@@ -1,0 +1,47 @@
+package com.offlineplaya.shared.data.repository
+
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import com.offlineplaya.shared.data.mapper.toDomain
+import com.offlineplaya.shared.database.OfflinePlayaDatabase
+import com.offlineplaya.shared.domain.model.Artist
+import com.offlineplaya.shared.domain.repository.ArtistRepository
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
+
+internal class SqlArtistRepository(
+    private val db: OfflinePlayaDatabase,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default,
+) : ArtistRepository {
+
+    private val queries get() = db.artistQueries
+
+    override fun observeAll(): Flow<List<Artist>> =
+        queries.selectAll().asFlow().mapToList(ioDispatcher).map { rows -> rows.map { it.toDomain() } }
+
+    override suspend fun findById(id: Long): Artist? = withContext(ioDispatcher) {
+        queries.selectById(id).executeAsOneOrNull()?.toDomain()
+    }
+
+    override suspend fun findByName(name: String): Artist? = withContext(ioDispatcher) {
+        queries.selectByName(name).executeAsOneOrNull()?.toDomain()
+    }
+
+    override suspend fun upsert(name: String): Long = withContext(ioDispatcher) {
+        queries.transactionWithResult {
+            queries.insert(name)
+            queries.selectByName(name).executeAsOne().id
+        }
+    }
+
+    override suspend fun refreshCounts(id: Long) = withContext(ioDispatcher) {
+        queries.updateCounts(id)
+    }
+
+    override suspend fun deleteAll() = withContext(ioDispatcher) {
+        queries.deleteAll()
+    }
+}

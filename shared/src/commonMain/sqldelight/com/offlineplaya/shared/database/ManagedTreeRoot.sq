@@ -1,0 +1,22 @@
+CREATE TABLE ManagedTreeRoot (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tree_uri TEXT NOT NULL UNIQUE,
+    display_name TEXT NOT NULL,
+    added_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+    last_scanned_at INTEGER
+);
+
+selectAll:
+SELECT * FROM ManagedTreeRoot ORDER BY display_name COLLATE NOCASE;
+
+selectByUri:
+SELECT * FROM ManagedTreeRoot WHERE tree_uri = ?;
+
+insert:
+INSERT OR IGNORE INTO ManagedTreeRoot(tree_uri, display_name) VALUES (?, ?);
+
+markScanned:
+UPDATE ManagedTreeRoot SET last_scanned_at = strftime('%s', 'now') WHERE tree_uri = ?;
+
+deleteByUri:
+DELETE FROM ManagedTreeRoot WHERE tree_uri = ?;

@@ -1,0 +1,103 @@
+CREATE TABLE Track (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    document_uri TEXT NOT NULL UNIQUE,
+    tree_uri TEXT NOT NULL,
+    relative_path TEXT NOT NULL,
+    file_name TEXT NOT NULL,
+    file_size INTEGER NOT NULL DEFAULT 0,
+    last_modified INTEGER NOT NULL DEFAULT 0,
+
+    title TEXT,
+    artist_name TEXT,
+    album_artist_name TEXT,
+    album_name TEXT,
+    genre TEXT,
+    year INTEGER,
+    track_number INTEGER,
+    disc_number INTEGER,
+    duration_ms INTEGER,
+    bitrate INTEGER,
+    sample_rate INTEGER,
+    channels INTEGER,
+    codec TEXT,
+
+    artist_id INTEGER REFERENCES Artist(id),
+    album_id INTEGER REFERENCES Album(id),
+    folder_id INTEGER REFERENCES Folder(id),
+
+    scan_status TEXT NOT NULL DEFAULT 'pending',
+    created_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+    updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+);
+
+CREATE INDEX idx_track_artist ON Track(artist_id);
+CREATE INDEX idx_track_album ON Track(album_id);
+CREATE INDEX idx_track_folder ON Track(folder_id);
+CREATE INDEX idx_track_scan_status ON Track(scan_status);
+CREATE INDEX idx_track_document_uri ON Track(document_uri);
+CREATE INDEX idx_track_relative_path ON Track(relative_path);
+
+selectAll:
+SELECT * FROM Track ORDER BY title COLLATE NOCASE;
+
+selectById:
+SELECT * FROM Track WHERE id = ?;
+
+selectByDocumentUri:
+SELECT * FROM Track WHERE document_uri = ?;
+
+selectByArtist:
+SELECT * FROM Track WHERE artist_id = ? ORDER BY album_id, disc_number, track_number, title;
+
+selectByAlbum:
+SELECT * FROM Track WHERE album_id = ? ORDER BY disc_number, track_number, title;
+
+selectByFolder:
+SELECT * FROM Track WHERE folder_id = ? ORDER BY file_name COLLATE NOCASE;
+
+selectPending:
+SELECT * FROM Track WHERE scan_status = 'pending' LIMIT ?;
+
+countAll:
+SELECT COUNT(*) FROM Track;
+
+countByStatus:
+SELECT COUNT(*) FROM Track WHERE scan_status = ?;
+
+insertFile:
+INSERT OR IGNORE INTO Track(document_uri, tree_uri, relative_path, file_name, file_size, last_modified, folder_id)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+updateMetadata:
+UPDATE Track SET
+    title = ?,
+    artist_name = ?,
+    album_artist_name = ?,
+    album_name = ?,
+    genre = ?,
+    year = ?,
+    track_number = ?,
+    disc_number = ?,
+    duration_ms = ?,
+    bitrate = ?,
+    sample_rate = ?,
+    channels = ?,
+    codec = ?,
+    scan_status = 'scanned',
+    updated_at = strftime('%s', 'now')
+WHERE id = ?;
+
+updateForeignKeys:
+UPDATE Track SET artist_id = ?, album_id = ? WHERE id = ?;
+
+markError:
+UPDATE Track SET scan_status = 'error', updated_at = strftime('%s', 'now') WHERE id = ?;
+
+deleteByDocumentUri:
+DELETE FROM Track WHERE document_uri = ?;
+
+deleteAll:
+DELETE FROM Track;
+
+lastInsertId:
+SELECT last_insert_rowid();

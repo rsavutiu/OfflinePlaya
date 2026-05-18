@@ -1,0 +1,34 @@
+CREATE TABLE PlaylistTrack (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    playlist_id INTEGER NOT NULL REFERENCES Playlist(id) ON DELETE CASCADE,
+    track_id INTEGER NOT NULL REFERENCES Track(id) ON DELETE CASCADE,
+    position INTEGER NOT NULL
+);
+
+CREATE INDEX idx_playlist_track_playlist ON PlaylistTrack(playlist_id, position);
+CREATE INDEX idx_playlist_track_track ON PlaylistTrack(track_id);
+
+selectByPlaylist:
+SELECT pt.id, pt.position, t.*
+FROM PlaylistTrack pt
+INNER JOIN Track t ON t.id = pt.track_id
+WHERE pt.playlist_id = ?
+ORDER BY pt.position;
+
+countByPlaylist:
+SELECT COUNT(*) FROM PlaylistTrack WHERE playlist_id = ?;
+
+maxPosition:
+SELECT COALESCE(MAX(position), -1) AS maxPosition FROM PlaylistTrack WHERE playlist_id = ?;
+
+insert:
+INSERT INTO PlaylistTrack(playlist_id, track_id, position) VALUES (?, ?, ?);
+
+updatePosition:
+UPDATE PlaylistTrack SET position = ? WHERE id = ?;
+
+deleteById:
+DELETE FROM PlaylistTrack WHERE id = ?;
+
+deleteByPlaylist:
+DELETE FROM PlaylistTrack WHERE playlist_id = ?;

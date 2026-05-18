@@ -1,0 +1,32 @@
+CREATE TABLE Artist (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE,
+    album_count INTEGER NOT NULL DEFAULT 0,
+    track_count INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE INDEX idx_artist_name ON Artist(name COLLATE NOCASE);
+
+selectAll:
+SELECT * FROM Artist ORDER BY name COLLATE NOCASE;
+
+selectById:
+SELECT * FROM Artist WHERE id = ?;
+
+selectByName:
+SELECT * FROM Artist WHERE name = ?;
+
+insert:
+INSERT OR IGNORE INTO Artist(name) VALUES (?);
+
+updateCounts:
+UPDATE Artist
+SET album_count = (SELECT COUNT(DISTINCT album_id) FROM Track WHERE artist_id = Artist.id AND album_id IS NOT NULL),
+    track_count = (SELECT COUNT(*) FROM Track WHERE artist_id = Artist.id)
+WHERE id = ?;
+
+lastInsertId:
+SELECT last_insert_rowid();
+
+deleteAll:
+DELETE FROM Artist;

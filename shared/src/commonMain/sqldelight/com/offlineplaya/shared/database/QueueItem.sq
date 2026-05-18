@@ -1,0 +1,32 @@
+CREATE TABLE QueueItem (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    track_id INTEGER NOT NULL REFERENCES Track(id) ON DELETE CASCADE,
+    position INTEGER NOT NULL,
+    source TEXT NOT NULL DEFAULT 'queue'
+);
+
+CREATE INDEX idx_queue_position ON QueueItem(position);
+
+selectAll:
+SELECT qi.id, qi.position, qi.source, t.*
+FROM QueueItem qi
+INNER JOIN Track t ON t.id = qi.track_id
+ORDER BY qi.position;
+
+count:
+SELECT COUNT(*) FROM QueueItem;
+
+maxPosition:
+SELECT COALESCE(MAX(position), -1) AS maxPosition FROM QueueItem;
+
+insert:
+INSERT INTO QueueItem(track_id, position, source) VALUES (?, ?, ?);
+
+updatePosition:
+UPDATE QueueItem SET position = ? WHERE id = ?;
+
+deleteById:
+DELETE FROM QueueItem WHERE id = ?;
+
+clear:
+DELETE FROM QueueItem;

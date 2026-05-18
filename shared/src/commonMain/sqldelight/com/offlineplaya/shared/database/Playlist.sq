@@ -1,0 +1,24 @@
+CREATE TABLE Playlist (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    created_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+    updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+);
+
+selectAll:
+SELECT * FROM Playlist ORDER BY name COLLATE NOCASE;
+
+selectById:
+SELECT * FROM Playlist WHERE id = ?;
+
+insert:
+INSERT INTO Playlist(name) VALUES (?);
+
+rename:
+UPDATE Playlist SET name = ?, updated_at = strftime('%s', 'now') WHERE id = ?;
+
+deleteById:
+DELETE FROM Playlist WHERE id = ?;
+
+lastInsertId:
+SELECT last_insert_rowid();

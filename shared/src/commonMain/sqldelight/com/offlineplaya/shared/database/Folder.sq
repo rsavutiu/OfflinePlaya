@@ -1,0 +1,38 @@
+CREATE TABLE Folder (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tree_uri TEXT NOT NULL,
+    relative_path TEXT NOT NULL,
+    display_name TEXT NOT NULL,
+    parent_id INTEGER REFERENCES Folder(id),
+    track_count INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE UNIQUE INDEX idx_folder_tree_path ON Folder(tree_uri, relative_path);
+CREATE INDEX idx_folder_parent ON Folder(parent_id);
+
+selectRoots:
+SELECT * FROM Folder WHERE parent_id IS NULL ORDER BY display_name COLLATE NOCASE;
+
+selectChildren:
+SELECT * FROM Folder WHERE parent_id = ? ORDER BY display_name COLLATE NOCASE;
+
+selectById:
+SELECT * FROM Folder WHERE id = ?;
+
+selectByPath:
+SELECT * FROM Folder WHERE tree_uri = ? AND relative_path = ?;
+
+insert:
+INSERT OR IGNORE INTO Folder(tree_uri, relative_path, display_name, parent_id)
+VALUES (?, ?, ?, ?);
+
+updateTrackCount:
+UPDATE Folder
+SET track_count = (SELECT COUNT(*) FROM Track WHERE folder_id = Folder.id)
+WHERE id = ?;
+
+lastInsertId:
+SELECT last_insert_rowid();
+
+deleteAll:
+DELETE FROM Folder;

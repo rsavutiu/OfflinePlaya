@@ -1,0 +1,38 @@
+CREATE TABLE Album (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    artist_id INTEGER REFERENCES Artist(id),
+    year INTEGER,
+    track_count INTEGER NOT NULL DEFAULT 0,
+    duration_ms INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE INDEX idx_album_artist ON Album(artist_id);
+CREATE UNIQUE INDEX idx_album_name_artist ON Album(name, artist_id);
+
+selectAll:
+SELECT * FROM Album ORDER BY name COLLATE NOCASE;
+
+selectByArtist:
+SELECT * FROM Album WHERE artist_id = ? ORDER BY COALESCE(year, 9999), name COLLATE NOCASE;
+
+selectById:
+SELECT * FROM Album WHERE id = ?;
+
+selectByNameAndArtist:
+SELECT * FROM Album WHERE name = ? AND artist_id IS ?;
+
+insert:
+INSERT OR IGNORE INTO Album(name, artist_id, year) VALUES (?, ?, ?);
+
+updateAggregates:
+UPDATE Album
+SET track_count = (SELECT COUNT(*) FROM Track WHERE album_id = Album.id),
+    duration_ms = (SELECT COALESCE(SUM(duration_ms), 0) FROM Track WHERE album_id = Album.id)
+WHERE id = ?;
+
+lastInsertId:
+SELECT last_insert_rowid();
+
+deleteAll:
+DELETE FROM Album;
