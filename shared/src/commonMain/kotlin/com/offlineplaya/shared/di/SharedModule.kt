@@ -15,6 +15,7 @@ import com.offlineplaya.shared.domain.repository.ManagedTreeRootRepository
 import com.offlineplaya.shared.domain.repository.PlaylistRepository
 import com.offlineplaya.shared.domain.repository.QueueRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
+import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
@@ -31,6 +32,20 @@ val sharedModule: Module = module {
     single { SqlPlaylistRepository(get()) } bind PlaylistRepository::class
     single { SqlQueueRepository(get()) } bind QueueRepository::class
     single { SqlManagedTreeRootRepository(get()) } bind ManagedTreeRootRepository::class
+
+    // Use cases. Scanner / MetadataReader bindings live in the platform module
+    // (androidModule for Android; tests inject fakes directly).
+    factory {
+        LibrarySyncUseCase(
+            managedRoots = get(),
+            folders = get(),
+            artists = get(),
+            albums = get(),
+            tracks = get(),
+            scanner = get(),
+            metadataReader = get(),
+        )
+    }
 }
 
 fun initKoin(

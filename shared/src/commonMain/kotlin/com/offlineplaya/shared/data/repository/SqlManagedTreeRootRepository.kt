@@ -22,6 +22,10 @@ internal class SqlManagedTreeRootRepository(
     override fun observeAll(): Flow<List<ManagedTreeRoot>> =
         queries.selectAll().asFlow().mapToList(ioDispatcher).map { rows -> rows.map { it.toDomain() } }
 
+    override suspend fun getAll(): List<ManagedTreeRoot> = withContext(ioDispatcher) {
+        queries.selectAll().executeAsList().map { it.toDomain() }
+    }
+
     override suspend fun findByUri(treeUri: String): ManagedTreeRoot? = withContext(ioDispatcher) {
         queries.selectByUri(treeUri).executeAsOneOrNull()?.toDomain()
     }
