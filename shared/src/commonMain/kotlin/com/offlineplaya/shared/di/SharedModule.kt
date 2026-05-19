@@ -18,6 +18,8 @@ import com.offlineplaya.shared.domain.repository.QueueRepository
 import com.offlineplaya.shared.domain.repository.SettingsRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
 import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
+import com.offlineplaya.shared.presentation.library.LibraryStateHolder
+import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import kotlinx.coroutines.CoroutineScope
@@ -75,6 +77,19 @@ val sharedModule: Module = module {
     single {
         ThemeStateHolder(
             settings = get(),
+            scope = get(),
+        )
+    }
+
+    // App-wide navigation stack. Single instance so back-stack survives recompositions.
+    single { AppNavigator() }
+
+    // Library facade — hot artist list + drill-down lookups for the library pages.
+    single {
+        LibraryStateHolder(
+            artists = get(),
+            albums = get(),
+            tracks = get(),
             scope = get(),
         )
     }

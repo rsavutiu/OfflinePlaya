@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.documentfile.provider.DocumentFile
 import com.offlineplaya.android.picker.OpenDocumentTreeContract
+import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
@@ -28,16 +29,18 @@ class MainActivity : ComponentActivity() {
 
 /**
  * Android host for the shared [App]. Wires SAF folder picking, hardware back
- * button into the [AppNavigator], and observes the theme/sync state holders.
+ * button into the [AppNavigator], and observes every state holder.
  */
 @Composable
 private fun AndroidApp() {
     val navigator: AppNavigator = koinInject()
     val themeStateHolder: ThemeStateHolder = koinInject()
     val coordinator: LibrarySyncCoordinator = koinInject()
+    val library: LibraryStateHolder = koinInject()
 
     val themePreferences by themeStateHolder.preferences.collectAsState()
     val syncStatus by coordinator.status.collectAsState()
+    val trackCount by library.totalTrackCount.collectAsState()
     val stack by navigator.stack.collectAsState()
     val context = LocalContext.current
 
@@ -62,8 +65,10 @@ private fun AndroidApp() {
 
     App(
         navigator = navigator,
+        library = library,
         themePreferences = themePreferences,
         syncStatus = syncStatus,
+        trackCount = trackCount,
         onPickFolder = { launcher.launch(Unit) },
         onColorModeChange = themeStateHolder::setColorMode,
         onDynamicColorChange = themeStateHolder::setUseDynamicColor,

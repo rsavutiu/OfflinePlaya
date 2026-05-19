@@ -1,0 +1,77 @@
+package com.offlineplaya.shared.presentation.ui.organisms
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import com.offlineplaya.shared.domain.model.ScanStatus
+import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
+import com.offlineplaya.shared.presentation.ui.molecules.TrackRow
+import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+
+@Composable
+fun TrackList(
+    tracks: List<Track>,
+    onTrackClick: (Track) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    if (tracks.isEmpty()) {
+        EmptyState(
+            title = "No tracks",
+            subtitle = "Nothing under this album was scanned.",
+            modifier = modifier,
+        )
+        return
+    }
+    LazyColumn(modifier = modifier.fillMaxSize()) {
+        items(items = tracks, key = { it.id }) { track ->
+            TrackRow(track = track, onClick = { onTrackClick(track) })
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun TrackListPopulatedPreview() {
+    PreviewTheme {
+        Surface {
+            TrackList(
+                tracks = listOf(
+                    sampleTrack(id = 1, n = 1, title = "Once", ms = 224_000L),
+                    sampleTrack(id = 2, n = 2, title = "Even Flow", ms = 296_000L),
+                    sampleTrack(id = 3, n = 3, title = "Alive", ms = 341_000L),
+                ),
+                onTrackClick = {},
+            )
+        }
+    }
+}
+
+private fun sampleTrack(id: Long, n: Int, title: String, ms: Long) = Track(
+    id = id,
+    documentUri = "preview://$id",
+    treeUri = "preview://tree",
+    relativePath = "Pearl Jam/Ten/$title.flac",
+    fileName = "$title.flac",
+    title = title,
+    artistName = "Pearl Jam",
+    albumArtistName = null,
+    albumName = "Ten",
+    genre = "Rock",
+    year = 1991,
+    trackNumber = n,
+    discNumber = 1,
+    durationMs = ms,
+    bitrate = 1_000_000,
+    sampleRate = 44_100,
+    channels = 2,
+    codec = "flac",
+    artistId = 1L,
+    albumId = 1L,
+    folderId = 1L,
+    scanStatus = ScanStatus.SCANNED,
+)

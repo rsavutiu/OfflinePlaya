@@ -9,7 +9,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,15 +26,16 @@ import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 /**
- * Home page: title bar with a Settings affordance, centered call-to-action to
- * pick a music folder, and the live scan status. The picker itself is a
- * platform concern — the page takes [onPickFolder] and [onOpenSettings]
- * callbacks; the host wires SAF (Android) etc.
+ * Home page: title bar with a Settings affordance, centered actions to pick a
+ * music folder and (once anything is scanned) open the library, and a live
+ * scan status caption. Pure presentation — every action is a callback.
  */
 @Composable
 fun HomePage(
     status: SyncStatus,
+    trackCount: Long,
     onPickFolder: () -> Unit,
+    onOpenLibrary: () -> Unit,
     onOpenSettings: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -60,15 +63,25 @@ fun HomePage(
             Column(
                 modifier = Modifier.padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 AppHeadline(text = "OfflinePlaya")
                 SyncStatusLine(status = status)
+
                 AppButton(
                     text = if (scanning) "Scanning…" else "Pick music folder",
                     onClick = onPickFolder,
                     enabled = !scanning,
                 )
+
+                if (trackCount > 0) {
+                    OutlinedButton(
+                        onClick = onOpenLibrary,
+                        enabled = !scanning,
+                    ) {
+                        Text("Open library ($trackCount tracks)")
+                    }
+                }
             }
         }
     }
@@ -78,7 +91,11 @@ fun HomePage(
 @Composable
 private fun HomePageIdlePreview() {
     PreviewTheme {
-        HomePage(status = SyncStatus.Idle, onPickFolder = {}, onOpenSettings = {})
+        HomePage(
+            status = SyncStatus.Idle,
+            trackCount = 0,
+            onPickFolder = {}, onOpenLibrary = {}, onOpenSettings = {},
+        )
     }
 }
 
@@ -88,8 +105,8 @@ private fun HomePageScanningPreview() {
     PreviewTheme {
         HomePage(
             status = SyncStatus.Scanning("content://tree/root"),
-            onPickFolder = {},
-            onOpenSettings = {},
+            trackCount = 0,
+            onPickFolder = {}, onOpenLibrary = {}, onOpenSettings = {},
         )
     }
 }
@@ -102,8 +119,8 @@ private fun HomePageCompletedPreview() {
             status = SyncStatus.Completed(
                 SyncReport(foldersUpserted = 6, tracksDiscovered = 87, tracksScanned = 87, tracksFailed = 0),
             ),
-            onPickFolder = {},
-            onOpenSettings = {},
+            trackCount = 87,
+            onPickFolder = {}, onOpenLibrary = {}, onOpenSettings = {},
         )
     }
 }
@@ -114,8 +131,8 @@ private fun HomePageFailedPreview() {
     PreviewTheme {
         HomePage(
             status = SyncStatus.Failed("permission denied"),
-            onPickFolder = {},
-            onOpenSettings = {},
+            trackCount = 142,
+            onPickFolder = {}, onOpenLibrary = {}, onOpenSettings = {},
         )
     }
 }
@@ -128,8 +145,8 @@ private fun HomePageCompletedDarkPreview() {
             status = SyncStatus.Completed(
                 SyncReport(foldersUpserted = 6, tracksDiscovered = 87, tracksScanned = 85, tracksFailed = 2),
             ),
-            onPickFolder = {},
-            onOpenSettings = {},
+            trackCount = 85,
+            onPickFolder = {}, onOpenLibrary = {}, onOpenSettings = {},
         )
     }
 }
