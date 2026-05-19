@@ -42,6 +42,7 @@ fun HomePage(
     val scanning = status is SyncStatus.Scanning
     Scaffold(
         modifier = modifier,
+        contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
         topBar = {
             AppTopBar(
                 title = "OfflinePlaya",

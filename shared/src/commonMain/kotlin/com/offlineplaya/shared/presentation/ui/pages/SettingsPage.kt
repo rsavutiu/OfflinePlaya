@@ -37,6 +37,7 @@ fun SettingsPage(
 ) {
     Scaffold(
         modifier = modifier,
+        contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
         topBar = { AppTopBar(title = "Settings", onBack = onBack) },
     ) { padding ->
         Column(

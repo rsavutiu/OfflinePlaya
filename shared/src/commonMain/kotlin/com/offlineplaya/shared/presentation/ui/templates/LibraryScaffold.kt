@@ -32,6 +32,7 @@ fun LibraryScaffold(
 ) {
     Scaffold(
         modifier = modifier,
+        contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
         topBar = {
             Column {
                 AppTopBar(title = "Library", onBack = onBack)

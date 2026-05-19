@@ -20,7 +20,10 @@ fun CenteredScaffoldTemplate(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    Scaffold(modifier = modifier) { padding ->
+    Scaffold(
+        modifier = modifier,
+        contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
+    ) { padding ->
         Box(
             modifier = Modifier.fillMaxSize().padding(padding),
             contentAlignment = Alignment.Center,

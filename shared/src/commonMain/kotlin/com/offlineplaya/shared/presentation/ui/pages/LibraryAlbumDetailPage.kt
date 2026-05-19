@@ -27,6 +27,7 @@ fun LibraryAlbumDetailPage(
 
     Scaffold(
         modifier = modifier,
+        contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
         topBar = { AppTopBar(title = albumTitle, onBack = onBack) },
     ) { padding ->
         TrackList(

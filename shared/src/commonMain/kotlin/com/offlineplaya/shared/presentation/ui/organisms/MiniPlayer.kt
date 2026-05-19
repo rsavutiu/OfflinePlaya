@@ -4,10 +4,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -47,7 +50,11 @@ fun MiniPlayer(
         tonalElevation = 4.dp,
         color = MaterialTheme.colorScheme.surfaceVariant,
     ) {
-        Column {
+        // Surface fills the bottomBar slot and extends behind the navigation
+        // bar; the inner Column pads upward off the nav bar so the tap targets
+        // stay reachable. This gives edge-to-edge visual continuity without
+        // breaking ergonomics.
+        Column(modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)) {
             ProgressLine(state = state)
             Row(
                 modifier = Modifier

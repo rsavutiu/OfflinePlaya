@@ -30,6 +30,7 @@ fun LibraryFolderDetailPage(
 
     Scaffold(
         modifier = modifier,
+        contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
         topBar = { AppTopBar(title = folderName, onBack = onBack) },
     ) { padding ->
         FolderDetailContent(

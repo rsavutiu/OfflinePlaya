@@ -7,8 +7,10 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -74,8 +76,33 @@ fun App(
             navigator.push(AppDestination.NowPlaying)
         }
 
-        Column(modifier = Modifier.fillMaxSize()) {
-            Box(modifier = Modifier.weight(1f)) {
+        // Single outer Scaffold owns all system insets. Inner page Scaffolds
+        // opt out via `contentWindowInsets = WindowInsets(0)` to avoid double
+        // padding. The MiniPlayer slots in as `bottomBar` so its background
+        // extends behind the navigation bar while its content sits above it.
+        val showMini = playback.currentTrack != null && current != AppDestination.NowPlaying
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            bottomBar = {
+                AnimatedVisibility(visible = showMini) {
+                    MiniPlayer(
+                        state = playback,
+                        onExpand = { navigator.push(AppDestination.NowPlaying) },
+                        onPlayPause = {
+                            if (playback.isPlaying) musicPlayer.pause() else musicPlayer.play()
+                        },
+                        onPrevious = { musicPlayer.skipToPrevious() },
+                        onNext = { musicPlayer.skipToNext() },
+                    )
+                }
+            },
+        ) { outerPadding ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(outerPadding)
+                    .consumeWindowInsets(outerPadding),
+            ) {
                 DestinationContent(
                     current = current,
                     navigator = navigator,
@@ -91,20 +118,6 @@ fun App(
                     dynamicColorSupported = dynamicColorSupported,
                     onTabSelected = onTabSelected,
                     onPlayTracks = onPlayTracks,
-                )
-            }
-
-            // MiniPlayer sits below the content, visible on every page that
-            // isn't NowPlaying (which already has full transport controls).
-            AnimatedVisibility(
-                visible = playback.currentTrack != null && current != AppDestination.NowPlaying,
-            ) {
-                MiniPlayer(
-                    state = playback,
-                    onExpand = { navigator.push(AppDestination.NowPlaying) },
-                    onPlayPause = { if (playback.isPlaying) musicPlayer.pause() else musicPlayer.play() },
-                    onPrevious = { musicPlayer.skipToPrevious() },
-                    onNext = { musicPlayer.skipToNext() },
                 )
             }
         }

@@ -53,6 +53,7 @@ fun NowPlayingPage(
 ) {
     Scaffold(
         modifier = modifier,
+        contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
         topBar = { AppTopBar(title = "Now Playing", onBack = onBack) },
     ) { padding ->
         val track = state.currentTrack
