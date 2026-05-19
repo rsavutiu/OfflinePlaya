@@ -27,6 +27,9 @@ interface MusicPlayer {
     fun skipToNext()
     fun skipToPrevious()
 
+    /** Jump to a specific queue index without changing the queue contents. */
+    fun seekToIndex(index: Int)
+
     // --- queue management ---
 
     /** Replace the queue with [tracks] and start playback at [startIndex]. */

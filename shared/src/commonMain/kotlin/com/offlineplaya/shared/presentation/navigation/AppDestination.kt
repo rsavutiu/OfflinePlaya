@@ -11,6 +11,7 @@ sealed interface AppDestination {
     data object Home : AppDestination
     data object Settings : AppDestination
     data object NowPlaying : AppDestination
+    data object Queue : AppDestination
 
     data object LibraryArtists : AppDestination
     data class LibraryArtistDetail(val artistId: Long) : AppDestination

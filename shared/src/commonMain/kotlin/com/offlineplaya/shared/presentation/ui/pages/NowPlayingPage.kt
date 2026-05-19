@@ -9,6 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.QueueMusic
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
@@ -30,6 +34,8 @@ import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AppCaption
 import com.offlineplaya.shared.presentation.ui.atoms.AppHeadline
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
+import com.offlineplaya.shared.presentation.ui.atoms.RepeatToggle
+import com.offlineplaya.shared.presentation.ui.atoms.ShuffleToggle
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.molecules.PlaybackControlsLarge
 import com.offlineplaya.shared.presentation.ui.molecules.formatDuration
@@ -48,13 +54,29 @@ fun NowPlayingPage(
     onPrevious: () -> Unit,
     onNext: () -> Unit,
     onSeek: (Long) -> Unit,
+    onShuffleToggle: () -> Unit,
+    onRepeatChange: (com.offlineplaya.shared.domain.model.RepeatMode) -> Unit,
+    onOpenQueue: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,
         contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
-        topBar = { AppTopBar(title = "Now Playing", onBack = onBack) },
+        topBar = {
+            AppTopBar(
+                title = "Now Playing",
+                onBack = onBack,
+                actions = {
+                    IconButton(onClick = onOpenQueue) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.QueueMusic,
+                            contentDescription = "Up next",
+                        )
+                    }
+                },
+            )
+        },
     ) { padding ->
         val track = state.currentTrack
         if (track == null) {
@@ -77,12 +99,20 @@ fun NowPlayingPage(
             ArtPanel()
             TrackHeadline(track = track)
             SeekRow(state = state, onSeek = onSeek)
-            PlaybackControlsLarge(
-                isPlaying = state.isPlaying,
-                onPlayPause = onPlayPause,
-                onPrevious = onPrevious,
-                onNext = onNext,
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                ShuffleToggle(enabled = state.shuffleEnabled, onToggle = onShuffleToggle)
+                PlaybackControlsLarge(
+                    isPlaying = state.isPlaying,
+                    onPlayPause = onPlayPause,
+                    onPrevious = onPrevious,
+                    onNext = onNext,
+                )
+                RepeatToggle(mode = state.repeatMode, onCycle = onRepeatChange)
+            }
         }
     }
 }
@@ -176,7 +206,8 @@ private fun NowPlayingPagePopulatedPreview() {
                 queueIndex = 0,
                 volume = 1f,
             ),
-            onPlayPause = {}, onPrevious = {}, onNext = {}, onSeek = {}, onBack = {},
+            onPlayPause = {}, onPrevious = {}, onNext = {}, onSeek = {},
+            onShuffleToggle = {}, onRepeatChange = {}, onOpenQueue = {}, onBack = {},
         )
     }
 }
@@ -187,7 +218,8 @@ private fun NowPlayingPageEmptyPreview() {
     PreviewTheme(darkTheme = true) {
         NowPlayingPage(
             state = PlaybackState.Empty,
-            onPlayPause = {}, onPrevious = {}, onNext = {}, onSeek = {}, onBack = {},
+            onPlayPause = {}, onPrevious = {}, onNext = {}, onSeek = {},
+            onShuffleToggle = {}, onRepeatChange = {}, onOpenQueue = {}, onBack = {},
         )
     }
 }

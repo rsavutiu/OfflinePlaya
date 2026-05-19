@@ -100,6 +100,13 @@ internal class Media3MusicPlayer(
     override fun skipToNext() = onMain { controller?.seekToNext() }
     override fun skipToPrevious() = onMain { controller?.seekToPrevious() }
 
+    override fun seekToIndex(index: Int) = onMain {
+        val ctrl = controller ?: return@onMain
+        if (index !in 0 until ctrl.mediaItemCount) return@onMain
+        ctrl.seekTo(index, /* positionMs = */ 0L)
+        ctrl.playWhenReady = true
+    }
+
     // --- queue ---
 
     override fun setQueue(tracks: List<Track>, startIndex: Int) = onMain {

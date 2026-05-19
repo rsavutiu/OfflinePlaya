@@ -41,6 +41,7 @@ import com.offlineplaya.shared.presentation.ui.pages.LibraryFlatPage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryFolderDetailPage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryFolderRootsPage
 import com.offlineplaya.shared.presentation.ui.pages.NowPlayingPage
+import com.offlineplaya.shared.presentation.ui.pages.QueuePage
 import com.offlineplaya.shared.presentation.ui.pages.SettingsPage
 import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
 
@@ -172,6 +173,17 @@ private fun DestinationContent(
                 onPrevious = { musicPlayer.skipToPrevious() },
                 onNext = { musicPlayer.skipToNext() },
                 onSeek = { musicPlayer.seekTo(it) },
+                onShuffleToggle = { musicPlayer.setShuffleEnabled(!playback.shuffleEnabled) },
+                onRepeatChange = { musicPlayer.setRepeatMode(it) },
+                onOpenQueue = { navigator.push(AppDestination.Queue) },
+                onBack = { navigator.pop() },
+            )
+
+            AppDestination.Queue -> QueuePage(
+                state = playback,
+                onJumpTo = { idx -> musicPlayer.seekToIndex(idx) },
+                onRemove = { idx -> musicPlayer.removeFromQueue(idx) },
+                onClearQueue = { musicPlayer.clearQueue() },
                 onBack = { navigator.pop() },
             )
 
