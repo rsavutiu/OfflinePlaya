@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
@@ -18,7 +19,11 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 @Composable
 fun LibraryFlatPage(
     tracks: List<Track>,
+    availablePlaylists: List<Playlist>,
     onPlayTracks: (List<Track>, Int) -> Unit,
+    onPlayNext: (Track) -> Unit,
+    onAddToQueue: (Track) -> Unit,
+    onAddToPlaylist: (Track, Long) -> Unit,
     onTabSelected: (LibraryTab) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -40,11 +45,15 @@ fun LibraryFlatPage(
     selectedTrack?.let { track ->
         TrackDetailsSheet(
             track = track,
+            availablePlaylists = availablePlaylists,
             onPlay = {
                 val index = tracks.indexOf(track).coerceAtLeast(0)
                 onPlayTracks(tracks, index)
                 selectedTrack = null
             },
+            onPlayNext = { onPlayNext(track); selectedTrack = null },
+            onAddToQueue = { onAddToQueue(track); selectedTrack = null },
+            onAddToPlaylist = { id -> onAddToPlaylist(track, id); selectedTrack = null },
             onDismiss = { selectedTrack = null },
         )
     }
@@ -60,7 +69,9 @@ private fun LibraryFlatPagePreview() {
                 sampleFlatTrack(2, "Boards of Canada", "Roygbiv"),
                 sampleFlatTrack(3, "Pearl Jam", "Once"),
             ),
+            availablePlaylists = emptyList(),
             onPlayTracks = { _, _ -> },
+            onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
             onTabSelected = {},
             onBack = {},
         )
@@ -73,7 +84,9 @@ private fun LibraryFlatPageEmptyPreview() {
     PreviewTheme(darkTheme = true) {
         LibraryFlatPage(
             tracks = emptyList(),
+            availablePlaylists = emptyList(),
             onPlayTracks = { _, _ -> },
+            onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
             onTabSelected = {},
             onBack = {},
         )

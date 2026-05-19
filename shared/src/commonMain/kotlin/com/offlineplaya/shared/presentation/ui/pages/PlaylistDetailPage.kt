@@ -13,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
@@ -30,7 +31,11 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 fun PlaylistDetailPage(
     playlistName: String,
     tracks: List<Track>,
+    availablePlaylists: List<Playlist>,
     onPlayTracks: (List<Track>, Int) -> Unit,
+    onPlayNext: (Track) -> Unit,
+    onAddToQueue: (Track) -> Unit,
+    onAddToPlaylist: (Track, Long) -> Unit,
     onDelete: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -67,11 +72,15 @@ fun PlaylistDetailPage(
     selectedTrack?.let { track ->
         TrackDetailsSheet(
             track = track,
+            availablePlaylists = availablePlaylists,
             onPlay = {
                 val index = tracks.indexOf(track).coerceAtLeast(0)
                 onPlayTracks(tracks, index)
                 selectedTrack = null
             },
+            onPlayNext = { onPlayNext(track); selectedTrack = null },
+            onAddToQueue = { onAddToQueue(track); selectedTrack = null },
+            onAddToPlaylist = { id -> onAddToPlaylist(track, id); selectedTrack = null },
             onDismiss = { selectedTrack = null },
         )
     }
@@ -87,7 +96,9 @@ private fun PlaylistDetailPagePopulatedPreview() {
                 samplePlaylistTrack(1, "Once", "Pearl Jam"),
                 samplePlaylistTrack(2, "Cherub Rock", "Smashing Pumpkins"),
             ),
+            availablePlaylists = emptyList(),
             onPlayTracks = { _, _ -> },
+            onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
             onDelete = {},
             onBack = {},
         )
@@ -101,7 +112,9 @@ private fun PlaylistDetailPageEmptyPreview() {
         PlaylistDetailPage(
             playlistName = "Empty",
             tracks = emptyList(),
+            availablePlaylists = emptyList(),
             onPlayTracks = { _, _ -> },
+            onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
             onDelete = {},
             onBack = {},
         )

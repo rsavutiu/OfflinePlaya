@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
@@ -19,7 +20,11 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 fun LibraryAlbumDetailPage(
     albumTitle: String,
     tracks: List<Track>,
+    availablePlaylists: List<Playlist>,
     onPlayTracks: (List<Track>, Int) -> Unit,
+    onPlayNext: (Track) -> Unit,
+    onAddToQueue: (Track) -> Unit,
+    onAddToPlaylist: (Track, Long) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -40,9 +45,22 @@ fun LibraryAlbumDetailPage(
     selectedTrack?.let { track ->
         TrackDetailsSheet(
             track = track,
+            availablePlaylists = availablePlaylists,
             onPlay = {
                 val index = tracks.indexOf(track).coerceAtLeast(0)
                 onPlayTracks(tracks, index)
+                selectedTrack = null
+            },
+            onPlayNext = {
+                onPlayNext(track)
+                selectedTrack = null
+            },
+            onAddToQueue = {
+                onAddToQueue(track)
+                selectedTrack = null
+            },
+            onAddToPlaylist = { playlistId ->
+                onAddToPlaylist(track, playlistId)
                 selectedTrack = null
             },
             onDismiss = { selectedTrack = null },
@@ -61,7 +79,9 @@ private fun LibraryAlbumDetailPagePreview() {
                 sampleTrack(2, 2, "Even Flow"),
                 sampleTrack(3, 3, "Alive"),
             ),
+            availablePlaylists = emptyList(),
             onPlayTracks = { _, _ -> },
+            onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
             onBack = {},
         )
     }

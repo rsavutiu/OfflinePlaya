@@ -73,12 +73,19 @@ fun App(
         val current = stack.last()
         val playback by musicPlayer.playbackState.collectAsState()
 
+        val availablePlaylists by playlists.allPlaylists.collectAsState()
+
         val onTabSelected: (LibraryTab) -> Unit = { tab ->
             navigator.swapTop(tab.toDestination())
         }
         val onPlayTracks: (List<Track>, Int) -> Unit = { tracks, index ->
             musicPlayer.setQueue(tracks, index)
             navigator.push(AppDestination.NowPlaying)
+        }
+        val onPlayNext: (Track) -> Unit = { musicPlayer.addNext(it) }
+        val onAddToQueue: (Track) -> Unit = { musicPlayer.addToQueue(it) }
+        val onAddToPlaylist: (Track, Long) -> Unit = { track, playlistId ->
+            playlists.addTrack(playlistId, track.id)
         }
 
         // Single outer Scaffold owns all system insets. Inner page Scaffolds
@@ -113,6 +120,7 @@ fun App(
                     navigator = navigator,
                     library = library,
                     playlists = playlists,
+                    availablePlaylists = availablePlaylists,
                     musicPlayer = musicPlayer,
                     playback = playback,
                     themePreferences = themePreferences,
@@ -124,6 +132,9 @@ fun App(
                     dynamicColorSupported = dynamicColorSupported,
                     onTabSelected = onTabSelected,
                     onPlayTracks = onPlayTracks,
+                    onPlayNext = onPlayNext,
+                    onAddToQueue = onAddToQueue,
+                    onAddToPlaylist = onAddToPlaylist,
                 )
             }
         }
@@ -136,6 +147,7 @@ private fun DestinationContent(
     navigator: AppNavigator,
     library: LibraryStateHolder,
     playlists: PlaylistStateHolder,
+    availablePlaylists: List<com.offlineplaya.shared.domain.model.Playlist>,
     musicPlayer: MusicPlayer,
     playback: PlaybackState,
     themePreferences: ThemePreferences,
@@ -147,6 +159,9 @@ private fun DestinationContent(
     dynamicColorSupported: Boolean,
     onTabSelected: (LibraryTab) -> Unit,
     onPlayTracks: (List<Track>, Int) -> Unit,
+    onPlayNext: (Track) -> Unit,
+    onAddToQueue: (Track) -> Unit,
+    onAddToPlaylist: (Track, Long) -> Unit,
 ) {
     AnimatedContent(
         targetState = current,
@@ -220,7 +235,11 @@ private fun DestinationContent(
                 PlaylistDetailPage(
                     playlistName = playlist?.name ?: "Loading…",
                     tracks = tracks,
+                    availablePlaylists = availablePlaylists,
                     onPlayTracks = onPlayTracks,
+                    onPlayNext = onPlayNext,
+                    onAddToQueue = onAddToQueue,
+                    onAddToPlaylist = onAddToPlaylist,
                     onDelete = {
                         playlists.delete(dest.playlistId)
                         navigator.pop()
@@ -272,7 +291,11 @@ private fun DestinationContent(
                 LibraryAlbumDetailPage(
                     albumTitle = album?.name ?: "Loading…",
                     tracks = tracks,
+                    availablePlaylists = availablePlaylists,
                     onPlayTracks = onPlayTracks,
+                    onPlayNext = onPlayNext,
+                    onAddToQueue = onAddToQueue,
+                    onAddToPlaylist = onAddToPlaylist,
                     onBack = { navigator.pop() },
                 )
             }
@@ -305,10 +328,14 @@ private fun DestinationContent(
                     folderName = folder?.displayName ?: "Loading…",
                     subfolders = subfolders,
                     tracks = tracks,
+                    availablePlaylists = availablePlaylists,
                     onFolderClick = { id ->
                         navigator.push(AppDestination.LibraryFolderDetail(id))
                     },
                     onPlayTracks = onPlayTracks,
+                    onPlayNext = onPlayNext,
+                    onAddToQueue = onAddToQueue,
+                    onAddToPlaylist = onAddToPlaylist,
                     onBack = { navigator.pop() },
                 )
             }
@@ -317,7 +344,11 @@ private fun DestinationContent(
                 val tracks by library.allTracks.collectAsState()
                 LibraryFlatPage(
                     tracks = tracks,
+                    availablePlaylists = availablePlaylists,
                     onPlayTracks = onPlayTracks,
+                    onPlayNext = onPlayNext,
+                    onAddToQueue = onAddToQueue,
+                    onAddToPlaylist = onAddToPlaylist,
                     onTabSelected = onTabSelected,
                     onBack = { navigator.pop() },
                 )

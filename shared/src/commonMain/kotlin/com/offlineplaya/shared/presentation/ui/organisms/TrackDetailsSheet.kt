@@ -1,6 +1,8 @@
 package com.offlineplaya.shared.presentation.ui.organisms
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -9,38 +11,71 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.presentation.ui.molecules.AddToPlaylistDialog
 import com.offlineplaya.shared.presentation.ui.molecules.formatDuration
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 /**
- * Bottom sheet showing track metadata with a Play action. The caller decides
- * what queue gets set (typically the parent list — album/folder/flat).
+ * Bottom sheet showing track metadata + actions: Play, Play next,
+ * Add to queue, Add to playlist. The caller decides what "Play" means
+ * (typically: set the parent list as the queue starting at this track).
+ * The "Add to playlist" action shows a dialog populated by
+ * [availablePlaylists]; picking one calls [onAddToPlaylist] and dismisses.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrackDetailsSheet(
     track: Track,
+    availablePlaylists: List<Playlist>,
     onPlay: () -> Unit,
+    onPlayNext: () -> Unit,
+    onAddToQueue: () -> Unit,
+    onAddToPlaylist: (playlistId: Long) -> Unit,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    var showAddToPlaylistDialog by remember { mutableStateOf(false) }
+
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
         modifier = modifier,
     ) {
-        TrackDetailsContent(track = track, onPlay = onPlay)
+        TrackDetailsContent(
+            track = track,
+            onPlay = onPlay,
+            onPlayNext = onPlayNext,
+            onAddToQueue = onAddToQueue,
+            onShowAddToPlaylist = { showAddToPlaylistDialog = true },
+        )
+    }
+
+    if (showAddToPlaylistDialog) {
+        AddToPlaylistDialog(
+            playlists = availablePlaylists,
+            onPickPlaylist = { id ->
+                onAddToPlaylist(id)
+                showAddToPlaylistDialog = false
+            },
+            onDismiss = { showAddToPlaylistDialog = false },
+        )
     }
 }
 
@@ -50,6 +85,9 @@ fun TrackDetailsContent(
     track: Track,
     modifier: Modifier = Modifier,
     onPlay: (() -> Unit)? = null,
+    onPlayNext: (() -> Unit)? = null,
+    onAddToQueue: (() -> Unit)? = null,
+    onShowAddToPlaylist: (() -> Unit)? = null,
 ) {
     Column(
         modifier = modifier
@@ -74,6 +112,35 @@ fun TrackDetailsContent(
             ) {
                 Text("Play")
             }
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+
+        if (onPlayNext != null || onAddToQueue != null) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                if (onPlayNext != null) {
+                    OutlinedButton(
+                        onClick = onPlayNext,
+                        modifier = Modifier.weight(1f),
+                    ) { Text("Play next") }
+                }
+                if (onAddToQueue != null) {
+                    OutlinedButton(
+                        onClick = onAddToQueue,
+                        modifier = Modifier.weight(1f),
+                    ) { Text("Add to queue") }
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+
+        if (onShowAddToPlaylist != null) {
+            OutlinedButton(
+                onClick = onShowAddToPlaylist,
+                modifier = Modifier.fillMaxWidth(),
+            ) { Text("Add to playlist") }
             Spacer(modifier = Modifier.height(20.dp))
         }
 
@@ -89,7 +156,7 @@ fun TrackDetailsContent(
 
 @Composable
 private fun DetailRow(label: String, value: String) {
-    androidx.compose.foundation.layout.Row(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp),
@@ -109,26 +176,15 @@ private fun DetailRow(label: String, value: String) {
 
 @Preview
 @Composable
-private fun TrackDetailsContentPreview() {
+private fun TrackDetailsContentFullPreview() {
     PreviewTheme {
         Surface {
             TrackDetailsContent(
-                track = Track(
-                    id = 1, documentUri = "u", treeUri = "t",
-                    relativePath = "Pearl Jam/Ten/01 Once.flac",
-                    fileName = "01 Once.flac",
-                    title = "Once",
-                    artistName = "Pearl Jam",
-                    albumArtistName = null,
-                    albumName = "Ten",
-                    genre = "Rock",
-                    year = 1991, trackNumber = 1, discNumber = 1,
-                    durationMs = 224_000L,
-                    bitrate = 1_000_000, sampleRate = 44_100, channels = 2,
-                    codec = "flac",
-                    artistId = 1L, albumId = 1L, folderId = 1L,
-                    scanStatus = ScanStatus.SCANNED,
-                ),
+                track = sampleTrack(),
+                onPlay = {},
+                onPlayNext = {},
+                onAddToQueue = {},
+                onShowAddToPlaylist = {},
             )
         }
     }
@@ -160,3 +216,20 @@ private fun TrackDetailsContentMinimalPreview() {
         }
     }
 }
+
+private fun sampleTrack() = Track(
+    id = 1, documentUri = "u", treeUri = "t",
+    relativePath = "Pearl Jam/Ten/01 Once.flac",
+    fileName = "01 Once.flac",
+    title = "Once",
+    artistName = "Pearl Jam",
+    albumArtistName = null,
+    albumName = "Ten",
+    genre = "Rock",
+    year = 1991, trackNumber = 1, discNumber = 1,
+    durationMs = 224_000L,
+    bitrate = 1_000_000, sampleRate = 44_100, channels = 2,
+    codec = "flac",
+    artistId = 1L, albumId = 1L, folderId = 1L,
+    scanStatus = ScanStatus.SCANNED,
+)

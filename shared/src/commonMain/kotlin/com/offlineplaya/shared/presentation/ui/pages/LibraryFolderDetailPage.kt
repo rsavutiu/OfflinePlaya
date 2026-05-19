@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.offlineplaya.shared.domain.model.Folder
+import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.organisms.FolderDetailContent
@@ -21,8 +22,12 @@ fun LibraryFolderDetailPage(
     folderName: String,
     subfolders: List<Folder>,
     tracks: List<Track>,
+    availablePlaylists: List<Playlist>,
     onFolderClick: (Long) -> Unit,
     onPlayTracks: (List<Track>, Int) -> Unit,
+    onPlayNext: (Track) -> Unit,
+    onAddToQueue: (Track) -> Unit,
+    onAddToPlaylist: (Track, Long) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -45,11 +50,15 @@ fun LibraryFolderDetailPage(
     selectedTrack?.let { track ->
         TrackDetailsSheet(
             track = track,
+            availablePlaylists = availablePlaylists,
             onPlay = {
                 val index = tracks.indexOf(track).coerceAtLeast(0)
                 onPlayTracks(tracks, index)
                 selectedTrack = null
             },
+            onPlayNext = { onPlayNext(track); selectedTrack = null },
+            onAddToQueue = { onAddToQueue(track); selectedTrack = null },
+            onAddToPlaylist = { id -> onAddToPlaylist(track, id); selectedTrack = null },
             onDismiss = { selectedTrack = null },
         )
     }
@@ -66,8 +75,10 @@ private fun LibraryFolderDetailPagePreview() {
                 Folder(11, "t", "Pearl Jam/Vs.", "Vs.", 1L, 12),
             ),
             tracks = emptyList(),
+            availablePlaylists = emptyList(),
             onFolderClick = {},
             onPlayTracks = { _, _ -> },
+            onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
             onBack = {},
         )
     }
