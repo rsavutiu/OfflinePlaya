@@ -36,6 +36,7 @@ fun HomePage(
     trackCount: Long,
     onPickFolder: () -> Unit,
     onOpenLibrary: () -> Unit,
+    onOpenPlaylists: () -> Unit,
     onOpenSettings: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -83,6 +84,10 @@ fun HomePage(
                         Text("Open library ($trackCount tracks)")
                     }
                 }
+
+                OutlinedButton(onClick = onOpenPlaylists, enabled = !scanning) {
+                    Text("Playlists")
+                }
             }
         }
     }
@@ -95,7 +100,7 @@ private fun HomePageIdlePreview() {
         HomePage(
             status = SyncStatus.Idle,
             trackCount = 0,
-            onPickFolder = {}, onOpenLibrary = {}, onOpenSettings = {},
+            onPickFolder = {}, onOpenLibrary = {}, onOpenPlaylists = {}, onOpenSettings = {},
         )
     }
 }
@@ -107,7 +112,7 @@ private fun HomePageScanningPreview() {
         HomePage(
             status = SyncStatus.Scanning("content://tree/root"),
             trackCount = 0,
-            onPickFolder = {}, onOpenLibrary = {}, onOpenSettings = {},
+            onPickFolder = {}, onOpenLibrary = {}, onOpenPlaylists = {}, onOpenSettings = {},
         )
     }
 }
@@ -121,7 +126,7 @@ private fun HomePageCompletedPreview() {
                 SyncReport(foldersUpserted = 6, tracksDiscovered = 87, tracksScanned = 87, tracksFailed = 0),
             ),
             trackCount = 87,
-            onPickFolder = {}, onOpenLibrary = {}, onOpenSettings = {},
+            onPickFolder = {}, onOpenLibrary = {}, onOpenPlaylists = {}, onOpenSettings = {},
         )
     }
 }
@@ -133,7 +138,7 @@ private fun HomePageFailedPreview() {
         HomePage(
             status = SyncStatus.Failed("permission denied"),
             trackCount = 142,
-            onPickFolder = {}, onOpenLibrary = {}, onOpenSettings = {},
+            onPickFolder = {}, onOpenLibrary = {}, onOpenPlaylists = {}, onOpenSettings = {},
         )
     }
 }
@@ -147,7 +152,7 @@ private fun HomePageCompletedDarkPreview() {
                 SyncReport(foldersUpserted = 6, tracksDiscovered = 87, tracksScanned = 85, tracksFailed = 2),
             ),
             trackCount = 85,
-            onPickFolder = {}, onOpenLibrary = {}, onOpenSettings = {},
+            onPickFolder = {}, onOpenLibrary = {}, onOpenPlaylists = {}, onOpenSettings = {},
         )
     }
 }

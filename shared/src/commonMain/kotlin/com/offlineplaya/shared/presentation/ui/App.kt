@@ -30,6 +30,7 @@ import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.navigation.AppDestination
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
+import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.sync.SyncStatus
 import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
 import com.offlineplaya.shared.presentation.ui.organisms.MiniPlayer
@@ -41,6 +42,8 @@ import com.offlineplaya.shared.presentation.ui.pages.LibraryFlatPage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryFolderDetailPage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryFolderRootsPage
 import com.offlineplaya.shared.presentation.ui.pages.NowPlayingPage
+import com.offlineplaya.shared.presentation.ui.pages.PlaylistDetailPage
+import com.offlineplaya.shared.presentation.ui.pages.PlaylistsPage
 import com.offlineplaya.shared.presentation.ui.pages.QueuePage
 import com.offlineplaya.shared.presentation.ui.pages.SettingsPage
 import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
@@ -55,6 +58,7 @@ import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
 fun App(
     navigator: AppNavigator,
     library: LibraryStateHolder,
+    playlists: PlaylistStateHolder,
     musicPlayer: MusicPlayer,
     themePreferences: ThemePreferences,
     syncStatus: SyncStatus,
@@ -108,6 +112,7 @@ fun App(
                     current = current,
                     navigator = navigator,
                     library = library,
+                    playlists = playlists,
                     musicPlayer = musicPlayer,
                     playback = playback,
                     themePreferences = themePreferences,
@@ -130,6 +135,7 @@ private fun DestinationContent(
     current: AppDestination,
     navigator: AppNavigator,
     library: LibraryStateHolder,
+    playlists: PlaylistStateHolder,
     musicPlayer: MusicPlayer,
     playback: PlaybackState,
     themePreferences: ThemePreferences,
@@ -156,6 +162,7 @@ private fun DestinationContent(
                 trackCount = trackCount,
                 onPickFolder = onPickFolder,
                 onOpenLibrary = { navigator.push(AppDestination.LibraryArtists) },
+                onOpenPlaylists = { navigator.push(AppDestination.Playlists) },
                 onOpenSettings = { navigator.push(AppDestination.Settings) },
             )
 
@@ -186,6 +193,41 @@ private fun DestinationContent(
                 onClearQueue = { musicPlayer.clearQueue() },
                 onBack = { navigator.pop() },
             )
+
+            AppDestination.Playlists -> {
+                val list by playlists.allPlaylists.collectAsState()
+                PlaylistsPage(
+                    playlists = list,
+                    onPlaylistClick = { id ->
+                        navigator.push(AppDestination.PlaylistDetail(id))
+                    },
+                    onCreate = { name -> playlists.create(name) },
+                    onBack = { navigator.pop() },
+                )
+            }
+
+            is AppDestination.PlaylistDetail -> {
+                var playlist by remember(dest.playlistId) {
+                    mutableStateOf<com.offlineplaya.shared.domain.model.Playlist?>(null)
+                }
+                LaunchedEffect(dest.playlistId) {
+                    playlist = playlists.findPlaylist(dest.playlistId)
+                }
+                val tracks by remember(dest.playlistId) {
+                    playlists.tracksIn(dest.playlistId)
+                }.collectAsState(initial = emptyList<Track>())
+
+                PlaylistDetailPage(
+                    playlistName = playlist?.name ?: "Loading…",
+                    tracks = tracks,
+                    onPlayTracks = onPlayTracks,
+                    onDelete = {
+                        playlists.delete(dest.playlistId)
+                        navigator.pop()
+                    },
+                    onBack = { navigator.pop() },
+                )
+            }
 
             AppDestination.LibraryArtists -> {
                 val artists by library.allArtists.collectAsState()

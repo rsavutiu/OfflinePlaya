@@ -20,6 +20,7 @@ import com.offlineplaya.shared.domain.repository.TrackRepository
 import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
+import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import kotlinx.coroutines.CoroutineScope
@@ -91,6 +92,14 @@ val sharedModule: Module = module {
             albums = get(),
             folders = get(),
             tracks = get(),
+            scope = get(),
+        )
+    }
+
+    // Playlist CRUD facade.
+    single {
+        PlaylistStateHolder(
+            playlists = get(),
             scope = get(),
         )
     }
