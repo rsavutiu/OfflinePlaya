@@ -10,6 +10,7 @@ package com.offlineplaya.shared.presentation.navigation
 sealed interface AppDestination {
     data object Home : AppDestination
     data object Settings : AppDestination
+    data object NowPlaying : AppDestination
 
     data object LibraryArtists : AppDestination
     data class LibraryArtistDetail(val artistId: Long) : AppDestination

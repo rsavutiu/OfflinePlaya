@@ -22,6 +22,7 @@ fun LibraryFolderDetailPage(
     subfolders: List<Folder>,
     tracks: List<Track>,
     onFolderClick: (Long) -> Unit,
+    onPlayTracks: (List<Track>, Int) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -43,6 +44,11 @@ fun LibraryFolderDetailPage(
     selectedTrack?.let { track ->
         TrackDetailsSheet(
             track = track,
+            onPlay = {
+                val index = tracks.indexOf(track).coerceAtLeast(0)
+                onPlayTracks(tracks, index)
+                selectedTrack = null
+            },
             onDismiss = { selectedTrack = null },
         )
     }
@@ -60,6 +66,7 @@ private fun LibraryFolderDetailPagePreview() {
             ),
             tracks = emptyList(),
             onFolderClick = {},
+            onPlayTracks = { _, _ -> },
             onBack = {},
         )
     }

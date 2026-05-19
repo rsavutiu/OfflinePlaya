@@ -1,6 +1,7 @@
 package com.offlineplaya.android
 
 import android.app.Application
+import com.offlineplaya.android.di.appPlayerModule
 import com.offlineplaya.shared.di.androidModule
 import com.offlineplaya.shared.di.initKoin
 import org.koin.android.ext.koin.androidContext
@@ -15,7 +16,7 @@ class OfflinePlayaApp : Application() {
                 androidLogger(Level.INFO)
                 androidContext(this@OfflinePlayaApp)
             },
-            platformModules = listOf(androidModule),
+            platformModules = listOf(androidModule, appPlayerModule),
         )
     }
 }

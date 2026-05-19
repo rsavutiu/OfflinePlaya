@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.documentfile.provider.DocumentFile
 import com.offlineplaya.android.picker.OpenDocumentTreeContract
+import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
@@ -37,6 +38,7 @@ private fun AndroidApp() {
     val themeStateHolder: ThemeStateHolder = koinInject()
     val coordinator: LibrarySyncCoordinator = koinInject()
     val library: LibraryStateHolder = koinInject()
+    val musicPlayer: MusicPlayer = koinInject()
 
     val themePreferences by themeStateHolder.preferences.collectAsState()
     val syncStatus by coordinator.status.collectAsState()
@@ -66,6 +68,7 @@ private fun AndroidApp() {
     App(
         navigator = navigator,
         library = library,
+        musicPlayer = musicPlayer,
         themePreferences = themePreferences,
         syncStatus = syncStatus,
         trackCount = trackCount,

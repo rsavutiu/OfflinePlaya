@@ -19,6 +19,7 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 fun LibraryAlbumDetailPage(
     albumTitle: String,
     tracks: List<Track>,
+    onPlayTracks: (List<Track>, Int) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -38,6 +39,11 @@ fun LibraryAlbumDetailPage(
     selectedTrack?.let { track ->
         TrackDetailsSheet(
             track = track,
+            onPlay = {
+                val index = tracks.indexOf(track).coerceAtLeast(0)
+                onPlayTracks(tracks, index)
+                selectedTrack = null
+            },
             onDismiss = { selectedTrack = null },
         )
     }
@@ -54,6 +60,7 @@ private fun LibraryAlbumDetailPagePreview() {
                 sampleTrack(2, 2, "Even Flow"),
                 sampleTrack(3, 3, "Alive"),
             ),
+            onPlayTracks = { _, _ -> },
             onBack = {},
         )
     }

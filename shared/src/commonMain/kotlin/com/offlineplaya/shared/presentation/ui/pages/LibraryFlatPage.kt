@@ -18,6 +18,7 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 @Composable
 fun LibraryFlatPage(
     tracks: List<Track>,
+    onPlayTracks: (List<Track>, Int) -> Unit,
     onTabSelected: (LibraryTab) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -39,6 +40,11 @@ fun LibraryFlatPage(
     selectedTrack?.let { track ->
         TrackDetailsSheet(
             track = track,
+            onPlay = {
+                val index = tracks.indexOf(track).coerceAtLeast(0)
+                onPlayTracks(tracks, index)
+                selectedTrack = null
+            },
             onDismiss = { selectedTrack = null },
         )
     }
@@ -54,6 +60,7 @@ private fun LibraryFlatPagePreview() {
                 sampleFlatTrack(2, "Boards of Canada", "Roygbiv"),
                 sampleFlatTrack(3, "Pearl Jam", "Once"),
             ),
+            onPlayTracks = { _, _ -> },
             onTabSelected = {},
             onBack = {},
         )
@@ -64,7 +71,12 @@ private fun LibraryFlatPagePreview() {
 @Composable
 private fun LibraryFlatPageEmptyPreview() {
     PreviewTheme(darkTheme = true) {
-        LibraryFlatPage(tracks = emptyList(), onTabSelected = {}, onBack = {})
+        LibraryFlatPage(
+            tracks = emptyList(),
+            onPlayTracks = { _, _ -> },
+            onTabSelected = {},
+            onBack = {},
+        )
     }
 }
 

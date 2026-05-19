@@ -1,0 +1,128 @@
+package com.offlineplaya.shared.presentation.ui.molecules
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.SkipNext
+import androidx.compose.material.icons.filled.SkipPrevious
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+
+/**
+ * Prev / Play-Pause / Next button trio. Size and spacing are tuned for the
+ * MiniPlayer; the full NowPlayingPage uses [PlaybackControlsLarge].
+ */
+@Composable
+fun PlaybackControls(
+    isPlaying: Boolean,
+    onPlayPause: () -> Unit,
+    onPrevious: () -> Unit,
+    onNext: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        IconButton(onClick = onPrevious) {
+            Icon(
+                imageVector = Icons.Default.SkipPrevious,
+                contentDescription = "Previous",
+                tint = MaterialTheme.colorScheme.onSurface,
+            )
+        }
+        IconButton(onClick = onPlayPause) {
+            Icon(
+                imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
+                contentDescription = if (isPlaying) "Pause" else "Play",
+                tint = MaterialTheme.colorScheme.onSurface,
+            )
+        }
+        IconButton(onClick = onNext) {
+            Icon(
+                imageVector = Icons.Default.SkipNext,
+                contentDescription = "Next",
+                tint = MaterialTheme.colorScheme.onSurface,
+            )
+        }
+    }
+}
+
+/** Larger variant for the NowPlayingPage. */
+@Composable
+fun PlaybackControlsLarge(
+    isPlaying: Boolean,
+    onPlayPause: () -> Unit,
+    onPrevious: () -> Unit,
+    onNext: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        IconButton(onClick = onPrevious, modifier = Modifier.size(56.dp)) {
+            Icon(
+                imageVector = Icons.Default.SkipPrevious,
+                contentDescription = "Previous",
+                modifier = Modifier.size(40.dp),
+                tint = MaterialTheme.colorScheme.onSurface,
+            )
+        }
+        IconButton(onClick = onPlayPause, modifier = Modifier.size(72.dp)) {
+            Icon(
+                imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
+                contentDescription = if (isPlaying) "Pause" else "Play",
+                modifier = Modifier.size(56.dp),
+                tint = MaterialTheme.colorScheme.primary,
+            )
+        }
+        IconButton(onClick = onNext, modifier = Modifier.size(56.dp)) {
+            Icon(
+                imageVector = Icons.Default.SkipNext,
+                contentDescription = "Next",
+                modifier = Modifier.size(40.dp),
+                tint = MaterialTheme.colorScheme.onSurface,
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun PlaybackControlsPlayingPreview() {
+    PreviewTheme {
+        Surface { PlaybackControls(isPlaying = true, onPlayPause = {}, onPrevious = {}, onNext = {}) }
+    }
+}
+
+@Preview
+@Composable
+private fun PlaybackControlsPausedPreview() {
+    PreviewTheme(darkTheme = true) {
+        Surface { PlaybackControls(isPlaying = false, onPlayPause = {}, onPrevious = {}, onNext = {}) }
+    }
+}
+
+@Preview
+@Composable
+private fun PlaybackControlsLargePreview() {
+    PreviewTheme {
+        Surface {
+            PlaybackControlsLarge(isPlaying = true, onPlayPause = {}, onPrevious = {}, onNext = {})
+        }
+    }
+}

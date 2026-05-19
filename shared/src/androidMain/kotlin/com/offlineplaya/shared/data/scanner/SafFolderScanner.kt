@@ -10,6 +10,7 @@ import com.offlineplaya.shared.domain.scanner.ScanResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import androidx.core.net.toUri
 
 /**
  * [FolderScanner] backed by SAF's [DocumentsContract] API. Uses the bulk
@@ -25,7 +26,7 @@ internal class SafFolderScanner(
 ) : FolderScanner {
 
     override suspend fun scan(treeUri: String): ScanResult = withContext(ioDispatcher) {
-        val uri = Uri.parse(treeUri)
+        val uri = treeUri.toUri()
         val rootDocId = DocumentsContract.getTreeDocumentId(uri)
 
         val folders = mutableListOf<AudioFolder>()

@@ -1,8 +1,11 @@
 package com.offlineplaya.shared.presentation.ui.organisms
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -20,14 +23,14 @@ import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 /**
- * Bottom sheet showing track metadata. Playback wires in here in Phase 3; for
- * now this is a read-only details view triggered by tapping a track in the
- * library.
+ * Bottom sheet showing track metadata with a Play action. The caller decides
+ * what queue gets set (typically the parent list — album/folder/flat).
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrackDetailsSheet(
     track: Track,
+    onPlay: () -> Unit,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -37,7 +40,7 @@ fun TrackDetailsSheet(
         sheetState = sheetState,
         modifier = modifier,
     ) {
-        TrackDetailsContent(track)
+        TrackDetailsContent(track = track, onPlay = onPlay)
     }
 }
 
@@ -46,6 +49,7 @@ fun TrackDetailsSheet(
 fun TrackDetailsContent(
     track: Track,
     modifier: Modifier = Modifier,
+    onPlay: (() -> Unit)? = null,
 ) {
     Column(
         modifier = modifier
@@ -62,6 +66,17 @@ fun TrackDetailsContent(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(top = 4.dp, bottom = 16.dp),
         )
+
+        if (onPlay != null) {
+            Button(
+                onClick = onPlay,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text("Play")
+            }
+            Spacer(modifier = Modifier.height(20.dp))
+        }
+
         DetailRow("Duration", track.durationMs.formatDuration())
         track.year?.let { DetailRow("Year", it.toString()) }
         track.genre?.let { DetailRow("Genre", it) }
@@ -69,12 +84,6 @@ fun TrackDetailsContent(
         track.bitrate?.let { DetailRow("Bitrate", "${it / 1000} kbps") }
         DetailRow("Path", track.relativePath)
         DetailRow("Status", track.scanStatus.name.lowercase().replaceFirstChar { it.titlecase() })
-        Text(
-            text = "Playback arrives in the next phase.",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.outline,
-            modifier = Modifier.padding(top = 16.dp),
-        )
     }
 }
 
