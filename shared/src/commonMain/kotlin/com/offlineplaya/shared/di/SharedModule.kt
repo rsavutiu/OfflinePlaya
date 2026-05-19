@@ -7,6 +7,7 @@ import com.offlineplaya.shared.data.repository.SqlFolderRepository
 import com.offlineplaya.shared.data.repository.SqlManagedTreeRootRepository
 import com.offlineplaya.shared.data.repository.SqlPlaylistRepository
 import com.offlineplaya.shared.data.repository.SqlQueueRepository
+import com.offlineplaya.shared.data.repository.SqlSettingsRepository
 import com.offlineplaya.shared.data.repository.SqlTrackRepository
 import com.offlineplaya.shared.domain.repository.AlbumRepository
 import com.offlineplaya.shared.domain.repository.ArtistRepository
@@ -14,8 +15,10 @@ import com.offlineplaya.shared.domain.repository.FolderRepository
 import com.offlineplaya.shared.domain.repository.ManagedTreeRootRepository
 import com.offlineplaya.shared.domain.repository.PlaylistRepository
 import com.offlineplaya.shared.domain.repository.QueueRepository
+import com.offlineplaya.shared.domain.repository.SettingsRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
 import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
+import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +39,7 @@ val sharedModule: Module = module {
     single { SqlPlaylistRepository(get()) } bind PlaylistRepository::class
     single { SqlQueueRepository(get()) } bind QueueRepository::class
     single { SqlManagedTreeRootRepository(get()) } bind ManagedTreeRootRepository::class
+    single { SqlSettingsRepository(get()) } bind SettingsRepository::class
 
     // Use cases. Scanner / MetadataReader bindings live in the platform module
     // (androidModule for Android; tests inject fakes directly).
@@ -63,6 +67,14 @@ val sharedModule: Module = module {
         LibrarySyncCoordinator(
             syncUseCase = get(),
             managedRoots = get(),
+            scope = get(),
+        )
+    }
+
+    // Theme state holder reads/writes ThemePreferences and exposes a hot flow.
+    single {
+        ThemeStateHolder(
+            settings = get(),
             scope = get(),
         )
     }

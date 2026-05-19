@@ -10,8 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.ui.atoms.AppCaption
 import com.offlineplaya.shared.presentation.ui.atoms.AppHeadline
-import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
 import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
+import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 /**
  * Vertical pair of headline + caption used for empty/placeholder screens.
@@ -49,7 +50,7 @@ private fun PlaceholderBannerPreview() {
 @Preview
 @Composable
 private fun PlaceholderBannerDarkPreview() {
-    OfflinePlayaTheme(darkTheme = true) {
+    PreviewTheme(darkTheme = true) {
         Surface {
             PlaceholderBanner(
                 title = "OfflinePlaya",
