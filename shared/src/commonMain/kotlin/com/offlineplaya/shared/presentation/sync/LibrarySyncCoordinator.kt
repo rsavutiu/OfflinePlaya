@@ -64,6 +64,22 @@ class LibrarySyncCoordinator(
     }
 
     /**
+     * Re-scan every managed root, but only if at least one is registered.
+     * Used at app launch so empty installs don't briefly flip the status
+     * indicator into Scanning / Completed for no reason.
+     */
+    fun resyncAllIfHasRoots(): Job = scope.launch {
+        if (managedRoots.getAll().isEmpty()) return@launch
+        try {
+            _status.value = SyncStatus.Scanning(treeUri = "<all>")
+            val report = syncUseCase.syncAll()
+            _status.value = SyncStatus.Completed(report)
+        } catch (t: Throwable) {
+            _status.value = SyncStatus.Failed(t.message ?: "Unknown error")
+        }
+    }
+
+    /**
      * Forget a managed tree URI. The scanned tracks/folders linger in the DB
      * — Phase-6-of-Phase-6 cascading cleanup can wipe them on demand. For
      * now this is just "stop tracking this root".

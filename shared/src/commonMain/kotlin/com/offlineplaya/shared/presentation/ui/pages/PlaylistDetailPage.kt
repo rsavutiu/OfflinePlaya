@@ -3,6 +3,7 @@ package com.offlineplaya.shared.presentation.ui.pages
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -17,15 +18,16 @@ import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
+import com.offlineplaya.shared.presentation.ui.molecules.PlaylistNameDialog
 import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
 import com.offlineplaya.shared.presentation.ui.organisms.TrackList
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 /**
- * Single-playlist detail: header has Play-all + Delete actions, body is the
- * track list. Tapping a track opens the details sheet (Play sets the queue
- * to the entire playlist from that track).
+ * Single-playlist detail: top bar has Play-all + Rename + Delete actions,
+ * body is the track list. Tapping a track opens the details sheet (Play
+ * sets the queue to the entire playlist from that track).
  */
 @Composable
 fun PlaylistDetailPage(
@@ -36,11 +38,13 @@ fun PlaylistDetailPage(
     onPlayNext: (Track) -> Unit,
     onAddToQueue: (Track) -> Unit,
     onAddToPlaylist: (Track, Long) -> Unit,
+    onRename: (String) -> Unit,
     onDelete: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var selectedTrack by remember { mutableStateOf<Track?>(null) }
+    var showRenameDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = modifier,
@@ -54,6 +58,9 @@ fun PlaylistDetailPage(
                         IconButton(onClick = { onPlayTracks(tracks, 0) }) {
                             Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "Play all")
                         }
+                    }
+                    IconButton(onClick = { showRenameDialog = true }) {
+                        Icon(imageVector = Icons.Default.Edit, contentDescription = "Rename playlist")
                     }
                     IconButton(onClick = onDelete) {
                         Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete playlist")
@@ -84,6 +91,16 @@ fun PlaylistDetailPage(
             onDismiss = { selectedTrack = null },
         )
     }
+
+    if (showRenameDialog) {
+        PlaylistNameDialog(
+            title = "Rename playlist",
+            confirmLabel = "Rename",
+            initialName = playlistName,
+            onConfirm = onRename,
+            onDismiss = { showRenameDialog = false },
+        )
+    }
 }
 
 @Preview
@@ -99,6 +116,7 @@ private fun PlaylistDetailPagePopulatedPreview() {
             availablePlaylists = emptyList(),
             onPlayTracks = { _, _ -> },
             onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
+            onRename = {},
             onDelete = {},
             onBack = {},
         )
@@ -115,6 +133,7 @@ private fun PlaylistDetailPageEmptyPreview() {
             availablePlaylists = emptyList(),
             onPlayTracks = { _, _ -> },
             onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
+            onRename = {},
             onDelete = {},
             onBack = {},
         )

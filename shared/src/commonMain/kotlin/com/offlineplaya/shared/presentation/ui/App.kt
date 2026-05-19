@@ -269,6 +269,11 @@ private fun DestinationContent(
                     onPlayNext = onPlayNext,
                     onAddToQueue = onAddToQueue,
                     onAddToPlaylist = onAddToPlaylist,
+                    onRename = { newName ->
+                        playlists.rename(dest.playlistId, newName)
+                        // Re-pull so the title bar refreshes without a round-trip pop.
+                        playlist = playlist?.copy(name = newName)
+                    },
                     onDelete = {
                         playlists.delete(dest.playlistId)
                         navigator.pop()
