@@ -2,6 +2,7 @@ package com.offlineplaya.android
 
 import android.app.Application
 import com.offlineplaya.android.di.appPlayerModule
+import com.offlineplaya.shared.data.image.installTrackArtImageLoader
 import com.offlineplaya.shared.di.androidModule
 import com.offlineplaya.shared.di.initKoin
 import org.koin.android.ext.koin.androidContext
@@ -11,6 +12,7 @@ import org.koin.core.logger.Level
 class OfflinePlayaApp : Application() {
     override fun onCreate() {
         super.onCreate()
+        installTrackArtImageLoader(this)
         initKoin(
             appDeclaration = {
                 androidLogger(Level.INFO)

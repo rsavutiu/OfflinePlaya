@@ -31,6 +31,7 @@ import com.offlineplaya.shared.domain.model.PlaybackState
 import com.offlineplaya.shared.domain.model.RepeatMode
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
 import com.offlineplaya.shared.presentation.ui.atoms.AppCaption
 import com.offlineplaya.shared.presentation.ui.atoms.AppHeadline
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
@@ -96,7 +97,7 @@ fun NowPlayingPage(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
-            ArtPanel()
+            ArtPanel(track = track)
             TrackHeadline(track = track)
             SeekRow(state = state, onSeek = onSeek)
             Row(
@@ -118,22 +119,20 @@ fun NowPlayingPage(
 }
 
 @Composable
-private fun ArtPanel(modifier: Modifier = Modifier) {
-    // Album art placeholder — Coil-backed real art lands in Phase 6 polish.
-    Surface(
+private fun ArtPanel(track: Track, modifier: Modifier = Modifier) {
+    // BoxWithConstraints lets the thumb fill the available square panel; the
+    // atom handles loading + fallback rendering uniformly.
+    androidx.compose.foundation.layout.BoxWithConstraints(
         modifier = modifier
             .fillMaxWidth()
             .aspectRatio(1f),
-        shape = RoundedCornerShape(16.dp),
-        color = MaterialTheme.colorScheme.tertiaryContainer,
     ) {
-        Box(contentAlignment = Alignment.Center) {
-            Text(
-                text = "♫",
-                style = MaterialTheme.typography.displayLarge,
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
-            )
-        }
+        AlbumArtThumb(
+            track = track,
+            size = maxWidth,
+            cornerRadius = 16.dp,
+            glyphStyle = MaterialTheme.typography.displayLarge,
+        )
     }
 }
 
