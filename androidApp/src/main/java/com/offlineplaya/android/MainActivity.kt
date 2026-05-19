@@ -75,6 +75,7 @@ private fun AndroidApp() {
         navigator = navigator,
         library = library,
         playlists = playlists,
+        syncCoordinator = coordinator,
         musicPlayer = musicPlayer,
         themePreferences = themePreferences,
         syncStatus = syncStatus,

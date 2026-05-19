@@ -1,9 +1,11 @@
 package com.offlineplaya.shared.presentation.sync
 
+import com.offlineplaya.shared.domain.model.ManagedTreeRoot
 import com.offlineplaya.shared.domain.repository.ManagedTreeRootRepository
 import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,6 +27,14 @@ class LibrarySyncCoordinator(
 ) {
     private val _status = MutableStateFlow<SyncStatus>(SyncStatus.Idle)
     val status: StateFlow<SyncStatus> = _status.asStateFlow()
+
+    /**
+     * Every tree URI the user has granted us access to. Cold Flow — callers
+     * collectAsState(initial = emptyList()) when they want to render the
+     * list. Kept cold so the coordinator scope doesn't accumulate sentinel
+     * coroutines that outlive the test fixtures.
+     */
+    val managedRootsFlow: Flow<List<ManagedTreeRoot>> = managedRoots.observeAll()
 
     /**
      * Register a newly-picked tree URI as a managed root and immediately sync
@@ -51,5 +61,14 @@ class LibrarySyncCoordinator(
         } catch (t: Throwable) {
             _status.value = SyncStatus.Failed(t.message ?: "Unknown error")
         }
+    }
+
+    /**
+     * Forget a managed tree URI. The scanned tracks/folders linger in the DB
+     * — Phase-6-of-Phase-6 cascading cleanup can wipe them on demand. For
+     * now this is just "stop tracking this root".
+     */
+    fun removeManagedRoot(treeUri: String): Job = scope.launch {
+        managedRoots.remove(treeUri)
     }
 }

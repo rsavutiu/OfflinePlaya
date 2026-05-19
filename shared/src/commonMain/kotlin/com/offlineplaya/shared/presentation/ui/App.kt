@@ -60,6 +60,7 @@ fun App(
     navigator: AppNavigator,
     library: LibraryStateHolder,
     playlists: PlaylistStateHolder,
+    syncCoordinator: com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator,
     musicPlayer: MusicPlayer,
     themePreferences: ThemePreferences,
     syncStatus: SyncStatus,
@@ -122,6 +123,7 @@ fun App(
                     library = library,
                     playlists = playlists,
                     availablePlaylists = availablePlaylists,
+                    syncCoordinator = syncCoordinator,
                     musicPlayer = musicPlayer,
                     playback = playback,
                     themePreferences = themePreferences,
@@ -149,6 +151,7 @@ private fun DestinationContent(
     library: LibraryStateHolder,
     playlists: PlaylistStateHolder,
     availablePlaylists: List<com.offlineplaya.shared.domain.model.Playlist>,
+    syncCoordinator: com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator,
     musicPlayer: MusicPlayer,
     playback: PlaybackState,
     themePreferences: ThemePreferences,
@@ -183,13 +186,21 @@ private fun DestinationContent(
                 onOpenSettings = { navigator.push(AppDestination.Settings) },
             )
 
-            AppDestination.Settings -> SettingsPage(
-                preferences = themePreferences,
-                onColorModeChange = onColorModeChange,
-                onDynamicColorChange = onDynamicColorChange,
-                onBack = { navigator.pop() },
-                dynamicColorSupported = dynamicColorSupported,
-            )
+            AppDestination.Settings -> {
+                val managedRoots by syncCoordinator.managedRootsFlow
+                    .collectAsState(initial = emptyList<com.offlineplaya.shared.domain.model.ManagedTreeRoot>())
+                SettingsPage(
+                    preferences = themePreferences,
+                    managedRoots = managedRoots,
+                    isScanning = syncStatus is SyncStatus.Scanning,
+                    onColorModeChange = onColorModeChange,
+                    onDynamicColorChange = onDynamicColorChange,
+                    onRescanAll = { syncCoordinator.resyncAll() },
+                    onRemoveManagedRoot = { uri -> syncCoordinator.removeManagedRoot(uri) },
+                    onBack = { navigator.pop() },
+                    dynamicColorSupported = dynamicColorSupported,
+                )
+            }
 
             AppDestination.NowPlaying -> NowPlayingPage(
                 state = playback,
