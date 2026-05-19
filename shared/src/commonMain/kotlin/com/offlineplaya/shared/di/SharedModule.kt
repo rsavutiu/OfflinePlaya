@@ -16,6 +16,10 @@ import com.offlineplaya.shared.domain.repository.PlaylistRepository
 import com.offlineplaya.shared.domain.repository.QueueRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
 import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
+import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
@@ -44,6 +48,22 @@ val sharedModule: Module = module {
             tracks = get(),
             scanner = get(),
             metadataReader = get(),
+        )
+    }
+
+    // Application-scoped CoroutineScope for fire-and-forget background work
+    // (sync, future re-scan). SupervisorJob so a single failure doesn't kill it.
+    single<CoroutineScope> {
+        CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    }
+
+    // Presentation-layer coordinator: bridges SAF picker results into the use
+    // case and exposes a SyncStatus flow for the UI.
+    single {
+        LibrarySyncCoordinator(
+            syncUseCase = get(),
+            managedRoots = get(),
+            scope = get(),
         )
     }
 }
