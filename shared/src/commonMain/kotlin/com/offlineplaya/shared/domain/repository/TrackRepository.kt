@@ -16,6 +16,13 @@ interface TrackRepository {
     suspend fun findByDocumentUri(uri: String): Track?
     suspend fun findPending(limit: Int): List<Track>
 
+    /**
+     * Fuzzy search across title / artist / album. The query string is
+     * substring-matched (case-insensitive); only `scanned` tracks are
+     * returned. Results are capped at [limit] for UI predictability.
+     */
+    suspend fun search(query: String, limit: Int = 200): List<Track>
+
     suspend fun insertFile(
         documentUri: String,
         treeUri: String,

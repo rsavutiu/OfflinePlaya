@@ -140,4 +140,43 @@ class SqlTrackRepositoryTest {
         repo.deleteAll()
         assertEquals(0L, repo.count())
     }
+
+    @Test
+    fun `search matches title artist or album case-insensitively and only on SCANNED tracks`() = runTest {
+        val repo = newRepository()
+        val a = repo.insertFile("u-a", "t", "p", "a.mp3", 0, 0, null)
+        val b = repo.insertFile("u-b", "t", "p", "b.mp3", 0, 0, null)
+        val c = repo.insertFile("u-c", "t", "p", "c.mp3", 0, 0, null)
+        val d = repo.insertFile("u-d", "t", "p", "d.mp3", 0, 0, null)
+        // a: matches title; b: matches artist; c: matches album; d: pending — excluded
+        repo.updateMetadata(repo.findById(a)!!.copy(title = "Tangerine Dream", artistName = "Tangerine", albumName = "X"))
+        repo.updateMetadata(repo.findById(b)!!.copy(title = "X", artistName = "TANGERINE", albumName = "Y"))
+        repo.updateMetadata(repo.findById(c)!!.copy(title = "X", artistName = "Y", albumName = "tangerine Z"))
+        // d stays pending — search must skip it
+
+        val hits = repo.search("tangerine")
+        assertEquals(3, hits.size, "should match scanned rows in title/artist/album, ignore pending")
+        // d's documentUri is not in the hit set
+        assertEquals(false, hits.any { it.documentUri == "u-d" })
+    }
+
+    @Test
+    fun `search returns empty list for blank input`() = runTest {
+        val repo = newRepository()
+        val id = repo.insertFile("u", "t", "p", "a.mp3", 0, 0, null)
+        repo.updateMetadata(repo.findById(id)!!.copy(title = "Anything"))
+
+        assertEquals(emptyList(), repo.search(""))
+        assertEquals(emptyList(), repo.search("   "))
+    }
+
+    @Test
+    fun `search respects the limit parameter`() = runTest {
+        val repo = newRepository()
+        repeat(5) { i ->
+            val id = repo.insertFile("u-$i", "t", "p", "$i.mp3", 0, 0, null)
+            repo.updateMetadata(repo.findById(id)!!.copy(title = "Match $i"))
+        }
+        assertEquals(2, repo.search("Match", limit = 2).size)
+    }
 }

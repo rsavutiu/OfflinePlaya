@@ -40,6 +40,17 @@ CREATE INDEX idx_track_relative_path ON Track(relative_path);
 selectAll:
 SELECT * FROM Track ORDER BY title COLLATE NOCASE;
 
+search:
+SELECT * FROM Track
+WHERE scan_status = 'scanned'
+  AND (
+       title LIKE ? COLLATE NOCASE
+    OR artist_name LIKE ? COLLATE NOCASE
+    OR album_name LIKE ? COLLATE NOCASE
+  )
+ORDER BY title COLLATE NOCASE
+LIMIT ?;
+
 selectById:
 SELECT * FROM Track WHERE id = ?;
 

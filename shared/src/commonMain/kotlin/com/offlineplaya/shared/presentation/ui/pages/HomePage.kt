@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -37,6 +38,7 @@ fun HomePage(
     onPickFolder: () -> Unit,
     onOpenLibrary: () -> Unit,
     onOpenPlaylists: () -> Unit,
+    onOpenSearch: () -> Unit,
     onOpenSettings: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -48,6 +50,12 @@ fun HomePage(
             AppTopBar(
                 title = "OfflinePlaya",
                 actions = {
+                    IconButton(onClick = onOpenSearch) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Search",
+                        )
+                    }
                     IconButton(onClick = onOpenSettings) {
                         Icon(
                             imageVector = Icons.Outlined.Settings,
@@ -100,7 +108,8 @@ private fun HomePageIdlePreview() {
         HomePage(
             status = SyncStatus.Idle,
             trackCount = 0,
-            onPickFolder = {}, onOpenLibrary = {}, onOpenPlaylists = {}, onOpenSettings = {},
+            onPickFolder = {}, onOpenLibrary = {}, onOpenPlaylists = {},
+            onOpenSearch = {}, onOpenSettings = {},
         )
     }
 }
@@ -112,7 +121,8 @@ private fun HomePageScanningPreview() {
         HomePage(
             status = SyncStatus.Scanning("content://tree/root"),
             trackCount = 0,
-            onPickFolder = {}, onOpenLibrary = {}, onOpenPlaylists = {}, onOpenSettings = {},
+            onPickFolder = {}, onOpenLibrary = {}, onOpenPlaylists = {},
+            onOpenSearch = {}, onOpenSettings = {},
         )
     }
 }
@@ -126,7 +136,8 @@ private fun HomePageCompletedPreview() {
                 SyncReport(foldersUpserted = 6, tracksDiscovered = 87, tracksScanned = 87, tracksFailed = 0),
             ),
             trackCount = 87,
-            onPickFolder = {}, onOpenLibrary = {}, onOpenPlaylists = {}, onOpenSettings = {},
+            onPickFolder = {}, onOpenLibrary = {}, onOpenPlaylists = {},
+            onOpenSearch = {}, onOpenSettings = {},
         )
     }
 }
@@ -138,7 +149,8 @@ private fun HomePageFailedPreview() {
         HomePage(
             status = SyncStatus.Failed("permission denied"),
             trackCount = 142,
-            onPickFolder = {}, onOpenLibrary = {}, onOpenPlaylists = {}, onOpenSettings = {},
+            onPickFolder = {}, onOpenLibrary = {}, onOpenPlaylists = {},
+            onOpenSearch = {}, onOpenSettings = {},
         )
     }
 }
@@ -152,7 +164,8 @@ private fun HomePageCompletedDarkPreview() {
                 SyncReport(foldersUpserted = 6, tracksDiscovered = 87, tracksScanned = 85, tracksFailed = 2),
             ),
             trackCount = 85,
-            onPickFolder = {}, onOpenLibrary = {}, onOpenPlaylists = {}, onOpenSettings = {},
+            onPickFolder = {}, onOpenLibrary = {}, onOpenPlaylists = {},
+            onOpenSearch = {}, onOpenSettings = {},
         )
     }
 }

@@ -55,6 +55,15 @@ internal class SqlTrackRepository(
         queries.selectPending(limit.toLong()).executeAsList().map { it.toDomain() }
     }
 
+    override suspend fun search(query: String, limit: Int): List<Track> = withContext(ioDispatcher) {
+        val trimmed = query.trim()
+        if (trimmed.isEmpty()) return@withContext emptyList()
+        val pattern = "%$trimmed%"
+        queries.search(pattern, pattern, pattern, limit.toLong())
+            .executeAsList()
+            .map { it.toDomain() }
+    }
+
     override suspend fun insertFile(
         documentUri: String,
         treeUri: String,

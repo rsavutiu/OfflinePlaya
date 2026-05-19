@@ -45,6 +45,7 @@ import com.offlineplaya.shared.presentation.ui.pages.NowPlayingPage
 import com.offlineplaya.shared.presentation.ui.pages.PlaylistDetailPage
 import com.offlineplaya.shared.presentation.ui.pages.PlaylistsPage
 import com.offlineplaya.shared.presentation.ui.pages.QueuePage
+import com.offlineplaya.shared.presentation.ui.pages.SearchPage
 import com.offlineplaya.shared.presentation.ui.pages.SettingsPage
 import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
 
@@ -178,6 +179,7 @@ private fun DestinationContent(
                 onPickFolder = onPickFolder,
                 onOpenLibrary = { navigator.push(AppDestination.LibraryArtists) },
                 onOpenPlaylists = { navigator.push(AppDestination.Playlists) },
+                onOpenSearch = { navigator.push(AppDestination.Search) },
                 onOpenSettings = { navigator.push(AppDestination.Settings) },
             )
 
@@ -200,6 +202,22 @@ private fun DestinationContent(
                 onOpenQueue = { navigator.push(AppDestination.Queue) },
                 onBack = { navigator.pop() },
             )
+
+            AppDestination.Search -> {
+                val query by library.searchQuery.collectAsState()
+                val results by library.searchResults.collectAsState()
+                SearchPage(
+                    query = query,
+                    results = results,
+                    availablePlaylists = availablePlaylists,
+                    onQueryChange = { library.setSearchQuery(it) },
+                    onPlayTracks = onPlayTracks,
+                    onPlayNext = onPlayNext,
+                    onAddToQueue = onAddToQueue,
+                    onAddToPlaylist = onAddToPlaylist,
+                    onBack = { navigator.pop() },
+                )
+            }
 
             AppDestination.Queue -> QueuePage(
                 state = playback,

@@ -16,6 +16,8 @@ sealed interface AppDestination {
     data object Playlists : AppDestination
     data class PlaylistDetail(val playlistId: Long) : AppDestination
 
+    data object Search : AppDestination
+
     data object LibraryArtists : AppDestination
     data class LibraryArtistDetail(val artistId: Long) : AppDestination
     data class LibraryAlbumDetail(val albumId: Long) : AppDestination
