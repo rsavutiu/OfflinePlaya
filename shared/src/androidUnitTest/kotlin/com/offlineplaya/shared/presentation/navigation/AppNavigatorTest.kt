@@ -49,6 +49,21 @@ class AppNavigatorTest {
     }
 
     @Test
+    fun `swapTop replaces the top destination but preserves the underlying stack`() {
+        val nav = AppNavigator()
+        nav.push(AppDestination.LibraryArtists)
+        // Home, LibraryArtists
+
+        nav.swapTop(AppDestination.LibraryFolderRoots)
+        // Home, LibraryFolderRoots — back still goes to Home
+        assertEquals(AppDestination.LibraryFolderRoots, nav.current)
+        assertTrue(nav.canGoBack)
+
+        assertTrue(nav.pop())
+        assertEquals(AppDestination.Home, nav.current)
+    }
+
+    @Test
     fun `data class destinations are equal by value`() {
         val a = AppDestination.LibraryArtistDetail(1L)
         val b = AppDestination.LibraryArtistDetail(1L)

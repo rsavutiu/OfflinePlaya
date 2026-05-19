@@ -1,31 +1,29 @@
 package com.offlineplaya.shared.presentation.ui.pages
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.offlineplaya.shared.domain.model.Artist
-import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
+import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
 import com.offlineplaya.shared.presentation.ui.organisms.ArtistList
 import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.templates.LibraryScaffold
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 @Composable
 fun LibraryArtistsPage(
     artists: List<Artist>,
     onArtistClick: (Long) -> Unit,
+    onTabSelected: (LibraryTab) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Scaffold(
+    LibraryScaffold(
+        selectedTab = LibraryTab.ARTISTS,
+        onTabSelected = onTabSelected,
+        onBack = onBack,
         modifier = modifier,
-        topBar = { AppTopBar(title = "Artists", onBack = onBack) },
-    ) { padding ->
-        ArtistList(
-            artists = artists,
-            onArtistClick = onArtistClick,
-            modifier = Modifier.padding(padding),
-        )
+    ) {
+        ArtistList(artists = artists, onArtistClick = onArtistClick)
     }
 }
 
@@ -39,6 +37,7 @@ private fun LibraryArtistsPagePopulatedPreview() {
                 Artist(2, "Pearl Jam", albumCount = 11, trackCount = 142),
             ),
             onArtistClick = {},
+            onTabSelected = {},
             onBack = {},
         )
     }
@@ -51,6 +50,7 @@ private fun LibraryArtistsPageEmptyPreview() {
         LibraryArtistsPage(
             artists = emptyList(),
             onArtistClick = {},
+            onTabSelected = {},
             onBack = {},
         )
     }

@@ -42,4 +42,13 @@ class AppNavigator(
     fun replaceWith(destination: AppDestination) {
         _stack.value = listOf(destination)
     }
+
+    /**
+     * Replace just the top destination without touching the rest of the stack.
+     * Used by tab strips: switching tabs swaps the current top-level view, but
+     * Back should still pop to whatever was below (e.g. Home).
+     */
+    fun swapTop(destination: AppDestination) {
+        _stack.update { stack -> stack.dropLast(1) + destination }
+    }
 }

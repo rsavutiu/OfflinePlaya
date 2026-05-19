@@ -2,9 +2,11 @@ package com.offlineplaya.shared.presentation.library
 
 import com.offlineplaya.shared.domain.model.Album
 import com.offlineplaya.shared.domain.model.Artist
+import com.offlineplaya.shared.domain.model.Folder
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.domain.repository.AlbumRepository
 import com.offlineplaya.shared.domain.repository.ArtistRepository
+import com.offlineplaya.shared.domain.repository.FolderRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +25,7 @@ import kotlinx.coroutines.flow.stateIn
 class LibraryStateHolder(
     private val artists: ArtistRepository,
     private val albums: AlbumRepository,
+    private val folders: FolderRepository,
     private val tracks: TrackRepository,
     private val scope: CoroutineScope,
 ) {
@@ -30,6 +33,14 @@ class LibraryStateHolder(
     /** All artists, alphabetical. Always-on hot list. */
     val allArtists: StateFlow<List<Artist>> = artists.observeAll()
         .stateIn(scope, SharingStarted.Eagerly, emptyList())
+
+    /** All root folders (one per managed tree). Always-on hot list. */
+    val rootFolders: StateFlow<List<Folder>> = folders.observeRoots()
+        .stateIn(scope, SharingStarted.Eagerly, emptyList())
+
+    /** Every track in the library, sorted by title. Lazy — collected only when subscribed. */
+    val allTracks: StateFlow<List<Track>> = tracks.observeAll()
+        .stateIn(scope, SharingStarted.WhileSubscribed(5_000L), emptyList())
 
     /**
      * Total track count derived from [TrackRepository.observeAll]. Re-emits
@@ -42,9 +53,12 @@ class LibraryStateHolder(
 
     suspend fun findArtist(id: Long): Artist? = artists.findById(id)
     suspend fun findAlbum(id: Long): Album? = albums.findById(id)
+    suspend fun findFolder(id: Long): Folder? = folders.findById(id)
 
     fun albumsByArtist(artistId: Long): Flow<List<Album>> = albums.observeByArtist(artistId)
     fun tracksByAlbum(albumId: Long): Flow<List<Track>> = tracks.observeByAlbum(albumId)
+    fun childFolders(parentId: Long): Flow<List<Folder>> = folders.observeChildren(parentId)
+    fun tracksInFolder(folderId: Long): Flow<List<Track>> = tracks.observeByFolder(folderId)
 
     /** Look up the artist name without holding a reference to the Artist row. */
     suspend fun artistNameOrNull(id: Long?): String? = id?.let { artists.findById(it)?.name }

@@ -15,16 +15,21 @@ import androidx.compose.runtime.setValue
 import com.offlineplaya.shared.domain.model.Album
 import com.offlineplaya.shared.domain.model.Artist
 import com.offlineplaya.shared.domain.model.ColorMode
+import com.offlineplaya.shared.domain.model.Folder
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.navigation.AppDestination
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.sync.SyncStatus
+import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
 import com.offlineplaya.shared.presentation.ui.pages.HomePage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryAlbumDetailPage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryArtistDetailPage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryArtistsPage
+import com.offlineplaya.shared.presentation.ui.pages.LibraryFlatPage
+import com.offlineplaya.shared.presentation.ui.pages.LibraryFolderDetailPage
+import com.offlineplaya.shared.presentation.ui.pages.LibraryFolderRootsPage
 import com.offlineplaya.shared.presentation.ui.pages.SettingsPage
 import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
 
@@ -49,6 +54,10 @@ fun App(
     OfflinePlayaTheme(preferences = themePreferences) {
         val stack by navigator.stack.collectAsState()
         val current = stack.last()
+
+        val onTabSelected: (LibraryTab) -> Unit = { tab ->
+            navigator.swapTop(tab.toDestination())
+        }
 
         AnimatedContent(
             targetState = current,
@@ -82,6 +91,7 @@ fun App(
                         onArtistClick = { id ->
                             navigator.push(AppDestination.LibraryArtistDetail(id))
                         },
+                        onTabSelected = onTabSelected,
                         onBack = { navigator.pop() },
                     )
                 }
@@ -121,18 +131,56 @@ fun App(
                     )
                 }
 
-                // Folder + flat destinations land in a follow-up; until then we
-                // route back to Home rather than show a blank screen.
-                AppDestination.LibraryFolderRoots,
-                is AppDestination.LibraryFolderDetail,
-                AppDestination.LibraryFlat -> HomePage(
-                    status = syncStatus,
-                    trackCount = trackCount,
-                    onPickFolder = onPickFolder,
-                    onOpenLibrary = { navigator.push(AppDestination.LibraryArtists) },
-                    onOpenSettings = { navigator.push(AppDestination.Settings) },
-                )
+                AppDestination.LibraryFolderRoots -> {
+                    val roots by library.rootFolders.collectAsState()
+                    LibraryFolderRootsPage(
+                        roots = roots,
+                        onFolderClick = { id ->
+                            navigator.push(AppDestination.LibraryFolderDetail(id))
+                        },
+                        onTabSelected = onTabSelected,
+                        onBack = { navigator.pop() },
+                    )
+                }
+
+                is AppDestination.LibraryFolderDetail -> {
+                    var folder by remember(dest.folderId) { mutableStateOf<Folder?>(null) }
+                    LaunchedEffect(dest.folderId) {
+                        folder = library.findFolder(dest.folderId)
+                    }
+                    val subfolders by remember(dest.folderId) {
+                        library.childFolders(dest.folderId)
+                    }.collectAsState(initial = emptyList<Folder>())
+                    val tracks by remember(dest.folderId) {
+                        library.tracksInFolder(dest.folderId)
+                    }.collectAsState(initial = emptyList<Track>())
+
+                    LibraryFolderDetailPage(
+                        folderName = folder?.displayName ?: "Loading…",
+                        subfolders = subfolders,
+                        tracks = tracks,
+                        onFolderClick = { id ->
+                            navigator.push(AppDestination.LibraryFolderDetail(id))
+                        },
+                        onBack = { navigator.pop() },
+                    )
+                }
+
+                AppDestination.LibraryFlat -> {
+                    val tracks by library.allTracks.collectAsState()
+                    LibraryFlatPage(
+                        tracks = tracks,
+                        onTabSelected = onTabSelected,
+                        onBack = { navigator.pop() },
+                    )
+                }
             }
         }
     }
+}
+
+private fun LibraryTab.toDestination(): AppDestination = when (this) {
+    LibraryTab.ARTISTS -> AppDestination.LibraryArtists
+    LibraryTab.FOLDERS -> AppDestination.LibraryFolderRoots
+    LibraryTab.FLAT -> AppDestination.LibraryFlat
 }

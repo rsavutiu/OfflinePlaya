@@ -89,6 +89,7 @@ val sharedModule: Module = module {
         LibraryStateHolder(
             artists = get(),
             albums = get(),
+            folders = get(),
             tracks = get(),
             scope = get(),
         )
