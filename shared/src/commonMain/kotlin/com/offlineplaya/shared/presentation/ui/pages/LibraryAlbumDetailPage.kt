@@ -38,7 +38,7 @@ fun LibraryAlbumDetailPage(
         TrackList(
             tracks = tracks,
             onTrackClick = { selectedTrack = it },
-            modifier = Modifier.padding(padding),
+            contentPadding = padding,
         )
     }
 

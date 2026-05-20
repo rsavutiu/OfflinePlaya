@@ -56,7 +56,7 @@ fun QueuePage(
             currentIndex = state.queueIndex,
             onJumpTo = onJumpTo,
             onRemove = onRemove,
-            modifier = Modifier.padding(padding),
+            contentPadding = padding,
         )
     }
 }

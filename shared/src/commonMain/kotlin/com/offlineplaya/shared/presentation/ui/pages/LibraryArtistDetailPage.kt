@@ -26,7 +26,7 @@ fun LibraryArtistDetailPage(
         AlbumList(
             albums = albums,
             onAlbumClick = onAlbumClick,
-            modifier = Modifier.padding(padding),
+            contentPadding = padding,
         )
     }
 }

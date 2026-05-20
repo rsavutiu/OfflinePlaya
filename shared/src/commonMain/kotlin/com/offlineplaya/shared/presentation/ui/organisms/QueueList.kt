@@ -3,6 +3,7 @@ package com.offlineplaya.shared.presentation.ui.organisms
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,6 +40,7 @@ fun QueueList(
     onJumpTo: (Int) -> Unit,
     onRemove: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
     if (tracks.isEmpty()) {
         EmptyState(
@@ -48,7 +50,10 @@ fun QueueList(
         )
         return
     }
-    LazyColumn(modifier = modifier.fillMaxSize()) {
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        contentPadding = contentPadding,
+    ) {
         itemsIndexed(items = tracks, key = { idx, track -> "$idx-${track.id}" }) { idx, track ->
             QueueRow(
                 track = track,

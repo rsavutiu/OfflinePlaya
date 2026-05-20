@@ -41,7 +41,7 @@ fun PlaylistsPage(
         PlaylistList(
             playlists = playlists,
             onPlaylistClick = onPlaylistClick,
-            modifier = Modifier.padding(padding),
+            contentPadding = padding,
         )
     }
 

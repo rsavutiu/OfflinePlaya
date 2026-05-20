@@ -1,11 +1,13 @@
 package com.offlineplaya.shared.presentation.ui.organisms
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
@@ -18,6 +20,7 @@ fun TrackList(
     tracks: List<Track>,
     onTrackClick: (Track) -> Unit,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
     if (tracks.isEmpty()) {
         EmptyState(
@@ -27,7 +30,10 @@ fun TrackList(
         )
         return
     }
-    LazyColumn(modifier = modifier.fillMaxSize()) {
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        contentPadding = contentPadding,
+    ) {
         items(items = tracks, key = { it.id }) { track ->
             TrackRow(track = track, onClick = { onTrackClick(track) })
         }
