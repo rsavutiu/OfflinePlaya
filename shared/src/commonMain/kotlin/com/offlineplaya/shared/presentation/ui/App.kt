@@ -61,6 +61,7 @@ fun App(
     library: LibraryStateHolder,
     playlists: PlaylistStateHolder,
     syncCoordinator: com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator,
+    embedArtCoordinator: com.offlineplaya.shared.presentation.artwork.EmbedArtCoordinator,
     musicPlayer: MusicPlayer,
     themePreferences: ThemePreferences,
     artworkPreferences: com.offlineplaya.shared.domain.model.ArtworkPreferences,
@@ -81,6 +82,7 @@ fun App(
         val playback by musicPlayer.playbackState.collectAsState()
 
         val availablePlaylists by playlists.allPlaylists.collectAsState()
+        val embedReport by embedArtCoordinator.report.collectAsState()
 
         val onTabSelected: (LibraryTab) -> Unit = { tab ->
             navigator.swapTop(tab.toDestination())
@@ -129,6 +131,8 @@ fun App(
                     playlists = playlists,
                     availablePlaylists = availablePlaylists,
                     syncCoordinator = syncCoordinator,
+                    embedArtCoordinator = embedArtCoordinator,
+                    embedReport = embedReport,
                     musicPlayer = musicPlayer,
                     playback = playback,
                     themePreferences = themePreferences,
@@ -162,6 +166,8 @@ private fun DestinationContent(
     playlists: PlaylistStateHolder,
     availablePlaylists: List<com.offlineplaya.shared.domain.model.Playlist>,
     syncCoordinator: com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator,
+    embedArtCoordinator: com.offlineplaya.shared.presentation.artwork.EmbedArtCoordinator,
+    embedReport: com.offlineplaya.shared.domain.usecase.EmbedReport,
     musicPlayer: MusicPlayer,
     playback: PlaybackState,
     themePreferences: ThemePreferences,
@@ -210,11 +216,14 @@ private fun DestinationContent(
                     managedRoots = managedRoots,
                     isScanning = syncStatus is SyncStatus.Scanning,
                     hasWritePermission = hasWritePermission,
+                    embedReport = embedReport,
                     onColorModeChange = onColorModeChange,
                     onDynamicColorChange = onDynamicColorChange,
                     onDownloadRemoteArtChange = onDownloadRemoteArtChange,
                     onEmbedDownloadedArtChange = onEmbedDownloadedArtChange,
                     onRequestWritePermission = onRequestWritePermission,
+                    onEmbedMissingArt = { embedArtCoordinator.start() },
+                    onAcknowledgeEmbedReport = { embedArtCoordinator.acknowledge() },
                     onRescanAll = { syncCoordinator.resyncAll() },
                     onRemoveManagedRoot = { uri -> syncCoordinator.removeManagedRoot(uri) },
                     onBack = { navigator.pop() },

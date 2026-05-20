@@ -25,6 +25,7 @@ import com.offlineplaya.shared.domain.model.ArtworkPreferences
 import com.offlineplaya.shared.domain.model.ColorMode
 import com.offlineplaya.shared.domain.model.ManagedTreeRoot
 import com.offlineplaya.shared.domain.model.ThemePreferences
+import com.offlineplaya.shared.domain.usecase.EmbedReport
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.ColorModeChooser
 import com.offlineplaya.shared.presentation.ui.molecules.SettingsSection
@@ -46,11 +47,14 @@ fun SettingsPage(
     managedRoots: List<ManagedTreeRoot>,
     isScanning: Boolean,
     hasWritePermission: Boolean,
+    embedReport: EmbedReport,
     onColorModeChange: (ColorMode) -> Unit,
     onDynamicColorChange: (Boolean) -> Unit,
     onDownloadRemoteArtChange: (Boolean) -> Unit,
     onEmbedDownloadedArtChange: (Boolean) -> Unit,
     onRequestWritePermission: () -> Unit,
+    onEmbedMissingArt: () -> Unit,
+    onAcknowledgeEmbedReport: () -> Unit,
     onRescanAll: () -> Unit,
     onRemoveManagedRoot: (String) -> Unit,
     onBack: () -> Unit,
@@ -120,6 +124,15 @@ fun SettingsPage(
                         Text("Grant write access (re-pick folder)")
                     }
                 }
+
+                EmbedReportBlock(
+                    report = embedReport,
+                    canEmbed = artworkPreferences.downloadRemoteArt &&
+                        artworkPreferences.embedDownloadedArt &&
+                        hasWritePermission,
+                    onEmbed = onEmbedMissingArt,
+                    onAcknowledge = onAcknowledgeEmbedReport,
+                )
             }
 
             SettingsSection(title = "Library") {
@@ -148,6 +161,72 @@ fun SettingsPage(
                     Text(if (isScanning) "Scanning…" else "Re-scan all folders")
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun EmbedReportBlock(
+    report: EmbedReport,
+    canEmbed: Boolean,
+    onEmbed: () -> Unit,
+    onAcknowledge: () -> Unit,
+) {
+    when (report) {
+        EmbedReport.Idle -> {
+            OutlinedButton(
+                onClick = onEmbed,
+                enabled = canEmbed,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+            ) {
+                Text("Find missing art and embed it now")
+            }
+        }
+        is EmbedReport.Running -> {
+            Text(
+                text = if (report.total > 0) {
+                    "Embedding… ${report.processed}/${report.total} • ${report.embedded} written"
+                } else {
+                    "Preparing…"
+                },
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        is EmbedReport.Completed -> {
+            Text(
+                text = buildString {
+                    append("Embedded ${report.embedded} covers")
+                    if (report.failed > 0) append(" (${report.failed} failed)")
+                    append(".")
+                },
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            OutlinedButton(
+                onClick = onAcknowledge,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+            ) { Text("Dismiss") }
+        }
+        is EmbedReport.Failed -> {
+            Text(
+                text = "Embed pass failed: ${report.message}",
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.error,
+            )
+            OutlinedButton(
+                onClick = onAcknowledge,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+            ) { Text("Dismiss") }
         }
     }
 }
@@ -205,6 +284,9 @@ private fun SettingsPageLightPreview() {
             onDownloadRemoteArtChange = {},
             onEmbedDownloadedArtChange = {},
             onRequestWritePermission = {},
+            embedReport = EmbedReport.Idle,
+            onEmbedMissingArt = {},
+            onAcknowledgeEmbedReport = {},
             onRescanAll = {},
             onRemoveManagedRoot = {},
             onBack = {},
@@ -227,6 +309,9 @@ private fun SettingsPageDarkPreview() {
             onDownloadRemoteArtChange = {},
             onEmbedDownloadedArtChange = {},
             onRequestWritePermission = {},
+            embedReport = EmbedReport.Idle,
+            onEmbedMissingArt = {},
+            onAcknowledgeEmbedReport = {},
             onRescanAll = {},
             onRemoveManagedRoot = {},
             onBack = {},
@@ -254,6 +339,9 @@ private fun SettingsPageScanningPreview() {
             onDownloadRemoteArtChange = {},
             onEmbedDownloadedArtChange = {},
             onRequestWritePermission = {},
+            embedReport = EmbedReport.Idle,
+            onEmbedMissingArt = {},
+            onAcknowledgeEmbedReport = {},
             onRescanAll = {},
             onRemoveManagedRoot = {},
             onBack = {},

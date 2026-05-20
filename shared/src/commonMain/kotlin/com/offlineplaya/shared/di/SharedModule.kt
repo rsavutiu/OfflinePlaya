@@ -17,7 +17,9 @@ import com.offlineplaya.shared.domain.repository.PlaylistRepository
 import com.offlineplaya.shared.domain.repository.QueueRepository
 import com.offlineplaya.shared.domain.repository.SettingsRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
+import com.offlineplaya.shared.domain.usecase.EmbedMissingArtUseCase
 import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
+import com.offlineplaya.shared.presentation.artwork.EmbedArtCoordinator
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
@@ -59,6 +61,16 @@ val sharedModule: Module = module {
         )
     }
 
+    // Embed-missing-album-art pass. RemoteArtSource + AlbumArtWriter come
+    // from the platform module.
+    factory {
+        EmbedMissingArtUseCase(
+            tracks = get(),
+            remoteSource = get(),
+            writer = get(),
+        )
+    }
+
     // Application-scoped CoroutineScope for fire-and-forget background work
     // (sync, future re-scan). SupervisorJob so a single failure doesn't kill it.
     single<CoroutineScope> {
@@ -87,6 +99,15 @@ val sharedModule: Module = module {
     single {
         ArtworkStateHolder(
             settings = get(),
+            scope = get(),
+        )
+    }
+
+    // Embed-art coordinator: kicks the use case off the application scope
+    // and exposes an EmbedReport flow for the Settings UI.
+    single {
+        EmbedArtCoordinator(
+            useCase = get(),
             scope = get(),
         )
     }

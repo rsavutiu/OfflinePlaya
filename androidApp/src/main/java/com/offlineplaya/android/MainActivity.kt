@@ -21,6 +21,7 @@ import com.offlineplaya.android.picker.OpenDocumentTreeContract
 import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
+import com.offlineplaya.shared.presentation.artwork.EmbedArtCoordinator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
@@ -47,6 +48,7 @@ private fun AndroidApp() {
     val themeStateHolder: ThemeStateHolder = koinInject()
     val artworkStateHolder: ArtworkStateHolder = koinInject()
     val coordinator: LibrarySyncCoordinator = koinInject()
+    val embedArtCoordinator: EmbedArtCoordinator = koinInject()
     val library: LibraryStateHolder = koinInject()
     val playlists: PlaylistStateHolder = koinInject()
     val musicPlayer: MusicPlayer = koinInject()
@@ -115,6 +117,7 @@ private fun AndroidApp() {
         library = library,
         playlists = playlists,
         syncCoordinator = coordinator,
+        embedArtCoordinator = embedArtCoordinator,
         musicPlayer = musicPlayer,
         themePreferences = themePreferences,
         artworkPreferences = artworkPreferences,

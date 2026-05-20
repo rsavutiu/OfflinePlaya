@@ -1,9 +1,11 @@
 package com.offlineplaya.shared.di
 
 import com.offlineplaya.shared.data.database.DatabaseDriverFactory
+import com.offlineplaya.shared.data.image.JaudiotaggerArtWriter
 import com.offlineplaya.shared.data.image.createMusicBrainzArtSource
 import com.offlineplaya.shared.data.metadata.AndroidMetadataReader
 import com.offlineplaya.shared.data.scanner.SafFolderScanner
+import com.offlineplaya.shared.domain.image.AlbumArtWriter
 import com.offlineplaya.shared.domain.image.RemoteArtSource
 import com.offlineplaya.shared.domain.scanner.FolderScanner
 import com.offlineplaya.shared.domain.scanner.MetadataReader
@@ -23,4 +25,8 @@ val androidModule: Module = module {
     // MusicBrainz + Cover Art Archive lookup. Singleton — holds an in-memory
     // session cache and an OkHttpClient.
     single<RemoteArtSource> { createMusicBrainzArtSource() }
+
+    // Jaudiotagger-backed art writer. Reads via MediaMetadataRetriever (so
+    // hasEmbeddedArt is cheap) and writes via the temp-file FD dance.
+    single<AlbumArtWriter> { JaudiotaggerArtWriter(androidContext()) }
 }
