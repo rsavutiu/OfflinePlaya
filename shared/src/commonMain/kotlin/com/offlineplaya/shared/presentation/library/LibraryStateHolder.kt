@@ -63,6 +63,12 @@ class LibraryStateHolder(
     suspend fun findAlbum(id: Long): Album? = albums.findById(id)
     suspend fun findFolder(id: Long): Folder? = folders.findById(id)
 
+    /** One representative track per album, used by album-row thumbnails to
+     *  feed the Coil art fetcher. Returns null while the album has no
+     *  tracks yet (e.g. mid-scan). */
+    suspend fun representativeTrackOfAlbum(albumId: Long): Track? =
+        tracks.findFirstByAlbum(albumId)
+
     fun albumsByArtist(artistId: Long): Flow<List<Album>> = albums.observeByArtist(artistId)
     fun tracksByAlbum(albumId: Long): Flow<List<Track>> = tracks.observeByAlbum(albumId)
     fun childFolders(parentId: Long): Flow<List<Folder>> = folders.observeChildren(parentId)

@@ -51,6 +51,12 @@ internal class SqlTrackRepository(
         queries.selectByDocumentUri(uri).executeAsOneOrNull()?.toDomain()
     }
 
+    override suspend fun findFirstByAlbum(albumId: Long): Track? = withContext(ioDispatcher) {
+        // selectByAlbum already sorts by disc + track + title, so the first
+        // row is the one users would think of as "track 1".
+        queries.selectByAlbum(albumId).executeAsList().firstOrNull()?.toDomain()
+    }
+
     override suspend fun findPending(limit: Int): List<Track> = withContext(ioDispatcher) {
         queries.selectPending(limit.toLong()).executeAsList().map { it.toDomain() }
     }

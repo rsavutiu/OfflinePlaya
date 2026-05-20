@@ -5,6 +5,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.offlineplaya.shared.domain.model.Album
+import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.organisms.AlbumList
 import com.offlineplaya.shared.presentation.ui.preview.Preview
@@ -17,6 +18,7 @@ fun LibraryArtistDetailPage(
     onAlbumClick: (Long) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
+    representativeTrackProvider: suspend (Long) -> Track? = { null },
 ) {
     Scaffold(
         modifier = modifier,
@@ -27,6 +29,7 @@ fun LibraryArtistDetailPage(
             albums = albums,
             onAlbumClick = onAlbumClick,
             contentPadding = padding,
+            representativeTrackProvider = representativeTrackProvider,
         )
     }
 }

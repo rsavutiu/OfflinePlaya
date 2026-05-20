@@ -341,6 +341,7 @@ private fun DestinationContent(
                         navigator.push(AppDestination.LibraryAlbumDetail(id))
                     },
                     onBack = { navigator.pop() },
+                    representativeTrackProvider = { id -> library.representativeTrackOfAlbum(id) },
                 )
             }
 

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Album
+import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.molecules.AlbumRow
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.preview.Preview
@@ -20,6 +21,7 @@ fun AlbumList(
     onAlbumClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
+    representativeTrackProvider: suspend (Long) -> Track? = { null },
 ) {
     if (albums.isEmpty()) {
         EmptyState(
@@ -34,7 +36,11 @@ fun AlbumList(
         contentPadding = contentPadding,
     ) {
         items(items = albums, key = { it.id }) { album ->
-            AlbumRow(album = album, onClick = { onAlbumClick(album.id) })
+            AlbumRow(
+                album = album,
+                onClick = { onAlbumClick(album.id) },
+                representativeTrackProvider = representativeTrackProvider,
+            )
         }
     }
 }

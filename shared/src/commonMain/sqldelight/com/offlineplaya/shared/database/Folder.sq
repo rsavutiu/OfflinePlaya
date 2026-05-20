@@ -27,9 +27,25 @@ INSERT OR IGNORE INTO Folder(tree_uri, relative_path, display_name, parent_id)
 VALUES (?, ?, ?, ?);
 
 updateTrackCount:
+-- Recursive count: every track under this folder OR any descendant.
+-- A folder with no direct tracks but many in subfolders (e.g. the synthetic
+-- "Device audio" root that just groups Music/, Download/, etc.) should still
+-- report a meaningful total, not 0.
+--
+-- The id placeholder is bound twice — once as the seed of the recursive CTE
+-- and once as the row to update — because SQLDelight repeats positional
+-- bindings rather than letting us reference one named param.
 UPDATE Folder
-SET track_count = (SELECT COUNT(*) FROM Track WHERE folder_id = Folder.id)
-WHERE id = ?;
+SET track_count = (
+    WITH RECURSIVE descendants(id) AS (
+        SELECT :folderId
+        UNION ALL
+        SELECT child.id FROM Folder AS child
+        JOIN descendants ON child.parent_id = descendants.id
+    )
+    SELECT COUNT(*) FROM Track WHERE folder_id IN descendants
+)
+WHERE id = :folderId;
 
 lastInsertId:
 SELECT last_insert_rowid();

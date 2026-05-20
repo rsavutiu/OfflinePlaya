@@ -78,19 +78,29 @@ fun HomePage(
                 AppHeadline(text = "OfflinePlaya")
                 SyncStatusLine(status = status)
 
-                AppButton(
-                    text = if (scanning) "Scanning…" else "Pick music folder",
-                    onClick = onPickFolder,
-                    enabled = !scanning,
-                )
-
+                // The most-likely action depends on library state:
+                //  - first launch / empty library → Pick a folder. That's
+                //    where the filled button goes.
+                //  - returning user with tracks → Open the library. The
+                //    filled action follows.
+                // Pick-music-folder demotes to outlined whenever the library
+                // already has content; we don't want to send a returning user
+                // through the SAF picker every time they open the app.
                 if (trackCount > 0) {
-                    OutlinedButton(
+                    AppButton(
+                        text = if (scanning) "Scanning…" else "Open library ($trackCount tracks)",
                         onClick = onOpenLibrary,
                         enabled = !scanning,
-                    ) {
-                        Text("Open library ($trackCount tracks)")
+                    )
+                    OutlinedButton(onClick = onPickFolder, enabled = !scanning) {
+                        Text("Pick music folder")
                     }
+                } else {
+                    AppButton(
+                        text = if (scanning) "Scanning…" else "Pick music folder",
+                        onClick = onPickFolder,
+                        enabled = !scanning,
+                    )
                 }
 
                 OutlinedButton(onClick = onOpenPlaylists, enabled = !scanning) {

@@ -17,6 +17,13 @@ interface TrackRepository {
     suspend fun findPending(limit: Int): List<Track>
 
     /**
+     * One representative track for [albumId] — used as the source for album-art
+     * thumbnails in list rows. Returns the first track in album/disc/title
+     * order, or `null` if the album has no tracks yet.
+     */
+    suspend fun findFirstByAlbum(albumId: Long): Track?
+
+    /**
      * Fuzzy search across title / artist / album. The query string is
      * substring-matched (case-insensitive); only `scanned` tracks are
      * returned. Results are capped at [limit] for UI predictability.
