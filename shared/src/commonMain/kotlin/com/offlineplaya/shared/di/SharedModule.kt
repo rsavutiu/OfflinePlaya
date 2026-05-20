@@ -103,11 +103,12 @@ val sharedModule: Module = module {
         )
     }
 
-    // Embed-art coordinator: kicks the use case off the application scope
-    // and exposes an EmbedReport flow for the Settings UI.
+    // Embed-art coordinator: dispatches the pass through the platform-shaped
+    // BackgroundTaskRunner (WorkManager on Android, plain coroutine on Desktop,
+    // BGTaskScheduler on iOS) and exposes an EmbedReport flow for the Settings UI.
     single {
         EmbedArtCoordinator(
-            useCase = get(),
+            runner = get(),
             scope = get(),
         )
     }

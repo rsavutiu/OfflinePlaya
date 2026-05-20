@@ -5,10 +5,12 @@ import com.offlineplaya.shared.data.image.JaudiotaggerArtWriter
 import com.offlineplaya.shared.data.image.createMusicBrainzArtSource
 import com.offlineplaya.shared.data.metadata.AndroidMetadataReader
 import com.offlineplaya.shared.data.scanner.SafFolderScanner
+import com.offlineplaya.shared.data.scheduling.WorkManagerTaskRunner
 import com.offlineplaya.shared.domain.image.AlbumArtWriter
 import com.offlineplaya.shared.domain.image.RemoteArtSource
 import com.offlineplaya.shared.domain.scanner.FolderScanner
 import com.offlineplaya.shared.domain.scanner.MetadataReader
+import com.offlineplaya.shared.domain.scheduling.BackgroundTaskRunner
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
 import org.koin.dsl.bind
@@ -29,4 +31,9 @@ val androidModule: Module = module {
     // Jaudiotagger-backed art writer. Reads via MediaMetadataRetriever (so
     // hasEmbeddedArt is cheap) and writes via the temp-file FD dance.
     single<AlbumArtWriter> { JaudiotaggerArtWriter(androidContext()) }
+
+    // WorkManager-backed dispatch for long-running tasks declared in commonMain
+    // (BackgroundTaskKind). Other targets will bind their own implementation —
+    // a plain coroutine on Desktop, BGTaskScheduler on iOS.
+    single<BackgroundTaskRunner> { WorkManagerTaskRunner(androidContext()) }
 }

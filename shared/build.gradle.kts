@@ -73,6 +73,7 @@ kotlin {
 
                 implementation(libs.jaudiotagger)
                 implementation(libs.okhttp)
+                implementation(libs.androidx.work.runtime)
             }
         }
     }

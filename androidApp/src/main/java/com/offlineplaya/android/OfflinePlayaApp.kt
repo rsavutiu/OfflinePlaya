@@ -1,8 +1,12 @@
 package com.offlineplaya.android
 
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 import com.offlineplaya.android.di.appPlayerModule
 import com.offlineplaya.shared.data.image.installTrackArtImageLoader
+import com.offlineplaya.shared.data.scheduling.WorkManagerTaskRunner
 import com.offlineplaya.shared.di.androidModule
 import com.offlineplaya.shared.di.initKoin
 import com.offlineplaya.shared.domain.image.RemoteArtSource
@@ -16,6 +20,7 @@ import org.koin.core.logger.Level
 class OfflinePlayaApp : Application() {
     override fun onCreate() {
         super.onCreate()
+        createBackgroundChannel()
         initKoin(
             appDeclaration = {
                 androidLogger(Level.INFO)
@@ -34,5 +39,24 @@ class OfflinePlayaApp : Application() {
         // Auto-rescan once per process start, after Koin is up. No-op when no
         // managed roots are registered yet (fresh install).
         koin.get<LibrarySyncCoordinator>().resyncAllIfHasRoots()
+    }
+
+    /**
+     * Notification channel for the foreground worker that backs
+     * [com.offlineplaya.shared.domain.scheduling.BackgroundTaskRunner].
+     * Created once per process, idempotent.
+     */
+    private fun createBackgroundChannel() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
+        val manager = getSystemService(NotificationManager::class.java) ?: return
+        val channel = NotificationChannel(
+            WorkManagerTaskRunner.CHANNEL_ID,
+            getString(R.string.background_channel_name),
+            NotificationManager.IMPORTANCE_LOW,
+        ).apply {
+            description = getString(R.string.background_channel_description)
+            setShowBadge(false)
+        }
+        manager.createNotificationChannel(channel)
     }
 }
