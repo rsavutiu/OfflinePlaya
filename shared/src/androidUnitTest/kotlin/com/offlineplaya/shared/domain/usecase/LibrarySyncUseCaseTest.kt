@@ -10,6 +10,7 @@ import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.scanner.AudioFolder
 import com.offlineplaya.shared.domain.scanner.AudioMetadata
 import com.offlineplaya.shared.domain.scanner.RawAudioFile
+import com.offlineplaya.shared.testsupport.FakeDeviceAudioScanner
 import com.offlineplaya.shared.testsupport.FakeFolderScanner
 import com.offlineplaya.shared.testsupport.FakeMetadataReader
 import com.offlineplaya.shared.testsupport.createInMemoryDatabase
@@ -57,6 +58,7 @@ class LibrarySyncUseCaseTest {
         tracks = f.tracks,
         scanner = scanner,
         metadataReader = reader,
+        deviceAudio = FakeDeviceAudioScanner(),
     )
 
     @Test

@@ -9,6 +9,7 @@ import com.offlineplaya.shared.domain.scanner.AudioFolder
 import com.offlineplaya.shared.domain.scanner.AudioMetadata
 import com.offlineplaya.shared.domain.scanner.RawAudioFile
 import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
+import com.offlineplaya.shared.testsupport.FakeDeviceAudioScanner
 import com.offlineplaya.shared.testsupport.FakeFolderScanner
 import com.offlineplaya.shared.testsupport.FakeMetadataReader
 import com.offlineplaya.shared.testsupport.createInMemoryDatabase
@@ -41,6 +42,7 @@ class LibrarySyncCoordinatorTest {
         val tracks = SqlTrackRepository(db, Dispatchers.Unconfined)
         val useCase = LibrarySyncUseCase(
             managedRoots, folders, artists, albums, tracks, scanner, reader,
+            FakeDeviceAudioScanner(),
         )
         return Harness(LibrarySyncCoordinator(useCase, managedRoots, testScope), managedRoots)
     }

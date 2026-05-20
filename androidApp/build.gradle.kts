@@ -67,6 +67,8 @@ dependencies {
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.media3.common)
 
+    implementation(libs.androidx.work.runtime)
+
     // Compose Preview: annotation (always) + renderer (debug only, for Android Studio)
     val compose = ComposePlugin.Dependencies(project)
     implementation(compose.components.uiToolingPreview)

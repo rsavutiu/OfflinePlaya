@@ -36,9 +36,12 @@ class OfflinePlayaApp : Application() {
             settings = koin.get<SettingsRepository>(),
             remoteSource = koin.get<RemoteArtSource>(),
         )
-        // Auto-rescan once per process start, after Koin is up. No-op when no
-        // managed roots are registered yet (fresh install).
-        koin.get<LibrarySyncCoordinator>().resyncAllIfHasRoots()
+        // Auto-rescan once per process start, after Koin is up. syncAll() now
+        // covers both SAF managed roots AND the platform's MediaStore index,
+        // so this is meaningful even on a fresh install — the device-audio
+        // pass picks up everything in Download/ etc. without the user having
+        // to add a folder first.
+        koin.get<LibrarySyncCoordinator>().resyncAll()
     }
 
     /**

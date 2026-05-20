@@ -1,6 +1,8 @@
 package com.offlineplaya.android
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,6 +10,7 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -16,6 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
 import androidx.documentfile.provider.DocumentFile
 import com.offlineplaya.android.picker.OpenDocumentTreeContract
 import com.offlineplaya.shared.domain.player.MusicPlayer
@@ -68,6 +72,27 @@ private fun AndroidApp() {
     LaunchedEffect(Unit) {
         hasWritePermission = context.contentResolver.persistedUriPermissions
             .any { it.isWritePermission }
+    }
+
+    // Audio-library permission. Granting this lets MediaStoreDeviceAudioScanner
+    // see music in folders SAF won't let users tree-pick (Download/, internal
+    // storage root). We ask once on first launch; if the user declines the
+    // app still works against any SAF folders they've added — they just won't
+    // see Downloads-style content.
+    val audioPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { granted ->
+        if (granted) coordinator.resyncAll()
+    }
+    LaunchedEffect(Unit) {
+        val perm = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Manifest.permission.READ_MEDIA_AUDIO
+        } else {
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        }
+        if (ContextCompat.checkSelfPermission(context, perm) != PackageManager.PERMISSION_GRANTED) {
+            audioPermissionLauncher.launch(perm)
+        }
     }
 
     // Plain folder picker (read-only, used for the initial Pick Folder action).

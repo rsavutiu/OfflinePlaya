@@ -7,6 +7,8 @@ import com.offlineplaya.shared.domain.repository.ManagedTreeRootRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
 import com.offlineplaya.shared.domain.scanner.AudioFolder
 import com.offlineplaya.shared.domain.scanner.AudioMetadata
+import com.offlineplaya.shared.domain.scanner.DeviceAudioScanner
+import com.offlineplaya.shared.domain.scanner.DeviceAudioTrack
 import com.offlineplaya.shared.domain.scanner.FolderScanner
 import com.offlineplaya.shared.domain.scanner.MetadataReader
 import com.offlineplaya.shared.domain.scanner.RawAudioFile
@@ -33,14 +35,22 @@ class LibrarySyncUseCase(
     private val tracks: TrackRepository,
     private val scanner: FolderScanner,
     private val metadataReader: MetadataReader,
+    private val deviceAudio: DeviceAudioScanner,
 ) {
 
-    /** Sync every managed tree root sequentially, accumulating the report. */
+    /**
+     * Sync every managed tree root sequentially, accumulating the report,
+     * then also pull in everything the platform's audio index knows about
+     * via [DeviceAudioScanner]. The device-audio pass is what catches
+     * music in Downloads / the internal-storage root / other locations
+     * Android refuses to let users grant SAF tree access to.
+     */
     suspend fun syncAll(): SyncReport {
         val roots = managedRoots.getAll()
-        return roots.fold(SyncReport.Empty) { acc, root ->
+        val safReport = roots.fold(SyncReport.Empty) { acc, root ->
             acc + syncOne(root.treeUri)
         }
+        return safReport + syncDeviceAudio()
     }
 
     /** Sync a single tree root by URI. Returns a per-root report. */
@@ -61,6 +71,112 @@ class LibrarySyncUseCase(
             tracksScanned = scanned,
             tracksFailed = failed,
         )
+    }
+
+    /**
+     * Pull every audio file the platform already knows about (Android's
+     * MediaStore, equivalents on iOS/Desktop) and merge it into the library
+     * under the synthetic [DeviceAudioScanner.ROOT_URI] tree.
+     *
+     * Idempotent: track rows are keyed by `document_uri`, so re-running this
+     * pass after a scan is a no-op insert plus a metadata refresh.
+     *
+     * Returns [SyncReport.Empty] when the scanner returns nothing — which
+     * is the path taken on permission-denied and on platforms with no
+     * device-audio implementation. We treat "no permission" identically to
+     * "no audio found" so the sync never throws at the user.
+     */
+    suspend fun syncDeviceAudio(): SyncReport {
+        val deviceTracks = deviceAudio.scan()
+        if (deviceTracks.isEmpty()) return SyncReport.Empty
+
+        val syntheticFolders = synthesizeFolders(deviceTracks)
+        val folderIds = materializeFolders(syntheticFolders)
+
+        var scanned = 0
+        val touchedTrackIds = mutableListOf<Long>()
+        for (deviceTrack in deviceTracks) {
+            val parentPath = parentRelativePath(deviceTrack.relativePath)
+            val folderId = folderIds[parentPath]
+
+            // INSERT OR IGNORE on document_uri — re-scans are no-ops here.
+            tracks.insertFile(
+                documentUri = deviceTrack.sourceUri,
+                treeUri = DeviceAudioScanner.ROOT_URI,
+                relativePath = deviceTrack.relativePath,
+                fileName = deviceTrack.fileName,
+                fileSize = deviceTrack.fileSize,
+                lastModified = deviceTrack.lastModified,
+                folderId = folderId,
+            )
+            // Look up by URI instead of trusting lastInsertId — that value
+            // is unreliable when INSERT OR IGNORE collapses to a no-op.
+            val stored = tracks.findByDocumentUri(deviceTrack.sourceUri) ?: continue
+
+            val artistId = upsertArtist(deviceTrack.metadata)
+            val albumId = upsertAlbum(deviceTrack.metadata, artistId)
+            tracks.updateMetadata(stored.applyMetadata(deviceTrack.metadata))
+            tracks.updateForeignKeys(stored.id, artistId, albumId)
+            touchedTrackIds += stored.id
+            scanned++
+        }
+
+        refreshAggregates(folderIds.values, touchedTrackIds)
+
+        return SyncReport(
+            foldersUpserted = folderIds.size,
+            tracksDiscovered = deviceTracks.size,
+            tracksScanned = scanned,
+            tracksFailed = deviceTracks.size - scanned,
+        )
+    }
+
+    /**
+     * Derive a list of [AudioFolder] entries for the synthetic device-audio
+     * tree by walking each track's `relativePath`. Returns folders in
+     * parent-before-child order so [materializeFolders] can resolve FKs.
+     *
+     * The root folder ("" / [DeviceAudioScanner.ROOT_DISPLAY_NAME]) is
+     * always emitted first, even if every track happens to live under a
+     * subdirectory, so the UI has a single anchor for the synthetic tree.
+     */
+    private fun synthesizeFolders(deviceTracks: List<DeviceAudioTrack>): List<AudioFolder> {
+        // Set of every directory path that needs to exist.
+        val paths = sortedSetOf("")
+        for (track in deviceTracks) {
+            val parent = parentRelativePath(track.relativePath)
+            if (parent.isEmpty()) continue
+            // Add the parent and every ancestor up to the root.
+            var current = parent
+            while (current.isNotEmpty()) {
+                paths += current
+                val idx = current.lastIndexOf('/')
+                current = if (idx < 0) "" else current.substring(0, idx)
+            }
+        }
+        // sortedSetOf("") sorts lexically, which gives us parent-before-child
+        // because "/foo" sorts before "/foo/bar" — but the root "" comes first
+        // either way.
+        return paths.map { path ->
+            val parent = if (path.isEmpty()) null else parentRelativePath(path)
+            val display = if (path.isEmpty()) {
+                DeviceAudioScanner.ROOT_DISPLAY_NAME
+            } else {
+                val idx = path.lastIndexOf('/')
+                if (idx < 0) path else path.substring(idx + 1)
+            }
+            AudioFolder(
+                treeUri = DeviceAudioScanner.ROOT_URI,
+                relativePath = path,
+                displayName = display,
+                parentRelativePath = parent,
+            )
+        }
+    }
+
+    private fun parentRelativePath(path: String): String {
+        val idx = path.lastIndexOf('/')
+        return if (idx < 0) "" else path.substring(0, idx)
     }
 
     // --- private helpers ---

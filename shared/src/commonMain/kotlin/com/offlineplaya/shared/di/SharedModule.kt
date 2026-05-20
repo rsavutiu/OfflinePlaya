@@ -58,6 +58,7 @@ val sharedModule: Module = module {
             tracks = get(),
             scanner = get(),
             metadataReader = get(),
+            deviceAudio = get(),
         )
     }
 

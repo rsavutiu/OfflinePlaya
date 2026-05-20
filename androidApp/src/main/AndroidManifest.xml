@@ -8,6 +8,13 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- Device audio index — used by MediaStoreDeviceAudioScanner so we can
+         see music in Download/, internal-storage root, and other places SAF
+         refuses to grant tree-URI access to on Android 11+. -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
     <application
         android:name=".OfflinePlayaApp"
         android:allowBackup="true"
@@ -34,6 +41,11 @@
                 <action android:name="androidx.media3.session.MediaSessionService" />
             </intent-filter>
         </service>
+
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync"
+            tools:node="merge" />
 
     </application>
 
