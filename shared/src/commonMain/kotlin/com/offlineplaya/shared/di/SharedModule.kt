@@ -21,6 +21,7 @@ import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
+import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import kotlinx.coroutines.CoroutineScope
@@ -77,6 +78,14 @@ val sharedModule: Module = module {
     // Theme state holder reads/writes ThemePreferences and exposes a hot flow.
     single {
         ThemeStateHolder(
+            settings = get(),
+            scope = get(),
+        )
+    }
+
+    // Artwork preferences (download from MusicBrainz / embed back into files).
+    single {
+        ArtworkStateHolder(
             settings = get(),
             scope = get(),
         )

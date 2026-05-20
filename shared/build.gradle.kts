@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.sqldelight)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -30,6 +31,8 @@ kotlin {
                 implementation(libs.koin.compose)
 
                 implementation(libs.coil.compose)
+
+                implementation(libs.kotlinx.serialization.json)
             }
         }
 
@@ -69,6 +72,7 @@ kotlin {
                 implementation(libs.androidx.media3.ui)
 
                 implementation(libs.jaudiotagger)
+                implementation(libs.okhttp)
             }
         }
     }

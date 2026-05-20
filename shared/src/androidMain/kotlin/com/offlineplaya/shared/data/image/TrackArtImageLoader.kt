@@ -3,19 +3,31 @@ package com.offlineplaya.shared.data.image
 import android.content.Context
 import coil3.ImageLoader
 import coil3.SingletonImageLoader
+import com.offlineplaya.shared.domain.image.RemoteArtSource
+import com.offlineplaya.shared.domain.repository.SettingsRepository
 
 /**
- * Public installer for the Coil [ImageLoader] that knows how to render track
- * album art. The app module calls this from `Application.onCreate` so that
- * any `AsyncImage(model = track, …)` anywhere in the app routes through the
- * custom [TrackArtFetcher].
+ * Installs the Coil [ImageLoader] that knows how to resolve track album art
+ * through the embedded → remote → placeholder chain. Called from
+ * `Application.onCreate`.
  */
-fun installTrackArtImageLoader(context: Context) {
+fun installTrackArtImageLoader(
+    context: Context,
+    settings: SettingsRepository,
+    remoteSource: RemoteArtSource,
+) {
+    val appContext = context.applicationContext
     SingletonImageLoader.setSafe { ctx ->
         ImageLoader.Builder(ctx)
             .components {
                 add(TrackKeyer())
-                add(TrackArtFetcher.Factory(context.applicationContext))
+                add(
+                    TrackArtFetcher.Factory(
+                        context = appContext,
+                        settings = settings,
+                        remoteSource = remoteSource,
+                    ),
+                )
             }
             .build()
     }

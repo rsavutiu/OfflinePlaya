@@ -1,5 +1,6 @@
 package com.offlineplaya.shared.domain.repository
 
+import com.offlineplaya.shared.domain.model.ArtworkPreferences
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import kotlinx.coroutines.flow.Flow
 
@@ -17,4 +18,13 @@ interface SettingsRepository {
 
     /** Replace the stored theme preferences atomically. */
     suspend fun setThemePreferences(preferences: ThemePreferences)
+
+    /** Live artwork preferences (download/embed toggles). */
+    fun observeArtworkPreferences(): Flow<ArtworkPreferences>
+
+    /** One-shot read of artwork preferences. */
+    suspend fun getArtworkPreferences(): ArtworkPreferences
+
+    /** Replace the stored artwork preferences atomically. */
+    suspend fun setArtworkPreferences(preferences: ArtworkPreferences)
 }

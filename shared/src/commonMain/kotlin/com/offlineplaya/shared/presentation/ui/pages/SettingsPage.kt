@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.offlineplaya.shared.domain.model.ArtworkPreferences
 import com.offlineplaya.shared.domain.model.ColorMode
 import com.offlineplaya.shared.domain.model.ManagedTreeRoot
 import com.offlineplaya.shared.domain.model.ThemePreferences
@@ -41,10 +42,15 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 @Composable
 fun SettingsPage(
     preferences: ThemePreferences,
+    artworkPreferences: ArtworkPreferences,
     managedRoots: List<ManagedTreeRoot>,
     isScanning: Boolean,
+    hasWritePermission: Boolean,
     onColorModeChange: (ColorMode) -> Unit,
     onDynamicColorChange: (Boolean) -> Unit,
+    onDownloadRemoteArtChange: (Boolean) -> Unit,
+    onEmbedDownloadedArtChange: (Boolean) -> Unit,
+    onRequestWritePermission: () -> Unit,
     onRescanAll: () -> Unit,
     onRemoveManagedRoot: (String) -> Unit,
     onBack: () -> Unit,
@@ -78,6 +84,42 @@ fun SettingsPage(
                     onCheckedChange = onDynamicColorChange,
                     enabled = dynamicColorSupported,
                 )
+            }
+
+            SettingsSection(title = "Album art") {
+                SwitchRow(
+                    title = "Download album art",
+                    subtitle = "Look up missing covers from MusicBrainz and Cover Art Archive.",
+                    checked = artworkPreferences.downloadRemoteArt,
+                    onCheckedChange = onDownloadRemoteArtChange,
+                )
+                SwitchRow(
+                    title = "Embed art into files",
+                    subtitle = when {
+                        !artworkPreferences.downloadRemoteArt ->
+                            "Enable downloading first."
+                        !hasWritePermission ->
+                            "Grant write access below to enable."
+                        else ->
+                            "Write downloaded covers back into the audio files. " +
+                                "This modifies your files — back them up first."
+                    },
+                    checked = artworkPreferences.embedDownloadedArt &&
+                        artworkPreferences.downloadRemoteArt &&
+                        hasWritePermission,
+                    onCheckedChange = onEmbedDownloadedArtChange,
+                    enabled = artworkPreferences.downloadRemoteArt && hasWritePermission,
+                )
+                if (artworkPreferences.downloadRemoteArt && !hasWritePermission) {
+                    OutlinedButton(
+                        onClick = onRequestWritePermission,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                    ) {
+                        Text("Grant write access (re-pick folder)")
+                    }
+                }
             }
 
             SettingsSection(title = "Library") {
@@ -156,8 +198,13 @@ private fun SettingsPageLightPreview() {
                 ManagedTreeRoot(2, "content://b", "Bootlegs", 0, null),
             ),
             isScanning = false,
+            hasWritePermission = false,
+            artworkPreferences = ArtworkPreferences.Default,
             onColorModeChange = {},
             onDynamicColorChange = {},
+            onDownloadRemoteArtChange = {},
+            onEmbedDownloadedArtChange = {},
+            onRequestWritePermission = {},
             onRescanAll = {},
             onRemoveManagedRoot = {},
             onBack = {},
@@ -173,8 +220,13 @@ private fun SettingsPageDarkPreview() {
             preferences = ThemePreferences(ColorMode.DARK, useDynamicColor = false),
             managedRoots = emptyList(),
             isScanning = false,
+            hasWritePermission = false,
+            artworkPreferences = ArtworkPreferences.Default,
             onColorModeChange = {},
             onDynamicColorChange = {},
+            onDownloadRemoteArtChange = {},
+            onEmbedDownloadedArtChange = {},
+            onRequestWritePermission = {},
             onRescanAll = {},
             onRemoveManagedRoot = {},
             onBack = {},
@@ -192,8 +244,16 @@ private fun SettingsPageScanningPreview() {
                 ManagedTreeRoot(1, "content://a", "Music Library", 0, 1_700_000_000),
             ),
             isScanning = true,
+            hasWritePermission = true,
+            artworkPreferences = ArtworkPreferences(
+                downloadRemoteArt = true,
+                embedDownloadedArt = true,
+            ),
             onColorModeChange = {},
             onDynamicColorChange = {},
+            onDownloadRemoteArtChange = {},
+            onEmbedDownloadedArtChange = {},
+            onRequestWritePermission = {},
             onRescanAll = {},
             onRemoveManagedRoot = {},
             onBack = {},
