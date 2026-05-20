@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 @Composable
@@ -30,20 +31,20 @@ fun TrackRow(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.md),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         // Track number column, right-aligned, fixed width so titles line up.
         Text(
             text = track.trackNumber?.toString() ?: "—",
-            modifier = Modifier.width(28.dp),
+            modifier = Modifier.width(28.dp), // fixed digit-column width, not a spacing token
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.End,
         )
         Column(
             modifier = Modifier
-                .padding(start = 16.dp)
+                .padding(start = AppSpacing.lg)
                 .weight(1f),
         ) {
             Text(

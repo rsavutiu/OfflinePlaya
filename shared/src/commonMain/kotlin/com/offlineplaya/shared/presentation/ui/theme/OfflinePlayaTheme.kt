@@ -40,6 +40,7 @@ fun OfflinePlayaTheme(
     MaterialTheme(
         colorScheme = colors,
         typography = OfflinePlayaTypography,
+        shapes = OfflinePlayaShapes,
         content = content,
     )
 }

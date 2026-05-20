@@ -34,6 +34,7 @@ import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.sync.SyncStatus
 import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
 import com.offlineplaya.shared.presentation.ui.organisms.MiniPlayer
+import com.offlineplaya.shared.presentation.ui.pages.DesignSystemGalleryPage
 import com.offlineplaya.shared.presentation.ui.pages.HomePage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryAlbumDetailPage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryArtistDetailPage
@@ -226,6 +227,7 @@ private fun DestinationContent(
                     onAcknowledgeEmbedReport = { embedArtCoordinator.acknowledge() },
                     onRescanAll = { syncCoordinator.resyncAll() },
                     onRemoveManagedRoot = { uri -> syncCoordinator.removeManagedRoot(uri) },
+                    onOpenDesignSystem = { navigator.push(AppDestination.DesignSystemGallery) },
                     onBack = { navigator.pop() },
                     dynamicColorSupported = dynamicColorSupported,
                 )
@@ -416,6 +418,10 @@ private fun DestinationContent(
                     onBack = { navigator.pop() },
                 )
             }
+
+            AppDestination.DesignSystemGallery -> DesignSystemGalleryPage(
+                onBack = { navigator.pop() },
+            )
         }
     }
 }

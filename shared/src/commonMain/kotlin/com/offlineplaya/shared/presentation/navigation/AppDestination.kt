@@ -26,4 +26,7 @@ sealed interface AppDestination {
     data class LibraryFolderDetail(val folderId: Long) : AppDestination
 
     data object LibraryFlat : AppDestination
+
+    /** Internal design-system catalog — every token rendered on one page. */
+    data object DesignSystemGallery : AppDestination
 }

@@ -57,6 +57,7 @@ fun SettingsPage(
     onAcknowledgeEmbedReport: () -> Unit,
     onRescanAll: () -> Unit,
     onRemoveManagedRoot: (String) -> Unit,
+    onOpenDesignSystem: () -> Unit,
     onBack: () -> Unit,
     dynamicColorSupported: Boolean = true,
     modifier: Modifier = Modifier,
@@ -159,6 +160,17 @@ fun SettingsPage(
                         .padding(horizontal = 16.dp, vertical = 8.dp),
                 ) {
                     Text(if (isScanning) "Scanning…" else "Re-scan all folders")
+                }
+            }
+
+            SettingsSection(title = "Developer") {
+                OutlinedButton(
+                    onClick = onOpenDesignSystem,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                ) {
+                    Text("Design system gallery")
                 }
             }
         }
@@ -289,6 +301,7 @@ private fun SettingsPageLightPreview() {
             onAcknowledgeEmbedReport = {},
             onRescanAll = {},
             onRemoveManagedRoot = {},
+            onOpenDesignSystem = {},
             onBack = {},
         )
     }
@@ -314,6 +327,7 @@ private fun SettingsPageDarkPreview() {
             onAcknowledgeEmbedReport = {},
             onRescanAll = {},
             onRemoveManagedRoot = {},
+            onOpenDesignSystem = {},
             onBack = {},
         )
     }
@@ -344,6 +358,7 @@ private fun SettingsPageScanningPreview() {
             onAcknowledgeEmbedReport = {},
             onRescanAll = {},
             onRemoveManagedRoot = {},
+            onOpenDesignSystem = {},
             onBack = {},
             dynamicColorSupported = false,
         )
