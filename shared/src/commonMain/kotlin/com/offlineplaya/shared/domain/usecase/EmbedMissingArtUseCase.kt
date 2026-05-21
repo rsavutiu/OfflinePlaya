@@ -3,6 +3,7 @@ package com.offlineplaya.shared.domain.usecase
 import com.offlineplaya.shared.domain.image.AlbumArtWriter
 import com.offlineplaya.shared.domain.image.RemoteArtSource
 import com.offlineplaya.shared.domain.repository.TrackRepository
+import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.flow.first
 
 private const val UNKNOWN_ARTIST = "Unknown Artist"
@@ -29,13 +30,20 @@ class EmbedMissingArtUseCase(
     private val tracks: TrackRepository,
     private val remoteSource: RemoteArtSource,
     private val writer: AlbumArtWriter,
+    private val logger: AppLogger,
 ) {
+    private companion object {
+        const val TAG = "EmbedMissingArtUseCase"
+    }
+
     suspend operator fun invoke(
         onProgress: (EmbedReport.Running) -> Unit,
         shouldCancel: () -> Boolean = { false },
     ): EmbedReport {
+        logger.i(TAG, "Starting EmbedMissingArtUseCase")
         val all = tracks.observeAll().first()
         val total = all.size
+        logger.d(TAG, "Found $total tracks in database")
 
         // Group by (artist, album) so each album hits MusicBrainz once.
         val grouped = all
@@ -43,41 +51,72 @@ class EmbedMissingArtUseCase(
             .filterNot { it.albumName.equals(UNKNOWN_ALBUM, ignoreCase = true) }
             .groupBy { (it.albumArtistName ?: it.artistName) to it.albumName }
 
+        logger.d(TAG, "Grouped into ${grouped.size} candidate albums")
+
         var processed = 0
         var embedded = 0
         var failed = 0
 
         for ((key, group) in grouped) {
             if (shouldCancel()) {
+                logger.i(TAG, "Sync cancelled by caller")
                 return EmbedReport.Completed(processed, embedded, failed)
             }
             val (artist, album) = key
 
             // Filter to tracks that actually need art.
-            val needing = group.filter { !writer.hasEmbeddedArt(it.documentUri) }
+            val needing = group.filter { 
+                try {
+                    !writer.hasEmbeddedArt(it.documentUri)
+                } catch (e: Exception) {
+                    logger.e(TAG, "Error checking embedded art for ${it.documentUri}", e)
+                    false // Skip if we can't even check
+                }
+            }
+            
             // Tracks that already had art still count as "processed" so the
             // progress numbers reflect the whole library walk.
             processed += group.size - needing.size
             onProgress(EmbedReport.Running(processed, total, embedded, failed))
 
-            if (needing.isEmpty()) continue
+            if (needing.isEmpty()) {
+                logger.d(TAG, "Album '$album' by '$artist' already has art for all ${group.size} tracks")
+                continue
+            }
 
-            val artBytes = remoteSource.resolve(artist, album)
+            logger.i(TAG, "Fetching art for album '$album' by '$artist' (${needing.size} tracks need it)")
+            val artBytes = try {
+                remoteSource.resolve(artist, album)
+            } catch (e: Exception) {
+                logger.e(TAG, "Error fetching art for '$album' by '$artist'", e)
+                null
+            }
+
             if (artBytes == null) {
+                logger.d(TAG, "No art found for album '$album' by '$artist'")
                 // No cover available — these tracks stay arty-less.
                 processed += needing.size
                 onProgress(EmbedReport.Running(processed, total, embedded, failed))
                 continue
             }
 
+            logger.d(TAG, "Found art for '$album' by '$artist' (${artBytes.size} bytes). Writing to ${needing.size} tracks.")
+
             for (track in needing) {
                 if (shouldCancel()) {
+                    logger.i(TAG, "Sync cancelled by caller during writing")
                     return EmbedReport.Completed(processed, embedded, failed)
                 }
                 writer.write(track.documentUri, artBytes)
                     .fold(
-                        onSuccess = { embedded++ },
-                        onFailure = { failed++ },
+                        onSuccess = { 
+                            embedded++
+                            logger.d(TAG, "Successfully embedded art into ${track.documentUri}")
+                        },
+                        onFailure = { error -> 
+                            failed++
+                            logger.e(TAG, "Failed to embed art into ${track.documentUri}", error)
+                        },
                     )
                 processed++
                 onProgress(EmbedReport.Running(processed, total, embedded, failed))
@@ -89,7 +128,9 @@ class EmbedMissingArtUseCase(
         processed += skipped
         onProgress(EmbedReport.Running(processed, total, embedded, failed))
 
-        return EmbedReport.Completed(processed, embedded, failed)
+        val report = EmbedReport.Completed(processed, embedded, failed)
+        logger.i(TAG, "EmbedMissingArtUseCase completed: $report")
+        return report
     }
 }
 

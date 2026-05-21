@@ -19,6 +19,7 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 fun AlbumList(
     albums: List<Album>,
     onAlbumClick: (Long) -> Unit,
+    onPlayAlbum: (Album) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     representativeTrackProvider: suspend (Long) -> Track? = { null },
@@ -40,6 +41,7 @@ fun AlbumList(
                 album = album,
                 onClick = { onAlbumClick(album.id) },
                 representativeTrackProvider = representativeTrackProvider,
+                onPlay = { onPlayAlbum(album) }
             )
         }
     }
@@ -57,6 +59,7 @@ private fun AlbumListPopulatedPreview() {
                     Album(3, "Live at the Gorge", artistId = 1, year = null, trackCount = 24, durationMs = 0),
                 ),
                 onAlbumClick = {},
+                onPlayAlbum = {},
             )
         }
     }

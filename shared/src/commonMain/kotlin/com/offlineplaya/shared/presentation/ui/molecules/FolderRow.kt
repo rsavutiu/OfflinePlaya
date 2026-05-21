@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Folder
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -18,6 +20,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Folder
 import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.theme.AppShapes
+import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 // [LOCAL-LLM] (model: qwen3:8b-ctx16k) — initial draft generated from the
@@ -34,15 +38,19 @@ fun FolderRow(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.md),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        FolderThumb(folder = folder)
-        Column(modifier = Modifier.padding(start = 16.dp).weight(1f)) {
+        FolderThumb()
+        Column(modifier = Modifier.padding(start = AppSpacing.lg).weight(1f)) {
             Text(
                 text = folder.displayName,
                 style = MaterialTheme.typography.titleMedium,
-                maxLines = 1,
+                // 2 lines accommodate the "Depeche Mode - Music for the Masses
+                // (Deluxe Edition)"-shaped folder names that come out of
+                // tracker downloads. Single-line truncated mid-word in the
+                // audit; this lets them wrap once before ellipsis.
+                maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
@@ -55,18 +63,21 @@ fun FolderRow(
 }
 
 @Composable
-private fun FolderThumb(folder: Folder, modifier: Modifier = Modifier) {
-    @Suppress("UNUSED_PARAMETER") val _kept = folder
+private fun FolderThumb(modifier: Modifier = Modifier) {
+    // Outlined folder icon tinted to onSurfaceVariant instead of the bright
+    // yellow "📁" glyph. Reads as part of the muted palette instead of
+    // shouting against it.
     Surface(
-        color = MaterialTheme.colorScheme.secondaryContainer,
-        shape = RoundedCornerShape(8.dp),
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        shape = AppShapes.tile,
         modifier = modifier.size(40.dp),
     ) {
         Box(contentAlignment = Alignment.Center) {
-            Text(
-                text = "📁",
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSecondaryContainer,
+            Icon(
+                imageVector = Icons.Outlined.Folder,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(24.dp),
             )
         }
     }

@@ -17,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.offlineplaya.shared.domain.model.Album
@@ -49,6 +50,8 @@ import com.offlineplaya.shared.presentation.ui.pages.QueuePage
 import com.offlineplaya.shared.presentation.ui.pages.SearchPage
 import com.offlineplaya.shared.presentation.ui.pages.SettingsPage
 import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 /**
  * Shared app entry. Renders whichever destination is on top of the navigator's
@@ -189,6 +192,7 @@ private fun DestinationContent(
     onAddToQueue: (Track) -> Unit,
     onAddToPlaylist: (Track, Long) -> Unit,
 ) {
+    val scope = rememberCoroutineScope()
     AnimatedContent(
         targetState = current,
         transitionSpec = {
@@ -320,6 +324,12 @@ private fun DestinationContent(
                     onArtistClick = { id ->
                         navigator.push(AppDestination.LibraryArtistDetail(id))
                     },
+                    onPlayArtist = { artist ->
+                        scope.launch {
+                            val tracks = library.tracksByArtist(artist.id).first()
+                            onPlayTracks(tracks, 0)
+                        }
+                    },
                     onTabSelected = onTabSelected,
                     onBack = { navigator.pop() },
                 )
@@ -335,10 +345,22 @@ private fun DestinationContent(
                 }.collectAsState(initial = emptyList<Album>())
 
                 LibraryArtistDetailPage(
-                    artistName = artist?.name ?: "Loading…",
+                    artist = artist,
                     albums = albums,
                     onAlbumClick = { id ->
                         navigator.push(AppDestination.LibraryAlbumDetail(id))
+                    },
+                    onPlayAlbum = { album ->
+                        scope.launch {
+                            val tracks = library.tracksByAlbum(album.id).first()
+                            onPlayTracks(tracks, 0)
+                        }
+                    },
+                    onPlayArtist = {
+                        scope.launch {
+                            val tracks = library.tracksByArtist(dest.artistId).first()
+                            onPlayTracks(tracks.shuffled(), 0)
+                        }
                     },
                     onBack = { navigator.pop() },
                     representativeTrackProvider = { id -> library.representativeTrackOfAlbum(id) },

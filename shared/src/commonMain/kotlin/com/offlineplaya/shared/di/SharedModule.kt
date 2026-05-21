@@ -26,6 +26,8 @@ import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
+import com.offlineplaya.shared.util.AppLogger
+import com.offlineplaya.shared.util.createLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -36,12 +38,13 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val sharedModule: Module = module {
+    single { createLogger() }
     single { createDatabase(get()) }
 
-    single { SqlTrackRepository(get()) } bind TrackRepository::class
-    single { SqlArtistRepository(get()) } bind ArtistRepository::class
-    single { SqlAlbumRepository(get()) } bind AlbumRepository::class
-    single { SqlFolderRepository(get()) } bind FolderRepository::class
+    single { SqlTrackRepository(get(), get()) } bind TrackRepository::class
+    single { SqlArtistRepository(get(), get()) } bind ArtistRepository::class
+    single { SqlAlbumRepository(get(), get()) } bind AlbumRepository::class
+    single { SqlFolderRepository(get(), get()) } bind FolderRepository::class
     single { SqlPlaylistRepository(get()) } bind PlaylistRepository::class
     single { SqlQueueRepository(get()) } bind QueueRepository::class
     single { SqlManagedTreeRootRepository(get()) } bind ManagedTreeRootRepository::class
@@ -59,6 +62,7 @@ val sharedModule: Module = module {
             scanner = get(),
             metadataReader = get(),
             deviceAudio = get(),
+            logger = get(),
         )
     }
 
@@ -69,6 +73,7 @@ val sharedModule: Module = module {
             tracks = get(),
             remoteSource = get(),
             writer = get(),
+            logger = get(),
         )
     }
 

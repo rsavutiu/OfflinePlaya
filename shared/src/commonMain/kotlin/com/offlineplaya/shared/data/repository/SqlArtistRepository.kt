@@ -6,6 +6,7 @@ import com.offlineplaya.shared.data.mapper.toDomain
 import com.offlineplaya.shared.database.OfflinePlayaDatabase
 import com.offlineplaya.shared.domain.model.Artist
 import com.offlineplaya.shared.domain.repository.ArtistRepository
+import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -14,8 +15,13 @@ import kotlinx.coroutines.withContext
 
 internal class SqlArtistRepository(
     private val db: OfflinePlayaDatabase,
+    private val logger: AppLogger,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : ArtistRepository {
+
+    private companion object {
+        const val TAG = "SqlArtistRepository"
+    }
 
     private val queries get() = db.artistQueries
 
@@ -31,14 +37,21 @@ internal class SqlArtistRepository(
     }
 
     override suspend fun upsert(name: String): Long = withContext(ioDispatcher) {
+        logger.d(TAG, "Upserting artist: $name")
         queries.transactionWithResult {
             queries.insert(name)
-            queries.selectByName(name).executeAsOne().id
+            val id = queries.selectByName(name).executeAsOne().id
+            logger.d(TAG, "Upserted artist '$name' with ID: $id")
+            id
         }
     }
 
     override suspend fun refreshCounts(id: Long) = withContext(ioDispatcher) {
         queries.updateCounts(id)
+    }
+
+    override suspend fun updateImageUrl(id: Long, imageUrl: String?) = withContext(ioDispatcher) {
+        queries.updateImageUrl(imageUrl, id)
     }
 
     override suspend fun deleteAll() = withContext(ioDispatcher) {

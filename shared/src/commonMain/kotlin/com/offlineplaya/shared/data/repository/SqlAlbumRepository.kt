@@ -6,6 +6,7 @@ import com.offlineplaya.shared.data.mapper.toDomain
 import com.offlineplaya.shared.database.OfflinePlayaDatabase
 import com.offlineplaya.shared.domain.model.Album
 import com.offlineplaya.shared.domain.repository.AlbumRepository
+import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -14,8 +15,13 @@ import kotlinx.coroutines.withContext
 
 internal class SqlAlbumRepository(
     private val db: OfflinePlayaDatabase,
+    private val logger: AppLogger,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : AlbumRepository {
+
+    private companion object {
+        const val TAG = "SqlAlbumRepository"
+    }
 
     private val queries get() = db.albumQueries
 
@@ -37,9 +43,12 @@ internal class SqlAlbumRepository(
 
     override suspend fun upsert(name: String, artistId: Long?, year: Int?): Long =
         withContext(ioDispatcher) {
+            logger.d(TAG, "Upserting album: $name (artistId: $artistId)")
             queries.transactionWithResult {
                 queries.insert(name, artistId, year?.toLong())
-                queries.selectByNameAndArtist(name, artistId).executeAsOne().id
+                val id = queries.selectByNameAndArtist(name, artistId).executeAsOne().id
+                logger.d(TAG, "Upserted album '$name' with ID: $id")
+                id
             }
         }
 

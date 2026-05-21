@@ -57,6 +57,9 @@ SELECT * FROM Track WHERE id = ?;
 selectByDocumentUri:
 SELECT * FROM Track WHERE document_uri = ?;
 
+selectIdByDocumentUri:
+SELECT id FROM Track WHERE document_uri = ?;
+
 selectByArtist:
 SELECT * FROM Track WHERE artist_id = ? ORDER BY album_id, disc_number, track_number, title;
 

@@ -1,7 +1,9 @@
 package com.offlineplaya.shared.presentation.ui.organisms
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -10,9 +12,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,52 +48,59 @@ fun MiniPlayer(
     modifier: Modifier = Modifier,
 ) {
     val track = state.currentTrack ?: return
-    Surface(
+    Box(
         modifier = modifier
-            .fillMaxWidth(),
-        tonalElevation = 4.dp,
-        color = MaterialTheme.colorScheme.surfaceVariant,
+            .fillMaxWidth()
+            .windowInsetsPadding(WindowInsets.navigationBars)
+            .padding(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 12.dp)
     ) {
-        // Surface fills the bottomBar slot and extends behind the navigation
-        // bar; the inner Column pads upward off the nav bar so the tap targets
-        // stay reachable. This gives edge-to-edge visual continuity without
-        // breaking ergonomics.
-        Column(modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)) {
-            ProgressLine(state = state)
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable(onClick = onExpand)
-                    .padding(horizontal = 12.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                AlbumArtThumb(track = track, size = 40.dp, cornerRadius = 4.dp)
-                Column(
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(6.dp)
+            ),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 8.dp
+            )
+        ) {
+            Column {
+                ProgressLine(state = state)
+                Row(
                     modifier = Modifier
-                        .padding(horizontal = 12.dp)
-                        .weight(1f),
+                        .fillMaxWidth()
+                        .clickable(onClick = onExpand)
+                        .padding(horizontal = 16.dp, vertical = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Text(
-                        text = track.title,
-                        style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                    Text(
-                        text = track.artistName,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
+                    AlbumArtThumb(track = track, size = 44.dp, cornerRadius = 8.dp)
+                    Column(
+                        modifier = Modifier
+                            .padding(horizontal = 12.dp)
+                            .weight(1f),
+                    ) {
+                        Text(
+                            text = track.title,
+                            style = MaterialTheme.typography.titleSmall,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            maxLines = 1,
+                            modifier = Modifier.basicMarquee(),
+                        )
+                        Text(
+                            text = track.artistName,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                    PlaybackControls(
+                        isPlaying = state.isPlaying,
+                        onPlayPause = onPlayPause,
+                        onPrevious = onPrevious,
+                        onNext = onNext,
                     )
                 }
-                PlaybackControls(
-                    isPlaying = state.isPlaying,
-                    onPlayPause = onPlayPause,
-                    onPrevious = onPrevious,
-                    onNext = onNext,
-                )
             }
         }
     }
@@ -99,16 +111,16 @@ fun MiniPlayer(
 private fun ProgressLine(state: PlaybackState) {
     val total = state.durationMs.coerceAtLeast(1L)
     val progress = (state.positionMs.toFloat() / total).coerceIn(0f, 1f)
-    androidx.compose.foundation.layout.Box(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(2.dp)
-            .background(MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)),
+            .height(3.dp)
+            .background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.15f)),
     ) {
-        androidx.compose.foundation.layout.Box(
+        Box(
             modifier = Modifier
                 .fillMaxWidth(fraction = progress)
-                .height(2.dp)
+                .height(3.dp)
                 .background(MaterialTheme.colorScheme.primary),
         )
     }

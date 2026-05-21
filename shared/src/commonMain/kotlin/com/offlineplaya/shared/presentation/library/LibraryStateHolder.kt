@@ -71,6 +71,7 @@ class LibraryStateHolder(
 
     fun albumsByArtist(artistId: Long): Flow<List<Album>> = albums.observeByArtist(artistId)
     fun tracksByAlbum(albumId: Long): Flow<List<Track>> = tracks.observeByAlbum(albumId)
+    fun tracksByArtist(artistId: Long): Flow<List<Track>> = tracks.observeByArtist(artistId)
     fun childFolders(parentId: Long): Flow<List<Folder>> = folders.observeChildren(parentId)
     fun tracksInFolder(folderId: Long): Flow<List<Track>> = tracks.observeByFolder(folderId)
 

@@ -15,14 +15,19 @@ package com.offlineplaya.shared.domain.image
 interface RemoteArtSource {
 
     /**
-     * Resolve album art bytes for the given album. May perform multiple
-     * network round-trips (MusicBrainz release search + Cover Art Archive
-     * fetch).
+     * Resolve album art bytes for the given album.
      *
-     * @param artist primary artist (album artist if available, else track
-     *   artist). Caller should NOT pass "Unknown Artist".
-     * @param album album name. Caller should NOT pass "Unknown Album".
+     * @param artist primary artist.
+     * @param album album name.
      * @return JPEG/PNG bytes for the front cover, or `null` when no match.
      */
     suspend fun resolve(artist: String, album: String): ByteArray?
+
+    /**
+     * Resolve an artist image URL.
+     *
+     * @param artist artist name.
+     * @return URL string for the artist's portrait, or `null` when no match.
+     */
+    suspend fun resolveArtistImage(artist: String): String?
 }

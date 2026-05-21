@@ -1,21 +1,43 @@
 package com.offlineplaya.shared.presentation.ui.pages
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.offlineplaya.shared.domain.model.Album
+import com.offlineplaya.shared.domain.model.Artist
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
+import com.offlineplaya.shared.presentation.ui.atoms.ArtistAvatar
 import com.offlineplaya.shared.presentation.ui.organisms.AlbumList
 import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 @Composable
 fun LibraryArtistDetailPage(
-    artistName: String,
+    artist: Artist?,
     albums: List<Album>,
     onAlbumClick: (Long) -> Unit,
+    onPlayAlbum: (Album) -> Unit,
+    onPlayArtist: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     representativeTrackProvider: suspend (Long) -> Track? = { null },
@@ -23,14 +45,52 @@ fun LibraryArtistDetailPage(
     Scaffold(
         modifier = modifier,
         contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
-        topBar = { AppTopBar(title = artistName, onBack = onBack) },
+        topBar = { AppTopBar(title = artist?.name ?: "Loading…", onBack = onBack) },
+        floatingActionButton = {
+            if (albums.isNotEmpty()) {
+                ExtendedFloatingActionButton(
+                    onClick = onPlayArtist,
+                    icon = { Icon(Icons.Default.PlayArrow, contentDescription = null) },
+                    text = { Text("Shuffle Artist") },
+                )
+            }
+        }
     ) { padding ->
-        AlbumList(
-            albums = albums,
-            onAlbumClick = onAlbumClick,
-            contentPadding = padding,
-            representativeTrackProvider = representativeTrackProvider,
-        )
+        Column(modifier = Modifier.padding(padding)) {
+            ArtistHeader(artist)
+            AlbumList(
+                albums = albums,
+                onAlbumClick = onAlbumClick,
+                onPlayAlbum = onPlayAlbum,
+                representativeTrackProvider = representativeTrackProvider,
+            )
+        }
+    }
+}
+
+@Composable
+private fun ArtistHeader(artist: Artist?) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+    ) {
+        if (artist?.imageUrl != null) {
+            AsyncImage(
+                model = artist.imageUrl,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize(),
+            )
+            // Scrim to ensure readability of anything overlayed, but we don't have text yet
+        } else {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                ArtistAvatar(artist = artist, size = 120.dp)
+            }
+        }
     }
 }
 
@@ -39,12 +99,14 @@ fun LibraryArtistDetailPage(
 private fun LibraryArtistDetailPagePreview() {
     PreviewTheme {
         LibraryArtistDetailPage(
-            artistName = "Pearl Jam",
+            artist = Artist(1, "Pearl Jam", 11, 142),
             albums = listOf(
                 Album(1, "Ten", artistId = 1, year = 1991, trackCount = 11, durationMs = 0),
                 Album(2, "Vs.", artistId = 1, year = 1993, trackCount = 12, durationMs = 0),
             ),
             onAlbumClick = {},
+            onPlayAlbum = {},
+            onPlayArtist = {},
             onBack = {},
         )
     }

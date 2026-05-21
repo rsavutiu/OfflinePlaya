@@ -9,5 +9,6 @@ interface ArtistRepository {
     suspend fun findByName(name: String): Artist?
     suspend fun upsert(name: String): Long
     suspend fun refreshCounts(id: Long)
+    suspend fun updateImageUrl(id: Long, imageUrl: String?)
     suspend fun deleteAll()
 }

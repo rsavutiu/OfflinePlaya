@@ -23,7 +23,7 @@ val androidModule: Module = module {
 
     // FolderScanner + MetadataReader contracts are defined in commonMain;
     // these are the Android-specific implementations.
-    single { SafFolderScanner(androidContext()) } bind FolderScanner::class
+    single { SafFolderScanner(androidContext(), get()) } bind FolderScanner::class
     single { AndroidMetadataReader(androidContext()) } bind MetadataReader::class
 
     // MediaStore-backed audio index. Lets the app see music in folders SAF
@@ -38,7 +38,7 @@ val androidModule: Module = module {
 
     // Jaudiotagger-backed art writer. Reads via MediaMetadataRetriever (so
     // hasEmbeddedArt is cheap) and writes via the temp-file FD dance.
-    single<AlbumArtWriter> { JaudiotaggerArtWriter(androidContext()) }
+    single<AlbumArtWriter> { JaudiotaggerArtWriter(androidContext(), get()) }
 
     // WorkManager-backed dispatch for long-running tasks declared in commonMain
     // (BackgroundTaskKind). Other targets will bind their own implementation —

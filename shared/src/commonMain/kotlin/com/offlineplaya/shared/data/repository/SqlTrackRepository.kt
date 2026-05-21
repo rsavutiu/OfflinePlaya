@@ -7,6 +7,7 @@ import com.offlineplaya.shared.database.OfflinePlayaDatabase
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.domain.repository.TrackRepository
+import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -15,8 +16,13 @@ import kotlinx.coroutines.withContext
 
 internal class SqlTrackRepository(
     private val db: OfflinePlayaDatabase,
+    private val logger: AppLogger,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : TrackRepository {
+
+    private companion object {
+        const val TAG = "SqlTrackRepository"
+    }
 
     private val queries get() = db.trackQueries
 
@@ -79,13 +85,17 @@ internal class SqlTrackRepository(
         lastModified: Long,
         folderId: Long?,
     ): Long = withContext(ioDispatcher) {
+        logger.d(TAG, "Inserting file: $documentUri (tree: $treeUri, path: $relativePath)")
         queries.transactionWithResult {
             queries.insertFile(documentUri, treeUri, relativePath, fileName, fileSize, lastModified, folderId)
-            queries.lastInsertId().executeAsOne()
+            val id = queries.selectIdByDocumentUri(documentUri).executeAsOne()
+            logger.d(TAG, "Inserted/Found file $documentUri with ID: $id")
+            id
         }
     }
 
     override suspend fun updateMetadata(track: Track) = withContext(ioDispatcher) {
+        logger.d(TAG, "Updating metadata for track ID ${track.id}: ${track.title}")
         queries.updateMetadata(
             title = track.title,
             artist_name = track.artistName,

@@ -13,6 +13,7 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 fun LibraryArtistsPage(
     artists: List<Artist>,
     onArtistClick: (Long) -> Unit,
+    onPlayArtist: (Artist) -> Unit,
     onTabSelected: (LibraryTab) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -23,7 +24,11 @@ fun LibraryArtistsPage(
         onBack = onBack,
         modifier = modifier,
     ) {
-        ArtistList(artists = artists, onArtistClick = onArtistClick)
+        ArtistList(
+            artists = artists,
+            onArtistClick = onArtistClick,
+            onPlayArtist = onPlayArtist,
+        )
     }
 }
 
@@ -37,6 +42,7 @@ private fun LibraryArtistsPagePopulatedPreview() {
                 Artist(2, "Pearl Jam", albumCount = 11, trackCount = 142),
             ),
             onArtistClick = {},
+            onPlayArtist = {},
             onTabSelected = {},
             onBack = {},
         )
@@ -50,6 +56,7 @@ private fun LibraryArtistsPageEmptyPreview() {
         LibraryArtistsPage(
             artists = emptyList(),
             onArtistClick = {},
+            onPlayArtist = {},
             onTabSelected = {},
             onBack = {},
         )

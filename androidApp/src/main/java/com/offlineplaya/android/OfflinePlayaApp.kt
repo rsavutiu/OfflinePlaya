@@ -34,6 +34,7 @@ class OfflinePlayaApp : Application() {
         installTrackArtImageLoader(
             context = this,
             settings = koin.get<SettingsRepository>(),
+            artistsRepo = koin.get<com.offlineplaya.shared.domain.repository.ArtistRepository>(),
             remoteSource = koin.get<RemoteArtSource>(),
         )
         // Auto-rescan once per process start, after Koin is up. syncAll() now

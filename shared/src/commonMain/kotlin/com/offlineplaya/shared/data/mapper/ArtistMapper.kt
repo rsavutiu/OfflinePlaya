@@ -8,4 +8,5 @@ internal fun ArtistRow.toDomain(): Artist = Artist(
     name = name,
     albumCount = album_count.toInt(),
     trackCount = track_count.toInt(),
+    imageUrl = image_url,
 )

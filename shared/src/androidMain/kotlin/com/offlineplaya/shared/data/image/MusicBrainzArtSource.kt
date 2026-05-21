@@ -60,6 +60,50 @@ internal class MusicBrainzArtSource(
         }
     }
 
+    override suspend fun resolveArtistImage(artist: String): String? {
+        return mutex.withLock {
+            val mbid = findArtistMbid(artist) ?: return@withLock null
+            
+            // Query TheAudioDB for artist portrait using MBID
+            val url = "https://www.theaudiodb.com/api/v1/json/123/artist-mbid.php?i=$mbid"
+            val request = Request.Builder()
+                .url(url)
+                .header("User-Agent", USER_AGENT)
+                .build()
+            
+            val body = withContext(Dispatchers.IO) {
+                httpClient.newCall(request).execute().use { response ->
+                    if (!response.isSuccessful) null else response.body?.string()
+                }
+            } ?: return@withLock null
+
+            // Very simple parsing of "strArtistThumb":"..." from the JSON
+            if (body.contains("\"strArtistThumb\":\"")) {
+                val thumb = body.substringAfter("\"strArtistThumb\":\"").substringBefore("\"")
+                if (thumb.startsWith("http")) return@withLock thumb.replace("\\/", "/")
+            }
+
+            null
+        }
+    }
+
+    private fun findArtistMbid(artist: String): String? {
+        val url = "https://musicbrainz.org/ws/2/artist/?query=artist:\"${artist.escapeLucene()}\"&fmt=json&limit=1"
+        val request = Request.Builder()
+            .url(url)
+            .header("User-Agent", USER_AGENT)
+            .header("Accept", "application/json")
+            .build()
+        val body = httpClient.newCall(request).execute().use { response ->
+            if (!response.isSuccessful) return null
+            response.body?.string() ?: return null
+        }
+        // Simplified parsing for MBID
+        return if (body.contains("\"id\":\"")) {
+            body.substringAfter("\"id\":\"").substringBefore("\"")
+        } else null
+    }
+
     private suspend fun fetchInternal(artist: String, album: String): ByteArray? =
         withContext(Dispatchers.IO) {
             val mbid = findReleaseGroupMbid(artist, album) ?: return@withContext null

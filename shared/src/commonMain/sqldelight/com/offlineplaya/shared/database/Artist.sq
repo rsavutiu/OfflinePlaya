@@ -2,7 +2,8 @@ CREATE TABLE Artist (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL UNIQUE,
     album_count INTEGER NOT NULL DEFAULT 0,
-    track_count INTEGER NOT NULL DEFAULT 0
+    track_count INTEGER NOT NULL DEFAULT 0,
+    image_url TEXT
 );
 
 CREATE INDEX idx_artist_name ON Artist(name COLLATE NOCASE);
@@ -24,6 +25,9 @@ UPDATE Artist
 SET album_count = (SELECT COUNT(DISTINCT album_id) FROM Track WHERE artist_id = Artist.id AND album_id IS NOT NULL),
     track_count = (SELECT COUNT(*) FROM Track WHERE artist_id = Artist.id)
 WHERE id = ?;
+
+updateImageUrl:
+UPDATE Artist SET image_url = ? WHERE id = ?;
 
 lastInsertId:
 SELECT last_insert_rowid();

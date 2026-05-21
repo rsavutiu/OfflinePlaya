@@ -3,8 +3,9 @@ package com.offlineplaya.shared.data.image
 import android.content.Context
 import android.media.MediaMetadataRetriever
 import android.net.Uri
-import co.touchlab.kermit.Logger
+import android.webkit.MimeTypeMap
 import com.offlineplaya.shared.domain.image.AlbumArtWriter
+import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jaudiotagger.audio.AudioFileIO
@@ -27,6 +28,7 @@ import java.io.FileOutputStream
  */
 internal class JaudiotaggerArtWriter(
     private val context: Context,
+    private val logger: AppLogger,
 ) : AlbumArtWriter {
 
     init {
@@ -35,15 +37,20 @@ internal class JaudiotaggerArtWriter(
         TagOptionSingleton.getInstance().isAndroid = true
     }
 
-    private val log = Logger.withTag("ArtWriter")
+    private companion object {
+        const val TAG = "JaudiotaggerArtWriter"
+    }
 
     override suspend fun hasEmbeddedArt(documentUri: String): Boolean =
         withContext(Dispatchers.IO) {
             val retriever = MediaMetadataRetriever()
             try {
                 retriever.setDataSource(context, Uri.parse(documentUri))
-                retriever.embeddedPicture != null
-            } catch (_: Throwable) {
+                val hasArt = retriever.embeddedPicture != null
+                logger.d(TAG, "hasEmbeddedArt($documentUri) -> $hasArt")
+                hasArt
+            } catch (e: Throwable) {
+                logger.w(TAG, "Failed to check embedded art for $documentUri: ${e.message}")
                 false
             } finally {
                 try {
@@ -59,13 +66,20 @@ internal class JaudiotaggerArtWriter(
         jpegBytes: ByteArray,
     ): Result<Unit> = withContext(Dispatchers.IO) {
         runCatching {
+            logger.i(TAG, "Writing art to $documentUri (${jpegBytes.size} bytes)")
             val uri = Uri.parse(documentUri)
             val resolver = context.contentResolver
+            
+            // Try to get extension from URI or MIME type
+            val mimeType = resolver.getType(uri)
+            val extensionFromMime = mimeType?.let { MimeTypeMap.getSingleton().getExtensionFromMimeType(it) }
             val displayName = uri.lastPathSegment ?: "audio"
-            val extension = displayName.substringAfterLast('.', "tmp")
+            val extensionFromUri = displayName.substringAfterLast('.', "")
                 .substringBefore('?')
                 .substringBefore('#')
-                .ifBlank { "tmp" }
+
+            val extension = extensionFromMime ?: extensionFromUri.ifBlank { "mp3" }
+            logger.d(TAG, "Determined extension: $extension for $documentUri")
             val tempFile = File.createTempFile("embed-art-", ".$extension", context.cacheDir)
 
             try {
@@ -79,13 +93,14 @@ internal class JaudiotaggerArtWriter(
                 val tag = audioFile.tagOrCreateAndSetDefault
                 val artwork = ArtworkFactory.getNew().apply {
                     binaryData = jpegBytes
-                    mimeType = "image/jpeg"
+                    setMimeType("image/jpeg")
                     pictureType = 0 // "Other" — universally supported value
                     description = ""
                 }
                 runCatching { tag.deleteArtworkField() }
                 tag.setField(artwork)
                 audioFile.commit()
+                logger.d(TAG, "Jaudiotagger committed changes to temp file")
 
                 // Step 3 — write the modified bytes back over the SAF doc.
                 // `"w"` truncates on open per ParcelFileDescriptor docs, so we
@@ -96,10 +111,11 @@ internal class JaudiotaggerArtWriter(
                     }
                 } ?: error("Could not open output FD for $uri")
 
+                logger.i(TAG, "Successfully wrote art back to $documentUri")
                 // Explicit Unit so runCatching infers Result<Unit>, not Result<Long>.
                 Unit
             } catch (t: Throwable) {
-                log.w(t) { "Embed failed for $documentUri" }
+                logger.e(TAG, "Embed failed for $documentUri", t)
                 throw t
             } finally {
                 if (tempFile.exists()) {

@@ -28,6 +28,9 @@ fun AppTopBar(
     onBack: (() -> Unit)? = null,
     actions: @Composable () -> Unit = {},
 ) {
+    // Container uses `surfaceContainer` rather than `surface` so the bar
+    // visually separates from the page content beneath it instead of bleeding
+    // into the same plane. M3 specifies this as the resting top-bar color.
     TopAppBar(
         modifier = modifier,
         title = { Text(title, style = MaterialTheme.typography.titleLarge) },
@@ -43,7 +46,7 @@ fun AppTopBar(
         },
         actions = { actions() },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
             titleContentColor = MaterialTheme.colorScheme.onSurface,
             navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
             actionIconContentColor = MaterialTheme.colorScheme.onSurface,

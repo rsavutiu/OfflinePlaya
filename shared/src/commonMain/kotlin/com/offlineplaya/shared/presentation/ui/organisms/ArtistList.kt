@@ -18,6 +18,7 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 fun ArtistList(
     artists: List<Artist>,
     onArtistClick: (Long) -> Unit,
+    onPlayArtist: (Artist) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
@@ -34,7 +35,11 @@ fun ArtistList(
         contentPadding = contentPadding,
     ) {
         items(items = artists, key = { it.id }) { artist ->
-            ArtistRow(artist = artist, onClick = { onArtistClick(artist.id) })
+            ArtistRow(
+                artist = artist,
+                onClick = { onArtistClick(artist.id) },
+                onPlay = { onPlayArtist(artist) }
+            )
         }
     }
 }
@@ -51,6 +56,7 @@ private fun ArtistListPopulatedPreview() {
                     Artist(3, "Pearl Jam", albumCount = 11, trackCount = 142),
                 ),
                 onArtistClick = {},
+                onPlayArtist = {},
             )
         }
     }
@@ -61,7 +67,7 @@ private fun ArtistListPopulatedPreview() {
 private fun ArtistListEmptyPreview() {
     PreviewTheme {
         Surface {
-            ArtistList(artists = emptyList(), onArtistClick = {})
+            ArtistList(artists = emptyList(), onArtistClick = {}, onPlayArtist = {})
         }
     }
 }

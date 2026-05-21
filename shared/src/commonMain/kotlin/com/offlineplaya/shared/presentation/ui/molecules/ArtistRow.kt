@@ -18,17 +18,20 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Artist
+import com.offlineplaya.shared.presentation.ui.atoms.ArtistAvatar
+import com.offlineplaya.shared.presentation.ui.atoms.PlayButton
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 /**
- * A row in the artist list. Leading initial avatar, name, and a count summary.
+ * A row in the artist list. Leading artist avatar, name, and a count summary.
  */
 @Composable
 fun ArtistRow(
     artist: Artist,
     onClick: () -> Unit,
+    onPlay: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -38,7 +41,7 @@ fun ArtistRow(
             .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.md),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        InitialAvatar(text = artist.name.firstLetterOrPlaceholder())
+        ArtistAvatar(artist = artist, size = 40.dp)
         Column(modifier = Modifier.padding(start = AppSpacing.lg).weight(1f)) {
             Text(
                 text = artist.name,
@@ -52,6 +55,7 @@ fun ArtistRow(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
+        PlayButton(onPlay = onPlay)
     }
 }
 
@@ -99,6 +103,7 @@ private fun ArtistRowPreview() {
             ArtistRow(
                 artist = Artist(id = 1, name = "Pearl Jam", albumCount = 11, trackCount = 142),
                 onClick = {},
+                onPlay = {},
             )
         }
     }
@@ -112,6 +117,7 @@ private fun ArtistRowSingletonsPreview() {
             ArtistRow(
                 artist = Artist(id = 1, name = "Solo Project", albumCount = 1, trackCount = 1),
                 onClick = {},
+                onPlay = {},
             )
         }
     }

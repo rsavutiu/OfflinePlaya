@@ -12,6 +12,7 @@ import com.offlineplaya.shared.domain.scanner.DeviceAudioTrack
 import com.offlineplaya.shared.domain.scanner.FolderScanner
 import com.offlineplaya.shared.domain.scanner.MetadataReader
 import com.offlineplaya.shared.domain.scanner.RawAudioFile
+import com.offlineplaya.shared.util.AppLogger
 
 /**
  * Phase 2 orchestrator. For each managed tree root:
@@ -36,7 +37,11 @@ class LibrarySyncUseCase(
     private val scanner: FolderScanner,
     private val metadataReader: MetadataReader,
     private val deviceAudio: DeviceAudioScanner,
+    private val logger: AppLogger,
 ) {
+    private companion object {
+        const val TAG = "LibrarySyncUseCase"
+    }
 
     /**
      * Sync every managed tree root sequentially, accumulating the report,
@@ -46,31 +51,45 @@ class LibrarySyncUseCase(
      * Android refuses to let users grant SAF tree access to.
      */
     suspend fun syncAll(): SyncReport {
+        logger.i(TAG, "Starting syncAll")
         val roots = managedRoots.getAll()
+        logger.d(TAG, "Found ${roots.size} managed roots")
         val safReport = roots.fold(SyncReport.Empty) { acc, root ->
             acc + syncOne(root.treeUri)
         }
-        return safReport + syncDeviceAudio()
+        val deviceReport = syncDeviceAudio()
+        val totalReport = safReport + deviceReport
+        logger.i(TAG, "Completed syncAll: $totalReport")
+        return totalReport
     }
 
     /** Sync a single tree root by URI. Returns a per-root report. */
     suspend fun syncOne(treeUri: String): SyncReport {
-        val scan = scanner.scan(treeUri)
+        logger.i(TAG, "Syncing root: $treeUri")
+        return try {
+            val scan = scanner.scan(treeUri)
+            logger.d(TAG, "Scanned $treeUri: ${scan.folders.size} folders, ${scan.files.size} files")
 
-        val folderIds = materializeFolders(scan.folders)
-        val pendingTracks = insertPendingTracks(scan.files, folderIds)
-        val (scanned, failed) = applyMetadataAndGrouping(pendingTracks)
+            val folderIds = materializeFolders(scan.folders)
+            val pendingTracks = insertPendingTracks(scan.files, folderIds)
+            val (scanned, failed) = applyMetadataAndGrouping(pendingTracks)
 
-        refreshAggregates(folderIds.values, pendingTracks.map { it.first })
+            refreshAggregates(folderIds.values, pendingTracks.map { it.first })
 
-        managedRoots.markScanned(treeUri)
+            managedRoots.markScanned(treeUri)
 
-        return SyncReport(
-            foldersUpserted = folderIds.size,
-            tracksDiscovered = scan.files.size,
-            tracksScanned = scanned,
-            tracksFailed = failed,
-        )
+            val report = SyncReport(
+                foldersUpserted = folderIds.size,
+                tracksDiscovered = scan.files.size,
+                tracksScanned = scanned,
+                tracksFailed = failed,
+            )
+            logger.i(TAG, "Finished syncing root $treeUri: $report")
+            report
+        } catch (e: Exception) {
+            logger.e(TAG, "Failed to sync root $treeUri", e)
+            SyncReport.Empty
+        }
     }
 
     /**
@@ -87,8 +106,13 @@ class LibrarySyncUseCase(
      * "no audio found" so the sync never throws at the user.
      */
     suspend fun syncDeviceAudio(): SyncReport {
+        logger.i(TAG, "Starting syncDeviceAudio")
         val deviceTracks = deviceAudio.scan()
-        if (deviceTracks.isEmpty()) return SyncReport.Empty
+        if (deviceTracks.isEmpty()) {
+            logger.d(TAG, "No device tracks found")
+            return SyncReport.Empty
+        }
+        logger.d(TAG, "Found ${deviceTracks.size} device tracks")
 
         val syntheticFolders = synthesizeFolders(deviceTracks)
         val folderIds = materializeFolders(syntheticFolders)
@@ -96,39 +120,45 @@ class LibrarySyncUseCase(
         var scanned = 0
         val touchedTrackIds = mutableListOf<Long>()
         for (deviceTrack in deviceTracks) {
-            val parentPath = parentRelativePath(deviceTrack.relativePath)
-            val folderId = folderIds[parentPath]
+            try {
+                val parentPath = parentRelativePath(deviceTrack.relativePath)
+                val folderId = folderIds[parentPath]
 
-            // INSERT OR IGNORE on document_uri — re-scans are no-ops here.
-            tracks.insertFile(
-                documentUri = deviceTrack.sourceUri,
-                treeUri = DeviceAudioScanner.ROOT_URI,
-                relativePath = deviceTrack.relativePath,
-                fileName = deviceTrack.fileName,
-                fileSize = deviceTrack.fileSize,
-                lastModified = deviceTrack.lastModified,
-                folderId = folderId,
-            )
-            // Look up by URI instead of trusting lastInsertId — that value
-            // is unreliable when INSERT OR IGNORE collapses to a no-op.
-            val stored = tracks.findByDocumentUri(deviceTrack.sourceUri) ?: continue
+                // INSERT OR IGNORE on document_uri — re-scans are no-ops here.
+                tracks.insertFile(
+                    documentUri = deviceTrack.sourceUri,
+                    treeUri = DeviceAudioScanner.ROOT_URI,
+                    relativePath = deviceTrack.relativePath,
+                    fileName = deviceTrack.fileName,
+                    fileSize = deviceTrack.fileSize,
+                    lastModified = deviceTrack.lastModified,
+                    folderId = folderId,
+                )
+                // Look up by URI instead of trusting lastInsertId — that value
+                // is unreliable when INSERT OR IGNORE collapses to a no-op.
+                val stored = tracks.findByDocumentUri(deviceTrack.sourceUri) ?: continue
 
-            val artistId = upsertArtist(deviceTrack.metadata)
-            val albumId = upsertAlbum(deviceTrack.metadata, artistId)
-            tracks.updateMetadata(stored.applyMetadata(deviceTrack.metadata))
-            tracks.updateForeignKeys(stored.id, artistId, albumId)
-            touchedTrackIds += stored.id
-            scanned++
+                val artistId = upsertArtist(deviceTrack.metadata)
+                val albumId = upsertAlbum(deviceTrack.metadata, artistId)
+                tracks.updateMetadata(stored.applyMetadata(deviceTrack.metadata))
+                tracks.updateForeignKeys(stored.id, artistId, albumId)
+                touchedTrackIds += stored.id
+                scanned++
+            } catch (e: Exception) {
+                logger.e(TAG, "Failed to process device track ${deviceTrack.sourceUri}", e)
+            }
         }
 
         refreshAggregates(folderIds.values, touchedTrackIds)
 
-        return SyncReport(
+        val report = SyncReport(
             foldersUpserted = folderIds.size,
             tracksDiscovered = deviceTracks.size,
             tracksScanned = scanned,
             tracksFailed = deviceTracks.size - scanned,
         )
+        logger.i(TAG, "Finished syncDeviceAudio: $report")
+        return report
     }
 
     /**

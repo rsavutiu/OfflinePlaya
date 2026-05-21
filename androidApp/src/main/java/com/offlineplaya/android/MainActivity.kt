@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.documentfile.provider.DocumentFile
+import org.koin.compose.KoinContext
 import com.offlineplaya.android.picker.OpenDocumentTreeContract
 import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
@@ -37,7 +38,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        setContent { AndroidApp() }
+        setContent {
+            KoinContext {
+                AndroidApp()
+            }
+        }
     }
 }
 

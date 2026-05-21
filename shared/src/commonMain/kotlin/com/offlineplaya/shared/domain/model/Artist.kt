@@ -5,4 +5,5 @@ data class Artist(
     val name: String,
     val albumCount: Int,
     val trackCount: Int,
+    val imageUrl: String? = null,
 )

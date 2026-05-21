@@ -6,6 +6,7 @@ import com.offlineplaya.shared.data.mapper.toDomain
 import com.offlineplaya.shared.database.OfflinePlayaDatabase
 import com.offlineplaya.shared.domain.model.Folder
 import com.offlineplaya.shared.domain.repository.FolderRepository
+import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -14,8 +15,13 @@ import kotlinx.coroutines.withContext
 
 internal class SqlFolderRepository(
     private val db: OfflinePlayaDatabase,
+    private val logger: AppLogger,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : FolderRepository {
+
+    private companion object {
+        const val TAG = "SqlFolderRepository"
+    }
 
     private val queries get() = db.folderQueries
 
@@ -41,9 +47,12 @@ internal class SqlFolderRepository(
         displayName: String,
         parentId: Long?,
     ): Long = withContext(ioDispatcher) {
+        logger.d(TAG, "Upserting folder: $relativePath in $treeUri")
         queries.transactionWithResult {
             queries.insert(treeUri, relativePath, displayName, parentId)
-            queries.selectByPath(treeUri, relativePath).executeAsOne().id
+            val id = queries.selectByPath(treeUri, relativePath).executeAsOne().id
+            logger.d(TAG, "Upserted folder '$relativePath' with ID: $id")
+            id
         }
     }
 

@@ -4,6 +4,7 @@ import android.content.Context
 import coil3.ImageLoader
 import coil3.SingletonImageLoader
 import com.offlineplaya.shared.domain.image.RemoteArtSource
+import com.offlineplaya.shared.domain.repository.ArtistRepository
 import com.offlineplaya.shared.domain.repository.SettingsRepository
 
 /**
@@ -14,9 +15,11 @@ import com.offlineplaya.shared.domain.repository.SettingsRepository
 fun installTrackArtImageLoader(
     context: Context,
     settings: SettingsRepository,
+    artistsRepo: ArtistRepository,
     remoteSource: RemoteArtSource,
 ) {
     val appContext = context.applicationContext
+    val httpClient = okhttp3.OkHttpClient()
     SingletonImageLoader.setSafe { ctx ->
         ImageLoader.Builder(ctx)
             .components {
@@ -27,6 +30,15 @@ fun installTrackArtImageLoader(
                         settings = settings,
                         remoteSource = remoteSource,
                     ),
+                )
+                add(ArtistKeyer())
+                add(
+                    ArtistArtFetcher.Factory(
+                        settings = settings,
+                        artistsRepo = artistsRepo,
+                        remoteSource = remoteSource,
+                        httpClient = httpClient,
+                    )
                 )
             }
             .build()

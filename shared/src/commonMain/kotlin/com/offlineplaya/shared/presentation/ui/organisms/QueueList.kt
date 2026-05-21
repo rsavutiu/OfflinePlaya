@@ -2,16 +2,19 @@ package com.offlineplaya.shared.presentation.ui.organisms
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +29,7 @@ import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 /**
@@ -73,8 +77,13 @@ private fun QueueRow(
     onRemove: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    // The "currently playing" highlight uses surfaceVariant (subtle tint)
+    // plus a leading equalizer-glyph instead of a full primaryContainer fill.
+    // The old fill overpowered the queue — only the playing row was visible
+    // and every other entry felt like a backdrop. M3's emphasis pattern is
+    // "marker + slight tint", not "flood the row with brand color".
     val rowBackground = if (isCurrent) {
-        MaterialTheme.colorScheme.primaryContainer
+        MaterialTheme.colorScheme.surfaceVariant
     } else {
         MaterialTheme.colorScheme.surface
     }
@@ -83,18 +92,33 @@ private fun QueueRow(
             .fillMaxWidth()
             .background(rowBackground)
             .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.md),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column(modifier = Modifier.weight(1f)) {
+        // Leading slot: equalizer glyph for the current track, equal-width
+        // spacer for everyone else so titles stay column-aligned.
+        Box(
+            modifier = Modifier.size(28.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (isCurrent) {
+                Icon(
+                    imageVector = Icons.Default.GraphicEq,
+                    contentDescription = "Now playing",
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(20.dp),
+                )
+            }
+        }
+        Column(
+            modifier = Modifier
+                .padding(start = AppSpacing.lg)
+                .weight(1f),
+        ) {
             Text(
                 text = track.title,
                 style = MaterialTheme.typography.bodyLarge,
-                color = if (isCurrent) {
-                    MaterialTheme.colorScheme.onPrimaryContainer
-                } else {
-                    MaterialTheme.colorScheme.onSurface
-                },
+                color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )

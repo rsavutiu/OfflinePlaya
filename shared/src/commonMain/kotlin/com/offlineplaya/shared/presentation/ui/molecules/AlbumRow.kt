@@ -5,6 +5,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -21,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Album
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
+import com.offlineplaya.shared.presentation.ui.atoms.PlayButton
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
@@ -38,6 +44,7 @@ fun AlbumRow(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     representativeTrackProvider: suspend (Long) -> Track? = { null },
+    onPlay: () -> Unit
 ) {
     var representativeTrack by remember(album.id) { mutableStateOf<Track?>(null) }
     LaunchedEffect(album.id) {
@@ -69,6 +76,8 @@ fun AlbumRow(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
+
+        PlayButton(onPlay = onPlay)
     }
 }
 
@@ -86,6 +95,7 @@ private fun AlbumRowFullPreview() {
             AlbumRow(
                 album = Album(id = 1, name = "Ten", artistId = 1, year = 1991, trackCount = 11, durationMs = 0),
                 onClick = {},
+                onPlay = {}
             )
         }
     }
@@ -99,6 +109,7 @@ private fun AlbumRowNoYearPreview() {
             AlbumRow(
                 album = Album(id = 2, name = "Untitled Bootleg", artistId = 1, year = null, trackCount = 7, durationMs = 0),
                 onClick = {},
+                onPlay = {}
             )
         }
     }

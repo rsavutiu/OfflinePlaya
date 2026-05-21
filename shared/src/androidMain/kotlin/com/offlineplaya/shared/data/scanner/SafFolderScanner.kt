@@ -3,14 +3,15 @@ package com.offlineplaya.shared.data.scanner
 import android.content.Context
 import android.net.Uri
 import android.provider.DocumentsContract
+import androidx.core.net.toUri
 import com.offlineplaya.shared.domain.scanner.AudioFolder
 import com.offlineplaya.shared.domain.scanner.FolderScanner
 import com.offlineplaya.shared.domain.scanner.RawAudioFile
 import com.offlineplaya.shared.domain.scanner.ScanResult
+import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import androidx.core.net.toUri
 
 /**
  * [FolderScanner] backed by SAF's [DocumentsContract] API. Uses the bulk
@@ -22,17 +23,25 @@ import androidx.core.net.toUri
  */
 internal class SafFolderScanner(
     private val context: Context,
+    private val logger: AppLogger,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : FolderScanner {
 
     override suspend fun scan(treeUri: String): ScanResult = withContext(ioDispatcher) {
+        logger.i(TAG, "Scanning SAF tree: $treeUri")
         val uri = treeUri.toUri()
-        val rootDocId = DocumentsContract.getTreeDocumentId(uri)
+        val rootDocId = try {
+            DocumentsContract.getTreeDocumentId(uri)
+        } catch (e: Exception) {
+            logger.e(TAG, "Failed to get root document ID for $treeUri", e)
+            throw e
+        }
 
         val folders = mutableListOf<AudioFolder>()
         val files = mutableListOf<RawAudioFile>()
 
         val rootDisplayName = queryDisplayName(uri, rootDocId) ?: "Folder"
+        logger.d(TAG, "Root folder name: $rootDisplayName")
         folders += AudioFolder(
             treeUri = treeUri,
             relativePath = "",
@@ -49,7 +58,9 @@ internal class SafFolderScanner(
             files = files,
         )
 
-        ScanResult(folders.toList(), files.toList())
+        val result = ScanResult(folders.toList(), files.toList())
+        logger.i(TAG, "Scan complete for $treeUri: ${folders.size} folders, ${files.size} files")
+        result
     }
 
     private fun queryDisplayName(treeUri: Uri, docId: String): String? {
@@ -144,6 +155,8 @@ internal class SafFolderScanner(
     private data class SubfolderRef(val docId: String, val relativePath: String)
 
     private companion object {
+        const val TAG = "SafFolderScanner"
+
         val PROJECTION = arrayOf(
             DocumentsContract.Document.COLUMN_DOCUMENT_ID,
             DocumentsContract.Document.COLUMN_DISPLAY_NAME,
