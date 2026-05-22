@@ -27,7 +27,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
+import com.offlineplaya.shared.presentation.ui.molecules.formatDuration
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
@@ -95,19 +97,25 @@ private fun QueueRow(
             .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.md),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        // Leading slot: equalizer glyph for the current track, equal-width
-        // spacer for everyone else so titles stay column-aligned.
-        Box(
-            modifier = Modifier.size(28.dp),
-            contentAlignment = Alignment.Center,
-        ) {
+        Box(modifier = Modifier.size(44.dp)) {
+            AlbumArtThumb(track = track, size = 44.dp, cornerRadius = 8.dp)
             if (isCurrent) {
-                Icon(
-                    imageVector = Icons.Default.GraphicEq,
-                    contentDescription = "Now playing",
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(20.dp),
-                )
+                Box(
+                    modifier = Modifier
+                        .size(44.dp)
+                        .background(
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+                            shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp),
+                        ),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.GraphicEq,
+                        contentDescription = "Now playing",
+                        tint = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier.size(22.dp),
+                    )
+                }
             }
         }
         Column(
@@ -118,12 +126,13 @@ private fun QueueRow(
             Text(
                 text = track.title,
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = if (isCurrent) MaterialTheme.colorScheme.primary
+                    else MaterialTheme.colorScheme.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
-                text = track.artistName,
+                text = "${track.artistName} · ${track.durationMs.formatDuration()}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,

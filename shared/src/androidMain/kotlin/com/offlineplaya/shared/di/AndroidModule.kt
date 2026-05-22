@@ -32,9 +32,9 @@ val androidModule: Module = module {
     // READ_MEDIA_AUDIO permission isn't held — sync treats that as a no-op.
     single<DeviceAudioScanner> { MediaStoreDeviceAudioScanner(androidContext()) }
 
-    // MusicBrainz + Cover Art Archive lookup. Singleton — holds an in-memory
-    // session cache and an OkHttpClient.
-    single<RemoteArtSource> { createMusicBrainzArtSource() }
+    // Deezer + MusicBrainz/CAA album art + artist image lookup. Singleton with
+    // persistent miss cache so failed lookups don't waste data on every restart.
+    single<RemoteArtSource> { createMusicBrainzArtSource(get()) }
 
     // Jaudiotagger-backed art writer. Reads via MediaMetadataRetriever (so
     // hasEmbeddedArt is cheap) and writes via the temp-file FD dance.

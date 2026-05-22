@@ -1,13 +1,20 @@
 package com.offlineplaya.shared.presentation.ui.organisms
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -16,11 +23,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Playlist
@@ -106,12 +116,7 @@ fun TrackDetailsContent(
         )
 
         if (onPlay != null) {
-            Button(
-                onClick = onPlay,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text("Play")
-            }
+            AutoPlayButton(onPlay = onPlay)
             Spacer(modifier = Modifier.height(8.dp))
         }
 
@@ -151,6 +156,70 @@ fun TrackDetailsContent(
         track.bitrate?.let { DetailRow("Bitrate", "${it / 1000} kbps") }
         DetailRow("Path", track.relativePath)
         DetailRow("Status", track.scanStatus.name.lowercase().replaceFirstChar { it.titlecase() })
+    }
+}
+
+/**
+ * Play button that begins a ~2s countdown the moment it appears. A filled
+ * progress band drains across the surface; when it reaches the end, [onPlay]
+ * fires. Tapping the button at any point cancels the countdown — pressing
+ * again restarts it.
+ */
+@Composable
+private fun AutoPlayButton(
+    onPlay: () -> Unit,
+    countdownMillis: Int = 2_000,
+) {
+    val progress = remember { Animatable(0f) }
+    var running by remember { mutableStateOf(true) }
+
+    LaunchedEffect(running) {
+        if (!running) return@LaunchedEffect
+        progress.snapTo(0f)
+        val result = progress.animateTo(
+            targetValue = 1f,
+            animationSpec = tween(durationMillis = countdownMillis, easing = LinearEasing),
+        )
+        // Cancellation throws; reaching here means the timer expired cleanly.
+        if (result.endReason == androidx.compose.animation.core.AnimationEndReason.Finished) {
+            onPlay()
+        }
+    }
+
+    val containerShape = RoundedCornerShape(24.dp)
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(52.dp)
+            .clip(containerShape)
+            .background(MaterialTheme.colorScheme.primaryContainer)
+            .clickable {
+                if (running) {
+                    // Tap during countdown → cancel auto-play; button reverts
+                    // to a normal Play affordance the user can press at will.
+                    running = false
+                } else {
+                    onPlay()
+                }
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        // Filled progress band drains left→right while the timer runs.
+        if (running) {
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(progress.value)
+                    .background(MaterialTheme.colorScheme.primary)
+                    .align(Alignment.CenterStart),
+            )
+        }
+        Text(
+            text = if (running) "Playing in…" else "Play",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            fontWeight = FontWeight.SemiBold,
+        )
     }
 }
 

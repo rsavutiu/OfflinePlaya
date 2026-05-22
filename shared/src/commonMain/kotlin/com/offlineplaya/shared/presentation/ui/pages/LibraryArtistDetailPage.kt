@@ -2,7 +2,7 @@ package com.offlineplaya.shared.presentation.ui.pages
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,7 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
+import coil3.compose.SubcomposeAsyncImage
+import coil3.compose.SubcomposeAsyncImageContent
 import com.offlineplaya.shared.domain.model.Album
 import com.offlineplaya.shared.domain.model.Artist
 import com.offlineplaya.shared.domain.model.Track
@@ -70,26 +71,44 @@ fun LibraryArtistDetailPage(
 
 @Composable
 private fun ArtistHeader(artist: Artist?) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        if (artist?.imageUrl != null) {
-            AsyncImage(
-                model = artist.imageUrl,
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+        ) {
+            val model: Any? = artist?.imageUrl ?: artist
+            SubcomposeAsyncImage(
+                model = model,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize(),
+                loading = {
+                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        ArtistAvatar(artist = null, size = 120.dp)
+                    }
+                },
+                error = {
+                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        ArtistAvatar(artist = artist, size = 120.dp)
+                    }
+                },
+                success = { SubcomposeAsyncImageContent() },
             )
-            // Scrim to ensure readability of anything overlayed, but we don't have text yet
-        } else {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                ArtistAvatar(artist = artist, size = 120.dp)
-            }
+        }
+        if (artist != null) {
+            Spacer(Modifier.height(AppSpacing.sm))
+            val albumPart = "${artist.albumCount} ${if (artist.albumCount == 1) "album" else "albums"}"
+            val trackPart = "${artist.trackCount} ${if (artist.trackCount == 1) "track" else "tracks"}"
+            Text(
+                text = "$albumPart · $trackPart",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(bottom = AppSpacing.sm),
+            )
         }
     }
 }

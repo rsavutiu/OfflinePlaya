@@ -16,6 +16,7 @@ import com.offlineplaya.shared.presentation.ui.organisms.FolderDetailContent
 import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun LibraryFolderDetailPage(
@@ -30,6 +31,7 @@ fun LibraryFolderDetailPage(
     onAddToPlaylist: (Track, Long) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
+    previewTracksProvider: ((Long) -> Flow<List<Track>>)? = null,
 ) {
     var selectedTrack by remember { mutableStateOf<Track?>(null) }
 
@@ -44,6 +46,7 @@ fun LibraryFolderDetailPage(
             onFolderClick = onFolderClick,
             onTrackClick = { selectedTrack = it },
             modifier = Modifier.padding(padding),
+            previewTracksProvider = previewTracksProvider,
         )
     }
 

@@ -1,34 +1,51 @@
 package com.offlineplaya.shared.presentation.ui.pages
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.QueueMusic
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.PlaylistNameDialog
+import com.offlineplaya.shared.presentation.ui.molecules.TrackRow
+import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
+import com.offlineplaya.shared.presentation.ui.molecules.formatDuration
 import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
-import com.offlineplaya.shared.presentation.ui.organisms.TrackList
 import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
-/**
- * Single-playlist detail: top bar has Play-all + Rename + Delete actions,
- * body is the track list. Tapping a track opens the details sheet (Play
- * sets the queue to the entire playlist from that track).
- */
 @Composable
 fun PlaylistDetailPage(
     playlistName: String,
@@ -54,11 +71,6 @@ fun PlaylistDetailPage(
                 title = playlistName,
                 onBack = onBack,
                 actions = {
-                    if (tracks.isNotEmpty()) {
-                        IconButton(onClick = { onPlayTracks(tracks, 0) }) {
-                            Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "Play all")
-                        }
-                    }
                     IconButton(onClick = { showRenameDialog = true }) {
                         Icon(imageVector = Icons.Default.Edit, contentDescription = "Rename playlist")
                     }
@@ -68,12 +80,44 @@ fun PlaylistDetailPage(
                 },
             )
         },
+        floatingActionButton = {
+            if (tracks.isNotEmpty()) {
+                ExtendedFloatingActionButton(
+                    onClick = { onPlayTracks(tracks, 0) },
+                    icon = { Icon(Icons.Default.PlayArrow, contentDescription = null) },
+                    text = { Text("Play All") },
+                )
+            }
+        },
     ) { padding ->
-        TrackList(
-            tracks = tracks,
-            onTrackClick = { selectedTrack = it },
-            contentPadding = padding,
-        )
+        if (tracks.isEmpty()) {
+            EmptyState(
+                title = "No tracks yet",
+                subtitle = "Add tracks from the library using the menu on any track.",
+                modifier = Modifier.padding(padding),
+            )
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize().padding(padding),
+            ) {
+                item(key = "header") {
+                    PlaylistHeader(
+                        name = playlistName,
+                        trackCount = tracks.size,
+                        totalDurationMs = tracks.sumOf { it.durationMs ?: 0L },
+                    )
+                }
+
+                itemsIndexed(items = tracks, key = { _, t -> t.id }) { _, track ->
+                    TrackRow(
+                        track = track,
+                        onClick = { selectedTrack = track },
+                    )
+                }
+
+                item { Spacer(Modifier.height(80.dp)) }
+            }
+        }
     }
 
     selectedTrack?.let { track ->
@@ -100,6 +144,54 @@ fun PlaylistDetailPage(
             onConfirm = onRename,
             onDismiss = { showRenameDialog = false },
         )
+    }
+}
+
+@Composable
+private fun PlaylistHeader(
+    name: String,
+    trackCount: Int,
+    totalDurationMs: Long,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(AppSpacing.lg),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Surface(
+            color = MaterialTheme.colorScheme.secondaryContainer,
+            shape = RoundedCornerShape(20.dp),
+            modifier = Modifier.size(120.dp),
+        ) {
+            Box(contentAlignment = Alignment.Center) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.QueueMusic,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                    modifier = Modifier.size(56.dp),
+                )
+            }
+        }
+        Spacer(Modifier.height(AppSpacing.lg))
+        Text(
+            text = name,
+            style = MaterialTheme.typography.headlineSmall,
+        )
+        Spacer(Modifier.height(AppSpacing.sm))
+        val countText = "$trackCount ${if (trackCount == 1) "track" else "tracks"}"
+        val durationMinutes = totalDurationMs / 60_000
+        val durationText = if (durationMinutes >= 60) {
+            "${durationMinutes / 60}h ${durationMinutes % 60}m"
+        } else {
+            "${durationMinutes}m"
+        }
+        Text(
+            text = "$countText · $durationText",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Spacer(Modifier.height(AppSpacing.md))
     }
 }
 

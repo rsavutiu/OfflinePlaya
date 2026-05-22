@@ -1,9 +1,11 @@
 package com.offlineplaya.shared.presentation.ui.molecules
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Folder
+import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.AppShapes
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
@@ -33,6 +37,7 @@ fun FolderRow(
     folder: Folder,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    previewTracks: List<Track> = emptyList(),
 ) {
     Row(
         modifier = modifier
@@ -41,7 +46,7 @@ fun FolderRow(
             .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.md),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        FolderThumb()
+        FolderThumb(previewTracks = previewTracks)
         Column(modifier = Modifier.padding(start = AppSpacing.lg).weight(1f)) {
             Text(
                 text = folder.displayName,
@@ -63,23 +68,93 @@ fun FolderRow(
 }
 
 @Composable
-private fun FolderThumb(modifier: Modifier = Modifier) {
-    // Outlined folder icon tinted to onSurfaceVariant instead of the bright
-    // yellow "📁" glyph. Reads as part of the muted palette instead of
-    // shouting against it.
+private fun FolderThumb(
+    previewTracks: List<Track>,
+    modifier: Modifier = Modifier,
+) {
     Surface(
         color = MaterialTheme.colorScheme.surfaceVariant,
         shape = AppShapes.tile,
-        modifier = modifier.size(40.dp),
+        modifier = modifier.size(48.dp),
     ) {
-        Box(contentAlignment = Alignment.Center) {
-            Icon(
-                imageVector = Icons.Outlined.Folder,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.size(24.dp),
-            )
+        if (previewTracks.isEmpty()) {
+            // Fall back to the muted folder glyph when no album art is
+            // available yet (mid-scan, or genuinely empty folder).
+            Box(contentAlignment = Alignment.Center) {
+                Icon(
+                    imageVector = Icons.Outlined.Folder,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.size(28.dp),
+                )
+            }
+        } else {
+            FolderArtCollage(previewTracks)
         }
+    }
+}
+
+/**
+ * 2×2 grid of album-art tiles. Renders 1–4 tiles; if fewer than 4 are
+ * available, repeats the first to keep the grid filled rather than leaving
+ * blank cells — matches the user's "even if it repeats" guidance.
+ */
+@Composable
+private fun FolderArtCollage(tracks: List<Track>) {
+    val padded = if (tracks.size >= 4) tracks.take(4) else List(4) { tracks[it % tracks.size] }
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(1.dp),
+        ) {
+            Row(
+                modifier = Modifier.weight(1f),
+                horizontalArrangement = Arrangement.spacedBy(1.dp),
+            ) {
+                CollageTile(padded[0], Modifier.weight(1f))
+                CollageTile(padded[1], Modifier.weight(1f))
+            }
+            Row(
+                modifier = Modifier.weight(1f),
+                horizontalArrangement = Arrangement.spacedBy(1.dp),
+            ) {
+                CollageTile(padded[2], Modifier.weight(1f))
+                CollageTile(padded[3], Modifier.weight(1f))
+            }
+        }
+        // Folder badge in the bottom-right corner keeps the "this is a
+        // folder" affordance readable even when the collage fills the tile.
+        Surface(
+            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.85f),
+            shape = AppShapes.tile,
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(2.dp)
+                .size(16.dp),
+        ) {
+            Box(contentAlignment = Alignment.Center) {
+                Icon(
+                    imageVector = Icons.Outlined.Folder,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.size(12.dp),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun CollageTile(track: Track, modifier: Modifier) {
+    Box(modifier = modifier.fillMaxSize()) {
+        // 0.dp corners so the tiles butt against each other; the outer
+        // Surface shape clips the whole collage to AppShapes.tile.
+        AlbumArtThumb(
+            track = track,
+            modifier = Modifier.fillMaxSize(),
+            size = null,
+            cornerRadius = 0.dp,
+        )
     }
 }
 

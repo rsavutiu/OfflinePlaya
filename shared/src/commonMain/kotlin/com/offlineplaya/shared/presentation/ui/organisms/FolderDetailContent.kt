@@ -8,6 +8,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Folder
@@ -18,6 +20,8 @@ import com.offlineplaya.shared.presentation.ui.molecules.FolderRow
 import com.offlineplaya.shared.presentation.ui.molecules.TrackRow
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 
 /**
  * Folder detail body: section of subfolders, then a section of tracks directly
@@ -30,6 +34,7 @@ fun FolderDetailContent(
     onFolderClick: (Long) -> Unit,
     onTrackClick: (Track) -> Unit,
     modifier: Modifier = Modifier,
+    previewTracksProvider: ((Long) -> Flow<List<Track>>)? = null,
 ) {
     if (subfolders.isEmpty() && tracks.isEmpty()) {
         EmptyState(
@@ -43,7 +48,19 @@ fun FolderDetailContent(
         if (subfolders.isNotEmpty()) {
             item { SectionHeader("Folders") }
             items(items = subfolders, key = { "f-${it.id}" }) { folder ->
-                FolderRow(folder = folder, onClick = { onFolderClick(folder.id) })
+                val previewTracks: List<Track> = if (previewTracksProvider != null) {
+                    val state by produceState(initialValue = emptyList<Track>(), folder.id) {
+                        previewTracksProvider(folder.id).collectLatest { value = it }
+                    }
+                    state
+                } else {
+                    emptyList()
+                }
+                FolderRow(
+                    folder = folder,
+                    onClick = { onFolderClick(folder.id) },
+                    previewTracks = previewTracks,
+                )
             }
         }
         if (tracks.isNotEmpty()) {

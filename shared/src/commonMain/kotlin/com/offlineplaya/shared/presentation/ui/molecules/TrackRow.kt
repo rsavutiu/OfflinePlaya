@@ -5,18 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
@@ -34,14 +32,10 @@ fun TrackRow(
             .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.md),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        // Track number column, right-aligned, fixed width so titles line up.
-        Text(
-            text = track.trackNumber?.toString() ?: "—",
-            modifier = Modifier.width(28.dp), // fixed digit-column width, not a spacing token
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.End,
-        )
+        // Album art is the row's leading element. Repeating across all tracks
+        // of an album is intentional — gives every row a visual anchor and
+        // matches the album-row treatment elsewhere.
+        AlbumArtThumb(track = track, size = 44.dp, cornerRadius = 8.dp)
         Column(
             modifier = Modifier
                 .padding(start = AppSpacing.lg)
@@ -53,8 +47,11 @@ fun TrackRow(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
+            val subtitle = track.trackNumber
+                ?.let { "$it · ${track.artistName}" }
+                ?: track.artistName
             Text(
-                text = track.artistName,
+                text = subtitle,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
@@ -72,10 +69,13 @@ fun TrackRow(
 internal fun Long?.formatDuration(): String {
     val ms = this ?: return "—:—"
     val totalSeconds = ms / 1000
-    val minutes = totalSeconds / 60
+    val hours = totalSeconds / 3600
+    val minutes = (totalSeconds % 3600) / 60
     val seconds = totalSeconds % 60
-    val secStr = if (seconds < 10) "0$seconds" else "$seconds"
-    return "$minutes:$secStr"
+    val ss = if (seconds < 10) "0$seconds" else "$seconds"
+    if (hours == 0L) return "$minutes:$ss"
+    val mm = if (minutes < 10) "0$minutes" else "$minutes"
+    return "$hours:$mm:$ss"
 }
 
 @Preview

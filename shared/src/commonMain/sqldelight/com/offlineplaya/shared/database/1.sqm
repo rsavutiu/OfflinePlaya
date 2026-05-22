@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS RemoteArtMiss (
+    lookup_key TEXT PRIMARY KEY,
+    last_attempted_at INTEGER NOT NULL
+);

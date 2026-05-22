@@ -10,6 +10,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MusicNote
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,7 +24,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Album
 import com.offlineplaya.shared.domain.model.Artist
 import com.offlineplaya.shared.domain.model.ColorMode
@@ -128,6 +135,7 @@ fun App(
                     .padding(outerPadding)
                     .consumeWindowInsets(outerPadding),
             ) {
+                AppWatermark()
                 DestinationContent(
                     current = current,
                     navigator = navigator,
@@ -369,15 +377,22 @@ private fun DestinationContent(
 
             is AppDestination.LibraryAlbumDetail -> {
                 var album by remember(dest.albumId) { mutableStateOf<Album?>(null) }
+                var artistName by remember(dest.albumId) { mutableStateOf<String?>(null) }
+                var representativeTrack by remember(dest.albumId) { mutableStateOf<Track?>(null) }
                 LaunchedEffect(dest.albumId) {
-                    album = library.findAlbum(dest.albumId)
+                    val a = library.findAlbum(dest.albumId)
+                    album = a
+                    artistName = library.artistNameOrNull(a?.artistId)
+                    representativeTrack = library.representativeTrackOfAlbum(dest.albumId)
                 }
                 val tracks by remember(dest.albumId) {
                     library.tracksByAlbum(dest.albumId)
                 }.collectAsState(initial = emptyList<Track>())
 
                 LibraryAlbumDetailPage(
-                    albumTitle = album?.name ?: "Loading…",
+                    album = album,
+                    artistName = artistName,
+                    representativeTrack = representativeTrack,
                     tracks = tracks,
                     availablePlaylists = availablePlaylists,
                     onPlayTracks = onPlayTracks,
@@ -397,6 +412,7 @@ private fun DestinationContent(
                     },
                     onTabSelected = onTabSelected,
                     onBack = { navigator.pop() },
+                    previewTracksProvider = { id -> library.previewTracksInFolder(id) },
                 )
             }
 
@@ -425,6 +441,7 @@ private fun DestinationContent(
                     onAddToQueue = onAddToQueue,
                     onAddToPlaylist = onAddToPlaylist,
                     onBack = { navigator.pop() },
+                    previewTracksProvider = { id -> library.previewTracksInFolder(id) },
                 )
             }
 
@@ -446,6 +463,28 @@ private fun DestinationContent(
                 onBack = { navigator.pop() },
             )
         }
+    }
+}
+
+/**
+ * Low-alpha brand mark behind every page. Sits in the same Box as
+ * [DestinationContent] but is drawn first, so any page background blends
+ * over it. Using the MusicNote icon as a stand-in for the launcher art —
+ * the launcher mipmap lives in androidApp and would need an expect/actual
+ * painter to reach commonMain, which isn't worth the wiring yet.
+ */
+@Composable
+private fun AppWatermark() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(
+            imageVector = Icons.Default.MusicNote,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.04f),
+            modifier = Modifier.size(280.dp),
+        )
     }
 }
 

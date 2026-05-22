@@ -1,0 +1,14 @@
+CREATE TABLE RemoteArtMiss (
+    lookup_key TEXT PRIMARY KEY,
+    last_attempted_at INTEGER NOT NULL
+);
+
+isMiss:
+SELECT 1 FROM RemoteArtMiss
+WHERE lookup_key = ? AND last_attempted_at > ?;
+
+insertMiss:
+INSERT OR REPLACE INTO RemoteArtMiss(lookup_key, last_attempted_at) VALUES (?, ?);
+
+deleteExpired:
+DELETE FROM RemoteArtMiss WHERE last_attempted_at <= ?;

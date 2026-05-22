@@ -31,12 +31,12 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 fun AlbumArtThumb(
     track: Track?,
     modifier: Modifier = Modifier,
-    size: Dp = 40.dp,
+    size: Dp? = 40.dp,
     cornerRadius: Dp = 6.dp,
     glyphStyle: androidx.compose.ui.text.TextStyle = MaterialTheme.typography.titleMedium,
 ) {
     Surface(
-        modifier = modifier.size(size),
+        modifier = if (size != null) modifier.size(size) else modifier,
         color = MaterialTheme.colorScheme.tertiaryContainer,
         shape = RoundedCornerShape(cornerRadius),
     ) {

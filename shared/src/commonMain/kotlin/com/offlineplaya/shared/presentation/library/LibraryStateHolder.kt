@@ -75,6 +75,22 @@ class LibraryStateHolder(
     fun childFolders(parentId: Long): Flow<List<Folder>> = folders.observeChildren(parentId)
     fun tracksInFolder(folderId: Long): Flow<List<Track>> = tracks.observeByFolder(folderId)
 
+    /**
+     * Up to [limit] tracks for [folderId], one per distinct album, used to
+     * build the folder-row collage thumbnail. Derived off the existing
+     * folder-tracks flow so it picks up new scans automatically.
+     */
+    fun previewTracksInFolder(folderId: Long, limit: Int = 4): Flow<List<Track>> =
+        tracks.observeByFolder(folderId).map { all ->
+            val seen = HashSet<Long?>()
+            val out = ArrayList<Track>(limit)
+            for (t in all) {
+                if (out.size >= limit) break
+                if (seen.add(t.albumId)) out += t
+            }
+            out
+        }
+
     /** Look up the artist name without holding a reference to the Artist row. */
     suspend fun artistNameOrNull(id: Long?): String? = id?.let { artists.findById(it)?.name }
 
