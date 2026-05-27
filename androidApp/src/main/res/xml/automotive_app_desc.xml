@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Declares Android Auto capabilities. `media` registers the app as a
+    media-browser provider so Auto picks up our MediaLibraryService and
+    shows OfflinePlaya in the in-car app launcher.
+
+    No "notification" or "template" entries yet — we're shipping the
+    minimum browse + play surface in v1.
+-->
+<automotiveApp>
+    <uses name="media" />
+</automotiveApp>

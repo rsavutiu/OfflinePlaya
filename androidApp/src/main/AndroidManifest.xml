@@ -25,6 +25,13 @@
         android:theme="@style/Theme.OfflinePlaya"
         tools:targetApi="31">
 
+        <!-- Android Auto capability declaration. Points at
+             automotive_app_desc.xml listing which Auto features we
+             implement (media browser only for v1). -->
+        <meta-data
+            android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -40,7 +47,14 @@
             android:exported="true"
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>
+                <!-- MediaLibraryService is a strict superset of
+                     MediaSessionService — both actions are valid so existing
+                     phone clients keep binding. The MediaBrowserService
+                     action is the legacy compat name older Auto clients
+                     still look for. -->
+                <action android:name="androidx.media3.session.MediaLibraryService" />
                 <action android:name="androidx.media3.session.MediaSessionService" />
+                <action android:name="android.media.browse.MediaBrowserService" />
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </service>

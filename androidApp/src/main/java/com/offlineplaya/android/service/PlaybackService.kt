@@ -6,11 +6,15 @@ import android.media.audiofx.AudioEffect
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.MediaSession
-import androidx.media3.session.MediaSessionService
 import com.offlineplaya.android.MainActivity
 import com.offlineplaya.android.audio.AppEqualizerController
+import com.offlineplaya.android.auto.AutoLibraryCallback
+import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
+import com.offlineplaya.shared.presentation.library.LibraryStateHolder
+import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,9 +31,9 @@ import org.koin.core.context.GlobalContext
  * Android Auto browse-tree support arrives in a later phase when we add the
  * browse interface explicitly.
  */
-class PlaybackService : MediaSessionService() {
+class PlaybackService : MediaLibraryService() {
 
-    private var mediaSession: MediaSession? = null
+    private var mediaSession: MediaLibrarySession? = null
     private var audioSessionId: Int = AudioEffect.ERROR_BAD_VALUE
     private var equalizerController: AppEqualizerController? = null
 
@@ -74,12 +78,23 @@ class PlaybackService : MediaSessionService() {
             PendingIntent.FLAG_IMMUTABLE,
         )
 
-        mediaSession = MediaSession.Builder(this, player)
+        // MediaLibrarySession (not MediaSession) so Android Auto can browse
+        // our library. Callback wires the browse tree into shared state
+        // holders; on phone (no Auto browser) this is dormant and behaves
+        // identically to the previous MediaSession.
+        val autoCallback = AutoLibraryCallback(
+            library = koin.get<LibraryStateHolder>(),
+            playlists = koin.get<PlaylistStateHolder>(),
+            musicPlayer = koin.get<MusicPlayer>(),
+            scope = serviceScope,
+            logger = logger,
+        )
+        mediaSession = MediaLibrarySession.Builder(this, player, autoCallback)
             .setSessionActivity(sessionActivityIntent)
             .build()
     }
 
-    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? =
+    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaLibrarySession? =
         mediaSession
 
     override fun onTaskRemoved(rootIntent: Intent?) {
