@@ -12,6 +12,7 @@ import androidx.media3.session.MediaSession
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.SettableFuture
+import com.offlineplaya.shared.data.image.TrackArtCache
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.presentation.auto.BrowseEntry
@@ -61,10 +62,10 @@ class AutoLibraryCallback(
                 else library.allArtists.value.firstOrNull { it.id == artistId }?.name
             },
             albumArtUri = { album ->
-                AppArtFileProvider.uriForAlbum(context, album)?.toString()
+                TrackArtCache.uriForAlbum(context, album.artistId, album.id)?.toString()
             },
             trackArtUri = { track ->
-                AppArtFileProvider.uriForTrack(context, track)?.toString()
+                TrackArtCache.uriForTrack(context, track)?.toString()
             },
         )
     }
@@ -308,7 +309,7 @@ class AutoLibraryCallback(
                 .setArtist(artistName)
                 .setAlbumTitle(albumName)
                 .apply {
-                    AppArtFileProvider.uriForTrack(context, this@toAutoMediaItem)
+                    TrackArtCache.uriForTrack(context, this@toAutoMediaItem)
                         ?.let { setArtworkUri(it) }
                 }
                 .setIsBrowsable(false)

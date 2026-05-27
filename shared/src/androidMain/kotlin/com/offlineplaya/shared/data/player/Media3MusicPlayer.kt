@@ -133,37 +133,14 @@ internal class Media3MusicPlayer(
     }
 
     /**
-     * Resolve a `content://` URI for [track]'s cached cover art via the
-     * app's FileProvider. Returns null when no cached file exists; the
-     * downstream surfaces (lock screen, Auto, Bluetooth) fall back to
-     * placeholders in that case.
-     *
-     * The cache-key form mirrors `TrackArtFetcher.trackArtCacheKey` and
-     * `AppArtFileProvider`. Three places duplicate it because the original
-     * is module-internal — keep them in sync if the convention changes.
+     * `content://` URI for [track]'s cached art, routed through
+     * [com.offlineplaya.shared.data.image.TrackArtCache] so the cache-key
+     * convention stays consistent with the Coil fetcher and the Auto
+     * FileProvider. Null when the file isn't on disk yet; downstream
+     * surfaces (lock screen, Auto, Bluetooth) render placeholders.
      */
-    private fun artworkUriFor(track: Track): android.net.Uri? {
-        val key = cacheKey(track) ?: return null
-        val file = java.io.File(java.io.File(context.cacheDir, "track_art"), key)
-        if (!file.exists()) return null
-        return runCatching {
-            androidx.core.content.FileProvider.getUriForFile(
-                context,
-                "${context.packageName}.artprovider",
-                file,
-            )
-        }.getOrNull()
-    }
-
-    private fun cacheKey(track: Track): String? {
-        val artistId = track.artistId
-        val albumId = track.albumId
-        return if (artistId != null && albumId != null) {
-            "album-art_${artistId}_${albumId}"
-        } else {
-            "track-art_${track.documentUri.hashCode().toUInt().toString(16)}"
-        }
-    }
+    private fun artworkUriFor(track: Track): android.net.Uri? =
+        com.offlineplaya.shared.data.image.TrackArtCache.uriForTrack(context, track)
 
     override fun removeFromQueue(index: Int) = onMain {
         val ctrl = controller ?: return@onMain

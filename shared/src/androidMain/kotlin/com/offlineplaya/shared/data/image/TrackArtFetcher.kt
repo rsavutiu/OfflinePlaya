@@ -12,9 +12,11 @@ import coil3.fetch.Fetcher
 import coil3.fetch.ImageFetchResult
 import coil3.key.Keyer
 import coil3.request.Options
+import com.offlineplaya.shared.domain.image.FolderArtSource
 import com.offlineplaya.shared.domain.image.RemoteArtSource
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.domain.repository.SettingsRepository
+import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -39,19 +41,44 @@ internal class TrackArtFetcher(
     private val track: Track,
     private val settings: SettingsRepository,
     private val remoteSource: RemoteArtSource,
+    private val folderSource: FolderArtSource,
 ) : Fetcher {
 
     override suspend fun fetch(): FetchResult? = withContext(Dispatchers.IO) {
-        readEmbedded()?.let { return@withContext it }
-        readRemoteIfEnabled()
+        // 1. Check our own on-disk byte cache — survives process death and is
+        //    keyed the same way as Coil's memory cache (per album slot) so
+        //    every track on the album shares one file.
+        cachedArtFile().let { f ->
+            if (f.exists() && f.length() > 0) {
+                runCatching { f.readBytes() }.getOrNull()?.let { return@withContext decode(it) }
+            }
+        }
+        // 2. Extract from the audio file itself.
+        readEmbedded()?.let { (bytes, result) ->
+            persist(bytes)
+            return@withContext result
+        }
+        // 3. Sidecar cover.jpg / folder.jpg sitting next to the track.
+        folderSource.findInFolder(track)?.let { bytes ->
+            decode(bytes)?.let { result ->
+                persist(bytes)
+                return@withContext result
+            }
+        }
+        // 4. Hit the remote source if the user opted in.
+        readRemoteIfEnabled()?.let { (bytes, result) ->
+            persist(bytes)
+            return@withContext result
+        }
+        null
     }
 
-    private fun readEmbedded(): FetchResult? {
+    private fun readEmbedded(): Pair<ByteArray, FetchResult>? {
         val retriever = MediaMetadataRetriever()
         return try {
             retriever.setDataSource(context, Uri.parse(track.documentUri))
             val bytes = retriever.embeddedPicture ?: return null
-            decode(bytes)
+            decode(bytes)?.let { bytes to it }
         } catch (_: Throwable) {
             null
         } finally {
@@ -63,7 +90,7 @@ internal class TrackArtFetcher(
         }
     }
 
-    private suspend fun readRemoteIfEnabled(): FetchResult? {
+    private suspend fun readRemoteIfEnabled(): Pair<ByteArray, FetchResult>? {
         val prefs = settings.getArtworkPreferences()
         if (!prefs.downloadRemoteArt) return null
 
@@ -74,7 +101,7 @@ internal class TrackArtFetcher(
         if (albumKey.equals(UNKNOWN_ALBUM, ignoreCase = true)) return null
 
         val bytes = remoteSource.resolve(artist = artistKey, album = albumKey) ?: return null
-        return decode(bytes)
+        return decode(bytes)?.let { bytes to it }
     }
 
     private fun decode(bytes: ByteArray): FetchResult? {
@@ -86,10 +113,28 @@ internal class TrackArtFetcher(
         )
     }
 
+    /**
+     * Cache file for [track]'s art. Slot routing is centralised in
+     * [TrackArtCache] so the Coil fetcher, the FileProvider, and the
+     * Media3 mapper all agree on where bytes live.
+     */
+    private fun cachedArtFile(): File = TrackArtCache.cacheFile(context, track)
+
+    private fun persist(bytes: ByteArray) {
+        val file = cachedArtFile()
+        runCatching {
+            // Atomic-ish write so a crash mid-write doesn't leave a half file.
+            val tmp = File(file.parentFile, file.name + ".tmp")
+            tmp.writeBytes(bytes)
+            tmp.renameTo(file)
+        }
+    }
+
     class Factory(
         private val context: Context,
         private val settings: SettingsRepository,
         private val remoteSource: RemoteArtSource,
+        private val folderSource: FolderArtSource,
     ) : Fetcher.Factory<Track> {
         override fun create(
             data: Track,
@@ -100,24 +145,18 @@ internal class TrackArtFetcher(
             track = data,
             settings = settings,
             remoteSource = remoteSource,
+            folderSource = folderSource,
         )
     }
 }
 
 /**
- * Cache key for [Track] art. When both artistId and albumId are present we
- * key by `(artistId,albumId)` so every track in the same album shares one
- * cached cover. Falls back to per-track keying when ids are missing
- * (pending-scan tracks etc.).
+ * Coil keyer that routes through [TrackArtCache] so the in-memory Coil
+ * cache shares slot identity with the on-disk persistence layer. Without
+ * this, two different albums whose tracks hashed to the same fallback
+ * URI would never collide; we'd waste work re-decoding identical bytes.
  */
 internal class TrackKeyer : Keyer<Track> {
-    override fun key(data: Track, options: Options): String {
-        val artistId = data.artistId
-        val albumId = data.albumId
-        return if (artistId != null && albumId != null) {
-            "album-art:$artistId:$albumId"
-        } else {
-            "track-art:${data.documentUri}"
-        }
-    }
+    override fun key(data: Track, options: Options): String =
+        TrackArtCache.cacheKey(data)
 }
