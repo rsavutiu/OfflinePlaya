@@ -3,6 +3,7 @@ package com.offlineplaya.shared.data.repository
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.offlineplaya.shared.database.OfflinePlayaDatabase
+import com.offlineplaya.shared.domain.model.CanonicalGenre
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.domain.repository.QueueRepository
@@ -65,6 +66,7 @@ internal class SqlQueueRepository(
         albumId: Long?,
         folderId: Long?,
         scanStatus: String,
+        canonicalGenre: String?,
         createdAt: Long,
         updatedAt: Long,
     ): Track = Track(
@@ -90,5 +92,6 @@ internal class SqlQueueRepository(
         albumId = albumId,
         folderId = folderId,
         scanStatus = ScanStatus.fromDbValue(scanStatus),
+        canonicalGenre = canonicalGenre?.let { CanonicalGenre.fromDbValue(it) },
     )
 }

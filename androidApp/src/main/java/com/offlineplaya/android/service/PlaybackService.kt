@@ -2,12 +2,21 @@ package com.offlineplaya.android.service
 
 import android.app.PendingIntent
 import android.content.Intent
+import android.media.audiofx.AudioEffect
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 import com.offlineplaya.android.MainActivity
+import com.offlineplaya.android.audio.AppEqualizerController
+import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
+import com.offlineplaya.shared.util.AppLogger
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import org.koin.core.context.GlobalContext
 
 /**
  * Foreground playback service. Hosts a single [ExoPlayer] + [MediaSession];
@@ -21,6 +30,15 @@ import com.offlineplaya.android.MainActivity
 class PlaybackService : MediaSessionService() {
 
     private var mediaSession: MediaSession? = null
+    private var audioSessionId: Int = AudioEffect.ERROR_BAD_VALUE
+    private var equalizerController: AppEqualizerController? = null
+
+    /**
+     * Service-scoped coroutine context. Used by [equalizerController] so
+     * Equalizer state collection lives exactly as long as the service.
+     */
+    private val serviceScope: CoroutineScope =
+        CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     override fun onCreate() {
         super.onCreate()
@@ -28,6 +46,24 @@ class PlaybackService : MediaSessionService() {
             .setHandleAudioBecomingNoisy(true)
             .setAudioAttributes(MUSIC_ATTRIBUTES, /* handleAudioFocus = */ true)
             .build()
+
+        audioSessionId = player.audioSessionId
+
+        // The equalizer controller is the single source of truth for the
+        // audio-effects pipeline: it OWNS the choice between our app EQ and
+        // the OEM system-EQ broadcast. Started here, after the ExoPlayer
+        // exists; released in onDestroy. See [AppEqualizerController] kdoc
+        // for why these can't co-exist.
+        val koin = GlobalContext.get()
+        val stateHolder = koin.get<EqualizerStateHolder>()
+        val logger = koin.get<AppLogger>()
+        equalizerController = AppEqualizerController(
+            context = this,
+            audioSessionId = audioSessionId,
+            stateHolder = stateHolder,
+            scope = serviceScope,
+            logger = logger,
+        ).also { it.start() }
 
         val sessionActivityIntent = PendingIntent.getActivity(
             /* context = */ this,
@@ -57,6 +93,9 @@ class PlaybackService : MediaSessionService() {
     }
 
     override fun onDestroy() {
+        equalizerController?.release()
+        equalizerController = null
+        serviceScope.cancel()
         mediaSession?.run {
             player.release()
             release()

@@ -2,10 +2,14 @@ package com.offlineplaya.shared.data.repository
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOne
 import com.offlineplaya.shared.data.mapper.toDomain
 import com.offlineplaya.shared.database.OfflinePlayaDatabase
+import com.offlineplaya.shared.domain.model.CanonicalGenre
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.domain.repository.TrackAggregateRef
+import com.offlineplaya.shared.domain.repository.TrackGenreRow
 import com.offlineplaya.shared.domain.repository.TrackRepository
 import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.CoroutineDispatcher
@@ -40,6 +44,9 @@ internal class SqlTrackRepository(
     override fun observeByFolder(folderId: Long): Flow<List<Track>> =
         queries.selectByFolder(folderId).asFlow().mapToList(ioDispatcher)
             .map { rows -> rows.map { it.toDomain() } }
+
+    override fun observeCount(): Flow<Long> =
+        queries.countAll().asFlow().mapToOne(ioDispatcher)
 
     override suspend fun count(): Long = withContext(ioDispatcher) {
         queries.countAll().executeAsOne()
@@ -102,6 +109,7 @@ internal class SqlTrackRepository(
             album_artist_name = track.albumArtistName,
             album_name = track.albumName,
             genre = track.genre,
+            canonical_genre = track.canonicalGenre?.name,
             year = track.year?.toLong(),
             track_number = track.trackNumber?.toLong(),
             disc_number = track.discNumber?.toLong(),
@@ -114,6 +122,18 @@ internal class SqlTrackRepository(
         )
     }
 
+    override suspend fun selectMissingCanonicalGenre(limit: Int): List<TrackGenreRow> =
+        withContext(ioDispatcher) {
+            queries.selectMissingCanonicalGenre(limit.toLong()).executeAsList().map { row ->
+                TrackGenreRow(row.id, row.genre)
+            }
+        }
+
+    override suspend fun setCanonicalGenre(id: Long, genre: CanonicalGenre) =
+        withContext(ioDispatcher) {
+            queries.setCanonicalGenre(genre.name, id)
+        }
+
     override suspend fun updateForeignKeys(id: Long, artistId: Long?, albumId: Long?) =
         withContext(ioDispatcher) {
             queries.updateForeignKeys(artist_id = artistId, album_id = albumId, id = id)
@@ -121,6 +141,42 @@ internal class SqlTrackRepository(
 
     override suspend fun markError(id: Long) = withContext(ioDispatcher) {
         queries.markError(id)
+    }
+
+    override suspend fun findByContentKeyExcludingTree(
+        fileName: String,
+        fileSize: Long,
+        lastModified: Long,
+        excludeTreeUri: String,
+    ): Track? = withContext(ioDispatcher) {
+        queries.selectByContentKeyExcludingTree(fileName, fileSize, lastModified, excludeTreeUri)
+            .executeAsOneOrNull()
+            ?.toDomain()
+    }
+
+    override suspend fun findIdsByContentKeyInTree(
+        fileName: String,
+        fileSize: Long,
+        lastModified: Long,
+        inTreeUri: String,
+    ): List<Long> = withContext(ioDispatcher) {
+        queries.selectIdsByContentKeyInTree(fileName, fileSize, lastModified, inTreeUri)
+            .executeAsList()
+    }
+
+    override suspend fun deleteById(id: Long) = withContext(ioDispatcher) {
+        queries.deleteById(id)
+    }
+
+    override suspend fun selectAggregatesByTreeUri(treeUri: String): List<TrackAggregateRef> =
+        withContext(ioDispatcher) {
+            queries.selectIdsByTreeUri(treeUri).executeAsList().map { row ->
+                TrackAggregateRef(row.id, row.artist_id, row.album_id)
+            }
+        }
+
+    override suspend fun deleteByTreeUri(treeUri: String) = withContext(ioDispatcher) {
+        queries.deleteByTreeUri(treeUri)
     }
 
     override suspend fun deleteAll() = withContext(ioDispatcher) {

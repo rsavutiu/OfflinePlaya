@@ -4,6 +4,7 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.offlineplaya.shared.data.mapper.toDomain
 import com.offlineplaya.shared.database.OfflinePlayaDatabase
+import com.offlineplaya.shared.domain.model.CanonicalGenre
 import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
@@ -93,6 +94,7 @@ internal class SqlPlaylistRepository(
         albumId: Long?,
         folderId: Long?,
         scanStatus: String,
+        canonicalGenre: String?,
         createdAt: Long,
         updatedAt: Long,
     ): Track = Track(
@@ -118,5 +120,6 @@ internal class SqlPlaylistRepository(
         albumId = albumId,
         folderId = folderId,
         scanStatus = ScanStatus.fromDbValue(scanStatus),
+        canonicalGenre = canonicalGenre?.let { CanonicalGenre.fromDbValue(it) },
     )
 }

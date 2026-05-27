@@ -1,0 +1,6 @@
+-- Add canonical_genre for the equalizer's Auto mode.
+-- Rows existing before the EQ feature get NULL here; the next library sync
+-- pass re-classifies them in-process (see LibrarySyncUseCase.backfill).
+ALTER TABLE Track ADD COLUMN canonical_genre TEXT;
+
+CREATE INDEX idx_track_canonical_genre ON Track(canonical_genre);

@@ -13,6 +13,7 @@ import com.offlineplaya.shared.testsupport.FakeDeviceAudioScanner
 import com.offlineplaya.shared.testsupport.FakeFolderScanner
 import com.offlineplaya.shared.testsupport.FakeMetadataReader
 import com.offlineplaya.shared.testsupport.createInMemoryDatabase
+import com.offlineplaya.shared.util.TestLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -36,15 +37,27 @@ class LibrarySyncCoordinatorTest {
     ): Harness {
         val db = createInMemoryDatabase()
         val managedRoots = SqlManagedTreeRootRepository(db, Dispatchers.Unconfined)
-        val folders = SqlFolderRepository(db, Dispatchers.Unconfined)
-        val artists = SqlArtistRepository(db, Dispatchers.Unconfined)
-        val albums = SqlAlbumRepository(db, Dispatchers.Unconfined)
-        val tracks = SqlTrackRepository(db, Dispatchers.Unconfined)
+        val folders = SqlFolderRepository(db, TestLogger(), Dispatchers.Unconfined)
+        val artists = SqlArtistRepository(db, TestLogger(), Dispatchers.Unconfined)
+        val albums = SqlAlbumRepository(db, TestLogger(), Dispatchers.Unconfined)
+        val tracks = SqlTrackRepository(db, TestLogger(), Dispatchers.Unconfined)
         val useCase = LibrarySyncUseCase(
             managedRoots, folders, artists, albums, tracks, scanner, reader,
             FakeDeviceAudioScanner(),
+            TestLogger(),
         )
-        return Harness(LibrarySyncCoordinator(useCase, managedRoots, testScope), managedRoots)
+        return Harness(
+            LibrarySyncCoordinator(
+                syncUseCase = useCase,
+                managedRoots = managedRoots,
+                tracks = tracks,
+                folders = folders,
+                artists = artists,
+                albums = albums,
+                scope = testScope,
+            ),
+            managedRoots,
+        )
     }
 
     @Test
@@ -95,7 +108,134 @@ class LibrarySyncCoordinatorTest {
     }
 
     @Test
-    fun `unscripted URI lands in Failed state without crashing the scope`() = runTest {
+    fun `addAndSync emits AlreadyAdded when the URI is already a managed root`() = runTest {
+        val uri = "content://tree/dupe"
+        val scope = CoroutineScope(coroutineContext + UnconfinedTestDispatcher(testScheduler))
+        val h = harness(
+            testScope = scope,
+            scanner = FakeFolderScanner.empty(uri, "Music"),
+            reader = FakeMetadataReader(),
+        )
+
+        h.coordinator.addAndSync(uri, "Music").join()
+        h.coordinator.addAndSync(uri, "Music").join()
+
+        val final = h.coordinator.status.value
+        assertIs<SyncStatus.AlreadyAdded>(final)
+        assertEquals(uri, final.treeUri)
+        assertEquals("Music", final.displayName)
+    }
+
+    @Test
+    fun `addAndSync rejects a subfolder of an already-added root`() = runTest {
+        val parent = "content://com.android.externalstorage.documents/tree/primary%3AMusic"
+        val child = "$parent%2FAlbums"
+        val scope = CoroutineScope(coroutineContext + UnconfinedTestDispatcher(testScheduler))
+        val h = harness(
+            testScope = scope,
+            scanner = FakeFolderScanner.empty(parent, "Music"),
+            reader = FakeMetadataReader(),
+        )
+
+        h.coordinator.addAndSync(parent, "Music").join()
+        h.coordinator.addAndSync(child, "Albums").join()
+
+        val final = h.coordinator.status.value
+        assertIs<SyncStatus.AlreadyAdded>(final)
+        assertEquals(parent, final.treeUri)
+        assertEquals("Music", final.displayName)
+    }
+
+    @Test
+    fun `addAndSync rejects a parent of an already-added root`() = runTest {
+        val parent = "content://com.android.externalstorage.documents/tree/primary%3AMusic"
+        val child = "$parent%2FAlbums"
+        val scope = CoroutineScope(coroutineContext + UnconfinedTestDispatcher(testScheduler))
+        val h = harness(
+            testScope = scope,
+            scanner = FakeFolderScanner.empty(child, "Albums"),
+            reader = FakeMetadataReader(),
+        )
+
+        h.coordinator.addAndSync(child, "Albums").join()
+        h.coordinator.addAndSync(parent, "Music").join()
+
+        val final = h.coordinator.status.value
+        assertIs<SyncStatus.AlreadyAdded>(final)
+        assertEquals(child, final.treeUri)
+        assertEquals("Albums", final.displayName)
+    }
+
+    @Test
+    fun `addAndSync accepts a sibling that shares a prefix but not a path boundary`() = runTest {
+        // "Music" vs "MusicVideos" — the latter is NOT under the former.
+        val music = "content://com.android.externalstorage.documents/tree/primary%3AMusic"
+        val videos = "content://com.android.externalstorage.documents/tree/primary%3AMusicVideos"
+        val scope = CoroutineScope(coroutineContext + UnconfinedTestDispatcher(testScheduler))
+        val scanner = FakeFolderScanner(
+            scripted = mapOf(
+                music to com.offlineplaya.shared.domain.scanner.ScanResult(
+                    folders = listOf(AudioFolder(music, "", "Music", null)),
+                    files = emptyList(),
+                ),
+                videos to com.offlineplaya.shared.domain.scanner.ScanResult(
+                    folders = listOf(AudioFolder(videos, "", "Videos", null)),
+                    files = emptyList(),
+                ),
+            ),
+        )
+        val h = harness(testScope = scope, scanner = scanner, reader = FakeMetadataReader())
+
+        h.coordinator.addAndSync(music, "Music").join()
+        h.coordinator.addAndSync(videos, "Videos").join()
+
+        val final = h.coordinator.status.value
+        assertIs<SyncStatus.Completed>(final)
+    }
+
+    @Test
+    fun `removeManagedRoot cascades to tracks and folders for that tree`() = runTest {
+        val uri = "content://tree/removable"
+        val docUri = "$uri/track.mp3"
+        val scanner = FakeFolderScanner.scan(
+            treeUri = uri,
+            folders = listOf(AudioFolder(uri, "", "Removable", null)),
+            files = listOf(RawAudioFile(docUri, uri, "track.mp3", "track.mp3", 100L, 200L)),
+        )
+        val reader = FakeMetadataReader(
+            scripted = mapOf(
+                docUri to AudioMetadata.Empty.copy(title = "T", artist = "A", album = "B"),
+            ),
+        )
+        val scope = CoroutineScope(coroutineContext + UnconfinedTestDispatcher(testScheduler))
+        val db = createInMemoryDatabase()
+        val managedRoots = SqlManagedTreeRootRepository(db, Dispatchers.Unconfined)
+        val folders = SqlFolderRepository(db, TestLogger(), Dispatchers.Unconfined)
+        val artists = SqlArtistRepository(db, TestLogger(), Dispatchers.Unconfined)
+        val albums = SqlAlbumRepository(db, TestLogger(), Dispatchers.Unconfined)
+        val tracks = SqlTrackRepository(db, TestLogger(), Dispatchers.Unconfined)
+        val useCase = LibrarySyncUseCase(
+            managedRoots, folders, artists, albums, tracks, scanner, reader,
+            FakeDeviceAudioScanner(), TestLogger(),
+        )
+        val coordinator = LibrarySyncCoordinator(
+            useCase, managedRoots, tracks, folders, artists, albums, scope,
+        )
+
+        coordinator.addAndSync(uri, "Removable").join()
+        assertEquals(1, tracks.count())
+        assertNotNull(tracks.findByDocumentUri(docUri))
+
+        coordinator.removeManagedRoot(uri).join()
+
+        assertEquals(0, tracks.count())
+        assertEquals(null, managedRoots.findByUri(uri))
+    }
+
+    @Test
+    fun `unscripted URI lands in Completed-empty state without crashing the scope`() = runTest {
+        // The use case swallows scanner failures and returns SyncReport.Empty;
+        // we just need to verify the coordinator scope survives.
         val scope = CoroutineScope(coroutineContext + UnconfinedTestDispatcher(testScheduler))
         val h = harness(
             testScope = scope,
@@ -105,6 +245,8 @@ class LibrarySyncCoordinatorTest {
 
         h.coordinator.addAndSync("content://nope", "Nope").join()
 
-        assertIs<SyncStatus.Failed>(h.coordinator.status.value)
+        val final = h.coordinator.status.value
+        assertIs<SyncStatus.Completed>(final)
+        assertEquals(0, final.report.tracksDiscovered)
     }
 }

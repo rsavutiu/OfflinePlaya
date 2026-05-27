@@ -1,5 +1,6 @@
 package com.offlineplaya.shared.data.mapper
 
+import com.offlineplaya.shared.domain.model.CanonicalGenre
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.database.Track as TrackRow
@@ -30,4 +31,5 @@ internal fun TrackRow.toDomain(): Track = Track(
     albumId = album_id,
     folderId = folder_id,
     scanStatus = ScanStatus.fromDbValue(scan_status),
+    canonicalGenre = canonical_genre?.let { CanonicalGenre.fromDbValue(it) },
 )

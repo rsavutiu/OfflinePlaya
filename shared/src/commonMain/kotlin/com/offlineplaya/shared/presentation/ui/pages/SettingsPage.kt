@@ -9,14 +9,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
@@ -25,7 +34,6 @@ import com.offlineplaya.shared.domain.model.ArtworkPreferences
 import com.offlineplaya.shared.domain.model.ColorMode
 import com.offlineplaya.shared.domain.model.ManagedTreeRoot
 import com.offlineplaya.shared.domain.model.ThemePreferences
-import com.offlineplaya.shared.domain.usecase.EmbedReport
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.ColorModeChooser
 import com.offlineplaya.shared.presentation.ui.molecules.SettingsSection
@@ -46,22 +54,23 @@ fun SettingsPage(
     artworkPreferences: ArtworkPreferences,
     managedRoots: List<ManagedTreeRoot>,
     isScanning: Boolean,
-    hasWritePermission: Boolean,
-    embedReport: EmbedReport,
     onColorModeChange: (ColorMode) -> Unit,
     onDynamicColorChange: (Boolean) -> Unit,
     onDownloadRemoteArtChange: (Boolean) -> Unit,
-    onEmbedDownloadedArtChange: (Boolean) -> Unit,
-    onRequestWritePermission: () -> Unit,
-    onEmbedMissingArt: () -> Unit,
-    onAcknowledgeEmbedReport: () -> Unit,
+    onEmbedFolderClick: () -> Unit,
+    onAddFolder: () -> Unit,
     onRescanAll: () -> Unit,
     onRemoveManagedRoot: (String) -> Unit,
+    onOpenEqualizer: () -> Unit,
     onOpenDesignSystem: () -> Unit,
     onBack: () -> Unit,
     dynamicColorSupported: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
+    // Per-row "remove" confirmation. Holds the root pending deletion so the
+    // dialog can show its name; null when no dialog is open.
+    var pendingRemoval by remember { mutableStateOf<ManagedTreeRoot?>(null) }
+
     Scaffold(
         modifier = modifier,
         contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
@@ -98,48 +107,51 @@ fun SettingsPage(
                     checked = artworkPreferences.downloadRemoteArt,
                     onCheckedChange = onDownloadRemoteArtChange,
                 )
-                SwitchRow(
-                    title = "Embed art into files",
-                    subtitle = when {
-                        !artworkPreferences.downloadRemoteArt ->
-                            "Enable downloading first."
-                        !hasWritePermission ->
-                            "Grant write access below to enable."
-                        else ->
-                            "Write downloaded covers back into the audio files. " +
-                                "This modifies your files — back them up first."
-                    },
-                    checked = artworkPreferences.embedDownloadedArt &&
-                        artworkPreferences.downloadRemoteArt &&
-                        hasWritePermission,
-                    onCheckedChange = onEmbedDownloadedArtChange,
-                    enabled = artworkPreferences.downloadRemoteArt && hasWritePermission,
+                Text(
+                    text = "Burn cover art into a folder's audio files",
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 12.dp),
                 )
-                if (artworkPreferences.downloadRemoteArt && !hasWritePermission) {
-                    OutlinedButton(
-                        onClick = onRequestWritePermission,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp),
-                    ) {
-                        Text("Grant write access (re-pick folder)")
-                    }
+                Text(
+                    text = "Pick a folder and we'll write missing covers into the audio " +
+                        "files themselves. Useful if you'll copy these files to another " +
+                        "device or play them in another app — for in-app playback the " +
+                        "covers already show without this.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                )
+                OutlinedButton(
+                    onClick = onEmbedFolderClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                ) {
+                    Text("Pick folder and burn covers")
                 }
-
-                EmbedReportBlock(
-                    report = embedReport,
-                    canEmbed = artworkPreferences.downloadRemoteArt &&
-                        artworkPreferences.embedDownloadedArt &&
-                        hasWritePermission,
-                    onEmbed = onEmbedMissingArt,
-                    onAcknowledge = onAcknowledgeEmbedReport,
-                )
             }
 
             SettingsSection(title = "Library") {
+                Button(
+                    onClick = onAddFolder,
+                    enabled = !isScanning,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = 8.dp),
+                    )
+                    Text("Add music folder")
+                }
                 if (managedRoots.isEmpty()) {
                     Text(
-                        text = "No folders added yet. Pick one from the home page.",
+                        text = "No folders added yet. Tap \"Add music folder\" above to get started.",
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -148,7 +160,7 @@ fun SettingsPage(
                     managedRoots.forEach { root ->
                         ManagedFolderRow(
                             root = root,
-                            onRemove = { onRemoveManagedRoot(root.treeUri) },
+                            onRemove = { pendingRemoval = root },
                         )
                     }
                 }
@@ -160,6 +172,17 @@ fun SettingsPage(
                         .padding(horizontal = 16.dp, vertical = 8.dp),
                 ) {
                     Text(if (isScanning) "Scanning…" else "Re-scan all folders")
+                }
+            }
+
+            SettingsSection(title = "Audio") {
+                OutlinedButton(
+                    onClick = onOpenEqualizer,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                ) {
+                    Text("Equalizer")
                 }
             }
 
@@ -175,71 +198,34 @@ fun SettingsPage(
             }
         }
     }
-}
 
-@Composable
-private fun EmbedReportBlock(
-    report: EmbedReport,
-    canEmbed: Boolean,
-    onEmbed: () -> Unit,
-    onAcknowledge: () -> Unit,
-) {
-    when (report) {
-        EmbedReport.Idle -> {
-            OutlinedButton(
-                onClick = onEmbed,
-                enabled = canEmbed,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-            ) {
-                Text("Find missing art and embed it now")
-            }
-        }
-        is EmbedReport.Running -> {
-            Text(
-                text = if (report.total > 0) {
-                    "Embedding… ${report.processed}/${report.total} • ${report.embedded} written"
-                } else {
-                    "Preparing…"
-                },
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        is EmbedReport.Completed -> {
-            Text(
-                text = buildString {
-                    append("Embedded ${report.embedded} covers")
-                    if (report.failed > 0) append(" (${report.failed} failed)")
-                    append(".")
-                },
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            OutlinedButton(
-                onClick = onAcknowledge,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-            ) { Text("Dismiss") }
-        }
-        is EmbedReport.Failed -> {
-            Text(
-                text = "Embed pass failed: ${report.message}",
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.error,
-            )
-            OutlinedButton(
-                onClick = onAcknowledge,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-            ) { Text("Dismiss") }
-        }
+    pendingRemoval?.let { root ->
+        AlertDialog(
+            onDismissRequest = { pendingRemoval = null },
+            title = { Text("Remove this folder?") },
+            text = {
+                Text(
+                    "\"${root.displayName}\" will disappear from your library, " +
+                        "along with the tracks scanned from it. " +
+                        "The files on disk aren't touched.",
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        onRemoveManagedRoot(root.treeUri)
+                        pendingRemoval = null
+                    },
+                ) {
+                    Text("Remove")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { pendingRemoval = null }) {
+                    Text("Cancel")
+                }
+            },
+        )
     }
 }
 
@@ -289,18 +275,15 @@ private fun SettingsPageLightPreview() {
                 ManagedTreeRoot(2, "content://b", "Bootlegs", 0, null),
             ),
             isScanning = false,
-            hasWritePermission = false,
             artworkPreferences = ArtworkPreferences.Default,
             onColorModeChange = {},
             onDynamicColorChange = {},
             onDownloadRemoteArtChange = {},
-            onEmbedDownloadedArtChange = {},
-            onRequestWritePermission = {},
-            embedReport = EmbedReport.Idle,
-            onEmbedMissingArt = {},
-            onAcknowledgeEmbedReport = {},
+            onEmbedFolderClick = {},
+            onAddFolder = {},
             onRescanAll = {},
             onRemoveManagedRoot = {},
+            onOpenEqualizer = {},
             onOpenDesignSystem = {},
             onBack = {},
         )
@@ -315,18 +298,15 @@ private fun SettingsPageDarkPreview() {
             preferences = ThemePreferences(ColorMode.DARK, useDynamicColor = false),
             managedRoots = emptyList(),
             isScanning = false,
-            hasWritePermission = false,
             artworkPreferences = ArtworkPreferences.Default,
             onColorModeChange = {},
             onDynamicColorChange = {},
             onDownloadRemoteArtChange = {},
-            onEmbedDownloadedArtChange = {},
-            onRequestWritePermission = {},
-            embedReport = EmbedReport.Idle,
-            onEmbedMissingArt = {},
-            onAcknowledgeEmbedReport = {},
+            onEmbedFolderClick = {},
+            onAddFolder = {},
             onRescanAll = {},
             onRemoveManagedRoot = {},
+            onOpenEqualizer = {},
             onOpenDesignSystem = {},
             onBack = {},
         )
@@ -343,7 +323,6 @@ private fun SettingsPageScanningPreview() {
                 ManagedTreeRoot(1, "content://a", "Music Library", 0, 1_700_000_000),
             ),
             isScanning = true,
-            hasWritePermission = true,
             artworkPreferences = ArtworkPreferences(
                 downloadRemoteArt = true,
                 embedDownloadedArt = true,
@@ -351,13 +330,11 @@ private fun SettingsPageScanningPreview() {
             onColorModeChange = {},
             onDynamicColorChange = {},
             onDownloadRemoteArtChange = {},
-            onEmbedDownloadedArtChange = {},
-            onRequestWritePermission = {},
-            embedReport = EmbedReport.Idle,
-            onEmbedMissingArt = {},
-            onAcknowledgeEmbedReport = {},
+            onEmbedFolderClick = {},
+            onAddFolder = {},
             onRescanAll = {},
             onRemoveManagedRoot = {},
+            onOpenEqualizer = {},
             onOpenDesignSystem = {},
             onBack = {},
             dynamicColorSupported = false,

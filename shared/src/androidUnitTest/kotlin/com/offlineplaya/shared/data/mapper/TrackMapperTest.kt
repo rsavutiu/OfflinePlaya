@@ -109,6 +109,7 @@ class TrackMapperTest {
         album_id: Long? = null,
         folder_id: Long? = null,
         scan_status: String = "pending",
+        canonical_genre: String? = null,
         created_at: Long = 0L,
         updated_at: Long = 0L,
     ) = TrackRow(
@@ -136,6 +137,7 @@ class TrackMapperTest {
         album_id = album_id,
         folder_id = folder_id,
         scan_status = scan_status,
+        canonical_genre = canonical_genre,
         created_at = created_at,
         updated_at = updated_at,
     )

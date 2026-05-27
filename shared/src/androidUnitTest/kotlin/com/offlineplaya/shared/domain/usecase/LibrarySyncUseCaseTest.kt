@@ -1,5 +1,6 @@
 package com.offlineplaya.shared.domain.usecase
 
+import com.offlineplaya.shared.domain.model.CanonicalGenre
 import com.offlineplaya.shared.data.repository.SqlAlbumRepository
 import com.offlineplaya.shared.data.repository.SqlArtistRepository
 import com.offlineplaya.shared.data.repository.SqlFolderRepository
@@ -9,11 +10,14 @@ import com.offlineplaya.shared.database.OfflinePlayaDatabase
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.scanner.AudioFolder
 import com.offlineplaya.shared.domain.scanner.AudioMetadata
+import com.offlineplaya.shared.domain.scanner.DeviceAudioScanner
+import com.offlineplaya.shared.domain.scanner.DeviceAudioTrack
 import com.offlineplaya.shared.domain.scanner.RawAudioFile
 import com.offlineplaya.shared.testsupport.FakeDeviceAudioScanner
 import com.offlineplaya.shared.testsupport.FakeFolderScanner
 import com.offlineplaya.shared.testsupport.FakeMetadataReader
 import com.offlineplaya.shared.testsupport.createInMemoryDatabase
+import com.offlineplaya.shared.util.TestLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -39,10 +43,10 @@ class LibrarySyncUseCaseTest {
         return Fixture(
             db = db,
             managedRoots = SqlManagedTreeRootRepository(db, Dispatchers.Unconfined),
-            folders = SqlFolderRepository(db, Dispatchers.Unconfined),
-            artists = SqlArtistRepository(db, Dispatchers.Unconfined),
-            albums = SqlAlbumRepository(db, Dispatchers.Unconfined),
-            tracks = SqlTrackRepository(db, Dispatchers.Unconfined),
+            folders = SqlFolderRepository(db, TestLogger(), Dispatchers.Unconfined),
+            artists = SqlArtistRepository(db, TestLogger(), Dispatchers.Unconfined),
+            albums = SqlAlbumRepository(db, TestLogger(), Dispatchers.Unconfined),
+            tracks = SqlTrackRepository(db, TestLogger(), Dispatchers.Unconfined),
         )
     }
 
@@ -50,6 +54,7 @@ class LibrarySyncUseCaseTest {
         f: Fixture,
         scanner: FakeFolderScanner,
         reader: FakeMetadataReader,
+        deviceAudio: FakeDeviceAudioScanner = FakeDeviceAudioScanner(),
     ) = LibrarySyncUseCase(
         managedRoots = f.managedRoots,
         folders = f.folders,
@@ -58,7 +63,8 @@ class LibrarySyncUseCaseTest {
         tracks = f.tracks,
         scanner = scanner,
         metadataReader = reader,
-        deviceAudio = FakeDeviceAudioScanner(),
+        deviceAudio = deviceAudio,
+        logger = TestLogger(),
     )
 
     @Test
@@ -292,6 +298,186 @@ class LibrarySyncUseCaseTest {
             f.managedRoots.findByUri(b)!!.lastScannedAt != null,
             "managed root B must be marked as scanned",
         )
+    }
+
+    @Test
+    fun `SAF-then-device dedup keeps SAF row when content key matches`() = runTest {
+        val f = fixture()
+        val safUri = "content://tree/safroot"
+        val safDoc = "$safUri/song.mp3"
+        val deviceDoc = "${DeviceAudioScanner.ROOT_URI}/Download/song.mp3"
+        val name = "song.mp3"
+        val size = 4_000_000L
+        val mtime = 1_700_000_000L
+
+        val scanner = FakeFolderScanner.scan(
+            treeUri = safUri,
+            folders = listOf(AudioFolder(safUri, "", "SAF", null)),
+            files = listOf(RawAudioFile(safDoc, safUri, "song.mp3", name, size, mtime)),
+        )
+        val reader = FakeMetadataReader(
+            scripted = mapOf(
+                safDoc to md(artist = "A", album = "Al", title = "Song"),
+                deviceDoc to md(artist = "A", album = "Al", title = "Song"),
+            ),
+        )
+        val device = FakeDeviceAudioScanner(
+            tracks = listOf(
+                DeviceAudioTrack(
+                    sourceUri = deviceDoc,
+                    relativePath = "Download/song.mp3",
+                    fileName = name,
+                    fileSize = size,
+                    lastModified = mtime,
+                    metadata = AudioMetadata.Empty.copy(title = "Song", artist = "A", album = "Al"),
+                ),
+            ),
+        )
+        f.managedRoots.add(safUri, "SAF")
+
+        useCase(f, scanner, reader, device).syncAll()
+
+        assertEquals(1L, f.tracks.count(), "duplicate physical file should not appear twice")
+        val survivor = f.tracks.findByDocumentUri(safDoc)
+        assertNotNull(survivor, "SAF row must be the survivor")
+        assertNull(f.tracks.findByDocumentUri(deviceDoc), "device-audio row must be skipped")
+    }
+
+    @Test
+    fun `device-then-SAF dedup replaces device row with SAF row`() = runTest {
+        val f = fixture()
+        val safUri = "content://tree/safroot"
+        val safDoc = "$safUri/song.mp3"
+        val deviceDoc = "${DeviceAudioScanner.ROOT_URI}/Download/song.mp3"
+        val name = "song.mp3"
+        val size = 4_000_000L
+        val mtime = 1_700_000_000L
+
+        // Pre-seed the DB with the device-audio row by running device scan first.
+        val device = FakeDeviceAudioScanner(
+            tracks = listOf(
+                DeviceAudioTrack(
+                    sourceUri = deviceDoc,
+                    relativePath = "Download/song.mp3",
+                    fileName = name,
+                    fileSize = size,
+                    lastModified = mtime,
+                    metadata = AudioMetadata.Empty.copy(title = "Song", artist = "A", album = "Al"),
+                ),
+            ),
+        )
+        useCase(f, FakeFolderScanner(scripted = emptyMap()), FakeMetadataReader(), device)
+            .syncDeviceAudio()
+        assertEquals(1L, f.tracks.count(), "device row should be present after first pass")
+
+        // Now run a SAF scan that finds the same physical file.
+        val scanner = FakeFolderScanner.scan(
+            treeUri = safUri,
+            folders = listOf(AudioFolder(safUri, "", "SAF", null)),
+            files = listOf(RawAudioFile(safDoc, safUri, "song.mp3", name, size, mtime)),
+        )
+        val reader = FakeMetadataReader(
+            scripted = mapOf(safDoc to md(artist = "A", album = "Al", title = "Song")),
+        )
+        useCase(f, scanner, reader, device).syncOne(safUri)
+
+        assertEquals(1L, f.tracks.count(), "device row must be evicted when SAF covers the same file")
+        assertNotNull(f.tracks.findByDocumentUri(safDoc))
+        assertNull(f.tracks.findByDocumentUri(deviceDoc))
+    }
+
+    @Test
+    fun `near-match with different lastModified is treated as a distinct file`() = runTest {
+        val f = fixture()
+        val safUri = "content://tree/safroot"
+        val safDoc = "$safUri/song.mp3"
+        val deviceDoc = "${DeviceAudioScanner.ROOT_URI}/Download/song.mp3"
+        val name = "song.mp3"
+        val size = 4_000_000L
+
+        val scanner = FakeFolderScanner.scan(
+            treeUri = safUri,
+            folders = listOf(AudioFolder(safUri, "", "SAF", null)),
+            files = listOf(RawAudioFile(safDoc, safUri, "song.mp3", name, size, lastModified = 1_700_000_000L)),
+        )
+        val reader = FakeMetadataReader(
+            scripted = mapOf(safDoc to md(artist = "A", album = "Al", title = "Song")),
+        )
+        val device = FakeDeviceAudioScanner(
+            tracks = listOf(
+                DeviceAudioTrack(
+                    sourceUri = deviceDoc,
+                    relativePath = "Download/song.mp3",
+                    fileName = name,
+                    fileSize = size,
+                    lastModified = 1_800_000_000L, // different mtime
+                    metadata = AudioMetadata.Empty.copy(title = "Song", artist = "A", album = "Al"),
+                ),
+            ),
+        )
+        f.managedRoots.add(safUri, "SAF")
+
+        useCase(f, scanner, reader, device).syncAll()
+
+        assertEquals(2L, f.tracks.count(), "different mtime means different physical file — keep both")
+    }
+
+    @Test
+    fun `scan populates canonical_genre on each scanned track`() = runTest {
+        val f = fixture()
+        val uri = "content://tree/root"
+        val docRock = "$uri/r.mp3"
+        val docJazz = "$uri/j.mp3"
+        val docUnknown = "$uri/u.mp3"
+        val scanner = FakeFolderScanner.scan(
+            treeUri = uri,
+            folders = listOf(AudioFolder(uri, "", "root", null)),
+            files = listOf(
+                RawAudioFile(docRock, uri, "r.mp3", "r.mp3", 0, 0),
+                RawAudioFile(docJazz, uri, "j.mp3", "j.mp3", 0, 0),
+                RawAudioFile(docUnknown, uri, "u.mp3", "u.mp3", 0, 0),
+            ),
+        )
+        val reader = FakeMetadataReader(
+            scripted = mapOf(
+                docRock to md(artist = "A", album = "Al", title = "R").copy(genre = "Alternative Rock"),
+                docJazz to md(artist = "A", album = "Al", title = "J").copy(genre = "Bebop"),
+                docUnknown to md(artist = "A", album = "Al", title = "U"),
+            ),
+        )
+        useCase(f, scanner, reader).syncOne(uri)
+        assertEquals(CanonicalGenre.ROCK, f.tracks.findByDocumentUri(docRock)?.canonicalGenre)
+        assertEquals(CanonicalGenre.JAZZ, f.tracks.findByDocumentUri(docJazz)?.canonicalGenre)
+        assertEquals(CanonicalGenre.DEFAULT, f.tracks.findByDocumentUri(docUnknown)?.canonicalGenre)
+    }
+
+    @Test
+    fun `syncAll backfills canonical_genre on legacy rows`() = runTest {
+        val f = fixture()
+        val uri = "content://tree/root"
+        val doc = "$uri/legacy.mp3"
+        // First scan populates the track normally (canonical_genre = ROCK).
+        val scanner = FakeFolderScanner.scan(
+            treeUri = uri,
+            folders = listOf(AudioFolder(uri, "", "root", null)),
+            files = listOf(RawAudioFile(doc, uri, "legacy.mp3", "legacy.mp3", 0, 0)),
+        )
+        val reader = FakeMetadataReader(
+            scripted = mapOf(doc to md(artist = "A", album = "Al", title = "L").copy(genre = "Indie Rock")),
+        )
+        f.managedRoots.add(uri, "Root")
+        useCase(f, scanner, reader).syncAll()
+        val initial = f.tracks.findByDocumentUri(doc)
+        assertNotNull(initial)
+        assertEquals(CanonicalGenre.ROCK, initial.canonicalGenre)
+
+        // Simulate the pre-EQ-feature state: stamp canonical_genre back to null.
+        f.db.trackQueries.setCanonicalGenre(null, initial.id)
+        assertEquals(null, f.tracks.findByDocumentUri(doc)?.canonicalGenre)
+
+        // Next syncAll should observe the missing row and backfill it.
+        useCase(f, FakeFolderScanner(scripted = emptyMap()), FakeMetadataReader()).syncAll()
+        assertEquals(CanonicalGenre.ROCK, f.tracks.findByDocumentUri(doc)?.canonicalGenre)
     }
 
     private fun md(

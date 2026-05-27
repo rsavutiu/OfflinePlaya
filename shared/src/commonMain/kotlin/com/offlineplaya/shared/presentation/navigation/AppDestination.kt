@@ -29,4 +29,7 @@ sealed interface AppDestination {
 
     /** Internal design-system catalog — every token rendered on one page. */
     data object DesignSystemGallery : AppDestination
+
+    /** Equalizer page — accessible from NowPlaying and from Settings. */
+    data object Equalizer : AppDestination
 }

@@ -26,6 +26,9 @@ CREATE TABLE Track (
     folder_id INTEGER REFERENCES Folder(id),
 
     scan_status TEXT NOT NULL DEFAULT 'pending',
+    -- Bucketed genre for equalizer Auto mode. Nullable so legacy rows that
+    -- pre-date the EQ feature get backfilled on the next library sync.
+    canonical_genre TEXT,
     created_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
     updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
 );
@@ -36,6 +39,7 @@ CREATE INDEX idx_track_folder ON Track(folder_id);
 CREATE INDEX idx_track_scan_status ON Track(scan_status);
 CREATE INDEX idx_track_document_uri ON Track(document_uri);
 CREATE INDEX idx_track_relative_path ON Track(relative_path);
+CREATE INDEX idx_track_canonical_genre ON Track(canonical_genre);
 
 selectAll:
 SELECT * FROM Track ORDER BY title COLLATE NOCASE;
@@ -56,6 +60,22 @@ SELECT * FROM Track WHERE id = ?;
 
 selectByDocumentUri:
 SELECT * FROM Track WHERE document_uri = ?;
+
+-- Used for content-based dedup between SAF roots and the synthetic
+-- `device://audio` tree: the same physical file picked up by both scanners
+-- has different URIs but identical (file_name, file_size, last_modified).
+selectByContentKeyExcludingTree:
+SELECT * FROM Track
+WHERE file_name = ? AND file_size = ? AND last_modified = ?
+  AND tree_uri != ?
+LIMIT 1;
+
+-- Inverse: find a device-audio row that matches a freshly-inserted SAF
+-- track, so we can drop the redundant device row.
+selectIdsByContentKeyInTree:
+SELECT id FROM Track
+WHERE file_name = ? AND file_size = ? AND last_modified = ?
+  AND tree_uri = ?;
 
 selectIdByDocumentUri:
 SELECT id FROM Track WHERE document_uri = ?;
@@ -89,6 +109,7 @@ UPDATE Track SET
     album_artist_name = ?,
     album_name = ?,
     genre = ?,
+    canonical_genre = ?,
     year = ?,
     track_number = ?,
     disc_number = ?,
@@ -101,6 +122,17 @@ UPDATE Track SET
     updated_at = strftime('%s', 'now')
 WHERE id = ?;
 
+-- Lazy backfill: pull every row that's been scanned but never had its
+-- canonical_genre classified. Bounded so a giant pre-EQ library can be
+-- chunked across multiple passes.
+selectMissingCanonicalGenre:
+SELECT id, genre FROM Track
+WHERE canonical_genre IS NULL AND scan_status = 'scanned'
+LIMIT ?;
+
+setCanonicalGenre:
+UPDATE Track SET canonical_genre = ?, updated_at = strftime('%s', 'now') WHERE id = ?;
+
 updateForeignKeys:
 UPDATE Track SET artist_id = ?, album_id = ? WHERE id = ?;
 
@@ -109,6 +141,15 @@ UPDATE Track SET scan_status = 'error', updated_at = strftime('%s', 'now') WHERE
 
 deleteByDocumentUri:
 DELETE FROM Track WHERE document_uri = ?;
+
+deleteById:
+DELETE FROM Track WHERE id = ?;
+
+selectIdsByTreeUri:
+SELECT id, artist_id, album_id FROM Track WHERE tree_uri = ?;
+
+deleteByTreeUri:
+DELETE FROM Track WHERE tree_uri = ?;
 
 deleteAll:
 DELETE FROM Track;

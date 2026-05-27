@@ -16,6 +16,8 @@ import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -35,6 +37,7 @@ import com.offlineplaya.shared.domain.model.PlaybackState
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.domain.player.MusicPlayer
+import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.navigation.AppDestination
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
@@ -42,7 +45,10 @@ import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.sync.SyncStatus
 import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
 import com.offlineplaya.shared.presentation.ui.organisms.MiniPlayer
+import com.offlineplaya.shared.presentation.ui.organisms.MiniPlayerReservedSpace
 import com.offlineplaya.shared.presentation.ui.pages.DesignSystemGalleryPage
+import com.offlineplaya.shared.presentation.ui.pages.EqualizerPage
+import com.offlineplaya.shared.presentation.ui.pages.userLabel
 import com.offlineplaya.shared.presentation.ui.pages.HomePage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryAlbumDetailPage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryArtistDetailPage
@@ -74,17 +80,16 @@ fun App(
     syncCoordinator: com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator,
     embedArtCoordinator: com.offlineplaya.shared.presentation.artwork.EmbedArtCoordinator,
     musicPlayer: MusicPlayer,
+    equalizerStateHolder: EqualizerStateHolder,
     themePreferences: ThemePreferences,
     artworkPreferences: com.offlineplaya.shared.domain.model.ArtworkPreferences,
-    hasWritePermission: Boolean,
     syncStatus: SyncStatus,
     trackCount: Long,
     onPickFolder: () -> Unit,
     onColorModeChange: (ColorMode) -> Unit,
     onDynamicColorChange: (Boolean) -> Unit,
     onDownloadRemoteArtChange: (Boolean) -> Unit,
-    onEmbedDownloadedArtChange: (Boolean) -> Unit,
-    onRequestWritePermission: () -> Unit,
+    onEmbedFolderClick: () -> Unit,
     dynamicColorSupported: Boolean,
 ) {
     OfflinePlayaTheme(preferences = themePreferences) {
@@ -93,7 +98,27 @@ fun App(
         val playback by musicPlayer.playbackState.collectAsState()
 
         val availablePlaylists by playlists.allPlaylists.collectAsState()
-        val embedReport by embedArtCoordinator.report.collectAsState()
+
+        // SnackbarHost shared across all destinations. The embed coordinator
+        // fires a one-shot Event when a folder pass finishes; we surface that
+        // here so the user gets feedback no matter which page they're on.
+        val snackbarHostState = remember { SnackbarHostState() }
+        LaunchedEffect(embedArtCoordinator) {
+            embedArtCoordinator.events.collect { event ->
+                val msg = when (event) {
+                    is com.offlineplaya.shared.presentation.artwork.EmbedArtCoordinator.Event.Done ->
+                        if (event.failed > 0)
+                            "Burned covers into ${event.embedded} files (${event.failed} failed)"
+                        else
+                            "Burned covers into ${event.embedded} files"
+                    is com.offlineplaya.shared.presentation.artwork.EmbedArtCoordinator.Event.NoTracks ->
+                        "No tracks in that folder are part of your library yet."
+                    is com.offlineplaya.shared.presentation.artwork.EmbedArtCoordinator.Event.Error ->
+                        "Couldn't burn covers: ${event.message}"
+                }
+                snackbarHostState.showSnackbar(msg)
+            }
+        }
 
         val onTabSelected: (LibraryTab) -> Unit = { tab ->
             navigator.swapTop(tab.toDestination())
@@ -112,12 +137,18 @@ fun App(
         // opt out via `contentWindowInsets = WindowInsets(0)` to avoid double
         // padding. The MiniPlayer slots in as `bottomBar` so its background
         // extends behind the navigation bar while its content sits above it.
-        val showMini = playback.currentTrack != null && current != AppDestination.NowPlaying
+        val onNowPlaying = current == AppDestination.NowPlaying
+        val showMini = playback.currentTrack != null && !onNowPlaying
         Scaffold(
             modifier = Modifier.fillMaxSize(),
+            snackbarHost = { SnackbarHost(snackbarHostState) },
             bottomBar = {
-                AnimatedVisibility(visible = showMini) {
-                    MiniPlayer(
+                // Always reserve the mini-player footprint on non-NowPlaying
+                // screens so the page above doesn't reflow when playback
+                // starts or stops. The reserved space is just empty when no
+                // track is queued — MiniPlayer slots into the same height.
+                when {
+                    showMini -> MiniPlayer(
                         state = playback,
                         onExpand = { navigator.push(AppDestination.NowPlaying) },
                         onPlayPause = {
@@ -126,6 +157,7 @@ fun App(
                         onPrevious = { musicPlayer.skipToPrevious() },
                         onNext = { musicPlayer.skipToNext() },
                     )
+                    !onNowPlaying -> MiniPlayerReservedSpace()
                 }
             },
         ) { outerPadding ->
@@ -143,21 +175,18 @@ fun App(
                     playlists = playlists,
                     availablePlaylists = availablePlaylists,
                     syncCoordinator = syncCoordinator,
-                    embedArtCoordinator = embedArtCoordinator,
-                    embedReport = embedReport,
                     musicPlayer = musicPlayer,
+                    equalizerStateHolder = equalizerStateHolder,
                     playback = playback,
                     themePreferences = themePreferences,
                     artworkPreferences = artworkPreferences,
-                    hasWritePermission = hasWritePermission,
                     syncStatus = syncStatus,
                     trackCount = trackCount,
                     onPickFolder = onPickFolder,
                     onColorModeChange = onColorModeChange,
                     onDynamicColorChange = onDynamicColorChange,
                     onDownloadRemoteArtChange = onDownloadRemoteArtChange,
-                    onEmbedDownloadedArtChange = onEmbedDownloadedArtChange,
-                    onRequestWritePermission = onRequestWritePermission,
+                    onEmbedFolderClick = onEmbedFolderClick,
                     dynamicColorSupported = dynamicColorSupported,
                     onTabSelected = onTabSelected,
                     onPlayTracks = onPlayTracks,
@@ -178,21 +207,18 @@ private fun DestinationContent(
     playlists: PlaylistStateHolder,
     availablePlaylists: List<com.offlineplaya.shared.domain.model.Playlist>,
     syncCoordinator: com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator,
-    embedArtCoordinator: com.offlineplaya.shared.presentation.artwork.EmbedArtCoordinator,
-    embedReport: com.offlineplaya.shared.domain.usecase.EmbedReport,
     musicPlayer: MusicPlayer,
+    equalizerStateHolder: EqualizerStateHolder,
     playback: PlaybackState,
     themePreferences: ThemePreferences,
     artworkPreferences: com.offlineplaya.shared.domain.model.ArtworkPreferences,
-    hasWritePermission: Boolean,
     syncStatus: SyncStatus,
     trackCount: Long,
     onPickFolder: () -> Unit,
     onColorModeChange: (ColorMode) -> Unit,
     onDynamicColorChange: (Boolean) -> Unit,
     onDownloadRemoteArtChange: (Boolean) -> Unit,
-    onEmbedDownloadedArtChange: (Boolean) -> Unit,
-    onRequestWritePermission: () -> Unit,
+    onEmbedFolderClick: () -> Unit,
     dynamicColorSupported: Boolean,
     onTabSelected: (LibraryTab) -> Unit,
     onPlayTracks: (List<Track>, Int) -> Unit,
@@ -210,15 +236,31 @@ private fun DestinationContent(
         label = "destination",
     ) { dest ->
         when (dest) {
-            AppDestination.Home -> HomePage(
-                status = syncStatus,
-                trackCount = trackCount,
-                onPickFolder = onPickFolder,
-                onOpenLibrary = { navigator.push(AppDestination.LibraryArtists) },
-                onOpenPlaylists = { navigator.push(AppDestination.Playlists) },
-                onOpenSearch = { navigator.push(AppDestination.Search) },
-                onOpenSettings = { navigator.push(AppDestination.Settings) },
-            )
+            AppDestination.Home -> {
+                val rootFolders by library.rootFolders.collectAsState()
+                val albums by library.allAlbums.collectAsState()
+                val artists by library.allArtists.collectAsState()
+                val playlistList by playlists.allPlaylists.collectAsState()
+                HomePage(
+                    status = syncStatus,
+                    trackCount = trackCount,
+                    folderCount = rootFolders.size,
+                    albumCount = albums.size,
+                    artistCount = artists.size,
+                    playlistCount = playlistList.size,
+                    recentAlbums = albums.take(10),
+                    representativeTrackOfAlbum = { id -> library.representativeTrackOfAlbum(id) },
+                    onPickFolder = onPickFolder,
+                    onOpenLibrary = { navigator.push(AppDestination.LibraryArtists) },
+                    onOpenAllTracks = { navigator.push(AppDestination.LibraryFlat) },
+                    onOpenAlbums = { navigator.push(AppDestination.LibraryArtists) },
+                    onOpenArtists = { navigator.push(AppDestination.LibraryArtists) },
+                    onOpenPlaylists = { navigator.push(AppDestination.Playlists) },
+                    onOpenAlbum = { id -> navigator.push(AppDestination.LibraryAlbumDetail(id)) },
+                    onOpenSearch = { navigator.push(AppDestination.Search) },
+                    onOpenSettings = { navigator.push(AppDestination.Settings) },
+                )
+            }
 
             AppDestination.Settings -> {
                 val managedRoots by syncCoordinator.managedRootsFlow
@@ -228,17 +270,14 @@ private fun DestinationContent(
                     artworkPreferences = artworkPreferences,
                     managedRoots = managedRoots,
                     isScanning = syncStatus is SyncStatus.Scanning,
-                    hasWritePermission = hasWritePermission,
-                    embedReport = embedReport,
                     onColorModeChange = onColorModeChange,
                     onDynamicColorChange = onDynamicColorChange,
                     onDownloadRemoteArtChange = onDownloadRemoteArtChange,
-                    onEmbedDownloadedArtChange = onEmbedDownloadedArtChange,
-                    onRequestWritePermission = onRequestWritePermission,
-                    onEmbedMissingArt = { embedArtCoordinator.start() },
-                    onAcknowledgeEmbedReport = { embedArtCoordinator.acknowledge() },
+                    onEmbedFolderClick = onEmbedFolderClick,
+                    onAddFolder = onPickFolder,
                     onRescanAll = { syncCoordinator.resyncAll() },
                     onRemoveManagedRoot = { uri -> syncCoordinator.removeManagedRoot(uri) },
+                    onOpenEqualizer = { navigator.push(AppDestination.Equalizer) },
                     onOpenDesignSystem = { navigator.push(AppDestination.DesignSystemGallery) },
                     onBack = { navigator.pop() },
                     dynamicColorSupported = dynamicColorSupported,
@@ -254,6 +293,7 @@ private fun DestinationContent(
                 onShuffleToggle = { musicPlayer.setShuffleEnabled(!playback.shuffleEnabled) },
                 onRepeatChange = { musicPlayer.setRepeatMode(it) },
                 onOpenQueue = { navigator.push(AppDestination.Queue) },
+                onOpenEqualizer = { navigator.push(AppDestination.Equalizer) },
                 onBack = { navigator.pop() },
             )
 
@@ -462,6 +502,27 @@ private fun DestinationContent(
             AppDestination.DesignSystemGallery -> DesignSystemGalleryPage(
                 onBack = { navigator.pop() },
             )
+
+            AppDestination.Equalizer -> {
+                val prefs by equalizerStateHolder.preferences.collectAsState()
+                val activePreset by equalizerStateHolder.activePreset.collectAsState()
+                EqualizerPage(
+                    preferences = prefs,
+                    activePreset = activePreset,
+                    // Show the resolved canonical genre under "Auto" so the
+                    // user can see why a given preset was picked.
+                    autoGenreLabel = playback.currentTrack
+                        ?.canonicalGenre
+                        ?.userLabel(),
+                    onModeChange = { equalizerStateHolder.setMode(it) },
+                    onPresetChange = { equalizerStateHolder.setManualPreset(it) },
+                    onBandGainChange = { idx, mb, gains ->
+                        equalizerStateHolder.setBandGain(idx, mb, gains)
+                    },
+                    onResetOverrides = { equalizerStateHolder.resetManualOverrides() },
+                    onBack = { navigator.pop() },
+                )
+            }
         }
     }
 }

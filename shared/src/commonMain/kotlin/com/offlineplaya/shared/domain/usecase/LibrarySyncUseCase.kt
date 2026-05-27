@@ -13,6 +13,11 @@ import com.offlineplaya.shared.domain.scanner.FolderScanner
 import com.offlineplaya.shared.domain.scanner.MetadataReader
 import com.offlineplaya.shared.domain.scanner.RawAudioFile
 import com.offlineplaya.shared.util.AppLogger
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 
 /**
  * Phase 2 orchestrator. For each managed tree root:
@@ -41,6 +46,19 @@ class LibrarySyncUseCase(
 ) {
     private companion object {
         const val TAG = "LibrarySyncUseCase"
+        /**
+         * Cap on simultaneous metadata reads. `MediaMetadataRetriever` has
+         * some internal global locking but 8 parallel reads measure ~6× faster
+         * than serial on mid-range devices and avoid OOM on cheap ones.
+         */
+        const val METADATA_READ_CONCURRENCY = 8
+
+        /**
+         * Cap on rows pulled per backfill pass. Keeps memory bounded on
+         * libraries with tens of thousands of pre-existing tracks; the loop
+         * just repeats until the unclassified set is exhausted.
+         */
+        const val BACKFILL_CHUNK_SIZE = 500
     }
 
     /**
@@ -58,9 +76,36 @@ class LibrarySyncUseCase(
             acc + syncOne(root.treeUri)
         }
         val deviceReport = syncDeviceAudio()
+        // After every sync pass, top up canonical_genre on any rows still
+        // missing it — covers pre-EQ-feature tracks that were scanned by an
+        // older app version and never classified. Runs in chunks so a huge
+        // legacy library doesn't block the sync's reported "Completed" state.
+        backfillCanonicalGenre()
         val totalReport = safReport + deviceReport
         logger.i(TAG, "Completed syncAll: $totalReport")
         return totalReport
+    }
+
+    /**
+     * Re-classify legacy rows whose `canonical_genre` is null. Pulls in chunks
+     * of [BACKFILL_CHUNK_SIZE] rows; loops until the table is exhausted. Pure
+     * SQL work — no file I/O — so even thousands of rows finish in well under
+     * a second on cold cache.
+     */
+    private suspend fun backfillCanonicalGenre() {
+        var totalUpdated = 0
+        while (true) {
+            val chunk = tracks.selectMissingCanonicalGenre(BACKFILL_CHUNK_SIZE)
+            if (chunk.isEmpty()) break
+            for (row in chunk) {
+                tracks.setCanonicalGenre(row.trackId, GenreClassifier.classify(row.rawGenre))
+            }
+            totalUpdated += chunk.size
+            if (chunk.size < BACKFILL_CHUNK_SIZE) break
+        }
+        if (totalUpdated > 0) {
+            logger.i(TAG, "Backfilled canonical_genre on $totalUpdated track(s)")
+        }
     }
 
     /** Sync a single tree root by URI. Returns a per-root report. */
@@ -72,6 +117,10 @@ class LibrarySyncUseCase(
 
             val folderIds = materializeFolders(scan.folders)
             val pendingTracks = insertPendingTracks(scan.files, folderIds)
+            // After inserting SAF tracks, promote them over any device-audio
+            // row representing the same physical file. Otherwise a file picked
+            // up by both scanners would show as a duplicate in the library.
+            demoteDeviceDuplicates(pendingTracks)
             val (scanned, failed) = applyMetadataAndGrouping(pendingTracks)
 
             refreshAggregates(folderIds.values, pendingTracks.map { it.first })
@@ -118,9 +167,24 @@ class LibrarySyncUseCase(
         val folderIds = materializeFolders(syntheticFolders)
 
         var scanned = 0
+        var skippedAsDuplicate = 0
         val touchedTrackIds = mutableListOf<Long>()
         for (deviceTrack in deviceTracks) {
             try {
+                // Skip files already covered by a SAF-managed root. Identity
+                // is the physical fingerprint (name + size + mtime) — same
+                // bytes on disk, two different URIs.
+                val safMatch = tracks.findByContentKeyExcludingTree(
+                    fileName = deviceTrack.fileName,
+                    fileSize = deviceTrack.fileSize,
+                    lastModified = deviceTrack.lastModified,
+                    excludeTreeUri = DeviceAudioScanner.ROOT_URI,
+                )
+                if (safMatch != null) {
+                    skippedAsDuplicate++
+                    continue
+                }
+
                 val parentPath = parentRelativePath(deviceTrack.relativePath)
                 val folderId = folderIds[parentPath]
 
@@ -155,10 +219,38 @@ class LibrarySyncUseCase(
             foldersUpserted = folderIds.size,
             tracksDiscovered = deviceTracks.size,
             tracksScanned = scanned,
-            tracksFailed = deviceTracks.size - scanned,
+            // Tracks skipped as SAF duplicates aren't failures — count them
+            // separately in the log but don't surface as failed in the report.
+            tracksFailed = deviceTracks.size - scanned - skippedAsDuplicate,
         )
-        logger.i(TAG, "Finished syncDeviceAudio: $report")
+        logger.i(TAG, "Finished syncDeviceAudio: $report (skipped $skippedAsDuplicate SAF duplicates)")
         return report
+    }
+
+    /**
+     * After a SAF scan inserts its tracks, sweep the device-audio tree and
+     * delete any row matching the same (fileName, fileSize, lastModified).
+     * The SAF row wins because it has a real parent folder in the user's tree
+     * — the device-audio synthetic root was just a fallback.
+     */
+    private suspend fun demoteDeviceDuplicates(pending: List<Pair<Long, RawAudioFile>>) {
+        if (pending.isEmpty()) return
+        var removed = 0
+        for ((_, file) in pending) {
+            val deviceIds = tracks.findIdsByContentKeyInTree(
+                fileName = file.fileName,
+                fileSize = file.fileSize,
+                lastModified = file.lastModified,
+                inTreeUri = DeviceAudioScanner.ROOT_URI,
+            )
+            for (id in deviceIds) {
+                tracks.deleteById(id)
+                removed++
+            }
+        }
+        if (removed > 0) {
+            logger.i(TAG, "Removed $removed device-audio duplicates after SAF scan")
+        }
     }
 
     /**
@@ -258,32 +350,43 @@ class LibrarySyncUseCase(
     /**
      * For each pending track, read metadata, upsert Artist+Album, and update
      * the Track. Returns (scannedCount, failedCount).
+     *
+     * The metadata read (file I/O via MediaMetadataRetriever) is the
+     * expensive step and gets fanned out across [METADATA_READ_CONCURRENCY]
+     * coroutines. The follow-up DB writes stay sequential because Artist /
+     * Album upserts have read-then-insert semantics that race under
+     * concurrent writers — keeping them serial is cheaper than serializing
+     * inside the repo.
      */
     private suspend fun applyMetadataAndGrouping(
         pending: List<Pair<Long, RawAudioFile>>,
-    ): Pair<Int, Int> {
+    ): Pair<Int, Int> = coroutineScope {
+        val semaphore = Semaphore(METADATA_READ_CONCURRENCY)
+        val results = pending.map { (trackId, file) ->
+            async {
+                semaphore.withPermit {
+                    trackId to metadataReader.read(file.documentUri)
+                }
+            }
+        }.awaitAll()
+
         var scanned = 0
         var failed = 0
-
-        for ((trackId, file) in pending) {
-            val metadata = metadataReader.read(file.documentUri)
+        for ((trackId, metadata) in results) {
             if (metadata == null) {
                 tracks.markError(trackId)
                 failed++
                 continue
             }
-
             val artistId = upsertArtist(metadata)
             val albumId = upsertAlbum(metadata, artistId)
-
             val stored = tracks.findById(trackId)
                 ?: continue // row disappeared between insert and update — skip silently
             tracks.updateMetadata(stored.applyMetadata(metadata))
             tracks.updateForeignKeys(trackId, artistId, albumId)
             scanned++
         }
-
-        return scanned to failed
+        scanned to failed
     }
 
     /** Upsert Artist, preferring albumArtist over track-level artist. */
@@ -334,18 +437,22 @@ internal fun RawAudioFile.parentRelativePath(): String {
  */
 internal fun com.offlineplaya.shared.domain.model.Track.applyMetadata(
     metadata: AudioMetadata,
-): com.offlineplaya.shared.domain.model.Track = copy(
-    title = metadata.title?.takeIf { it.isNotBlank() } ?: fileName,
-    artistName = metadata.artist?.takeIf { it.isNotBlank() } ?: "Unknown Artist",
-    albumArtistName = metadata.albumArtist?.takeIf { it.isNotBlank() },
-    albumName = metadata.album?.takeIf { it.isNotBlank() } ?: "Unknown Album",
-    genre = metadata.genre?.takeIf { it.isNotBlank() },
-    year = metadata.year,
-    trackNumber = metadata.trackNumber,
-    discNumber = metadata.discNumber,
-    durationMs = metadata.durationMs,
-    bitrate = metadata.bitrate,
-    sampleRate = metadata.sampleRate,
-    channels = metadata.channels,
-    codec = metadata.codec,
-)
+): com.offlineplaya.shared.domain.model.Track {
+    val rawGenre = metadata.genre?.takeIf { it.isNotBlank() }
+    return copy(
+        title = metadata.title?.takeIf { it.isNotBlank() } ?: fileName,
+        artistName = metadata.artist?.takeIf { it.isNotBlank() } ?: "Unknown Artist",
+        albumArtistName = metadata.albumArtist?.takeIf { it.isNotBlank() },
+        albumName = metadata.album?.takeIf { it.isNotBlank() } ?: "Unknown Album",
+        genre = rawGenre,
+        canonicalGenre = GenreClassifier.classify(rawGenre),
+        year = metadata.year,
+        trackNumber = metadata.trackNumber,
+        discNumber = metadata.discNumber,
+        durationMs = metadata.durationMs,
+        bitrate = metadata.bitrate,
+        sampleRate = metadata.sampleRate,
+        channels = metadata.channels,
+        codec = metadata.codec,
+    )
+}

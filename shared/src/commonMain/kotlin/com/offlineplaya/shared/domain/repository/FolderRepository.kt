@@ -10,5 +10,6 @@ interface FolderRepository {
     suspend fun findByPath(treeUri: String, relativePath: String): Folder?
     suspend fun upsert(treeUri: String, relativePath: String, displayName: String, parentId: Long?): Long
     suspend fun refreshTrackCount(id: Long)
+    suspend fun deleteByTreeUri(treeUri: String)
     suspend fun deleteAll()
 }

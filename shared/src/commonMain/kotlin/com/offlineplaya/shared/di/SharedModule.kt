@@ -20,6 +20,7 @@ import com.offlineplaya.shared.domain.repository.TrackRepository
 import com.offlineplaya.shared.domain.usecase.EmbedMissingArtUseCase
 import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
 import com.offlineplaya.shared.presentation.artwork.EmbedArtCoordinator
+import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
@@ -72,6 +73,7 @@ val sharedModule: Module = module {
         EmbedMissingArtUseCase(
             tracks = get(),
             remoteSource = get(),
+            folderSource = get(),
             writer = get(),
             logger = get(),
         )
@@ -89,6 +91,10 @@ val sharedModule: Module = module {
         LibrarySyncCoordinator(
             syncUseCase = get(),
             managedRoots = get(),
+            tracks = get(),
+            folders = get(),
+            artists = get(),
+            albums = get(),
             scope = get(),
         )
     }
@@ -109,12 +115,11 @@ val sharedModule: Module = module {
         )
     }
 
-    // Embed-art coordinator: dispatches the pass through the platform-shaped
-    // BackgroundTaskRunner (WorkManager on Android, plain coroutine on Desktop,
-    // BGTaskScheduler on iOS) and exposes an EmbedReport flow for the Settings UI.
+    // Embed-art coordinator: runs the per-folder embed pass in-process and
+    // emits a one-shot Event for the Settings page to snackbar.
     single {
         EmbedArtCoordinator(
-            runner = get(),
+            useCase = get(),
             scope = get(),
         )
     }
@@ -137,6 +142,16 @@ val sharedModule: Module = module {
     single {
         PlaylistStateHolder(
             playlists = get(),
+            scope = get(),
+        )
+    }
+
+    // Equalizer state — observed by the UI and by the platform audio-effect
+    // driver. Lives in shared so future iOS/Desktop targets can reuse it.
+    single {
+        EqualizerStateHolder(
+            settings = get(),
+            musicPlayer = get(),
             scope = get(),
         )
     }

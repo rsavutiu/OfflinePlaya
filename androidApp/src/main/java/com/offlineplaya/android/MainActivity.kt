@@ -61,6 +61,7 @@ private fun AndroidApp() {
     val library: LibraryStateHolder = koinInject()
     val playlists: PlaylistStateHolder = koinInject()
     val musicPlayer: MusicPlayer = koinInject()
+    val equalizerStateHolder: com.offlineplaya.shared.presentation.eq.EqualizerStateHolder = koinInject()
 
     val themePreferences by themeStateHolder.preferences.collectAsState()
     val artworkPreferences by artworkStateHolder.preferences.collectAsState()
@@ -68,16 +69,6 @@ private fun AndroidApp() {
     val trackCount by library.totalTrackCount.collectAsState()
     val stack by navigator.stack.collectAsState()
     val context = LocalContext.current
-
-    // Snapshot of whether any persisted SAF permission grants us write access
-    // — used to gate the "embed art into files" toggle in Settings. We
-    // recompute it on first composition + every time the read-write picker
-    // returns successfully.
-    var hasWritePermission by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) {
-        hasWritePermission = context.contentResolver.persistedUriPermissions
-            .any { it.isWritePermission }
-    }
 
     // Audio-library permission. Granting this lets MediaStoreDeviceAudioScanner
     // see music in folders SAF won't let users tree-pick (Download/, internal
@@ -115,9 +106,11 @@ private fun AndroidApp() {
         coordinator.addAndSync(uri.toString(), displayName)
     }
 
-    // Write-elevation picker. The user re-picks the same root to grant write
-    // access; we persist both R+W permissions so the embed flow can use them.
-    val writePickerLauncher = rememberLauncherForActivityResult(
+    // Embed-cover picker. One-shot: the user picks a folder, we take write
+    // access for it, and immediately kick off the burn-art pass scoped to
+    // that tree URI. Completion bubbles back as a snackbar via
+    // EmbedArtCoordinator.events — no persistent state.
+    val embedPickerLauncher = rememberLauncherForActivityResult(
         OpenDocumentTreeContract(requestWrite = true),
     ) { uri ->
         if (uri == null) return@rememberLauncherForActivityResult
@@ -128,14 +121,7 @@ private fun AndroidApp() {
                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
             )
         }
-        // Refresh the cached state so the Settings toggle un-greys.
-        hasWritePermission = context.contentResolver.persistedUriPermissions
-            .any { it.isWritePermission }
-        // If this is a brand-new tree, treat it like a normal Pick Folder too.
-        val displayName = DocumentFile.fromTreeUri(context, uri)?.name
-            ?: uri.lastPathSegment
-            ?: "Folder"
-        coordinator.addAndSync(uri.toString(), displayName)
+        embedArtCoordinator.embedFolder(uri.toString())
     }
 
     BackHandler(enabled = stack.size > 1) {
@@ -149,17 +135,16 @@ private fun AndroidApp() {
         syncCoordinator = coordinator,
         embedArtCoordinator = embedArtCoordinator,
         musicPlayer = musicPlayer,
+        equalizerStateHolder = equalizerStateHolder,
         themePreferences = themePreferences,
         artworkPreferences = artworkPreferences,
-        hasWritePermission = hasWritePermission,
         syncStatus = syncStatus,
         trackCount = trackCount,
         onPickFolder = { readPickerLauncher.launch(Unit) },
         onColorModeChange = themeStateHolder::setColorMode,
         onDynamicColorChange = themeStateHolder::setUseDynamicColor,
         onDownloadRemoteArtChange = artworkStateHolder::setDownloadRemoteArt,
-        onEmbedDownloadedArtChange = artworkStateHolder::setEmbedDownloadedArt,
-        onRequestWritePermission = { writePickerLauncher.launch(Unit) },
+        onEmbedFolderClick = { embedPickerLauncher.launch(Unit) },
         dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
     )
 }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.QueueMusic
+import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -31,9 +32,8 @@ import com.offlineplaya.shared.domain.model.PlaybackState
 import com.offlineplaya.shared.domain.model.RepeatMode
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
+import androidx.compose.ui.text.font.FontWeight
 import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
-import com.offlineplaya.shared.presentation.ui.atoms.AppCaption
-import com.offlineplaya.shared.presentation.ui.atoms.AppHeadline
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.atoms.RepeatToggle
 import com.offlineplaya.shared.presentation.ui.atoms.ShuffleToggle
@@ -42,6 +42,8 @@ import com.offlineplaya.shared.presentation.ui.molecules.PlaybackControlsLarge
 import com.offlineplaya.shared.presentation.ui.molecules.formatDuration
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import org.jetbrains.compose.resources.stringResource
+import offlineplaya.shared.generated.resources.*
 
 /**
  * Full-screen now-playing view: big album art placeholder, title + artist,
@@ -58,6 +60,7 @@ fun NowPlayingPage(
     onShuffleToggle: () -> Unit,
     onRepeatChange: (com.offlineplaya.shared.domain.model.RepeatMode) -> Unit,
     onOpenQueue: () -> Unit,
+    onOpenEqualizer: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -66,13 +69,19 @@ fun NowPlayingPage(
         contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
         topBar = {
             AppTopBar(
-                title = "Now Playing",
+                title = stringResource(Res.string.now_playing_title),
                 onBack = onBack,
                 actions = {
+                    IconButton(onClick = onOpenEqualizer) {
+                        Icon(
+                            imageVector = Icons.Default.GraphicEq,
+                            contentDescription = "Equalizer",
+                        )
+                    }
                     IconButton(onClick = onOpenQueue) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.QueueMusic,
-                            contentDescription = "Up next",
+                            contentDescription = stringResource(Res.string.now_playing_up_next),
                         )
                     }
                 },
@@ -138,12 +147,21 @@ private fun ArtPanel(track: Track, modifier: Modifier = Modifier) {
 
 @Composable
 private fun TrackHeadline(track: Track) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        AppHeadline(text = track.title)
-        AppCaption(text = "${track.artistName} — ${track.albumName}")
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = track.title,
+            style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.ExtraBold),
+            color = MaterialTheme.colorScheme.onSurface,
+            maxLines = 1,
+            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+        )
+        Text(
+            text = "${track.artistName} — ${track.albumName}",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.outline,
+            maxLines = 1,
+            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+        )
     }
 }
 
@@ -206,7 +224,7 @@ private fun NowPlayingPagePopulatedPreview() {
                 volume = 1f,
             ),
             onPlayPause = {}, onPrevious = {}, onNext = {}, onSeek = {},
-            onShuffleToggle = {}, onRepeatChange = {}, onOpenQueue = {}, onBack = {},
+            onShuffleToggle = {}, onRepeatChange = {}, onOpenQueue = {}, onOpenEqualizer = {}, onBack = {},
         )
     }
 }
@@ -218,7 +236,7 @@ private fun NowPlayingPageEmptyPreview() {
         NowPlayingPage(
             state = PlaybackState.Empty,
             onPlayPause = {}, onPrevious = {}, onNext = {}, onSeek = {},
-            onShuffleToggle = {}, onRepeatChange = {}, onOpenQueue = {}, onBack = {},
+            onShuffleToggle = {}, onRepeatChange = {}, onOpenQueue = {}, onOpenEqualizer = {}, onBack = {},
         )
     }
 }

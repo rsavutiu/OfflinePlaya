@@ -50,5 +50,8 @@ WHERE id = :folderId;
 lastInsertId:
 SELECT last_insert_rowid();
 
+deleteByTreeUri:
+DELETE FROM Folder WHERE tree_uri = ?;
+
 deleteAll:
 DELETE FROM Folder;

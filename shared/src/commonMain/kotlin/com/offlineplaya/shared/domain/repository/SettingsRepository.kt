@@ -1,6 +1,7 @@
 package com.offlineplaya.shared.domain.repository
 
 import com.offlineplaya.shared.domain.model.ArtworkPreferences
+import com.offlineplaya.shared.domain.model.EqPreferences
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import kotlinx.coroutines.flow.Flow
 
@@ -27,4 +28,13 @@ interface SettingsRepository {
 
     /** Replace the stored artwork preferences atomically. */
     suspend fun setArtworkPreferences(preferences: ArtworkPreferences)
+
+    /** Live equalizer preferences (mode + manual preset + per-band overrides). */
+    fun observeEqPreferences(): Flow<EqPreferences>
+
+    /** One-shot read of equalizer preferences. */
+    suspend fun getEqPreferences(): EqPreferences
+
+    /** Replace stored equalizer preferences atomically. */
+    suspend fun setEqPreferences(preferences: EqPreferences)
 }

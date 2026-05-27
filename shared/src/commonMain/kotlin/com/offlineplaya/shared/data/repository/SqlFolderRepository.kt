@@ -60,6 +60,10 @@ internal class SqlFolderRepository(
         queries.updateTrackCount(id)
     }
 
+    override suspend fun deleteByTreeUri(treeUri: String) = withContext(ioDispatcher) {
+        queries.deleteByTreeUri(treeUri)
+    }
+
     override suspend fun deleteAll() = withContext(ioDispatcher) {
         queries.deleteAll()
     }
