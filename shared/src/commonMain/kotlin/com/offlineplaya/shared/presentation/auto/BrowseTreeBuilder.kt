@@ -30,6 +30,8 @@ import com.offlineplaya.shared.domain.model.Track
  */
 class BrowseTreeBuilder(
     private val artistNameByAlbum: (artistId: Long?) -> String? = { null },
+    private val albumArtUri: (album: Album) -> String? = { null },
+    private val trackArtUri: (track: Track) -> String? = { null },
 ) {
 
     /**
@@ -72,6 +74,7 @@ class BrowseTreeBuilder(
                 title = album.name,
                 subtitle = artistNameByAlbum(album.artistId),
                 isBrowsable = true,
+                artworkUri = albumArtUri(album),
             )
         }
 
@@ -110,6 +113,7 @@ class BrowseTreeBuilder(
                 subtitle = track.artistName,
                 isPlayable = true,
                 trackId = track.id,
+                artworkUri = trackArtUri(track),
             )
         }
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    File paths exposed by AppArtFileProvider. Only the `track_art`
+    subdirectory under cacheDir/ is shared — that's where
+    TrackArtFetcher persists embedded/remote covers. Everything else
+    (HTTP cache, Coil's own disk cache, app database) stays private.
+-->
+<paths>
+    <cache-path name="track_art" path="track_art/" />
+</paths>

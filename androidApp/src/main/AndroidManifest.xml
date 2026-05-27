@@ -64,6 +64,23 @@
             android:foregroundServiceType="dataSync"
             tools:node="merge" />
 
+        <!--
+            Exposes cacheDir/track_art/<key> as content:// URIs so Android
+            Auto (and any other cross-process surface) can fetch album art
+            without read-access to our private cache. See AppArtFileProvider.
+            grantUriPermissions=true so we can stamp temporary access tokens
+            on individual MediaItem metadata.artworkUri values.
+        -->
+        <provider
+            android:name=".auto.AppArtFileProvider"
+            android:authorities="${applicationId}.artprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
     </application>
 
 </manifest>

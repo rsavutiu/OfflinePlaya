@@ -19,6 +19,11 @@ package com.offlineplaya.shared.presentation.auto
  *   entry represents a real track. Browse-tree projection consumers don't
  *   need this — the parsed media id carries it — but it's convenient to
  *   surface for logging.
+ * @property artworkUri opaque platform-specific URI string for the row's
+ *   thumbnail (album cover, etc.). Null when no art is available — the
+ *   head unit renders a generic placeholder in that case. Stored as
+ *   `String` so the commonMain projection stays platform-neutral; the
+ *   androidApp side wraps it into a `Uri` before handing to media3.
  */
 data class BrowseEntry(
     val mediaId: String,
@@ -27,6 +32,7 @@ data class BrowseEntry(
     val isBrowsable: Boolean = false,
     val isPlayable: Boolean = false,
     val trackId: Long? = null,
+    val artworkUri: String? = null,
 ) {
     init {
         require(isBrowsable xor isPlayable) {

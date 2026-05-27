@@ -112,7 +112,7 @@ internal class Media3MusicPlayer(
     override fun setQueue(tracks: List<Track>, startIndex: Int) = onMain {
         val ctrl = controller ?: return@onMain
         queueTracks = tracks
-        val items = tracks.map(TrackMediaItemMapper::toMediaItem)
+        val items = tracks.map { TrackMediaItemMapper.toMediaItem(it, artworkUriFor(it)) }
         val safeIndex = startIndex.coerceIn(0, (items.size - 1).coerceAtLeast(0))
         ctrl.setMediaItems(items, safeIndex, /* startPositionMs = */ 0L)
         ctrl.prepare()
@@ -122,14 +122,47 @@ internal class Media3MusicPlayer(
     override fun addToQueue(track: Track) = onMain {
         val ctrl = controller ?: return@onMain
         queueTracks = queueTracks + track
-        ctrl.addMediaItem(TrackMediaItemMapper.toMediaItem(track))
+        ctrl.addMediaItem(TrackMediaItemMapper.toMediaItem(track, artworkUriFor(track)))
     }
 
     override fun addNext(track: Track) = onMain {
         val ctrl = controller ?: return@onMain
         val insertAt = (ctrl.currentMediaItemIndex + 1).coerceAtLeast(0)
         queueTracks = queueTracks.toMutableList().also { it.add(insertAt, track) }
-        ctrl.addMediaItem(insertAt, TrackMediaItemMapper.toMediaItem(track))
+        ctrl.addMediaItem(insertAt, TrackMediaItemMapper.toMediaItem(track, artworkUriFor(track)))
+    }
+
+    /**
+     * Resolve a `content://` URI for [track]'s cached cover art via the
+     * app's FileProvider. Returns null when no cached file exists; the
+     * downstream surfaces (lock screen, Auto, Bluetooth) fall back to
+     * placeholders in that case.
+     *
+     * The cache-key form mirrors `TrackArtFetcher.trackArtCacheKey` and
+     * `AppArtFileProvider`. Three places duplicate it because the original
+     * is module-internal — keep them in sync if the convention changes.
+     */
+    private fun artworkUriFor(track: Track): android.net.Uri? {
+        val key = cacheKey(track) ?: return null
+        val file = java.io.File(java.io.File(context.cacheDir, "track_art"), key)
+        if (!file.exists()) return null
+        return runCatching {
+            androidx.core.content.FileProvider.getUriForFile(
+                context,
+                "${context.packageName}.artprovider",
+                file,
+            )
+        }.getOrNull()
+    }
+
+    private fun cacheKey(track: Track): String? {
+        val artistId = track.artistId
+        val albumId = track.albumId
+        return if (artistId != null && albumId != null) {
+            "album-art_${artistId}_${albumId}"
+        } else {
+            "track-art_${track.documentUri.hashCode().toUInt().toString(16)}"
+        }
     }
 
     override fun removeFromQueue(index: Int) = onMain {

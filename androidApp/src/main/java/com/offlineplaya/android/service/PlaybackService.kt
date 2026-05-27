@@ -83,6 +83,7 @@ class PlaybackService : MediaLibraryService() {
         // holders; on phone (no Auto browser) this is dormant and behaves
         // identically to the previous MediaSession.
         val autoCallback = AutoLibraryCallback(
+            context = applicationContext,
             library = koin.get<LibraryStateHolder>(),
             playlists = koin.get<PlaylistStateHolder>(),
             musicPlayer = koin.get<MusicPlayer>(),

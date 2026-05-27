@@ -12,7 +12,14 @@ import com.offlineplaya.shared.domain.model.Track
  */
 internal object TrackMediaItemMapper {
 
-    fun toMediaItem(track: Track): MediaItem {
+    /**
+     * Build a Media3 [MediaItem] for [track]. Optional [artworkUri] gets
+     * stamped onto `MediaMetadata.artworkUri` so surfaces that read media
+     * metadata directly — Android Auto's now-playing display, lock-screen
+     * media controls, Bluetooth car displays — can render the cover
+     * without going through Coil.
+     */
+    fun toMediaItem(track: Track, artworkUri: Uri? = null): MediaItem {
         val metadata = MediaMetadata.Builder()
             .setTitle(track.title)
             .setArtist(track.artistName)
@@ -23,6 +30,7 @@ internal object TrackMediaItemMapper {
             .setTrackNumber(track.trackNumber)
             .setDiscNumber(track.discNumber)
             .setDurationMs(track.durationMs)
+            .apply { artworkUri?.let { setArtworkUri(it) } }
             .setIsBrowsable(false)
             .setIsPlayable(true)
             .build()

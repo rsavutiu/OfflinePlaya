@@ -108,6 +108,34 @@ class BrowseTreeBuilderTest {
     }
 
     @Test
+    fun `albumsAsBrowsable propagates artwork uri from the lambda`() {
+        val withArt = BrowseTreeBuilder(
+            albumArtUri = { album -> "content://art/album/${album.id}" },
+        )
+        val entries = withArt.albumsAsBrowsable(listOf(album(99, "X", artistId = 1L)))
+        assertEquals("content://art/album/99", entries.single().artworkUri)
+    }
+
+    @Test
+    fun `tracksAsPlayable propagates artwork uri from the lambda`() {
+        val withArt = BrowseTreeBuilder(
+            trackArtUri = { track -> "content://art/track/${track.id}" },
+        )
+        val entries = withArt.tracksAsPlayable(
+            listOf(track(7, "Song")),
+            MediaIdRouter.ParentContext.Album(1L),
+        )
+        assertEquals("content://art/track/7", entries.single().artworkUri)
+    }
+
+    @Test
+    fun `artwork uri stays null when the lambda returns null`() {
+        // Default builder has both lambdas returning null.
+        val entries = builder.albumsAsBrowsable(listOf(album(1, "A", 1L)))
+        assertNull(entries.single().artworkUri)
+    }
+
+    @Test
     fun `top-level cap is enforced`() {
         val many = (1..(BrowseTreeBuilder.MAX_TOP_LEVEL_RESULTS + 5)).map {
             album(it.toLong(), "Album $it", artistId = null)

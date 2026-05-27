@@ -1,5 +1,7 @@
 package com.offlineplaya.android.auto
 
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
@@ -38,6 +40,7 @@ import com.google.common.collect.ImmutableList
  * coroutine context, then fulfill a [SettableFuture] back to media3.
  */
 class AutoLibraryCallback(
+    private val context: Context,
     private val library: LibraryStateHolder,
     private val playlists: PlaylistStateHolder,
     private val musicPlayer: MusicPlayer,
@@ -56,6 +59,12 @@ class AutoLibraryCallback(
             artistNameByAlbum = { artistId ->
                 if (artistId == null) null
                 else library.allArtists.value.firstOrNull { it.id == artistId }?.name
+            },
+            albumArtUri = { album ->
+                AppArtFileProvider.uriForAlbum(context, album)?.toString()
+            },
+            trackArtUri = { track ->
+                AppArtFileProvider.uriForTrack(context, track)?.toString()
             },
         )
     }
@@ -270,6 +279,7 @@ class AutoLibraryCallback(
         val metadata = MediaMetadata.Builder()
             .setTitle(title)
             .apply { subtitle?.let { setSubtitle(it) } }
+            .apply { artworkUri?.let { setArtworkUri(Uri.parse(it)) } }
             .setIsBrowsable(isBrowsable)
             .setIsPlayable(isPlayable)
             .setMediaType(
@@ -297,6 +307,10 @@ class AutoLibraryCallback(
                 .setTitle(title)
                 .setArtist(artistName)
                 .setAlbumTitle(albumName)
+                .apply {
+                    AppArtFileProvider.uriForTrack(context, this@toAutoMediaItem)
+                        ?.let { setArtworkUri(it) }
+                }
                 .setIsBrowsable(false)
                 .setIsPlayable(true)
                 .setMediaType(MediaMetadata.MEDIA_TYPE_MUSIC)
