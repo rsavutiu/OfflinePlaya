@@ -194,28 +194,34 @@ class AutoLibraryCallback(
     // ─── Play action ────────────────────────────────────────────────────
 
     /**
-     * Items that already carry a URI (the in-app flow built by
-     * [com.offlineplaya.shared.data.player.TrackMediaItemMapper]) are
-     * passed through unchanged — they're complete and ready for the
-     * session's player to load. Items that arrive as stubs from Android
-     * Auto (mediaId only, no URI) are resolved through the router into
-     * one or more concrete playable items.
+     * Media3 strips `localConfiguration` (including the URI) from
+     * MediaItems crossing the session IPC boundary — *every* item arrives
+     * here with a null URI even when the sender set one. We can't rely on
+     * `localConfiguration?.uri` to discriminate flows; instead, look at
+     * the mediaId itself.
      *
-     * Critically: this method does NOT call [musicPlayer.setQueue] — the
-     * media3 session player picks up the returned items directly. Going
-     * back through MusicPlayer would re-enter this very callback via the
-     * in-app MediaController, looping.
+     * In-app callers use `track.documentUri` (a `content://...` URI) as
+     * the mediaId, so mediaIds containing `://` are restored by parsing
+     * the URI back out of the mediaId. Auto stubs use router-encoded
+     * mediaIds (`album/42`, `track/100?from=album:42`); those are routed
+     * through [resolveAutoStub].
+     *
+     * Critically: this method does NOT touch [MusicPlayer]. The media3
+     * session player picks up the returned items directly. Going through
+     * MusicPlayer would re-enter this callback via the in-app
+     * MediaController, looping.
      */
     override fun onAddMediaItems(
         mediaSession: MediaSession,
         controller: MediaSession.ControllerInfo,
         mediaItems: MutableList<MediaItem>,
     ): ListenableFuture<MutableList<MediaItem>> {
-        if (mediaItems.all { it.localConfiguration?.uri != null }) {
-            // In-app fast path: nothing to resolve.
-            return Futures.immediateFuture(mediaItems)
+        if (mediaItems.all { it.mediaId.looksLikeUri() }) {
+            // In-app fast path: rebuild each item with its URI restored
+            // from the mediaId. Metadata that survived IPC stays intact.
+            return Futures.immediateFuture(mediaItems.map { it.withUriFromMediaId() }.toMutableList())
         }
-        // Auto path: stubs need URI resolution.
+        // Auto path: stubs need router resolution.
         val future = SettableFuture.create<MutableList<MediaItem>>()
         scope.launch {
             try {
@@ -229,13 +235,13 @@ class AutoLibraryCallback(
     }
 
     /**
-     * Auto entry point for "user tapped a playable row." Returns both the
-     * full queue and the index the player should start at, so a track
-     * tapped inside an album plays from that track with the rest of the
-     * album queued behind it.
+     * Auto entry point for "user tapped a playable row." Returns the full
+     * queue + start index so a track tapped inside an album plays from
+     * that track with the album queued behind it.
      *
-     * For in-app callers (Media3MusicPlayer.setQueue), [mediaItems] already
-     * have URIs and a meaningful [startIndex]; we pass through unchanged.
+     * In-app callers ([Media3MusicPlayer.setQueue]) hit the URI fast-path
+     * — same restoration as in [onAddMediaItems] — and the player honours
+     * the original [startIndex] / [startPositionMs].
      */
     override fun onSetMediaItems(
         mediaSession: MediaSession,
@@ -244,13 +250,10 @@ class AutoLibraryCallback(
         startIndex: Int,
         startPositionMs: Long,
     ): ListenableFuture<MediaSession.MediaItemsWithStartPosition> {
-        if (mediaItems.all { it.localConfiguration?.uri != null }) {
+        if (mediaItems.all { it.mediaId.looksLikeUri() }) {
+            val restored = ImmutableList.copyOf(mediaItems.map { it.withUriFromMediaId() })
             return Futures.immediateFuture(
-                MediaSession.MediaItemsWithStartPosition(
-                    ImmutableList.copyOf(mediaItems),
-                    startIndex,
-                    startPositionMs,
-                ),
+                MediaSession.MediaItemsWithStartPosition(restored, startIndex, startPositionMs),
             )
         }
         val first = mediaItems.firstOrNull()
@@ -275,10 +278,8 @@ class AutoLibraryCallback(
     }
 
     /**
-     * Expand a list of Auto stub MediaItems (each containing only a
-     * router-encoded mediaId) into concrete playable MediaItems. Each stub
-     * is treated independently; a single tap that resolves to N tracks
-     * contributes those N to the returned list.
+     * Expand Auto stub MediaItems (router-encoded mediaIds) into concrete
+     * playable items by reading library state via the suspend helpers.
      */
     private suspend fun resolveAutoStubs(stubs: List<MediaItem>): List<MediaItem> =
         stubs.flatMap { stub ->
@@ -290,6 +291,17 @@ class AutoLibraryCallback(
                 tracks.map { it.toAutoMediaItem() }
             }
         }
+
+    /** A mediaId carrying a usable playback URI (in-app form). */
+    private fun String.looksLikeUri(): Boolean = contains("://")
+
+    /**
+     * Rebuild [this] with `setUri(Uri.parse(mediaId))` so the session player
+     * has a source to load. Preserves the mediaId and metadata that
+     * survived IPC.
+     */
+    private fun MediaItem.withUriFromMediaId(): MediaItem =
+        buildUpon().setUri(Uri.parse(mediaId)).build()
 
     /**
      * Given a parsed tap, expand into (queue, startIndex). Tap on a track
