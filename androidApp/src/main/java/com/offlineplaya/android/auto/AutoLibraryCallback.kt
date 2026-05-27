@@ -2,7 +2,6 @@ package com.offlineplaya.android.auto
 
 import android.content.Context
 import android.net.Uri
-import android.os.Bundle
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.session.LibraryResult
@@ -14,7 +13,6 @@ import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.SettableFuture
 import com.offlineplaya.shared.data.image.TrackArtCache
 import com.offlineplaya.shared.domain.model.Track
-import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.presentation.auto.BrowseEntry
 import com.offlineplaya.shared.presentation.auto.BrowseTreeBuilder
 import com.offlineplaya.shared.presentation.auto.MediaIdRouter
@@ -44,7 +42,6 @@ class AutoLibraryCallback(
     private val context: Context,
     private val library: LibraryStateHolder,
     private val playlists: PlaylistStateHolder,
-    private val musicPlayer: MusicPlayer,
     private val scope: CoroutineScope,
     private val logger: AppLogger,
 ) : MediaLibrarySession.Callback {
@@ -197,42 +194,102 @@ class AutoLibraryCallback(
     // ─── Play action ────────────────────────────────────────────────────
 
     /**
-     * Auto calls this when the user taps a playable row. We translate the
-     * tapped media id (and any others — head units sometimes batch) into a
-     * full queue: if the tap was on a track inside an album/playlist, the
-     * queue is that whole parent; otherwise it's just the single track.
+     * Items that already carry a URI (the in-app flow built by
+     * [com.offlineplaya.shared.data.player.TrackMediaItemMapper]) are
+     * passed through unchanged — they're complete and ready for the
+     * session's player to load. Items that arrive as stubs from Android
+     * Auto (mediaId only, no URI) are resolved through the router into
+     * one or more concrete playable items.
+     *
+     * Critically: this method does NOT call [musicPlayer.setQueue] — the
+     * media3 session player picks up the returned items directly. Going
+     * back through MusicPlayer would re-enter this very callback via the
+     * in-app MediaController, looping.
      */
     override fun onAddMediaItems(
         mediaSession: MediaSession,
         controller: MediaSession.ControllerInfo,
         mediaItems: MutableList<MediaItem>,
     ): ListenableFuture<MutableList<MediaItem>> {
-        val first = mediaItems.firstOrNull()
-            ?: return Futures.immediateFuture(mutableListOf())
-        val parsed = MediaIdRouter.parse(first.mediaId)
-
+        if (mediaItems.all { it.localConfiguration?.uri != null }) {
+            // In-app fast path: nothing to resolve.
+            return Futures.immediateFuture(mediaItems)
+        }
+        // Auto path: stubs need URI resolution.
         val future = SettableFuture.create<MutableList<MediaItem>>()
         scope.launch {
             try {
-                val (queue, startIndex) = buildPlaybackQueue(parsed, first.mediaId)
-                if (queue.isEmpty()) {
-                    // Nothing to play — return empty list and let media3 noop.
-                    future.set(mutableListOf())
-                    return@launch
-                }
-                musicPlayer.setQueue(queue, startIndex)
-                // We return MediaItems WITH `setUri` set so media3's player
-                // can actually load them. Media3 wraps these into the
-                // session's internal queue too; our MusicPlayer maintains
-                // the canonical state for the rest of the app.
-                future.set(queue.map { it.toAutoMediaItem() }.toMutableList())
+                future.set(resolveAutoStubs(mediaItems).toMutableList())
             } catch (t: Throwable) {
-                logger.e(TAG, "onAddMediaItems failed for ${first.mediaId}", t)
+                logger.e(TAG, "onAddMediaItems resolve failed", t)
                 future.set(mutableListOf())
             }
         }
         return future
     }
+
+    /**
+     * Auto entry point for "user tapped a playable row." Returns both the
+     * full queue and the index the player should start at, so a track
+     * tapped inside an album plays from that track with the rest of the
+     * album queued behind it.
+     *
+     * For in-app callers (Media3MusicPlayer.setQueue), [mediaItems] already
+     * have URIs and a meaningful [startIndex]; we pass through unchanged.
+     */
+    override fun onSetMediaItems(
+        mediaSession: MediaSession,
+        controller: MediaSession.ControllerInfo,
+        mediaItems: MutableList<MediaItem>,
+        startIndex: Int,
+        startPositionMs: Long,
+    ): ListenableFuture<MediaSession.MediaItemsWithStartPosition> {
+        if (mediaItems.all { it.localConfiguration?.uri != null }) {
+            return Futures.immediateFuture(
+                MediaSession.MediaItemsWithStartPosition(
+                    ImmutableList.copyOf(mediaItems),
+                    startIndex,
+                    startPositionMs,
+                ),
+            )
+        }
+        val first = mediaItems.firstOrNull()
+            ?: return Futures.immediateFuture(
+                MediaSession.MediaItemsWithStartPosition(ImmutableList.of(), 0, 0L),
+            )
+        val future = SettableFuture.create<MediaSession.MediaItemsWithStartPosition>()
+        scope.launch {
+            try {
+                val parsed = MediaIdRouter.parse(first.mediaId)
+                val (tracks, idx) = buildPlaybackQueue(parsed, first.mediaId)
+                val items = ImmutableList.copyOf(tracks.map { it.toAutoMediaItem() })
+                future.set(MediaSession.MediaItemsWithStartPosition(items, idx, 0L))
+            } catch (t: Throwable) {
+                logger.e(TAG, "onSetMediaItems resolve failed", t)
+                future.set(
+                    MediaSession.MediaItemsWithStartPosition(ImmutableList.of(), 0, 0L),
+                )
+            }
+        }
+        return future
+    }
+
+    /**
+     * Expand a list of Auto stub MediaItems (each containing only a
+     * router-encoded mediaId) into concrete playable MediaItems. Each stub
+     * is treated independently; a single tap that resolves to N tracks
+     * contributes those N to the returned list.
+     */
+    private suspend fun resolveAutoStubs(stubs: List<MediaItem>): List<MediaItem> =
+        stubs.flatMap { stub ->
+            val parsed = MediaIdRouter.parse(stub.mediaId)
+            if (parsed !is MediaIdRouter.ParsedId.Entity) {
+                emptyList()
+            } else {
+                val (tracks, _) = buildPlaybackQueue(parsed, stub.mediaId)
+                tracks.map { it.toAutoMediaItem() }
+            }
+        }
 
     /**
      * Given a parsed tap, expand into (queue, startIndex). Tap on a track
@@ -318,9 +375,6 @@ class AutoLibraryCallback(
                 .build(),
         )
         .build()
-
-    @Suppress("unused")
-    private fun unusedBundle(): Bundle = Bundle.EMPTY
 
     private companion object {
         const val TAG = "AutoLibraryCallback"

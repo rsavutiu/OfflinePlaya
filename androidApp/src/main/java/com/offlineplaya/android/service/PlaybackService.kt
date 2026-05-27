@@ -86,7 +86,6 @@ class PlaybackService : MediaLibraryService() {
             context = applicationContext,
             library = koin.get<LibraryStateHolder>(),
             playlists = koin.get<PlaylistStateHolder>(),
-            musicPlayer = koin.get<MusicPlayer>(),
             scope = serviceScope,
             logger = logger,
         )
