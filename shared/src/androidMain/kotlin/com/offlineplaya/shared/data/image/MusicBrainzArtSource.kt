@@ -7,7 +7,9 @@ import com.offlineplaya.shared.domain.image.RemoteArtSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -38,11 +40,29 @@ internal class MusicBrainzArtSource(
     private val db: OfflinePlayaDatabase,
 ) : RemoteArtSource, RemoteGenreSource {
 
-    private val mutex = Mutex()
+    // Cap total in-flight lookups so we don't open 100 sockets when Coil
+    // hands us a screen full of artist tiles all at once. 8 is plenty —
+    // the bottleneck downstream is MusicBrainz's 1-req-sec rate, gated
+    // separately by [musicBrainzGate].
+    private val concurrencyLimit = Semaphore(MAX_CONCURRENT_LOOKUPS)
+
+    // Serialises ONLY MusicBrainz HTTP calls + their cool-down. Deezer,
+    // Open Library, and Google Books all run unthrottled (their rate
+    // limits are far more permissive than MusicBrainz's anonymous 1-rps).
+    private val musicBrainzGate = Mutex()
+
+    // missKeys lookups/inserts must be thread-safe now that resolve() can
+    // run concurrently. Critical sections are <1µs (set ops) so the lock
+    // is cheap.
+    private val missKeysLock = Mutex()
     private val missKeys = mutableSetOf<String>()
     private val log = Logger.withTag("MusicBrainzArt")
 
-    private data class SourceAttempt(val name: String, val fetch: suspend () -> ByteArray?)
+    private data class SourceAttempt(
+        val name: String,
+        val rateLimited: Boolean,
+        val fetch: suspend () -> ByteArray?
+    )
 
     override suspend fun resolve(artist: String, album: String): ByteArray? {
         val key = "v${SOURCE_VERSION}:album:${artist.lowercase()}|${album.lowercase()}"
@@ -51,14 +71,32 @@ internal class MusicBrainzArtSource(
             return null
         }
 
-        return mutex.withLock {
-            if (isKnownMiss(key)) return@withLock null
+        return concurrencyLimit.withPermit {
+            if (isKnownMiss(key)) return@withPermit null
 
             val sources = listOf(
-                SourceAttempt("Deezer") { fetchViaDeezer(artist, album) },
-                SourceAttempt("MusicBrainz/CAA") { fetchViaMusicBrainz(artist, album) },
-                SourceAttempt("OpenLibrary") { fetchViaOpenLibrary(artist, album) },
-                SourceAttempt("GoogleBooks") { fetchViaGoogleBooks(artist, album) },
+                SourceAttempt("Deezer", rateLimited = false) { fetchViaDeezer(artist, album) },
+                SourceAttempt("MusicBrainz/CAA", rateLimited = true) {
+                    musicBrainzGate.withLock {
+                        val r = fetchViaMusicBrainz(artist, album)
+                        // Hold the MB-only gate across the cool-down so the
+                        // NEXT MB call (in any coroutine) waits ~1s.
+                        delay(RATE_LIMIT_DELAY_MS)
+                        r
+                    }
+                },
+                SourceAttempt("OpenLibrary", rateLimited = false) {
+                    fetchViaOpenLibrary(
+                        artist,
+                        album
+                    )
+                },
+                SourceAttempt("GoogleBooks", rateLimited = false) {
+                    fetchViaGoogleBooks(
+                        artist,
+                        album
+                    )
+                },
             )
 
             var anyTransient = false
@@ -84,7 +122,6 @@ internal class MusicBrainzArtSource(
             } else {
                 log.d { "resolve('$artist' / '$album') got ${bytes.size} bytes" }
             }
-            delay(RATE_LIMIT_DELAY_MS)
             bytes
         }
     }
@@ -96,10 +133,13 @@ internal class MusicBrainzArtSource(
             return null
         }
 
-        return mutex.withLock {
-            if (isKnownMiss(key)) return@withLock null
+        return concurrencyLimit.withPermit {
+            if (isKnownMiss(key)) return@withPermit null
 
             log.d { "resolveArtistImage('$artist') querying Deezer..." }
+            // Artist images come from Deezer only — no MusicBrainz cool-down,
+            // so multiple artist fetches can be in flight in parallel, capped
+            // only by [concurrencyLimit].
             val result = runCatching { findArtistImageViaDeezer(artist) }
             result.exceptionOrNull()?.let {
                 log.w(it) { "resolveArtistImage('$artist') failed" }
@@ -109,7 +149,6 @@ internal class MusicBrainzArtSource(
                 recordMiss(key)
                 log.d { "resolveArtistImage('$artist') clean miss — saved to DB" }
             }
-            delay(RATE_LIMIT_DELAY_MS)
             url
         }
     }
@@ -155,16 +194,18 @@ internal class MusicBrainzArtSource(
         }
     }
 
-    private fun isKnownMiss(key: String): Boolean {
-        if (key in missKeys) return true
+    private suspend fun isKnownMiss(key: String): Boolean {
+        // Fast path — the in-memory cache check is cheap enough that we
+        // sync it under a Mutex rather than reach for ConcurrentHashMap.
+        missKeysLock.withLock { if (key in missKeys) return true }
         val cutoff = System.currentTimeMillis() - MISS_EXPIRY_MS
         val hit = db.remoteArtMissQueries.isMiss(key, cutoff).executeAsOneOrNull()
-        if (hit != null) missKeys.add(key)
+        if (hit != null) missKeysLock.withLock { missKeys.add(key) }
         return hit != null
     }
 
-    private fun recordMiss(key: String) {
-        missKeys.add(key)
+    private suspend fun recordMiss(key: String) {
+        missKeysLock.withLock { missKeys.add(key) }
         db.remoteArtMissQueries.insertMiss(key, System.currentTimeMillis())
     }
 
@@ -237,18 +278,24 @@ internal class MusicBrainzArtSource(
             return null
         }
 
-        return mutex.withLock {
-            if (isKnownMiss(key)) return@withLock null
-            val genre = runCatching { fetchGenreViaMusicBrainz(artist, album) }
-                .onFailure { log.w(it) { "Genre lookup transient failure for $artist / $album" } }
-                .getOrNull()
+        return concurrencyLimit.withPermit {
+            if (isKnownMiss(key)) return@withPermit null
+            // Genre lookup hits MusicBrainz, so it must share the MB-only
+            // gate with the album-art MB path; otherwise two parallel callers
+            // could double the actual MB request rate.
+            val genre = musicBrainzGate.withLock {
+                val g = runCatching { fetchGenreViaMusicBrainz(artist, album) }
+                    .onFailure { log.w(it) { "Genre lookup transient failure for $artist / $album" } }
+                    .getOrNull()
+                delay(RATE_LIMIT_DELAY_MS)
+                g
+            }
             if (genre == null) {
                 recordMiss(key)
                 log.d { "resolveGenre('$artist' / '$album') clean miss — saved" }
             } else {
                 log.d { "resolveGenre('$artist' / '$album') → $genre" }
             }
-            delay(RATE_LIMIT_DELAY_MS)
             genre
         }
     }
@@ -550,6 +597,12 @@ internal class MusicBrainzArtSource(
         const val RATE_LIMIT_DELAY_MS = 1_100L
         const val MISS_EXPIRY_MS = 30L * 24 * 60 * 60 * 1_000 // 30 days
         const val SOURCE_VERSION = 3 // bump when adding/removing sources to invalidate old misses
+
+        // Concurrent in-flight album/artist/genre lookups. 8 is the same
+        // budget the library-sync metadata reader uses and matches the
+        // OkHttp client's default dispatcher cap, so we never queue
+        // requests at the HTTP layer.
+        const val MAX_CONCURRENT_LOOKUPS = 8
     }
 }
 
