@@ -194,6 +194,75 @@ class LibrarySyncCoordinatorTest {
     }
 
     @Test
+    fun `addAndSync rejects a file URI subfolder of an already-added file URI root`() = runTest {
+        val parent = "file:///storage/emulated/0/Music"
+        val child = "file:///storage/emulated/0/Music/Albums"
+        val scope = CoroutineScope(coroutineContext + UnconfinedTestDispatcher(testScheduler))
+        val h = harness(
+            testScope = scope,
+            scanner = FakeFolderScanner.empty(parent, "Music"),
+            reader = FakeMetadataReader(),
+        )
+
+        h.coordinator.addAndSync(parent, "Music").join()
+        h.coordinator.addAndSync(child, "Albums").join()
+
+        val final = h.coordinator.status.value
+        assertIs<SyncStatus.AlreadyAdded>(final)
+        assertEquals(parent, final.treeUri)
+    }
+
+    @Test
+    fun `addAndSync rejects a file URI root that overlaps an existing SAF primary root`() =
+        runTest {
+            // SAF primary:Music and file:///storage/emulated/0/Music point at the same
+            // physical folder — without normalisation each scan would insert a fresh set
+            // of Track rows with different document_uri values, duplicating every album.
+            val safPrimary = "content://com.android.externalstorage.documents/tree/primary%3AMusic"
+            val fileRoot = "file:///storage/emulated/0/Music"
+            val scope = CoroutineScope(coroutineContext + UnconfinedTestDispatcher(testScheduler))
+            val h = harness(
+                testScope = scope,
+                scanner = FakeFolderScanner.empty(safPrimary, "Music"),
+                reader = FakeMetadataReader(),
+            )
+
+            h.coordinator.addAndSync(safPrimary, "Music").join()
+            h.coordinator.addAndSync(fileRoot, "Music").join()
+
+            val final = h.coordinator.status.value
+            assertIs<SyncStatus.AlreadyAdded>(final)
+            assertEquals(safPrimary, final.treeUri)
+        }
+
+    @Test
+    fun `addAndSync accepts a file URI sibling that shares a prefix but not a path boundary`() =
+        runTest {
+            val music = "file:///storage/emulated/0/Music"
+            val videos = "file:///storage/emulated/0/MusicVideos"
+            val scope = CoroutineScope(coroutineContext + UnconfinedTestDispatcher(testScheduler))
+            val scanner = FakeFolderScanner(
+                scripted = mapOf(
+                    music to com.offlineplaya.shared.domain.scanner.ScanResult(
+                        folders = listOf(AudioFolder(music, "", "Music", null)),
+                        files = emptyList(),
+                    ),
+                    videos to com.offlineplaya.shared.domain.scanner.ScanResult(
+                        folders = listOf(AudioFolder(videos, "", "MusicVideos", null)),
+                        files = emptyList(),
+                    ),
+                ),
+            )
+            val h = harness(testScope = scope, scanner = scanner, reader = FakeMetadataReader())
+
+            h.coordinator.addAndSync(music, "Music").join()
+            h.coordinator.addAndSync(videos, "MusicVideos").join()
+
+        val final = h.coordinator.status.value
+        assertIs<SyncStatus.Completed>(final)
+    }
+
+    @Test
     fun `removeManagedRoot cascades to tracks and folders for that tree`() = runTest {
         val uri = "content://tree/removable"
         val docUri = "$uri/track.mp3"

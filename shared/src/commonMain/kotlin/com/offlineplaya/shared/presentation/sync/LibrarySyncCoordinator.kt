@@ -124,9 +124,10 @@ class LibrarySyncCoordinator(
         // synthetic URIs.
         existing.firstOrNull { it.treeUri == candidateUri }?.let { return it }
 
-        val candidate = parseTreeUri(candidateUri) ?: return null
+        val candidate = parseRoot(candidateUri) ?: return null
         for (root in existing) {
-            val r = parseTreeUri(root.treeUri) ?: continue
+            val r = parseRoot(root.treeUri) ?: continue
+            if (candidate.scheme != r.scheme) continue
             if (candidate.authority != r.authority) continue
             if (candidate.path == r.path) return root
             if (candidate.path.startsWith(r.path + "/")) return root
@@ -158,31 +159,61 @@ class LibrarySyncCoordinator(
     }
 }
 
-internal data class ParsedTreeUri(val authority: String, val path: String)
+internal data class ParsedRoot(val scheme: String, val authority: String, val path: String)
+
+private const val PRIMARY_VOLUME_FS_PATH = "/storage/emulated/0"
 
 /**
- * Decompose a `content://<authority>/tree/<encoded-doc-id>` URI into its
- * authority and a percent-decoded document-id path with `/` separators.
- * Returns null for URIs that don't follow the SAF tree shape — those just
- * fall through to "no overlap detected" so a malformed URI never blocks the
- * happy path.
+ * Decompose a managed-root URI into a `(scheme, authority, path)` triple that
+ * can be prefix-compared for overlap detection. Handles two shapes:
+ *
+ *  - `content://<authority>/tree/<encoded-doc-id>` (SAF) — path is the
+ *    percent-decoded document id.
+ *  - `file:///absolute/path` (direct filesystem, used by the in-app folder
+ *    browser when the user has granted MANAGE_EXTERNAL_STORAGE).
+ *
+ * As a special case, SAF tree URIs against the external-storage provider's
+ * primary volume (`primary:Foo`) are normalised to their filesystem
+ * counterpart (`/storage/emulated/0/Foo`) under a synthetic `"fs"` scheme.
+ * Without that mapping, a SAF root and a file:// root pointing at the same
+ * physical folder would not collide, and re-scanning via the alternate picker
+ * would duplicate every track. Cross-authority and SD-card SAF URIs fall back
+ * to their raw scheme/authority and only overlap with same-scheme roots.
+ *
+ * Returns null for URIs that match neither shape — those just fall through to
+ * "no overlap detected" so a malformed URI never blocks the happy path.
  */
-internal fun parseTreeUri(uri: String): ParsedTreeUri? {
+internal fun parseRoot(uri: String): ParsedRoot? {
     val schemeIdx = uri.indexOf("://")
     if (schemeIdx < 0) return null
+    val scheme = uri.substring(0, schemeIdx)
     val afterScheme = uri.substring(schemeIdx + 3)
+
+    if (scheme == "file") {
+        val rawPath = if (afterScheme.startsWith("/")) afterScheme else "/$afterScheme"
+        return ParsedRoot("fs", authority = "", path = trimTrailingSlash(rawPath))
+    }
+
     val authorityEnd = afterScheme.indexOf('/')
     if (authorityEnd <= 0) return null
     val authority = afterScheme.substring(0, authorityEnd)
     val rest = afterScheme.substring(authorityEnd + 1)
     val treeMarker = "tree/"
     if (!rest.startsWith(treeMarker)) return null
-    // Take only the tree-document-id segment, dropping any /document/... suffix.
     val afterTree = rest.substring(treeMarker.length)
     val docIdEnd = afterTree.indexOf('/').let { if (it < 0) afterTree.length else it }
-    val encodedDocId = afterTree.substring(0, docIdEnd)
-    return ParsedTreeUri(authority, percentDecode(encodedDocId))
+    val docId = percentDecode(afterTree.substring(0, docIdEnd))
+
+    if (authority == "com.android.externalstorage.documents" && docId.startsWith("primary:")) {
+        val sub = docId.removePrefix("primary:").trim('/')
+        val path = if (sub.isEmpty()) PRIMARY_VOLUME_FS_PATH else "$PRIMARY_VOLUME_FS_PATH/$sub"
+        return ParsedRoot("fs", authority = "", path = trimTrailingSlash(path))
+    }
+    return ParsedRoot(scheme, authority, docId)
 }
+
+private fun trimTrailingSlash(path: String): String =
+    if (path.length > 1 && path.endsWith('/')) path.trimEnd('/') else path
 
 /**
  * Tiny URL-decoder for the document-id portion of a SAF tree URI. Handles
