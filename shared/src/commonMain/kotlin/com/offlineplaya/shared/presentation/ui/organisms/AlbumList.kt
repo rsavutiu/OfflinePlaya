@@ -16,6 +16,10 @@ import com.offlineplaya.shared.presentation.ui.molecules.AlbumRow
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.empty_album_subtitle
+import offlineplaya.shared.generated.resources.empty_album_title
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun AlbumList(
@@ -28,8 +32,8 @@ fun AlbumList(
 ) {
     if (albums.isEmpty()) {
         EmptyState(
-            title = "No albums",
-            subtitle = "This artist has no albums in the scanned library.",
+            title = stringResource(Res.string.empty_album_title),
+            subtitle = stringResource(Res.string.empty_album_subtitle),
             modifier = modifier,
         )
         return

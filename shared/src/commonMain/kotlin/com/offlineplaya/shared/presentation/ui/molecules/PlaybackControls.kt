@@ -18,6 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.cd_next
+import offlineplaya.shared.generated.resources.cd_pause
+import offlineplaya.shared.generated.resources.cd_play
+import offlineplaya.shared.generated.resources.cd_previous
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Prev / Play-Pause / Next button trio. Size and spacing are tuned for the
@@ -39,21 +45,23 @@ fun PlaybackControls(
         IconButton(onClick = onPrevious) {
             Icon(
                 imageVector = Icons.Default.SkipPrevious,
-                contentDescription = "Previous",
+                contentDescription = stringResource(Res.string.cd_previous),
                 tint = MaterialTheme.colorScheme.onSurface,
             )
         }
         IconButton(onClick = onPlayPause) {
             Icon(
                 imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
-                contentDescription = if (isPlaying) "Pause" else "Play",
+                contentDescription = if (isPlaying) stringResource(Res.string.cd_pause) else stringResource(
+                    Res.string.cd_play
+                ),
                 tint = MaterialTheme.colorScheme.onSurface,
             )
         }
         IconButton(onClick = onNext) {
             Icon(
                 imageVector = Icons.Default.SkipNext,
-                contentDescription = "Next",
+                contentDescription = stringResource(Res.string.cd_next),
                 tint = MaterialTheme.colorScheme.onSurface,
             )
         }
@@ -77,7 +85,7 @@ fun PlaybackControlsLarge(
         IconButton(onClick = onPrevious, modifier = Modifier.size(56.dp)) {
             Icon(
                 imageVector = Icons.Default.SkipPrevious,
-                contentDescription = "Previous",
+                contentDescription = stringResource(Res.string.cd_previous),
                 modifier = Modifier.size(40.dp),
                 tint = MaterialTheme.colorScheme.onSurface,
             )
@@ -85,7 +93,9 @@ fun PlaybackControlsLarge(
         IconButton(onClick = onPlayPause, modifier = Modifier.size(72.dp)) {
             Icon(
                 imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
-                contentDescription = if (isPlaying) "Pause" else "Play",
+                contentDescription = if (isPlaying) stringResource(Res.string.cd_pause) else stringResource(
+                    Res.string.cd_play
+                ),
                 modifier = Modifier.size(56.dp),
                 tint = MaterialTheme.colorScheme.primary,
             )
@@ -93,7 +103,7 @@ fun PlaybackControlsLarge(
         IconButton(onClick = onNext, modifier = Modifier.size(56.dp)) {
             Icon(
                 imageVector = Icons.Default.SkipNext,
-                contentDescription = "Next",
+                contentDescription = stringResource(Res.string.cd_next),
                 modifier = Modifier.size(40.dp),
                 tint = MaterialTheme.colorScheme.onSurface,
             )

@@ -14,6 +14,9 @@ import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
 import com.offlineplaya.shared.presentation.ui.molecules.LibraryTabRow
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.top_bar_library
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Top-level library template: a [Scaffold] whose top section is an
@@ -35,7 +38,7 @@ fun LibraryScaffold(
         contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
         topBar = {
             Column {
-                AppTopBar(title = "Library", onBack = onBack)
+                AppTopBar(title = stringResource(Res.string.top_bar_library), onBack = onBack)
                 LibraryTabRow(selected = selectedTab, onTabSelected = onTabSelected)
             }
         },

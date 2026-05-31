@@ -22,6 +22,12 @@ import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.empty_folder_subtitle
+import offlineplaya.shared.generated.resources.empty_folder_title
+import offlineplaya.shared.generated.resources.folder_section_folders
+import offlineplaya.shared.generated.resources.folder_section_tracks
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Folder detail body: section of subfolders, then a section of tracks directly
@@ -38,15 +44,15 @@ fun FolderDetailContent(
 ) {
     if (subfolders.isEmpty() && tracks.isEmpty()) {
         EmptyState(
-            title = "Empty folder",
-            subtitle = "Nothing was scanned under this folder.",
+            title = stringResource(Res.string.empty_folder_title),
+            subtitle = stringResource(Res.string.empty_folder_subtitle),
             modifier = modifier,
         )
         return
     }
     LazyColumn(modifier = modifier.fillMaxSize()) {
         if (subfolders.isNotEmpty()) {
-            item { SectionHeader("Folders") }
+            item { SectionHeader(stringResource(Res.string.folder_section_folders)) }
             items(items = subfolders, key = { "f-${it.id}" }) { folder ->
                 val previewTracks: List<Track> = if (previewTracksProvider != null) {
                     val state by produceState(initialValue = emptyList<Track>(), folder.id) {
@@ -64,7 +70,7 @@ fun FolderDetailContent(
             }
         }
         if (tracks.isNotEmpty()) {
-            item { SectionHeader("Tracks") }
+            item { SectionHeader(stringResource(Res.string.folder_section_tracks)) }
             items(items = tracks, key = { "t-${it.id}" }) { track ->
                 TrackRow(track = track, onClick = { onTrackClick(track) })
             }

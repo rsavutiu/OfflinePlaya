@@ -35,6 +35,9 @@ import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.top_bar_settings
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Settings page. Five sections in portrait, two columns in landscape so the
@@ -68,7 +71,12 @@ fun SettingsPage(
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
-        topBar = { AppTopBar(title = "Settings", onBack = onBack) },
+        topBar = {
+            AppTopBar(
+                title = stringResource(Res.string.top_bar_settings),
+                onBack = onBack
+            )
+        },
     ) { padding ->
         ResponsiveContent(modifier = Modifier.padding(padding)) {
             val appearance: @Composable () -> Unit = {

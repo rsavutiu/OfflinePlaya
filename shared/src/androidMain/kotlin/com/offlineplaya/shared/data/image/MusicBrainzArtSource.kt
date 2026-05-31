@@ -116,7 +116,7 @@ internal class MusicBrainzArtSource(
 
     private suspend fun findArtistImageViaDeezer(artist: String): String? =
         withContext(Dispatchers.IO) {
-            val encoded = java.net.URLEncoder.encode(artist, Charsets.UTF_8)
+            val encoded = artist.urlEncode()
             val url = "https://api.deezer.com/search/artist?q=$encoded&limit=3"
             log.d { "findArtistImageViaDeezer('$artist') -> $url" }
             val request = Request.Builder()
@@ -170,8 +170,7 @@ internal class MusicBrainzArtSource(
 
     private suspend fun fetchViaDeezer(artist: String, album: String): ByteArray? =
         withContext(Dispatchers.IO) {
-            val query = "$artist $album"
-            val encoded = java.net.URLEncoder.encode(query, Charsets.UTF_8)
+            val encoded = "$artist $album".urlEncode()
             val url = "https://api.deezer.com/search/album?q=$encoded&limit=5"
             log.d { "fetchViaDeezer('$artist' / '$album') -> $url" }
             val request = Request.Builder()
@@ -334,8 +333,8 @@ internal class MusicBrainzArtSource(
 
     private suspend fun fetchViaOpenLibrary(artist: String, album: String): ByteArray? =
         withContext(Dispatchers.IO) {
-            val titleEnc = java.net.URLEncoder.encode(album, Charsets.UTF_8)
-            val authorEnc = java.net.URLEncoder.encode(artist, Charsets.UTF_8)
+            val titleEnc = album.urlEncode()
+            val authorEnc = artist.urlEncode()
             val url = "https://openlibrary.org/search.json?title=$titleEnc&author=$authorEnc&limit=3&fields=title,author_name,cover_i"
             log.d { "fetchViaOpenLibrary('$artist' / '$album') -> $url" }
             val request = Request.Builder()
@@ -375,8 +374,8 @@ internal class MusicBrainzArtSource(
 
     private suspend fun fetchViaGoogleBooks(artist: String, album: String): ByteArray? =
         withContext(Dispatchers.IO) {
-            val titleEnc = java.net.URLEncoder.encode(album, Charsets.UTF_8)
-            val authorEnc = java.net.URLEncoder.encode(artist, Charsets.UTF_8)
+            val titleEnc = album.urlEncode()
+            val authorEnc = artist.urlEncode()
             val url = "https://www.googleapis.com/books/v1/volumes?q=$titleEnc+inauthor:$authorEnc&maxResults=3"
             log.d { "fetchViaGoogleBooks('$artist' / '$album') -> $url" }
             val request = Request.Builder()
@@ -539,8 +538,11 @@ internal class MusicBrainzArtSource(
     private fun String.escapeLucene(): String =
         replace("\\", "\\\\").replace("\"", "\\\"")
 
+    // String-name overload — available since Android API 1, unlike the
+    // Charset overload which is API 33+. minSdk here is 24, so the Charset
+    // form throws NoSuchMethodError on Android 12 and older.
     private fun String.urlEncode(): String =
-        java.net.URLEncoder.encode(this, Charsets.UTF_8)
+        java.net.URLEncoder.encode(this, "UTF-8")
 
     private companion object {
         const val USER_AGENT =

@@ -23,6 +23,20 @@ import com.offlineplaya.shared.presentation.ui.molecules.SettingsSection
 import com.offlineplaya.shared.presentation.ui.molecules.SwitchRow
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.burn_button
+import offlineplaya.shared.generated.resources.burn_completed_message
+import offlineplaya.shared.generated.resources.burn_completed_title
+import offlineplaya.shared.generated.resources.burn_download_remote_art
+import offlineplaya.shared.generated.resources.burn_download_remote_art_subtitle
+import offlineplaya.shared.generated.resources.burn_explainer
+import offlineplaya.shared.generated.resources.burn_failed_title
+import offlineplaya.shared.generated.resources.burn_progress
+import offlineplaya.shared.generated.resources.burn_result
+import offlineplaya.shared.generated.resources.burn_start_button
+import offlineplaya.shared.generated.resources.common_ok
+import offlineplaya.shared.generated.resources.settings_section_metadata_tags
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun BurnMetadataSettings(
@@ -37,11 +51,14 @@ fun BurnMetadataSettings(
     val isCompleted = report is EmbedReport.Completed
     val isFailed = report is EmbedReport.Failed
 
-    SettingsSection(title = "Metadata & Tags", modifier = modifier) {
+    SettingsSection(
+        title = stringResource(Res.string.settings_section_metadata_tags),
+        modifier = modifier
+    ) {
         Column(modifier = Modifier.padding(bottom = 8.dp)) {
             SwitchRow(
-                title = "Download remote art",
-                subtitle = "Look up missing covers from MusicBrainz when needed.",
+                title = stringResource(Res.string.burn_download_remote_art),
+                subtitle = stringResource(Res.string.burn_download_remote_art_subtitle),
                 checked = artworkPreferences.downloadRemoteArt,
                 onCheckedChange = onDownloadRemoteArtChange,
                 enabled = !isRunning,
@@ -50,13 +67,12 @@ fun BurnMetadataSettings(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Burn tags into files",
+                text = stringResource(Res.string.burn_button),
                 style = MaterialTheme.typography.titleSmall,
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
             Text(
-                text = "Writes album art and genre tags directly into your audio files. " +
-                        "This helps other apps see the correct info and enables EQ Auto mode.",
+                text = stringResource(Res.string.burn_explainer),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
@@ -75,12 +91,12 @@ fun BurnMetadataSettings(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Burning metadata: ${r.processed} / ${r.total}",
+                        text = stringResource(Res.string.burn_progress, r.processed, r.total),
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "Success: ${r.embedded} • Failed: ${r.failed}",
+                        text = stringResource(Res.string.burn_result, r.embedded, r.failed),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.outline
                     )
@@ -93,7 +109,7 @@ fun BurnMetadataSettings(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp),
                 ) {
-                    Text("Start metadata burn")
+                    Text(stringResource(Res.string.burn_start_button))
                 }
             }
 
@@ -105,14 +121,20 @@ fun BurnMetadataSettings(
                 ) {
                     Column(modifier = Modifier.padding(12.dp)) {
                         Text(
-                            text = if (isFailed) "Burn Failed" else "Burn Completed",
+                            text = if (isFailed) stringResource(Res.string.burn_failed_title) else stringResource(
+                                Res.string.burn_completed_title
+                            ),
                             style = MaterialTheme.typography.labelLarge,
                             fontWeight = FontWeight.Bold
                         )
                         if (isCompleted) {
                             val c = report as EmbedReport.Completed
                             Text(
-                                text = "Successfully updated ${c.embedded} files (${c.failed} failed).",
+                                text = stringResource(
+                                    Res.string.burn_completed_message,
+                                    c.embedded,
+                                    c.failed
+                                ),
                                 style = MaterialTheme.typography.bodySmall
                             )
                         } else if (isFailed) {
@@ -123,7 +145,7 @@ fun BurnMetadataSettings(
                             onClick = onAcknowledgeReport,
                             modifier = Modifier.align(Alignment.End)
                         ) {
-                            Text("OK")
+                            Text(stringResource(Res.string.common_ok))
                         }
                     }
                 }

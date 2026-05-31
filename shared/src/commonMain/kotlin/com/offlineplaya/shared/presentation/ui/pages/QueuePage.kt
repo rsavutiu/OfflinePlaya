@@ -17,6 +17,10 @@ import com.offlineplaya.shared.presentation.ui.organisms.QueueList
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.cd_clear_queue
+import offlineplaya.shared.generated.resources.queue_title
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Full-screen queue browser. Highlights the current track and lets the user
@@ -37,14 +41,14 @@ fun QueuePage(
         contentWindowInsets = WindowInsets(0),
         topBar = {
             AppTopBar(
-                title = "Up next",
+                title = stringResource(Res.string.queue_title),
                 onBack = onBack,
                 actions = {
                     if (state.queue.isNotEmpty()) {
                         IconButton(onClick = onClearQueue) {
                             Icon(
                                 imageVector = Icons.Default.ClearAll,
-                                contentDescription = "Clear queue",
+                                contentDescription = stringResource(Res.string.cd_clear_queue),
                             )
                         }
                     }

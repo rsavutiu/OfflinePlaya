@@ -17,6 +17,11 @@ import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.add_to_playlist_dialog_title
+import offlineplaya.shared.generated.resources.playlist_dialog_cancel
+import offlineplaya.shared.generated.resources.playlist_empty_message
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Lists existing playlists. Tapping one calls [onPickPlaylist] and dismisses.
@@ -31,11 +36,11 @@ fun AddToPlaylistDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Add to playlist") },
+        title = { Text(stringResource(Res.string.add_to_playlist_dialog_title)) },
         text = {
             if (playlists.isEmpty()) {
                 Text(
-                    text = "No playlists yet. Create one from the Playlists screen first.",
+                    text = stringResource(Res.string.playlist_empty_message),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -66,7 +71,7 @@ fun AddToPlaylistDialog(
         },
         confirmButton = {},
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(stringResource(Res.string.playlist_dialog_cancel)) }
         },
     )
 }

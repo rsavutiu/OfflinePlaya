@@ -10,6 +10,12 @@ import com.offlineplaya.shared.presentation.ui.molecules.SettingsSection
 import com.offlineplaya.shared.presentation.ui.molecules.SwitchRow
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.appearance_material_you
+import offlineplaya.shared.generated.resources.appearance_material_you_supported
+import offlineplaya.shared.generated.resources.appearance_material_you_unsupported
+import offlineplaya.shared.generated.resources.settings_section_appearance
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Appearance section: light/dark/system chooser + Material You toggle. The
@@ -24,18 +30,21 @@ fun AppearanceSettings(
     onDynamicColorChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    SettingsSection(title = "Appearance", modifier = modifier) {
+    SettingsSection(
+        title = stringResource(Res.string.settings_section_appearance),
+        modifier = modifier
+    ) {
         ColorModeChooser(
             modifier = Modifier.fillMaxWidth(0.5f),
             selected = preferences.colorMode,
             onSelectionChanged = onColorModeChange,
         )
         SwitchRow(
-            title = "Material You",
+            title = stringResource(Res.string.appearance_material_you),
             subtitle = if (dynamicColorSupported) {
-                "Use wallpaper-based colors"
+                stringResource(Res.string.appearance_material_you_supported)
             } else {
-                "Requires Android 12 or later"
+                stringResource(Res.string.appearance_material_you_unsupported)
             },
             checked = preferences.useDynamicColor && dynamicColorSupported,
             onCheckedChange = onDynamicColorChange,

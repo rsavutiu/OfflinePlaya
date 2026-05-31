@@ -20,6 +20,11 @@ import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.ManagedTreeRoot
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.cd_remove
+import offlineplaya.shared.generated.resources.managed_folder_not_yet_scanned
+import offlineplaya.shared.generated.resources.managed_folder_scanned
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * One row of the managed-folders list in Settings: display name, scan status
@@ -47,7 +52,9 @@ fun ManagedFolderRow(
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
-                text = if (root.lastScannedAt != null) "Scanned" else "Not yet scanned",
+                text = if (root.lastScannedAt != null) stringResource(Res.string.managed_folder_scanned) else stringResource(
+                    Res.string.managed_folder_not_yet_scanned
+                ),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -55,7 +62,7 @@ fun ManagedFolderRow(
         IconButton(onClick = onRemove) {
             Icon(
                 imageVector = Icons.Default.Delete,
-                contentDescription = "Remove",
+                contentDescription = stringResource(Res.string.cd_remove),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }

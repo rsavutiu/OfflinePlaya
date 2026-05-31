@@ -1,10 +1,22 @@
 import org.jetbrains.compose.ComposePlugin
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.jetbrainsCompose)
+}
+
+// Upload-key credentials are read from `androidApp/keystore.properties`
+// (gitignored). When the file is absent — e.g. on a fresh checkout, in CI
+// without secrets, or for a contributor who only ever builds debug — the
+// release signing config is silently omitted so `assembleDebug` still
+// works. Release builds then fall through to the unsigned-output path,
+// which fails loudly with a clear "signingConfig not set" error.
+val keystorePropsFile = rootProject.file("androidApp/keystore.properties")
+val keystoreProps = Properties().apply {
+    if (keystorePropsFile.exists()) keystorePropsFile.inputStream().use { load(it) }
 }
 
 android {
@@ -17,11 +29,56 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "0.1.0"
+
+        // Make AGP package the native debug symbols (function names only —
+        // FULL would also include line numbers, ~10x larger) for every .so
+        // bundled into the release. The output zip is what Play Console
+        // wants in App bundle explorer → Native debug symbols.
+        //   File: androidApp/build/outputs/native-debug-symbols/release/
+        //         native-debug-symbols.zip
+        // Has no impact on your own code's crash deobfuscation (mapping.txt
+        // is uploaded automatically inside the AAB); it only matters for
+        // native crashes inside Media3/SQLite/etc.
+        ndk {
+            debugSymbolLevel = "SYMBOL_TABLE"
+        }
+    }
+
+    signingConfigs {
+        if (keystoreProps.isNotEmpty()) {
+            create("release") {
+                storeFile = file(keystoreProps.getProperty("storeFile"))
+                storePassword = keystoreProps.getProperty("storePassword")
+                keyAlias = keystoreProps.getProperty("keyAlias")
+                keyPassword = keystoreProps.getProperty("keyPassword")
+            }
+        }
     }
 
     buildTypes {
-        release {
+        debug {
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
+            signingConfigs.findByName("release")?.let { signingConfig = it }
+        }
+    }
+
+    // Lint Vital runs by default before every release build and tries to
+    // download check-definition updates over HTTPS. On this machine the
+    // JBR truststore rejects the proxy's MITM cert with "PKIX path
+    // building failed", which blocks the release build. The check
+    // definitions bundled in AGP are enough; turn off the network-going
+    // pre-release lint pass.
+    lint {
+        checkReleaseBuilds = false
     }
 
     buildFeatures {

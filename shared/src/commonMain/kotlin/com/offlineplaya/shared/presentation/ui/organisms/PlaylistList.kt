@@ -13,6 +13,10 @@ import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.molecules.PlaylistRow
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.empty_playlist_subtitle
+import offlineplaya.shared.generated.resources.empty_playlist_title
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun PlaylistList(
@@ -23,8 +27,8 @@ fun PlaylistList(
 ) {
     if (playlists.isEmpty()) {
         EmptyState(
-            title = "No playlists yet",
-            subtitle = "Tap the + button to create one.",
+            title = stringResource(Res.string.empty_playlist_title),
+            subtitle = stringResource(Res.string.empty_playlist_subtitle),
             modifier = modifier,
         )
         return

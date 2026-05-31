@@ -35,6 +35,15 @@ import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.cd_delete_playlist
+import offlineplaya.shared.generated.resources.cd_rename_playlist
+import offlineplaya.shared.generated.resources.empty_playlist_tracks_subtitle
+import offlineplaya.shared.generated.resources.empty_playlist_tracks_title
+import offlineplaya.shared.generated.resources.playlist_dialog_rename
+import offlineplaya.shared.generated.resources.playlist_dialog_rename_confirm
+import offlineplaya.shared.generated.resources.playlist_play_all
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun PlaylistDetailPage(
@@ -62,10 +71,16 @@ fun PlaylistDetailPage(
                 onBack = onBack,
                 actions = {
                     IconButton(onClick = { showRenameDialog = true }) {
-                        Icon(imageVector = Icons.Default.Edit, contentDescription = "Rename playlist")
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = stringResource(Res.string.cd_rename_playlist)
+                        )
                     }
                     IconButton(onClick = onDelete) {
-                        Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete playlist")
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = stringResource(Res.string.cd_delete_playlist)
+                        )
                     }
                 },
             )
@@ -75,15 +90,15 @@ fun PlaylistDetailPage(
                 ExtendedFloatingActionButton(
                     onClick = { onPlayTracks(tracks, 0) },
                     icon = { Icon(Icons.Default.PlayArrow, contentDescription = null) },
-                    text = { Text("Play All") },
+                    text = { Text(stringResource(Res.string.playlist_play_all)) },
                 )
             }
         },
     ) { padding ->
         if (tracks.isEmpty()) {
             EmptyState(
-                title = "No tracks yet",
-                subtitle = "Add tracks from the library using the menu on any track.",
+                title = stringResource(Res.string.empty_playlist_tracks_title),
+                subtitle = stringResource(Res.string.empty_playlist_tracks_subtitle),
                 modifier = Modifier.padding(padding),
             )
         } else {
@@ -130,8 +145,8 @@ fun PlaylistDetailPage(
 
     if (showRenameDialog) {
         PlaylistNameDialog(
-            title = "Rename playlist",
-            confirmLabel = "Rename",
+            title = stringResource(Res.string.playlist_dialog_rename),
+            confirmLabel = stringResource(Res.string.playlist_dialog_rename_confirm),
             initialName = playlistName,
             onConfirm = onRename,
             onDismiss = { showRenameDialog = false },

@@ -26,6 +26,14 @@ import com.offlineplaya.shared.presentation.ui.organisms.TrackList
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.search_empty_subtitle
+import offlineplaya.shared.generated.resources.search_empty_title
+import offlineplaya.shared.generated.resources.search_field_label
+import offlineplaya.shared.generated.resources.search_no_results_subtitle
+import offlineplaya.shared.generated.resources.search_no_results_title
+import offlineplaya.shared.generated.resources.top_bar_search
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Global search across track title / artist / album. The repository handles
@@ -50,7 +58,7 @@ fun SearchPage(
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
-        topBar = { AppTopBar(title = "Search", onBack = onBack) },
+        topBar = { AppTopBar(title = stringResource(Res.string.top_bar_search), onBack = onBack) },
     ) { padding ->
         ResponsiveContent(
             modifier = Modifier
@@ -63,18 +71,18 @@ fun SearchPage(
                 SearchField(
                     query = query,
                     onQueryChange = onQueryChange,
-                    label = "Title, artist, or album",
+                    label = stringResource(Res.string.search_field_label),
             )
 
             when {
                 query.trim().length < 2 -> EmptyState(
-                    title = "Search your library",
-                    subtitle = "Type at least two characters to find a title, artist, or album.",
+                    title = stringResource(Res.string.search_empty_title),
+                    subtitle = stringResource(Res.string.search_empty_subtitle),
                 )
 
                 results.isEmpty() -> EmptyState(
-                    title = "Nothing matches “${query.trim()}”",
-                    subtitle = "Try a different spelling or fewer characters.",
+                    title = stringResource(Res.string.search_no_results_title, query.trim()),
+                    subtitle = stringResource(Res.string.search_no_results_subtitle),
                 )
 
                 else -> {

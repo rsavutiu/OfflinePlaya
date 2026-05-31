@@ -3,6 +3,10 @@ package com.offlineplaya.shared.presentation.ui.molecules
 import androidx.compose.runtime.Composable
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.playlist_dialog_create_confirm
+import offlineplaya.shared.generated.resources.playlist_dialog_new
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Thin alias over [PlaylistNameDialog] preserving the original Create-only
@@ -14,8 +18,8 @@ fun CreatePlaylistDialog(
     onDismiss: () -> Unit,
 ) {
     PlaylistNameDialog(
-        title = "New playlist",
-        confirmLabel = "Create",
+        title = stringResource(Res.string.playlist_dialog_new),
+        confirmLabel = stringResource(Res.string.playlist_dialog_create_confirm),
         initialName = "",
         onConfirm = onCreate,
         onDismiss = onDismiss,

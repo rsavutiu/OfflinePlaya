@@ -13,6 +13,9 @@ import androidx.compose.ui.Modifier
 import com.offlineplaya.shared.domain.model.RepeatMode
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.cd_repeat_mode
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Icon button that cycles through repeat modes: OFF → ALL → ONE → OFF.
@@ -40,7 +43,11 @@ fun RepeatToggle(
         MaterialTheme.colorScheme.primary
     }
     IconButton(onClick = { onCycle(next) }, modifier = modifier) {
-        Icon(imageVector = icon, contentDescription = "Repeat: $mode", tint = tint)
+        Icon(
+            imageVector = icon,
+            contentDescription = stringResource(Res.string.cd_repeat_mode, mode.toString()),
+            tint = tint
+        )
     }
 }
 

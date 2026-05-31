@@ -19,6 +19,10 @@ import com.offlineplaya.shared.presentation.ui.organisms.PlaylistList
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.cd_new_playlist
+import offlineplaya.shared.generated.resources.top_bar_playlists
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun PlaylistsPage(
@@ -32,10 +36,18 @@ fun PlaylistsPage(
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
-        topBar = { AppTopBar(title = "Playlists", onBack = onBack) },
+        topBar = {
+            AppTopBar(
+                title = stringResource(Res.string.top_bar_playlists),
+                onBack = onBack
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = { showCreateDialog = true }) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "New playlist")
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(Res.string.cd_new_playlist)
+                )
             }
         },
     ) { padding ->

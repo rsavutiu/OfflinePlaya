@@ -22,6 +22,9 @@ import com.offlineplaya.shared.presentation.ui.organisms.NowPlayingContent
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.cd_equalizer
+import offlineplaya.shared.generated.resources.now_playing_empty_subtitle
+import offlineplaya.shared.generated.resources.now_playing_empty_title
 import offlineplaya.shared.generated.resources.now_playing_title
 import offlineplaya.shared.generated.resources.now_playing_up_next
 import org.jetbrains.compose.resources.stringResource
@@ -55,7 +58,7 @@ fun NowPlayingPage(
                     IconButton(onClick = onOpenEqualizer) {
                         Icon(
                             imageVector = Icons.Default.GraphicEq,
-                            contentDescription = "Equalizer",
+                            contentDescription = stringResource(Res.string.cd_equalizer),
                         )
                     }
                     IconButton(onClick = onOpenQueue) {
@@ -70,8 +73,8 @@ fun NowPlayingPage(
     ) { padding ->
         if (state.currentTrack == null) {
             EmptyState(
-                title = "Nothing is playing",
-                subtitle = "Pick a track from the library to start playback.",
+                title = stringResource(Res.string.now_playing_empty_title),
+                subtitle = stringResource(Res.string.now_playing_empty_subtitle),
                 modifier = Modifier.padding(padding),
             )
         } else {

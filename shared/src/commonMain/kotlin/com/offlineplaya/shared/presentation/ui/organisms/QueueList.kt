@@ -33,6 +33,12 @@ import com.offlineplaya.shared.presentation.ui.molecules.formatDuration
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.cd_now_playing
+import offlineplaya.shared.generated.resources.cd_remove_from_queue
+import offlineplaya.shared.generated.resources.empty_queue_subtitle
+import offlineplaya.shared.generated.resources.empty_queue_title
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Vertical list of queued tracks. The track at [currentIndex] is highlighted.
@@ -50,8 +56,8 @@ fun QueueList(
 ) {
     if (tracks.isEmpty()) {
         EmptyState(
-            title = "Queue is empty",
-            subtitle = "Start playback from the library to populate the queue.",
+            title = stringResource(Res.string.empty_queue_title),
+            subtitle = stringResource(Res.string.empty_queue_subtitle),
             modifier = modifier,
         )
         return
@@ -111,7 +117,7 @@ private fun QueueRow(
                 ) {
                     Icon(
                         imageVector = Icons.Default.GraphicEq,
-                        contentDescription = "Now playing",
+                        contentDescription = stringResource(Res.string.cd_now_playing),
                         tint = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier.size(22.dp),
                     )
@@ -142,7 +148,7 @@ private fun QueueRow(
         IconButton(onClick = onRemove) {
             Icon(
                 imageVector = Icons.Default.Close,
-                contentDescription = "Remove from queue",
+                contentDescription = stringResource(Res.string.cd_remove_from_queue),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }

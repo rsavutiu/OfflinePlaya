@@ -14,6 +14,10 @@ import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.molecules.TrackRow
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.empty_tracks_subtitle
+import offlineplaya.shared.generated.resources.empty_tracks_title
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun TrackList(
@@ -24,8 +28,8 @@ fun TrackList(
 ) {
     if (tracks.isEmpty()) {
         EmptyState(
-            title = "No tracks",
-            subtitle = "Nothing under this album was scanned.",
+            title = stringResource(Res.string.empty_tracks_title),
+            subtitle = stringResource(Res.string.empty_tracks_subtitle),
             modifier = modifier,
         )
         return

@@ -27,6 +27,12 @@ import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.settings_section_bands
+import offlineplaya.shared.generated.resources.settings_section_mode
+import offlineplaya.shared.generated.resources.settings_section_preset
+import offlineplaya.shared.generated.resources.top_bar_equalizer
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Equalizer settings page. Three modes (Off / Manual / Auto), a horizontal
@@ -50,7 +56,12 @@ fun EqualizerPage(
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { AppTopBar(title = "Equalizer", onBack = onBack) },
+        topBar = {
+            AppTopBar(
+                title = stringResource(Res.string.top_bar_equalizer),
+                onBack = onBack
+            )
+        },
         contentWindowInsets = WindowInsets(0),
     ) { padding ->
         ResponsiveContent(modifier = Modifier.padding(padding)) {
@@ -59,7 +70,7 @@ fun EqualizerPage(
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState()),
             ) {
-                SettingsSection(title = "Mode") {
+                SettingsSection(title = stringResource(Res.string.settings_section_mode)) {
                     EqModeChooser(
                         selected = preferences.mode,
                         onModeChange = onModeChange,
@@ -92,7 +103,7 @@ fun EqualizerPage(
                 }
 
                 if (preferences.mode == EqMode.MANUAL) {
-                    SettingsSection(title = "Preset") {
+                    SettingsSection(title = stringResource(Res.string.settings_section_preset)) {
                         EqPresetChooser(
                             selectedName = preferences.manualPresetName,
                             onPresetChange = onPresetChange,
@@ -100,7 +111,7 @@ fun EqualizerPage(
                     }
                 }
 
-                SettingsSection(title = "Bands") {
+                SettingsSection(title = stringResource(Res.string.settings_section_bands)) {
                     EqualizerGraph(
                         gains = activePreset.gainsMillibels,
                         enabled = preferences.mode != EqMode.OFF,

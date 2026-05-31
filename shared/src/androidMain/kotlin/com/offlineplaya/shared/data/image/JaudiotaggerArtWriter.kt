@@ -3,7 +3,7 @@ package com.offlineplaya.shared.data.image
 import android.content.Context
 import android.media.MediaMetadataRetriever
 import android.net.Uri
-import android.webkit.MimeTypeMap
+import com.offlineplaya.shared.data.util.resolveAudioExtension
 import com.offlineplaya.shared.domain.image.AlbumArtWriter
 import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.Dispatchers
@@ -69,16 +69,7 @@ internal class JaudiotaggerArtWriter(
             logger.i(TAG, "Writing art to $documentUri (${jpegBytes.size} bytes)")
             val uri = Uri.parse(documentUri)
             val resolver = context.contentResolver
-            
-            // Try to get extension from URI or MIME type
-            val mimeType = resolver.getType(uri)
-            val extensionFromMime = mimeType?.let { MimeTypeMap.getSingleton().getExtensionFromMimeType(it) }
-            val displayName = uri.lastPathSegment ?: "audio"
-            val extensionFromUri = displayName.substringAfterLast('.', "")
-                .substringBefore('?')
-                .substringBefore('#')
-
-            val extension = extensionFromMime ?: extensionFromUri.ifBlank { "mp3" }
+            val extension = resolveAudioExtension(context, uri)
             logger.d(TAG, "Determined extension: $extension for $documentUri")
             val tempFile = File.createTempFile("embed-art-", ".$extension", context.cacheDir)
 

@@ -15,6 +15,10 @@ import com.offlineplaya.shared.presentation.ui.molecules.ArtistRow
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.empty_artist_subtitle
+import offlineplaya.shared.generated.resources.empty_artist_title
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ArtistList(
@@ -26,8 +30,8 @@ fun ArtistList(
 ) {
     if (artists.isEmpty()) {
         EmptyState(
-            title = "No artists yet",
-            subtitle = "Scan a folder from the home page to populate the library.",
+            title = stringResource(Res.string.empty_artist_title),
+            subtitle = stringResource(Res.string.empty_artist_subtitle),
             modifier = modifier,
         )
         return

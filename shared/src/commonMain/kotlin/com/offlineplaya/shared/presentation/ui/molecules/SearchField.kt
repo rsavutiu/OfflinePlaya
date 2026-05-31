@@ -15,6 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.cd_clear
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Outlined text field with a leading search icon and a trailing clear button
@@ -39,7 +42,10 @@ fun SearchField(
         trailingIcon = {
             if (query.isNotEmpty()) {
                 IconButton(onClick = { onQueryChange("") }) {
-                    Icon(imageVector = Icons.Default.Close, contentDescription = "Clear")
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = stringResource(Res.string.cd_clear)
+                    )
                 }
             }
         },

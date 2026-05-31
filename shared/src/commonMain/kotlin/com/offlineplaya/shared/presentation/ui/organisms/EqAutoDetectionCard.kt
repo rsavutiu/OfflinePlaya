@@ -19,6 +19,17 @@ import com.offlineplaya.shared.domain.model.CanonicalGenre
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.eq_auto_explainer
+import offlineplaya.shared.generated.resources.eq_detected_genre
+import offlineplaya.shared.generated.resources.eq_fallback_no_tag
+import offlineplaya.shared.generated.resources.eq_fallback_unknown_tag
+import offlineplaya.shared.generated.resources.eq_label_applied_preset
+import offlineplaya.shared.generated.resources.eq_label_from_tag
+import offlineplaya.shared.generated.resources.eq_label_now_playing
+import offlineplaya.shared.generated.resources.eq_no_genre_tag
+import offlineplaya.shared.generated.resources.eq_nothing_playing
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Makes Auto-mode EQ legible: shows what the app read off the track and what it
@@ -50,7 +61,7 @@ fun EqAutoDetectionCard(
             }
 
             Text(
-                text = "DETECTED GENRE",
+                text = stringResource(Res.string.eq_detected_genre),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -67,19 +78,21 @@ fun EqAutoDetectionCard(
             )
             Spacer(Modifier.height(AppSpacing.sm))
 
-            DetailRow("Applied preset", appliedPresetName)
-            DetailRow("From tag", rawGenreTag?.takeIf { it.isNotBlank() } ?: "— no genre tag —")
-            DetailRow("Now playing", nowPlayingTitle)
+            DetailRow(stringResource(Res.string.eq_label_applied_preset), appliedPresetName)
+            DetailRow(
+                stringResource(Res.string.eq_label_from_tag),
+                rawGenreTag?.takeIf { it.isNotBlank() }
+                    ?: stringResource(Res.string.eq_no_genre_tag),
+            )
+            DetailRow(stringResource(Res.string.eq_label_now_playing), nowPlayingTitle)
 
             if (isFlatFallback) {
                 Spacer(Modifier.height(AppSpacing.sm))
                 Text(
                     text = if (rawGenreTag.isNullOrBlank()) {
-                        "This file has no genre tag, so Auto can't infer a style — " +
-                                "the curve stays flat. Tag your files or switch to Manual."
+                        stringResource(Res.string.eq_fallback_no_tag)
                     } else {
-                        "The tag \"$rawGenreTag\" didn't map to a known style — " +
-                                "staying flat. Switch to Manual to pick a curve."
+                        stringResource(Res.string.eq_fallback_unknown_tag, rawGenreTag)
                     },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -92,13 +105,13 @@ fun EqAutoDetectionCard(
 @Composable
 private fun NothingPlayingHint() {
     Text(
-        text = "Nothing playing",
+        text = stringResource(Res.string.eq_nothing_playing),
         style = MaterialTheme.typography.titleSmall,
         color = MaterialTheme.colorScheme.onSurface,
     )
     Spacer(Modifier.height(AppSpacing.xs))
     Text(
-        text = "Start a track and Auto picks a preset from its genre tag.",
+        text = stringResource(Res.string.eq_auto_explainer),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )

@@ -26,6 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.cd_back
+import offlineplaya.shared.generated.resources.cd_settings
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * App-wide "open settings" handler. [App] provides this once; every [AppTopBar]
@@ -68,7 +72,7 @@ fun AppTopBar(
                 IconButton(onClick = onBack, modifier = Modifier.size(40.dp)) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back",
+                        contentDescription = stringResource(Res.string.cd_back),
                         tint = MaterialTheme.colorScheme.onSurface,
                     )
                 }
@@ -92,7 +96,7 @@ fun AppTopBar(
                     IconButton(onClick = openSettings, modifier = Modifier.size(40.dp)) {
                         Icon(
                             imageVector = Icons.Default.Settings,
-                            contentDescription = "Settings",
+                            contentDescription = stringResource(Res.string.cd_settings),
                             tint = MaterialTheme.colorScheme.onSurface,
                         )
                     }

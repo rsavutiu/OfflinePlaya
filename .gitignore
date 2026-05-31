@@ -13,3 +13,7 @@ local.properties
 *.hprof
 .kotlin
 screenshots/
+# Signing-key credentials. NEVER commit.
+keystore.properties
+*.jks
+*.keystore
