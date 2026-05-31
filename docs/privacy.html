@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>OfflinePlaya — Privacy Policy</title>
+    <style>
+        :root {
+          color-scheme: light dark;
+          --accent: #7c5cbf;
+        }
+        body {
+          font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          max-width: 720px;
+          margin: 2.5rem auto;
+          padding: 0 1.25rem 4rem;
+          color: #222;
+          background: #fafafa;
+        }
+        @media (prefers-color-scheme: dark) {
+          body { color: #e8e6f0; background: #14111c; }
+          a { color: #b9a4e8; }
+        }
+        h1 { color: var(--accent); margin-bottom: .25rem; }
+        .updated { color: #888; font-size: .9rem; margin-top: 0; }
+        h2 { margin-top: 2rem; }
+        code { background: rgba(124, 92, 191, .12); padding: .1em .35em; border-radius: 3px; }
+    </style>
+</head>
+<body>
+<h1>OfflinePlaya Privacy Policy</h1>
+<p class="updated">Last updated: 2026-05-31</p>
+
+<p>
+    OfflinePlaya is an offline music player for Android. It plays audio files
+    that already exist on your device. It does not have user accounts, does
+    not sync to any cloud service, and does not contain advertising, analytics,
+    or third-party tracking SDKs.
+</p>
+
+<h2>Information we collect</h2>
+<p>
+    <strong>None.</strong> OfflinePlaya does not collect, transmit, or store
+    any personal information about you. There is no sign-in. There is no
+    telemetry. There is no crash reporting service. Everything the app
+    records — your library, playlists, playback history, settings — stays
+    on your device in its private application storage.
+</p>
+
+<h2>Permissions we request</h2>
+<ul>
+    <li>
+        <code>READ_EXTERNAL_STORAGE</code> /
+        <code>MANAGE_EXTERNAL_STORAGE</code> — required to read the audio files
+        you choose to add to your library. The app only reads files; it does
+        not upload them.
+    </li>
+    <li>
+        <code>FOREGROUND_SERVICE</code> /
+        <code>FOREGROUND_SERVICE_MEDIA_PLAYBACK</code> — required to keep
+        playback running while the app is in the background, and to show the
+        media notification.
+    </li>
+    <li>
+        <code>POST_NOTIFICATIONS</code> — required to display the media
+        playback notification on Android 13 and newer.
+    </li>
+    <li>
+        <code>WAKE_LOCK</code> — keeps the CPU awake during playback so the
+        audio does not stutter when the screen turns off.
+    </li>
+    <li>
+        <code>INTERNET</code> — used <em>only</em> for the optional album-art
+        and artist-image lookups described below. Disable
+        <em>Download album art from the internet</em> in Settings to stop all
+        outbound network traffic.
+    </li>
+</ul>
+
+<h2>Optional network requests for cover art</h2>
+<p>
+    When the album-art download setting is enabled, OfflinePlaya queries
+    the following public services to look up missing album, artist, and
+    audiobook cover images:
+</p>
+<ul>
+    <li><a href="https://musicbrainz.org/">MusicBrainz</a> — to resolve album and artist identifiers
+    </li>
+    <li><a href="https://coverartarchive.org/">Cover Art Archive</a> — for album covers</li>
+    <li><a href="https://www.deezer.com/">Deezer</a> public API — as a fallback for album and artist
+        images
+    </li>
+    <li><a href="https://openlibrary.org/">Open Library</a> and
+        <a href="https://books.google.com/">Google Books</a> — for
+        audiobook covers
+    </li>
+</ul>
+<p>
+    The only data sent to these services is the album, artist, or book
+    title and (where present) year, as derived from the metadata in your
+    audio files. No device identifiers, IP-address-linked account data,
+    or other personal information is attached by the app. Your IP address
+    is, of course, visible to those services in the same way it is
+    visible to any website you visit; we have no control over their own
+    logging or privacy practices. See their respective privacy policies
+    for details.
+</p>
+
+<h2>Data we share with third parties</h2>
+<p>
+    None, beyond the optional cover-art lookups described above. We do
+    not sell, rent, or otherwise share any information with advertisers,
+    data brokers, or analytics providers.
+</p>
+
+<h2>Children's privacy</h2>
+<p>
+    OfflinePlaya is suitable for all ages and does not knowingly collect
+    information from anyone, including children under 13.
+</p>
+
+<h2>Changes to this policy</h2>
+<p>
+    If this policy changes, the updated version will be published at the
+    same URL with a new "Last updated" date.
+</p>
+
+<h2>Contact</h2>
+<p>
+    Questions or concerns? Email
+    <a href="mailto:rsavutiu@gmail.com">rsavutiu@gmail.com</a> or open an
+    issue at
+    <a href="https://github.com/rsavutiu/OfflinePlaya/issues">github.com/rsavutiu/OfflinePlaya</a>.
+</p>
+</body>
+</html>

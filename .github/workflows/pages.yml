@@ -1,0 +1,43 @@
+name: Publish privacy site to GitHub Pages
+
+# Serves the static files in `docs/` (privacy.html + index.html) at
+# https://rsavutiu.github.io/OfflinePlaya/ — that URL is what gets pasted
+# into Google Play Console's "Privacy policy" field.
+#
+# Triggers on any push to main that touches the site, and on manual
+# dispatch from the Actions tab. No build step — the files are already
+# the deployable artifact.
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Pages only accepts one in-flight deployment at a time. Don't cancel an
+# in-progress one — privacy-policy publishes need to land.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - id: deployment
+        uses: actions/deploy-pages@v4
