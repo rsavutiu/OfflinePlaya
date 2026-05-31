@@ -7,6 +7,7 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
@@ -47,7 +48,7 @@ fun LibraryTabRow(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun LibraryTabRowArtistsPreview() {
     PreviewTheme {
@@ -55,7 +56,7 @@ private fun LibraryTabRowArtistsPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun LibraryTabRowFoldersDarkPreview() {
     PreviewTheme(darkTheme = true) {

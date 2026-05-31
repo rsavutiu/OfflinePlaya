@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">OfflinePlaya</string>
-
-    <!-- Background-task foreground service notification (album-art embed pass, future sync) -->
-    <string name="background_channel_name">Background processing</string>
-    <string name="background_channel_description">Shows progress for long-running tasks like embedding album art.</string>
-    <string name="background_embed_title">Embedding album art</string>
-    <string name="background_embed_text_pending">Preparing…</string>
-    <string name="background_embed_text_progress">%1$d / %2$d tracks</string>
+    <string name="background_channel_name">Music Playback</string>
+    <string name="background_channel_description">Controls music playback in the background</string>
 </resources>

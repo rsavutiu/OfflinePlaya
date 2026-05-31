@@ -77,6 +77,18 @@ class LibrarySyncCoordinator(
     }
 
     /**
+     * Re-scan only if nothing is in flight. Used by the auto-rescan triggers
+     * (MediaStore observer, app foreground) so a burst of filesystem events
+     * doesn't stack scans on top of each other — if the user just added 50
+     * tracks from a torrent client, the observer fires many times in seconds;
+     * we want one scan, not fifty.
+     */
+    fun resyncIfIdle(): Job? {
+        if (_status.value is SyncStatus.Scanning) return null
+        return resyncAll()
+    }
+
+    /**
      * Re-scan every managed root, but only if at least one is registered.
      * Used at app launch so empty installs don't briefly flip the status
      * indicator into Scanning / Completed for no reason.

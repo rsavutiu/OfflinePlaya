@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
@@ -59,7 +60,7 @@ fun LibraryFlatPage(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun LibraryFlatPagePreview() {
     PreviewTheme {
@@ -78,7 +79,7 @@ private fun LibraryFlatPagePreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun LibraryFlatPageEmptyPreview() {
     PreviewTheme(darkTheme = true) {

@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
@@ -56,7 +57,7 @@ fun PlaylistNameDialog(
     )
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun PlaylistNameDialogCreatePreview() {
     PreviewTheme {
@@ -70,7 +71,7 @@ private fun PlaylistNameDialogCreatePreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun PlaylistNameDialogRenamePreview() {
     PreviewTheme(darkTheme = true) {

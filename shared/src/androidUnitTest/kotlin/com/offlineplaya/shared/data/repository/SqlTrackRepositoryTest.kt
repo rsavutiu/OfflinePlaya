@@ -2,6 +2,7 @@ package com.offlineplaya.shared.data.repository
 
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.testsupport.createInMemoryDatabase
+import com.offlineplaya.shared.util.TestLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -12,7 +13,8 @@ import kotlin.test.assertNull
 
 class SqlTrackRepositoryTest {
 
-    private fun newRepository() = SqlTrackRepository(createInMemoryDatabase(), Dispatchers.Unconfined)
+    private fun newRepository() =
+        SqlTrackRepository(createInMemoryDatabase(), TestLogger(), Dispatchers.Unconfined)
 
     @Test
     fun `empty repository reports zero count and empty observeAll`() = runTest {
@@ -116,9 +118,9 @@ class SqlTrackRepositoryTest {
     @Test
     fun `updateForeignKeys writes artist and album ids without touching metadata`() = runTest {
         val db = createInMemoryDatabase()
-        val repo = SqlTrackRepository(db, Dispatchers.Unconfined)
-        val artistRepo = SqlArtistRepository(db, Dispatchers.Unconfined)
-        val albumRepo = SqlAlbumRepository(db, Dispatchers.Unconfined)
+        val repo = SqlTrackRepository(db, TestLogger(), Dispatchers.Unconfined)
+        val artistRepo = SqlArtistRepository(db, TestLogger(), Dispatchers.Unconfined)
+        val albumRepo = SqlAlbumRepository(db, TestLogger(), Dispatchers.Unconfined)
 
         val id = repo.insertFile("u", "t", "p", "f.mp3", 0, 0, null)
         val artistId = artistRepo.upsert("Test Artist")

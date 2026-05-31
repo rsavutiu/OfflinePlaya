@@ -1,49 +1,40 @@
 package com.offlineplaya.shared.presentation.ui.pages
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.QueueMusic
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
+import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.molecules.PlaylistNameDialog
 import com.offlineplaya.shared.presentation.ui.molecules.TrackRow
-import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
-import com.offlineplaya.shared.presentation.ui.molecules.formatDuration
+import com.offlineplaya.shared.presentation.ui.organisms.PlaylistDetailHeader
 import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
 import com.offlineplaya.shared.presentation.ui.preview.Preview
-import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
+import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 @Composable
@@ -65,7 +56,7 @@ fun PlaylistDetailPage(
 
     Scaffold(
         modifier = modifier,
-        contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
+        contentWindowInsets = WindowInsets(0),
         topBar = {
             AppTopBar(
                 title = playlistName,
@@ -97,11 +88,12 @@ fun PlaylistDetailPage(
                 modifier = Modifier.padding(padding),
             )
         } else {
+            ResponsiveContent(modifier = Modifier.padding(padding)) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(padding),
+                modifier = Modifier.fillMaxSize(),
             ) {
                 item(key = "header") {
-                    PlaylistHeader(
+                    PlaylistDetailHeader(
                         name = playlistName,
                         trackCount = tracks.size,
                         totalDurationMs = tracks.sumOf { it.durationMs ?: 0L },
@@ -116,6 +108,7 @@ fun PlaylistDetailPage(
                 }
 
                 item { Spacer(Modifier.height(80.dp)) }
+            }
             }
         }
     }
@@ -147,55 +140,7 @@ fun PlaylistDetailPage(
     }
 }
 
-@Composable
-private fun PlaylistHeader(
-    name: String,
-    trackCount: Int,
-    totalDurationMs: Long,
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(AppSpacing.lg),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Surface(
-            color = MaterialTheme.colorScheme.secondaryContainer,
-            shape = RoundedCornerShape(20.dp),
-            modifier = Modifier.size(120.dp),
-        ) {
-            Box(contentAlignment = Alignment.Center) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.QueueMusic,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                    modifier = Modifier.size(56.dp),
-                )
-            }
-        }
-        Spacer(Modifier.height(AppSpacing.lg))
-        Text(
-            text = name,
-            style = MaterialTheme.typography.headlineSmall,
-        )
-        Spacer(Modifier.height(AppSpacing.sm))
-        val countText = "$trackCount ${if (trackCount == 1) "track" else "tracks"}"
-        val durationMinutes = totalDurationMs / 60_000
-        val durationText = if (durationMinutes >= 60) {
-            "${durationMinutes / 60}h ${durationMinutes % 60}m"
-        } else {
-            "${durationMinutes}m"
-        }
-        Text(
-            text = "$countText · $durationText",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        Spacer(Modifier.height(AppSpacing.md))
-    }
-}
-
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun PlaylistDetailPagePopulatedPreview() {
     PreviewTheme {
@@ -215,7 +160,7 @@ private fun PlaylistDetailPagePopulatedPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun PlaylistDetailPageEmptyPreview() {
     PreviewTheme(darkTheme = true) {

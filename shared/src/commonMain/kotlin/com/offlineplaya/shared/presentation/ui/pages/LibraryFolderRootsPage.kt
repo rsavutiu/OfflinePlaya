@@ -2,6 +2,7 @@ package com.offlineplaya.shared.presentation.ui.pages
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.offlineplaya.shared.domain.model.Folder
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
@@ -34,7 +35,7 @@ fun LibraryFolderRootsPage(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun LibraryFolderRootsPagePreview() {
     PreviewTheme {

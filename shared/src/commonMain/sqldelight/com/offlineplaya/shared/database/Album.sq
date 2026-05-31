@@ -8,7 +8,7 @@ CREATE TABLE Album (
 );
 
 CREATE INDEX idx_album_artist ON Album(artist_id);
-CREATE UNIQUE INDEX idx_album_name_artist ON Album(name, artist_id);
+CREATE UNIQUE INDEX idx_album_name_artist ON Album(name COLLATE NOCASE, artist_id);
 
 selectAll:
 SELECT * FROM Album ORDER BY name COLLATE NOCASE;
@@ -20,7 +20,7 @@ selectById:
 SELECT * FROM Album WHERE id = ?;
 
 selectByNameAndArtist:
-SELECT * FROM Album WHERE name = ? AND artist_id IS ?;
+SELECT * FROM Album WHERE name = ? COLLATE NOCASE AND artist_id IS ?;
 
 insert:
 INSERT OR IGNORE INTO Album(name, artist_id, year) VALUES (?, ?, ?);

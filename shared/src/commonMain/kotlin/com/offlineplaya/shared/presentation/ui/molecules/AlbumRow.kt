@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Album
 import com.offlineplaya.shared.domain.model.Track
@@ -63,7 +64,9 @@ fun AlbumRow(
             size = 48.dp,
             cornerRadius = 10.dp, // matches AppShapes.tile
         )
-        Column(modifier = Modifier.padding(start = AppSpacing.lg).weight(1f)) {
+        Column(modifier = Modifier
+            .padding(start = AppSpacing.lg)
+            .weight(1f)) {
             Text(
                 text = album.name,
                 style = MaterialTheme.typography.titleMedium,
@@ -87,7 +90,7 @@ private fun subtitleFor(album: Album): String {
     return listOfNotNull(yearPart, trackPart).joinToString(" · ")
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun AlbumRowFullPreview() {
     PreviewTheme {
@@ -101,7 +104,7 @@ private fun AlbumRowFullPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun AlbumRowNoYearPreview() {
     PreviewTheme {

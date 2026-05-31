@@ -6,35 +6,30 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
 /**
- * Brand color tokens for OfflinePlaya. The palette leans on a muted purple
- * (think vinyl sleeve ink) for primary and a warm amber accent for tertiary —
- * meant to read as "music app, but not Spotify-green".
- *
- * Material 3's tonal system generates the rest of the on-/container colors
- * from these seeds.
+ * Brand color tokens for OfflinePlaya. Single-accent violet (#7C5CBF) design
+ * system — every accent surface uses this family. The deep dark background
+ * (#0C0C12) maximises contrast on AMOLED screens.
  */
-private val BrandPurple = Color(0xFF5E4DAB)
-private val BrandPurpleLight = Color(0xFFB8AEFF)
-private val BrandAmber = Color(0xFFE19F23)
-private val BrandAmberLight = Color(0xFFFFCB6F)
-private val BrandTeal = Color(0xFF3E8278)
-private val BrandTealLight = Color(0xFF87D0C3)
+private val BrandViolet = Color(0xFF7C5CBF)
+private val BrandVioletLight = Color(0xFFB0A0F0)
+private val BrandVioletDim = Color(0xFF9B8CE0)
+private val BrandVioletDeep = Color(0xFF3D2E7C)
 
 internal val DefaultLightColors: ColorScheme = lightColorScheme(
-    primary = BrandPurple,
+    primary = BrandViolet,
     onPrimary = Color.White,
     primaryContainer = Color(0xFFE3DDFF),
     onPrimaryContainer = Color(0xFF1B0F5C),
 
-    secondary = BrandTeal,
+    secondary = BrandViolet,
     onSecondary = Color.White,
-    secondaryContainer = Color(0xFFBCEBE1),
-    onSecondaryContainer = Color(0xFF002822),
+    secondaryContainer = Color(0xFFE3DDFF),
+    onSecondaryContainer = Color(0xFF1B0F5C),
 
-    tertiary = BrandAmber,
+    tertiary = BrandViolet,
     onTertiary = Color.White,
-    tertiaryContainer = Color(0xFFFFE0AC),
-    onTertiaryContainer = Color(0xFF291800),
+    tertiaryContainer = Color(0xFFE3DDFF),
+    onTertiaryContainer = Color(0xFF1B0F5C),
 
     background = Color(0xFFFCF9FF),
     onBackground = Color(0xFF1B1B22),
@@ -52,32 +47,32 @@ internal val DefaultLightColors: ColorScheme = lightColorScheme(
 )
 
 internal val DefaultDarkColors: ColorScheme = darkColorScheme(
-    primary = BrandPurpleLight,
-    onPrimary = Color(0xFF2C1D7F),
-    primaryContainer = Color(0xFF453596),
+    primary = BrandVioletLight,
+    onPrimary = BrandVioletDeep,
+    primaryContainer = BrandViolet,
     onPrimaryContainer = Color(0xFFE3DDFF),
 
-    secondary = BrandTealLight,
-    onSecondary = Color(0xFF003830),
-    secondaryContainer = Color(0xFF1E5147),
-    onSecondaryContainer = Color(0xFFBCEBE1),
+    secondary = BrandVioletDim,
+    onSecondary = BrandVioletDeep,
+    secondaryContainer = Color(0xFF2A1E4C),
+    onSecondaryContainer = Color(0xFFE3DDFF),
 
-    tertiary = BrandAmberLight,
-    onTertiary = Color(0xFF442B00),
-    tertiaryContainer = Color(0xFF604000),
-    onTertiaryContainer = Color(0xFFFFE0AC),
+    tertiary = BrandVioletDim,
+    onTertiary = BrandVioletDeep,
+    tertiaryContainer = Color(0xFF2A1E4C),
+    onTertiaryContainer = Color(0xFFE3DDFF),
 
-    background = Color(0xFF13131A),
-    onBackground = Color(0xFFE5E1E9),
-    surface = Color(0xFF13131A),
-    onSurface = Color(0xFFE5E1E9),
-    surfaceVariant = Color(0xFF49454E),
-    onSurfaceVariant = Color(0xFFCAC4CF),
+    background = Color(0xFF0C0C12),
+    onBackground = Color(0xFFF0F0F5),
+    surface = Color(0xFF0C0C12),
+    onSurface = Color(0xFFF0F0F5),
+    surfaceVariant = Color(0xFF14141C),
+    onSurfaceVariant = Color(0xFFD0D0E8),
 
-    error = Color(0xFFFFB4AB),
+    error = Color(0xFFEF6070),
     onError = Color(0xFF690005),
     errorContainer = Color(0xFF93000A),
     onErrorContainer = Color(0xFFFFDAD6),
 
-    outline = Color(0xFF948F99),
+    outline = Color(0xFF5A5A7A),
 )

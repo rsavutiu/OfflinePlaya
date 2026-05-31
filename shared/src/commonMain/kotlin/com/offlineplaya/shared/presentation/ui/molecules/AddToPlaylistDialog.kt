@@ -13,9 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Playlist
-import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 /**
@@ -71,7 +71,7 @@ fun AddToPlaylistDialog(
     )
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun AddToPlaylistDialogPopulatedPreview() {
     PreviewTheme {
@@ -87,7 +87,7 @@ private fun AddToPlaylistDialogPopulatedPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun AddToPlaylistDialogEmptyPreview() {
     PreviewTheme(darkTheme = true) {

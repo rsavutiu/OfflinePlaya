@@ -1,6 +1,7 @@
 package com.offlineplaya.shared.data.repository
 
 import com.offlineplaya.shared.testsupport.createInMemoryDatabase
+import com.offlineplaya.shared.util.TestLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -11,7 +12,8 @@ import kotlin.test.assertNull
 
 class SqlArtistRepositoryTest {
 
-    private fun newRepository() = SqlArtistRepository(createInMemoryDatabase(), Dispatchers.Unconfined)
+    private fun newRepository() =
+        SqlArtistRepository(createInMemoryDatabase(), TestLogger(), Dispatchers.Unconfined)
 
     @Test
     fun `upsert returns the same id for a duplicate name`() = runTest {

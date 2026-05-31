@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
@@ -34,7 +35,7 @@ fun SwitchRow(
         modifier = modifier
             .fillMaxWidth()
             .clickable(enabled = enabled) { onCheckedChange(!checked) }
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .padding(horizontal = 16.dp, vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -60,7 +61,7 @@ fun SwitchRow(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun SwitchRowOnPreview() {
     PreviewTheme {
@@ -75,7 +76,7 @@ private fun SwitchRowOnPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun SwitchRowOffPreview() {
     PreviewTheme {
@@ -90,7 +91,7 @@ private fun SwitchRowOffPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun SwitchRowDisabledPreview() {
     PreviewTheme {

@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Folder
 import com.offlineplaya.shared.domain.model.Track
@@ -47,7 +48,9 @@ fun FolderRow(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         FolderThumb(previewTracks = previewTracks)
-        Column(modifier = Modifier.padding(start = AppSpacing.lg).weight(1f)) {
+        Column(modifier = Modifier
+            .padding(start = AppSpacing.lg)
+            .weight(1f)) {
             Text(
                 text = folder.displayName,
                 style = MaterialTheme.typography.titleMedium,
@@ -162,7 +165,7 @@ private fun summary(folder: Folder): String {
     return "${folder.trackCount} ${if (folder.trackCount == 1) "track" else "tracks"}"
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun FolderRowPopulatedPreview() {
     PreviewTheme {
@@ -182,7 +185,7 @@ private fun FolderRowPopulatedPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun FolderRowEmptyPreview() {
     PreviewTheme {

@@ -42,6 +42,10 @@ class LibraryStateHolder(
     val allArtists: StateFlow<List<Artist>> = artists.observeAll()
         .stateIn(scope, SharingStarted.Eagerly, emptyList())
 
+    /** All albums, alphabetical. Used by the home page recent-albums shelf. */
+    val allAlbums: StateFlow<List<Album>> = albums.observeAll()
+        .stateIn(scope, SharingStarted.Eagerly, emptyList())
+
     /** All root folders (one per managed tree). Always-on hot list. */
     val rootFolders: StateFlow<List<Folder>> = folders.observeRoots()
         .stateIn(scope, SharingStarted.Eagerly, emptyList())
@@ -55,8 +59,7 @@ class LibraryStateHolder(
      * whenever the underlying table changes, so the home page Library button
      * appears as soon as the first scan completes.
      */
-    val totalTrackCount: StateFlow<Long> = tracks.observeAll()
-        .map { it.size.toLong() }
+    val totalTrackCount: StateFlow<Long> = tracks.observeCount()
         .stateIn(scope, SharingStarted.Eagerly, 0L)
 
     suspend fun findArtist(id: Long): Artist? = artists.findById(id)

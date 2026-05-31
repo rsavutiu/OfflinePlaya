@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OfflinePlaya</string>
+    <string name="home_title_your_music_offline">Votre musique, hors ligne</string>
+    <string name="home_label_library">Bibliothèque</string>
+    <string name="home_button_browse">PARCOURIR</string>
+    <string name="home_title_all_tracks">Tous les morceaux</string>
+    <string name="home_label_albums">Albums</string>
+    <string name="home_label_browse">Parcourir</string>
+    <string name="home_label_artists">Artistes</string>
+    <string name="home_label_playlists">Playlists</string>
+    <string name="home_label_collections">Collections</string>
+    <string name="home_label_add_folders">Ajouter des dossiers</string>
+    <string name="home_label_import_more_tracks">Importer plus de morceaux</string>
+    <string name="home_title_start_your_music_journey">Commencez votre voyage musical</string>
+    <string name="home_label_select_folder">Sélectionnez un dossier pour construire votre
+        bibliothèque hors ligne.
+    </string>
+    <string name="home_status_picking_music_folder">Sélection du dossier musical</string>
+    <string name="home_status_scanning">Scannage…</string>
+    <string name="home_label_pick_music_folder">Choisir un dossier musical</string>
+    <string name="home_label_tracks">Morceaux</string>
+    <string name="home_label_folders">Dossiers</string>
+    <string name="home_label_total">Total</string>
+    <string name="now_playing_title">En lecture</string>
+    <string name="now_playing_up_next">À venir</string>
+    <string name="now_playing_back">Retour</string>
+    <string name="now_playing_search">Rechercher</string>
+    <string name="now_playing_settings">Paramètres</string>
+    <string name="track_details_play_next">Lire après</string>
+    <string name="track_details_queue">File d'attente</string>
+    <string name="track_details_add_to_playlist">Ajouter à la playlist</string>
+    <string name="track_details_favourite">Favori</string>
+    <string name="track_details_hide_file_info">Cacher les informations du fichier</string>
+    <string name="track_details_file_info">Informations du fichier</string>
+    <string name="track_details_duration">Durée</string>
+    <string name="track_details_year">Année</string>
+    <string name="track_details_genre">Genre</string>
+    <string name="track_details_codec">Codec</string>
+    <string name="track_details_bitrate">Débit binaire</string>
+    <string name="track_details_path">Chemin</string>
+    <string name="track_details_status">Statut</string>
+    <string name="track_details_playing_in">Lecture dans…</string>
+    <string name="track_details_play_now">▶ Lire maintenant</string>
+    <string name="track_details_kbps">kbps</string>
+    <string name="library_album_detail_track">morceau</string>
+    <string name="library_album_detail_tracks">morceaux</string>
+    <string name="library_album_detail_play">Lire</string>
+    <string name="library_album_detail_shuffle">Mélanger</string>
+    <string name="track_row_playing_indicator">▶</string>
+    <string name="sync_status_idle">Aucun dossier ajouté encore. Choisissez-en un pour commencer.
+    </string>
+    <string name="sync_status_scanning">Scannage…</string>
+    <string name="sync_status_completed">Scanné %d morceaux sur %d dossiers</string>
+    <string name="sync_status_completed_with_failed">%s (%d échoués)</string>
+    <string name="sync_status_failed">Scan échoué : %s</string>
+</resources>

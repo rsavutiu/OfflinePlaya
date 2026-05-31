@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -43,12 +45,13 @@ import com.offlineplaya.shared.presentation.navigation.AppDestination
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.sync.SyncStatus
+import com.offlineplaya.shared.presentation.ui.atoms.LocalOpenSettings
 import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
 import com.offlineplaya.shared.presentation.ui.organisms.MiniPlayer
 import com.offlineplaya.shared.presentation.ui.organisms.MiniPlayerReservedSpace
 import com.offlineplaya.shared.presentation.ui.pages.DesignSystemGalleryPage
 import com.offlineplaya.shared.presentation.ui.pages.EqualizerPage
-import com.offlineplaya.shared.presentation.ui.pages.userLabel
+import com.offlineplaya.shared.presentation.ui.organisms.userLabel
 import com.offlineplaya.shared.presentation.ui.pages.HomePage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryAlbumDetailPage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryArtistDetailPage
@@ -92,6 +95,7 @@ fun App(
     onEmbedFolderClick: () -> Unit,
     dynamicColorSupported: Boolean,
 ) {
+
     OfflinePlayaTheme(preferences = themePreferences) {
         val stack by navigator.stack.collectAsState()
         val current = stack.last()
@@ -111,8 +115,10 @@ fun App(
                             "Burned covers into ${event.embedded} files (${event.failed} failed)"
                         else
                             "Burned covers into ${event.embedded} files"
+
                     is com.offlineplaya.shared.presentation.artwork.EmbedArtCoordinator.Event.NoTracks ->
                         "No tracks in that folder are part of your library yet."
+
                     is com.offlineplaya.shared.presentation.artwork.EmbedArtCoordinator.Event.Error ->
                         "Couldn't burn covers: ${event.message}"
                 }
@@ -139,61 +145,79 @@ fun App(
         // extends behind the navigation bar while its content sits above it.
         val onNowPlaying = current == AppDestination.NowPlaying
         val showMini = playback.currentTrack != null && !onNowPlaying
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            snackbarHost = { SnackbarHost(snackbarHostState) },
-            bottomBar = {
-                // Always reserve the mini-player footprint on non-NowPlaying
-                // screens so the page above doesn't reflow when playback
-                // starts or stops. The reserved space is just empty when no
-                // track is queued — MiniPlayer slots into the same height.
-                when {
-                    showMini -> MiniPlayer(
-                        state = playback,
-                        onExpand = { navigator.push(AppDestination.NowPlaying) },
-                        onPlayPause = {
-                            if (playback.isPlaying) musicPlayer.pause() else musicPlayer.play()
-                        },
-                        onPrevious = { musicPlayer.skipToPrevious() },
-                        onNext = { musicPlayer.skipToNext() },
-                    )
-                    !onNowPlaying -> MiniPlayerReservedSpace()
+        // Measure the window once at the root and classify orientation purely
+        // from its dimensions — a KMP-friendly substitute for Android's
+        // LocalConfiguration. Provided via LocalOrientation so any page can
+        // branch portrait vs landscape without platform APIs.
+        ProvideOrientation {
+            Scaffold(
+                modifier = Modifier.fillMaxSize(),
+                snackbarHost = { SnackbarHost(snackbarHostState) },
+                bottomBar = {
+                    // Always reserve the mini-player footprint on non-NowPlaying
+                    // screens so the page above doesn't reflow when playback
+                    // starts or stops. The reserved space is just empty when no
+                    // track is queued — MiniPlayer slots into the same height.
+                    when {
+                        showMini -> MiniPlayer(
+                            state = playback,
+                            onExpand = { navigator.push(AppDestination.NowPlaying) },
+                            onPlayPause = {
+                                if (playback.isPlaying) musicPlayer.pause() else musicPlayer.play()
+                            },
+                            onPrevious = { musicPlayer.skipToPrevious() },
+                            onNext = { musicPlayer.skipToNext() },
+                        )
+
+                        !onNowPlaying -> MiniPlayerReservedSpace()
+                    }
+                },
+            ) { outerPadding ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(outerPadding)
+                        .consumeWindowInsets(outerPadding),
+                ) {
+                    AppWatermark()
+                    // Settings reachable from every screen: AppTopBar renders a
+                    // gear whenever this is non-null. Suppressed on the Settings
+                    // screen itself so we don't push a duplicate onto the stack.
+                    val openSettingsGlobally: (() -> Unit)? =
+                        if (current == AppDestination.Settings) {
+                            null
+                        } else {
+                            { navigator.push(AppDestination.Settings) }
+                        }
+                    CompositionLocalProvider(LocalOpenSettings provides openSettingsGlobally) {
+                        DestinationContent(
+                            current = current,
+                            navigator = navigator,
+                            library = library,
+                            playlists = playlists,
+                            availablePlaylists = availablePlaylists,
+                            syncCoordinator = syncCoordinator,
+                            musicPlayer = musicPlayer,
+                            equalizerStateHolder = equalizerStateHolder,
+                            playback = playback,
+                            themePreferences = themePreferences,
+                            artworkPreferences = artworkPreferences,
+                            syncStatus = syncStatus,
+                            trackCount = trackCount,
+                            onPickFolder = onPickFolder,
+                            onColorModeChange = onColorModeChange,
+                            onDynamicColorChange = onDynamicColorChange,
+                            onDownloadRemoteArtChange = onDownloadRemoteArtChange,
+                            onEmbedFolderClick = onEmbedFolderClick,
+                            dynamicColorSupported = dynamicColorSupported,
+                            onTabSelected = onTabSelected,
+                            onPlayTracks = onPlayTracks,
+                            onPlayNext = onPlayNext,
+                            onAddToQueue = onAddToQueue,
+                            onAddToPlaylist = onAddToPlaylist,
+                        )
+                    }
                 }
-            },
-        ) { outerPadding ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(outerPadding)
-                    .consumeWindowInsets(outerPadding),
-            ) {
-                AppWatermark()
-                DestinationContent(
-                    current = current,
-                    navigator = navigator,
-                    library = library,
-                    playlists = playlists,
-                    availablePlaylists = availablePlaylists,
-                    syncCoordinator = syncCoordinator,
-                    musicPlayer = musicPlayer,
-                    equalizerStateHolder = equalizerStateHolder,
-                    playback = playback,
-                    themePreferences = themePreferences,
-                    artworkPreferences = artworkPreferences,
-                    syncStatus = syncStatus,
-                    trackCount = trackCount,
-                    onPickFolder = onPickFolder,
-                    onColorModeChange = onColorModeChange,
-                    onDynamicColorChange = onDynamicColorChange,
-                    onDownloadRemoteArtChange = onDownloadRemoteArtChange,
-                    onEmbedFolderClick = onEmbedFolderClick,
-                    dynamicColorSupported = dynamicColorSupported,
-                    onTabSelected = onTabSelected,
-                    onPlayTracks = onPlayTracks,
-                    onPlayNext = onPlayNext,
-                    onAddToQueue = onAddToQueue,
-                    onAddToPlaylist = onAddToPlaylist,
-                )
             }
         }
     }
@@ -231,7 +255,7 @@ private fun DestinationContent(
         targetState = current,
         transitionSpec = {
             fadeIn(animationSpec = tween(durationMillis = 180)) togetherWith
-                fadeOut(animationSpec = tween(durationMillis = 180))
+                    fadeOut(animationSpec = tween(durationMillis = 180))
         },
         label = "destination",
     ) { dest ->
@@ -509,8 +533,11 @@ private fun DestinationContent(
                 EqualizerPage(
                     preferences = prefs,
                     activePreset = activePreset,
-                    // Show the resolved canonical genre under "Auto" so the
-                    // user can see why a given preset was picked.
+                    // Surface what Auto inferred about the playing track: the
+                    // title, the raw genre tag it read, and the canonical
+                    // bucket that drove the preset — so the magic is visible.
+                    nowPlayingTitle = playback.currentTrack?.title,
+                    rawGenreTag = playback.currentTrack?.genre,
                     autoGenreLabel = playback.currentTrack
                         ?.canonicalGenre
                         ?.userLabel(),

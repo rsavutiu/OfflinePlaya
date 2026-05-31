@@ -1,5 +1,6 @@
 package com.offlineplaya.shared.presentation.ui.pages
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -12,11 +13,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.CreatePlaylistDialog
 import com.offlineplaya.shared.presentation.ui.organisms.PlaylistList
 import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 @Composable
@@ -30,7 +33,7 @@ fun PlaylistsPage(
     var showCreateDialog by remember { mutableStateOf(false) }
     Scaffold(
         modifier = modifier,
-        contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
+        contentWindowInsets = WindowInsets(0),
         topBar = { AppTopBar(title = "Playlists", onBack = onBack) },
         floatingActionButton = {
             FloatingActionButton(onClick = { showCreateDialog = true }) {
@@ -38,11 +41,13 @@ fun PlaylistsPage(
             }
         },
     ) { padding ->
-        PlaylistList(
-            playlists = playlists,
-            onPlaylistClick = onPlaylistClick,
-            contentPadding = padding,
-        )
+        ResponsiveContent {
+            PlaylistList(
+                playlists = playlists,
+                onPlaylistClick = onPlaylistClick,
+                contentPadding = padding,
+            )
+        }
     }
 
     if (showCreateDialog) {
@@ -53,7 +58,7 @@ fun PlaylistsPage(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun PlaylistsPagePopulatedPreview() {
     PreviewTheme {
@@ -67,7 +72,31 @@ private fun PlaylistsPagePopulatedPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
+@Composable
+private fun PlaylistsPageFullListPreview() {
+    PreviewTheme {
+        PlaylistsPage(
+            playlists = listOf(
+                Playlist(1, "Morning Run", 0, 0),
+                Playlist(2, "Focus", 0, 0),
+                Playlist(3, "Late Night Drive", 0, 0),
+                Playlist(4, "Workout Bangers", 0, 0),
+                Playlist(5, "Chill Acoustic", 0, 0),
+                Playlist(6, "90s Throwbacks", 0, 0),
+                Playlist(7, "Deep House", 0, 0),
+                Playlist(8, "Rainy Day Jazz", 0, 0),
+                Playlist(9, "Road Trip", 0, 0),
+                Playlist(10, "Sunday Coffee", 0, 0),
+                Playlist(11, "Party Starters", 0, 0),
+                Playlist(12, "Sleep & Ambient", 0, 0),
+            ),
+            onPlaylistClick = {}, onCreate = {}, onBack = {},
+        )
+    }
+}
+
+@PreviewScreenSizes
 @Composable
 private fun PlaylistsPageEmptyPreview() {
     PreviewTheme(darkTheme = true) {

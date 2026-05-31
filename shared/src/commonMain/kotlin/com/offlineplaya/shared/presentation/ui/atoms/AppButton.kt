@@ -5,6 +5,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
 
@@ -28,7 +29,7 @@ fun AppButton(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun AppButtonEnabledPreview() {
     OfflinePlayaTheme {
@@ -38,7 +39,7 @@ private fun AppButtonEnabledPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun AppButtonDisabledPreview() {
     OfflinePlayaTheme {

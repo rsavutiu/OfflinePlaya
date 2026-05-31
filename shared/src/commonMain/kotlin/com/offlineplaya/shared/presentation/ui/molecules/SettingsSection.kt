@@ -2,13 +2,17 @@ package com.offlineplaya.shared.presentation.ui.molecules
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
+import com.offlineplaya.shared.presentation.ui.LocalOrientation
+import com.offlineplaya.shared.presentation.ui.Orientation
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
@@ -22,18 +26,25 @@ fun SettingsSection(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    Column(modifier = modifier.padding(top = 16.dp)) {
+    val localOrientation = LocalOrientation.current
+    val body = @Composable {
         Text(
             text = title.uppercase(),
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-            style = MaterialTheme.typography.labelMedium,
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 2.dp),
+            style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.primary,
         )
         content()
     }
+
+    if (localOrientation == Orientation.PORTRAIT) {
+        Column(modifier = modifier) { body() }
+    } else {
+        Row(modifier = modifier) { body() }
+    }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun SettingsSectionPreview() {
     PreviewTheme {

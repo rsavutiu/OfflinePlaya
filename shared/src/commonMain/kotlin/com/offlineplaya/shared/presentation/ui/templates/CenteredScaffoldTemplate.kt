@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 
@@ -25,7 +26,9 @@ fun CenteredScaffoldTemplate(
         contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
     ) { padding ->
         Box(
-            modifier = Modifier.fillMaxSize().padding(padding),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding),
             contentAlignment = Alignment.Center,
         ) {
             content()
@@ -33,7 +36,7 @@ fun CenteredScaffoldTemplate(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun CenteredScaffoldTemplatePreview() {
     OfflinePlayaTheme {

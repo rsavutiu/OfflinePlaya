@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OfflinePlaya</string>
+    <string name="home_title_your_music_offline">Tu música, offline</string>
+    <string name="home_label_library">Biblioteca</string>
+    <string name="home_button_browse">EXPLORAR</string>
+    <string name="home_title_all_tracks">Todos los tracks</string>
+    <string name="home_label_albums">Álbumes</string>
+    <string name="home_label_browse">Explorar</string>
+    <string name="home_label_artists">Artistas</string>
+    <string name="home_label_playlists">Listas de reproducción</string>
+    <string name="home_label_collections">Colecciones</string>
+    <string name="home_label_add_folders">Añadir carpetas</string>
+    <string name="home_label_import_more_tracks">Importar más tracks</string>
+    <string name="home_title_start_your_music_journey">Comienza tu viaje musical</string>
+    <string name="home_label_select_folder">Selecciona una carpeta para construir tu biblioteca
+        offline.
+    </string>
+    <string name="home_status_picking_music_folder">Seleccionando carpeta de música</string>
+    <string name="home_status_scanning">Escaneando…</string>
+    <string name="home_label_pick_music_folder">Selecciona carpeta de música</string>
+    <string name="home_label_tracks">Tracks</string>
+    <string name="home_label_folders">Carpetas</string>
+    <string name="home_label_total">Total</string>
+    <string name="now_playing_title">Reproduciendo</string>
+    <string name="now_playing_up_next">Siguiente</string>
+    <string name="now_playing_back">Atrás</string>
+    <string name="now_playing_search">Buscar</string>
+    <string name="now_playing_settings">Ajustes</string>
+    <string name="track_details_play_next">Reproducir siguiente</string>
+    <string name="track_details_queue">Cola</string>
+    <string name="track_details_add_to_playlist">Añadir a lista de reproducción</string>
+    <string name="track_details_favourite">Favorito</string>
+    <string name="track_details_hide_file_info">Ocultar información del archivo</string>
+    <string name="track_details_file_info">Información del archivo</string>
+    <string name="track_details_duration">Duración</string>
+    <string name="track_details_year">Año</string>
+    <string name="track_details_genre">Género</string>
+    <string name="track_details_codec">Codec</string>
+    <string name="track_details_bitrate">Tasa de bits</string>
+    <string name="track_details_path">Ruta</string>
+    <string name="track_details_status">Estado</string>
+    <string name="track_details_playing_in">Reproduciendo en…</string>
+    <string name="track_details_play_now">▶ Reproducir ahora</string>
+    <string name="track_details_kbps">kbps</string>
+    <string name="library_album_detail_track">canción</string>
+    <string name="library_album_detail_tracks">canciones</string>
+    <string name="library_album_detail_play">Reproducir</string>
+    <string name="library_album_detail_shuffle">Aleatorio</string>
+    <string name="track_row_playing_indicator">▶</string>
+    <string name="sync_status_idle">No se han añadido carpetas aún. Selecciona una para comenzar.
+    </string>
+    <string name="sync_status_scanning">Escaneando…</string>
+    <string name="sync_status_completed">Escaneado %d tracks en %d carpetas</string>
+    <string name="sync_status_completed_with_failed">%s (%d fallidos)</string>
+    <string name="sync_status_failed">Escaneo fallido: %s</string>
+</resources>

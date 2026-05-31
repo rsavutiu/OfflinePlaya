@@ -1,9 +1,12 @@
 package com.offlineplaya.android.auto
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.LibraryResult
 import androidx.media3.session.MediaLibraryService.LibraryParams
 import androidx.media3.session.MediaLibraryService.MediaLibrarySession
@@ -14,6 +17,7 @@ import com.google.common.util.concurrent.SettableFuture
 import com.offlineplaya.shared.data.image.TrackArtCache
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.auto.BrowseEntry
+import com.offlineplaya.shared.presentation.auto.BrowseStyle
 import com.offlineplaya.shared.presentation.auto.BrowseTreeBuilder
 import com.offlineplaya.shared.presentation.auto.MediaIdRouter
 import com.offlineplaya.shared.presentation.auto.MediaIdRouter.ParentContext
@@ -103,24 +107,35 @@ class AutoLibraryCallback(
         val parsed = MediaIdRouter.parse(parentId)
         logger.d(TAG, "onGetChildren parentId=$parentId parsed=$parsed")
 
+        val controllerPackage = browser.packageName
+
         // Top-level synchronous nodes — answered without coroutine bridging.
         when {
             parentId == MediaIdRouter.ROOT -> {
-                return immediate(treeBuilder.rootChildren().toMediaItems())
+                return immediate(treeBuilder.rootChildren().toMediaItems(controllerPackage))
             }
             parentId == MediaIdRouter.NODE_RECENTS -> {
                 val recents = library.allAlbums.value.take(BrowseTreeBuilder.RECENT_ALBUMS_LIMIT)
-                return immediate(treeBuilder.albumsAsBrowsable(recents).toMediaItems())
+                return immediate(
+                    treeBuilder.albumsAsBrowsable(recents).toMediaItems(controllerPackage)
+                )
             }
             parentId == MediaIdRouter.NODE_ALBUMS -> {
-                return immediate(treeBuilder.albumsAsBrowsable(library.allAlbums.value).toMediaItems())
+                return immediate(
+                    treeBuilder.albumsAsBrowsable(library.allAlbums.value)
+                        .toMediaItems(controllerPackage)
+                )
             }
             parentId == MediaIdRouter.NODE_ARTISTS -> {
-                return immediate(treeBuilder.artistsAsBrowsable(library.allArtists.value).toMediaItems())
+                return immediate(
+                    treeBuilder.artistsAsBrowsable(library.allArtists.value)
+                        .toMediaItems(controllerPackage)
+                )
             }
             parentId == MediaIdRouter.NODE_PLAYLISTS -> {
                 return immediate(
-                    treeBuilder.playlistsAsBrowsable(playlists.allPlaylists.value).toMediaItems(),
+                    treeBuilder.playlistsAsBrowsable(playlists.allPlaylists.value)
+                        .toMediaItems(controllerPackage),
                 )
             }
         }
@@ -150,7 +165,7 @@ class AutoLibraryCallback(
                 }
                 future.set(
                     LibraryResult.ofItemList(
-                        ImmutableList.copyOf(children.toMediaItems()),
+                        ImmutableList.copyOf(children.toMediaItems(controllerPackage)),
                         params,
                     ),
                 )
@@ -225,7 +240,7 @@ class AutoLibraryCallback(
         val future = SettableFuture.create<MutableList<MediaItem>>()
         scope.launch {
             try {
-                future.set(resolveAutoStubs(mediaItems).toMutableList())
+                future.set(resolveAutoStubs(mediaItems, controller.packageName).toMutableList())
             } catch (t: Throwable) {
                 logger.e(TAG, "onAddMediaItems resolve failed", t)
                 future.set(mutableListOf())
@@ -243,6 +258,7 @@ class AutoLibraryCallback(
      * — same restoration as in [onAddMediaItems] — and the player honours
      * the original [startIndex] / [startPositionMs].
      */
+    @UnstableApi
     override fun onSetMediaItems(
         mediaSession: MediaSession,
         controller: MediaSession.ControllerInfo,
@@ -265,7 +281,8 @@ class AutoLibraryCallback(
             try {
                 val parsed = MediaIdRouter.parse(first.mediaId)
                 val (tracks, idx) = buildPlaybackQueue(parsed, first.mediaId)
-                val items = ImmutableList.copyOf(tracks.map { it.toAutoMediaItem() })
+                val items =
+                    ImmutableList.copyOf(tracks.map { it.toAutoMediaItem(controller.packageName) })
                 future.set(MediaSession.MediaItemsWithStartPosition(items, idx, 0L))
             } catch (t: Throwable) {
                 logger.e(TAG, "onSetMediaItems resolve failed", t)
@@ -281,14 +298,17 @@ class AutoLibraryCallback(
      * Expand Auto stub MediaItems (router-encoded mediaIds) into concrete
      * playable items by reading library state via the suspend helpers.
      */
-    private suspend fun resolveAutoStubs(stubs: List<MediaItem>): List<MediaItem> =
+    private suspend fun resolveAutoStubs(
+        stubs: List<MediaItem>,
+        controllerPackage: String,
+    ): List<MediaItem> =
         stubs.flatMap { stub ->
             val parsed = MediaIdRouter.parse(stub.mediaId)
             if (parsed !is MediaIdRouter.ParsedId.Entity) {
                 emptyList()
             } else {
                 val (tracks, _) = buildPlaybackQueue(parsed, stub.mediaId)
-                tracks.map { it.toAutoMediaItem() }
+                tracks.map { it.toAutoMediaItem(controllerPackage) }
             }
         }
 
@@ -343,13 +363,16 @@ class AutoLibraryCallback(
             LibraryResult.ofItemList(ImmutableList.copyOf(items), /* params = */ null),
         )
 
-    private fun List<BrowseEntry>.toMediaItems(): List<MediaItem> = map { it.toMediaItem() }
+    private fun List<BrowseEntry>.toMediaItems(controllerPackage: String): List<MediaItem> =
+        map { it.toMediaItem(controllerPackage) }
 
-    private fun BrowseEntry.toMediaItem(): MediaItem {
+    private fun BrowseEntry.toMediaItem(controllerPackage: String): MediaItem {
+        val artUri = artworkUri?.let { Uri.parse(it) }?.also { grantArtRead(controllerPackage, it) }
         val metadata = MediaMetadata.Builder()
             .setTitle(title)
             .apply { subtitle?.let { setSubtitle(it) } }
-            .apply { artworkUri?.let { setArtworkUri(Uri.parse(it)) } }
+            .apply { artUri?.let { setArtworkUri(it) } }
+            .apply { contentStyleExtras(childrenStyle)?.let { setExtras(it) } }
             .setIsBrowsable(isBrowsable)
             .setIsPlayable(isPlayable)
             .setMediaType(
@@ -369,7 +392,7 @@ class AutoLibraryCallback(
      * for in-app playback; we duplicate the minimum here to keep this file
      * self-contained.
      */
-    private fun Track.toAutoMediaItem(): MediaItem = MediaItem.Builder()
+    private fun Track.toAutoMediaItem(controllerPackage: String): MediaItem = MediaItem.Builder()
         .setMediaId(MediaIdRouter.trackId(id))
         .setUri(documentUri)
         .setMediaMetadata(
@@ -379,6 +402,7 @@ class AutoLibraryCallback(
                 .setAlbumTitle(albumName)
                 .apply {
                     TrackArtCache.uriForTrack(context, this@toAutoMediaItem)
+                        ?.also { grantArtRead(controllerPackage, it) }
                         ?.let { setArtworkUri(it) }
                 }
                 .setIsBrowsable(false)
@@ -388,7 +412,54 @@ class AutoLibraryCallback(
         )
         .build()
 
+    /**
+     * Grant [packageName] (the connected Auto host / controller) read access
+     * to [uri]. Our art FileProvider is `exported=false`, so cross-process
+     * surfaces can't read the `content://...artprovider/...` URIs unless we
+     * explicitly stamp a per-URI grant — media3 does NOT auto-grant
+     * FileProvider URIs handed out in browse-tree / queue metadata. Without
+     * this, every artwork load on the head unit fails with a permission
+     * denial and rows fall back to the generic music icon.
+     */
+    private fun grantArtRead(packageName: String, uri: Uri) {
+        runCatching {
+            context.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }.onFailure { logger.e(TAG, "grantUriPermission failed for $packageName / $uri", it) }
+    }
+
+    /**
+     * Build the Android Auto content-style extras for a browsable node from
+     * its [BrowseStyle] hint. Auto reads these off the parent item and lays
+     * out the children as a grid of tiles or a list of rows accordingly.
+     * We set both the browsable and playable hints to the same value so the
+     * node renders consistently whether its children drill in or play.
+     * Returns null when there's no hint, leaving the head unit's default.
+     *
+     * Uses the raw `android.media.browse.CONTENT_STYLE_*` keys/values rather
+     * than depending on the legacy `androidx.media` MediaConstants — media3
+     * doesn't pull that artifact in and the contract is a stable framework
+     * string.
+     */
+    private fun contentStyleExtras(style: BrowseStyle?): Bundle? {
+        val value = when (style) {
+            BrowseStyle.GRID -> CONTENT_STYLE_GRID_ITEM
+            BrowseStyle.LIST -> CONTENT_STYLE_LIST_ITEM
+            null -> return null
+        }
+        return Bundle().apply {
+            putInt(CONTENT_STYLE_BROWSABLE_HINT, value)
+            putInt(CONTENT_STYLE_PLAYABLE_HINT, value)
+        }
+    }
+
     private companion object {
         const val TAG = "AutoLibraryCallback"
+
+        // Android Auto / Automotive content-style contract. Set on a browsable
+        // item's extras to control how its children are presented.
+        const val CONTENT_STYLE_BROWSABLE_HINT = "android.media.browse.CONTENT_STYLE_BROWSABLE_HINT"
+        const val CONTENT_STYLE_PLAYABLE_HINT = "android.media.browse.CONTENT_STYLE_PLAYABLE_HINT"
+        const val CONTENT_STYLE_LIST_ITEM = 1
+        const val CONTENT_STYLE_GRID_ITEM = 2
     }
 }

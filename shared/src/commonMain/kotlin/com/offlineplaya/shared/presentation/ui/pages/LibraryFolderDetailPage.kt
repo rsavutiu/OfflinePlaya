@@ -1,5 +1,6 @@
 package com.offlineplaya.shared.presentation.ui.pages
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -8,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.offlineplaya.shared.domain.model.Folder
 import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.Track
@@ -15,6 +17,7 @@ import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.organisms.FolderDetailContent
 import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
 import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.coroutines.flow.Flow
 
@@ -37,17 +40,18 @@ fun LibraryFolderDetailPage(
 
     Scaffold(
         modifier = modifier,
-        contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
+        contentWindowInsets = WindowInsets(0),
         topBar = { AppTopBar(title = folderName, onBack = onBack) },
     ) { padding ->
-        FolderDetailContent(
-            subfolders = subfolders,
-            tracks = tracks,
-            onFolderClick = onFolderClick,
-            onTrackClick = { selectedTrack = it },
-            modifier = Modifier.padding(padding),
-            previewTracksProvider = previewTracksProvider,
-        )
+        ResponsiveContent(modifier = Modifier.padding(padding)) {
+            FolderDetailContent(
+                subfolders = subfolders,
+                tracks = tracks,
+                onFolderClick = onFolderClick,
+                onTrackClick = { selectedTrack = it },
+                previewTracksProvider = previewTracksProvider,
+            )
+        }
     }
 
     selectedTrack?.let { track ->
@@ -67,7 +71,7 @@ fun LibraryFolderDetailPage(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun LibraryFolderDetailPagePreview() {
     PreviewTheme {

@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.ui.atoms.AppCaption
 import com.offlineplaya.shared.presentation.ui.atoms.AppHeadline
@@ -26,7 +27,9 @@ fun EmptyState(
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier.fillMaxSize().padding(24.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(24.dp),
         contentAlignment = Alignment.Center,
     ) {
         Column(
@@ -39,7 +42,7 @@ fun EmptyState(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun EmptyStatePreview() {
     PreviewTheme {

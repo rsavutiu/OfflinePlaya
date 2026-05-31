@@ -1,6 +1,7 @@
 package com.offlineplaya.shared.domain.usecase
 
 import com.offlineplaya.shared.domain.image.AlbumArtWriter
+import com.offlineplaya.shared.domain.image.FolderArtSource
 import com.offlineplaya.shared.domain.image.RemoteArtSource
 import com.offlineplaya.shared.domain.repository.TrackRepository
 import com.offlineplaya.shared.util.AppLogger
@@ -29,6 +30,7 @@ private const val UNKNOWN_ALBUM = "Unknown Album"
 class EmbedMissingArtUseCase(
     private val tracks: TrackRepository,
     private val remoteSource: RemoteArtSource,
+    private val folderSource: FolderArtSource,
     private val writer: AlbumArtWriter,
     private val logger: AppLogger,
 ) {
@@ -39,14 +41,22 @@ class EmbedMissingArtUseCase(
     suspend operator fun invoke(
         onProgress: (EmbedReport.Running) -> Unit,
         shouldCancel: () -> Boolean = { false },
+        treeUriFilter: String? = null,
     ): EmbedReport {
-        logger.i(TAG, "Starting EmbedMissingArtUseCase")
+        logger.i(
+            TAG, "Starting EmbedMissingArtUseCase" +
+                (treeUriFilter?.let { " scoped to $it" } ?: " (whole library)"))
         val all = tracks.observeAll().first()
-        val total = all.size
-        logger.d(TAG, "Found $total tracks in database")
+        val scoped = if (treeUriFilter != null) {
+            all.filter { it.treeUri == treeUriFilter }
+        } else {
+            all
+        }
+        val total = scoped.size
+        logger.d(TAG, "Found $total tracks in scope (of ${all.size} total)")
 
         // Group by (artist, album) so each album hits MusicBrainz once.
-        val grouped = all
+        val grouped = scoped
             .filterNot { it.artistName.equals(UNKNOWN_ARTIST, ignoreCase = true) }
             .filterNot { it.albumName.equals(UNKNOWN_ALBUM, ignoreCase = true) }
             .groupBy { (it.albumArtistName ?: it.artistName) to it.albumName }
@@ -85,11 +95,26 @@ class EmbedMissingArtUseCase(
             }
 
             logger.i(TAG, "Fetching art for album '$album' by '$artist' (${needing.size} tracks need it)")
-            val artBytes = try {
+            // Sidecar (cover.jpg / folder.jpg) wins over remote — it's local,
+            // free, and usually higher quality than what MusicBrainz/CAA has.
+            // One track per group is enough; siblings share the folder.
+            val sidecarBytes = try {
+                folderSource.findInFolder(needing.first())
+            } catch (e: Exception) {
+                logger.e(TAG, "Error reading sidecar art for '$album' by '$artist'", e)
+                null
+            }
+            val artBytes = sidecarBytes ?: try {
                 remoteSource.resolve(artist, album)
             } catch (e: Exception) {
                 logger.e(TAG, "Error fetching art for '$album' by '$artist'", e)
                 null
+            }
+            if (sidecarBytes != null) {
+                logger.d(
+                    TAG,
+                    "Using sidecar art for '$album' by '$artist' (${sidecarBytes.size} bytes)"
+                )
             }
 
             if (artBytes == null) {

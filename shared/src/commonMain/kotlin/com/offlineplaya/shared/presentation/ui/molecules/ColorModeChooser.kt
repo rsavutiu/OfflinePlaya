@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.ColorMode
 import com.offlineplaya.shared.presentation.ui.preview.Preview
@@ -37,7 +38,7 @@ fun ColorModeChooser(
                         onClick = { onSelectionChanged(mode) },
                         role = Role.RadioButton,
                     )
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                    .padding(horizontal = 16.dp, vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 RadioButton(selected = mode == selected, onClick = null)
@@ -58,7 +59,7 @@ private val ColorMode.label: String
         ColorMode.DARK -> "Dark"
     }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun ColorModeChooserSystemPreview() {
     PreviewTheme {
@@ -66,7 +67,7 @@ private fun ColorModeChooserSystemPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun ColorModeChooserDarkPreview() {
     PreviewTheme(darkTheme = true) {

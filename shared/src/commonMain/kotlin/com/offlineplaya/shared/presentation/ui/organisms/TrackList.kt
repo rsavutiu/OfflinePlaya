@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
@@ -40,7 +41,7 @@ fun TrackList(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun TrackListPopulatedPreview() {
     PreviewTheme {

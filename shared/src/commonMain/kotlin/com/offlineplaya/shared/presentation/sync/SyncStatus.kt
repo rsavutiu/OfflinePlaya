@@ -10,5 +10,6 @@ sealed interface SyncStatus {
     data object Idle : SyncStatus
     data class Scanning(val treeUri: String) : SyncStatus
     data class Completed(val report: SyncReport) : SyncStatus
+    data class AlreadyAdded(val treeUri: String, val displayName: String) : SyncStatus
     data class Failed(val message: String) : SyncStatus
 }

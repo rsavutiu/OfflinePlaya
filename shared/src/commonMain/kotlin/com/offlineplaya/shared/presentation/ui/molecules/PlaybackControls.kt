@@ -15,6 +15,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
@@ -101,7 +102,7 @@ fun PlaybackControlsLarge(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun PlaybackControlsPlayingPreview() {
     PreviewTheme {
@@ -109,7 +110,7 @@ private fun PlaybackControlsPlayingPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun PlaybackControlsPausedPreview() {
     PreviewTheme(darkTheme = true) {
@@ -117,7 +118,7 @@ private fun PlaybackControlsPausedPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun PlaybackControlsLargePreview() {
     PreviewTheme {

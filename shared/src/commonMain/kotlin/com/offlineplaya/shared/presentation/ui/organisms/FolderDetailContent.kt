@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Folder
 import com.offlineplaya.shared.domain.model.ScanStatus
@@ -82,7 +83,7 @@ private fun SectionHeader(text: String) {
     )
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun FolderDetailContentMixedPreview() {
     PreviewTheme {

@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.presentation.ui.preview.Preview
@@ -37,7 +38,9 @@ fun PlaylistRow(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         PlaylistThumb()
-        Column(modifier = Modifier.padding(start = 16.dp).weight(1f)) {
+        Column(modifier = Modifier
+            .padding(start = 16.dp)
+            .weight(1f)) {
             Text(
                 text = playlist.name,
                 style = MaterialTheme.typography.titleMedium,
@@ -65,7 +68,7 @@ private fun PlaylistThumb() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun PlaylistRowPreview() {
     PreviewTheme {

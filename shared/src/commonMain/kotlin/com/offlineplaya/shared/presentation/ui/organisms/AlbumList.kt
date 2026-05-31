@@ -1,12 +1,15 @@
 package com.offlineplaya.shared.presentation.ui.organisms
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Album
 import com.offlineplaya.shared.domain.model.Track
@@ -32,9 +35,13 @@ fun AlbumList(
         )
         return
     }
-    LazyColumn(
+    // Adaptive columns: single column on a portrait phone, two-plus on wide
+    // screens so the album browse fills landscape width tidily.
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(minSize = COLUMN_MIN_WIDTH),
         modifier = modifier.fillMaxSize(),
         contentPadding = contentPadding,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(items = albums, key = { it.id }) { album ->
             AlbumRow(
@@ -47,7 +54,10 @@ fun AlbumList(
     }
 }
 
-@Preview
+/** Min cell width before the grid adds another column. Tuned so portrait phones stay single-column. */
+private val COLUMN_MIN_WIDTH = 360.dp
+
+@PreviewScreenSizes
 @Composable
 private fun AlbumListPopulatedPreview() {
     PreviewTheme {

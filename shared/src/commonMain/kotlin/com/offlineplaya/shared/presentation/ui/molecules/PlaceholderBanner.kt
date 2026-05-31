@@ -7,6 +7,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.ui.atoms.AppCaption
 import com.offlineplaya.shared.presentation.ui.atoms.AppHeadline
@@ -34,7 +35,7 @@ fun PlaceholderBanner(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun PlaceholderBannerPreview() {
     OfflinePlayaTheme {
@@ -47,7 +48,7 @@ private fun PlaceholderBannerPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun PlaceholderBannerDarkPreview() {
     PreviewTheme(darkTheme = true) {

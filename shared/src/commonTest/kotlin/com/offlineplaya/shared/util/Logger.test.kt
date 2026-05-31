@@ -1,10 +1,10 @@
 package com.offlineplaya.shared.util
 
-actual val isDebugMode: Boolean = true
-
-actual fun createPlatformLogger(isDebug: Boolean): AppLogger = TestLogger()
-
-private class TestLogger : AppLogger {
+/**
+ * Stdout-printing [AppLogger] for unit tests. Construct directly where a repo
+ * or use case wants a logger — no platform plumbing required.
+ */
+internal class TestLogger : AppLogger {
     override fun d(tag: String, message: String) {
         println("DEBUG: [$tag] $message")
     }

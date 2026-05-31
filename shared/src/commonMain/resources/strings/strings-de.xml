@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OfflinePlaya</string>
+    <string name="home_title_your_music_offline">Deine Musik offline</string>
+    <string name="home_label_library">Bibliothek</string>
+    <string name="home_button_browse">DURCHSUCHEN</string>
+    <string name="home_title_all_tracks">Alle Titel</string>
+    <string name="home_label_albums">Alben</string>
+    <string name="home_label_browse">Durchsuchen</string>
+    <string name="home_label_artists">Künstler</string>
+    <string name="home_label_playlists">Playlists</string>
+    <string name="home_label_collections">Sammlungen</string>
+    <string name="home_label_add_folders">Ordner hinzufügen</string>
+    <string name="home_label_import_more_tracks">Weitere Titel importieren</string>
+    <string name="home_title_start_your_music_journey">Deine Musikreise starten</string>
+    <string name="home_label_select_folder">Wähle einen Ordner, um deine Offline-Bibliothek zu
+        erstellen.
+    </string>
+    <string name="home_status_picking_music_folder">Musikordner auswählen</string>
+    <string name="home_status_scanning">Scanne…</string>
+    <string name="home_label_pick_music_folder">Musikordner auswählen</string>
+    <string name="home_label_tracks">Titel</string>
+    <string name="home_label_folders">Ordner</string>
+    <string name="home_label_total">Gesamt</string>
+    <string name="now_playing_title">Während der Wiedergabe</string>
+    <string name="now_playing_up_next">Als Nächstes</string>
+    <string name="now_playing_back">Zurück</string>
+    <string name="now_playing_search">Suche</string>
+    <string name="now_playing_settings">Einstellungen</string>
+    <string name="track_details_play_next">Als Nächstes abspielen</string>
+    <string name="track_details_queue">Warteschlange</string>
+    <string name="track_details_add_to_playlist">Zu Playlist hinzufügen</string>
+    <string name="track_details_favourite">Zu Favoriten</string>
+    <string name="track_details_hide_file_info">Dateiinfo verbergen</string>
+    <string name="track_details_file_info">Dateiinfo</string>
+    <string name="track_details_duration">Dauer</string>
+    <string name="track_details_year">Jahr</string>
+    <string name="track_details_genre">Genre</string>
+    <string name="track_details_codec">Codec</string>
+    <string name="track_details_bitrate">Bitrate</string>
+    <string name="track_details_path">Pfad</string>
+    <string name="track_details_status">Status</string>
+    <string name="track_details_playing_in">Wird abgespielt in…</string>
+    <string name="track_details_play_now">▶ Jetzt abspielen</string>
+    <string name="track_details_kbps">kbps</string>
+    <string name="library_album_detail_track">Titel</string>
+    <string name="library_album_detail_tracks">Titel</string>
+    <string name="library_album_detail_play">Abspielen</string>
+    <string name="library_album_detail_shuffle">Zufällig abspielen</string>
+    <string name="track_row_playing_indicator">▶</string>
+    <string name="sync_status_idle">Noch keine Ordner hinzugefügt. Wähle einen, um zu starten.
+    </string>
+    <string name="sync_status_scanning">Scanne…</string>
+    <string name="sync_status_completed">Gescannt %d Titel über %d Ordner</string>
+    <string name="sync_status_completed_with_failed">%s (%d fehlgeschlagen)</string>
+    <string name="sync_status_failed">Scan fehlgeschlagen: %s</string>
+</resources>

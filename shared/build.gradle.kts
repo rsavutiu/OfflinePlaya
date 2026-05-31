@@ -34,6 +34,8 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose)
 
+                implementation(libs.jetbrains.compose.material3.windowSizeClass)
+
                 implementation(libs.coil.compose)
 
                 implementation(libs.kotlinx.serialization.json)

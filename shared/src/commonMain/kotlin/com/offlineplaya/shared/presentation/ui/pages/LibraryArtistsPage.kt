@@ -2,6 +2,7 @@ package com.offlineplaya.shared.presentation.ui.pages
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.offlineplaya.shared.domain.model.Artist
 import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
 import com.offlineplaya.shared.presentation.ui.organisms.ArtistList
@@ -32,7 +33,7 @@ fun LibraryArtistsPage(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun LibraryArtistsPagePopulatedPreview() {
     PreviewTheme {
@@ -49,7 +50,7 @@ private fun LibraryArtistsPagePopulatedPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun LibraryArtistsPageEmptyPreview() {
     PreviewTheme(darkTheme = true) {

@@ -2,6 +2,7 @@ package com.offlineplaya.shared.data.repository
 
 import com.offlineplaya.shared.database.OfflinePlayaDatabase
 import com.offlineplaya.shared.testsupport.createInMemoryDatabase
+import com.offlineplaya.shared.util.TestLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -22,7 +23,7 @@ class SqlPlaylistRepositoryTest {
         return Fixture(
             db = db,
             playlists = SqlPlaylistRepository(db, Dispatchers.Unconfined),
-            tracks = SqlTrackRepository(db, Dispatchers.Unconfined),
+            tracks = SqlTrackRepository(db, TestLogger(), Dispatchers.Unconfined),
         )
     }
 

@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
@@ -70,7 +71,7 @@ private fun Placeholder(style: androidx.compose.ui.text.TextStyle) {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun AlbumArtThumbSmallPreview() {
     PreviewTheme {
@@ -78,7 +79,7 @@ private fun AlbumArtThumbSmallPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun AlbumArtThumbLargePreview() {
     PreviewTheme(darkTheme = true) {

@@ -5,6 +5,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+import com.offlineplaya.shared.presentation.ui.ProvideOrientation
 import com.offlineplaya.shared.domain.model.ColorMode
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import com.offlineplaya.shared.presentation.ui.preview.Preview
@@ -56,11 +58,14 @@ fun PreviewTheme(
             colorMode = if (darkTheme) ColorMode.DARK else ColorMode.LIGHT,
             useDynamicColor = false,
         ),
-        content = content,
-    )
+    ) {
+        // Measure the preview canvas so LocalOrientation reflects the actual
+        // preview shape instead of the bare PORTRAIT default.
+        ProvideOrientation(content = content)
+    }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun OfflinePlayaThemeLightPreview() {
     PreviewTheme(darkTheme = false) {
@@ -68,7 +73,7 @@ private fun OfflinePlayaThemeLightPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun OfflinePlayaThemeDarkPreview() {
     PreviewTheme(darkTheme = true) {

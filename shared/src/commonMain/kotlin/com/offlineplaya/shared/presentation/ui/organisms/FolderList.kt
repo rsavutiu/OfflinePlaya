@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Folder
 import com.offlineplaya.shared.domain.model.Track
@@ -55,7 +56,7 @@ fun FolderList(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun FolderListPopulatedPreview() {
     PreviewTheme {
@@ -71,7 +72,7 @@ private fun FolderListPopulatedPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun FolderListEmptyPreview() {
     PreviewTheme(darkTheme = true) {

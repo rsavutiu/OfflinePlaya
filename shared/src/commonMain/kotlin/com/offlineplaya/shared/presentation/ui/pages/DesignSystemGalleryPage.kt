@@ -22,10 +22,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.AppElevation
 import com.offlineplaya.shared.presentation.ui.theme.AppShapes
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
@@ -39,7 +41,7 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
  * "hard-code a one-off".
  *
  * Used by the Preview MCP for visual regression: each token block has its
- * own @Preview, so changes to the design system show up as obvious image
+ * own @PreviewScreenSizes, so changes to the design system show up as obvious image
  * diffs rather than getting lost across 30 page screenshots.
  */
 @Composable
@@ -51,18 +53,19 @@ fun DesignSystemGalleryPage(
         modifier = modifier,
         topBar = { AppTopBar(title = "Design system", onBack = onBack) },
     ) { inner ->
-        Column(
-            modifier = Modifier
-                .padding(inner)
-                .verticalScroll(rememberScrollState())
-                .padding(AppSpacing.lg),
-            verticalArrangement = Arrangement.spacedBy(AppSpacing.xl),
-        ) {
-            ColorsBlock()
-            TypographyBlock()
-            ShapesBlock()
-            SpacingBlock()
-            ElevationBlock()
+        ResponsiveContent(modifier = Modifier.padding(inner)) {
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(AppSpacing.lg),
+                verticalArrangement = Arrangement.spacedBy(AppSpacing.xl),
+            ) {
+                ColorsBlock()
+                TypographyBlock()
+                ShapesBlock()
+                SpacingBlock()
+                ElevationBlock()
+            }
         }
     }
 }
@@ -268,7 +271,7 @@ private fun SectionHeader(text: String) {
 
 // --- Previews — these are the visual-regression entry points ---
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun DesignSystemGalleryLightPreview() {
     PreviewTheme(darkTheme = false) {
@@ -278,7 +281,7 @@ private fun DesignSystemGalleryLightPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun DesignSystemGalleryDarkPreview() {
     PreviewTheme(darkTheme = true) {
@@ -288,7 +291,7 @@ private fun DesignSystemGalleryDarkPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun DesignSystemColorsPreview() {
     OfflinePlayaTheme {
@@ -296,7 +299,7 @@ private fun DesignSystemColorsPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun DesignSystemTypographyPreview() {
     OfflinePlayaTheme {
@@ -304,7 +307,7 @@ private fun DesignSystemTypographyPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun DesignSystemShapesPreview() {
     OfflinePlayaTheme {
@@ -312,7 +315,7 @@ private fun DesignSystemShapesPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun DesignSystemSpacingPreview() {
     OfflinePlayaTheme {
@@ -320,7 +323,7 @@ private fun DesignSystemSpacingPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun DesignSystemElevationPreview() {
     OfflinePlayaTheme {

@@ -62,7 +62,6 @@ private fun AndroidApp() {
     val playlists: PlaylistStateHolder = koinInject()
     val musicPlayer: MusicPlayer = koinInject()
     val equalizerStateHolder: com.offlineplaya.shared.presentation.eq.EqualizerStateHolder = koinInject()
-
     val themePreferences by themeStateHolder.preferences.collectAsState()
     val artworkPreferences by artworkStateHolder.preferences.collectAsState()
     val syncStatus by coordinator.status.collectAsState()

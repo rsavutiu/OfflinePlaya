@@ -1,12 +1,15 @@
 package com.offlineplaya.shared.presentation.ui.organisms
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Artist
 import com.offlineplaya.shared.presentation.ui.molecules.ArtistRow
@@ -30,9 +33,14 @@ fun ArtistList(
         )
         return
     }
-    LazyColumn(
+    // Adaptive columns: one column on a portrait phone (cells wider than the
+    // min), two-plus once the screen is wide enough (landscape / tablet / car),
+    // so browse lists fill the width instead of leaving empty side gutters.
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(minSize = COLUMN_MIN_WIDTH),
         modifier = modifier.fillMaxSize(),
         contentPadding = contentPadding,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(items = artists, key = { it.id }) { artist ->
             ArtistRow(
@@ -44,7 +52,10 @@ fun ArtistList(
     }
 }
 
-@Preview
+/** Min cell width before the grid adds another column. Tuned so portrait phones stay single-column. */
+private val COLUMN_MIN_WIDTH = 360.dp
+
+@PreviewScreenSizes
 @Composable
 private fun ArtistListPopulatedPreview() {
     PreviewTheme {
@@ -62,7 +73,7 @@ private fun ArtistListPopulatedPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun ArtistListEmptyPreview() {
     PreviewTheme {

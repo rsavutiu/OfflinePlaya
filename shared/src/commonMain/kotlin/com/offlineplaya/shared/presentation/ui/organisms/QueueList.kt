@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
@@ -149,7 +150,7 @@ private fun QueueRow(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun QueueListPopulatedPreview() {
     PreviewTheme {
@@ -168,7 +169,7 @@ private fun QueueListPopulatedPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun QueueListEmptyPreview() {
     PreviewTheme(darkTheme = true) {

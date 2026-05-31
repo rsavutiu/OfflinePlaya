@@ -3,11 +3,14 @@ package com.offlineplaya.shared.presentation.ui.molecules
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.offlineplaya.shared.domain.usecase.SyncReport
 import com.offlineplaya.shared.presentation.sync.SyncStatus
 import com.offlineplaya.shared.presentation.ui.atoms.AppCaption
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
+import org.jetbrains.compose.resources.stringResource
+import offlineplaya.shared.generated.resources.*
 
 /**
  * Single-line status caption mirroring the current [SyncStatus]. Renders the
@@ -23,20 +26,24 @@ fun SyncStatusLine(
     AppCaption(text = status.describe(), modifier = modifier)
 }
 
+@Composable
 private fun SyncStatus.describe(): String = when (this) {
     SyncStatus.Idle ->
-        "No folders added yet. Pick one to start."
+        stringResource(Res.string.sync_status_idle)
     is SyncStatus.Scanning ->
-        "Scanning…"
+        stringResource(Res.string.sync_status_scanning)
     is SyncStatus.Completed -> with(report) {
-        "Scanned $tracksScanned tracks across $foldersUpserted folders" +
+        stringResource(Res.string.sync_status_completed, tracksScanned, foldersUpserted) +
             if (tracksFailed > 0) " ($tracksFailed failed)" else ""
     }
+
+    is SyncStatus.AlreadyAdded ->
+        stringResource(Res.string.sync_status_already_added, displayName)
     is SyncStatus.Failed ->
-        "Scan failed: $message"
+        stringResource(Res.string.sync_status_failed, message)
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun SyncStatusLineIdlePreview() {
     OfflinePlayaTheme {
@@ -44,7 +51,7 @@ private fun SyncStatusLineIdlePreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun SyncStatusLineScanningPreview() {
     OfflinePlayaTheme {
@@ -52,7 +59,7 @@ private fun SyncStatusLineScanningPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun SyncStatusLineCompletedPreview() {
     OfflinePlayaTheme {
@@ -66,7 +73,17 @@ private fun SyncStatusLineCompletedPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
+@Composable
+private fun SyncStatusLineAlreadyAddedPreview() {
+    OfflinePlayaTheme {
+        Surface {
+            SyncStatusLine(SyncStatus.AlreadyAdded("content://tree/root", "Music"))
+        }
+    }
+}
+
+@PreviewScreenSizes
 @Composable
 private fun SyncStatusLineFailedPreview() {
     OfflinePlayaTheme {

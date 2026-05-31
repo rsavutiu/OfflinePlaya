@@ -1,17 +1,11 @@
 package com.offlineplaya.shared.presentation.ui.pages
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,15 +14,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
+import com.offlineplaya.shared.presentation.ui.molecules.SearchField
 import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
 import com.offlineplaya.shared.presentation.ui.organisms.TrackList
 import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 /**
@@ -53,36 +50,21 @@ fun SearchPage(
 
     Scaffold(
         modifier = modifier,
-        contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
+        contentWindowInsets = WindowInsets(0),
         topBar = { AppTopBar(title = "Search", onBack = onBack) },
     ) { padding ->
-        Column(
+        ResponsiveContent(
             modifier = Modifier
-                .fillMaxSize()
                 .padding(padding)
                 .imePadding(),
         ) {
-            OutlinedTextField(
-                value = query,
-                onValueChange = onQueryChange,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                label = { Text("Title, artist, or album") },
-                leadingIcon = {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = null)
-                },
-                trailingIcon = {
-                    if (query.isNotEmpty()) {
-                        IconButton(onClick = { onQueryChange("") }) {
-                            Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = "Clear",
-                            )
-                        }
-                    }
-                },
-                singleLine = true,
+            Column(
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                SearchField(
+                    query = query,
+                    onQueryChange = onQueryChange,
+                    label = "Title, artist, or album",
             )
 
             when {
@@ -110,6 +92,7 @@ fun SearchPage(
                 }
             }
         }
+        }
     }
 
     selectedTrack?.let { track ->
@@ -129,7 +112,7 @@ fun SearchPage(
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun SearchPageInitialPreview() {
     PreviewTheme {
@@ -145,7 +128,7 @@ private fun SearchPageInitialPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun SearchPageResultsPreview() {
     PreviewTheme {
@@ -164,7 +147,7 @@ private fun SearchPageResultsPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun SearchPageNoMatchesPreview() {
     PreviewTheme(darkTheme = true) {

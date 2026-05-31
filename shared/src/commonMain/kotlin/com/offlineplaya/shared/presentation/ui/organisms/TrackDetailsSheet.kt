@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
@@ -40,6 +41,8 @@ import com.offlineplaya.shared.presentation.ui.molecules.AddToPlaylistDialog
 import com.offlineplaya.shared.presentation.ui.molecules.formatDuration
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import org.jetbrains.compose.resources.stringResource
+import offlineplaya.shared.generated.resources.*
 
 /**
  * Bottom sheet showing track metadata + actions: Play, Play next,
@@ -129,13 +132,13 @@ fun TrackDetailsContent(
                     OutlinedButton(
                         onClick = onPlayNext,
                         modifier = Modifier.weight(1f),
-                    ) { Text("Play next") }
+                    ) { Text(stringResource(Res.string.track_details_play_next)) }
                 }
                 if (onAddToQueue != null) {
                     OutlinedButton(
                         onClick = onAddToQueue,
                         modifier = Modifier.weight(1f),
-                    ) { Text("Add to queue") }
+                    ) { Text(stringResource(Res.string.track_details_queue)) }
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
@@ -145,17 +148,27 @@ fun TrackDetailsContent(
             OutlinedButton(
                 onClick = onShowAddToPlaylist,
                 modifier = Modifier.fillMaxWidth(),
-            ) { Text("Add to playlist") }
+            ) { Text(stringResource(Res.string.track_details_add_to_playlist)) }
             Spacer(modifier = Modifier.height(20.dp))
         }
 
-        DetailRow("Duration", track.durationMs.formatDuration())
-        track.year?.let { DetailRow("Year", it.toString()) }
-        track.genre?.let { DetailRow("Genre", it) }
-        track.codec?.let { DetailRow("Codec", it) }
-        track.bitrate?.let { DetailRow("Bitrate", "${it / 1000} kbps") }
-        DetailRow("Path", track.relativePath)
-        DetailRow("Status", track.scanStatus.name.lowercase().replaceFirstChar { it.titlecase() })
+        DetailRow(
+            stringResource(Res.string.track_details_duration),
+            track.durationMs.formatDuration()
+        )
+        track.year?.let { DetailRow(stringResource(Res.string.track_details_year), it.toString()) }
+        track.genre?.let { DetailRow(stringResource(Res.string.track_details_genre), it) }
+        track.codec?.let { DetailRow(stringResource(Res.string.track_details_codec), it) }
+        track.bitrate?.let {
+            DetailRow(
+                stringResource(Res.string.track_details_bitrate),
+                "${it / 1000} kbps"
+            )
+        }
+        DetailRow(stringResource(Res.string.track_details_path), track.relativePath)
+        DetailRow(
+            stringResource(Res.string.track_details_status),
+            track.scanStatus.name.lowercase().replaceFirstChar { it.titlecase() })
     }
 }
 
@@ -215,7 +228,9 @@ private fun AutoPlayButton(
             )
         }
         Text(
-            text = if (running) "Playing in…" else "Play",
+            text = if (running) stringResource(Res.string.track_details_playing_in) else stringResource(
+                Res.string.track_details_play_now
+            ),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontWeight = FontWeight.SemiBold,
@@ -243,7 +258,7 @@ private fun DetailRow(label: String, value: String) {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun TrackDetailsContentFullPreview() {
     PreviewTheme {
@@ -259,7 +274,7 @@ private fun TrackDetailsContentFullPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun TrackDetailsContentMinimalPreview() {
     PreviewTheme(darkTheme = true) {

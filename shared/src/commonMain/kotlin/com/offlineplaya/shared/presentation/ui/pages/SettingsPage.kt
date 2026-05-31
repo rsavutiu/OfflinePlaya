@@ -3,50 +3,38 @@ package com.offlineplaya.shared.presentation.ui.pages
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.ArtworkPreferences
 import com.offlineplaya.shared.domain.model.ColorMode
 import com.offlineplaya.shared.domain.model.ManagedTreeRoot
 import com.offlineplaya.shared.domain.model.ThemePreferences
+import com.offlineplaya.shared.presentation.ui.LocalOrientation
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
-import com.offlineplaya.shared.presentation.ui.molecules.ColorModeChooser
-import com.offlineplaya.shared.presentation.ui.molecules.SettingsSection
-import com.offlineplaya.shared.presentation.ui.molecules.SwitchRow
-import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.molecules.RemoveManagedRootDialog
+import com.offlineplaya.shared.presentation.ui.molecules.SettingsLinkSection
+import com.offlineplaya.shared.presentation.ui.organisms.AlbumArtSettings
+import com.offlineplaya.shared.presentation.ui.organisms.AppearanceSettings
+import com.offlineplaya.shared.presentation.ui.organisms.LibrarySettings
+import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 /**
- * Settings page: appearance controls + library management.
- *
- * Library section shows the managed tree roots with a remove button each
- * and a "re-scan everything" action. Re-scan is disabled while a scan is
- * already in flight.
+ * Settings page. Five sections in portrait, two columns in landscape so the
+ * page fits on small screens. Remove-folder is gated by a confirmation dialog.
  */
 @Composable
 fun SettingsPage(
@@ -67,204 +55,98 @@ fun SettingsPage(
     dynamicColorSupported: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
-    // Per-row "remove" confirmation. Holds the root pending deletion so the
-    // dialog can show its name; null when no dialog is open.
     var pendingRemoval by remember { mutableStateOf<ManagedTreeRoot?>(null) }
 
     Scaffold(
         modifier = modifier,
-        contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
+        contentWindowInsets = WindowInsets(0),
         topBar = { AppTopBar(title = "Settings", onBack = onBack) },
     ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .verticalScroll(rememberScrollState()),
-        ) {
-            SettingsSection(title = "Appearance") {
-                ColorModeChooser(
-                    selected = preferences.colorMode,
-                    onSelectionChanged = onColorModeChange,
-                )
-                SwitchRow(
-                    title = "Material You",
-                    subtitle = if (dynamicColorSupported) {
-                        "Use wallpaper-based colors"
-                    } else {
-                        "Requires Android 12 or later"
-                    },
-                    checked = preferences.useDynamicColor && dynamicColorSupported,
-                    onCheckedChange = onDynamicColorChange,
-                    enabled = dynamicColorSupported,
+        ResponsiveContent(modifier = Modifier.padding(padding)) {
+            val appearance: @Composable () -> Unit = {
+                AppearanceSettings(
+                    preferences = preferences,
+                    dynamicColorSupported = dynamicColorSupported,
+                    onColorModeChange = onColorModeChange,
+                    onDynamicColorChange = onDynamicColorChange,
                 )
             }
-
-            SettingsSection(title = "Album art") {
-                SwitchRow(
-                    title = "Download album art",
-                    subtitle = "Look up missing covers from MusicBrainz and Cover Art Archive.",
-                    checked = artworkPreferences.downloadRemoteArt,
-                    onCheckedChange = onDownloadRemoteArtChange,
+            val albumArt: @Composable () -> Unit = {
+                AlbumArtSettings(
+                    artworkPreferences = artworkPreferences,
+                    onDownloadRemoteArtChange = onDownloadRemoteArtChange,
+                    onEmbedFolderClick = onEmbedFolderClick,
                 )
-                Text(
-                    text = "Burn cover art into a folder's audio files",
-                    style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 12.dp),
-                )
-                Text(
-                    text = "Pick a folder and we'll write missing covers into the audio " +
-                        "files themselves. Useful if you'll copy these files to another " +
-                        "device or play them in another app — for in-app playback the " +
-                        "covers already show without this.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-                )
-                OutlinedButton(
-                    onClick = onEmbedFolderClick,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                ) {
-                    Text("Pick folder and burn covers")
-                }
             }
-
-            SettingsSection(title = "Library") {
-                Button(
-                    onClick = onAddFolder,
-                    enabled = !isScanning,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = null,
-                        modifier = Modifier.padding(end = 8.dp),
-                    )
-                    Text("Add music folder")
-                }
-                if (managedRoots.isEmpty()) {
-                    Text(
-                        text = "No folders added yet. Tap \"Add music folder\" above to get started.",
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                } else {
-                    managedRoots.forEach { root ->
-                        ManagedFolderRow(
-                            root = root,
-                            onRemove = { pendingRemoval = root },
-                        )
-                    }
-                }
-                OutlinedButton(
-                    onClick = onRescanAll,
-                    enabled = !isScanning && managedRoots.isNotEmpty(),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                ) {
-                    Text(if (isScanning) "Scanning…" else "Re-scan all folders")
-                }
+            val library: @Composable () -> Unit = {
+                LibrarySettings(
+                    managedRoots = managedRoots,
+                    isScanning = isScanning,
+                    onAddFolder = onAddFolder,
+                    onRescanAll = onRescanAll,
+                    onRemoveManagedRoot = { pendingRemoval = it },
+                )
             }
-
-            SettingsSection(title = "Audio") {
-                OutlinedButton(
+            val audio: @Composable () -> Unit = {
+                SettingsLinkSection(
+                    sectionTitle = "Audio",
+                    actionLabel = "Equalizer",
                     onClick = onOpenEqualizer,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                ) {
-                    Text("Equalizer")
-                }
+                )
+            }
+            val developer: @Composable () -> Unit = {
+                SettingsLinkSection(
+                    sectionTitle = "Developer",
+                    actionLabel = "Design system gallery",
+                    onClick = onOpenDesignSystem,
+                )
             }
 
-            SettingsSection(title = "Developer") {
-                OutlinedButton(
-                    onClick = onOpenDesignSystem,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                ) {
-                    Text("Design system gallery")
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+            ) {
+                if (LocalOrientation.current.isLandscape) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            appearance()
+                            albumArt()
+                        }
+                        Column(modifier = Modifier.weight(1f)) {
+                            library()
+                            audio()
+                            developer()
+                        }
+                    }
+                } else {
+                    appearance()
+                    albumArt()
+                    library()
+                    audio()
+                    developer()
                 }
             }
         }
     }
 
     pendingRemoval?.let { root ->
-        AlertDialog(
-            onDismissRequest = { pendingRemoval = null },
-            title = { Text("Remove this folder?") },
-            text = {
-                Text(
-                    "\"${root.displayName}\" will disappear from your library, " +
-                        "along with the tracks scanned from it. " +
-                        "The files on disk aren't touched.",
-                )
+        RemoveManagedRootDialog(
+            root = root,
+            onConfirm = {
+                onRemoveManagedRoot(root.treeUri)
+                pendingRemoval = null
             },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        onRemoveManagedRoot(root.treeUri)
-                        pendingRemoval = null
-                    },
-                ) {
-                    Text("Remove")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { pendingRemoval = null }) {
-                    Text("Cancel")
-                }
-            },
+            onDismiss = { pendingRemoval = null },
         )
     }
 }
 
-@Composable
-private fun ManagedFolderRow(
-    root: ManagedTreeRoot,
-    onRemove: () -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-    ) {
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = root.displayName,
-                style = MaterialTheme.typography.bodyLarge,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-            Text(
-                text = if (root.lastScannedAt != null) "Scanned" else "Not yet scanned",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        IconButton(onClick = onRemove) {
-            Icon(
-                imageVector = Icons.Default.Delete,
-                contentDescription = "Remove",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-    }
-}
-
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun SettingsPageLightPreview() {
     PreviewTheme {
@@ -276,21 +158,15 @@ private fun SettingsPageLightPreview() {
             ),
             isScanning = false,
             artworkPreferences = ArtworkPreferences.Default,
-            onColorModeChange = {},
-            onDynamicColorChange = {},
-            onDownloadRemoteArtChange = {},
-            onEmbedFolderClick = {},
-            onAddFolder = {},
-            onRescanAll = {},
-            onRemoveManagedRoot = {},
-            onOpenEqualizer = {},
-            onOpenDesignSystem = {},
-            onBack = {},
+            onColorModeChange = {}, onDynamicColorChange = {},
+            onDownloadRemoteArtChange = {}, onEmbedFolderClick = {},
+            onAddFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
+            onOpenEqualizer = {}, onOpenDesignSystem = {}, onBack = {},
         )
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun SettingsPageDarkPreview() {
     PreviewTheme(darkTheme = true) {
@@ -299,21 +175,15 @@ private fun SettingsPageDarkPreview() {
             managedRoots = emptyList(),
             isScanning = false,
             artworkPreferences = ArtworkPreferences.Default,
-            onColorModeChange = {},
-            onDynamicColorChange = {},
-            onDownloadRemoteArtChange = {},
-            onEmbedFolderClick = {},
-            onAddFolder = {},
-            onRescanAll = {},
-            onRemoveManagedRoot = {},
-            onOpenEqualizer = {},
-            onOpenDesignSystem = {},
-            onBack = {},
+            onColorModeChange = {}, onDynamicColorChange = {},
+            onDownloadRemoteArtChange = {}, onEmbedFolderClick = {},
+            onAddFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
+            onOpenEqualizer = {}, onOpenDesignSystem = {}, onBack = {},
         )
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun SettingsPageScanningPreview() {
     PreviewTheme {
@@ -327,16 +197,10 @@ private fun SettingsPageScanningPreview() {
                 downloadRemoteArt = true,
                 embedDownloadedArt = true,
             ),
-            onColorModeChange = {},
-            onDynamicColorChange = {},
-            onDownloadRemoteArtChange = {},
-            onEmbedFolderClick = {},
-            onAddFolder = {},
-            onRescanAll = {},
-            onRemoveManagedRoot = {},
-            onOpenEqualizer = {},
-            onOpenDesignSystem = {},
-            onBack = {},
+            onColorModeChange = {}, onDynamicColorChange = {},
+            onDownloadRemoteArtChange = {}, onEmbedFolderClick = {},
+            onAddFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
+            onOpenEqualizer = {}, onOpenDesignSystem = {}, onBack = {},
             dynamicColorSupported = false,
         )
     }

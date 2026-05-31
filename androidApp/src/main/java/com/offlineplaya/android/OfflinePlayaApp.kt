@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
 import com.offlineplaya.android.di.appPlayerModule
+import com.offlineplaya.android.sync.AutoRescanController
 import com.offlineplaya.shared.data.image.installTrackArtImageLoader
 import com.offlineplaya.shared.data.scheduling.WorkManagerTaskRunner
 import com.offlineplaya.shared.di.androidModule
@@ -12,6 +13,8 @@ import com.offlineplaya.shared.di.initKoin
 import com.offlineplaya.shared.domain.image.RemoteArtSource
 import com.offlineplaya.shared.domain.repository.SettingsRepository
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext
@@ -28,21 +31,36 @@ class OfflinePlayaApp : Application() {
             },
             platformModules = listOf(androidModule, appPlayerModule),
         )
-        // Coil ImageLoader is installed after Koin so it can pick up the
-        // settings + remote-source singletons from the graph.
+        // Everything else touches the database (via Koin singletons) or the
+        // network (remote-art source). Push it onto the application-scoped
+        // background scope so Application.onCreate returns quickly and the
+        // first frame isn't waiting on SQLite open + a full library scan.
         val koin = GlobalContext.get()
-        installTrackArtImageLoader(
-            context = this,
-            settings = koin.get<SettingsRepository>(),
-            artistsRepo = koin.get<com.offlineplaya.shared.domain.repository.ArtistRepository>(),
-            remoteSource = koin.get<RemoteArtSource>(),
-        )
-        // Auto-rescan once per process start, after Koin is up. syncAll() now
-        // covers both SAF managed roots AND the platform's MediaStore index,
-        // so this is meaningful even on a fresh install — the device-audio
-        // pass picks up everything in Download/ etc. without the user having
-        // to add a folder first.
-        koin.get<LibrarySyncCoordinator>().resyncAll()
+        val appScope = koin.get<CoroutineScope>()
+        appScope.launch {
+            installTrackArtImageLoader(
+                context = this@OfflinePlayaApp,
+                settings = koin.get<SettingsRepository>(),
+                artistsRepo = koin.get<com.offlineplaya.shared.domain.repository.ArtistRepository>(),
+                remoteSource = koin.get<RemoteArtSource>(),
+                folderSource = koin.get<com.offlineplaya.shared.domain.image.FolderArtSource>(),
+            )
+            // Auto-rescan once per process start. syncAll() covers both SAF
+            // managed roots AND the platform's MediaStore index, so this is
+            // meaningful even on a fresh install — the device-audio pass
+            // picks up everything in Download/ etc. without the user having
+            // to add a folder first.
+            val coordinator = koin.get<LibrarySyncCoordinator>()
+            coordinator.resyncAll()
+            // After the cold-start scan, keep watching: MediaStore changes
+            // (torrents, downloads, sync clients) and app foreground events
+            // each trigger a debounced reconcile. See [AutoRescanController].
+            AutoRescanController(
+                context = this@OfflinePlayaApp,
+                coordinator = coordinator,
+                scope = appScope,
+            ).start()
+        }
     }
 
     /**

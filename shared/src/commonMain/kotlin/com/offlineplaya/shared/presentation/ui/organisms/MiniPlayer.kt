@@ -12,16 +12,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.PlaybackState
 import com.offlineplaya.shared.domain.model.ScanStatus
@@ -30,6 +30,32 @@ import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
 import com.offlineplaya.shared.presentation.ui.molecules.PlaybackControls
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+
+/**
+ * Vertical footprint of the [MiniPlayer]'s content above the navigation-bar
+ * inset (3 dp progress line + 64 dp row). Use [MiniPlayerReservedSpace] to
+ * leave matching room when no track is queued so the page above doesn't
+ * reflow the moment playback starts.
+ */
+val MiniPlayerContentHeight: Dp = 67.dp
+
+/**
+ * Empty bottom strip that occupies the same vertical space as a rendered
+ * [MiniPlayer]. Render this in the bottom-bar slot when nothing is queued
+ * so the layout above is identical whether or not music is playing.
+ */
+@Composable
+fun MiniPlayerReservedSpace(modifier: Modifier = Modifier) {
+    Box(
+        modifier
+            .fillMaxWidth()
+            .windowInsetsPadding(WindowInsets.navigationBars),
+    ) {
+        Box(Modifier
+            .fillMaxWidth()
+            .height(MiniPlayerContentHeight))
+    }
+}
 
 /**
  * Persistent bottom-anchored mini-player shown above the page content while
@@ -48,59 +74,53 @@ fun MiniPlayer(
     modifier: Modifier = Modifier,
 ) {
     val track = state.currentTrack ?: return
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .windowInsetsPadding(WindowInsets.navigationBars)
-            .padding(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 12.dp)
+    // Docked to the bottom edge — the surface colour extends *behind* the
+    // nav bar so there's no jarring cut between the player and the system
+    // chrome. Only the tappable content row inside is shifted up by the
+    // nav-bar inset so controls stay reachable.
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.surfaceColorAtElevation(6.dp),
+        tonalElevation = 6.dp,
+        shadowElevation = 8.dp,
     ) {
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(6.dp)
-            ),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 8.dp
-            )
-        ) {
-            Column {
-                ProgressLine(state = state)
-                Row(
+        Column {
+            ProgressLine(state = state)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = onExpand)
+                    .windowInsetsPadding(WindowInsets.navigationBars)
+                    .padding(horizontal = 16.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                AlbumArtThumb(track = track, size = 44.dp, cornerRadius = 8.dp)
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable(onClick = onExpand)
-                        .padding(horizontal = 16.dp, vertical = 10.dp),
-                    verticalAlignment = Alignment.CenterVertically,
+                        .padding(horizontal = 12.dp)
+                        .weight(1f),
                 ) {
-                    AlbumArtThumb(track = track, size = 44.dp, cornerRadius = 8.dp)
-                    Column(
-                        modifier = Modifier
-                            .padding(horizontal = 12.dp)
-                            .weight(1f),
-                    ) {
-                        Text(
-                            text = track.title,
-                            style = MaterialTheme.typography.titleSmall,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            maxLines = 1,
-                            modifier = Modifier.basicMarquee(),
-                        )
-                        Text(
-                            text = track.artistName,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
-                    PlaybackControls(
-                        isPlaying = state.isPlaying,
-                        onPlayPause = onPlayPause,
-                        onPrevious = onPrevious,
-                        onNext = onNext,
+                    Text(
+                        text = track.title,
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1,
+                        modifier = Modifier.basicMarquee(),
+                    )
+                    Text(
+                        text = track.artistName,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
+                PlaybackControls(
+                    isPlaying = state.isPlaying,
+                    onPlayPause = onPlayPause,
+                    onPrevious = onPrevious,
+                    onNext = onNext,
+                )
             }
         }
     }
@@ -126,7 +146,7 @@ private fun ProgressLine(state: PlaybackState) {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun MiniPlayerPlayingPreview() {
     PreviewTheme {
@@ -147,7 +167,7 @@ private fun MiniPlayerPlayingPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun MiniPlayerPausedDarkPreview() {
     PreviewTheme(darkTheme = true) {

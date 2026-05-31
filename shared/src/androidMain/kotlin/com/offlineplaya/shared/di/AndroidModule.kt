@@ -2,12 +2,14 @@ package com.offlineplaya.shared.di
 
 import com.offlineplaya.shared.data.database.DatabaseDriverFactory
 import com.offlineplaya.shared.data.image.JaudiotaggerArtWriter
+import com.offlineplaya.shared.data.image.SafFolderArtSource
 import com.offlineplaya.shared.data.image.createMusicBrainzArtSource
 import com.offlineplaya.shared.data.metadata.AndroidMetadataReader
 import com.offlineplaya.shared.data.scanner.MediaStoreDeviceAudioScanner
 import com.offlineplaya.shared.data.scanner.SafFolderScanner
 import com.offlineplaya.shared.data.scheduling.WorkManagerTaskRunner
 import com.offlineplaya.shared.domain.image.AlbumArtWriter
+import com.offlineplaya.shared.domain.image.FolderArtSource
 import com.offlineplaya.shared.domain.image.RemoteArtSource
 import com.offlineplaya.shared.domain.scanner.DeviceAudioScanner
 import com.offlineplaya.shared.domain.scanner.FolderScanner
@@ -35,6 +37,11 @@ val androidModule: Module = module {
     // Deezer + MusicBrainz/CAA album art + artist image lookup. Singleton with
     // persistent miss cache so failed lookups don't waste data on every restart.
     single<RemoteArtSource> { createMusicBrainzArtSource(get()) }
+
+    // Sidecar cover.jpg / folder.jpg / album.jpg lookup inside the track's
+    // SAF folder. Checked before remote so ripped/torrented folders with
+    // bundled artwork never hit the network.
+    single<FolderArtSource> { SafFolderArtSource(androidContext(), get()) }
 
     // Jaudiotagger-backed art writer. Reads via MediaMetadataRetriever (so
     // hasEmbeddedArt is cheap) and writes via the temp-file FD dance.

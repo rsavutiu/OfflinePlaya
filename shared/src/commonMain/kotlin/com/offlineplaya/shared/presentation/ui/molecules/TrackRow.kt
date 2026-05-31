@@ -1,5 +1,6 @@
 package com.offlineplaya.shared.presentation.ui.molecules
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,7 +12,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
@@ -19,22 +22,33 @@ import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
+/**
+ * Track list row with album art, title, artist, and duration.
+ * When [isPlaying] is true, the row gets a subtle accent tint, bold title
+ * in the primary color, and a ▶ indicator replacing the track number —
+ * matching the redesign's "playing state visible in list" guideline.
+ */
 @Composable
 fun TrackRow(
     track: Track,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    isPlaying: Boolean = false,
 ) {
+    val bgModifier = if (isPlaying) {
+        Modifier.background(MaterialTheme.colorScheme.primary.copy(alpha = 0.08f))
+    } else {
+        Modifier
+    }
+
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .then(bgModifier)
             .clickable(onClick = onClick)
-            .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.md),
+            .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        // Album art is the row's leading element. Repeating across all tracks
-        // of an album is intentional — gives every row a visual anchor and
-        // matches the album-row treatment elsewhere.
         AlbumArtThumb(track = track, size = 44.dp, cornerRadius = 8.dp)
         Column(
             modifier = Modifier
@@ -43,17 +57,28 @@ fun TrackRow(
         ) {
             Text(
                 text = track.title,
-                style = MaterialTheme.typography.bodyLarge,
+                style = if (isPlaying) {
+                    MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
+                } else {
+                    MaterialTheme.typography.bodyLarge
+                },
+                color = if (isPlaying) MaterialTheme.colorScheme.primary
+                else MaterialTheme.colorScheme.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            val subtitle = track.trackNumber
-                ?.let { "$it · ${track.artistName}" }
-                ?: track.artistName
+            val subtitle = if (isPlaying) {
+                "▶ ${track.artistName}"
+            } else {
+                track.trackNumber
+                    ?.let { "$it · ${track.artistName}" }
+                    ?: track.artistName
+            }
             Text(
                 text = subtitle,
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = if (isPlaying) MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
+                else MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -61,7 +86,8 @@ fun TrackRow(
         Text(
             text = track.durationMs.formatDuration(),
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = if (isPlaying) MaterialTheme.colorScheme.primary
+            else MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }
@@ -78,7 +104,7 @@ internal fun Long?.formatDuration(): String {
     return "$hours:$mm:$ss"
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun TrackRowFullPreview() {
     PreviewTheme {
@@ -96,7 +122,26 @@ private fun TrackRowFullPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
+@Composable
+private fun TrackRowPlayingPreview() {
+    PreviewTheme(darkTheme = true) {
+        Surface {
+            TrackRow(
+                track = previewTrack(
+                    title = "Fainting Spells",
+                    artistName = "Crystal Castles",
+                    trackNumber = 1,
+                    durationMs = 163_000L,
+                ),
+                onClick = {},
+                isPlaying = true,
+            )
+        }
+    }
+}
+
+@PreviewScreenSizes
 @Composable
 private fun TrackRowMissingTrackNumberPreview() {
     PreviewTheme {

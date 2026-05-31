@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Artist
 import com.offlineplaya.shared.presentation.ui.atoms.ArtistAvatar
@@ -42,7 +43,9 @@ fun ArtistRow(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         ArtistAvatar(artist = artist, size = 40.dp)
-        Column(modifier = Modifier.padding(start = AppSpacing.lg).weight(1f)) {
+        Column(modifier = Modifier
+            .padding(start = AppSpacing.lg)
+            .weight(1f)) {
             Text(
                 text = artist.name,
                 style = MaterialTheme.typography.titleMedium,
@@ -95,7 +98,7 @@ private fun summary(artist: Artist): String {
     return "$albumPart · $trackPart"
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun ArtistRowPreview() {
     PreviewTheme {
@@ -109,7 +112,7 @@ private fun ArtistRowPreview() {
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun ArtistRowSingletonsPreview() {
     PreviewTheme {

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OfflinePlaya</string>
+    <string name="home_title_your_music_offline">Ваша музыка, оффлайн</string>
+    <string name="home_label_library">Библиотека</string>
+    <string name="home_button_browse">ПЕРЕХОДИТЬ</string>
+    <string name="home_title_all_tracks">Все треки</string>
+    <string name="home_label_albums">Альбомы</string>
+    <string name="home_label_browse">Просмотр</string>
+    <string name="home_label_artists">Исполнители</string>
+    <string name="home_label_playlists">Плейлисты</string>
+    <string name="home_label_collections">Коллекции</string>
+    <string name="home_label_add_folders">Добавить папки</string>
+    <string name="home_label_import_more_tracks">Импортировать больше треков</string>
+    <string name="home_title_start_your_music_journey">Начните ваше музыкальное путешествие</string>
+    <string name="home_label_select_folder">Выберите папку, чтобы создать вашу оффлайн-библиотеку.
+    </string>
+    <string name="home_status_picking_music_folder">Выбор папки с музыкой</string>
+    <string name="home_status_scanning">Сканирование…</string>
+    <string name="home_label_pick_music_folder">Выберите папку с музыкой</string>
+    <string name="home_label_tracks">Треки</string>
+    <string name="home_label_folders">Папки</string>
+    <string name="home_label_total">Всего</string>
+    <string name="now_playing_title">Плеер</string>
+    <string name="now_playing_up_next">Следующее</string>
+    <string name="now_playing_back">Назад</string>
+    <string name="now_playing_search">Поиск</string>
+    <string name="now_playing_settings">Настройки</string>
+    <string name="track_details_play_next">Воспроизвести следующий</string>
+    <string name="track_details_queue">Очередь</string>
+    <string name="track_details_add_to_playlist">Добавить в плейлист</string>
+    <string name="track_details_favourite">Избранные</string>
+    <string name="track_details_hide_file_info">Скрыть информацию о файле</string>
+    <string name="track_details_file_info">Информация о файле</string>
+    <string name="track_details_duration">Длительность</string>
+    <string name="track_details_year">Год</string>
+    <string name="track_details_genre">Жанр</string>
+    <string name="track_details_codec">Кодек</string>
+    <string name="track_details_bitrate">Битрейт</string>
+    <string name="track_details_path">Путь</string>
+    <string name="track_details_status">Статус</string>
+    <string name="track_details_playing_in">Воспроизводится в…</string>
+    <string name="track_details_play_now">▶ Воспроизвести сейчас</string>
+    <string name="track_details_kbps">kbps</string>
+    <string name="library_album_detail_track">трек</string>
+    <string name="library_album_detail_tracks">треки</string>
+    <string name="library_album_detail_play">Воспроизвести</string>
+    <string name="library_album_detail_shuffle">Случайный порядок</string>
+    <string name="track_row_playing_indicator">▶</string>
+    <string name="sync_status_idle">Еще не добавлено ни одной папки. Выберите одну, чтобы начать.
+    </string>
+    <string name="sync_status_scanning">Сканирование…</string>
+    <string name="sync_status_completed">Сканировано %d треков в %d папках</string>
+    <string name="sync_status_completed_with_failed">%s (%d неудачных)</string>
+    <string name="sync_status_failed">Сканирование завершилось с ошибкой: %s</string>
+</resources>

@@ -1,0 +1,90 @@
+-- Migrate Artist.name to COLLATE NOCASE uniqueness.
+-- Merge case-duplicate artists: keep the lowest-id row, re-point tracks & albums.
+
+-- Step 1: Re-point tracks from duplicate artists to the canonical (lowest-id) one.
+UPDATE Track
+SET artist_id = (
+    SELECT MIN(a2.id)
+    FROM Artist a2
+    WHERE a2.name = (SELECT a3.name FROM Artist a3 WHERE a3.id = Track.artist_id) COLLATE NOCASE
+)
+WHERE artist_id IS NOT NULL
+  AND artist_id != (
+    SELECT MIN(a2.id)
+    FROM Artist a2
+    WHERE a2.name = (SELECT a3.name FROM Artist a3 WHERE a3.id = Track.artist_id) COLLATE NOCASE
+);
+
+-- Step 2: Re-point albums from duplicate artists to the canonical one.
+UPDATE Album
+SET artist_id = (
+    SELECT MIN(a2.id)
+    FROM Artist a2
+    WHERE a2.name = (SELECT a3.name FROM Artist a3 WHERE a3.id = Album.artist_id) COLLATE NOCASE
+)
+WHERE artist_id IS NOT NULL
+  AND artist_id != (
+    SELECT MIN(a2.id)
+    FROM Artist a2
+    WHERE a2.name = (SELECT a3.name FROM Artist a3 WHERE a3.id = Album.artist_id) COLLATE NOCASE
+);
+
+-- Step 3: Delete duplicate artist rows (keep lowest id per case-insensitive name).
+DELETE FROM Artist
+WHERE id NOT IN (
+    SELECT MIN(id) FROM Artist GROUP BY name COLLATE NOCASE
+);
+
+-- Step 4: Merge duplicate albums that now share the same (name COLLATE NOCASE, artist_id).
+-- Re-point tracks from duplicate albums to the canonical (lowest-id) album.
+UPDATE Track
+SET album_id = (
+    SELECT MIN(a2.id)
+    FROM Album a2
+    WHERE a2.name = (SELECT a3.name FROM Album a3 WHERE a3.id = Track.album_id) COLLATE NOCASE
+      AND a2.artist_id IS (SELECT a3.artist_id FROM Album a3 WHERE a3.id = Track.album_id)
+)
+WHERE album_id IS NOT NULL
+  AND album_id != (
+    SELECT MIN(a2.id)
+    FROM Album a2
+    WHERE a2.name = (SELECT a3.name FROM Album a3 WHERE a3.id = Track.album_id) COLLATE NOCASE
+      AND a2.artist_id IS (SELECT a3.artist_id FROM Album a3 WHERE a3.id = Track.album_id)
+);
+
+-- Step 5: Delete duplicate album rows.
+DELETE FROM Album
+WHERE id NOT IN (
+    SELECT MIN(id) FROM Album GROUP BY name COLLATE NOCASE, artist_id
+);
+
+-- Step 6: Recreate Artist table with COLLATE NOCASE on name column.
+-- SQLite doesn't support ALTER COLUMN, so we rebuild.
+CREATE TABLE Artist_new (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE COLLATE NOCASE,
+    album_count INTEGER NOT NULL DEFAULT 0,
+    track_count INTEGER NOT NULL DEFAULT 0,
+    image_url TEXT
+);
+
+INSERT INTO Artist_new(id, name, album_count, track_count, image_url)
+SELECT id, name, album_count, track_count, image_url FROM Artist;
+
+DROP TABLE Artist;
+ALTER TABLE Artist_new RENAME TO Artist;
+
+CREATE INDEX idx_artist_name ON Artist(name COLLATE NOCASE);
+
+-- Step 7: Recreate Album unique index with COLLATE NOCASE.
+DROP INDEX IF EXISTS idx_album_name_artist;
+CREATE UNIQUE INDEX idx_album_name_artist ON Album(name COLLATE NOCASE, artist_id);
+
+-- Step 8: Refresh aggregate counts.
+UPDATE Artist
+SET album_count = (SELECT COUNT(DISTINCT album_id) FROM Track WHERE artist_id = Artist.id AND album_id IS NOT NULL),
+    track_count = (SELECT COUNT(*) FROM Track WHERE artist_id = Artist.id);
+
+UPDATE Album
+SET track_count = (SELECT COUNT(*) FROM Track WHERE album_id = Album.id),
+    duration_ms = (SELECT COALESCE(SUM(duration_ms), 0) FROM Track WHERE album_id = Album.id);

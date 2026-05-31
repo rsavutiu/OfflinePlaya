@@ -1,6 +1,7 @@
 package com.offlineplaya.shared.presentation.ui.molecules
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.preview.Preview
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
@@ -22,7 +23,7 @@ fun CreatePlaylistDialog(
     )
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun CreatePlaylistDialogPreview() {
     PreviewTheme {

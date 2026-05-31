@@ -22,8 +22,8 @@ import kotlinx.coroutines.launch
  * Two responsibilities:
  *
  *  1. Translate the resolved [EqPreset] from [EqualizerStateHolder] into
- *     per-band `Equalizer.setBandLevel` calls. The preset is a template (5
- *     gains by convention); we remap onto whatever band count the platform
+ *     per-band `Equalizer.setBandLevel` calls. The preset is a template (10
+ *     gains by convention); we resample onto whatever band count the platform
  *     reports — typically 5, occasionally fewer on cheap hardware, rarely more.
  *
  *  2. **Mutually exclude** our EQ with the system audio-effects broadcast
@@ -205,17 +205,28 @@ class AppEqualizerController(
 
         /**
          * Project a preset's gain vector onto the platform's actual band
-         * count: truncate when the platform has fewer bands, repeat the last
-         * value when it has more. Better than dropping gains silently —
-         * users get *something* even on weird hardware.
+         * count by **linear resampling** across the normalized [0,1] frequency
+         * axis. This preserves the curve's *shape* regardless of how many
+         * bands either side has — a 10-band template maps cleanly onto 5-band
+         * hardware (the common case) without dropping the treble half, which a
+         * naive `take(n)` truncation would do.
          */
         fun remapGainsToBands(template: List<Int>, layout: BandLayout): List<Int> {
             val n = layout.numberOfBands
             return when {
+                n <= 0 -> emptyList()
                 template.isEmpty() -> List(n) { 0 }
                 template.size == n -> template
-                template.size > n -> template.take(n)
-                else -> template + List(n - template.size) { template.last() }
+                n == 1 -> listOf(template[template.size / 2])
+                template.size == 1 -> List(n) { template[0] }
+                else -> List(n) { j ->
+                    // Position of hardware band j on the template's axis.
+                    val t = j.toFloat() / (n - 1) * (template.size - 1)
+                    val lo = t.toInt()
+                    val hi = (lo + 1).coerceAtMost(template.size - 1)
+                    val frac = t - lo
+                    (template[lo] + (template[hi] - template[lo]) * frac).toInt()
+                }
             }
         }
     }

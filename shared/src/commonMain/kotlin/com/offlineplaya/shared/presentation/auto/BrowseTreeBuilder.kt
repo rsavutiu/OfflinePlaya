@@ -44,21 +44,27 @@ class BrowseTreeBuilder(
             mediaId = MediaIdRouter.NODE_RECENTS,
             title = "Recents",
             isBrowsable = true,
+            // Children are albums → show their covers as a grid of tiles.
+            childrenStyle = BrowseStyle.GRID,
         ),
         BrowseEntry(
             mediaId = MediaIdRouter.NODE_ALBUMS,
             title = "Albums",
             isBrowsable = true,
+            childrenStyle = BrowseStyle.GRID,
         ),
         BrowseEntry(
             mediaId = MediaIdRouter.NODE_ARTISTS,
             title = "Artists",
             isBrowsable = true,
+            // Artist rows carry no artwork — a list reads better than empty tiles.
+            childrenStyle = BrowseStyle.LIST,
         ),
         BrowseEntry(
             mediaId = MediaIdRouter.NODE_PLAYLISTS,
             title = "Playlists",
             isBrowsable = true,
+            childrenStyle = BrowseStyle.LIST,
         ),
     )
 
@@ -75,6 +81,8 @@ class BrowseTreeBuilder(
                 subtitle = artistNameByAlbum(album.artistId),
                 isBrowsable = true,
                 artworkUri = albumArtUri(album),
+                // Children are tracks → a plain list, not tiles.
+                childrenStyle = BrowseStyle.LIST,
             )
         }
 
@@ -85,6 +93,8 @@ class BrowseTreeBuilder(
                 title = artist.name,
                 subtitle = pluralCount(artist.albumCount, "album", "albums"),
                 isBrowsable = true,
+                // Drilling into an artist shows their albums → grid of covers.
+                childrenStyle = BrowseStyle.GRID,
             )
         }
 
@@ -94,6 +104,8 @@ class BrowseTreeBuilder(
                 mediaId = MediaIdRouter.playlistId(playlist.id),
                 title = playlist.name,
                 isBrowsable = true,
+                // Children are tracks → list.
+                childrenStyle = BrowseStyle.LIST,
             )
         }
 

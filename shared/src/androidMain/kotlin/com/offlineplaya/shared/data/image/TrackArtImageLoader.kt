@@ -7,6 +7,7 @@ import coil3.SingletonImageLoader
 import coil3.disk.DiskCache
 import coil3.disk.directory
 import coil3.network.okhttp.OkHttpNetworkFetcherFactory
+import com.offlineplaya.shared.domain.image.FolderArtSource
 import com.offlineplaya.shared.domain.image.RemoteArtSource
 import com.offlineplaya.shared.domain.repository.ArtistRepository
 import com.offlineplaya.shared.domain.repository.SettingsRepository
@@ -21,11 +22,20 @@ fun installTrackArtImageLoader(
     settings: SettingsRepository,
     artistsRepo: ArtistRepository,
     remoteSource: RemoteArtSource,
+    folderSource: FolderArtSource,
 ) {
     val log = Logger.withTag("ImageLoaderSetup")
     log.d { "installTrackArtImageLoader() called" }
     val appContext = context.applicationContext
-    val httpClient = okhttp3.OkHttpClient()
+    // 50 MB HTTP cache so artist images (downloaded over OkHttp) survive
+    // process restarts. Without this, every cold start re-downloads them.
+    val httpCache = okhttp3.Cache(
+        directory = appContext.cacheDir.resolve("http_cache"),
+        maxSize = 50L * 1024 * 1024,
+    )
+    val httpClient = okhttp3.OkHttpClient.Builder()
+        .cache(httpCache)
+        .build()
     SingletonImageLoader.setSafe { ctx ->
         log.d { "Building ImageLoader with disk cache at ${appContext.cacheDir}/coil_cache" }
         ImageLoader.Builder(ctx)
@@ -43,6 +53,7 @@ fun installTrackArtImageLoader(
                         context = appContext,
                         settings = settings,
                         remoteSource = remoteSource,
+                        folderSource = folderSource,
                     ),
                 )
                 add(ArtistKeyer())

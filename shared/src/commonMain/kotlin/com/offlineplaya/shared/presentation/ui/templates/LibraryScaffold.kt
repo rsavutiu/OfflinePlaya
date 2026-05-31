@@ -8,6 +8,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
@@ -40,17 +41,15 @@ fun LibraryScaffold(
             }
         },
     ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding),
-        ) {
-            content()
+        ResponsiveContent(modifier = Modifier.padding(padding)) {
+            Column(modifier = Modifier.fillMaxSize()) {
+                content()
+            }
         }
     }
 }
 
-@Preview
+@PreviewScreenSizes
 @Composable
 private fun LibraryScaffoldArtistsPreview() {
     PreviewTheme {

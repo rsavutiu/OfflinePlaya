@@ -2,6 +2,7 @@ package com.offlineplaya.shared.data.repository
 
 import com.offlineplaya.shared.database.OfflinePlayaDatabase
 import com.offlineplaya.shared.testsupport.createInMemoryDatabase
+import com.offlineplaya.shared.util.TestLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -13,7 +14,7 @@ class SqlQueueRepositoryTest {
     private fun setup(): Pair<SqlQueueRepository, SqlTrackRepository> {
         val db: OfflinePlayaDatabase = createInMemoryDatabase()
         return SqlQueueRepository(db, Dispatchers.Unconfined) to
-            SqlTrackRepository(db, Dispatchers.Unconfined)
+                SqlTrackRepository(db, TestLogger(), Dispatchers.Unconfined)
     }
 
     @Test
