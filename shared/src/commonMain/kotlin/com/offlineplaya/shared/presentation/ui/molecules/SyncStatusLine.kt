@@ -3,14 +3,18 @@ package com.offlineplaya.shared.presentation.ui.molecules
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.offlineplaya.shared.domain.usecase.SyncReport
 import com.offlineplaya.shared.presentation.sync.SyncStatus
 import com.offlineplaya.shared.presentation.ui.atoms.AppCaption
-import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.sync_status_already_added
+import offlineplaya.shared.generated.resources.sync_status_completed
+import offlineplaya.shared.generated.resources.sync_status_failed
+import offlineplaya.shared.generated.resources.sync_status_idle
+import offlineplaya.shared.generated.resources.sync_status_scanning
 import org.jetbrains.compose.resources.stringResource
-import offlineplaya.shared.generated.resources.*
 
 /**
  * Single-line status caption mirroring the current [SyncStatus]. Renders the

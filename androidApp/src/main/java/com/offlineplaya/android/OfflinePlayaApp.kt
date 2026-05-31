@@ -12,7 +12,6 @@ import com.offlineplaya.shared.di.androidModule
 import com.offlineplaya.shared.di.initKoin
 import com.offlineplaya.shared.domain.image.RemoteArtSource
 import com.offlineplaya.shared.domain.repository.SettingsRepository
-import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.koin.androidContext
@@ -45,21 +44,16 @@ class OfflinePlayaApp : Application() {
                 remoteSource = koin.get<RemoteArtSource>(),
                 folderSource = koin.get<com.offlineplaya.shared.domain.image.FolderArtSource>(),
             )
-            // Auto-rescan once per process start. syncAll() covers both SAF
-            // managed roots AND the platform's MediaStore index, so this is
-            // meaningful even on a fresh install — the device-audio pass
-            // picks up everything in Download/ etc. without the user having
-            // to add a folder first.
-            val coordinator = koin.get<LibrarySyncCoordinator>()
-            coordinator.resyncAll()
             // After the cold-start scan, keep watching: MediaStore changes
             // (torrents, downloads, sync clients) and app foreground events
             // each trigger a debounced reconcile. See [AutoRescanController].
-            AutoRescanController(
-                context = this@OfflinePlayaApp,
-                coordinator = coordinator,
-                scope = appScope,
-            ).start()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                AutoRescanController(
+                    context = this@OfflinePlayaApp,
+                    coordinator = koin.get(),
+                    scope = appScope,
+                ).start()
+            }
         }
     }
 

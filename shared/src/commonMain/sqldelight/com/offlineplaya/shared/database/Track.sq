@@ -133,6 +133,17 @@ LIMIT ?;
 setCanonicalGenre:
 UPDATE Track SET canonical_genre = ?, updated_at = strftime('%s', 'now') WHERE id = ?;
 
+-- Used by the genre-burn flow: when MusicBrainz hands us a genre for an album
+-- that we then write into the audio file, the DB needs the raw tag AND its
+-- canonical bucket in lockstep — otherwise [GenreClassifier] would still see
+-- the empty original on the next scan and re-bucket as DEFAULT.
+setRawAndCanonicalGenre:
+UPDATE Track SET
+    genre = ?,
+    canonical_genre = ?,
+    updated_at = strftime('%s', 'now')
+WHERE id = ?;
+
 updateForeignKeys:
 UPDATE Track SET artist_id = ?, album_id = ? WHERE id = ?;
 

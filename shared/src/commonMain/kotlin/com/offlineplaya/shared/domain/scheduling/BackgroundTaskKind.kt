@@ -14,16 +14,16 @@ sealed interface BackgroundTaskKind {
      *  serialized scheduling state, telemetry). One per concrete kind. */
     val id: String
 
-    /** Walk all tracks with missing embedded art, download covers, write
-     *  them back into the audio files. */
-    data object EmbedMissingArt : BackgroundTaskKind {
-        override val id: String = "embed_missing_art"
+    /** Walk all tracks with missing embedded art or genre tags, fetch them,
+     *  and write them back into the audio files. */
+    data object BurnMetadata : BackgroundTaskKind {
+        override val id: String = "burn_metadata"
     }
 
     companion object {
         /** Parse a [BackgroundTaskKind] from its [id], or `null` if unknown. */
         fun fromId(raw: String?): BackgroundTaskKind? = when (raw) {
-            EmbedMissingArt.id -> EmbedMissingArt
+            BurnMetadata.id -> BurnMetadata
             else -> null
         }
     }

@@ -14,13 +14,14 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.ManagedTreeRoot
 import com.offlineplaya.shared.presentation.ui.molecules.ManagedFolderRow
 import com.offlineplaya.shared.presentation.ui.molecules.SettingsSection
-import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 
 /**
  * Library section: Add Folder primary button, a list of managed roots with
@@ -30,7 +31,7 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
  */
 @Composable
 fun LibrarySettings(
-    managedRoots: List<ManagedTreeRoot>,
+    managedRoots: PersistentList<ManagedTreeRoot>,
     isScanning: Boolean,
     onAddFolder: () -> Unit,
     onRescanAll: () -> Unit,
@@ -41,7 +42,6 @@ fun LibrarySettings(
         Column {
             Button(
                 onClick = onAddFolder,
-                enabled = !isScanning,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                 ),
@@ -56,6 +56,7 @@ fun LibrarySettings(
                 )
                 Text("Add music folder")
             }
+
             if (managedRoots.isEmpty()) {
                 Text(
                     text = "No folders added yet. Tap \"Add music folder\" above to get started.",
@@ -87,7 +88,7 @@ fun LibrarySettings(
 private fun LibrarySettingsPopulatedPreview() {
     PreviewTheme {
         LibrarySettings(
-            managedRoots = listOf(
+            managedRoots = persistentListOf(
                 ManagedTreeRoot(1, "content://a", "Music Library", 0, 1_700_000_000),
                 ManagedTreeRoot(2, "content://b", "Bootlegs", 0, null),
             ),
@@ -104,7 +105,7 @@ private fun LibrarySettingsPopulatedPreview() {
 private fun LibrarySettingsEmptyPreview() {
     PreviewTheme {
         LibrarySettings(
-            managedRoots = emptyList(),
+            managedRoots = persistentListOf(),
             isScanning = false,
             onAddFolder = {},
             onRescanAll = {},

@@ -1,13 +1,17 @@
 package com.offlineplaya.shared.di
 
 import com.offlineplaya.shared.data.database.DatabaseDriverFactory
+import com.offlineplaya.shared.data.genre.JaudiotaggerGenreWriter
 import com.offlineplaya.shared.data.image.JaudiotaggerArtWriter
+import com.offlineplaya.shared.data.image.MusicBrainzArtSource
 import com.offlineplaya.shared.data.image.SafFolderArtSource
-import com.offlineplaya.shared.data.image.createMusicBrainzArtSource
+import com.offlineplaya.shared.data.image.createMusicBrainzSource
 import com.offlineplaya.shared.data.metadata.AndroidMetadataReader
 import com.offlineplaya.shared.data.scanner.MediaStoreDeviceAudioScanner
 import com.offlineplaya.shared.data.scanner.SafFolderScanner
 import com.offlineplaya.shared.data.scheduling.WorkManagerTaskRunner
+import com.offlineplaya.shared.domain.genre.GenreTagWriter
+import com.offlineplaya.shared.domain.genre.RemoteGenreSource
 import com.offlineplaya.shared.domain.image.AlbumArtWriter
 import com.offlineplaya.shared.domain.image.FolderArtSource
 import com.offlineplaya.shared.domain.image.RemoteArtSource
@@ -32,11 +36,20 @@ val androidModule: Module = module {
     // can't tree-pick (Download/, internal-storage root) without making the
     // user grant MANAGE_EXTERNAL_STORAGE. Returns an empty list when the
     // READ_MEDIA_AUDIO permission isn't held — sync treats that as a no-op.
-    single<DeviceAudioScanner> { MediaStoreDeviceAudioScanner(androidContext()) }
+    single<DeviceAudioScanner> {
+        MediaStoreDeviceAudioScanner(
+            context = androidContext(),
+            logger = get()
+        )
+    }
 
-    // Deezer + MusicBrainz/CAA album art + artist image lookup. Singleton with
-    // persistent miss cache so failed lookups don't waste data on every restart.
-    single<RemoteArtSource> { createMusicBrainzArtSource(get()) }
+    // Deezer + MusicBrainz/CAA album art + artist image lookup, plus genre
+    // resolution. The concrete class implements both interfaces; binding the
+    // same singleton to both means art-lookup and genre-lookup share the
+    // same rate-limit mutex and miss-cache instead of each running their own.
+    single { createMusicBrainzSource(get()) }
+    single<RemoteArtSource> { get<MusicBrainzArtSource>() }
+    single<RemoteGenreSource> { get<MusicBrainzArtSource>() }
 
     // Sidecar cover.jpg / folder.jpg / album.jpg lookup inside the track's
     // SAF folder. Checked before remote so ripped/torrented folders with
@@ -46,6 +59,11 @@ val androidModule: Module = module {
     // Jaudiotagger-backed art writer. Reads via MediaMetadataRetriever (so
     // hasEmbeddedArt is cheap) and writes via the temp-file FD dance.
     single<AlbumArtWriter> { JaudiotaggerArtWriter(androidContext(), get()) }
+
+    // Jaudiotagger-backed genre tag writer. Same temp-file dance as the art
+    // writer; reads via Jaudiotagger too since MediaMetadataRetriever doesn't
+    // round-trip the genre string reliably across container formats.
+    single<GenreTagWriter> { JaudiotaggerGenreWriter(androidContext(), get()) }
 
     // WorkManager-backed dispatch for long-running tasks declared in commonMain
     // (BackgroundTaskKind). Other targets will bind their own implementation —

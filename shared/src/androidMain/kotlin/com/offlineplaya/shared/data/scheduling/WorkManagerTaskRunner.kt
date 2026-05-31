@@ -13,7 +13,7 @@ import androidx.work.workDataOf
 import com.offlineplaya.shared.domain.scheduling.BackgroundTaskKind
 import com.offlineplaya.shared.domain.scheduling.BackgroundTaskRunner
 import com.offlineplaya.shared.domain.scheduling.BackgroundTaskStatus
-import com.offlineplaya.shared.presentation.artwork.EmbedArtCoordinator
+import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
@@ -21,15 +21,6 @@ import kotlinx.coroutines.flow.map
 
 /**
  * Android implementation of [BackgroundTaskRunner] backed by WorkManager.
- *
- * Each [BackgroundTaskKind] maps to a unique work name so concurrent
- * `enqueue` calls collapse onto the same in-flight job ([ExistingWorkPolicy.KEEP]) —
- * starting an embed pass while one is already running is a no-op that hands
- * back the existing task id.
- *
- * The task id we return is the WorkRequest's UUID string. Callers pass it
- * back to [observe] and [cancel]; the UUID is what WorkManager indexes by
- * even across process death.
  */
 class WorkManagerTaskRunner(
     context: Context,
@@ -43,10 +34,8 @@ class WorkManagerTaskRunner(
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .setConstraints(
                 Constraints.Builder()
-                    // The embed pass needs network for the MusicBrainz lookup.
-                    // Other kinds can override once they get added.
                     .setRequiredNetworkType(
-                        if (kind is BackgroundTaskKind.EmbedMissingArt) NetworkType.CONNECTED
+                        if (kind is BackgroundTaskKind.BurnMetadata) NetworkType.CONNECTED
                         else NetworkType.NOT_REQUIRED
                     )
                     .build()
@@ -89,18 +78,14 @@ class WorkManagerTaskRunner(
     }
 
     private fun Data.toLongMap(): Map<String, Long> {
-        // We only pass through the well-known numeric payload keys the
-        // EmbedMissingArt task uses; any other key would be a wire-format
-        // bug rather than something we silently forward.
         val keys = listOf(
-            EmbedArtCoordinator.KEY_PROCESSED,
-            EmbedArtCoordinator.KEY_EMBEDDED,
-            EmbedArtCoordinator.KEY_FAILED,
+            BurnMetadataCoordinator.KEY_PROCESSED,
+            BurnMetadataCoordinator.KEY_EMBEDDED,
+            BurnMetadataCoordinator.KEY_FAILED,
         )
         val map = mutableMapOf<String, Long>()
         for (k in keys) {
             if (keyValueMap.containsKey(k)) {
-                // setProgress / output can be Int OR Long depending on caller.
                 map[k] = getLong(k, getInt(k, 0).toLong())
             }
         }
@@ -108,8 +93,6 @@ class WorkManagerTaskRunner(
     }
 
     companion object {
-        /** Notification channel id for the foreground worker notification. The
-         *  channel itself is created by the host app at startup. */
         const val CHANNEL_ID = "background_processing"
     }
 }

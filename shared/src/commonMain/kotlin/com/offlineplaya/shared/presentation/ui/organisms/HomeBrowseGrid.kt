@@ -40,7 +40,15 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import com.offlineplaya.shared.domain.model.Album
 import com.offlineplaya.shared.domain.model.Track
-import offlineplaya.shared.generated.resources.*
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.home_label_albums
+import offlineplaya.shared.generated.resources.home_label_albums_count
+import offlineplaya.shared.generated.resources.home_label_artists
+import offlineplaya.shared.generated.resources.home_label_artists_count
+import offlineplaya.shared.generated.resources.home_label_playlists
+import offlineplaya.shared.generated.resources.home_label_playlists_count
+import offlineplaya.shared.generated.resources.home_label_songs_count
+import offlineplaya.shared.generated.resources.home_title_all_tracks
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -159,12 +167,15 @@ private fun BrowseCard(
             .then(if (enabled) Modifier.clickable(onClick = onClick) else Modifier),
     ) {
         if (albums.isNotEmpty()) {
+            // Centered vertically on the right edge — the card is about the
+            // art, so let the deck dominate. Padding only on the trailing edge;
+            // the back layers of the fan spill leftward via negative offsets.
             CoverFan(
                 albums = albums.take(5),
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
                 modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(12.dp),
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 14.dp),
             )
         }
         Column(
@@ -205,19 +216,21 @@ private fun CoverFan(
     representativeTrackOfAlbum: suspend (Long) -> Track?,
     modifier: Modifier = Modifier,
 ) {
-    val coverSize = 48.dp
+    val coverSize = 72.dp
     Box(modifier = modifier.size(coverSize)) {
         val fan = albums.take(5)
         // Drawn back-to-front so the front cover (index 0) lands on top,
         // upright and fully opaque; layers behind rotate, shift, and dim.
+        // Spread scales with cover size — at 72dp the original 8/3dp offsets
+        // looked tight, so the deck spreads ~50% wider too.
         fan.indices.reversed().forEach { i ->
             FanItem(
                 album = fan[i],
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
                 size = coverSize,
                 rotation = -7f * i,
-                translateX = (-8 * i).dp,
-                translateY = (3 * i).dp,
+                translateX = (-12 * i).dp,
+                translateY = (4 * i).dp,
                 alpha = when (i) {
                     0 -> 1f
                     1 -> 0.8f

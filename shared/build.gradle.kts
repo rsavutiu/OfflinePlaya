@@ -39,6 +39,7 @@ kotlin {
                 implementation(libs.coil.compose)
 
                 implementation(libs.kotlinx.serialization.json)
+                implementation(libs.kotlinx.collections.immutable)
             }
         }
 

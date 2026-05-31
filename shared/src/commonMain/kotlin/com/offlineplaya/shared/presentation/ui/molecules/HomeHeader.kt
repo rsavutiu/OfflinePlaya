@@ -17,12 +17,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
-import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import com.offlineplaya.shared.util.currentHourOfDay
-import offlineplaya.shared.generated.resources.*
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.home_greeting_afternoon
+import offlineplaya.shared.generated.resources.home_greeting_evening
+import offlineplaya.shared.generated.resources.home_greeting_morning
+import offlineplaya.shared.generated.resources.home_label_library
+import offlineplaya.shared.generated.resources.now_playing_search
+import offlineplaya.shared.generated.resources.now_playing_settings
 import org.jetbrains.compose.resources.stringResource
 
 /**

@@ -32,17 +32,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.molecules.AddToPlaylistDialog
 import com.offlineplaya.shared.presentation.ui.molecules.formatDuration
-import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.track_details_add_to_playlist
+import offlineplaya.shared.generated.resources.track_details_bitrate
+import offlineplaya.shared.generated.resources.track_details_codec
+import offlineplaya.shared.generated.resources.track_details_duration
+import offlineplaya.shared.generated.resources.track_details_genre
+import offlineplaya.shared.generated.resources.track_details_path
+import offlineplaya.shared.generated.resources.track_details_play_next
+import offlineplaya.shared.generated.resources.track_details_play_now
+import offlineplaya.shared.generated.resources.track_details_playing_in_plurals
+import offlineplaya.shared.generated.resources.track_details_queue
+import offlineplaya.shared.generated.resources.track_details_status
+import offlineplaya.shared.generated.resources.track_details_year
+import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
-import offlineplaya.shared.generated.resources.*
 
 /**
  * Bottom sheet showing track metadata + actions: Play, Play next,
@@ -227,10 +239,21 @@ private fun AutoPlayButton(
                     .align(Alignment.CenterStart),
             )
         }
+        val secondsLeft = if (running) {
+            val remainingMs = (countdownMillis * (1f - progress.value)).toLong()
+            (remainingMs / 1000) + 1
+        } else 0L
+
         Text(
-            text = if (running) stringResource(Res.string.track_details_playing_in) else stringResource(
-                Res.string.track_details_play_now
-            ),
+            text = if (running) {
+                pluralStringResource(
+                    Res.plurals.track_details_playing_in_plurals,
+                    secondsLeft.toInt(),
+                    secondsLeft.toInt()
+                )
+            } else {
+                stringResource(Res.string.track_details_play_now)
+            },
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontWeight = FontWeight.SemiBold,

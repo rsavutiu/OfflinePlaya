@@ -28,16 +28,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Album
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.LocalOrientation
 import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
-import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
-import offlineplaya.shared.generated.resources.*
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.library_album_detail_play
+import offlineplaya.shared.generated.resources.library_album_detail_track
+import offlineplaya.shared.generated.resources.library_album_detail_tracks
 import org.jetbrains.compose.resources.stringResource
 
 /**

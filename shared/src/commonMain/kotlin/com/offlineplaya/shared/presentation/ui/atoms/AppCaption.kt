@@ -6,9 +6,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
-import com.offlineplaya.shared.presentation.ui.preview.Preview
 
 /**
  * The secondary-text atom for short, supporting copy beneath headlines.

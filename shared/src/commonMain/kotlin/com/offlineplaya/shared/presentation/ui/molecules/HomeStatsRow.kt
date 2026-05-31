@@ -17,12 +17,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.sync.SyncStatus
-import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
-import offlineplaya.shared.generated.resources.*
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.home_label_folders
+import offlineplaya.shared.generated.resources.home_label_total
+import offlineplaya.shared.generated.resources.home_label_tracks
 import org.jetbrains.compose.resources.stringResource
 
 /**

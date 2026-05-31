@@ -96,6 +96,14 @@ interface TrackRepository {
 
     suspend fun setCanonicalGenre(id: Long, genre: CanonicalGenre)
 
+    /**
+     * Store both the raw tag string AND its canonical bucket. Used by the
+     * genre-burn flow after writing the tag back into the file — the row
+     * then matches what the file contains and a future scan won't re-classify
+     * it as DEFAULT.
+     */
+    suspend fun setRawAndCanonicalGenre(id: Long, rawGenre: String, canonical: CanonicalGenre)
+
     suspend fun deleteAll()
 }
 

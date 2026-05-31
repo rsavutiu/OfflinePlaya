@@ -1,12 +1,13 @@
 package com.offlineplaya.android.sync
 
-import android.content.ContentResolver
 import android.content.Context
 import android.database.ContentObserver
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
@@ -54,6 +55,7 @@ class AutoRescanController(
      * Wire up both triggers. Idempotent — calling twice from
      * `Application.onCreate` only registers once.
      */
+    @RequiresApi(Build.VERSION_CODES.O)
     fun start() {
         if (observer != null) return
         val resolver = context.contentResolver
@@ -73,16 +75,21 @@ class AutoRescanController(
         observer = obs
         registeredAtMillis = System.currentTimeMillis()
 
-        ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
-            override fun onStart(owner: LifecycleOwner) {
-                // Skip the very first ON_START — the cold-start scan from
-                // OfflinePlayaApp.onCreate is already running and a foreground
-                // rescan moments later is just churn. After that, every return
-                // to the app does a quiet reconcile.
-                if (System.currentTimeMillis() - registeredAtMillis < FOREGROUND_GRACE_MILLIS) return
-                schedule()
-            }
-        })
+        // [start] is called from the application-scoped background coroutine
+        // (Dispatchers.Default) so we don't block the first frame on DB init.
+        // Lifecycle.addObserver requires the main thread — post it.
+        handler.post {
+            ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
+                override fun onStart(owner: LifecycleOwner) {
+                    // Skip the very first ON_START — the cold-start scan from
+                    // OfflinePlayaApp.onCreate is already running and a foreground
+                    // rescan moments later is just churn. After that, every return
+                    // to the app does a quiet reconcile.
+                    if (System.currentTimeMillis() - registeredAtMillis < FOREGROUND_GRACE_MILLIS) return
+                    schedule()
+                }
+            })
+        }
     }
 
     /**

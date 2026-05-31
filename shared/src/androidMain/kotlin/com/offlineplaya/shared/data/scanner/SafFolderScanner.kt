@@ -12,14 +12,13 @@ import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.File
 
 /**
- * [FolderScanner] backed by SAF's [DocumentsContract] API. Uses the bulk
- * `buildChildDocumentsUriUsingTree` cursor traversal — much faster than
- * `DocumentFile.listFiles()` (the plan flags this explicitly).
- *
- * Emits folders in parent-before-child order as required by [FolderScanner].
- * Audio detection is delegated to [AudioFileTypes].
+ * [FolderScanner] that handles both SAF (content://) and direct filesystem (file://)
+ * URIs. SAF is used for standard user-picked folders; direct access is used
+ * as a fallback when the user grants MANAGE_EXTERNAL_STORAGE to bypass
+ * "To protect your privacy" system errors.
  */
 internal class SafFolderScanner(
     private val context: Context,
@@ -27,7 +26,84 @@ internal class SafFolderScanner(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : FolderScanner {
 
+    private companion object {
+        const val TAG = "FolderScanner"
+
+        val PROJECTION = arrayOf(
+            DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+            DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+            DocumentsContract.Document.COLUMN_MIME_TYPE,
+            DocumentsContract.Document.COLUMN_SIZE,
+            DocumentsContract.Document.COLUMN_LAST_MODIFIED,
+        )
+
+        fun childRelativePath(parent: String, displayName: String): String =
+            if (parent.isEmpty()) displayName else "$parent/$displayName"
+    }
+
     override suspend fun scan(treeUri: String): ScanResult = withContext(ioDispatcher) {
+        if (treeUri.startsWith("file://")) {
+            scanDirect(treeUri)
+        } else {
+            scanSaf(treeUri)
+        }
+    }
+
+    private fun scanDirect(treeUri: String): ScanResult {
+        logger.i(TAG, "Scanning direct path: $treeUri")
+        val path = treeUri.removePrefix("file://")
+        val root = File(path)
+        if (!root.exists() || !root.isDirectory) {
+            logger.e(TAG, "Direct path does not exist or is not a directory: $path")
+            return ScanResult(emptyList(), emptyList())
+        }
+
+        val folders = mutableListOf<AudioFolder>()
+        val files = mutableListOf<RawAudioFile>()
+
+        folders += AudioFolder(
+            treeUri = treeUri,
+            relativePath = "",
+            displayName = root.name.ifBlank { "Folder" },
+            parentRelativePath = null,
+        )
+
+        walkDirect(root, treeUri, "", folders, files)
+        logger.i(TAG, "Direct scan complete: ${folders.size} folders, ${files.size} files")
+        return ScanResult(folders, files)
+    }
+
+    private fun walkDirect(
+        dir: File,
+        treeUri: String,
+        parentRelPath: String,
+        folders: MutableList<AudioFolder>,
+        files: MutableList<RawAudioFile>,
+    ) {
+        dir.listFiles()?.forEach { file ->
+            val relPath = childRelativePath(parentRelPath, file.name)
+            if (file.isDirectory) {
+                folders += AudioFolder(
+                    treeUri = treeUri,
+                    relativePath = relPath,
+                    displayName = file.name,
+                    parentRelativePath = parentRelPath,
+                )
+                walkDirect(file, treeUri, relPath, folders, files)
+            } else if (AudioFileTypes.isAudioFile(file.name, null)) {
+                files += RawAudioFile(
+                    documentUri = "file://${file.absolutePath}",
+                    treeUri = treeUri,
+                    relativePath = relPath,
+                    fileName = file.name,
+                    fileSize = file.length(),
+                    lastModified = file.lastModified(),
+                )
+            }
+        }
+    }
+
+    private suspend fun scanSaf(treeUri: String): ScanResult {
         logger.i(TAG, "Scanning SAF tree: $treeUri")
         val uri = treeUri.toUri()
         val rootDocId = try {
@@ -41,7 +117,6 @@ internal class SafFolderScanner(
         val files = mutableListOf<RawAudioFile>()
 
         val rootDisplayName = queryDisplayName(uri, rootDocId) ?: "Folder"
-        logger.d(TAG, "Root folder name: $rootDisplayName")
         folders += AudioFolder(
             treeUri = treeUri,
             relativePath = "",
@@ -49,7 +124,7 @@ internal class SafFolderScanner(
             parentRelativePath = null,
         )
 
-        walk(
+        walkSaf(
             treeUri = uri,
             treeUriString = treeUri,
             parentDocId = rootDocId,
@@ -58,9 +133,7 @@ internal class SafFolderScanner(
             files = files,
         )
 
-        val result = ScanResult(folders.toList(), files.toList())
-        logger.i(TAG, "Scan complete for $treeUri: ${folders.size} folders, ${files.size} files")
-        result
+        return ScanResult(folders.toList(), files.toList())
     }
 
     private fun queryDisplayName(treeUri: Uri, docId: String): String? {
@@ -70,13 +143,7 @@ internal class SafFolderScanner(
             ?.use { cursor -> if (cursor.moveToFirst()) cursor.getString(0) else null }
     }
 
-    /**
-     * Depth-first recursion. Reads children of `parentDocId` in a single query,
-     * appends folders + audio files at this level, then descends into each
-     * subfolder. The cursor is fully drained and closed before recursing so
-     * we don't hold a cursor open across levels.
-     */
-    private fun walk(
+    private fun walkSaf(
         treeUri: Uri,
         treeUriString: String,
         parentDocId: String,
@@ -85,87 +152,67 @@ internal class SafFolderScanner(
         files: MutableList<RawAudioFile>,
     ) {
         val childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, parentDocId)
-
-        // Collect subfolders to recurse into after the cursor closes.
         val subfolders = mutableListOf<SubfolderRef>()
 
-        context.contentResolver.query(
-            childrenUri,
-            PROJECTION,
-            null,
-            null,
-            null,
-        )?.use { cursor ->
-            val idxId = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID)
-            val idxName = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DISPLAY_NAME)
-            val idxMime = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_MIME_TYPE)
-            val idxSize = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_SIZE)
-            val idxModified = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_LAST_MODIFIED)
+        try {
+            context.contentResolver.query(childrenUri, PROJECTION, null, null, null)
+                ?.use { cursor ->
+                    val idxId =
+                        cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID)
+                    val idxName =
+                        cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DISPLAY_NAME)
+                    val idxMime =
+                        cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_MIME_TYPE)
+                    val idxSize =
+                        cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_SIZE)
+                    val idxModified =
+                        cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_LAST_MODIFIED)
 
-            while (cursor.moveToNext()) {
-                val docId = cursor.getString(idxId) ?: continue
-                val displayName = cursor.getString(idxName) ?: continue
-                val mime = cursor.getString(idxMime)
-                val size = if (cursor.isNull(idxSize)) 0L else cursor.getLong(idxSize)
-                val lastModified = if (cursor.isNull(idxModified)) 0L else cursor.getLong(idxModified)
+                    while (cursor.moveToNext()) {
+                        val docId = cursor.getString(idxId) ?: continue
+                        val displayName = cursor.getString(idxName) ?: continue
+                        val mime = cursor.getString(idxMime)
+                        val size = if (cursor.isNull(idxSize)) 0L else cursor.getLong(idxSize)
+                        val lastModified =
+                            if (cursor.isNull(idxModified)) 0L else cursor.getLong(idxModified)
 
-                val childRelPath = childRelativePath(parentRelativePath, displayName)
+                        val childRelPath = childRelativePath(parentRelativePath, displayName)
 
-                when {
-                    mime == DocumentsContract.Document.MIME_TYPE_DIR -> {
-                        folders += AudioFolder(
-                            treeUri = treeUriString,
-                            relativePath = childRelPath,
-                            displayName = displayName,
-                            parentRelativePath = parentRelativePath,
-                        )
-                        subfolders += SubfolderRef(docId, childRelPath)
+                        when {
+                            mime == DocumentsContract.Document.MIME_TYPE_DIR -> {
+                                folders += AudioFolder(
+                                    treeUri = treeUriString,
+                                    relativePath = childRelPath,
+                                    displayName = displayName,
+                                    parentRelativePath = parentRelativePath,
+                                )
+                                subfolders += SubfolderRef(docId, childRelPath)
+                            }
+
+                            AudioFileTypes.isAudioFile(displayName, mime) -> {
+                                val docUri =
+                                    DocumentsContract.buildDocumentUriUsingTree(treeUri, docId)
+                                        .toString()
+                                files += RawAudioFile(
+                                    documentUri = docUri,
+                                    treeUri = treeUriString,
+                                    relativePath = childRelPath,
+                                    fileName = displayName,
+                                    fileSize = size,
+                                    lastModified = lastModified,
+                                )
+                            }
+                        }
                     }
-
-                    AudioFileTypes.isAudioFile(displayName, mime) -> {
-                        val docUri = DocumentsContract
-                            .buildDocumentUriUsingTree(treeUri, docId)
-                            .toString()
-                        files += RawAudioFile(
-                            documentUri = docUri,
-                            treeUri = treeUriString,
-                            relativePath = childRelPath,
-                            fileName = displayName,
-                            fileSize = size,
-                            lastModified = lastModified,
-                        )
-                    }
-                    // else: non-audio file (image, txt …) — skip silently.
                 }
-            }
+        } catch (e: Exception) {
+            logger.e(TAG, "Failed to query $childrenUri", e)
         }
 
         for (sub in subfolders) {
-            walk(
-                treeUri = treeUri,
-                treeUriString = treeUriString,
-                parentDocId = sub.docId,
-                parentRelativePath = sub.relativePath,
-                folders = folders,
-                files = files,
-            )
+            walkSaf(treeUri, treeUriString, sub.docId, sub.relativePath, folders, files)
         }
     }
 
     private data class SubfolderRef(val docId: String, val relativePath: String)
-
-    private companion object {
-        const val TAG = "SafFolderScanner"
-
-        val PROJECTION = arrayOf(
-            DocumentsContract.Document.COLUMN_DOCUMENT_ID,
-            DocumentsContract.Document.COLUMN_DISPLAY_NAME,
-            DocumentsContract.Document.COLUMN_MIME_TYPE,
-            DocumentsContract.Document.COLUMN_SIZE,
-            DocumentsContract.Document.COLUMN_LAST_MODIFIED,
-        )
-
-        fun childRelativePath(parent: String, displayName: String): String =
-            if (parent.isEmpty()) displayName else "$parent/$displayName"
-    }
 }

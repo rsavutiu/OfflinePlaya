@@ -18,7 +18,7 @@
     <string name="home_label_add_folders">Add Folders</string>
     <string name="home_label_import_more_tracks">Import more tracks</string>
     <string name="home_title_start_your_music_journey">Start Your Music Journey</string>
-    <string name="home_label_select_folder">Select a folder to build your offline library.</string>
+    <string name="home_label_select_folder">Pick a folder with your music. Note: On modern Android, you cannot select the device root; please pick a subfolder like \"Music\".</string>
     <string name="home_status_picking_music_folder">Picking music folder</string>
     <string name="home_status_scanning">Scanning…</string>
     <string name="home_label_pick_music_folder">Pick music folder</string>
@@ -57,7 +57,10 @@
     <string name="track_details_bitrate">Bitrate</string>
     <string name="track_details_path">Path</string>
     <string name="track_details_status">Status</string>
-    <string name="track_details_playing_in">Playing in…</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Playing in %1$d second…</item>
+        <item quantity="other">Playing in %1$d seconds…</item>
+    </plurals>
     <string name="track_details_play_now">▶  Play now</string>
     <string name="track_details_kbps"> kbps</string>
 

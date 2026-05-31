@@ -14,7 +14,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Album
 import com.offlineplaya.shared.domain.model.Track
@@ -25,20 +24,20 @@ import com.offlineplaya.shared.presentation.ui.Orientation
 import com.offlineplaya.shared.presentation.ui.atoms.SectionLabel
 import com.offlineplaya.shared.presentation.ui.molecules.HomeHeader
 import com.offlineplaya.shared.presentation.ui.molecules.HomeStatsRow
-import com.offlineplaya.shared.presentation.ui.organisms.EmptyLibraryContent
 import com.offlineplaya.shared.presentation.ui.organisms.HomeBrowseGrid
 import com.offlineplaya.shared.presentation.ui.organisms.RecentAlbumsShelf
-import com.offlineplaya.shared.presentation.ui.preview.Preview
+import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
-import offlineplaya.shared.generated.resources.*
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.home_label_browse
+import offlineplaya.shared.generated.resources.home_label_recently_played
 import org.jetbrains.compose.resources.stringResource
 
 /**
  * Landing page. When the library has content (or a scan is in flight), shows
  * header + stats + recently-played + browse grid stacked into the available
  * height (no scroll — the grid absorbs leftover space via `weight(1f)`).
- * When the library is empty, swaps in the [EmptyLibraryContent] onboarding.
  */
 @Composable
 fun HomePage(
@@ -50,7 +49,6 @@ fun HomePage(
     playlistCount: Int,
     recentAlbums: List<Album>,
     representativeTrackOfAlbum: suspend (Long) -> Track? = { null },
-    onPickFolder: () -> Unit,
     onOpenLibrary: () -> Unit,
     onOpenAllTracks: () -> Unit,
     onOpenAlbums: () -> Unit,
@@ -68,35 +66,24 @@ fun HomePage(
         contentWindowInsets = WindowInsets(0),
         containerColor = MaterialTheme.colorScheme.background,
     ) { padding ->
-        if (trackCount > 0 || scanning) {
-            ResponsiveContent(modifier = Modifier.padding(padding)) {
-                PopulatedHome(
-                    status = status,
-                    trackCount = trackCount,
-                    folderCount = folderCount,
-                    albumCount = albumCount,
-                    artistCount = artistCount,
-                    playlistCount = playlistCount,
-                    recentAlbums = recentAlbums,
-                    representativeTrackOfAlbum = representativeTrackOfAlbum,
-                    scanning = scanning,
-                    onOpenAllTracks = onOpenAllTracks,
-                    onOpenAlbums = onOpenAlbums,
-                    onOpenArtists = onOpenArtists,
-                    onOpenPlaylists = onOpenPlaylists,
-                    onOpenAlbum = onOpenAlbum,
-                    onOpenSearch = onOpenSearch,
-                    onOpenSettings = onOpenSettings,
-                )
-            }
-        } else {
-            EmptyLibraryContent(
+        ResponsiveContent(modifier = Modifier.padding(padding)) {
+            PopulatedHome(
+                status = status,
+                trackCount = trackCount,
+                folderCount = folderCount,
+                albumCount = albumCount,
+                artistCount = artistCount,
+                playlistCount = playlistCount,
+                recentAlbums = recentAlbums,
+                representativeTrackOfAlbum = representativeTrackOfAlbum,
                 scanning = scanning,
-                onPickFolder = onPickFolder,
+                onOpenAllTracks = onOpenAllTracks,
+                onOpenAlbums = onOpenAlbums,
+                onOpenArtists = onOpenArtists,
+                onOpenPlaylists = onOpenPlaylists,
+                onOpenAlbum = onOpenAlbum,
+                onOpenSearch = onOpenSearch,
                 onOpenSettings = onOpenSettings,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding),
             )
         }
     }
@@ -202,7 +189,7 @@ private fun HomePageIdlePreview() {
             folderCount = 0,
             albumCount = 0, artistCount = 0, playlistCount = 0,
             recentAlbums = emptyList(),
-            onPickFolder = {}, onOpenLibrary = {}, onOpenAllTracks = {},
+            onOpenLibrary = {}, onOpenAllTracks = {},
             onOpenAlbums = {}, onOpenArtists = {},
             onOpenPlaylists = {}, onOpenSearch = {}, onOpenSettings = {},
         )
@@ -226,7 +213,7 @@ private fun HomePagePopulatedPreview() {
                 Album(3, "Shepherd Moons", 3, 1991, 13, 2_880_000),
                 Album(4, "Ten", 4, 1991, 11, 3_320_000),
             ),
-            onPickFolder = {}, onOpenLibrary = {}, onOpenAllTracks = {},
+            onOpenLibrary = {}, onOpenAllTracks = {},
             onOpenAlbums = {}, onOpenArtists = {},
             onOpenPlaylists = {}, onOpenSearch = {}, onOpenSettings = {},
         )

@@ -2,6 +2,7 @@ package com.offlineplaya.shared.data.image
 
 import co.touchlab.kermit.Logger
 import com.offlineplaya.shared.database.OfflinePlayaDatabase
+import com.offlineplaya.shared.domain.genre.RemoteGenreSource
 import com.offlineplaya.shared.domain.image.RemoteArtSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -35,7 +36,7 @@ internal class MusicBrainzArtSource(
     private val httpClient: OkHttpClient,
     private val json: Json,
     private val db: OfflinePlayaDatabase,
-) : RemoteArtSource {
+) : RemoteArtSource, RemoteGenreSource {
 
     private val mutex = Mutex()
     private val missKeys = mutableSetOf<String>()
@@ -228,6 +229,60 @@ internal class MusicBrainzArtSource(
             downloadCover(mbid)
         }
 
+    // ── Genre lookup (RemoteGenreSource) ──────────────────────────────
+
+    override suspend fun resolveGenre(artist: String, album: String): String? {
+        val key = "v${SOURCE_VERSION}:genre:${artist.lowercase()}|${album.lowercase()}"
+        if (isKnownMiss(key)) {
+            log.d { "resolveGenre('$artist' / '$album') skipped — persistent miss" }
+            return null
+        }
+
+        return mutex.withLock {
+            if (isKnownMiss(key)) return@withLock null
+            val genre = runCatching { fetchGenreViaMusicBrainz(artist, album) }
+                .onFailure { log.w(it) { "Genre lookup transient failure for $artist / $album" } }
+                .getOrNull()
+            if (genre == null) {
+                recordMiss(key)
+                log.d { "resolveGenre('$artist' / '$album') clean miss — saved" }
+            } else {
+                log.d { "resolveGenre('$artist' / '$album') → $genre" }
+            }
+            delay(RATE_LIMIT_DELAY_MS)
+            genre
+        }
+    }
+
+    private suspend fun fetchGenreViaMusicBrainz(artist: String, album: String): String? =
+        withContext(Dispatchers.IO) {
+            val mbid = findReleaseGroupMbid(artist, album) ?: return@withContext null
+            // Pull tags + genres for the release group. `genres` is the
+            // curated list (votes on canonical genres only); `tags` is the
+            // freeform community pool. Prefer the curated one, fall back to
+            // tags when MB hasn't assigned any genre yet.
+            val url = "https://musicbrainz.org/ws/2/release-group/$mbid?inc=tags+genres&fmt=json"
+            val request = Request.Builder()
+                .url(url)
+                .header("User-Agent", USER_AGENT)
+                .header("Accept", "application/json")
+                .build()
+            val body = httpClient.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) {
+                    throw ArtLookupException("MBz genre HTTP ${response.code} for $artist / $album")
+                }
+                response.body?.string() ?: return@withContext null
+            }
+            val parsed = runCatching { json.decodeFromString<ReleaseGroupTagsResponse>(body) }
+                .getOrElse {
+                    log.d(it) { "Failed to parse MBz tags response" }
+                    return@withContext null
+                }
+            val topGenre = parsed.genres.maxByOrNull { it.count }
+            val topTag = parsed.tags.maxByOrNull { it.count }
+            (topGenre?.name ?: topTag?.name)?.takeIf { it.isNotBlank() }
+        }
+
     private fun findReleaseGroupMbid(artist: String, album: String): String? {
         val query = "release:\"${album.escapeLucene()}\" AND artist:\"${artist.escapeLucene()}\""
         val url = "https://musicbrainz.org/ws/2/release-group/?query=${query.urlEncode()}&fmt=json&limit=10"
@@ -392,6 +447,24 @@ internal class MusicBrainzArtSource(
         val primaryType: String? = null,
     )
 
+    /**
+     * Tags-and-genres slice of a single release-group lookup. `genres` is the
+     * curated subset MusicBrainz exposes per release group; `tags` is the
+     * freeform community pool. The genre-burn flow prefers `genres` and falls
+     * back to `tags` only when the curated list is empty.
+     */
+    @Serializable
+    private data class ReleaseGroupTagsResponse(
+        val tags: List<TagEntry> = emptyList(),
+        val genres: List<TagEntry> = emptyList(),
+    )
+
+    @Serializable
+    private data class TagEntry(
+        val name: String,
+        val count: Int = 0,
+    )
+
     @Serializable
     private data class DeezerArtistSearchResponse(
         val data: List<DeezerArtist> = emptyList(),
@@ -478,8 +551,14 @@ internal class MusicBrainzArtSource(
     }
 }
 
-/** Public factory so DI doesn't have to know how to build the OkHttp client. */
-fun createMusicBrainzArtSource(db: OfflinePlayaDatabase): RemoteArtSource {
+/**
+ * Public factory so DI doesn't have to know how to build the OkHttp client.
+ * Returns the concrete class so the Koin module can bind one instance to
+ * both [RemoteArtSource] and [com.offlineplaya.shared.domain.genre.RemoteGenreSource]
+ * — the rate-limit mutex inside is per-instance, so sharing it means genre
+ * lookups and art lookups politely take turns instead of racing.
+ */
+internal fun createMusicBrainzSource(db: OfflinePlayaDatabase): MusicBrainzArtSource {
     val client = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
         .readTimeout(15, TimeUnit.SECONDS)
@@ -487,3 +566,7 @@ fun createMusicBrainzArtSource(db: OfflinePlayaDatabase): RemoteArtSource {
     val json = Json { ignoreUnknownKeys = true }
     return MusicBrainzArtSource(client, json, db)
 }
+
+/** Kept for callers that only need the art interface. */
+fun createMusicBrainzArtSource(db: OfflinePlayaDatabase): RemoteArtSource =
+    createMusicBrainzSource(db)

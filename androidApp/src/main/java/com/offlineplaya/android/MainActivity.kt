@@ -1,10 +1,15 @@
 package com.offlineplaya.android
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaScannerConnection
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -12,26 +17,31 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
-import org.koin.compose.KoinContext
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import com.offlineplaya.android.picker.OpenDocumentTreeContract
+import com.offlineplaya.android.ui.PermissionRequiredScreen
 import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
+import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
-import com.offlineplaya.shared.presentation.artwork.EmbedArtCoordinator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import com.offlineplaya.shared.presentation.ui.App
+import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 
 class MainActivity : ComponentActivity() {
@@ -46,6 +56,18 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+private fun checkMandatoryPermissions(context: Context): Boolean {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        Environment.isExternalStorageManager()
+    } else {
+        val read =
+            ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+        val write =
+            ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        read == PackageManager.PERMISSION_GRANTED && write == PackageManager.PERMISSION_GRANTED
+    }
+}
+
 /**
  * Android host for the shared [App]. Wires SAF folder picking (read-only +
  * read-write variants), hardware back into the [AppNavigator], and observes
@@ -57,7 +79,7 @@ private fun AndroidApp() {
     val themeStateHolder: ThemeStateHolder = koinInject()
     val artworkStateHolder: ArtworkStateHolder = koinInject()
     val coordinator: LibrarySyncCoordinator = koinInject()
-    val embedArtCoordinator: EmbedArtCoordinator = koinInject()
+    val burnMetadataCoordinator: BurnMetadataCoordinator = koinInject()
     val library: LibraryStateHolder = koinInject()
     val playlists: PlaylistStateHolder = koinInject()
     val musicPlayer: MusicPlayer = koinInject()
@@ -68,63 +90,81 @@ private fun AndroidApp() {
     val trackCount by library.totalTrackCount.collectAsState()
     val stack by navigator.stack.collectAsState()
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
 
-    // Audio-library permission. Granting this lets MediaStoreDeviceAudioScanner
-    // see music in folders SAF won't let users tree-pick (Download/, internal
-    // storage root). We ask once on first launch; if the user declines the
-    // app still works against any SAF folders they've added — they just won't
-    // see Downloads-style content.
-    val audioPermissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission(),
-    ) { granted ->
-        if (granted) coordinator.resyncAll()
-    }
-    LaunchedEffect(Unit) {
-        val perm = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            Manifest.permission.READ_MEDIA_AUDIO
-        } else {
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        }
-        if (ContextCompat.checkSelfPermission(context, perm) != PackageManager.PERMISSION_GRANTED) {
-            audioPermissionLauncher.launch(perm)
-        }
+    // Check permissions immediately on launch and every time app resumes.
+    var hasPermission by remember {
+        mutableStateOf(checkMandatoryPermissions(context))
     }
 
-    // Plain folder picker (read-only, used for the initial Pick Folder action).
-    val readPickerLauncher = rememberLauncherForActivityResult(OpenDocumentTreeContract()) { uri ->
-        if (uri == null) return@rememberLauncherForActivityResult
-        runCatching {
-            context.contentResolver.takePersistableUriPermission(
-                uri,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION,
-            )
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                hasPermission = checkMandatoryPermissions(context)
+                if (hasPermission) coordinator.resyncAll()
+            }
         }
-        val displayName = DocumentFile.fromTreeUri(context, uri)?.name
-            ?: uri.lastPathSegment
-            ?: "Folder"
-        coordinator.addAndSync(uri.toString(), displayName)
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
 
-    // Embed-cover picker. One-shot: the user picks a folder, we take write
-    // access for it, and immediately kick off the burn-art pass scoped to
-    // that tree URI. Completion bubbles back as a snackbar via
-    // EmbedArtCoordinator.events — no persistent state.
-    val embedPickerLauncher = rememberLauncherForActivityResult(
-        OpenDocumentTreeContract(requestWrite = true),
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { results ->
+        hasPermission = results.values.all { it }
+        if (hasPermission) coordinator.resyncAll()
+    }
+
+    if (!hasPermission) {
+        PermissionRequiredScreen {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                // Android 11+ Mandatory "All Files Access"
+                runCatching {
+                    val intent =
+                        Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
+                            data = "package:${context.packageName}".toUri()
+                        }
+                    context.startActivity(intent)
+                }.onFailure {
+                    context.startActivity(Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION))
+                }
+            } else {
+                // Older Android: Standard runtime storage permissions
+                permissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                )
+            }
+        }
+        return
+    }
+
+    // Standard activity-level logic only runs once permission is secured.
+    BackHandler(enabled = stack.size > 1) {
+        navigator.pop()
+    }
+
+    val readPickerLauncher = rememberLauncherForActivityResult(
+        OpenDocumentTreeContract(),
     ) { uri ->
         if (uri == null) return@rememberLauncherForActivityResult
         runCatching {
-            context.contentResolver.takePersistableUriPermission(
-                uri,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION or
-                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
-            )
+            val takeFlags =
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            context.contentResolver.takePersistableUriPermission(uri, takeFlags)
+        }.onFailure {
+            runCatching {
+                context.contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            }
         }
-        embedArtCoordinator.embedFolder(uri.toString())
-    }
-
-    BackHandler(enabled = stack.size > 1) {
-        navigator.pop()
+        val displayName =
+            DocumentFile.fromTreeUri(context, uri)?.name ?: uri.lastPathSegment ?: "Folder"
+        coordinator.addAndSync(uri.toString(), displayName)
     }
 
     App(
@@ -132,7 +172,7 @@ private fun AndroidApp() {
         library = library,
         playlists = playlists,
         syncCoordinator = coordinator,
-        embedArtCoordinator = embedArtCoordinator,
+        burnMetadataCoordinator = burnMetadataCoordinator,
         musicPlayer = musicPlayer,
         equalizerStateHolder = equalizerStateHolder,
         themePreferences = themePreferences,
@@ -143,7 +183,37 @@ private fun AndroidApp() {
         onColorModeChange = themeStateHolder::setColorMode,
         onDynamicColorChange = themeStateHolder::setUseDynamicColor,
         onDownloadRemoteArtChange = artworkStateHolder::setDownloadRemoteArt,
-        onEmbedFolderClick = { embedPickerLauncher.launch(Unit) },
+        onAddDirectFolder = { path ->
+            val name = path.substringAfterLast('/')
+            coordinator.addAndSync(path, name)
+        },
+        onManageExternalStorageClick = {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                runCatching {
+                    val intent =
+                        Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
+                            data = Uri.parse("package:${context.packageName}")
+                        }
+                    context.startActivity(intent)
+                }.onFailure {
+                    // Fallback to the general list if package-specific fails
+                    val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+                    context.startActivity(intent)
+                }
+            } else {
+                // On older versions, just trigger a media scan of common folders
+                MediaScannerConnection.scanFile(
+                    context,
+                    arrayOf(
+                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).absolutePath,
+                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath
+                    ),
+                    null
+                ) { path, _ ->
+                    android.util.Log.d("OfflinePlaya", "Scanned $path")
+                }
+            }
+        },
         dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
     )
 }

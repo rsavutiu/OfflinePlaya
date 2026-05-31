@@ -17,17 +17,16 @@ import com.offlineplaya.shared.domain.repository.PlaylistRepository
 import com.offlineplaya.shared.domain.repository.QueueRepository
 import com.offlineplaya.shared.domain.repository.SettingsRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
-import com.offlineplaya.shared.domain.usecase.EmbedMissingArtUseCase
+import com.offlineplaya.shared.domain.usecase.BurnMetadataUseCase
 import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
-import com.offlineplaya.shared.presentation.artwork.EmbedArtCoordinator
 import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
+import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
-import com.offlineplaya.shared.util.AppLogger
 import com.offlineplaya.shared.util.createLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -67,14 +66,15 @@ val sharedModule: Module = module {
         )
     }
 
-    // Embed-missing-album-art pass. RemoteArtSource + AlbumArtWriter come
-    // from the platform module.
+    // Burn-metadata pass. Combines art and genre lookups/writes.
     factory {
-        EmbedMissingArtUseCase(
+        BurnMetadataUseCase(
             tracks = get(),
-            remoteSource = get(),
-            folderSource = get(),
-            writer = get(),
+            artSource = get(),
+            folderArtSource = get(),
+            artWriter = get(),
+            genreSource = get(),
+            genreWriter = get(),
             logger = get(),
         )
     }
@@ -115,10 +115,9 @@ val sharedModule: Module = module {
         )
     }
 
-    // Embed-art coordinator: runs the per-folder embed pass in-process and
-    // emits a one-shot Event for the Settings page to snackbar.
+    // Burn-metadata coordinator: runs the unified pass and exposes hot state.
     single {
-        EmbedArtCoordinator(
+        BurnMetadataCoordinator(
             useCase = get(),
             scope = get(),
         )
@@ -148,10 +147,15 @@ val sharedModule: Module = module {
 
     // Equalizer state — observed by the UI and by the platform audio-effect
     // driver. Lives in shared so future iOS/Desktop targets can reuse it.
+    // Takes the genre use case so EQ Auto can opportunistically tag tracks
+    // whose files lack a genre tag, lighting up the right preset on the
+    // next playback frame without the user having to run the burn pass.
     single {
         EqualizerStateHolder(
             settings = get(),
             musicPlayer = get(),
+            tracks = get(),
+            burnMetadata = get(),
             scope = get(),
         )
     }

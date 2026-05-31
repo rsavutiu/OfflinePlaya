@@ -134,6 +134,14 @@ internal class SqlTrackRepository(
             queries.setCanonicalGenre(genre.name, id)
         }
 
+    override suspend fun setRawAndCanonicalGenre(
+        id: Long,
+        rawGenre: String,
+        canonical: CanonicalGenre,
+    ) = withContext(ioDispatcher) {
+        queries.setRawAndCanonicalGenre(genre = rawGenre, canonical_genre = canonical.name, id = id)
+    }
+
     override suspend fun updateForeignKeys(id: Long, artistId: Long?, albumId: Long?) =
         withContext(ioDispatcher) {
             queries.updateForeignKeys(artist_id = artistId, album_id = albumId, id = id)

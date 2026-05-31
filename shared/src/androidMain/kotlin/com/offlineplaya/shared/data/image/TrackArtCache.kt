@@ -1,8 +1,10 @@
 package com.offlineplaya.shared.data.image
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import androidx.core.content.FileProvider
+import com.offlineplaya.shared.data.image.TrackArtCache.uriForTrack
 import com.offlineplaya.shared.domain.model.Track
 import java.io.File
 
@@ -106,7 +108,44 @@ object TrackArtCache {
     private fun uriForFile(context: Context, file: File): Uri? {
         if (!file.exists()) return null
         return runCatching {
-            FileProvider.getUriForFile(context, authority(context), file)
+            val uri = FileProvider.getUriForFile(context, authority(context), file)
+            grantToCrossProcessConsumers(context, uri)
+            uri
         }.getOrNull()
     }
+
+    /**
+     * The FileProvider is declared `exported="false"`, so any other process
+     * that tries to read the URI directly (SystemUI's lock-screen media
+     * controls, Android Auto / GearHead, the Bluetooth A2DP avrcp surface)
+     * crashes with SecurityException unless we explicitly grant it access.
+     *
+     * `grantUriPermission` is per-(package, uri) and lives until reboot or an
+     * explicit revoke — calling it repeatedly with the same args is cheap.
+     * We grant to a fixed allowlist of known media surfaces; anything else
+     * (e.g. third-party screen-mirror apps) would have to be added here.
+     */
+    private fun grantToCrossProcessConsumers(context: Context, uri: Uri) {
+        CROSS_PROCESS_CONSUMERS.forEach { pkg ->
+            runCatching {
+                context.grantUriPermission(pkg, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            // grantUriPermission throws if the target package isn't installed.
+            // That's fine on devices without Auto / Wear — just swallow it.
+        }
+    }
+
+    private val CROSS_PROCESS_CONSUMERS = listOf(
+        // Lock-screen media controls / notification shade.
+        "com.android.systemui",
+        // Android Auto head-unit projection.
+        "com.google.android.projection.gearhead",
+        // Bluetooth media stack (used by car AVRCP displays).
+        "com.android.bluetooth",
+        "com.android.bluetooth.services",
+        // Wear OS companion.
+        "com.google.android.wearable.app",
+        // Assistant (queries now-playing for "what's playing?").
+        "com.google.android.googlequicksearchbox",
+    )
 }

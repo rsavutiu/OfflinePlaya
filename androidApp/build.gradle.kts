@@ -52,6 +52,13 @@ kotlin {
 dependencies {
     implementation(project(":shared"))
 
+    val compose = ComposePlugin.Dependencies(project)
+    implementation(compose.runtime)
+    implementation(compose.foundation)
+    implementation(compose.material3)
+    implementation(compose.ui)
+    implementation(compose.materialIconsExtended)
+
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
@@ -69,9 +76,9 @@ dependencies {
     implementation(libs.androidx.media3.common)
 
     implementation(libs.androidx.work.runtime)
+    implementation(libs.lifecycle.process)
 
     // Compose Preview: annotation (always) + renderer (debug only, for Android Studio)
-    val compose = ComposePlugin.Dependencies(project)
     implementation(compose.components.uiToolingPreview)
     debugImplementation(compose.uiTooling)
 }
