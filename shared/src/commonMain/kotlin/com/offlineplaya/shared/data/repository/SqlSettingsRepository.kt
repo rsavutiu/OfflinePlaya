@@ -18,7 +18,7 @@ import kotlinx.coroutines.withContext
 
 internal class SqlSettingsRepository(
     private val db: OfflinePlayaDatabase,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : SettingsRepository {
 
     private val queries get() = db.settingQueries

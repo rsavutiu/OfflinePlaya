@@ -33,6 +33,8 @@ import com.offlineplaya.shared.presentation.ui.molecules.formatDuration
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.cd_now_playing
 import offlineplaya.shared.generated.resources.cd_remove_from_queue
@@ -47,7 +49,7 @@ import org.jetbrains.compose.resources.stringResource
  */
 @Composable
 fun QueueList(
-    tracks: List<Track>,
+    tracks: PersistentList<Track>,
     currentIndex: Int,
     onJumpTo: (Int) -> Unit,
     onRemove: (Int) -> Unit,
@@ -161,7 +163,7 @@ private fun QueueListPopulatedPreview() {
     PreviewTheme {
         Surface {
             QueueList(
-                tracks = listOf(
+                tracks = persistentListOf(
                     sampleQueueTrack(1, "Once", "Pearl Jam"),
                     sampleQueueTrack(2, "Even Flow", "Pearl Jam"),
                     sampleQueueTrack(3, "Alive", "Pearl Jam"),
@@ -179,7 +181,7 @@ private fun QueueListPopulatedPreview() {
 private fun QueueListEmptyPreview() {
     PreviewTheme(darkTheme = true) {
         Surface {
-            QueueList(tracks = emptyList(), currentIndex = -1, onJumpTo = {}, onRemove = {})
+            QueueList(tracks = persistentListOf(), currentIndex = -1, onJumpTo = {}, onRemove = {})
         }
     }
 }

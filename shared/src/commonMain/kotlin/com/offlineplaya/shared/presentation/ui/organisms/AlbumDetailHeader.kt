@@ -36,6 +36,7 @@ import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.library_album_detail_play
 import offlineplaya.shared.generated.resources.library_album_detail_track
@@ -61,7 +62,7 @@ fun AlbumDetailHeader(
     modifier: Modifier = Modifier,
 ) {
     val gradient = Brush.verticalGradient(
-        colors = listOf(
+        colors = persistentListOf(
             MaterialTheme.colorScheme.primary.copy(alpha = 0.25f),
             MaterialTheme.colorScheme.background,
         ),

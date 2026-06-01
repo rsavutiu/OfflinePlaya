@@ -18,14 +18,16 @@ import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun LibraryFolderDetailPage(
     folderName: String,
-    subfolders: List<Folder>,
-    tracks: List<Track>,
-    availablePlaylists: List<Playlist>,
+    subfolders: PersistentList<Folder>,
+    tracks: PersistentList<Track>,
+    availablePlaylists: PersistentList<Playlist>,
     onFolderClick: (Long) -> Unit,
     onPlayTracks: (List<Track>, Int) -> Unit,
     onPlayNext: (Track) -> Unit,
@@ -76,12 +78,12 @@ private fun LibraryFolderDetailPagePreview() {
     PreviewTheme {
         LibraryFolderDetailPage(
             folderName = "Pearl Jam",
-            subfolders = listOf(
+            subfolders = persistentListOf(
                 Folder(10, "t", "Pearl Jam/Ten", "Ten", 1L, 11),
                 Folder(11, "t", "Pearl Jam/Vs.", "Vs.", 1L, 12),
             ),
-            tracks = emptyList(),
-            availablePlaylists = emptyList(),
+            tracks = persistentListOf(),
+            availablePlaylists = persistentListOf(),
             onFolderClick = {},
             onPlayTracks = { _, _ -> },
             onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },

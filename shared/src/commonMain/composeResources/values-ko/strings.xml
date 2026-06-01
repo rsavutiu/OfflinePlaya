@@ -13,7 +13,6 @@
     <string name="home_label_add_folders">폴더 추가</string>
     <string name="home_label_import_more_tracks">추가 트랙 가져오기</string>
     <string name="home_title_start_your_music_journey">음악 여행 시작</string>
-    <string name="home_label_select_folder">오프라인 라이브러리를 만들기 위해 폴더를 선택하세요.</string>
     <string name="home_status_picking_music_folder">음악 폴더 선택 중</string>
     <string name="home_status_scanning">스캔 중…</string>
     <string name="home_label_pick_music_folder">음악 폴더 선택</string>
@@ -51,8 +50,6 @@
     <string name="sync_status_completed">총 %1$d 트랙을 %2$d 폴더에서 스캔했습니다</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d 실패)</string>
     <string name="sync_status_failed">스캔 실패: %1$s</string>
-
-    <!-- Auto-translated to Korean via local LLM; review and refine. -->
     <string name="home_greeting_morning">좋은 아침입니다</string>
     <string name="home_greeting_afternoon">좋은 오후입니다</string>
     <string name="home_greeting_evening">좋은 저녁입니다</string>
@@ -151,4 +148,7 @@
     <string name="cd_delete_playlist">플레이리스트 삭제</string>
     <string name="cd_new_playlist">새 플레이리스트</string>
     <string name="cd_repeat_mode">반복: %1$s</string>
+
+    <!-- Auto-translated to Korean via local LLM; review and refine. -->
+    <string name="home_label_select_folder">음악이 있는 폴더를 선택하세요. 현대 Android에서는 시스템이 표준 미디어 폴더(음악, 다운로드 등)를 선택하는 것을 차단합니다 — Music/Albums와 같은 하위 폴더를 선택하세요. 차단된 폴더의 음악은 음악 접근 권한을 통해 라이브러리에 계속 나타납니다. 태그 블랭킹 기능을 위해만 폴더를 선택해야 합니다.</string>
 </resources>

@@ -87,8 +87,6 @@ fun App(
     onColorModeChange: (ColorMode) -> Unit,
     onDynamicColorChange: (Boolean) -> Unit,
     onDownloadRemoteArtChange: (Boolean) -> Unit,
-    onAddDirectFolder: (String) -> Unit,
-    onManageExternalStorageClick: () -> Unit,
     dynamicColorSupported: Boolean,
 ) {
     OfflinePlayaTheme(preferences = themePreferences) {
@@ -105,6 +103,11 @@ fun App(
         }
         val onPlayTracks: (List<Track>, Int) -> Unit = { tracks, index ->
             musicPlayer.setQueue(tracks, index)
+            // Mark the played track's album as just-used so the home
+            // page's cover-fan shelf reflects what the user actually
+            // listens to. Null albumId tracks (mid-scan, no metadata
+            // yet) are silently skipped inside recordAlbumUse.
+            tracks.getOrNull(index)?.albumId?.let { library.recordAlbumUse(it) }
             navigator.push(AppDestination.NowPlaying)
         }
         val onPlayNext: (Track) -> Unit = { musicPlayer.addNext(it) }
@@ -169,8 +172,6 @@ fun App(
                             onDownloadRemoteArtChange = onDownloadRemoteArtChange,
                             onBurnMetadataClick = { burnMetadataCoordinator.start() },
                             onAcknowledgeBurnReport = { burnMetadataCoordinator.acknowledge() },
-                            onAddDirectFolder = onAddDirectFolder,
-                            onManageExternalStorageClick = onManageExternalStorageClick,
                             dynamicColorSupported = dynamicColorSupported,
                             onTabSelected = onTabSelected,
                             onPlayTracks = onPlayTracks,
@@ -191,7 +192,7 @@ private fun DestinationContent(
     navigator: AppNavigator,
     library: LibraryStateHolder,
     playlists: PlaylistStateHolder,
-    availablePlaylists: List<com.offlineplaya.shared.domain.model.Playlist>,
+    availablePlaylists: kotlinx.collections.immutable.PersistentList<com.offlineplaya.shared.domain.model.Playlist>,
     syncCoordinator: com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator,
     musicPlayer: MusicPlayer,
     equalizerStateHolder: EqualizerStateHolder,
@@ -207,8 +208,6 @@ private fun DestinationContent(
     onDownloadRemoteArtChange: (Boolean) -> Unit,
     onBurnMetadataClick: () -> Unit,
     onAcknowledgeBurnReport: () -> Unit,
-    onManageExternalStorageClick: () -> Unit,
-    onAddDirectFolder: (String) -> Unit,
     dynamicColorSupported: Boolean,
     onTabSelected: (LibraryTab) -> Unit,
     onPlayTracks: (List<Track>, Int) -> Unit,
@@ -231,6 +230,11 @@ private fun DestinationContent(
                 val albums by library.allAlbums.collectAsState()
                 val artists by library.allArtists.collectAsState()
                 val playlistList by playlists.allPlaylists.collectAsState()
+                // Recent albums = a persisted, append-only list driven
+                // by playback (not the full alphabetical library), so
+                // the home grid's fans stay empty on a fresh install
+                // and only grow when the user actually plays something.
+                val recentAlbums by library.recentAlbums.collectAsState()
                 HomePage(
                     status = syncStatus,
                     trackCount = trackCount,
@@ -238,7 +242,7 @@ private fun DestinationContent(
                     albumCount = albums.size,
                     artistCount = artists.size,
                     playlistCount = playlistList.size,
-                    recentAlbums = albums.take(10),
+                    recentAlbums = recentAlbums,
                     representativeTrackOfAlbum = { id -> library.representativeTrackOfAlbum(id) },
                     onOpenLibrary = { navigator.push(AppDestination.LibraryArtists) },
                     onOpenAllTracks = { navigator.push(AppDestination.LibraryFlat) },
@@ -265,8 +269,7 @@ private fun DestinationContent(
                     onDownloadRemoteArtChange = onDownloadRemoteArtChange,
                     onBurnMetadataClick = onBurnMetadataClick,
                     onAcknowledgeBurnReport = onAcknowledgeBurnReport,
-                    onManageExternalStorageClick = onManageExternalStorageClick,
-                    onAddDirectFolder = onAddDirectFolder,
+                    onPickFolder = onPickFolder,
                     onRescanAll = { syncCoordinator.resyncAll() },
                     onRemoveManagedRoot = { uri -> syncCoordinator.removeManagedRoot(uri) },
                     onOpenEqualizer = { navigator.push(AppDestination.Equalizer) },
@@ -334,7 +337,7 @@ private fun DestinationContent(
                 }
                 val tracks by remember(dest.playlistId) {
                     playlists.tracksIn(dest.playlistId)
-                }.collectAsState(initial = emptyList<Track>())
+                }.collectAsState(initial = kotlinx.collections.immutable.persistentListOf<Track>())
 
                 PlaylistDetailPage(
                     playlistName = playlist?.name ?: "Loading…",
@@ -381,7 +384,7 @@ private fun DestinationContent(
                 }
                 val albums by remember(dest.artistId) {
                     library.albumsByArtist(dest.artistId)
-                }.collectAsState(initial = emptyList<Album>())
+                }.collectAsState(initial = kotlinx.collections.immutable.persistentListOf<Album>())
 
                 LibraryArtistDetailPage(
                     artist = artist,
@@ -418,7 +421,7 @@ private fun DestinationContent(
                 }
                 val tracks by remember(dest.albumId) {
                     library.tracksByAlbum(dest.albumId)
-                }.collectAsState(initial = emptyList<Track>())
+                }.collectAsState(initial = kotlinx.collections.immutable.persistentListOf<Track>())
 
                 LibraryAlbumDetailPage(
                     album = album,
@@ -454,10 +457,10 @@ private fun DestinationContent(
                 }
                 val subfolders by remember(dest.folderId) {
                     library.childFolders(dest.folderId)
-                }.collectAsState(initial = emptyList<Folder>())
+                }.collectAsState(initial = kotlinx.collections.immutable.persistentListOf<Folder>())
                 val tracks by remember(dest.folderId) {
                     library.tracksInFolder(dest.folderId)
-                }.collectAsState(initial = emptyList<Track>())
+                }.collectAsState(initial = kotlinx.collections.immutable.persistentListOf<Track>())
 
                 LibraryFolderDetailPage(
                     folderName = folder?.displayName ?: "Loading…",

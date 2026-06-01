@@ -15,6 +15,8 @@ import com.offlineplaya.shared.presentation.ui.molecules.ArtistRow
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.empty_artist_subtitle
 import offlineplaya.shared.generated.resources.empty_artist_title
@@ -22,7 +24,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ArtistList(
-    artists: List<Artist>,
+    artists: PersistentList<Artist>,
     onArtistClick: (Long) -> Unit,
     onPlayArtist: (Artist) -> Unit,
     modifier: Modifier = Modifier,
@@ -64,7 +66,7 @@ private fun ArtistListPopulatedPreview() {
     PreviewTheme {
         Surface {
             ArtistList(
-                artists = listOf(
+                artists = persistentListOf(
                     Artist(1, "Aphex Twin", albumCount = 6, trackCount = 92),
                     Artist(2, "Boards of Canada", albumCount = 4, trackCount = 48),
                     Artist(3, "Pearl Jam", albumCount = 11, trackCount = 142),
@@ -81,7 +83,7 @@ private fun ArtistListPopulatedPreview() {
 private fun ArtistListEmptyPreview() {
     PreviewTheme {
         Surface {
-            ArtistList(artists = emptyList(), onArtistClick = {}, onPlayArtist = {})
+            ArtistList(artists = persistentListOf(), onArtistClick = {}, onPlayArtist = {})
         }
     }
 }

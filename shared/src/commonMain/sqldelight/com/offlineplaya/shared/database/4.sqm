@@ -1,0 +1,12 @@
+-- Add the RecentAlbum table backing the home-page cover-fan shelf.
+-- See RecentAlbum.sq for the column comments; this file exists only so
+-- existing installs (which already had Album + everything else) gain
+-- the table on first launch after the upgrade.
+
+CREATE TABLE IF NOT EXISTS RecentAlbum (
+    album_id INTEGER PRIMARY KEY NOT NULL REFERENCES Album(id) ON DELETE CASCADE,
+    last_used_at INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_recent_album_last_used_at
+    ON RecentAlbum(last_used_at DESC);

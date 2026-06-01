@@ -21,7 +21,7 @@ import kotlinx.coroutines.withContext
 internal class SqlTrackRepository(
     private val db: OfflinePlayaDatabase,
     private val logger: AppLogger,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : TrackRepository {
 
     private companion object {

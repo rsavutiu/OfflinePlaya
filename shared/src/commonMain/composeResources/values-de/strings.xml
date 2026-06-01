@@ -13,7 +13,6 @@
     <string name="home_label_add_folders">Ordner hinzufügen</string>
     <string name="home_label_import_more_tracks">Weitere Titel importieren</string>
     <string name="home_title_start_your_music_journey">Deine Musikreise starten</string>
-    <string name="home_label_select_folder">Wähle einen Ordner, um deine Offline-Bibliothek zu erstellen.</string>
     <string name="home_status_picking_music_folder">Musikordner auswählen</string>
     <string name="home_status_scanning">Scanne…</string>
     <string name="home_label_pick_music_folder">Musikordner auswählen</string>
@@ -51,8 +50,6 @@
     <string name="sync_status_completed">Gescannt %1$d Titel über %2$d Ordner</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d fehlgeschlagen)</string>
     <string name="sync_status_failed">Scan fehlgeschlagen: %1$s</string>
-
-    <!-- Auto-translated to German via local LLM; review and refine. -->
     <string name="home_greeting_morning">Guten Morgen</string>
     <string name="home_greeting_afternoon">Guten Tag</string>
     <string name="home_greeting_evening">Guten Abend</string>
@@ -151,4 +148,7 @@
     <string name="cd_delete_playlist">Playlist löschen</string>
     <string name="cd_new_playlist">Neue Playlist</string>
     <string name="cd_repeat_mode">Wiederholen: %1$s</string>
+
+    <!-- Auto-translated to German via local LLM; review and refine. -->
+    <string name="home_label_select_folder">Wählen Sie einen Ordner mit Ihrer Musik aus. Auf modernen Android-Geräten blockiert das System das Auswählen der Standardmediaverzeichnisse (Music, Downloads usw.) — navigieren Sie in ein Unterverzeichnis wie Music/Albums und wählen Sie dieses stattdessen aus. Audiodateien in den blockierten Verzeichnissen werden immer noch in Ihrer Bibliothek angezeigt, da Sie das music-access-Recht haben; Sie müssen lediglich Ordner für die Funktion zur Beschriftung von Tags auswählen.</string>
 </resources>

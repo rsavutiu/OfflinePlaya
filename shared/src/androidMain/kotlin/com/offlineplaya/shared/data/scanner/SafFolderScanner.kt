@@ -12,13 +12,15 @@ import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.File
 
 /**
- * [FolderScanner] that handles both SAF (content://) and direct filesystem (file://)
- * URIs. SAF is used for standard user-picked folders; direct access is used
- * as a fallback when the user grants MANAGE_EXTERNAL_STORAGE to bypass
- * "To protect your privacy" system errors.
+ * [FolderScanner] backed entirely by SAF (Storage Access Framework). Every
+ * managed root is a `content://...tree/...` URI obtained from the system
+ * folder picker, which is the only path Google Play allows for a music
+ * player without the MANAGE_EXTERNAL_STORAGE permission. Files outside any
+ * SAF-picked tree are still visible to the user via
+ * [MediaStoreDeviceAudioScanner] (read-only) but can't be written to —
+ * tag-burning is intentionally scoped to SAF-picked roots only.
  */
 internal class SafFolderScanner(
     private val context: Context,
@@ -42,65 +44,7 @@ internal class SafFolderScanner(
     }
 
     override suspend fun scan(treeUri: String): ScanResult = withContext(ioDispatcher) {
-        if (treeUri.startsWith("file://")) {
-            scanDirect(treeUri)
-        } else {
-            scanSaf(treeUri)
-        }
-    }
-
-    private fun scanDirect(treeUri: String): ScanResult {
-        logger.i(TAG, "Scanning direct path: $treeUri")
-        val path = treeUri.removePrefix("file://")
-        val root = File(path)
-        if (!root.exists() || !root.isDirectory) {
-            logger.e(TAG, "Direct path does not exist or is not a directory: $path")
-            return ScanResult(emptyList(), emptyList())
-        }
-
-        val folders = mutableListOf<AudioFolder>()
-        val files = mutableListOf<RawAudioFile>()
-
-        folders += AudioFolder(
-            treeUri = treeUri,
-            relativePath = "",
-            displayName = root.name.ifBlank { "Folder" },
-            parentRelativePath = null,
-        )
-
-        walkDirect(root, treeUri, "", folders, files)
-        logger.i(TAG, "Direct scan complete: ${folders.size} folders, ${files.size} files")
-        return ScanResult(folders, files)
-    }
-
-    private fun walkDirect(
-        dir: File,
-        treeUri: String,
-        parentRelPath: String,
-        folders: MutableList<AudioFolder>,
-        files: MutableList<RawAudioFile>,
-    ) {
-        dir.listFiles()?.forEach { file ->
-            val relPath = childRelativePath(parentRelPath, file.name)
-            if (file.isDirectory) {
-                folders += AudioFolder(
-                    treeUri = treeUri,
-                    relativePath = relPath,
-                    displayName = file.name,
-                    parentRelativePath = parentRelPath,
-                )
-                walkDirect(file, treeUri, relPath, folders, files)
-            } else if (AudioFileTypes.isAudioFile(file.name, null)) {
-                files += RawAudioFile(
-                    documentUri = "file://${file.absolutePath}",
-                    treeUri = treeUri,
-                    relativePath = relPath,
-                    fileName = file.name,
-                    fileSize = file.length(),
-                    lastModified = file.lastModified(),
-                )
-            }
-        }
+        scanSaf(treeUri)
     }
 
     private suspend fun scanSaf(treeUri: String): ScanResult {

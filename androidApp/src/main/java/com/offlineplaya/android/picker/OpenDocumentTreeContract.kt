@@ -7,12 +7,20 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 
 /**
- * Robust wrapper for [Intent.ACTION_OPEN_DOCUMENT_TREE].
- * 
- * NOTE: We do NOT add extra flags like FLAG_GRANT_PERSISTABLE_URI_PERMISSION here
- * because doing so triggers the "To protect your privacy" error in the system 
- * picker for many subfolders. We take the persistable permission AFTER the 
- * user has picked the folder in MainActivity.
+ * Thin wrapper around [Intent.ACTION_OPEN_DOCUMENT_TREE].
+ *
+ * Deliberately minimal: no `EXTRA_INITIAL_URI` (DocumentsUI half-breaks the
+ * picker when seeded with a URI the app hasn't been granted access to yet),
+ * no `FLAG_GRANT_PERSISTABLE_URI_PERMISSION` on the launch intent (which
+ * makes the picker stricter about which sub-trees it allows). The
+ * persistable permission is taken in `MainActivity` after the user picks,
+ * which is what Google's own samples do.
+ *
+ * The OS-level block on standard media dirs (`Music/`, `Download/`,
+ * `Pictures/`, etc.) and the storage root cannot be bypassed without
+ * MANAGE_EXTERNAL_STORAGE — which Google Play disallows for music players.
+ * Users have to drill into a sub-folder of those to pick. The home-page
+ * hint copy explains that.
  */
 class OpenDocumentTreeContract(
     private val requestWrite: Boolean = false,

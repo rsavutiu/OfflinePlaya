@@ -105,11 +105,12 @@ No instrumented (`connectedAndroidTest`) suite exists in this repo.
 - **`pwsh` is not on this machine.** Only Windows PowerShell 5.1 (`powershell.exe`). The driver uses
   `param()` + `switch` so it's 5.1-compatible; if you add features, don't reach for ternary (`?:`)
   or null-coalescing (`??`).
-- **First-run permission gate.** On a fresh install the
-  app's [MainActivity.kt:118](../../../androidApp/src/main/java/com/offlineplaya/android/MainActivity.kt:118)
-  blocks the UI behind a `PermissionRequiredScreen` until `MANAGE_EXTERNAL_STORAGE` is granted. The
-  driver can't grant that — tap through the system settings screen on the device once, then re-
-  `launch`. Subsequent runs skip it.
+- **First-run permission prompt.** On a fresh install the app shows a
+  `PermissionRequiredScreen` that fires the standard runtime permission
+  prompt for `READ_MEDIA_AUDIO` (Android 13+) or `READ_EXTERNAL_STORAGE`
+  (12 and older). The driver can't auto-tap "Allow" on the system dialog —
+  approve it manually once on the device, then re-`launch`. Subsequent
+  runs skip it.
 - **First frame can take longer than 4s on a cold start.** The default `-WaitMs 4000` is fine after
   the app's been launched once today; on a real cold boot, pass `-WaitMs 8000` or screenshot will
   catch the splash.

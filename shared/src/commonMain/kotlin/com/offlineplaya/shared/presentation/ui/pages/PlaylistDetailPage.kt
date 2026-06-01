@@ -35,6 +35,8 @@ import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.cd_delete_playlist
 import offlineplaya.shared.generated.resources.cd_rename_playlist
@@ -48,8 +50,8 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun PlaylistDetailPage(
     playlistName: String,
-    tracks: List<Track>,
-    availablePlaylists: List<Playlist>,
+    tracks: PersistentList<Track>,
+    availablePlaylists: PersistentList<Playlist>,
     onPlayTracks: (List<Track>, Int) -> Unit,
     onPlayNext: (Track) -> Unit,
     onAddToQueue: (Track) -> Unit,
@@ -160,11 +162,11 @@ private fun PlaylistDetailPagePopulatedPreview() {
     PreviewTheme {
         PlaylistDetailPage(
             playlistName = "Morning Run",
-            tracks = listOf(
+            tracks = persistentListOf(
                 samplePlaylistTrack(1, "Once", "Pearl Jam"),
                 samplePlaylistTrack(2, "Cherub Rock", "Smashing Pumpkins"),
             ),
-            availablePlaylists = emptyList(),
+            availablePlaylists = persistentListOf(),
             onPlayTracks = { _, _ -> },
             onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
             onRename = {},
@@ -180,8 +182,8 @@ private fun PlaylistDetailPageEmptyPreview() {
     PreviewTheme(darkTheme = true) {
         PlaylistDetailPage(
             playlistName = "Empty",
-            tracks = emptyList(),
-            availablePlaylists = emptyList(),
+            tracks = persistentListOf(),
+            availablePlaylists = persistentListOf(),
             onPlayTracks = { _, _ -> },
             onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
             onRename = {},

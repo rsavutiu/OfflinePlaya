@@ -24,7 +24,6 @@ import com.offlineplaya.shared.domain.model.ThemePreferences
 import com.offlineplaya.shared.domain.usecase.EmbedReport
 import com.offlineplaya.shared.presentation.ui.LocalOrientation
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
-import com.offlineplaya.shared.presentation.ui.molecules.FolderPickerBrowser
 import com.offlineplaya.shared.presentation.ui.molecules.RemoveManagedRootDialog
 import com.offlineplaya.shared.presentation.ui.molecules.SettingsLinkSection
 import com.offlineplaya.shared.presentation.ui.organisms.AppearanceSettings
@@ -40,8 +39,10 @@ import offlineplaya.shared.generated.resources.top_bar_settings
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * Settings page. Five sections in portrait, two columns in landscape so the
- * page fits on small screens. Remove-folder is gated by a confirmation dialog.
+ * Settings page. Sections stack vertically in portrait and split into two
+ * columns in landscape so the page fits on small screens. Removing a folder
+ * is gated by a confirmation dialog because it drops every track row that
+ * came from that tree.
  */
 @Composable
 fun SettingsPage(
@@ -56,17 +57,15 @@ fun SettingsPage(
     onDownloadRemoteArtChange: (Boolean) -> Unit,
     onBurnMetadataClick: () -> Unit,
     onAcknowledgeBurnReport: () -> Unit,
-    onAddDirectFolder: (String) -> Unit,
+    onPickFolder: () -> Unit,
     onRescanAll: () -> Unit,
     onRemoveManagedRoot: (String) -> Unit,
     onOpenEqualizer: () -> Unit,
     onOpenDesignSystem: () -> Unit,
-    onManageExternalStorageClick: () -> Unit,
     onBack: () -> Unit,
     dynamicColorSupported: Boolean = true,
 ) {
     var pendingRemoval by remember { mutableStateOf<ManagedTreeRoot?>(null) }
-    var showDirectPicker by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = modifier,
@@ -100,7 +99,7 @@ fun SettingsPage(
                 LibrarySettings(
                     managedRoots = managedRoots,
                     isScanning = isScanning,
-                    onAddFolder = { showDirectPicker = true },
+                    onAddFolder = onPickFolder,
                     onRescanAll = onRescanAll,
                     onRemoveManagedRoot = { pendingRemoval = it },
                 )
@@ -113,18 +112,11 @@ fun SettingsPage(
                 )
             }
             val developer: @Composable () -> Unit = {
-                Column {
-                    SettingsLinkSection(
-                        sectionTitle = "Permissions",
-                        actionLabel = if (android.os.Build.VERSION.SDK_INT >= 30) "All files access (Android 11+)" else "Refresh Media Library",
-                        onClick = onManageExternalStorageClick,
-                    )
-                    SettingsLinkSection(
-                        sectionTitle = "Developer",
-                        actionLabel = "Design system gallery",
-                        onClick = onOpenDesignSystem,
-                    )
-                }
+                SettingsLinkSection(
+                    sectionTitle = "Developer",
+                    actionLabel = "Design system gallery",
+                    onClick = onOpenDesignSystem,
+                )
             }
 
             Column(
@@ -169,16 +161,6 @@ fun SettingsPage(
             onDismiss = { pendingRemoval = null },
         )
     }
-
-    if (showDirectPicker) {
-        FolderPickerBrowser(
-            onFolderSelected = { path ->
-                onAddDirectFolder(path)
-                showDirectPicker = false
-            },
-            onDismiss = { showDirectPicker = false }
-        )
-    }
 }
 
 @PreviewScreenSizes
@@ -197,9 +179,9 @@ private fun SettingsPageLightPreview() {
             onColorModeChange = {}, onDynamicColorChange = {},
             onDownloadRemoteArtChange = {}, onBurnMetadataClick = {},
             onAcknowledgeBurnReport = {},
-            onAddDirectFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
+            onPickFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
             onOpenEqualizer = {}, onOpenDesignSystem = {},
-            onManageExternalStorageClick = {}, onBack = {},
+            onBack = {},
         )
     }
 }
@@ -217,9 +199,9 @@ private fun SettingsPageDarkPreview() {
             onColorModeChange = {}, onDynamicColorChange = {},
             onDownloadRemoteArtChange = {}, onBurnMetadataClick = {},
             onAcknowledgeBurnReport = {},
-            onAddDirectFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
+            onPickFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
             onOpenEqualizer = {}, onOpenDesignSystem = {},
-            onManageExternalStorageClick = {}, onBack = {},
+            onBack = {},
         )
     }
 }
@@ -242,9 +224,9 @@ private fun SettingsPageScanningPreview() {
             onColorModeChange = {}, onDynamicColorChange = {},
             onDownloadRemoteArtChange = {}, onBurnMetadataClick = {},
             onAcknowledgeBurnReport = {},
-            onAddDirectFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
+            onPickFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
             onOpenEqualizer = {}, onOpenDesignSystem = {},
-            onManageExternalStorageClick = {}, onBack = {},
+            onBack = {},
             dynamicColorSupported = false,
         )
     }

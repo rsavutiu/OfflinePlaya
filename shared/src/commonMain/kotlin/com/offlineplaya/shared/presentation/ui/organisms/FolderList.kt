@@ -16,12 +16,15 @@ import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.molecules.FolderRow
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun FolderList(
-    folders: List<Folder>,
+    folders: PersistentList<Folder>,
     onFolderClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -38,13 +41,13 @@ fun FolderList(
         contentPadding = contentPadding,
     ) {
         items(items = folders, key = { it.id }) { folder ->
-            val previewTracks: List<Track> = if (previewTracksProvider != null) {
-                val state by produceState(initialValue = emptyList<Track>(), folder.id) {
-                    previewTracksProvider(folder.id).collectLatest { value = it }
+            val previewTracks: PersistentList<Track> = if (previewTracksProvider != null) {
+                val state by produceState(initialValue = persistentListOf<Track>(), folder.id) {
+                    previewTracksProvider(folder.id).collectLatest { value = it.toPersistentList() }
                 }
                 state
             } else {
-                emptyList()
+                persistentListOf()
             }
             FolderRow(
                 folder = folder,
@@ -61,7 +64,7 @@ private fun FolderListPopulatedPreview() {
     PreviewTheme {
         Surface {
             FolderList(
-                folders = listOf(
+                folders = persistentListOf(
                     Folder(1, "content://tree", "", "Music Library", null, 247),
                     Folder(2, "content://tree2", "", "Bootlegs", null, 412),
                 ),
@@ -76,7 +79,7 @@ private fun FolderListPopulatedPreview() {
 private fun FolderListEmptyPreview() {
     PreviewTheme(darkTheme = true) {
         Surface {
-            FolderList(folders = emptyList(), onFolderClick = {})
+            FolderList(folders = persistentListOf(), onFolderClick = {})
         }
     }
 }

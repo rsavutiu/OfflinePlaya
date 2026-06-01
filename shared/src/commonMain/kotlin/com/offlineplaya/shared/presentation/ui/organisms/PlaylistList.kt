@@ -13,6 +13,8 @@ import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.molecules.PlaylistRow
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.empty_playlist_subtitle
 import offlineplaya.shared.generated.resources.empty_playlist_title
@@ -20,7 +22,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun PlaylistList(
-    playlists: List<Playlist>,
+    playlists: PersistentList<Playlist>,
     onPlaylistClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -49,7 +51,7 @@ private fun PlaylistListPopulatedPreview() {
     PreviewTheme {
         Surface {
             PlaylistList(
-                playlists = listOf(
+                playlists = persistentListOf(
                     Playlist(1, "Morning Run", 0, 0),
                     Playlist(2, "Focus", 0, 0),
                     Playlist(3, "Late Drives", 0, 0),
@@ -64,6 +66,6 @@ private fun PlaylistListPopulatedPreview() {
 @Composable
 private fun PlaylistListEmptyPreview() {
     PreviewTheme(darkTheme = true) {
-        Surface { PlaylistList(playlists = emptyList(), onPlaylistClick = {}) }
+        Surface { PlaylistList(playlists = persistentListOf(), onPlaylistClick = {}) }
     }
 }

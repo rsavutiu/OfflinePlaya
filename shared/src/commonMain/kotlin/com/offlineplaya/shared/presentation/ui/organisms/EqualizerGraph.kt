@@ -40,6 +40,8 @@ import androidx.compose.ui.unit.sp
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -57,9 +59,9 @@ import kotlin.math.roundToInt
  */
 @Composable
 fun EqualizerGraph(
-    gains: List<Int>,
+    gains: PersistentList<Int>,
     enabled: Boolean,
-    onBandGainChange: (bandIndex: Int, millibels: Int, fullGains: List<Int>) -> Unit,
+    onBandGainChange: (bandIndex: Int, millibels: Int, fullGains: PersistentList<Int>) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val bandCount = gains.size
@@ -208,7 +210,7 @@ fun EqualizerGraph(
                     drawPath(
                         path = fill,
                         brush = Brush.verticalGradient(
-                            colors = listOf(
+                            colors = persistentListOf(
                                 accent.copy(alpha = if (enabled) 0.28f else 0.08f),
                                 accent.copy(alpha = 0.0f),
                             ),
@@ -303,7 +305,7 @@ private fun bandFrequencyLabel(index: Int, total: Int): String {
     // Standard 10-band graphic-EQ centre frequencies. The graph shows the
     // *template* band layout (10 bands by convention), not the hardware bands —
     // the controller resamples onto hardware.
-    val tenBand = listOf("31", "62", "125", "250", "500", "1k", "2k", "4k", "8k", "16k")
+    val tenBand = persistentListOf("31", "62", "125", "250", "500", "1k", "2k", "4k", "8k", "16k")
     if (total == 10) return tenBand[index]
     if (total == 5) return when (index) {
         0 -> "60"
@@ -329,7 +331,7 @@ private fun EqualizerGraphPreview() {
     PreviewTheme(darkTheme = true) {
         Surface {
             EqualizerGraph(
-                gains = listOf(400, 300, 200, 100, 0, -100, -200, 100, 300, 500),
+                gains = persistentListOf(400, 300, 200, 100, 0, -100, -200, 100, 300, 500),
                 enabled = true,
                 onBandGainChange = { _, _, _ -> },
                 modifier = Modifier.padding(16.dp),
@@ -344,7 +346,7 @@ private fun EqualizerGraphDisabledPreview() {
     PreviewTheme(darkTheme = true) {
         Surface {
             EqualizerGraph(
-                gains = listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+                gains = persistentListOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
                 enabled = false,
                 onBandGainChange = { _, _, _ -> },
                 modifier = Modifier.padding(16.dp),

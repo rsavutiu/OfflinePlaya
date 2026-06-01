@@ -13,7 +13,6 @@
     <string name="home_label_add_folders">Ajouter des dossiers</string>
     <string name="home_label_import_more_tracks">Importer plus de morceaux</string>
     <string name="home_title_start_your_music_journey">Commencez votre voyage musical</string>
-    <string name="home_label_select_folder">Sélectionnez un dossier pour construire votre bibliothèque hors ligne.</string>
     <string name="home_status_picking_music_folder">Sélection du dossier musical</string>
     <string name="home_status_scanning">Scannage…</string>
     <string name="home_label_pick_music_folder">Choisir un dossier musical</string>
@@ -51,8 +50,6 @@
     <string name="sync_status_completed">Scanné %1$d morceaux sur %2$d dossiers</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d échoués)</string>
     <string name="sync_status_failed">Scan échoué : %1$s</string>
-
-    <!-- Auto-translated to French via local LLM; review and refine. -->
     <string name="home_greeting_morning">Bonjour</string>
     <string name="home_greeting_afternoon">Bon après-midi</string>
     <string name="home_greeting_evening">Bonsoir</string>
@@ -151,4 +148,7 @@
     <string name="cd_delete_playlist">Supprimer la playlist</string>
     <string name="cd_new_playlist">Nouvelle playlist</string>
     <string name="cd_repeat_mode">Répéter: %1$s</string>
+
+    <!-- Auto-translated to French via local LLM; review and refine. -->
+    <string name="home_label_select_folder">Choisissez un dossier contenant votre musique. Sur Android moderne, le système bloque le choix des dossiers standards de média (Musique, Téléchargements, etc.) — naviguez dans un sous-dossier comme Musique/Albums et choisissez celui-ci à la place. La musique dans les dossiers bloqués apparaît toujours dans votre bibliothèque via le droit d'accès à la musique ; vous n'avez besoin de choisir des dossiers que pour la fonction de gravure de tags.</string>
 </resources>

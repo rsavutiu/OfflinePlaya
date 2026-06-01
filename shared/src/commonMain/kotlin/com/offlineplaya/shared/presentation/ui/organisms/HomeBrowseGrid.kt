@@ -40,6 +40,8 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import com.offlineplaya.shared.domain.model.Album
 import com.offlineplaya.shared.domain.model.Track
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.toPersistentList
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.home_label_albums
 import offlineplaya.shared.generated.resources.home_label_albums_count
@@ -52,13 +54,16 @@ import offlineplaya.shared.generated.resources.home_title_all_tracks
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * 2x2 grid of browse cards (All tracks / Albums / Artists / Playlists). Each
- * card carries a fanned stack of mini covers in its top-right corner so the
- * page feels like a real shelf of music rather than four labeled rectangles.
+ * 2x2 grid of browse cards (All tracks / Albums / Artists / Playlists).
+ * Each card carries a fanned stack of mini covers in its top-right
+ * corner so the page feels like a real shelf of music rather than four
+ * labelled rectangles.
  *
- * The collage source is sliced four-at-a-time with index-based offsets so the
- * cards don't look identical even with a tiny library. Wraps modulo the
- * source length so blanks never appear.
+ * [collageSource] is the persisted "recently played" album list, empty
+ * on a fresh install. All four cards share the same fan — the first
+ * [COVERS_PER_CARD] recent albums — so a single play populates every
+ * card at once. The source only changes when the user plays something,
+ * never during a background scan, so the fans never flicker mid-scan.
  */
 @Composable
 fun HomeBrowseGrid(
@@ -66,18 +71,24 @@ fun HomeBrowseGrid(
     albumCount: Int,
     artistCount: Int,
     playlistCount: Int,
-    collageSource: List<Album>,
+    collageSource: PersistentList<Album>,
     representativeTrackOfAlbum: suspend (Long) -> Track?,
-    scanning: Boolean,
     onOpenAllTracks: () -> Unit,
     onOpenAlbums: () -> Unit,
     onOpenArtists: () -> Unit,
     onOpenPlaylists: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    fun slice(index: Int): List<Album> {
-        if (collageSource.isEmpty()) return emptyList()
-        return List(4) { i -> collageSource[(index * 4 + i) % collageSource.size] }
+    // Per-card persistent assignment. Outer list is per-card (size 4),
+    // inner list is the album IDs currently displayed in that card's fan.
+    // Every card draws its fan from the same pool — the first few recent
+    // albums. They share covers (which is fine — "you can mix them I
+    // dont care"), so all four cards populate the instant the user plays
+    // one album, instead of needing 5/9/13 distinct plays to fill the
+    // later cards. The recent-albums list only changes on a play action,
+    // never during a background scan, so this can't flicker mid-scan.
+    val fanIds = remember(collageSource) {
+        collageSource.take(COVERS_PER_CARD).map { it.id }.toPersistentList()
     }
 
     Column(
@@ -94,9 +105,8 @@ fun HomeBrowseGrid(
                 icon = Icons.Default.MusicNote,
                 title = stringResource(Res.string.home_title_all_tracks),
                 subtitle = stringResource(Res.string.home_label_songs_count, trackCount.toInt()),
-                albums = slice(0),
+                albumIds = fanIds,
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
-                enabled = !scanning,
                 onClick = onOpenAllTracks,
                 modifier = Modifier
                     .weight(1f)
@@ -106,9 +116,8 @@ fun HomeBrowseGrid(
                 icon = Icons.Default.Album,
                 title = stringResource(Res.string.home_label_albums),
                 subtitle = stringResource(Res.string.home_label_albums_count, albumCount),
-                albums = slice(1),
+                albumIds = fanIds,
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
-                enabled = !scanning,
                 onClick = onOpenAlbums,
                 modifier = Modifier
                     .weight(1f)
@@ -125,9 +134,8 @@ fun HomeBrowseGrid(
                 icon = Icons.Default.Person,
                 title = stringResource(Res.string.home_label_artists),
                 subtitle = stringResource(Res.string.home_label_artists_count, artistCount),
-                albums = slice(2),
+                albumIds = fanIds,
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
-                enabled = !scanning,
                 onClick = onOpenArtists,
                 modifier = Modifier
                     .weight(1f)
@@ -137,9 +145,8 @@ fun HomeBrowseGrid(
                 icon = Icons.AutoMirrored.Filled.QueueMusic,
                 title = stringResource(Res.string.home_label_playlists),
                 subtitle = stringResource(Res.string.home_label_playlists_count, playlistCount),
-                albums = slice(3),
+                albumIds = fanIds,
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
-                enabled = !scanning,
                 onClick = onOpenPlaylists,
                 modifier = Modifier
                     .weight(1f)
@@ -154,24 +161,26 @@ private fun BrowseCard(
     icon: ImageVector,
     title: String,
     subtitle: String,
-    albums: List<Album>,
+    albumIds: PersistentList<Long>,
     representativeTrackOfAlbum: suspend (Long) -> Track?,
-    enabled: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    // Always clickable. Previous versions disabled the cards while a
+    // library scan was in flight, but that hid a real bug — the
+    // browse destinations are designed to handle their own empty /
+    // loading state, and locking out navigation just made the home
+    // page look unresponsive during the most common first-launch flow
+    // (the initial scan).
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
             .background(MaterialTheme.colorScheme.surfaceVariant)
-            .then(if (enabled) Modifier.clickable(onClick = onClick) else Modifier),
+            .clickable(onClick = onClick),
     ) {
-        if (albums.isNotEmpty()) {
-            // Centered vertically on the right edge — the card is about the
-            // art, so let the deck dominate. Padding only on the trailing edge;
-            // the back layers of the fan spill leftward via negative offsets.
+        if (albumIds.isNotEmpty()) {
             CoverFan(
-                albums = albums.take(5),
+                albumIds = albumIds,
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
@@ -212,30 +221,40 @@ private fun BrowseCard(
 
 @Composable
 private fun CoverFan(
-    albums: List<Album>,
+    albumIds: PersistentList<Long>,
     representativeTrackOfAlbum: suspend (Long) -> Track?,
     modifier: Modifier = Modifier,
 ) {
     val coverSize = 72.dp
     Box(modifier = modifier.size(coverSize)) {
-        val fan = albums.take(5)
-        // Drawn back-to-front so the front cover (index 0) lands on top,
-        // upright and fully opaque; layers behind rotate, shift, and dim.
-        // Spread scales with cover size — at 72dp the original 8/3dp offsets
-        // looked tight, so the deck spreads ~50% wider too.
-        fan.indices.reversed().forEach { i ->
+        // Front-most cover renders last so it lands on top, upright and
+        // fully opaque. Back layers rotate, shift, and dim.
+        //
+        // Tuned for a 6-deep fan: the per-layer offsets are tighter than
+        // a naive linear spread would be so all six covers fit inside the
+        // card quadrant. Total horizontal spread is 5 × 8dp = 40dp (only
+        // ~4dp wider than the old 4-deep fan), and the rotation tops out
+        // at 5 × 5° = 25° on the backmost layer instead of running away.
+        // The card's outer Box clips overflow and draws the title text on
+        // top of the fan, so the faint back layers never hurt legibility.
+        val take = albumIds.take(COVERS_PER_CARD)
+        take.indices.reversed().forEach { i ->
             FanItem(
-                album = fan[i],
+                albumId = take[i],
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
                 size = coverSize,
-                rotation = -7f * i,
-                translateX = (-12 * i).dp,
-                translateY = (4 * i).dp,
+                rotation = -5f * i,
+                translateX = (-8 * i).dp,
+                translateY = (3 * i).dp,
+                // Even-ish opacity decay from 1.0 (front) to ~0.32 (back)
+                // across all six layers, so each cover reads as a distinct
+                // sliver of depth rather than a flat faint stack.
                 alpha = when (i) {
                     0 -> 1f
-                    1 -> 0.8f
-                    2 -> 0.6f
-                    3 -> 0.45f
+                    1 -> 0.84f
+                    2 -> 0.68f
+                    3 -> 0.54f
+                    4 -> 0.42f
                     else -> 0.32f
                 },
             )
@@ -245,7 +264,7 @@ private fun CoverFan(
 
 @Composable
 private fun FanItem(
-    album: Album,
+    albumId: Long,
     representativeTrackOfAlbum: suspend (Long) -> Track?,
     size: Dp,
     rotation: Float,
@@ -253,11 +272,14 @@ private fun FanItem(
     translateY: Dp,
     alpha: Float,
 ) {
-    var track by remember(album.id) { mutableStateOf<Track?>(null) }
-    LaunchedEffect(album.id) { track = representativeTrackOfAlbum(album.id) }
+    // Resolve the representative Track for this album exactly once per
+    // albumId. The `remember(albumId)` key ties the Track state to the
+    // ID — recomposition that keeps the same ID (the common case now
+    // that fans are append-only) never re-issues the suspend lookup, so
+    // Coil keeps the cached bitmap.
+    var track by remember(albumId) { mutableStateOf<Track?>(null) }
+    LaunchedEffect(albumId) { track = representativeTrackOfAlbum(albumId) }
     val current = track ?: return
-    // Render the slot ONLY when Coil resolves real artwork. Albums without art
-    // simply leave their slot empty rather than showing a placeholder glyph.
     SubcomposeAsyncImage(
         model = current,
         contentDescription = null,
@@ -275,3 +297,16 @@ private fun FanItem(
         success = { SubcomposeAsyncImageContent() },
     )
 }
+
+/**
+ * Number of cover-art slots in each Browse card's fan. Every card shows
+ * the first [COVERS_PER_CARD] recent albums (shared across all four
+ * cards), so the fans fill the moment the user plays a single album
+ * rather than needing many distinct plays.
+ *
+ * Bumping this also requires re-tuning the per-layer offset/rotation/
+ * alpha in [CoverFan] — the geometry is hand-fitted to this count so
+ * the back layers stay inside the card quadrant and remain visually
+ * distinct. See the comment block there.
+ */
+internal const val COVERS_PER_CARD = 6

@@ -3,10 +3,14 @@ package com.offlineplaya.shared.presentation.playlist
 import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.domain.repository.PlaylistRepository
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -20,10 +24,12 @@ class PlaylistStateHolder(
     private val scope: CoroutineScope,
 ) {
 
-    val allPlaylists: StateFlow<List<Playlist>> = playlists.observeAll()
-        .stateIn(scope, SharingStarted.Eagerly, emptyList())
+    val allPlaylists: StateFlow<PersistentList<Playlist>> = playlists.observeAll()
+        .map { it.toPersistentList() }
+        .stateIn(scope, SharingStarted.Eagerly, persistentListOf())
 
-    fun tracksIn(playlistId: Long): Flow<List<Track>> = playlists.observeTracks(playlistId)
+    fun tracksIn(playlistId: Long): Flow<PersistentList<Track>> =
+        playlists.observeTracks(playlistId).map { it.toPersistentList() }
 
     suspend fun findPlaylist(id: Long): Playlist? = playlists.findById(id)
 

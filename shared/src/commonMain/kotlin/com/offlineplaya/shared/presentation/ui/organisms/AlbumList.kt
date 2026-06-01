@@ -16,6 +16,8 @@ import com.offlineplaya.shared.presentation.ui.molecules.AlbumRow
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.empty_album_subtitle
 import offlineplaya.shared.generated.resources.empty_album_title
@@ -23,7 +25,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun AlbumList(
-    albums: List<Album>,
+    albums: PersistentList<Album>,
     onAlbumClick: (Long) -> Unit,
     onPlayAlbum: (Album) -> Unit,
     modifier: Modifier = Modifier,
@@ -66,7 +68,7 @@ private fun AlbumListPopulatedPreview() {
     PreviewTheme {
         Surface {
             AlbumList(
-                albums = listOf(
+                albums = persistentListOf(
                     Album(1, "Ten", artistId = 1, year = 1991, trackCount = 11, durationMs = 0),
                     Album(2, "Vs.", artistId = 1, year = 1993, trackCount = 12, durationMs = 0),
                     Album(3, "Live at the Gorge", artistId = 1, year = null, trackCount = 24, durationMs = 0),

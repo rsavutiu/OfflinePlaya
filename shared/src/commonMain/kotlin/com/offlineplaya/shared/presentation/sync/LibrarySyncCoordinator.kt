@@ -7,12 +7,15 @@ import com.offlineplaya.shared.domain.repository.FolderRepository
 import com.offlineplaya.shared.domain.repository.ManagedTreeRootRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
 import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 /**
@@ -42,7 +45,8 @@ class LibrarySyncCoordinator(
      * list. Kept cold so the coordinator scope doesn't accumulate sentinel
      * coroutines that outlive the test fixtures.
      */
-    val managedRootsFlow: Flow<List<ManagedTreeRoot>> = managedRoots.observeAll()
+    val managedRootsFlow: Flow<PersistentList<ManagedTreeRoot>> =
+        managedRoots.observeAll().map { it.toPersistentList() }
 
     /**
      * Register a newly-picked tree URI as a managed root and immediately sync

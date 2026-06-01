@@ -50,10 +50,17 @@
 <h2>Permissions we request</h2>
 <ul>
     <li>
-        <code>READ_EXTERNAL_STORAGE</code> /
-        <code>MANAGE_EXTERNAL_STORAGE</code> — required to read the audio files
-        you choose to add to your library. The app only reads files; it does
-        not upload them.
+        <code>READ_MEDIA_AUDIO</code> (Android 13+) /
+        <code>READ_EXTERNAL_STORAGE</code> (Android 12 and older) — required
+        to enumerate the audio files on your device so the app can list and
+        play them. The app reads files only; it does not upload them and does
+        not request the "all files access" permission.
+    </li>
+    <li>
+        Folder access for tag-writing comes from the system folder picker
+        (Storage Access Framework). The "burn metadata" feature can only
+        write tags into folders you have explicitly picked via that picker;
+        no other files on your device are writable by the app.
     </li>
     <li>
         <code>FOREGROUND_SERVICE</code> /

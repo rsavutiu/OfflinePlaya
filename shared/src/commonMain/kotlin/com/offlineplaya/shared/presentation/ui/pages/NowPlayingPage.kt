@@ -21,6 +21,7 @@ import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.organisms.NowPlayingContent
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.cd_equalizer
 import offlineplaya.shared.generated.resources.now_playing_empty_subtitle
@@ -104,7 +105,7 @@ private fun NowPlayingPagePopulatedPreview() {
                 durationMs = 224_000L,
                 shuffleEnabled = false,
                 repeatMode = RepeatMode.OFF,
-                queue = emptyList(),
+                queue = persistentListOf(),
                 queueIndex = 0,
                 volume = 1f,
             ),
@@ -126,7 +127,7 @@ private fun NowPlayingPageWidePreview() {
                 durationMs = 343_000L,
                 shuffleEnabled = true,
                 repeatMode = RepeatMode.ALL,
-                queue = emptyList(),
+                queue = persistentListOf(),
                 queueIndex = 0,
                 volume = 1f,
             ),

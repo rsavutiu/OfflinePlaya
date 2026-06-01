@@ -25,6 +25,14 @@ import java.io.FileOutputStream
  * Per-track failures bubble up as `Result.failure` so the caller can count
  * them without aborting the whole batch.
  */
+/**
+ * Public factory exposing [JaudiotaggerGenreWriter] to instrumentation tests
+ * in `androidApp` without leaking the class itself. Production callers go
+ * through Koin and bind against the [GenreTagWriter] interface.
+ */
+fun createJaudiotaggerGenreWriter(context: Context, logger: AppLogger): GenreTagWriter =
+    JaudiotaggerGenreWriter(context, logger)
+
 internal class JaudiotaggerGenreWriter(
     private val context: Context,
     private val logger: AppLogger,
@@ -84,7 +92,6 @@ internal class JaudiotaggerGenreWriter(
                 } ?: error("Could not open output FD for $uri")
 
                 logger.i(TAG, "Successfully wrote genre back to $documentUri")
-                Unit
             } finally {
                 if (tempFile.exists()) tempFile.delete()
             }

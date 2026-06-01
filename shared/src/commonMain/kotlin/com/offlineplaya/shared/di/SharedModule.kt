@@ -7,6 +7,7 @@ import com.offlineplaya.shared.data.repository.SqlFolderRepository
 import com.offlineplaya.shared.data.repository.SqlManagedTreeRootRepository
 import com.offlineplaya.shared.data.repository.SqlPlaylistRepository
 import com.offlineplaya.shared.data.repository.SqlQueueRepository
+import com.offlineplaya.shared.data.repository.SqlRecentAlbumRepository
 import com.offlineplaya.shared.data.repository.SqlSettingsRepository
 import com.offlineplaya.shared.data.repository.SqlTrackRepository
 import com.offlineplaya.shared.domain.repository.AlbumRepository
@@ -15,6 +16,7 @@ import com.offlineplaya.shared.domain.repository.FolderRepository
 import com.offlineplaya.shared.domain.repository.ManagedTreeRootRepository
 import com.offlineplaya.shared.domain.repository.PlaylistRepository
 import com.offlineplaya.shared.domain.repository.QueueRepository
+import com.offlineplaya.shared.domain.repository.RecentAlbumRepository
 import com.offlineplaya.shared.domain.repository.SettingsRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
 import com.offlineplaya.shared.domain.usecase.BurnMetadataUseCase
@@ -44,6 +46,7 @@ val sharedModule: Module = module {
     single { SqlTrackRepository(get(), get()) } bind TrackRepository::class
     single { SqlArtistRepository(get(), get()) } bind ArtistRepository::class
     single { SqlAlbumRepository(get(), get()) } bind AlbumRepository::class
+    single { SqlRecentAlbumRepository(get(), get()) } bind RecentAlbumRepository::class
     single { SqlFolderRepository(get(), get()) } bind FolderRepository::class
     single { SqlPlaylistRepository(get()) } bind PlaylistRepository::class
     single { SqlQueueRepository(get()) } bind QueueRepository::class
@@ -133,6 +136,7 @@ val sharedModule: Module = module {
             albums = get(),
             folders = get(),
             tracks = get(),
+            recentAlbumsRepo = get(),
             scope = get(),
         )
     }

@@ -26,6 +26,8 @@ import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 
 /**
  * Album detail page: gradient header (art + metadata + Play/Shuffle) followed
@@ -36,9 +38,9 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 fun LibraryAlbumDetailPage(
     album: Album?,
     artistName: String?,
-    tracks: List<Track>,
+    tracks: PersistentList<Track>,
     representativeTrack: Track?,
-    availablePlaylists: List<Playlist>,
+    availablePlaylists: PersistentList<Playlist>,
     onPlayTracks: (List<Track>, Int) -> Unit,
     onPlayNext: (Track) -> Unit,
     onAddToQueue: (Track) -> Unit,
@@ -106,12 +108,12 @@ private fun LibraryAlbumDetailPagePreview() {
             album = Album(1, "Ten", 1, 1991, 3, 672_000),
             artistName = "Pearl Jam",
             representativeTrack = null,
-            tracks = listOf(
+            tracks = persistentListOf(
                 sampleTrack(1, 1, "Once"),
                 sampleTrack(2, 2, "Even Flow"),
                 sampleTrack(3, 3, "Alive"),
             ),
-            availablePlaylists = emptyList(),
+            availablePlaylists = persistentListOf(),
             onPlayTracks = { _, _ -> },
             onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
             onBack = {},
@@ -127,8 +129,8 @@ private fun LibraryAlbumDetailPageEmptyPreview() {
             album = Album(1, "Empty Album", 1, null, 0, 0),
             artistName = "Unknown",
             representativeTrack = null,
-            tracks = emptyList(),
-            availablePlaylists = emptyList(),
+            tracks = persistentListOf(),
+            availablePlaylists = persistentListOf(),
             onPlayTracks = { _, _ -> },
             onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
             onBack = {},

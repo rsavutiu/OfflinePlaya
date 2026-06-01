@@ -15,11 +15,13 @@ import com.offlineplaya.shared.presentation.ui.organisms.TrackList
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.LibraryScaffold
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun LibraryFlatPage(
-    tracks: List<Track>,
-    availablePlaylists: List<Playlist>,
+    tracks: PersistentList<Track>,
+    availablePlaylists: PersistentList<Playlist>,
     onPlayTracks: (List<Track>, Int) -> Unit,
     onPlayNext: (Track) -> Unit,
     onAddToQueue: (Track) -> Unit,
@@ -64,12 +66,12 @@ fun LibraryFlatPage(
 private fun LibraryFlatPagePreview() {
     PreviewTheme {
         LibraryFlatPage(
-            tracks = listOf(
+            tracks = persistentListOf(
                 sampleFlatTrack(1, "Aphex Twin", "Alberto Balsalm"),
                 sampleFlatTrack(2, "Boards of Canada", "Roygbiv"),
                 sampleFlatTrack(3, "Pearl Jam", "Once"),
             ),
-            availablePlaylists = emptyList(),
+            availablePlaylists = persistentListOf(),
             onPlayTracks = { _, _ -> },
             onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
             onTabSelected = {},
@@ -83,8 +85,8 @@ private fun LibraryFlatPagePreview() {
 private fun LibraryFlatPageEmptyPreview() {
     PreviewTheme(darkTheme = true) {
         LibraryFlatPage(
-            tracks = emptyList(),
-            availablePlaylists = emptyList(),
+            tracks = persistentListOf(),
+            availablePlaylists = persistentListOf(),
             onPlayTracks = { _, _ -> },
             onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
             onTabSelected = {},

@@ -13,7 +13,6 @@
     <string name="home_label_add_folders">Aggiungi cartelle</string>
     <string name="home_label_import_more_tracks">Importa più brani</string>
     <string name="home_title_start_your_music_journey">Inizia il tuo viaggio musicale</string>
-    <string name="home_label_select_folder">Seleziona una cartella per costruire la tua libreria offline.</string>
     <string name="home_status_picking_music_folder">Seleziono la cartella musicale</string>
     <string name="home_status_scanning">Scansiono...</string>
     <string name="home_label_pick_music_folder">Seleziona la cartella musicale</string>
@@ -51,8 +50,6 @@
     <string name="sync_status_completed">Scansionati %1$d brani in %2$d cartelle</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d falliti)</string>
     <string name="sync_status_failed">Scansione fallita: %1$s</string>
-
-    <!-- Auto-translated to Italian via local LLM; review and refine. -->
     <string name="home_greeting_morning">Buongiorno</string>
     <string name="home_greeting_afternoon">Buon pomeriggio</string>
     <string name="home_greeting_evening">Buona sera</string>
@@ -151,4 +148,7 @@
     <string name="cd_delete_playlist">Elimina playlist</string>
     <string name="cd_new_playlist">Nuova playlist</string>
     <string name="cd_repeat_mode">Ripeti: %1$s</string>
+
+    <!-- Auto-translated to Italian via local LLM; review and refine. -->
+    <string name="home_label_select_folder">Scegli una cartella con la tua musica. Su Android moderno il sistema blocca la selezione delle cartelle standard delle media (Musica, Download, ecc.) — vai in una sottocartella come Musica/Albumi e seleziona quella invece. La musica nelle cartelle bloccate appare comunque nella tua libreria tramite il permesso di accesso alle media; devi selezionare solo le cartelle per la funzione di incisione dei tag.</string>
 </resources>

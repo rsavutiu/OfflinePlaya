@@ -40,6 +40,7 @@ import com.offlineplaya.shared.presentation.ui.molecules.AddToPlaylistDialog
 import com.offlineplaya.shared.presentation.ui.molecules.formatDuration
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.track_details_add_to_playlist
 import offlineplaya.shared.generated.resources.track_details_bitrate
@@ -67,7 +68,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun TrackDetailsSheet(
     track: Track,
-    availablePlaylists: List<Playlist>,
+    availablePlaylists: PersistentList<Playlist>,
     onPlay: () -> Unit,
     onPlayNext: () -> Unit,
     onAddToQueue: () -> Unit,

@@ -17,6 +17,8 @@ import com.offlineplaya.shared.presentation.ui.organisms.QueueList
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.cd_clear_queue
 import offlineplaya.shared.generated.resources.queue_title
@@ -58,7 +60,7 @@ fun QueuePage(
     ) { padding ->
         ResponsiveContent {
             QueueList(
-                tracks = state.queue,
+                tracks = state.queue.toPersistentList(),
                 currentIndex = state.queueIndex,
                 onJumpTo = onJumpTo,
                 onRemove = onRemove,
@@ -80,7 +82,7 @@ private fun QueuePagePopulatedPreview() {
                 durationMs = 296_000L,
                 shuffleEnabled = false,
                 repeatMode = RepeatMode.OFF,
-                queue = listOf(
+                queue = persistentListOf(
                     sampleQueueTrack(1, "Once", "Pearl Jam"),
                     sampleQueueTrack(2, "Even Flow", "Pearl Jam"),
                     sampleQueueTrack(3, "Alive", "Pearl Jam"),

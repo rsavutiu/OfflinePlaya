@@ -9,18 +9,15 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-    <!-- Device audio index — used by MediaStoreDeviceAudioScanner so we can
-         see music in Download/, internal-storage root, and other places SAF
-         refuses to grant tree-URI access to on Android 11+. -->
+    <!-- Read-only access to the device audio index, used by
+         MediaStoreDeviceAudioScanner so we can see music in Downloads/,
+         internal-storage root, and other places SAF refuses to grant tree-URI
+         access to on Android 11+. Tag-writing (the "burn metadata" feature)
+         only works on files inside folders the user has SAF-picked, where
+         we get write access via the granted tree URI. -->
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="29" />
-    <uses-permission
-        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
 
     <application
         android:name=".OfflinePlayaApp"
@@ -29,7 +26,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.OfflinePlaya"
-        android:requestLegacyExternalStorage="true"
         tools:targetApi="31">
 
         <!-- Android Auto capability declaration. Points at

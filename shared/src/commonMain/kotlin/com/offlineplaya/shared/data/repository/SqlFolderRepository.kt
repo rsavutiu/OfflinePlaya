@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 internal class SqlFolderRepository(
     private val db: OfflinePlayaDatabase,
     private val logger: AppLogger,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : FolderRepository {
 
     private companion object {

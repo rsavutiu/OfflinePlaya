@@ -4,12 +4,8 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.MediaScannerConnection
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -18,6 +14,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,12 +23,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.offlineplaya.android.picker.OpenDocumentTreeContract
-import com.offlineplaya.android.ui.PermissionRequiredScreen
 import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
@@ -56,22 +51,32 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private fun checkMandatoryPermissions(context: Context): Boolean {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        Environment.isExternalStorageManager()
+/**
+ * The runtime permission we need to enumerate music files via MediaStore.
+ * Android 13 split storage perms by media type — audio gets its own
+ * `READ_MEDIA_AUDIO`. On 12 and older we fall back to the legacy
+ * `READ_EXTERNAL_STORAGE` (declared in the manifest with maxSdkVersion=32).
+ *
+ * We deliberately do NOT use `MANAGE_EXTERNAL_STORAGE` ("All files access").
+ * Google Play's policy reserves that for file managers / backup / antivirus
+ * apps, and music players are not on the allow-list. Library reads go via
+ * MediaStore + this permission; library writes (the burn-metadata feature)
+ * go via SAF tree URIs the user explicitly grants in the folder picker.
+ */
+private val AUDIO_READ_PERMISSION: String =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        Manifest.permission.READ_MEDIA_AUDIO
     } else {
-        val read =
-            ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
-        val write =
-            ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        read == PackageManager.PERMISSION_GRANTED && write == PackageManager.PERMISSION_GRANTED
+        Manifest.permission.READ_EXTERNAL_STORAGE
     }
-}
+
+private fun hasAudioReadPermission(context: Context): Boolean =
+    ContextCompat.checkSelfPermission(context, AUDIO_READ_PERMISSION) ==
+            PackageManager.PERMISSION_GRANTED
 
 /**
- * Android host for the shared [App]. Wires SAF folder picking (read-only +
- * read-write variants), hardware back into the [AppNavigator], and observes
- * every state holder.
+ * Android host for the shared [App]. Wires the SAF folder picker, hardware
+ * back into the [AppNavigator], and observes every state holder.
  */
 @Composable
 private fun AndroidApp() {
@@ -92,16 +97,13 @@ private fun AndroidApp() {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    // Check permissions immediately on launch and every time app resumes.
-    var hasPermission by remember {
-        mutableStateOf(checkMandatoryPermissions(context))
-    }
-
+    // Re-scan whenever the app comes back to the foreground AND we still
+    // hold the audio-read permission. If the user toggled it off in system
+    // settings, ON_RESUME notices that and the next sync turns into a no-op.
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                hasPermission = checkMandatoryPermissions(context)
-                if (hasPermission) coordinator.resyncAll()
+            if (event == Lifecycle.Event.ON_RESUME && hasAudioReadPermission(context)) {
+                coordinator.resyncAll()
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
@@ -109,39 +111,28 @@ private fun AndroidApp() {
     }
 
     val permissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { results ->
-        hasPermission = results.values.all { it }
-        if (hasPermission) coordinator.resyncAll()
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        // Granted now → kick off a scan so the library populates without
+        // requiring a manual re-sync. Denied is fine — the app still works
+        // with SAF-picked folders; the library just won't auto-discover
+        // MediaStore-indexed audio (Downloads, root storage, etc.).
+        if (granted) coordinator.resyncAll()
     }
 
-    if (!hasPermission) {
-        PermissionRequiredScreen {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                // Android 11+ Mandatory "All Files Access"
-                runCatching {
-                    val intent =
-                        Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
-                            data = "package:${context.packageName}".toUri()
-                        }
-                    context.startActivity(intent)
-                }.onFailure {
-                    context.startActivity(Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION))
-                }
-            } else {
-                // Older Android: Standard runtime storage permissions
-                permissionLauncher.launch(
-                    arrayOf(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                )
-            }
+    // Fire the system runtime-permission dialog at most once per process
+    // start. No in-app rationale screen — the system dialog itself
+    // ("Allow OfflinePlaya to access music and audio?") is self-explanatory
+    // for a music player, and a custom pre-prompt screen would just be an
+    // extra tap with no information value.
+    var permissionPromptFired by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        if (!permissionPromptFired && !hasAudioReadPermission(context)) {
+            permissionPromptFired = true
+            permissionLauncher.launch(AUDIO_READ_PERMISSION)
         }
-        return
     }
 
-    // Standard activity-level logic only runs once permission is secured.
     BackHandler(enabled = stack.size > 1) {
         navigator.pop()
     }
@@ -150,6 +141,9 @@ private fun AndroidApp() {
         OpenDocumentTreeContract(),
     ) { uri ->
         if (uri == null) return@rememberLauncherForActivityResult
+        // Take read+write so the burn-metadata feature can write tags back
+        // into files inside the tree. Fall back to read-only if the provider
+        // refuses write — at minimum we can still scan the folder.
         runCatching {
             val takeFlags =
                 Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
@@ -183,37 +177,6 @@ private fun AndroidApp() {
         onColorModeChange = themeStateHolder::setColorMode,
         onDynamicColorChange = themeStateHolder::setUseDynamicColor,
         onDownloadRemoteArtChange = artworkStateHolder::setDownloadRemoteArt,
-        onAddDirectFolder = { path ->
-            val name = path.substringAfterLast('/')
-            coordinator.addAndSync(path, name)
-        },
-        onManageExternalStorageClick = {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                runCatching {
-                    val intent =
-                        Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
-                            data = Uri.parse("package:${context.packageName}")
-                        }
-                    context.startActivity(intent)
-                }.onFailure {
-                    // Fallback to the general list if package-specific fails
-                    val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
-                    context.startActivity(intent)
-                }
-            } else {
-                // On older versions, just trigger a media scan of common folders
-                MediaScannerConnection.scanFile(
-                    context,
-                    arrayOf(
-                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).absolutePath,
-                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath
-                    ),
-                    null
-                ) { path, _ ->
-                    android.util.Log.d("OfflinePlaya", "Scanned $path")
-                }
-            }
-        },
         dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
     )
 }

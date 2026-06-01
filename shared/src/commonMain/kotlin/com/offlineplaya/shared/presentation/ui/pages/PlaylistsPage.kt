@@ -19,6 +19,8 @@ import com.offlineplaya.shared.presentation.ui.organisms.PlaylistList
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.cd_new_playlist
 import offlineplaya.shared.generated.resources.top_bar_playlists
@@ -26,7 +28,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun PlaylistsPage(
-    playlists: List<Playlist>,
+    playlists: PersistentList<Playlist>,
     onPlaylistClick: (Long) -> Unit,
     onCreate: (String) -> Unit,
     onBack: () -> Unit,
@@ -73,7 +75,7 @@ fun PlaylistsPage(
 private fun PlaylistsPagePopulatedPreview() {
     PreviewTheme {
         PlaylistsPage(
-            playlists = listOf(
+            playlists = persistentListOf(
                 Playlist(1, "Morning Run", 0, 0),
                 Playlist(2, "Focus", 0, 0),
             ),
@@ -87,7 +89,7 @@ private fun PlaylistsPagePopulatedPreview() {
 private fun PlaylistsPageFullListPreview() {
     PreviewTheme {
         PlaylistsPage(
-            playlists = listOf(
+            playlists = persistentListOf(
                 Playlist(1, "Morning Run", 0, 0),
                 Playlist(2, "Focus", 0, 0),
                 Playlist(3, "Late Night Drive", 0, 0),
@@ -111,7 +113,7 @@ private fun PlaylistsPageFullListPreview() {
 private fun PlaylistsPageEmptyPreview() {
     PreviewTheme(darkTheme = true) {
         PlaylistsPage(
-            playlists = emptyList(),
+            playlists = persistentListOf(),
             onPlaylistClick = {}, onCreate = {}, onBack = {},
         )
     }

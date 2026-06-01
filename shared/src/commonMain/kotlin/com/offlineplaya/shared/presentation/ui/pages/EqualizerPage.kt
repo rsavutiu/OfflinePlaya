@@ -27,6 +27,8 @@ import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.toPersistentList
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.settings_section_bands
 import offlineplaya.shared.generated.resources.settings_section_mode
@@ -49,7 +51,7 @@ fun EqualizerPage(
     autoGenreLabel: String?,
     onModeChange: (EqMode) -> Unit,
     onPresetChange: (String) -> Unit,
-    onBandGainChange: (bandIndex: Int, millibels: Int, fullGains: List<Int>) -> Unit,
+    onBandGainChange: (bandIndex: Int, millibels: Int, fullGains: PersistentList<Int>) -> Unit,
     onResetOverrides: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -113,7 +115,7 @@ fun EqualizerPage(
 
                 SettingsSection(title = stringResource(Res.string.settings_section_bands)) {
                     EqualizerGraph(
-                        gains = activePreset.gainsMillibels,
+                        gains = activePreset.gainsMillibels.toPersistentList(),
                         enabled = preferences.mode != EqMode.OFF,
                         onBandGainChange = onBandGainChange,
                         modifier = Modifier.padding(

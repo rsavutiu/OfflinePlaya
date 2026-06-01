@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 
 internal class SqlPlaylistRepository(
     private val db: OfflinePlayaDatabase,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : PlaylistRepository {
 
     private val playlistQueries get() = db.playlistQueries

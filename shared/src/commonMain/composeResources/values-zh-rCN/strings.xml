@@ -13,7 +13,6 @@
     <string name="home_label_add_folders">添加文件夹</string>
     <string name="home_label_import_more_tracks">导入更多曲目</string>
     <string name="home_title_start_your_music_journey">开始你的音乐之旅</string>
-    <string name="home_label_select_folder">选择一个文件夹来构建你的离线库。</string>
     <string name="home_status_picking_music_folder">正在选择音乐文件夹</string>
     <string name="home_status_scanning">扫描中…</string>
     <string name="home_label_pick_music_folder">选择音乐文件夹</string>
@@ -51,8 +50,6 @@
     <string name="sync_status_completed">已扫描 %1$d 曲目，覆盖 %2$d 个文件夹</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d 个失败)</string>
     <string name="sync_status_failed">扫描失败: %1$s</string>
-
-    <!-- Auto-translated to Simplified Chinese via local LLM; review and refine. -->
     <string name="home_greeting_morning">早上好</string>
     <string name="home_greeting_afternoon">下午好</string>
     <string name="home_greeting_evening">晚上好</string>
@@ -151,4 +148,7 @@
     <string name="cd_delete_playlist">删除播放列表</string>
     <string name="cd_new_playlist">新建播放列表</string>
     <string name="cd_repeat_mode">循环: %1$s</string>
+
+    <!-- Auto-translated to Simplified Chinese via local LLM; review and refine. -->
+    <string name="home_label_select_folder">选择包含音乐的文件夹。在现代Android系统中，系统会阻止选择标准媒体文件夹（如音乐、下载等）——请进入一个子文件夹，如音乐/专辑，然后选择该文件夹。被阻止的文件夹中的音频仍会通过音乐访问权限显示在您的库中；您只需选择文件夹以用于标签烧录功能。</string>
 </resources>

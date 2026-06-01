@@ -18,7 +18,7 @@
     <string name="home_label_add_folders">Add Folders</string>
     <string name="home_label_import_more_tracks">Import more tracks</string>
     <string name="home_title_start_your_music_journey">Start Your Music Journey</string>
-    <string name="home_label_select_folder">Pick a folder with your music. Note: On modern Android, you cannot select the device root; please pick a subfolder like \"Music\".</string>
+    <string name="home_label_select_folder">Pick a folder with your music. On modern Android the system blocks picking the standard media folders (Music, Downloads, etc.) — drill into a sub-folder like Music/Albums and pick that instead. Audio in the blocked folders still appears in your library via the music-access permission; you only need to pick folders for the tag-burning feature.</string>
     <string name="home_status_picking_music_folder">Picking music folder</string>
     <string name="home_status_scanning">Scanning…</string>
     <string name="home_label_pick_music_folder">Pick music folder</string>

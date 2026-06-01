@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 
 internal class SqlQueueRepository(
     private val db: OfflinePlayaDatabase,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : QueueRepository {
 
     private val queries get() = db.queueItemQueries

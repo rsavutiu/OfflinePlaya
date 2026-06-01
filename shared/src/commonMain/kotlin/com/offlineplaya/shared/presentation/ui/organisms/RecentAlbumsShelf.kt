@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Album
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
+import kotlinx.collections.immutable.PersistentList
 
 /**
  * Horizontal shelf of recently-played albums on the Home page. Each tile is
@@ -33,7 +34,7 @@ import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
  */
 @Composable
 fun RecentAlbumsShelf(
-    albums: List<Album>,
+    albums: PersistentList<Album>,
     representativeTrackOfAlbum: suspend (Long) -> Track?,
     onOpenAlbum: (Long) -> Unit,
     modifier: Modifier = Modifier,

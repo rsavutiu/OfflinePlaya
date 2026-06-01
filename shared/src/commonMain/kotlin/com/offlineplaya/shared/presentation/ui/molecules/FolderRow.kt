@@ -27,6 +27,8 @@ import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.AppShapes
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 
 // [LOCAL-LLM] (model: qwen3:8b-ctx16k) — initial draft generated from the
 // ArtistRow template; Claude added the missing `layout.size` import and
@@ -37,7 +39,7 @@ fun FolderRow(
     folder: Folder,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    previewTracks: List<Track> = emptyList(),
+    previewTracks: PersistentList<Track> = persistentListOf(),
 ) {
     Row(
         modifier = modifier
@@ -71,7 +73,7 @@ fun FolderRow(
 
 @Composable
 private fun FolderThumb(
-    previewTracks: List<Track>,
+    previewTracks: PersistentList<Track>,
     modifier: Modifier = Modifier,
 ) {
     Surface(

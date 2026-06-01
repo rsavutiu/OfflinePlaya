@@ -29,6 +29,8 @@ import com.offlineplaya.shared.presentation.ui.organisms.RecentAlbumsShelf
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.home_label_browse
 import offlineplaya.shared.generated.resources.home_label_recently_played
@@ -47,7 +49,7 @@ fun HomePage(
     albumCount: Int,
     artistCount: Int,
     playlistCount: Int,
-    recentAlbums: List<Album>,
+    recentAlbums: PersistentList<Album>,
     representativeTrackOfAlbum: suspend (Long) -> Track? = { null },
     onOpenLibrary: () -> Unit,
     onOpenAllTracks: () -> Unit,
@@ -59,8 +61,6 @@ fun HomePage(
     onOpenSettings: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val scanning = status is SyncStatus.Scanning
-
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
@@ -76,7 +76,6 @@ fun HomePage(
                 playlistCount = playlistCount,
                 recentAlbums = recentAlbums,
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
-                scanning = scanning,
                 onOpenAllTracks = onOpenAllTracks,
                 onOpenAlbums = onOpenAlbums,
                 onOpenArtists = onOpenArtists,
@@ -97,9 +96,8 @@ private fun PopulatedHome(
     albumCount: Int,
     artistCount: Int,
     playlistCount: Int,
-    recentAlbums: List<Album>,
+    recentAlbums: PersistentList<Album>,
     representativeTrackOfAlbum: suspend (Long) -> Track?,
-    scanning: Boolean,
     onOpenAllTracks: () -> Unit,
     onOpenAlbums: () -> Unit,
     onOpenArtists: () -> Unit,
@@ -165,7 +163,6 @@ private fun PopulatedHome(
             playlistCount = playlistCount,
             collageSource = recentAlbums,
             representativeTrackOfAlbum = representativeTrackOfAlbum,
-            scanning = scanning,
             onOpenAllTracks = onOpenAllTracks,
             onOpenAlbums = onOpenAlbums,
             onOpenArtists = onOpenArtists,
@@ -188,7 +185,7 @@ private fun HomePageIdlePreview() {
             trackCount = 0,
             folderCount = 0,
             albumCount = 0, artistCount = 0, playlistCount = 0,
-            recentAlbums = emptyList(),
+            recentAlbums = persistentListOf(),
             onOpenLibrary = {}, onOpenAllTracks = {},
             onOpenAlbums = {}, onOpenArtists = {},
             onOpenPlaylists = {}, onOpenSearch = {}, onOpenSettings = {},
@@ -207,7 +204,7 @@ private fun HomePagePopulatedPreview() {
             trackCount = 212,
             folderCount = 22,
             albumCount = 18, artistCount = 12, playlistCount = 4,
-            recentAlbums = listOf(
+            recentAlbums = persistentListOf(
                 Album(1, "Crystal Castles (II)", 1, 2010, 14, 3_060_000),
                 Album(2, "A Moon Shaped Pool", 2, 2016, 11, 3_240_000),
                 Album(3, "Shepherd Moons", 3, 1991, 13, 2_880_000),

@@ -8,10 +8,12 @@ import com.offlineplaya.shared.presentation.ui.organisms.ArtistList
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.LibraryScaffold
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun LibraryArtistsPage(
-    artists: List<Artist>,
+    artists: PersistentList<Artist>,
     onArtistClick: (Long) -> Unit,
     onPlayArtist: (Artist) -> Unit,
     onTabSelected: (LibraryTab) -> Unit,
@@ -37,7 +39,7 @@ fun LibraryArtistsPage(
 private fun LibraryArtistsPagePopulatedPreview() {
     PreviewTheme {
         LibraryArtistsPage(
-            artists = listOf(
+            artists = persistentListOf(
                 Artist(1, "Aphex Twin", albumCount = 6, trackCount = 92),
                 Artist(2, "Pearl Jam", albumCount = 11, trackCount = 142),
             ),
@@ -54,7 +56,7 @@ private fun LibraryArtistsPagePopulatedPreview() {
 private fun LibraryArtistsPageEmptyPreview() {
     PreviewTheme(darkTheme = true) {
         LibraryArtistsPage(
-            artists = emptyList(),
+            artists = persistentListOf(),
             onArtistClick = {},
             onPlayArtist = {},
             onTabSelected = {},

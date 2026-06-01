@@ -26,6 +26,8 @@ import com.offlineplaya.shared.presentation.ui.organisms.TrackList
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.search_empty_subtitle
 import offlineplaya.shared.generated.resources.search_empty_title
@@ -43,8 +45,8 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun SearchPage(
     query: String,
-    results: List<Track>,
-    availablePlaylists: List<Playlist>,
+    results: PersistentList<Track>,
+    availablePlaylists: PersistentList<Playlist>,
     onQueryChange: (String) -> Unit,
     onPlayTracks: (List<Track>, Int) -> Unit,
     onPlayNext: (Track) -> Unit,
@@ -125,8 +127,8 @@ private fun SearchPageInitialPreview() {
     PreviewTheme {
         SearchPage(
             query = "",
-            results = emptyList(),
-            availablePlaylists = emptyList(),
+            results = persistentListOf(),
+            availablePlaylists = persistentListOf(),
             onQueryChange = {},
             onPlayTracks = { _, _ -> },
             onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
@@ -141,11 +143,11 @@ private fun SearchPageResultsPreview() {
     PreviewTheme {
         SearchPage(
             query = "Pearl",
-            results = listOf(
+            results = persistentListOf(
                 sampleSearchTrack(1, "Once", "Pearl Jam"),
                 sampleSearchTrack(2, "Even Flow", "Pearl Jam"),
             ),
-            availablePlaylists = emptyList(),
+            availablePlaylists = persistentListOf(),
             onQueryChange = {},
             onPlayTracks = { _, _ -> },
             onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
@@ -160,8 +162,8 @@ private fun SearchPageNoMatchesPreview() {
     PreviewTheme(darkTheme = true) {
         SearchPage(
             query = "zzz",
-            results = emptyList(),
-            availablePlaylists = emptyList(),
+            results = persistentListOf(),
+            availablePlaylists = persistentListOf(),
             onQueryChange = {},
             onPlayTracks = { _, _ -> },
             onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },

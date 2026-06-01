@@ -13,7 +13,6 @@
     <string name="home_label_add_folders">Добавить папки</string>
     <string name="home_label_import_more_tracks">Импортировать больше треков</string>
     <string name="home_title_start_your_music_journey">Начните ваше музыкальное путешествие</string>
-    <string name="home_label_select_folder">Выберите папку, чтобы создать вашу оффлайн-библиотеку.</string>
     <string name="home_status_picking_music_folder">Выбор папки с музыкой</string>
     <string name="home_status_scanning">Сканирование…</string>
     <string name="home_label_pick_music_folder">Выберите папку с музыкой</string>
@@ -51,8 +50,6 @@
     <string name="sync_status_completed">Сканировано %1$d треков в %2$d папках</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d неудачных)</string>
     <string name="sync_status_failed">Сканирование завершилось с ошибкой: %1$s</string>
-
-    <!-- Auto-translated to Russian via local LLM; review and refine. -->
     <string name="home_greeting_morning">Доброе утро</string>
     <string name="home_greeting_afternoon">Добрый день</string>
     <string name="home_greeting_evening">Добрый вечер</string>
@@ -151,4 +148,7 @@
     <string name="cd_delete_playlist">Удалить плейлист</string>
     <string name="cd_new_playlist">Новый плейлист</string>
     <string name="cd_repeat_mode">Повтор: %1$s</string>
+
+    <!-- Auto-translated to Russian via local LLM; review and refine. -->
+    <string name="home_label_select_folder">Выберите папку с вашей музыкой. На современных Android система блокирует выбор стандартных медиа-папок (Музыка, Загрузки и т.д.) — перейдите в подпапку, например, Музыка/Альбомы, и выберите её вместо этого. Аудио в заблокированных папках всё равно отображается в вашей библиотеке через разрешение на доступ к музыке; вам нужно только выбрать папки для функции записи метаданных.</string>
 </resources>

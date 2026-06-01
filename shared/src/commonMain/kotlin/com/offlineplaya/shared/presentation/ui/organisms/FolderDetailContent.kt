@@ -20,6 +20,9 @@ import com.offlineplaya.shared.presentation.ui.molecules.FolderRow
 import com.offlineplaya.shared.presentation.ui.molecules.TrackRow
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import offlineplaya.shared.generated.resources.Res
@@ -35,8 +38,8 @@ import org.jetbrains.compose.resources.stringResource
  */
 @Composable
 fun FolderDetailContent(
-    subfolders: List<Folder>,
-    tracks: List<Track>,
+    subfolders: PersistentList<Folder>,
+    tracks: PersistentList<Track>,
     onFolderClick: (Long) -> Unit,
     onTrackClick: (Track) -> Unit,
     modifier: Modifier = Modifier,
@@ -54,13 +57,15 @@ fun FolderDetailContent(
         if (subfolders.isNotEmpty()) {
             item { SectionHeader(stringResource(Res.string.folder_section_folders)) }
             items(items = subfolders, key = { "f-${it.id}" }) { folder ->
-                val previewTracks: List<Track> = if (previewTracksProvider != null) {
-                    val state by produceState(initialValue = emptyList<Track>(), folder.id) {
-                        previewTracksProvider(folder.id).collectLatest { value = it }
+                val previewTracks: PersistentList<Track> = if (previewTracksProvider != null) {
+                    val state by produceState(initialValue = persistentListOf<Track>(), folder.id) {
+                        previewTracksProvider(folder.id).collectLatest {
+                            value = it.toPersistentList()
+                        }
                     }
                     state
                 } else {
-                    emptyList()
+                    persistentListOf()
                 }
                 FolderRow(
                     folder = folder,
@@ -94,10 +99,10 @@ private fun FolderDetailContentMixedPreview() {
     PreviewTheme {
         Surface {
             FolderDetailContent(
-                subfolders = listOf(
+                subfolders = persistentListOf(
                     Folder(10, "t", "Pearl Jam/Live", "Live", 1L, 24),
                 ),
-                tracks = listOf(
+                tracks = persistentListOf(
                     sampleTrack(1, 1, "Once"),
                     sampleTrack(2, 2, "Even Flow"),
                 ),

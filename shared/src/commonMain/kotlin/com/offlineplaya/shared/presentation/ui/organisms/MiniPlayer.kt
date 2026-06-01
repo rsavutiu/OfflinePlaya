@@ -29,6 +29,7 @@ import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
 import com.offlineplaya.shared.presentation.ui.molecules.PlaybackControls
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.persistentListOf
 
 /**
  * Vertical footprint of the [MiniPlayer]'s content above the navigation-bar
@@ -157,7 +158,7 @@ private fun MiniPlayerPlayingPreview() {
                 durationMs = 224_000L,
                 shuffleEnabled = false,
                 repeatMode = com.offlineplaya.shared.domain.model.RepeatMode.OFF,
-                queue = emptyList(),
+                queue = persistentListOf(),
                 queueIndex = 0,
                 volume = 1f,
             ),
@@ -178,7 +179,7 @@ private fun MiniPlayerPausedDarkPreview() {
                 durationMs = 296_000L,
                 shuffleEnabled = false,
                 repeatMode = com.offlineplaya.shared.domain.model.RepeatMode.OFF,
-                queue = emptyList(),
+                queue = persistentListOf(),
                 queueIndex = 0,
                 volume = 1f,
             ),

@@ -27,8 +27,12 @@ android {
         applicationId = "com.offlineplaya.android"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.1.1"
+
+        // The default AndroidJUnitRunner is enough — no custom runner needed
+        // until we want Hilt/Koin lifecycle hooks for instrumented Koin tests.
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // Make AGP package the native debug symbols (function names only —
         // FULL would also include line numbers, ~10x larger) for every .so
@@ -138,4 +142,14 @@ dependencies {
     // Compose Preview: annotation (always) + renderer (debug only, for Android Studio)
     implementation(compose.components.uiToolingPreview)
     debugImplementation(compose.uiTooling)
+
+    // Instrumented tests — exercise the real Android stack (SAF, MediaStore,
+    // Jaudiotagger over real files) against the fixture audio committed under
+    // src/androidTest/assets/fixtures.
+    androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
 }

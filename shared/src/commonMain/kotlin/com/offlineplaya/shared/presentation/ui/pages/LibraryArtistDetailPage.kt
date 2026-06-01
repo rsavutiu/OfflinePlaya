@@ -21,6 +21,8 @@ import com.offlineplaya.shared.presentation.ui.organisms.ArtistDetailHeader
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 
 /**
  * Artist detail: adaptive header + grid of the artist's albums. A "Shuffle
@@ -29,7 +31,7 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 @Composable
 fun LibraryArtistDetailPage(
     artist: Artist?,
-    albums: List<Album>,
+    albums: PersistentList<Album>,
     onAlbumClick: (Long) -> Unit,
     onPlayAlbum: (Album) -> Unit,
     onPlayArtist: () -> Unit,
@@ -71,7 +73,7 @@ private fun LibraryArtistDetailPagePreview() {
     PreviewTheme {
         LibraryArtistDetailPage(
             artist = Artist(1, "Pearl Jam", 11, 142),
-            albums = listOf(
+            albums = persistentListOf(
                 Album(1, "Ten", artistId = 1, year = 1991, trackCount = 11, durationMs = 0),
                 Album(2, "Vs.", artistId = 1, year = 1993, trackCount = 12, durationMs = 0),
             ),

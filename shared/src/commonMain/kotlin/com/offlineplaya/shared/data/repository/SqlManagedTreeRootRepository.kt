@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 
 internal class SqlManagedTreeRootRepository(
     private val db: OfflinePlayaDatabase,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ManagedTreeRootRepository {
 
     private val queries get() = db.managedTreeRootQueries

@@ -13,7 +13,6 @@
     <string name="home_label_add_folders">Adicionar pastas</string>
     <string name="home_label_import_more_tracks">Importar mais faixas</string>
     <string name="home_title_start_your_music_journey">Inicie sua jornada musical</string>
-    <string name="home_label_select_folder">Selecione uma pasta para construir sua biblioteca offline.</string>
     <string name="home_status_picking_music_folder">Selecionando pasta de música</string>
     <string name="home_status_scanning">Varrendo...</string>
     <string name="home_label_pick_music_folder">Selecione pasta de música</string>
@@ -51,8 +50,6 @@
     <string name="sync_status_completed">Varredura concluída: %1$d faixas em %2$d pastas</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d falhados)</string>
     <string name="sync_status_failed">Varredura falhou: %1$s</string>
-
-    <!-- Auto-translated to Brazilian Portuguese via local LLM; review and refine. -->
     <string name="home_greeting_morning">Bom dia</string>
     <string name="home_greeting_afternoon">Boa tarde</string>
     <string name="home_greeting_evening">Boa noite</string>
@@ -151,4 +148,7 @@
     <string name="cd_delete_playlist">Excluir playlist</string>
     <string name="cd_new_playlist">Nova playlist</string>
     <string name="cd_repeat_mode">Repetir: %1$s</string>
+
+    <!-- Auto-translated to Brazilian Portuguese via local LLM; review and refine. -->
+    <string name="home_label_select_folder">Escolha uma pasta com sua música. No Android moderno, o sistema bloqueia a seleção das pastas de mídia padrão (Música, Downloads, etc.) — entre em uma subpasta como Música/Álbuns e escolha essa em vez disso. Áudio nas pastas bloqueadas ainda aparece na sua biblioteca via permissão de acesso à música; você só precisa escolher pastas para o recurso de gravação de tags.</string>
 </resources>

@@ -1,0 +1,52 @@
+-- "Recently used" albums for the home page's cover-fan shelf.
+-- One row per album the user has actively interacted with (currently:
+-- played). New entries push older ones DOWN in the order, never the
+-- other way around — that's how we feed the [HomeBrowseGrid] a stable,
+-- append-only stream during library sync without re-shuffling the
+-- alphabetical Album.observeAll() result.
+--
+-- The table lives separately from Album so that:
+--  * Album rows can be re-created mid-scan without losing recency.
+--  * The recency clock can be reset (e.g. user wipes history) without
+--    touching the library itself.
+--  * Joining recency with Album is a single index lookup.
+--
+-- ON DELETE CASCADE: if an Album row is removed (folder unmanaged,
+-- last track in that album deleted), its recency entry goes with it.
+
+CREATE TABLE IF NOT EXISTS RecentAlbum (
+    album_id INTEGER PRIMARY KEY NOT NULL REFERENCES Album(id) ON DELETE CASCADE,
+    last_used_at INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_recent_album_last_used_at
+    ON RecentAlbum(last_used_at DESC);
+
+-- Upsert: bump an album's recency to `now`. `INSERT OR REPLACE` works
+-- here because `album_id` is the primary key — re-inserting an existing
+-- album_id replaces the row, updating last_used_at. (SQLDelight 2.0.1
+-- targets SQLite 3.18, which predates the `ON CONFLICT (...) DO UPDATE`
+-- upsert syntax; INSERT OR REPLACE has been available since 3.0.)
+recordUse:
+INSERT OR REPLACE INTO RecentAlbum(album_id, last_used_at)
+VALUES (?, ?);
+
+-- Hot stream of the N most-recently-used albums, newest first, joined
+-- with their Album rows so callers don't have to re-fetch.
+selectRecentAlbums:
+SELECT
+    Album.id AS id,
+    Album.name AS name,
+    Album.artist_id AS artist_id,
+    Album.year AS year,
+    Album.track_count AS track_count,
+    Album.duration_ms AS duration_ms
+FROM RecentAlbum
+INNER JOIN Album ON Album.id = RecentAlbum.album_id
+ORDER BY RecentAlbum.last_used_at DESC
+LIMIT :limit;
+
+-- Wipe the entire recency history. Exposed so a future "clear recent
+-- albums" Settings action has a clean entry point.
+clearAll:
+DELETE FROM RecentAlbum;

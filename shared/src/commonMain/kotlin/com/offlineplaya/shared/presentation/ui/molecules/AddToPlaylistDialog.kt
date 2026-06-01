@@ -17,6 +17,8 @@ import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.add_to_playlist_dialog_title
 import offlineplaya.shared.generated.resources.playlist_dialog_cancel
@@ -30,7 +32,7 @@ import org.jetbrains.compose.resources.stringResource
  */
 @Composable
 fun AddToPlaylistDialog(
-    playlists: List<Playlist>,
+    playlists: PersistentList<Playlist>,
     onPickPlaylist: (Long) -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -81,7 +83,7 @@ fun AddToPlaylistDialog(
 private fun AddToPlaylistDialogPopulatedPreview() {
     PreviewTheme {
         AddToPlaylistDialog(
-            playlists = listOf(
+            playlists = persistentListOf(
                 Playlist(1, "Morning Run", 0, 0),
                 Playlist(2, "Focus", 0, 0),
                 Playlist(3, "Late Drives", 0, 0),
@@ -96,6 +98,6 @@ private fun AddToPlaylistDialogPopulatedPreview() {
 @Composable
 private fun AddToPlaylistDialogEmptyPreview() {
     PreviewTheme(darkTheme = true) {
-        AddToPlaylistDialog(playlists = emptyList(), onPickPlaylist = {}, onDismiss = {})
+        AddToPlaylistDialog(playlists = persistentListOf(), onPickPlaylist = {}, onDismiss = {})
     }
 }

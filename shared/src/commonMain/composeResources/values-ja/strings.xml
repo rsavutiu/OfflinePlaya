@@ -13,7 +13,6 @@
     <string name="home_label_add_folders">フォルダを追加</string>
     <string name="home_label_import_more_tracks">さらにトラックをインポート</string>
     <string name="home_title_start_your_music_journey">音楽の旅を開始</string>
-    <string name="home_label_select_folder">オフラインライブラリを作成するには、フォルダを選択してください。</string>
     <string name="home_status_picking_music_folder">音楽フォルダを選択中</string>
     <string name="home_status_scanning">スキャン中…</string>
     <string name="home_label_pick_music_folder">音楽フォルダを選択</string>
@@ -51,8 +50,6 @@
     <string name="sync_status_completed">合計 %1$d トラックを %2$d フォルダでスキャンしました</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d 失敗)</string>
     <string name="sync_status_failed">スキャン失敗: %1$s</string>
-
-    <!-- Auto-translated to Japanese via local LLM; review and refine. -->
     <string name="home_greeting_morning">おはようございます</string>
     <string name="home_greeting_afternoon">こんにちは</string>
     <string name="home_greeting_evening">こんばんは</string>
@@ -151,4 +148,7 @@
     <string name="cd_delete_playlist">プレイリストを削除</string>
     <string name="cd_new_playlist">新しいプレイリスト</string>
     <string name="cd_repeat_mode">リピート: %1$s</string>
+
+    <!-- Auto-translated to Japanese via local LLM; review and refine. -->
+    <string name="home_label_select_folder">音楽があるフォルダを選んでください。現代のAndroidでは、システムが標準のメディアフォルダ（Music、Downloadsなど）の選択をブロックしています — 代わりにMusic/Albumsなどのサブフォルダを選んでください。ブロックされたフォルダ内の音楽は、ミュージックアクセス権限を通じてライブラリに表示されます。タグ焼却機能のためにフォルダを選ばなければならないだけです。</string>
 </resources>

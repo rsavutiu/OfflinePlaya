@@ -9,11 +9,13 @@ import com.offlineplaya.shared.presentation.ui.organisms.FolderList
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.LibraryScaffold
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun LibraryFolderRootsPage(
-    roots: List<Folder>,
+    roots: PersistentList<Folder>,
     onFolderClick: (Long) -> Unit,
     onTabSelected: (LibraryTab) -> Unit,
     onBack: () -> Unit,
@@ -39,7 +41,7 @@ fun LibraryFolderRootsPage(
 private fun LibraryFolderRootsPagePreview() {
     PreviewTheme {
         LibraryFolderRootsPage(
-            roots = listOf(
+            roots = persistentListOf(
                 Folder(1, "content://A", "", "Main Library", null, 247),
                 Folder(2, "content://B", "", "Bootlegs", null, 412),
             ),

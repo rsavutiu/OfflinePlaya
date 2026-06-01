@@ -14,6 +14,8 @@ import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.molecules.TrackRow
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.empty_tracks_subtitle
 import offlineplaya.shared.generated.resources.empty_tracks_title
@@ -21,7 +23,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun TrackList(
-    tracks: List<Track>,
+    tracks: PersistentList<Track>,
     onTrackClick: (Track) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -50,7 +52,7 @@ private fun TrackListPopulatedPreview() {
     PreviewTheme {
         Surface {
             TrackList(
-                tracks = listOf(
+                tracks = persistentListOf(
                     sampleTrack(id = 1, n = 1, title = "Once", ms = 224_000L),
                     sampleTrack(id = 2, n = 2, title = "Even Flow", ms = 296_000L),
                     sampleTrack(id = 3, n = 3, title = "Alive", ms = 341_000L),

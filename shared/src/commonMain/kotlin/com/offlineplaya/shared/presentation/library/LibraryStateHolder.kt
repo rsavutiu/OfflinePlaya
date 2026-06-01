@@ -7,7 +7,12 @@ import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.domain.repository.AlbumRepository
 import com.offlineplaya.shared.domain.repository.ArtistRepository
 import com.offlineplaya.shared.domain.repository.FolderRepository
+import com.offlineplaya.shared.domain.repository.RecentAlbumRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
+import com.offlineplaya.shared.presentation.library.LibraryStateHolder.Companion.RECENT_ALBUMS_LIMIT
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -22,6 +27,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 /**
  * UI-facing facade over the library repositories. Exposes hot lists for the
@@ -35,24 +41,66 @@ class LibraryStateHolder(
     private val albums: AlbumRepository,
     private val folders: FolderRepository,
     private val tracks: TrackRepository,
+    private val recentAlbumsRepo: RecentAlbumRepository,
     private val scope: CoroutineScope,
 ) {
 
+    private companion object {
+        // Plenty of headroom for the home grid's 16 fan slots without
+        // bloating the recency table. Old entries fall off naturally as
+        // the user plays new things — there's no explicit eviction
+        // policy because the LIMIT clause clips the read path.
+        const val RECENT_ALBUMS_LIMIT = 32
+    }
+
+    // Repositories return plain `List<T>`; we convert to `PersistentList`
+    // at the state-holder boundary so every downstream Composable sees a
+    // Compose-stable collection (the Compose compiler treats `List` as
+    // unstable because mutable subtypes exist; `PersistentList` is
+    // `@Immutable` and skips recomposition when the reference is the same).
     /** All artists, alphabetical. Always-on hot list. */
-    val allArtists: StateFlow<List<Artist>> = artists.observeAll()
-        .stateIn(scope, SharingStarted.Eagerly, emptyList())
+    val allArtists: StateFlow<PersistentList<Artist>> = artists.observeAll()
+        .map { it.toPersistentList() }
+        .stateIn(scope, SharingStarted.Eagerly, persistentListOf())
 
     /** All albums, alphabetical. Used by the home page recent-albums shelf. */
-    val allAlbums: StateFlow<List<Album>> = albums.observeAll()
-        .stateIn(scope, SharingStarted.Eagerly, emptyList())
+    val allAlbums: StateFlow<PersistentList<Album>> = albums.observeAll()
+        .map { it.toPersistentList() }
+        .stateIn(scope, SharingStarted.Eagerly, persistentListOf())
 
     /** All root folders (one per managed tree). Always-on hot list. */
-    val rootFolders: StateFlow<List<Folder>> = folders.observeRoots()
-        .stateIn(scope, SharingStarted.Eagerly, emptyList())
+    val rootFolders: StateFlow<PersistentList<Folder>> = folders.observeRoots()
+        .map { it.toPersistentList() }
+        .stateIn(scope, SharingStarted.Eagerly, persistentListOf())
 
     /** Every track in the library, sorted by title. Lazy — collected only when subscribed. */
-    val allTracks: StateFlow<List<Track>> = tracks.observeAll()
-        .stateIn(scope, SharingStarted.WhileSubscribed(5_000L), emptyList())
+    val allTracks: StateFlow<PersistentList<Track>> = tracks.observeAll()
+        .map { it.toPersistentList() }
+        .stateIn(scope, SharingStarted.WhileSubscribed(5_000L), persistentListOf())
+
+    /**
+     * "Recently played" album shelf, persisted across launches via the
+     * `RecentAlbum` table. Empty on first launch — fills up as the user
+     * plays tracks (see [recordAlbumUse] on the [App] play-trigger
+     * lambda). Front of the list is most recent. Capped at
+     * [RECENT_ALBUMS_LIMIT]; the home grid only ever displays the first
+     * 16 anyway.
+     */
+    val recentAlbums: StateFlow<PersistentList<Album>> =
+        recentAlbumsRepo.observeRecent(RECENT_ALBUMS_LIMIT)
+            .map { it.toPersistentList() }
+            .stateIn(scope, SharingStarted.Eagerly, persistentListOf())
+
+    /**
+     * Record an album as "just played". No-op when [albumId] is null —
+     * the player path passes through Track rows whose `albumId` may not
+     * have been resolved yet (mid-scan), and we'd rather drop those
+     * recordings on the floor than insert nulls.
+     */
+    fun recordAlbumUse(albumId: Long?) {
+        if (albumId == null) return
+        scope.launch { recentAlbumsRepo.recordUse(albumId, System.currentTimeMillis()) }
+    }
 
     /**
      * Total track count derived from [TrackRepository.observeAll]. Re-emits
@@ -72,18 +120,27 @@ class LibraryStateHolder(
     suspend fun representativeTrackOfAlbum(albumId: Long): Track? =
         tracks.findFirstByAlbum(albumId)
 
-    fun albumsByArtist(artistId: Long): Flow<List<Album>> = albums.observeByArtist(artistId)
-    fun tracksByAlbum(albumId: Long): Flow<List<Track>> = tracks.observeByAlbum(albumId)
-    fun tracksByArtist(artistId: Long): Flow<List<Track>> = tracks.observeByArtist(artistId)
-    fun childFolders(parentId: Long): Flow<List<Folder>> = folders.observeChildren(parentId)
-    fun tracksInFolder(folderId: Long): Flow<List<Track>> = tracks.observeByFolder(folderId)
+    fun albumsByArtist(artistId: Long): Flow<PersistentList<Album>> =
+        albums.observeByArtist(artistId).map { it.toPersistentList() }
+
+    fun tracksByAlbum(albumId: Long): Flow<PersistentList<Track>> =
+        tracks.observeByAlbum(albumId).map { it.toPersistentList() }
+
+    fun tracksByArtist(artistId: Long): Flow<PersistentList<Track>> =
+        tracks.observeByArtist(artistId).map { it.toPersistentList() }
+
+    fun childFolders(parentId: Long): Flow<PersistentList<Folder>> =
+        folders.observeChildren(parentId).map { it.toPersistentList() }
+
+    fun tracksInFolder(folderId: Long): Flow<PersistentList<Track>> =
+        tracks.observeByFolder(folderId).map { it.toPersistentList() }
 
     /**
      * Up to [limit] tracks for [folderId], one per distinct album, used to
      * build the folder-row collage thumbnail. Derived off the existing
      * folder-tracks flow so it picks up new scans automatically.
      */
-    fun previewTracksInFolder(folderId: Long, limit: Int = 4): Flow<List<Track>> =
+    fun previewTracksInFolder(folderId: Long, limit: Int = 4): Flow<PersistentList<Track>> =
         tracks.observeByFolder(folderId).map { all ->
             val seen = HashSet<Long?>()
             val out = ArrayList<Track>(limit)
@@ -91,7 +148,7 @@ class LibraryStateHolder(
                 if (out.size >= limit) break
                 if (seen.add(t.albumId)) out += t
             }
-            out
+            out.toPersistentList()
         }
 
     /** Look up the artist name without holding a reference to the Artist row. */
@@ -112,12 +169,13 @@ class LibraryStateHolder(
      * pass, cancelling any earlier in-flight search when the query changes.
      */
     @OptIn(FlowPreview::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
-    val searchResults: StateFlow<List<Track>> = _searchQuery
+    val searchResults: StateFlow<PersistentList<Track>> = _searchQuery
         .debounce(200L)
         .map { it.trim() }
         .distinctUntilChanged()
         .flatMapLatest { query ->
-            if (query.length < 2) flowOf(emptyList()) else flow { emit(tracks.search(query)) }
+            if (query.length < 2) flowOf(persistentListOf())
+            else flow { emit(tracks.search(query).toPersistentList()) }
         }
-        .stateIn(scope, SharingStarted.WhileSubscribed(5_000L), emptyList())
+        .stateIn(scope, SharingStarted.WhileSubscribed(5_000L), persistentListOf())
 }
