@@ -1,7 +1,8 @@
 package com.offlineplaya.shared.presentation.ui.molecules
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,13 +27,18 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
  * When [isPlaying] is true, the row gets a subtle accent tint, bold title
  * in the primary color, and a ▶ indicator replacing the track number —
  * matching the redesign's "playing state visible in list" guideline.
+ *
+ * [onClick] plays the track; [onLongClick] (when supplied) opens the track
+ * actions sheet — the long-press → add-to-playlist / queue entry point.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TrackRow(
     track: Track,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isPlaying: Boolean = false,
+    onLongClick: (() -> Unit)? = null,
 ) {
     val bgModifier = if (isPlaying) {
         Modifier.background(MaterialTheme.colorScheme.primary.copy(alpha = 0.08f))
@@ -44,7 +50,7 @@ fun TrackRow(
         modifier = modifier
             .fillMaxWidth()
             .then(bgModifier)
-            .clickable(onClick = onClick)
+            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
             .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {

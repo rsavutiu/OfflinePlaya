@@ -9,20 +9,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Album
-import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.TrackRow
 import com.offlineplaya.shared.presentation.ui.organisms.AlbumDetailHeader
-import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
@@ -31,8 +25,8 @@ import kotlinx.collections.immutable.persistentListOf
 
 /**
  * Album detail page: gradient header (art + metadata + Play/Shuffle) followed
- * by the track listing. Tapping a row opens [TrackDetailsSheet] for queue
- * and playlist actions.
+ * by the track listing. Tapping a row plays the album from that track;
+ * long-pressing raises the global track-actions sheet via [onTrackLongPress].
  */
 @Composable
 fun LibraryAlbumDetailPage(
@@ -40,16 +34,11 @@ fun LibraryAlbumDetailPage(
     artistName: String?,
     tracks: PersistentList<Track>,
     representativeTrack: Track?,
-    availablePlaylists: PersistentList<Playlist>,
     onPlayTracks: (List<Track>, Int) -> Unit,
-    onPlayNext: (Track) -> Unit,
-    onAddToQueue: (Track) -> Unit,
-    onAddToPlaylist: (Track, Long) -> Unit,
+    onTrackLongPress: (Track) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var selectedTrack by remember { mutableStateOf<Track?>(null) }
-
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
@@ -72,31 +61,16 @@ fun LibraryAlbumDetailPage(
                         },
                     )
                 }
-                itemsIndexed(items = tracks, key = { _, t -> t.id }) { _, track ->
-                    TrackRow(track = track, onClick = { selectedTrack = track })
+                itemsIndexed(items = tracks, key = { _, t -> t.id }) { index, track ->
+                    TrackRow(
+                        track = track,
+                        onClick = { onPlayTracks(tracks, index) },
+                        onLongClick = { onTrackLongPress(track) },
+                    )
                 }
                 item { Spacer(Modifier.height(80.dp)) }
             }
         }
-    }
-
-    selectedTrack?.let { track ->
-        TrackDetailsSheet(
-            track = track,
-            availablePlaylists = availablePlaylists,
-            onPlay = {
-                val index = tracks.indexOf(track).coerceAtLeast(0)
-                onPlayTracks(tracks, index)
-                selectedTrack = null
-            },
-            onPlayNext = { onPlayNext(track); selectedTrack = null },
-            onAddToQueue = { onAddToQueue(track); selectedTrack = null },
-            onAddToPlaylist = { playlistId ->
-                onAddToPlaylist(track, playlistId)
-                selectedTrack = null
-            },
-            onDismiss = { selectedTrack = null },
-        )
     }
 }
 
@@ -113,9 +87,8 @@ private fun LibraryAlbumDetailPagePreview() {
                 sampleTrack(2, 2, "Even Flow"),
                 sampleTrack(3, 3, "Alive"),
             ),
-            availablePlaylists = persistentListOf(),
             onPlayTracks = { _, _ -> },
-            onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
+            onTrackLongPress = {},
             onBack = {},
         )
     }
@@ -130,9 +103,8 @@ private fun LibraryAlbumDetailPageEmptyPreview() {
             artistName = "Unknown",
             representativeTrack = null,
             tracks = persistentListOf(),
-            availablePlaylists = persistentListOf(),
             onPlayTracks = { _, _ -> },
-            onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
+            onTrackLongPress = {},
             onBack = {},
         )
     }

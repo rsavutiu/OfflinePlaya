@@ -27,6 +27,7 @@ fun TrackList(
     onTrackClick: (Track) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
+    onTrackLongPress: ((Track) -> Unit)? = null,
 ) {
     if (tracks.isEmpty()) {
         EmptyState(
@@ -41,7 +42,11 @@ fun TrackList(
         contentPadding = contentPadding,
     ) {
         items(items = tracks, key = { it.id }) { track ->
-            TrackRow(track = track, onClick = { onTrackClick(track) })
+            TrackRow(
+                track = track,
+                onClick = { onTrackClick(track) },
+                onLongClick = onTrackLongPress?.let { { it(track) } },
+            )
         }
     }
 }

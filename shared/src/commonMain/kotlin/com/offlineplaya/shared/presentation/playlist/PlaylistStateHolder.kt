@@ -38,6 +38,21 @@ class PlaylistStateHolder(
         scope.launch { playlists.create(name.trim()) }
     }
 
+    /**
+     * Create a playlist and immediately add [trackId] to it. Used by the
+     * long-press "Add to new playlist" flow so the user isn't bounced to the
+     * Playlists page just to seed a playlist with one track. The repo's
+     * [PlaylistRepository.create] returns the new id, so this stays a single
+     * launched job — create-then-add — rather than two fire-and-forget calls.
+     */
+    fun createAndAddTrack(name: String, trackId: Long) {
+        if (name.isBlank()) return
+        scope.launch {
+            val id = playlists.create(name.trim())
+            playlists.addTrack(id, trackId)
+        }
+    }
+
     fun rename(id: Long, name: String) {
         if (name.isBlank()) return
         scope.launch { playlists.rename(id, name.trim()) }

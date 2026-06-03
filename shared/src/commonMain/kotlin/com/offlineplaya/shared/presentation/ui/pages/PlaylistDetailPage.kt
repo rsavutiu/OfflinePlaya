@@ -23,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
@@ -31,7 +30,6 @@ import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.molecules.PlaylistNameDialog
 import com.offlineplaya.shared.presentation.ui.molecules.TrackRow
 import com.offlineplaya.shared.presentation.ui.organisms.PlaylistDetailHeader
-import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
@@ -51,17 +49,13 @@ import org.jetbrains.compose.resources.stringResource
 fun PlaylistDetailPage(
     playlistName: String,
     tracks: PersistentList<Track>,
-    availablePlaylists: PersistentList<Playlist>,
     onPlayTracks: (List<Track>, Int) -> Unit,
-    onPlayNext: (Track) -> Unit,
-    onAddToQueue: (Track) -> Unit,
-    onAddToPlaylist: (Track, Long) -> Unit,
+    onTrackLongPress: (Track) -> Unit,
     onRename: (String) -> Unit,
     onDelete: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var selectedTrack by remember { mutableStateOf<Track?>(null) }
     var showRenameDialog by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -116,10 +110,11 @@ fun PlaylistDetailPage(
                     )
                 }
 
-                itemsIndexed(items = tracks, key = { _, t -> t.id }) { _, track ->
+                itemsIndexed(items = tracks, key = { _, t -> t.id }) { index, track ->
                     TrackRow(
                         track = track,
-                        onClick = { selectedTrack = track },
+                        onClick = { onPlayTracks(tracks, index) },
+                        onLongClick = { onTrackLongPress(track) },
                     )
                 }
 
@@ -127,22 +122,6 @@ fun PlaylistDetailPage(
             }
             }
         }
-    }
-
-    selectedTrack?.let { track ->
-        TrackDetailsSheet(
-            track = track,
-            availablePlaylists = availablePlaylists,
-            onPlay = {
-                val index = tracks.indexOf(track).coerceAtLeast(0)
-                onPlayTracks(tracks, index)
-                selectedTrack = null
-            },
-            onPlayNext = { onPlayNext(track); selectedTrack = null },
-            onAddToQueue = { onAddToQueue(track); selectedTrack = null },
-            onAddToPlaylist = { id -> onAddToPlaylist(track, id); selectedTrack = null },
-            onDismiss = { selectedTrack = null },
-        )
     }
 
     if (showRenameDialog) {
@@ -166,9 +145,8 @@ private fun PlaylistDetailPagePopulatedPreview() {
                 samplePlaylistTrack(1, "Once", "Pearl Jam"),
                 samplePlaylistTrack(2, "Cherub Rock", "Smashing Pumpkins"),
             ),
-            availablePlaylists = persistentListOf(),
             onPlayTracks = { _, _ -> },
-            onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
+            onTrackLongPress = {},
             onRename = {},
             onDelete = {},
             onBack = {},
@@ -183,9 +161,8 @@ private fun PlaylistDetailPageEmptyPreview() {
         PlaylistDetailPage(
             playlistName = "Empty",
             tracks = persistentListOf(),
-            availablePlaylists = persistentListOf(),
             onPlayTracks = { _, _ -> },
-            onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
+            onTrackLongPress = {},
             onRename = {},
             onDelete = {},
             onBack = {},

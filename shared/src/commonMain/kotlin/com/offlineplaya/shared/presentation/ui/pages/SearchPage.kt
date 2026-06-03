@@ -9,19 +9,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.molecules.SearchField
-import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
 import com.offlineplaya.shared.presentation.ui.organisms.TrackList
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
@@ -40,23 +34,19 @@ import org.jetbrains.compose.resources.stringResource
 /**
  * Global search across track title / artist / album. The repository handles
  * the actual SQL match; the page just wires the query string + results into
- * the existing TrackList + TrackDetailsSheet pattern.
+ * the shared TrackList. Tapping a result plays it; long-pressing raises the
+ * global track-actions sheet via [onTrackLongPress].
  */
 @Composable
 fun SearchPage(
     query: String,
     results: PersistentList<Track>,
-    availablePlaylists: PersistentList<Playlist>,
     onQueryChange: (String) -> Unit,
     onPlayTracks: (List<Track>, Int) -> Unit,
-    onPlayNext: (Track) -> Unit,
-    onAddToQueue: (Track) -> Unit,
-    onAddToPlaylist: (Track, Long) -> Unit,
+    onTrackLongPress: (Track) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var selectedTrack by remember { mutableStateOf<Track?>(null) }
-
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
@@ -96,28 +86,13 @@ fun SearchPage(
                     )
                     TrackList(
                         tracks = results,
-                        onTrackClick = { selectedTrack = it },
+                        onTrackClick = { onPlayTracks(results, results.indexOf(it).coerceAtLeast(0)) },
+                        onTrackLongPress = onTrackLongPress,
                     )
                 }
             }
         }
         }
-    }
-
-    selectedTrack?.let { track ->
-        TrackDetailsSheet(
-            track = track,
-            availablePlaylists = availablePlaylists,
-            onPlay = {
-                val index = results.indexOf(track).coerceAtLeast(0)
-                onPlayTracks(results, index)
-                selectedTrack = null
-            },
-            onPlayNext = { onPlayNext(track); selectedTrack = null },
-            onAddToQueue = { onAddToQueue(track); selectedTrack = null },
-            onAddToPlaylist = { id -> onAddToPlaylist(track, id); selectedTrack = null },
-            onDismiss = { selectedTrack = null },
-        )
     }
 }
 
@@ -128,10 +103,9 @@ private fun SearchPageInitialPreview() {
         SearchPage(
             query = "",
             results = persistentListOf(),
-            availablePlaylists = persistentListOf(),
             onQueryChange = {},
             onPlayTracks = { _, _ -> },
-            onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
+            onTrackLongPress = {},
             onBack = {},
         )
     }
@@ -147,10 +121,9 @@ private fun SearchPageResultsPreview() {
                 sampleSearchTrack(1, "Once", "Pearl Jam"),
                 sampleSearchTrack(2, "Even Flow", "Pearl Jam"),
             ),
-            availablePlaylists = persistentListOf(),
             onQueryChange = {},
             onPlayTracks = { _, _ -> },
-            onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
+            onTrackLongPress = {},
             onBack = {},
         )
     }
@@ -163,10 +136,9 @@ private fun SearchPageNoMatchesPreview() {
         SearchPage(
             query = "zzz",
             results = persistentListOf(),
-            availablePlaylists = persistentListOf(),
             onQueryChange = {},
             onPlayTracks = { _, _ -> },
-            onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
+            onTrackLongPress = {},
             onBack = {},
         )
     }

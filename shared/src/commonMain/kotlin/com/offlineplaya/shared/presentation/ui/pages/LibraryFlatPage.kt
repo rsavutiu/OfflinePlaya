@@ -1,16 +1,10 @@
 package com.offlineplaya.shared.presentation.ui.pages
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
-import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
 import com.offlineplaya.shared.presentation.ui.organisms.TrackList
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.LibraryScaffold
@@ -21,17 +15,12 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 fun LibraryFlatPage(
     tracks: PersistentList<Track>,
-    availablePlaylists: PersistentList<Playlist>,
     onPlayTracks: (List<Track>, Int) -> Unit,
-    onPlayNext: (Track) -> Unit,
-    onAddToQueue: (Track) -> Unit,
-    onAddToPlaylist: (Track, Long) -> Unit,
+    onTrackLongPress: (Track) -> Unit,
     onTabSelected: (LibraryTab) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var selectedTrack by remember { mutableStateOf<Track?>(null) }
-
     LibraryScaffold(
         selectedTab = LibraryTab.FLAT,
         onTabSelected = onTabSelected,
@@ -40,23 +29,8 @@ fun LibraryFlatPage(
     ) {
         TrackList(
             tracks = tracks,
-            onTrackClick = { selectedTrack = it },
-        )
-    }
-
-    selectedTrack?.let { track ->
-        TrackDetailsSheet(
-            track = track,
-            availablePlaylists = availablePlaylists,
-            onPlay = {
-                val index = tracks.indexOf(track).coerceAtLeast(0)
-                onPlayTracks(tracks, index)
-                selectedTrack = null
-            },
-            onPlayNext = { onPlayNext(track); selectedTrack = null },
-            onAddToQueue = { onAddToQueue(track); selectedTrack = null },
-            onAddToPlaylist = { id -> onAddToPlaylist(track, id); selectedTrack = null },
-            onDismiss = { selectedTrack = null },
+            onTrackClick = { onPlayTracks(tracks, tracks.indexOf(it).coerceAtLeast(0)) },
+            onTrackLongPress = onTrackLongPress,
         )
     }
 }
@@ -71,9 +45,8 @@ private fun LibraryFlatPagePreview() {
                 sampleFlatTrack(2, "Boards of Canada", "Roygbiv"),
                 sampleFlatTrack(3, "Pearl Jam", "Once"),
             ),
-            availablePlaylists = persistentListOf(),
             onPlayTracks = { _, _ -> },
-            onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
+            onTrackLongPress = {},
             onTabSelected = {},
             onBack = {},
         )
@@ -86,9 +59,8 @@ private fun LibraryFlatPageEmptyPreview() {
     PreviewTheme(darkTheme = true) {
         LibraryFlatPage(
             tracks = persistentListOf(),
-            availablePlaylists = persistentListOf(),
             onPlayTracks = { _, _ -> },
-            onPlayNext = {}, onAddToQueue = {}, onAddToPlaylist = { _, _ -> },
+            onTrackLongPress = {},
             onTabSelected = {},
             onBack = {},
         )

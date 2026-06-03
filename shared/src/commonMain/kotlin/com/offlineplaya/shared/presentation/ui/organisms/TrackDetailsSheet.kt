@@ -37,6 +37,7 @@ import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.molecules.AddToPlaylistDialog
+import com.offlineplaya.shared.presentation.ui.molecules.CreatePlaylistDialog
 import com.offlineplaya.shared.presentation.ui.molecules.formatDuration
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
@@ -58,26 +59,31 @@ import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * Bottom sheet showing track metadata + actions: Play, Play next,
- * Add to queue, Add to playlist. The caller decides what "Play" means
- * (typically: set the parent list as the queue starting at this track).
- * The "Add to playlist" action shows a dialog populated by
- * [availablePlaylists]; picking one calls [onAddToPlaylist] and dismisses.
+ * Bottom sheet showing track metadata + actions: Play next, Add to queue,
+ * Add to playlist. Reached by long-pressing a track row (a plain tap plays
+ * the track in its list context, so [onPlay] is optional and normally null —
+ * when null the in-sheet play affordance is hidden entirely).
+ *
+ * "Add to playlist" opens [AddToPlaylistDialog], populated by
+ * [availablePlaylists]: picking one calls [onAddToExistingPlaylist]; choosing
+ * "+ New playlist" prompts for a name and calls [onCreatePlaylistAndAdd].
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrackDetailsSheet(
     track: Track,
     availablePlaylists: PersistentList<Playlist>,
-    onPlay: () -> Unit,
     onPlayNext: () -> Unit,
     onAddToQueue: () -> Unit,
-    onAddToPlaylist: (playlistId: Long) -> Unit,
+    onAddToExistingPlaylist: (playlistId: Long) -> Unit,
+    onCreatePlaylistAndAdd: (name: String) -> Unit,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
+    onPlay: (() -> Unit)? = null,
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showAddToPlaylistDialog by remember { mutableStateOf(false) }
+    var showCreatePlaylistDialog by remember { mutableStateOf(false) }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -97,10 +103,26 @@ fun TrackDetailsSheet(
         AddToPlaylistDialog(
             playlists = availablePlaylists,
             onPickPlaylist = { id ->
-                onAddToPlaylist(id)
+                onAddToExistingPlaylist(id)
                 showAddToPlaylistDialog = false
+                onDismiss()
+            },
+            onCreateNew = {
+                showAddToPlaylistDialog = false
+                showCreatePlaylistDialog = true
             },
             onDismiss = { showAddToPlaylistDialog = false },
+        )
+    }
+
+    if (showCreatePlaylistDialog) {
+        CreatePlaylistDialog(
+            onCreate = { name ->
+                onCreatePlaylistAndAdd(name)
+                showCreatePlaylistDialog = false
+                onDismiss()
+            },
+            onDismiss = { showCreatePlaylistDialog = false },
         )
     }
 }

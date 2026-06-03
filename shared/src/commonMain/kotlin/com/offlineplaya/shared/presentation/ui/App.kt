@@ -49,6 +49,7 @@ import com.offlineplaya.shared.presentation.ui.atoms.LocalOpenSettings
 import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
 import com.offlineplaya.shared.presentation.ui.organisms.MiniPlayer
 import com.offlineplaya.shared.presentation.ui.organisms.MiniPlayerReservedSpace
+import com.offlineplaya.shared.presentation.ui.organisms.TrackDetailsSheet
 import com.offlineplaya.shared.presentation.ui.organisms.userLabel
 import com.offlineplaya.shared.presentation.ui.pages.DesignSystemGalleryPage
 import com.offlineplaya.shared.presentation.ui.pages.EqualizerPage
@@ -83,13 +84,15 @@ fun App(
     artworkPreferences: com.offlineplaya.shared.domain.model.ArtworkPreferences,
     syncStatus: SyncStatus,
     trackCount: Long,
+    seedColor: Int?,
     onPickFolder: () -> Unit,
     onColorModeChange: (ColorMode) -> Unit,
     onDynamicColorChange: (Boolean) -> Unit,
+    onAlbumArtColorChange: (Boolean) -> Unit,
     onDownloadRemoteArtChange: (Boolean) -> Unit,
     dynamicColorSupported: Boolean,
 ) {
-    OfflinePlayaTheme(preferences = themePreferences) {
+    OfflinePlayaTheme(preferences = themePreferences, seedColor = seedColor) {
         val stack by navigator.stack.collectAsState()
         val current = stack.last()
         val playback by musicPlayer.playbackState.collectAsState()
@@ -97,6 +100,13 @@ fun App(
         val burnReport by burnMetadataCoordinator.report.collectAsState()
 
         val snackbarHostState = remember { SnackbarHostState() }
+
+        // Long-pressing any track row anywhere in the app raises this; the
+        // actions sheet is rendered once, globally (below), so every track
+        // list gets Play-next / Add-to-queue / Add-to-playlist for free
+        // without each page re-implementing the sheet.
+        var actionsTrack by remember { mutableStateOf<Track?>(null) }
+        val onTrackLongPress: (Track) -> Unit = { actionsTrack = it }
 
         val onTabSelected: (LibraryTab) -> Unit = { tab ->
             navigator.swapTop(tab.toDestination())
@@ -109,11 +119,6 @@ fun App(
             // yet) are silently skipped inside recordAlbumUse.
             tracks.getOrNull(index)?.albumId?.let { library.recordAlbumUse(it) }
             navigator.push(AppDestination.NowPlaying)
-        }
-        val onPlayNext: (Track) -> Unit = { musicPlayer.addNext(it) }
-        val onAddToQueue: (Track) -> Unit = { musicPlayer.addToQueue(it) }
-        val onAddToPlaylist: (Track, Long) -> Unit = { track, playlistId ->
-            playlists.addTrack(playlistId, track.id)
         }
 
         val onNowPlaying = current == AppDestination.NowPlaying
@@ -156,7 +161,6 @@ fun App(
                             navigator = navigator,
                             library = library,
                             playlists = playlists,
-                            availablePlaylists = availablePlaylists,
                             syncCoordinator = syncCoordinator,
                             musicPlayer = musicPlayer,
                             equalizerStateHolder = equalizerStateHolder,
@@ -169,15 +173,31 @@ fun App(
                             onPickFolder = onPickFolder,
                             onColorModeChange = onColorModeChange,
                             onDynamicColorChange = onDynamicColorChange,
+                            onAlbumArtColorChange = onAlbumArtColorChange,
                             onDownloadRemoteArtChange = onDownloadRemoteArtChange,
                             onBurnMetadataClick = { burnMetadataCoordinator.start() },
                             onAcknowledgeBurnReport = { burnMetadataCoordinator.acknowledge() },
                             dynamicColorSupported = dynamicColorSupported,
                             onTabSelected = onTabSelected,
                             onPlayTracks = onPlayTracks,
-                            onPlayNext = onPlayNext,
-                            onAddToQueue = onAddToQueue,
-                            onAddToPlaylist = onAddToPlaylist,
+                            onTrackLongPress = onTrackLongPress,
+                        )
+                    }
+
+                    // Global long-press track actions. Single-track ops only
+                    // (no "Play" — tapping a row already plays it in its list
+                    // context), so this needs no parent-list awareness.
+                    actionsTrack?.let { track ->
+                        TrackDetailsSheet(
+                            track = track,
+                            availablePlaylists = availablePlaylists,
+                            onPlayNext = { musicPlayer.addNext(track); actionsTrack = null },
+                            onAddToQueue = { musicPlayer.addToQueue(track); actionsTrack = null },
+                            onAddToExistingPlaylist = { id -> playlists.addTrack(id, track.id) },
+                            onCreatePlaylistAndAdd = { name ->
+                                playlists.createAndAddTrack(name, track.id)
+                            },
+                            onDismiss = { actionsTrack = null },
                         )
                     }
                 }
@@ -192,7 +212,6 @@ private fun DestinationContent(
     navigator: AppNavigator,
     library: LibraryStateHolder,
     playlists: PlaylistStateHolder,
-    availablePlaylists: kotlinx.collections.immutable.PersistentList<com.offlineplaya.shared.domain.model.Playlist>,
     syncCoordinator: com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator,
     musicPlayer: MusicPlayer,
     equalizerStateHolder: EqualizerStateHolder,
@@ -205,15 +224,14 @@ private fun DestinationContent(
     onPickFolder: () -> Unit,
     onColorModeChange: (ColorMode) -> Unit,
     onDynamicColorChange: (Boolean) -> Unit,
+    onAlbumArtColorChange: (Boolean) -> Unit,
     onDownloadRemoteArtChange: (Boolean) -> Unit,
     onBurnMetadataClick: () -> Unit,
     onAcknowledgeBurnReport: () -> Unit,
     dynamicColorSupported: Boolean,
     onTabSelected: (LibraryTab) -> Unit,
     onPlayTracks: (List<Track>, Int) -> Unit,
-    onPlayNext: (Track) -> Unit,
-    onAddToQueue: (Track) -> Unit,
-    onAddToPlaylist: (Track, Long) -> Unit,
+    onTrackLongPress: (Track) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     AnimatedContent(
@@ -266,11 +284,12 @@ private fun DestinationContent(
                     burnReport = burnReport,
                     onColorModeChange = onColorModeChange,
                     onDynamicColorChange = onDynamicColorChange,
+                    onAlbumArtColorChange = onAlbumArtColorChange,
                     onDownloadRemoteArtChange = onDownloadRemoteArtChange,
                     onBurnMetadataClick = onBurnMetadataClick,
                     onAcknowledgeBurnReport = onAcknowledgeBurnReport,
                     onPickFolder = onPickFolder,
-                    onRescanAll = { syncCoordinator.resyncAll() },
+                    onRescanAll = { syncCoordinator.forceResyncAll() },
                     onRemoveManagedRoot = { uri -> syncCoordinator.removeManagedRoot(uri) },
                     onOpenEqualizer = { navigator.push(AppDestination.Equalizer) },
                     onOpenDesignSystem = { navigator.push(AppDestination.DesignSystemGallery) },
@@ -298,12 +317,9 @@ private fun DestinationContent(
                 SearchPage(
                     query = query,
                     results = results,
-                    availablePlaylists = availablePlaylists,
                     onQueryChange = { library.setSearchQuery(it) },
                     onPlayTracks = onPlayTracks,
-                    onPlayNext = onPlayNext,
-                    onAddToQueue = onAddToQueue,
-                    onAddToPlaylist = onAddToPlaylist,
+                    onTrackLongPress = onTrackLongPress,
                     onBack = { navigator.pop() },
                 )
             }
@@ -342,11 +358,8 @@ private fun DestinationContent(
                 PlaylistDetailPage(
                     playlistName = playlist?.name ?: "Loading…",
                     tracks = tracks,
-                    availablePlaylists = availablePlaylists,
                     onPlayTracks = onPlayTracks,
-                    onPlayNext = onPlayNext,
-                    onAddToQueue = onAddToQueue,
-                    onAddToPlaylist = onAddToPlaylist,
+                    onTrackLongPress = onTrackLongPress,
                     onRename = { newName ->
                         playlists.rename(dest.playlistId, newName)
                         playlist = playlist?.copy(name = newName)
@@ -428,11 +441,8 @@ private fun DestinationContent(
                     artistName = artistName,
                     representativeTrack = representativeTrack,
                     tracks = tracks,
-                    availablePlaylists = availablePlaylists,
                     onPlayTracks = onPlayTracks,
-                    onPlayNext = onPlayNext,
-                    onAddToQueue = onAddToQueue,
-                    onAddToPlaylist = onAddToPlaylist,
+                    onTrackLongPress = onTrackLongPress,
                     onBack = { navigator.pop() },
                 )
             }
@@ -466,14 +476,11 @@ private fun DestinationContent(
                     folderName = folder?.displayName ?: "Loading…",
                     subfolders = subfolders,
                     tracks = tracks,
-                    availablePlaylists = availablePlaylists,
                     onFolderClick = { id ->
                         navigator.push(AppDestination.LibraryFolderDetail(id))
                     },
                     onPlayTracks = onPlayTracks,
-                    onPlayNext = onPlayNext,
-                    onAddToQueue = onAddToQueue,
-                    onAddToPlaylist = onAddToPlaylist,
+                    onTrackLongPress = onTrackLongPress,
                     onBack = { navigator.pop() },
                     previewTracksProvider = { id -> library.previewTracksInFolder(id) },
                 )
@@ -483,11 +490,8 @@ private fun DestinationContent(
                 val tracks by library.allTracks.collectAsState()
                 LibraryFlatPage(
                     tracks = tracks,
-                    availablePlaylists = availablePlaylists,
                     onPlayTracks = onPlayTracks,
-                    onPlayNext = onPlayNext,
-                    onAddToQueue = onAddToQueue,
-                    onAddToPlaylist = onAddToPlaylist,
+                    onTrackLongPress = onTrackLongPress,
                     onTabSelected = onTabSelected,
                     onBack = { navigator.pop() },
                 )

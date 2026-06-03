@@ -1,6 +1,8 @@
 package com.offlineplaya.shared.presentation.ui.organisms
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,6 +31,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -36,6 +48,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kotlin.math.abs
+import kotlin.math.sin
 import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import com.offlineplaya.shared.domain.model.Album
@@ -43,6 +57,7 @@ import com.offlineplaya.shared.domain.model.Track
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.freddie_silhouette
 import offlineplaya.shared.generated.resources.home_label_albums
 import offlineplaya.shared.generated.resources.home_label_albums_count
 import offlineplaya.shared.generated.resources.home_label_artists
@@ -51,6 +66,7 @@ import offlineplaya.shared.generated.resources.home_label_playlists
 import offlineplaya.shared.generated.resources.home_label_playlists_count
 import offlineplaya.shared.generated.resources.home_label_songs_count
 import offlineplaya.shared.generated.resources.home_title_all_tracks
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -105,6 +121,7 @@ fun HomeBrowseGrid(
                 icon = Icons.Default.MusicNote,
                 title = stringResource(Res.string.home_title_all_tracks),
                 subtitle = stringResource(Res.string.home_label_songs_count, trackCount.toInt()),
+                motif = BrowseMotif.WAVEFORM,
                 albumIds = fanIds,
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
                 onClick = onOpenAllTracks,
@@ -116,6 +133,7 @@ fun HomeBrowseGrid(
                 icon = Icons.Default.Album,
                 title = stringResource(Res.string.home_label_albums),
                 subtitle = stringResource(Res.string.home_label_albums_count, albumCount),
+                motif = BrowseMotif.VINYL,
                 albumIds = fanIds,
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
                 onClick = onOpenAlbums,
@@ -134,6 +152,7 @@ fun HomeBrowseGrid(
                 icon = Icons.Default.Person,
                 title = stringResource(Res.string.home_label_artists),
                 subtitle = stringResource(Res.string.home_label_artists_count, artistCount),
+                motif = BrowseMotif.PERFORMER,
                 albumIds = fanIds,
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
                 onClick = onOpenArtists,
@@ -145,6 +164,7 @@ fun HomeBrowseGrid(
                 icon = Icons.AutoMirrored.Filled.QueueMusic,
                 title = stringResource(Res.string.home_label_playlists),
                 subtitle = stringResource(Res.string.home_label_playlists_count, playlistCount),
+                motif = BrowseMotif.PLAYLIST,
                 albumIds = fanIds,
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
                 onClick = onOpenPlaylists,
@@ -161,11 +181,18 @@ private fun BrowseCard(
     icon: ImageVector,
     title: String,
     subtitle: String,
+    motif: BrowseMotif,
     albumIds: PersistentList<Long>,
     representativeTrackOfAlbum: suspend (Long) -> Track?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    // Captured outside the draw lambda — MaterialTheme isn't readable inside
+    // DrawScope. Each card paints a faint themed motif (waveform / vinyl /
+    // mic / playlist) as a violet watermark between the surface fill and the
+    // foreground content, so the cards read as "kinds of music" at a glance.
+    val motifColor = MaterialTheme.colorScheme.primary
+    val cardShape = RoundedCornerShape(16.dp)
     // Always clickable. Previous versions disabled the cards while a
     // library scan was in flight, but that hid a real bug — the
     // browse destinations are designed to handle their own empty /
@@ -174,17 +201,35 @@ private fun BrowseCard(
     // (the initial scan).
     Box(
         modifier = modifier
-            .clip(RoundedCornerShape(16.dp))
+            .clip(cardShape)
             .background(MaterialTheme.colorScheme.surfaceVariant)
+            .drawBehind { drawBrowseMotif(motif, motifColor) }
+            .border(width = 1.dp, color = motifColor.copy(alpha = 0.35f), shape = cardShape)
             .clickable(onClick = onClick),
     ) {
+        // The performer silhouette is a real traced asset (tintable PNG),
+        // not a primitive drawing — rendered behind everything, tinted to
+        // the accent at the same weight as the vector motifs, biased left
+        // so it clears the corner cover fan.
+        if (motif == BrowseMotif.PERFORMER) {
+            Image(
+                painter = painterResource(Res.drawable.freddie_silhouette),
+                contentDescription = null,
+                contentScale = ContentScale.Fit,
+                alignment = Alignment.BottomStart,
+                colorFilter = ColorFilter.tint(motifColor.copy(alpha = 0.30f)),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 16.dp, bottom = 6.dp, start = 6.dp, end = 44.dp),
+            )
+        }
         if (albumIds.isNotEmpty()) {
             CoverFan(
                 albumIds = albumIds,
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
                 modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(end = 14.dp),
+                    .align(Alignment.TopEnd)
+                    .padding(top = 10.dp, end = 10.dp),
             )
         }
         Column(
@@ -203,7 +248,10 @@ private fun BrowseCard(
                 Text(
                     text = title,
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    // Accented so each browse card's label reacts to the album
+                    // color, matching the home hero title. The subtitle below
+                    // stays neutral (outline) for hierarchy.
+                    color = MaterialTheme.colorScheme.primary,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -225,7 +273,7 @@ private fun CoverFan(
     representativeTrackOfAlbum: suspend (Long) -> Track?,
     modifier: Modifier = Modifier,
 ) {
-    val coverSize = 72.dp
+    val coverSize = 48.dp
     Box(modifier = modifier.size(coverSize)) {
         // Front-most cover renders last so it lands on top, upright and
         // fully opaque. Back layers rotate, shift, and dim.
@@ -243,9 +291,9 @@ private fun CoverFan(
                 albumId = take[i],
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
                 size = coverSize,
-                rotation = -5f * i,
-                translateX = (-8 * i).dp,
-                translateY = (3 * i).dp,
+                rotation = -4f * i,
+                translateX = (-5 * i).dp,
+                translateY = (2 * i).dp,
                 // Even-ish opacity decay from 1.0 (front) to ~0.32 (back)
                 // across all six layers, so each cover reads as a distinct
                 // sliver of depth rather than a flat faint stack.
@@ -296,6 +344,108 @@ private fun FanItem(
         error = {},
         success = { SubcomposeAsyncImageContent() },
     )
+}
+
+/** Which themed watermark a [BrowseCard] paints behind its content. */
+private enum class BrowseMotif { WAVEFORM, VINYL, PERFORMER, PLAYLIST }
+
+/**
+ * Paints the per-card motif: a soft violet radial glow anchored under the
+ * motif's focal point, then bold vector strokes on top. Everything is
+ * vector — strokes, fills and the gradient are sized off the card's own
+ * dimensions — so it stays crisp at any density and costs no image assets.
+ * Motifs are biased toward the left/centre, away from the small cover fan
+ * tucked in the top-right corner.
+ */
+private fun DrawScope.drawBrowseMotif(motif: BrowseMotif, base: Color) {
+    val anchor = when (motif) {
+        BrowseMotif.WAVEFORM -> Offset(size.width * 0.40f, size.height * 0.62f)
+        BrowseMotif.VINYL -> Offset(size.width * 0.44f, size.height * 0.60f)
+        BrowseMotif.PERFORMER -> Offset(size.width * 0.42f, size.height * 0.55f)
+        BrowseMotif.PLAYLIST -> Offset(size.width * 0.36f, size.height * 0.52f)
+    }
+    drawRect(
+        brush = Brush.radialGradient(
+            colors = listOf(base.copy(alpha = 0.22f), Color.Transparent),
+            center = anchor,
+            radius = size.maxDimension * 0.85f,
+        ),
+    )
+    when (motif) {
+        BrowseMotif.WAVEFORM -> drawWaveform(base)
+        BrowseMotif.VINYL -> drawVinyl(base)
+        // PERFORMER's figure is a tinted Image overlay in BrowseCard; here we
+        // only lay down the shared gradient glow behind it.
+        BrowseMotif.PERFORMER -> Unit
+        BrowseMotif.PLAYLIST -> drawPlaylist(base)
+    }
+}
+
+private fun DrawScope.drawWaveform(base: Color) {
+    val color = base.copy(alpha = 0.30f)
+    val barCount = 11
+    val midY = size.height * 0.52f
+    val maxBar = size.height * 0.48f
+    val slotW = size.width / barCount
+    val barW = slotW * 0.44f
+    for (i in 0 until barCount) {
+        val rel = 0.28f + 0.72f * abs(sin(i * 0.8f + 0.4f))
+        val h = maxBar * rel
+        val cx = slotW * (i + 0.5f)
+        drawRoundRect(
+            color = color,
+            topLeft = Offset(cx - barW / 2f, midY - h / 2f),
+            size = Size(barW, h),
+            cornerRadius = CornerRadius(barW / 2f, barW / 2f),
+        )
+    }
+}
+
+private fun DrawScope.drawVinyl(base: Color) {
+    val center = Offset(size.width * 0.44f, size.height * 0.60f)
+    val outer = size.minDimension * 0.72f
+    // Solid disc body — this is what makes it read as a record rather than
+    // a wireframe of rings.
+    drawCircle(color = base.copy(alpha = 0.32f), radius = outer, center = center)
+    // Grooves cut into the disc: thin concentric rings, a touch brighter
+    // than the body so they catch the eye like real grooves.
+    val grooveWidth = size.minDimension * 0.011f
+    val rings = 7
+    for (i in 1..rings) {
+        val r = outer * (0.30f + 0.68f * i / rings)
+        drawCircle(
+            color = base.copy(alpha = 0.16f),
+            radius = r,
+            center = center,
+            style = Stroke(width = grooveWidth),
+        )
+    }
+    // Solid centre label + bright spindle pin.
+    drawCircle(color = base.copy(alpha = 0.55f), radius = outer * 0.26f, center = center)
+    drawCircle(color = base.copy(alpha = 0.85f), radius = outer * 0.05f, center = center)
+}
+
+private fun DrawScope.drawPlaylist(base: Color) {
+    val color = base.copy(alpha = 0.30f)
+    val w = size.width
+    val h = size.height
+    val rows = 4
+    val startX = w * 0.16f
+    val bulletR = w * 0.034f
+    val top = h * 0.30f
+    val gap = h * 0.15f
+    for (i in 0 until rows) {
+        val y = top + gap * i
+        drawCircle(color = color, radius = bulletR, center = Offset(startX, y))
+        val lineLen = w * (0.56f - i * 0.07f)
+        drawLine(
+            color = color,
+            start = Offset(startX + bulletR * 2.4f, y),
+            end = Offset(startX + bulletR * 2.4f + lineLen, y),
+            strokeWidth = h * 0.026f,
+            cap = StrokeCap.Round,
+        )
+    }
 }
 
 /**

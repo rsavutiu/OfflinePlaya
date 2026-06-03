@@ -43,6 +43,7 @@ fun FolderDetailContent(
     onFolderClick: (Long) -> Unit,
     onTrackClick: (Track) -> Unit,
     modifier: Modifier = Modifier,
+    onTrackLongPress: ((Track) -> Unit)? = null,
     previewTracksProvider: ((Long) -> Flow<List<Track>>)? = null,
 ) {
     if (subfolders.isEmpty() && tracks.isEmpty()) {
@@ -77,7 +78,11 @@ fun FolderDetailContent(
         if (tracks.isNotEmpty()) {
             item { SectionHeader(stringResource(Res.string.folder_section_tracks)) }
             items(items = tracks, key = { "t-${it.id}" }) { track ->
-                TrackRow(track = track, onClick = { onTrackClick(track) })
+                TrackRow(
+                    track = track,
+                    onClick = { onTrackClick(track) },
+                    onLongClick = onTrackLongPress?.let { { it(track) } },
+                )
             }
         }
     }
