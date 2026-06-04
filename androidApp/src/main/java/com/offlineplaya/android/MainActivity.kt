@@ -33,6 +33,7 @@ import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
+import com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import com.offlineplaya.shared.presentation.ui.App
@@ -83,14 +84,18 @@ private fun AndroidApp() {
     val navigator: AppNavigator = koinInject()
     val themeStateHolder: ThemeStateHolder = koinInject()
     val artworkStateHolder: ArtworkStateHolder = koinInject()
+    val playbackTuningStateHolder: PlaybackTuningStateHolder = koinInject()
     val coordinator: LibrarySyncCoordinator = koinInject()
     val burnMetadataCoordinator: BurnMetadataCoordinator = koinInject()
     val library: LibraryStateHolder = koinInject()
     val playlists: PlaylistStateHolder = koinInject()
     val musicPlayer: MusicPlayer = koinInject()
     val equalizerStateHolder: com.offlineplaya.shared.presentation.eq.EqualizerStateHolder = koinInject()
+    val albumColorStateHolder: com.offlineplaya.shared.presentation.theme.AlbumColorStateHolder = koinInject()
     val themePreferences by themeStateHolder.preferences.collectAsState()
+    val seedColor by albumColorStateHolder.seedColor.collectAsState()
     val artworkPreferences by artworkStateHolder.preferences.collectAsState()
+    val playbackPreferences by playbackTuningStateHolder.preferences.collectAsState()
     val syncStatus by coordinator.status.collectAsState()
     val trackCount by library.totalTrackCount.collectAsState()
     val stack by navigator.stack.collectAsState()
@@ -103,7 +108,12 @@ private fun AndroidApp() {
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME && hasAudioReadPermission(context)) {
-                coordinator.resyncAll()
+                // resyncIfIdle, not resyncAll: returning from the SAF picker or
+                // a quick app-switch fires ON_RESUME, and we don't want those to
+                // stack a second full scan on top of one already running. The
+                // scan itself is now cheap when nothing changed (already-scanned
+                // device rows are short-circuited in syncDeviceAudio).
+                coordinator.resyncIfIdle()
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
@@ -171,12 +181,17 @@ private fun AndroidApp() {
         equalizerStateHolder = equalizerStateHolder,
         themePreferences = themePreferences,
         artworkPreferences = artworkPreferences,
+        playbackPreferences = playbackPreferences,
         syncStatus = syncStatus,
         trackCount = trackCount,
+        seedColor = seedColor,
         onPickFolder = { readPickerLauncher.launch(Unit) },
         onColorModeChange = themeStateHolder::setColorMode,
         onDynamicColorChange = themeStateHolder::setUseDynamicColor,
+        onAlbumArtColorChange = themeStateHolder::setUseAlbumArtColor,
         onDownloadRemoteArtChange = artworkStateHolder::setDownloadRemoteArt,
+        onCrossfadeEnabledChange = playbackTuningStateHolder::setCrossfadeEnabled,
+        onCrossfadeDurationChange = playbackTuningStateHolder::setCrossfadeDurationSeconds,
         dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
     )
 }

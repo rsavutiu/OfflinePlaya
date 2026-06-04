@@ -95,15 +95,24 @@
     <string name="settings_section_appearance">Appearance</string>
     <string name="settings_section_library">Library</string>
     <string name="settings_section_metadata_tags">Metadata &amp; Tags</string>
+    <string name="settings_section_playback">Playback</string>
     <string name="settings_section_mode">Mode</string>
     <string name="settings_section_preset">Preset</string>
     <string name="settings_section_bands">Bands</string>
 
     <!-- Appearance -->
+    <string name="appearance_album_art_color">Album art colors</string>
+    <string name="appearance_album_art_color_subtitle">Tint the whole app to the last song\'s cover</string>
     <string name="appearance_material_you">Material You</string>
     <string name="appearance_material_you_subtitle">Use wallpaper-based colors (Android 12+)</string>
     <string name="appearance_material_you_supported">Use wallpaper-based colors</string>
     <string name="appearance_material_you_unsupported">Requires Android 12 or later</string>
+
+    <!-- Playback / crossfade -->
+    <string name="playback_crossfade">Crossfade</string>
+    <string name="playback_crossfade_subtitle">Overlap the end of one track with the start of the next. Off plays tracks gaplessly, back-to-back.</string>
+    <string name="playback_crossfade_duration">Crossfade length</string>
+    <string name="playback_crossfade_duration_value">%1$d s</string>
 
     <!-- Burn metadata -->
     <string name="burn_download_remote_art">Download remote art</string>

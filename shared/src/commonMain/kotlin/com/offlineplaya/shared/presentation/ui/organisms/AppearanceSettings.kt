@@ -11,6 +11,8 @@ import com.offlineplaya.shared.presentation.ui.molecules.SwitchRow
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.appearance_album_art_color
+import offlineplaya.shared.generated.resources.appearance_album_art_color_subtitle
 import offlineplaya.shared.generated.resources.appearance_material_you
 import offlineplaya.shared.generated.resources.appearance_material_you_supported
 import offlineplaya.shared.generated.resources.appearance_material_you_unsupported
@@ -18,9 +20,10 @@ import offlineplaya.shared.generated.resources.settings_section_appearance
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * Appearance section: light/dark/system chooser + Material You toggle. The
- * dynamic-color toggle disables itself on Android 11 and earlier, with the
- * subtitle calling out why.
+ * Appearance section: light/dark/system chooser + album-art color toggle +
+ * Material You toggle. The dynamic-color toggle disables itself on Android 11
+ * and earlier, with the subtitle calling out why; album-art color works on
+ * every supported API level.
  */
 @Composable
 fun AppearanceSettings(
@@ -28,6 +31,7 @@ fun AppearanceSettings(
     dynamicColorSupported: Boolean,
     onColorModeChange: (ColorMode) -> Unit,
     onDynamicColorChange: (Boolean) -> Unit,
+    onAlbumArtColorChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     SettingsSection(
@@ -38,6 +42,12 @@ fun AppearanceSettings(
             modifier = Modifier.fillMaxWidth(0.5f),
             selected = preferences.colorMode,
             onSelectionChanged = onColorModeChange,
+        )
+        SwitchRow(
+            title = stringResource(Res.string.appearance_album_art_color),
+            subtitle = stringResource(Res.string.appearance_album_art_color_subtitle),
+            checked = preferences.useAlbumArtColor,
+            onCheckedChange = onAlbumArtColorChange,
         )
         SwitchRow(
             title = stringResource(Res.string.appearance_material_you),
@@ -58,10 +68,15 @@ fun AppearanceSettings(
 private fun AppearanceSettingsPreview() {
     PreviewTheme {
         AppearanceSettings(
-            preferences = ThemePreferences(ColorMode.SYSTEM, useDynamicColor = true),
+            preferences = ThemePreferences(
+                ColorMode.SYSTEM,
+                useDynamicColor = true,
+                useAlbumArtColor = true,
+            ),
             dynamicColorSupported = true,
             onColorModeChange = {},
             onDynamicColorChange = {},
+            onAlbumArtColorChange = {},
         )
     }
 }

@@ -2,6 +2,7 @@ package com.offlineplaya.shared.domain.repository
 
 import com.offlineplaya.shared.domain.model.ArtworkPreferences
 import com.offlineplaya.shared.domain.model.EqPreferences
+import com.offlineplaya.shared.domain.model.PlaybackPreferences
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import kotlinx.coroutines.flow.Flow
 
@@ -37,4 +38,24 @@ interface SettingsRepository {
 
     /** Replace stored equalizer preferences atomically. */
     suspend fun setEqPreferences(preferences: EqPreferences)
+
+    /** Live playback-engine preferences (crossfade toggle + duration). */
+    fun observePlaybackPreferences(): Flow<PlaybackPreferences>
+
+    /** One-shot read of playback-engine preferences. */
+    suspend fun getPlaybackPreferences(): PlaybackPreferences
+
+    /** Replace stored playback-engine preferences atomically. */
+    suspend fun setPlaybackPreferences(preferences: PlaybackPreferences)
+
+    /**
+     * The ARGB seed color extracted from the last song's album art, or `null`
+     * if nothing has played yet (or the user cleared it). Persisted so the app
+     * opens already tinted to the last-played album instead of flashing the
+     * brand palette until the first track change of the session.
+     */
+    suspend fun getLastSeedColor(): Int?
+
+    /** Persist (or clear, with `null`) the last album-art seed color. */
+    suspend fun setLastSeedColor(argb: Int?)
 }

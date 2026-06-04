@@ -2,6 +2,7 @@ package com.offlineplaya.shared.di
 
 import com.offlineplaya.shared.data.database.DatabaseDriverFactory
 import com.offlineplaya.shared.data.genre.JaudiotaggerGenreWriter
+import com.offlineplaya.shared.data.image.CoilPaletteColorExtractor
 import com.offlineplaya.shared.data.image.JaudiotaggerArtWriter
 import com.offlineplaya.shared.data.image.MusicBrainzArtSource
 import com.offlineplaya.shared.data.image.SafFolderArtSource
@@ -12,6 +13,7 @@ import com.offlineplaya.shared.data.scanner.SafFolderScanner
 import com.offlineplaya.shared.data.scheduling.WorkManagerTaskRunner
 import com.offlineplaya.shared.domain.genre.GenreTagWriter
 import com.offlineplaya.shared.domain.genre.RemoteGenreSource
+import com.offlineplaya.shared.domain.image.AlbumArtColorExtractor
 import com.offlineplaya.shared.domain.image.AlbumArtWriter
 import com.offlineplaya.shared.domain.image.FolderArtSource
 import com.offlineplaya.shared.domain.image.RemoteArtSource
@@ -50,6 +52,11 @@ val androidModule: Module = module {
     single { createMusicBrainzSource(get()) }
     single<RemoteArtSource> { get<MusicBrainzArtSource>() }
     single<RemoteGenreSource> { get<MusicBrainzArtSource>() }
+
+    // Extracts a seed color from album art (Palette over the Coil chain) to
+    // drive the album-art reactive theme. Reuses the singleton ImageLoader so
+    // extraction is usually a cache hit on art the user has already seen.
+    single { CoilPaletteColorExtractor(androidContext(), get()) } bind AlbumArtColorExtractor::class
 
     // Sidecar cover.jpg / folder.jpg / album.jpg lookup inside the track's
     // SAF folder. Checked before remote so ripped/torrented folders with

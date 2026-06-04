@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.ArtworkPreferences
 import com.offlineplaya.shared.domain.model.ColorMode
 import com.offlineplaya.shared.domain.model.ManagedTreeRoot
+import com.offlineplaya.shared.domain.model.PlaybackPreferences
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import com.offlineplaya.shared.domain.usecase.EmbedReport
 import com.offlineplaya.shared.presentation.ui.LocalOrientation
@@ -29,6 +30,7 @@ import com.offlineplaya.shared.presentation.ui.molecules.SettingsLinkSection
 import com.offlineplaya.shared.presentation.ui.organisms.AppearanceSettings
 import com.offlineplaya.shared.presentation.ui.organisms.BurnMetadataSettings
 import com.offlineplaya.shared.presentation.ui.organisms.LibrarySettings
+import com.offlineplaya.shared.presentation.ui.organisms.PlaybackSettings
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
@@ -49,12 +51,16 @@ fun SettingsPage(
     modifier: Modifier = Modifier,
     preferences: ThemePreferences,
     artworkPreferences: ArtworkPreferences,
+    playbackPreferences: PlaybackPreferences,
     managedRoots: PersistentList<ManagedTreeRoot>,
     isScanning: Boolean,
     burnReport: EmbedReport,
     onColorModeChange: (ColorMode) -> Unit,
     onDynamicColorChange: (Boolean) -> Unit,
+    onAlbumArtColorChange: (Boolean) -> Unit,
     onDownloadRemoteArtChange: (Boolean) -> Unit,
+    onCrossfadeEnabledChange: (Boolean) -> Unit,
+    onCrossfadeDurationChange: (Int) -> Unit,
     onBurnMetadataClick: () -> Unit,
     onAcknowledgeBurnReport: () -> Unit,
     onPickFolder: () -> Unit,
@@ -84,6 +90,7 @@ fun SettingsPage(
                     dynamicColorSupported = dynamicColorSupported,
                     onColorModeChange = onColorModeChange,
                     onDynamicColorChange = onDynamicColorChange,
+                    onAlbumArtColorChange = onAlbumArtColorChange,
                 )
             }
             val metadata: @Composable () -> Unit = {
@@ -102,6 +109,13 @@ fun SettingsPage(
                     onAddFolder = onPickFolder,
                     onRescanAll = onRescanAll,
                     onRemoveManagedRoot = { pendingRemoval = it },
+                )
+            }
+            val playback: @Composable () -> Unit = {
+                PlaybackSettings(
+                    preferences = playbackPreferences,
+                    onCrossfadeEnabledChange = onCrossfadeEnabledChange,
+                    onCrossfadeDurationChange = onCrossfadeDurationChange,
                 )
             }
             val audio: @Composable () -> Unit = {
@@ -136,6 +150,7 @@ fun SettingsPage(
                         }
                         Column(modifier = Modifier.weight(1f)) {
                             library()
+                            playback()
                             audio()
                             developer()
                         }
@@ -144,6 +159,7 @@ fun SettingsPage(
                     appearance()
                     metadata()
                     library()
+                    playback()
                     audio()
                     developer()
                 }
@@ -168,16 +184,18 @@ fun SettingsPage(
 private fun SettingsPageLightPreview() {
     PreviewTheme {
         SettingsPage(
-            preferences = ThemePreferences(ColorMode.SYSTEM, useDynamicColor = true),
+            preferences = ThemePreferences(ColorMode.SYSTEM, useDynamicColor = true, useAlbumArtColor = true),
             managedRoots = persistentListOf(
                 ManagedTreeRoot(1, "content://a", "Music Library", 0, 1_700_000_000),
                 ManagedTreeRoot(2, "content://b", "Bootlegs", 0, null),
             ),
             isScanning = false,
             artworkPreferences = ArtworkPreferences.Default,
+            playbackPreferences = PlaybackPreferences.Default,
             burnReport = EmbedReport.Idle,
-            onColorModeChange = {}, onDynamicColorChange = {},
+            onColorModeChange = {}, onDynamicColorChange = {}, onAlbumArtColorChange = {},
             onDownloadRemoteArtChange = {}, onBurnMetadataClick = {},
+            onCrossfadeEnabledChange = {}, onCrossfadeDurationChange = {},
             onAcknowledgeBurnReport = {},
             onPickFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
             onOpenEqualizer = {}, onOpenDesignSystem = {},
@@ -191,13 +209,15 @@ private fun SettingsPageLightPreview() {
 private fun SettingsPageDarkPreview() {
     PreviewTheme(darkTheme = true) {
         SettingsPage(
-            preferences = ThemePreferences(ColorMode.DARK, useDynamicColor = false),
+            preferences = ThemePreferences(ColorMode.DARK, useDynamicColor = false, useAlbumArtColor = true),
             managedRoots = persistentListOf(),
             isScanning = false,
             artworkPreferences = ArtworkPreferences.Default,
+            playbackPreferences = PlaybackPreferences(crossfadeEnabled = false, crossfadeDurationSeconds = 6),
             burnReport = EmbedReport.Idle,
-            onColorModeChange = {}, onDynamicColorChange = {},
+            onColorModeChange = {}, onDynamicColorChange = {}, onAlbumArtColorChange = {},
             onDownloadRemoteArtChange = {}, onBurnMetadataClick = {},
+            onCrossfadeEnabledChange = {}, onCrossfadeDurationChange = {},
             onAcknowledgeBurnReport = {},
             onPickFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
             onOpenEqualizer = {}, onOpenDesignSystem = {},
@@ -211,7 +231,7 @@ private fun SettingsPageDarkPreview() {
 private fun SettingsPageScanningPreview() {
     PreviewTheme {
         SettingsPage(
-            preferences = ThemePreferences(ColorMode.LIGHT, useDynamicColor = false),
+            preferences = ThemePreferences(ColorMode.LIGHT, useDynamicColor = false, useAlbumArtColor = true),
             managedRoots = persistentListOf(
                 ManagedTreeRoot(1, "content://a", "Music Library", 0, 1_700_000_000),
             ),
@@ -220,9 +240,11 @@ private fun SettingsPageScanningPreview() {
                 downloadRemoteArt = true,
                 embedDownloadedArt = true,
             ),
+            playbackPreferences = PlaybackPreferences(crossfadeEnabled = true, crossfadeDurationSeconds = 10),
             burnReport = EmbedReport.Running(10, 100, 8, 2),
-            onColorModeChange = {}, onDynamicColorChange = {},
+            onColorModeChange = {}, onDynamicColorChange = {}, onAlbumArtColorChange = {},
             onDownloadRemoteArtChange = {}, onBurnMetadataClick = {},
+            onCrossfadeEnabledChange = {}, onCrossfadeDurationChange = {},
             onAcknowledgeBurnReport = {},
             onPickFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
             onOpenEqualizer = {}, onOpenDesignSystem = {},

@@ -8,6 +8,7 @@ import com.offlineplaya.shared.domain.model.ArtworkPreferences
 import com.offlineplaya.shared.domain.model.ColorMode
 import com.offlineplaya.shared.domain.model.EqMode
 import com.offlineplaya.shared.domain.model.EqPreferences
+import com.offlineplaya.shared.domain.model.PlaybackPreferences
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import com.offlineplaya.shared.domain.repository.SettingsRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -37,8 +38,21 @@ internal class SqlSettingsRepository(
             queries.transaction {
                 queries.insertOrReplace(KEY_COLOR_MODE, preferences.colorMode.dbValue)
                 queries.insertOrReplace(KEY_DYNAMIC_COLOR, preferences.useDynamicColor.toString())
+                queries.insertOrReplace(KEY_ALBUM_ART_COLOR, preferences.useAlbumArtColor.toString())
             }
         }
+
+    override suspend fun getLastSeedColor(): Int? = withContext(ioDispatcher) {
+        queries.selectByKey(KEY_LAST_SEED_COLOR).executeAsOneOrNull()?.toIntOrNull()
+    }
+
+    override suspend fun setLastSeedColor(argb: Int?) = withContext(ioDispatcher) {
+        if (argb == null) {
+            queries.deleteByKey(KEY_LAST_SEED_COLOR)
+        } else {
+            queries.insertOrReplace(KEY_LAST_SEED_COLOR, argb.toString())
+        }
+    }
 
     override fun observeArtworkPreferences(): Flow<ArtworkPreferences> =
         queries.selectAll().asFlow().mapToList(ioDispatcher).map { rows ->
@@ -80,14 +94,36 @@ internal class SqlSettingsRepository(
             }
         }
 
+    override fun observePlaybackPreferences(): Flow<PlaybackPreferences> =
+        queries.selectAll().asFlow().mapToList(ioDispatcher).map { rows ->
+            rows.toPlaybackPreferences()
+        }
+
+    override suspend fun getPlaybackPreferences(): PlaybackPreferences = withContext(ioDispatcher) {
+        queries.selectAll().executeAsList().toPlaybackPreferences()
+    }
+
+    override suspend fun setPlaybackPreferences(preferences: PlaybackPreferences) =
+        withContext(ioDispatcher) {
+            queries.transaction {
+                queries.insertOrReplace(KEY_CROSSFADE_ENABLED, preferences.crossfadeEnabled.toString())
+                queries.insertOrReplace(
+                    KEY_CROSSFADE_DURATION,
+                    preferences.crossfadeDurationSeconds.toString(),
+                )
+            }
+        }
+
     private fun List<Setting>.toThemePreferences(): ThemePreferences {
         val map: Map<String, String> = associate { it.key to it.value_ }
         val defaults = ThemePreferences.Default
         val rawMode = map[KEY_COLOR_MODE]
         val rawDynamic = map[KEY_DYNAMIC_COLOR]
+        val rawAlbumArt = map[KEY_ALBUM_ART_COLOR]
         return ThemePreferences(
             colorMode = if (rawMode != null) ColorMode.fromDbValue(rawMode) else defaults.colorMode,
             useDynamicColor = rawDynamic?.toBoolean() ?: defaults.useDynamicColor,
+            useAlbumArtColor = rawAlbumArt?.toBoolean() ?: defaults.useAlbumArtColor,
         )
     }
 
@@ -121,13 +157,31 @@ internal class SqlSettingsRepository(
         )
     }
 
+    private fun List<Setting>.toPlaybackPreferences(): PlaybackPreferences {
+        val map: Map<String, String> = associate { it.key to it.value_ }
+        val defaults = PlaybackPreferences.Default
+        val rawDuration = map[KEY_CROSSFADE_DURATION]?.toIntOrNull()
+        return PlaybackPreferences(
+            crossfadeEnabled = map[KEY_CROSSFADE_ENABLED]?.toBoolean() ?: defaults.crossfadeEnabled,
+            crossfadeDurationSeconds = (rawDuration ?: defaults.crossfadeDurationSeconds)
+                .coerceIn(
+                    PlaybackPreferences.MIN_DURATION_SECONDS,
+                    PlaybackPreferences.MAX_DURATION_SECONDS,
+                ),
+        )
+    }
+
     private companion object {
         const val KEY_COLOR_MODE = "theme.color_mode"
         const val KEY_DYNAMIC_COLOR = "theme.dynamic_color"
+        const val KEY_ALBUM_ART_COLOR = "theme.album_art_color"
+        const val KEY_LAST_SEED_COLOR = "theme.last_seed_color"
         const val KEY_DOWNLOAD_REMOTE_ART = "artwork.download_remote"
         const val KEY_EMBED_DOWNLOADED_ART = "artwork.embed_downloaded"
         const val KEY_EQ_MODE = "eq.mode"
         const val KEY_EQ_MANUAL_PRESET = "eq.manual_preset"
         const val KEY_EQ_MANUAL_GAINS = "eq.manual_gains"
+        const val KEY_CROSSFADE_ENABLED = "playback.crossfade_enabled"
+        const val KEY_CROSSFADE_DURATION = "playback.crossfade_duration_s"
     }
 }

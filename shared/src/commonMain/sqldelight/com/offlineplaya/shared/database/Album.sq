@@ -34,5 +34,12 @@ WHERE id = ?;
 lastInsertId:
 SELECT last_insert_rowid();
 
+-- Remove albums that no longer have any tracks. Used after a regrouping
+-- rescan: when a compilation's tracks move from per-artist split albums into
+-- one "Various Artists" album, the old split rows are left empty.
+deleteEmpty:
+DELETE FROM Album
+WHERE id NOT IN (SELECT DISTINCT album_id FROM Track WHERE album_id IS NOT NULL);
+
 deleteAll:
 DELETE FROM Album;

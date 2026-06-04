@@ -56,6 +56,10 @@ internal class SqlAlbumRepository(
         queries.updateAggregates(id)
     }
 
+    override suspend fun deleteEmpty() = withContext(ioDispatcher) {
+        queries.deleteEmpty()
+    }
+
     override suspend fun deleteAll() = withContext(ioDispatcher) {
         queries.deleteAll()
     }

@@ -81,6 +81,23 @@ class LibrarySyncCoordinator(
     }
 
     /**
+     * Force a full re-scan that reprocesses *every* track, not just new/changed
+     * ones. Backs the "Rescan all" Settings action. Unlike [resyncAll] (which
+     * skips already-scanned device-audio rows for speed), this re-derives every
+     * artist/album — needed to apply a grouping change (e.g. collapsing a
+     * compilation) to an already-scanned library without wiping data.
+     */
+    fun forceResyncAll(): Job = scope.launch {
+        try {
+            _status.value = SyncStatus.Scanning(treeUri = "<all>")
+            val report = syncUseCase.syncAll(force = true)
+            _status.value = SyncStatus.Completed(report)
+        } catch (t: Throwable) {
+            _status.value = SyncStatus.Failed(t.message ?: "Unknown error")
+        }
+    }
+
+    /**
      * Re-scan only if nothing is in flight. Used by the auto-rescan triggers
      * (MediaStore observer, app foreground) so a burst of filesystem events
      * doesn't stack scans on top of each other — if the user just added 50

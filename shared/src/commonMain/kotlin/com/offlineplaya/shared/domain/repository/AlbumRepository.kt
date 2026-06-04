@@ -10,5 +10,9 @@ interface AlbumRepository {
     suspend fun findByNameAndArtist(name: String, artistId: Long?): Album?
     suspend fun upsert(name: String, artistId: Long?, year: Int?): Long
     suspend fun refreshAggregates(id: Long)
+
+    /** Delete albums that have no tracks (e.g. split rows left after regrouping). */
+    suspend fun deleteEmpty()
+
     suspend fun deleteAll()
 }

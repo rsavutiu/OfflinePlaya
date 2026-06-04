@@ -59,7 +59,10 @@ fun HomeHeader(
                 style = MaterialTheme.typography.headlineMedium.copy(
                     fontWeight = FontWeight.ExtraBold,
                 ),
-                color = MaterialTheme.colorScheme.onSurface,
+                // Hero title wears the album accent so the page's biggest text
+                // visibly reacts to the cover. Body text stays neutral
+                // (onSurface) for legibility; this is the one deliberate accent.
+                color = MaterialTheme.colorScheme.primary,
             )
         }
         Row {

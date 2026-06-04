@@ -423,6 +423,77 @@ class LibrarySyncUseCaseTest {
     }
 
     @Test
+    fun `re-scanning unchanged device tracks does not reprocess them`() = runTest {
+        val f = fixture()
+        val deviceDoc = "${DeviceAudioScanner.ROOT_URI}/Download/song.mp3"
+        val device = FakeDeviceAudioScanner(
+            tracks = listOf(
+                DeviceAudioTrack(
+                    sourceUri = deviceDoc,
+                    relativePath = "Download/song.mp3",
+                    fileName = "song.mp3",
+                    fileSize = 4_000_000L,
+                    lastModified = 1_700_000_000L,
+                    metadata = AudioMetadata.Empty.copy(title = "Song", artist = "A", album = "Al"),
+                ),
+            ),
+        )
+        val uc = useCase(f, FakeFolderScanner(scripted = emptyMap()), FakeMetadataReader(), device)
+
+        // First pass: the URI is new, so it gets inserted and classified.
+        val first = uc.syncDeviceAudio()
+        assertEquals(1, first.tracksScanned, "first pass scans the newly-discovered track")
+        assertEquals(1L, f.tracks.count())
+        assertEquals(
+            ScanStatus.SCANNED,
+            f.tracks.findByDocumentUri(deviceDoc)?.scanStatus,
+            "track must be SCANNED after the first pass",
+        )
+
+        // Second pass over the identical device index — this is what happens on
+        // every app foreground. The row is already SCANNED, so it must be
+        // short-circuited: zero re-scanned, zero failed, no duplicate row.
+        // Before the short-circuit this reported tracksScanned == 1 every time,
+        // re-upserting the artist/album and rewriting the track on each resume.
+        val second = uc.syncDeviceAudio()
+        assertEquals(0, second.tracksScanned, "an unchanged, already-scanned track must not be re-scanned")
+        assertEquals(0, second.tracksFailed, "an unchanged track must not be miscounted as failed")
+        assertEquals(1L, f.tracks.count(), "re-scan must not create a duplicate row")
+    }
+
+    @Test
+    fun `re-scanning device audio still retries a previously errored track`() = runTest {
+        val f = fixture()
+        val deviceDoc = "${DeviceAudioScanner.ROOT_URI}/Download/song.mp3"
+        val track = DeviceAudioTrack(
+            sourceUri = deviceDoc,
+            relativePath = "Download/song.mp3",
+            fileName = "song.mp3",
+            fileSize = 4_000_000L,
+            lastModified = 1_700_000_000L,
+            metadata = AudioMetadata.Empty.copy(title = "Song", artist = "A", album = "Al"),
+        )
+        val device = FakeDeviceAudioScanner(tracks = listOf(track))
+        val uc = useCase(f, FakeFolderScanner(scripted = emptyMap()), FakeMetadataReader(), device)
+
+        // Scan once, then force the row into the ERROR state to simulate a
+        // first pass that failed to read tags. A re-scan SHOULD pick it back up
+        // (the short-circuit only skips SCANNED rows, never ERROR/PENDING).
+        uc.syncDeviceAudio()
+        val id = f.tracks.findByDocumentUri(deviceDoc)!!.id
+        f.tracks.markError(id)
+        assertEquals(ScanStatus.ERROR, f.tracks.findByDocumentUri(deviceDoc)?.scanStatus)
+
+        val retry = uc.syncDeviceAudio()
+        assertEquals(1, retry.tracksScanned, "an ERROR row must be retried on the next device scan")
+        assertEquals(
+            ScanStatus.SCANNED,
+            f.tracks.findByDocumentUri(deviceDoc)?.scanStatus,
+            "the retried track must end up SCANNED",
+        )
+    }
+
+    @Test
     fun `scan populates canonical_genre on each scanned track`() = runTest {
         val f = fixture()
         val uri = "content://tree/root"
@@ -478,6 +549,130 @@ class LibrarySyncUseCaseTest {
         // Next syncAll should observe the missing row and backfill it.
         useCase(f, FakeFolderScanner(scripted = emptyMap()), FakeMetadataReader()).syncAll()
         assertEquals(CanonicalGenre.ROCK, f.tracks.findByDocumentUri(doc)?.canonicalGenre)
+    }
+
+    @Test
+    fun `multi-artist folder with no albumArtist collapses into one Various Artists album`() = runTest {
+        val f = fixture()
+        val uri = "content://tree/root"
+        val scanner = FakeFolderScanner.scan(
+            treeUri = uri,
+            folders = listOf(
+                AudioFolder(uri, "", "root", null),
+                AudioFolder(uri, "comp", "comp", ""),
+            ),
+            files = listOf("a", "b", "c").map { n ->
+                RawAudioFile("$uri/comp/$n.mp3", uri, "comp/$n.mp3", "$n.mp3", 0, 0)
+            },
+        )
+        val reader = FakeMetadataReader(
+            scripted = mapOf(
+                "$uri/comp/a.mp3" to md(title = "S1", artist = "Artist A", album = "Now 100"),
+                "$uri/comp/b.mp3" to md(title = "S2", artist = "Artist B", album = "Now 100"),
+                "$uri/comp/c.mp3" to md(title = "S3", artist = "Artist C", album = "Now 100"),
+            ),
+        )
+
+        useCase(f, scanner, reader).syncOne(uri)
+
+        // The whole folder is ONE album, filed under Various Artists.
+        val va = f.artists.findByName("Various Artists")
+        assertNotNull(va, "a multi-artist album with no albumArtist must file under Various Artists")
+        val albums = f.albums.observeByArtist(va.id).first()
+        assertEquals(1, albums.size, "the compilation must be a single album, not one per artist")
+        assertEquals("Now 100", albums.first().name)
+        assertEquals(3, albums.first().trackCount)
+
+        // Each track still shows its OWN artist name for display.
+        val tracks = f.tracks.observeByAlbum(albums.first().id).first()
+        assertEquals(
+            setOf("Artist A", "Artist B", "Artist C"),
+            tracks.map { it.artistName }.toSet(),
+            "per-track artist names must be preserved even though the album is Various Artists",
+        )
+    }
+
+    @Test
+    fun `same album name by different artists in different folders stays separate`() = runTest {
+        val f = fixture()
+        val uri = "content://tree/root"
+        val scanner = FakeFolderScanner.scan(
+            treeUri = uri,
+            folders = listOf(
+                AudioFolder(uri, "", "root", null),
+                AudioFolder(uri, "a", "a", ""),
+                AudioFolder(uri, "b", "b", ""),
+            ),
+            files = listOf(
+                RawAudioFile("$uri/a/x.mp3", uri, "a/x.mp3", "x.mp3", 0, 0),
+                RawAudioFile("$uri/b/y.mp3", uri, "b/y.mp3", "y.mp3", 0, 0),
+            ),
+        )
+        val reader = FakeMetadataReader(
+            scripted = mapOf(
+                "$uri/a/x.mp3" to md(title = "X", artist = "Alice", album = "Greatest Hits"),
+                "$uri/b/y.mp3" to md(title = "Y", artist = "Bob", album = "Greatest Hits"),
+            ),
+        )
+
+        useCase(f, scanner, reader).syncOne(uri)
+
+        // Two single-artist albums that merely share a name must NOT be fused
+        // into a Various Artists compilation — folder scoping keeps them apart.
+        assertNull(
+            f.artists.findByName("Various Artists"),
+            "distinct single-artist albums must not be collapsed into a compilation",
+        )
+        val alice = f.artists.findByName("Alice")
+        val bob = f.artists.findByName("Bob")
+        assertNotNull(alice)
+        assertNotNull(bob)
+        assertEquals(1, f.albums.observeByArtist(alice.id).first().size)
+        assertEquals(1, f.albums.observeByArtist(bob.id).first().size)
+    }
+
+    @Test
+    fun `single-artist album with guest-featured tracks is not a compilation`() = runTest {
+        val f = fixture()
+        val uri = "content://tree/root"
+        // 4 tracks, no albumArtist tag: three plain "Phil Collins" and one
+        // "Phil Collins feat. Philip Bailey". The dominant artist owns the
+        // album, so it must NOT be flagged as a Various Artists compilation.
+        val scanner = FakeFolderScanner.scan(
+            treeUri = uri,
+            folders = listOf(
+                AudioFolder(uri, "", "root", null),
+                AudioFolder(uri, "nojacket", "nojacket", ""),
+            ),
+            files = listOf("1", "2", "3", "4").map { n ->
+                RawAudioFile("$uri/nojacket/$n.mp3", uri, "nojacket/$n.mp3", "$n.mp3", 0, 0)
+            },
+        )
+        val reader = FakeMetadataReader(
+            scripted = mapOf(
+                "$uri/nojacket/1.mp3" to md(title = "Sussudio", artist = "Phil Collins", album = "No Jacket Required"),
+                "$uri/nojacket/2.mp3" to md(title = "Only You", artist = "Phil Collins", album = "No Jacket Required"),
+                "$uri/nojacket/3.mp3" to md(title = "One More Night", artist = "Phil Collins", album = "No Jacket Required"),
+                "$uri/nojacket/4.mp3" to md(
+                    title = "Who Said I Would",
+                    artist = "Phil Collins feat. Philip Bailey",
+                    album = "No Jacket Required",
+                ),
+            ),
+        )
+
+        useCase(f, scanner, reader).syncOne(uri)
+
+        assertNull(
+            f.artists.findByName("Various Artists"),
+            "a single-artist album with one guest track must not become a compilation",
+        )
+        val phil = f.artists.findByName("Phil Collins")
+        assertNotNull(phil, "the album must be filed under its dominant artist")
+        val albums = f.albums.observeByArtist(phil.id).first()
+        assertEquals(1, albums.size)
+        assertEquals("No Jacket Required", albums.first().name)
+        assertEquals(4, albums.first().trackCount)
     }
 
     private fun md(

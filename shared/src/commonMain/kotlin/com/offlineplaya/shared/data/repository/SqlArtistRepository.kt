@@ -54,6 +54,10 @@ internal class SqlArtistRepository(
         queries.updateImageUrl(imageUrl, id)
     }
 
+    override suspend fun deleteOrphans() = withContext(ioDispatcher) {
+        queries.deleteOrphans()
+    }
+
     override suspend fun deleteAll() = withContext(ioDispatcher) {
         queries.deleteAll()
     }

@@ -36,4 +36,10 @@ class ThemeStateHolder(
             settings.setThemePreferences(preferences.value.copy(useDynamicColor = enabled))
         }
     }
+
+    fun setUseAlbumArtColor(enabled: Boolean) {
+        scope.launch {
+            settings.setThemePreferences(preferences.value.copy(useAlbumArtColor = enabled))
+        }
+    }
 }

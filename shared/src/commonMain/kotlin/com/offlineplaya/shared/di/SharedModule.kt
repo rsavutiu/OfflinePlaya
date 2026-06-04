@@ -27,8 +27,10 @@ import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
+import com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
+import com.offlineplaya.shared.presentation.theme.AlbumColorStateHolder
 import com.offlineplaya.shared.util.createLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -113,6 +115,28 @@ val sharedModule: Module = module {
     // Artwork preferences (download from MusicBrainz / embed back into files).
     single {
         ArtworkStateHolder(
+            settings = get(),
+            scope = get(),
+        )
+    }
+
+    // Playback-engine preferences (crossfade toggle + duration). Observed by
+    // the UI and by the Android CrossfadeController in the playback service.
+    single {
+        PlaybackTuningStateHolder(
+            settings = get(),
+            scope = get(),
+        )
+    }
+
+    // Album-art reactive theme: watches the player, extracts a seed color from
+    // the current cover, and persists it so the app opens tinted to the last
+    // song. `extractor` is platform-provided (androidModule binds the Palette
+    // impl). Single so exactly one observer runs for the app's lifetime.
+    single {
+        AlbumColorStateHolder(
+            player = get(),
+            extractor = get(),
             settings = get(),
             scope = get(),
         )

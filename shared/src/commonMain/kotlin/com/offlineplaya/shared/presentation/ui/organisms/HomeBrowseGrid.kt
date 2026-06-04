@@ -384,14 +384,22 @@ private fun DrawScope.drawBrowseMotif(motif: BrowseMotif, base: Color) {
 private fun DrawScope.drawWaveform(base: Color) {
     val color = base.copy(alpha = 0.30f)
     val barCount = 11
-    val midY = size.height * 0.52f
-    val maxBar = size.height * 0.48f
-    val slotW = size.width / barCount
+    // Inset on all borders so the waveform reads as a contained motif
+    // rather than running into the card's rounded edge. The cover fan
+    // already lives in the top-right corner, so the top padding also
+    // keeps the bars from crowding it.
+    val padX = size.width * 0.08f
+    val padY = size.height * 0.10f
+    val drawW = size.width - padX * 2f
+    val drawH = size.height - padY * 2f
+    val midY = padY + drawH * 0.52f
+    val maxBar = drawH * 0.96f
+    val slotW = drawW / barCount
     val barW = slotW * 0.44f
     for (i in 0 until barCount) {
         val rel = 0.28f + 0.72f * abs(sin(i * 0.8f + 0.4f))
         val h = maxBar * rel
-        val cx = slotW * (i + 0.5f)
+        val cx = padX + slotW * (i + 0.5f)
         drawRoundRect(
             color = color,
             topLeft = Offset(cx - barW / 2f, midY - h / 2f),

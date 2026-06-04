@@ -12,6 +12,7 @@ import com.offlineplaya.shared.domain.scanner.DeviceAudioTrack
 import com.offlineplaya.shared.domain.scanner.FolderScanner
 import com.offlineplaya.shared.domain.scanner.MetadataReader
 import com.offlineplaya.shared.domain.scanner.RawAudioFile
+import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -59,6 +60,24 @@ class LibrarySyncUseCase(
          * just repeats until the unclassified set is exhausted.
          */
         const val BACKFILL_CHUNK_SIZE = 500
+
+        /**
+         * Synthetic album-artist for untagged compilations — a folder whose
+         * tracks span more than one artist with no explicit albumArtist tag.
+         * Standard music-library convention; keeps the album as one row.
+         */
+        const val VARIOUS_ARTISTS = "Various Artists"
+
+        /**
+         * Matches a trailing featuring credit so the primary artist can be
+         * isolated. Anchored on an explicit feat./ft./featuring marker preceded
+         * by whitespace or an opening bracket — never a bare "&"/"," — so band
+         * names keep their commas and ampersands.
+         */
+        val FEAT_CREDIT = Regex(
+            """[\s(\[]+(?:feat\.?|ft\.?|featuring)\s.*""",
+            RegexOption.IGNORE_CASE,
+        )
     }
 
     /**
@@ -68,19 +87,24 @@ class LibrarySyncUseCase(
      * music in Downloads / the internal-storage root / other locations
      * Android refuses to let users grant SAF tree access to.
      */
-    suspend fun syncAll(): SyncReport {
-        logger.i(TAG, "Starting syncAll")
+    suspend fun syncAll(force: Boolean = false): SyncReport {
+        logger.i(TAG, "Starting syncAll (force=$force)")
         val roots = managedRoots.getAll()
         logger.d(TAG, "Found ${roots.size} managed roots")
         val safReport = roots.fold(SyncReport.Empty) { acc, root ->
             acc + syncOne(root.treeUri)
         }
-        val deviceReport = syncDeviceAudio()
+        val deviceReport = syncDeviceAudio(force = force)
         // After every sync pass, top up canonical_genre on any rows still
         // missing it — covers pre-EQ-feature tracks that were scanned by an
         // older app version and never classified. Runs in chunks so a huge
         // legacy library doesn't block the sync's reported "Completed" state.
         backfillCanonicalGenre()
+        // Drop albums/artists left with no tracks — e.g. the per-artist album
+        // rows a compilation used to be split into, after a force-rescan
+        // regroups its tracks under one "Various Artists" album.
+        albums.deleteEmpty()
+        artists.deleteOrphans()
         val totalReport = safReport + deviceReport
         logger.i(TAG, "Completed syncAll: $totalReport")
         return totalReport
@@ -154,8 +178,8 @@ class LibrarySyncUseCase(
      * device-audio implementation. We treat "no permission" identically to
      * "no audio found" so the sync never throws at the user.
      */
-    suspend fun syncDeviceAudio(): SyncReport {
-        logger.i(TAG, "Starting syncDeviceAudio")
+    suspend fun syncDeviceAudio(force: Boolean = false): SyncReport {
+        logger.i(TAG, "Starting syncDeviceAudio (force=$force)")
         val deviceTracks = deviceAudio.scan()
         if (deviceTracks.isEmpty()) {
             logger.d(TAG, "No device tracks found")
@@ -168,9 +192,29 @@ class LibrarySyncUseCase(
 
         var scanned = 0
         var skippedAsDuplicate = 0
+        var unchanged = 0
         val touchedTrackIds = mutableListOf<Long>()
+        val entries = mutableListOf<GroupEntry>()
         for (deviceTrack in deviceTracks) {
             try {
+                // Fast path: a row for this exact MediaStore URI that's already
+                // been fully scanned needs no work. syncDeviceAudio runs on
+                // every app foreground (see the resync-on-resume trigger), so
+                // without this short-circuit every resume would re-upsert every
+                // artist + album and rewrite every track row — pure DB churn
+                // (and the per-track log spam the user noticed) for a library
+                // that hasn't changed. We still process PENDING rows (freshly
+                // inserted, never classified) and ERROR rows (worth a retry).
+                //
+                // [force] overrides this — the "Rescan all" action reprocesses
+                // everything so a logic change (e.g. compilation grouping) can
+                // be applied to an already-scanned library without a wipe.
+                val existing = tracks.findByDocumentUri(deviceTrack.sourceUri)
+                if (!force && existing != null && existing.scanStatus == ScanStatus.SCANNED) {
+                    unchanged++
+                    continue
+                }
+
                 // Skip files already covered by a SAF-managed root. Identity
                 // is the physical fingerprint (name + size + mtime) — same
                 // bytes on disk, two different URIs.
@@ -202,10 +246,7 @@ class LibrarySyncUseCase(
                 // is unreliable when INSERT OR IGNORE collapses to a no-op.
                 val stored = tracks.findByDocumentUri(deviceTrack.sourceUri) ?: continue
 
-                val artistId = upsertArtist(deviceTrack.metadata)
-                val albumId = upsertAlbum(deviceTrack.metadata, artistId)
-                tracks.updateMetadata(stored.applyMetadata(deviceTrack.metadata))
-                tracks.updateForeignKeys(stored.id, artistId, albumId)
+                entries += GroupEntry(stored.id, parentPath, deviceTrack.metadata)
                 touchedTrackIds += stored.id
                 scanned++
             } catch (e: Exception) {
@@ -213,17 +254,25 @@ class LibrarySyncUseCase(
             }
         }
 
+        // Group after the loop so a compilation folder is seen as a whole.
+        assignArtistsAndAlbums(entries)
         refreshAggregates(folderIds.values, touchedTrackIds)
 
         val report = SyncReport(
             foldersUpserted = folderIds.size,
             tracksDiscovered = deviceTracks.size,
             tracksScanned = scanned,
-            // Tracks skipped as SAF duplicates aren't failures — count them
-            // separately in the log but don't surface as failed in the report.
-            tracksFailed = deviceTracks.size - scanned - skippedAsDuplicate,
+            // Neither SAF duplicates nor already-scanned unchanged rows are
+            // failures — subtract both so a steady-state resync (everything
+            // unchanged) reports zero failed instead of flagging the whole
+            // library.
+            tracksFailed = deviceTracks.size - scanned - skippedAsDuplicate - unchanged,
         )
-        logger.i(TAG, "Finished syncDeviceAudio: $report (skipped $skippedAsDuplicate SAF duplicates)")
+        logger.i(
+            TAG,
+            "Finished syncDeviceAudio: $report " +
+                "(skipped $skippedAsDuplicate SAF duplicates, $unchanged already scanned)",
+        )
         return report
     }
 
@@ -365,42 +414,140 @@ class LibrarySyncUseCase(
         val results = pending.map { (trackId, file) ->
             async {
                 semaphore.withPermit {
-                    trackId to metadataReader.read(file.documentUri)
+                    Triple(trackId, file, metadataReader.read(file.documentUri))
                 }
             }
         }.awaitAll()
 
-        var scanned = 0
         var failed = 0
-        for ((trackId, metadata) in results) {
+        val entries = mutableListOf<GroupEntry>()
+        for ((trackId, file, metadata) in results) {
             if (metadata == null) {
                 tracks.markError(trackId)
                 failed++
-                continue
+            } else {
+                entries += GroupEntry(trackId, file.parentRelativePath(), metadata)
             }
-            val artistId = upsertArtist(metadata)
-            val albumId = upsertAlbum(metadata, artistId)
-            val stored = tracks.findById(trackId)
-                ?: continue // row disappeared between insert and update — skip silently
-            tracks.updateMetadata(stored.applyMetadata(metadata))
-            tracks.updateForeignKeys(trackId, artistId, albumId)
-            scanned++
         }
-        scanned to failed
+        // Artist/album assignment happens after all reads so compilations can
+        // be detected across the whole folder (a single track can't know it's
+        // part of a multi-artist album).
+        assignArtistsAndAlbums(entries)
+        entries.size to failed
     }
 
-    /** Upsert Artist, preferring albumArtist over track-level artist. */
-    private suspend fun upsertArtist(metadata: AudioMetadata): Long? {
-        val name = metadata.albumArtist?.takeIf { it.isNotBlank() }
-            ?: metadata.artist?.takeIf { it.isNotBlank() }
+    /**
+     * Assign Artist + Album foreign keys for a batch of freshly-read tracks,
+     * collapsing multi-artist albums into a single "Various Artists"
+     * compilation instead of splitting one album into one row per artist.
+     *
+     * Grouping key for albums is **(album name, parent folder)**: a
+     * compilation living in one folder collapses to a single album even when
+     * every track has a different artist, while two unrelated albums that
+     * happen to share a name stay distinct as long as they're in different
+     * folders. (Multi-disc albums split across sub-folders still merge at the
+     * DB level, since album identity there is (name, artist).)
+     *
+     * Tracks with no album tag are handled individually — each keeps its own
+     * artist and gets no album.
+     */
+    private suspend fun assignArtistsAndAlbums(entries: List<GroupEntry>) {
+        val (withAlbum, withoutAlbum) = entries.partition { !it.metadata.album.isNullOrBlank() }
+
+        for (e in withoutAlbum) {
+            applyTrack(e, artistId = ownArtistId(e.metadata), albumId = null)
+        }
+
+        val groups = withAlbum.groupBy {
+            AlbumGroupKey(it.metadata.album!!.trim().lowercase(), it.folderKey)
+        }
+        for ((_, group) in groups) {
+            val albumName = group.first().metadata.album!!.trim()
+            val artistId = resolveGroupArtistId(group)
+            val year = group.firstNotNullOfOrNull { it.metadata.year }
+            val albumId = albums.upsert(albumName, artistId, year)
+            for (e in group) applyTrack(e, artistId, albumId)
+        }
+    }
+
+    private suspend fun applyTrack(entry: GroupEntry, artistId: Long?, albumId: Long?) {
+        // row may have disappeared between insert and update — skip silently
+        val stored = tracks.findById(entry.trackId) ?: return
+        tracks.updateMetadata(stored.applyMetadata(entry.metadata))
+        tracks.updateForeignKeys(entry.trackId, artistId, albumId)
+    }
+
+    /**
+     * The album-artist for a group:
+     *  1. an explicit `albumArtist` tag (most common one in the group) wins —
+     *     properly-tagged compilations already say "Various Artists" here;
+     *  2. otherwise, if the group spans more than one distinct track artist,
+     *     it's an untagged compilation → [VARIOUS_ARTISTS];
+     *  3. otherwise the single track artist.
+     *
+     * Every track in the group (and the album) is filed under this artist, so
+     * a compilation appears once in the Albums/Artists views. Each track still
+     * shows its own artist *name* in track rows (preserved via
+     * [com.offlineplaya.shared.domain.model.Track.applyMetadata]).
+     */
+    private suspend fun resolveGroupArtistId(group: List<GroupEntry>): Long? {
+        val albumArtist = group
+            .mapNotNull { it.metadata.albumArtist?.takeIf { a -> a.isNotBlank() } }
+            .groupingBy { it }.eachCount().maxByOrNull { it.value }?.key
+        if (albumArtist != null) return artists.upsert(albumArtist)
+
+        // Normalize each track artist to its "primary" (strip a trailing
+        // "feat./ft./featuring ..." credit) so a single-artist album with a few
+        // guest tracks — e.g. a Phil Collins album with "Phil Collins feat.
+        // Philip Bailey" — doesn't read as multiple artists.
+        val primaries = group
+            .mapNotNull { it.metadata.artist?.takeIf { a -> a.isNotBlank() } }
+            .map { primaryArtist(it) }
+            .filter { it.isNotBlank() }
+        if (primaries.isEmpty()) return null
+
+        val countsByKey = primaries.groupingBy { it.lowercase() }.eachCount()
+        val topKey = countsByKey.maxByOrNull { it.value }!!.key
+        val topCount = countsByKey.getValue(topKey)
+
+        // It's a compilation ONLY if no single artist owns the majority of the
+        // tracks. One dominant artist (with occasional guests) keeps their name;
+        // a genuinely mixed album (no majority) becomes Various Artists.
+        return if (countsByKey.size == 1 || topCount * 2 > primaries.size) {
+            val display = primaries.filter { it.equals(topKey, ignoreCase = true) }
+                .groupingBy { it }.eachCount().maxByOrNull { it.value }!!.key
+            artists.upsert(display)
+        } else {
+            artists.upsert(VARIOUS_ARTISTS)
+        }
+    }
+
+    /**
+     * The "primary" artist of a credit string: the part before a featuring
+     * marker. "Phil Collins feat. Philip Bailey" / "Drake (ft. Future)" →
+     * "Phil Collins" / "Drake". Deliberately only splits on explicit feat./ft./
+     * featuring markers — never on "&" or "," — so band names like
+     * "Earth, Wind & Fire" are left intact.
+     */
+    private fun primaryArtist(name: String): String =
+        name.replace(FEAT_CREDIT, "").trim()
+
+    /** A single track's own artist (no album-grouping context). */
+    private suspend fun ownArtistId(metadata: AudioMetadata): Long? {
+        val name = metadata.artist?.takeIf { it.isNotBlank() }
+            ?: metadata.albumArtist?.takeIf { it.isNotBlank() }
             ?: return null
         return artists.upsert(name)
     }
 
-    private suspend fun upsertAlbum(metadata: AudioMetadata, artistId: Long?): Long? {
-        val name = metadata.album?.takeIf { it.isNotBlank() } ?: return null
-        return albums.upsert(name, artistId, metadata.year)
-    }
+    /** A track ready for artist/album assignment: id + parent folder + tags. */
+    private class GroupEntry(
+        val trackId: Long,
+        val folderKey: String,
+        val metadata: AudioMetadata,
+    )
+
+    private data class AlbumGroupKey(val albumNameLower: String, val folderKey: String)
 
     /** Refresh aggregate counts on every folder/artist/album that may have changed. */
     private suspend fun refreshAggregates(

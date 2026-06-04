@@ -10,5 +10,9 @@ interface ArtistRepository {
     suspend fun upsert(name: String): Long
     suspend fun refreshCounts(id: Long)
     suspend fun updateImageUrl(id: Long, imageUrl: String?)
+
+    /** Delete artists referenced by no track and no album (orphans after regrouping). */
+    suspend fun deleteOrphans()
+
     suspend fun deleteAll()
 }

@@ -32,5 +32,13 @@ UPDATE Artist SET image_url = ? WHERE id = ?;
 lastInsertId:
 SELECT last_insert_rowid();
 
+-- Remove artists that nothing references — no track has their artist_id and
+-- no album has them as album-artist. Cleans up the per-artist rows left
+-- behind when a compilation's tracks regroup under "Various Artists".
+deleteOrphans:
+DELETE FROM Artist
+WHERE id NOT IN (SELECT DISTINCT artist_id FROM Track WHERE artist_id IS NOT NULL)
+  AND id NOT IN (SELECT DISTINCT artist_id FROM Album WHERE artist_id IS NOT NULL);
+
 deleteAll:
 DELETE FROM Artist;

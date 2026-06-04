@@ -2,6 +2,7 @@ package com.offlineplaya.android.service
 
 import android.app.PendingIntent
 import android.content.Intent
+import android.media.AudioManager
 import android.media.audiofx.AudioEffect
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
@@ -10,9 +11,11 @@ import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.MediaSession
 import com.offlineplaya.android.MainActivity
 import com.offlineplaya.android.audio.AppEqualizerController
+import com.offlineplaya.android.audio.CrossfadeController
 import com.offlineplaya.android.auto.AutoLibraryCallback
 import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
+import com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.util.AppLogger
@@ -36,6 +39,7 @@ class PlaybackService : MediaLibraryService() {
     private var mediaSession: MediaLibrarySession? = null
     private var audioSessionId: Int = AudioEffect.ERROR_BAD_VALUE
     private var equalizerController: AppEqualizerController? = null
+    private var crossfadeController: CrossfadeController? = null
 
     /**
      * Service-scoped coroutine context. Used by [equalizerController] so
@@ -46,12 +50,19 @@ class PlaybackService : MediaLibraryService() {
 
     override fun onCreate() {
         super.onCreate()
+        // Generate the audio session id explicitly and pin it on the player so
+        // BOTH the EQ and the crossfade secondary engine bind to the same
+        // session (rather than reading back whatever the player happened to
+        // allocate). See CrossfadeController for why the secondary shares it.
+        val audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
+        val sessionId = audioManager.generateAudioSessionId()
         val player = ExoPlayer.Builder(this)
             .setHandleAudioBecomingNoisy(true)
             .setAudioAttributes(MUSIC_ATTRIBUTES, /* handleAudioFocus = */ true)
             .build()
+            .apply { setAudioSessionId(sessionId) }
 
-        audioSessionId = player.audioSessionId
+        audioSessionId = sessionId
 
         // The equalizer controller is the single source of truth for the
         // audio-effects pipeline: it OWNS the choice between our app EQ and
@@ -65,6 +76,19 @@ class PlaybackService : MediaLibraryService() {
             context = this,
             audioSessionId = audioSessionId,
             stateHolder = stateHolder,
+            scope = serviceScope,
+            logger = logger,
+        ).also { it.start() }
+
+        // Crossfade overlay: leaves `player` as the untouched MediaSession
+        // player and drives a second engine for the track-to-track overlap.
+        // Shares the EQ audio session and the service scope. No-op while the
+        // user has crossfade disabled (the default-off path is native gapless).
+        crossfadeController = CrossfadeController(
+            context = this,
+            mainPlayer = player,
+            audioSessionId = audioSessionId,
+            preferences = koin.get<PlaybackTuningStateHolder>().preferences,
             scope = serviceScope,
             logger = logger,
         ).also { it.start() }
@@ -108,6 +132,8 @@ class PlaybackService : MediaLibraryService() {
     }
 
     override fun onDestroy() {
+        crossfadeController?.release()
+        crossfadeController = null
         equalizerController?.release()
         equalizerController = null
         serviceScope.cancel()

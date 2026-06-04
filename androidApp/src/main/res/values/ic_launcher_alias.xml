@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Legacy launcher-icon alias.
+
+  On API 26+ the adaptive icon at mipmap-anydpi-v26/ic_launcher.xml wins,
+  so this default-config resource only matters on API 24/25 (minSdk = 24),
+  where there is no adaptive-icon support and a raster is required.
+
+  The legacy ic_launcher.png rasters used to be byte-for-byte identical to
+  the adaptive foreground (ic_launcher_foreground.png) in every density,
+  which shipped the same image twice in the AAB. They were deleted and this
+  alias points ic_launcher at the foreground, so only one set of PNG bytes
+  ships and pre-26 devices still get the exact same icon they had before.
+-->
+<resources>
+    <item name="ic_launcher" type="mipmap">@mipmap/ic_launcher_foreground</item>
+</resources>

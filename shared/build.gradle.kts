@@ -40,6 +40,10 @@ kotlin {
 
                 implementation(libs.kotlinx.serialization.json)
                 api(libs.kotlinx.collections.immutable)
+
+                // Generates a full Material 3 ColorScheme from a single seed
+                // color (the album-art reactive theme). Pure-Compose, KMP-safe.
+                implementation(libs.material.kolor)
             }
         }
 
@@ -82,6 +86,10 @@ kotlin {
                 implementation(libs.okhttp)
                 implementation(libs.coil.network.okhttp)
                 implementation(libs.androidx.work.runtime)
+
+                // Extracts a dominant/vibrant seed color from album-art bitmaps
+                // (Android-only) to feed the reactive theme.
+                implementation(libs.androidx.palette)
             }
         }
     }
