@@ -8,8 +8,10 @@ import com.offlineplaya.shared.data.image.MusicBrainzArtSource
 import com.offlineplaya.shared.data.image.SafFolderArtSource
 import com.offlineplaya.shared.data.image.createMusicBrainzSource
 import com.offlineplaya.shared.data.lyrics.JaudiotaggerLyricsSource
+import com.offlineplaya.shared.data.lyrics.LrclibLyricsSource
 import com.offlineplaya.shared.data.lyrics.SafSidecarLyricsSource
 import com.offlineplaya.shared.data.lyrics.SqlLyricsRepository
+import com.offlineplaya.shared.data.lyrics.createLrclibLyricsSource
 import com.offlineplaya.shared.data.metadata.AndroidMetadataReader
 import com.offlineplaya.shared.data.scanner.MediaStoreDeviceAudioScanner
 import com.offlineplaya.shared.data.scanner.SafFolderScanner
@@ -22,6 +24,7 @@ import com.offlineplaya.shared.domain.image.FolderArtSource
 import com.offlineplaya.shared.domain.image.RemoteArtSource
 import com.offlineplaya.shared.domain.lyrics.EmbeddedLyricsSource
 import com.offlineplaya.shared.domain.lyrics.LyricsRepository
+import com.offlineplaya.shared.domain.lyrics.RemoteLyricsSource
 import com.offlineplaya.shared.domain.lyrics.SidecarLyricsSource
 import com.offlineplaya.shared.domain.scanner.DeviceAudioScanner
 import com.offlineplaya.shared.domain.scanner.FolderScanner
@@ -79,15 +82,20 @@ val androidModule: Module = module {
     single<GenreTagWriter> { JaudiotaggerGenreWriter(androidContext(), get()) }
 
     // Lyrics sources + repository. Embedded reads via the Jaudiotagger
-    // temp-file dance; sidecar reads <basename>.lrc/.txt via DocumentsContract.
-    // The repository orchestrates cache → embedded → sidecar and persists hits.
+    // temp-file dance; sidecar reads <basename>.lrc/.txt via DocumentsContract;
+    // remote hits LRCLIB (no API key, free) and is gated behind the
+    // download-remote-lyrics user preference. The repository orchestrates
+    // cache → embedded → sidecar → remote and persists hits in the Lyrics table.
     single<EmbeddedLyricsSource> { JaudiotaggerLyricsSource(androidContext(), get()) }
     single<SidecarLyricsSource> { SafSidecarLyricsSource(androidContext(), get()) }
+    single<RemoteLyricsSource> { createLrclibLyricsSource(get(), get()) }
     single<LyricsRepository> {
         SqlLyricsRepository(
             db = get(),
             embedded = get(),
             sidecar = get(),
+            remote = get(),
+            settings = get(),
             logger = get(),
         )
     }

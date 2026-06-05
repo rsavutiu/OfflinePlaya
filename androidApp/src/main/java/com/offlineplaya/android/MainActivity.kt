@@ -33,6 +33,7 @@ import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
+import com.offlineplaya.shared.presentation.settings.LyricsPreferencesStateHolder
 import com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
@@ -84,6 +85,7 @@ private fun AndroidApp() {
     val navigator: AppNavigator = koinInject()
     val themeStateHolder: ThemeStateHolder = koinInject()
     val artworkStateHolder: ArtworkStateHolder = koinInject()
+    val lyricsPreferencesStateHolder: LyricsPreferencesStateHolder = koinInject()
     val playbackTuningStateHolder: PlaybackTuningStateHolder = koinInject()
     val coordinator: LibrarySyncCoordinator = koinInject()
     val burnMetadataCoordinator: BurnMetadataCoordinator = koinInject()
@@ -96,6 +98,7 @@ private fun AndroidApp() {
     val themePreferences by themeStateHolder.preferences.collectAsState()
     val seedColor by albumColorStateHolder.seedColor.collectAsState()
     val artworkPreferences by artworkStateHolder.preferences.collectAsState()
+    val lyricsPreferences by lyricsPreferencesStateHolder.preferences.collectAsState()
     val playbackPreferences by playbackTuningStateHolder.preferences.collectAsState()
     val syncStatus by coordinator.status.collectAsState()
     val trackCount by library.totalTrackCount.collectAsState()
@@ -183,6 +186,7 @@ private fun AndroidApp() {
         lyricsStateHolder = lyricsStateHolder,
         themePreferences = themePreferences,
         artworkPreferences = artworkPreferences,
+        lyricsPreferences = lyricsPreferences,
         playbackPreferences = playbackPreferences,
         syncStatus = syncStatus,
         trackCount = trackCount,
@@ -192,6 +196,7 @@ private fun AndroidApp() {
         onDynamicColorChange = themeStateHolder::setUseDynamicColor,
         onAlbumArtColorChange = themeStateHolder::setUseAlbumArtColor,
         onDownloadRemoteArtChange = artworkStateHolder::setDownloadRemoteArt,
+        onDownloadRemoteLyricsChange = lyricsPreferencesStateHolder::setDownloadRemoteLyrics,
         onCrossfadeEnabledChange = playbackTuningStateHolder::setCrossfadeEnabled,
         onCrossfadeDurationChange = playbackTuningStateHolder::setCrossfadeDurationSeconds,
         dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,

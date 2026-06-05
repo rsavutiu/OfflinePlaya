@@ -2,6 +2,7 @@ package com.offlineplaya.shared.domain.repository
 
 import com.offlineplaya.shared.domain.model.ArtworkPreferences
 import com.offlineplaya.shared.domain.model.EqPreferences
+import com.offlineplaya.shared.domain.model.LyricsPreferences
 import com.offlineplaya.shared.domain.model.PlaybackPreferences
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import kotlinx.coroutines.flow.Flow
@@ -29,6 +30,15 @@ interface SettingsRepository {
 
     /** Replace the stored artwork preferences atomically. */
     suspend fun setArtworkPreferences(preferences: ArtworkPreferences)
+
+    /** Live lyrics preferences (download-remote toggle). */
+    fun observeLyricsPreferences(): Flow<LyricsPreferences>
+
+    /** One-shot read of lyrics preferences. */
+    suspend fun getLyricsPreferences(): LyricsPreferences
+
+    /** Replace the stored lyrics preferences atomically. */
+    suspend fun setLyricsPreferences(preferences: LyricsPreferences)
 
     /** Live equalizer preferences (mode + manual preset + per-band overrides). */
     fun observeEqPreferences(): Flow<EqPreferences>

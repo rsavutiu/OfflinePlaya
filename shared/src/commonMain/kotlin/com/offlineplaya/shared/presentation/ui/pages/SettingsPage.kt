@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.ArtworkPreferences
 import com.offlineplaya.shared.domain.model.ColorMode
+import com.offlineplaya.shared.domain.model.LyricsPreferences
 import com.offlineplaya.shared.domain.model.ManagedTreeRoot
 import com.offlineplaya.shared.domain.model.PlaybackPreferences
 import com.offlineplaya.shared.domain.model.ThemePreferences
@@ -30,6 +31,7 @@ import com.offlineplaya.shared.presentation.ui.molecules.SettingsLinkSection
 import com.offlineplaya.shared.presentation.ui.organisms.AppearanceSettings
 import com.offlineplaya.shared.presentation.ui.organisms.BurnMetadataSettings
 import com.offlineplaya.shared.presentation.ui.organisms.LibrarySettings
+import com.offlineplaya.shared.presentation.ui.organisms.LyricsSettings
 import com.offlineplaya.shared.presentation.ui.organisms.PlaybackSettings
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
@@ -51,6 +53,7 @@ fun SettingsPage(
     modifier: Modifier = Modifier,
     preferences: ThemePreferences,
     artworkPreferences: ArtworkPreferences,
+    lyricsPreferences: LyricsPreferences,
     playbackPreferences: PlaybackPreferences,
     managedRoots: PersistentList<ManagedTreeRoot>,
     isScanning: Boolean,
@@ -59,6 +62,7 @@ fun SettingsPage(
     onDynamicColorChange: (Boolean) -> Unit,
     onAlbumArtColorChange: (Boolean) -> Unit,
     onDownloadRemoteArtChange: (Boolean) -> Unit,
+    onDownloadRemoteLyricsChange: (Boolean) -> Unit,
     onCrossfadeEnabledChange: (Boolean) -> Unit,
     onCrossfadeDurationChange: (Int) -> Unit,
     onBurnMetadataClick: () -> Unit,
@@ -100,6 +104,12 @@ fun SettingsPage(
                     report = burnReport,
                     onBurnClick = onBurnMetadataClick,
                     onAcknowledgeReport = onAcknowledgeBurnReport
+                )
+            }
+            val lyrics: @Composable () -> Unit = {
+                LyricsSettings(
+                    preferences = lyricsPreferences,
+                    onDownloadRemoteLyricsChange = onDownloadRemoteLyricsChange,
                 )
             }
             val library: @Composable () -> Unit = {
@@ -147,6 +157,7 @@ fun SettingsPage(
                         Column(modifier = Modifier.weight(1f)) {
                             appearance()
                             metadata()
+                            lyrics()
                         }
                         Column(modifier = Modifier.weight(1f)) {
                             library()
@@ -158,6 +169,7 @@ fun SettingsPage(
                 } else {
                     appearance()
                     metadata()
+                    lyrics()
                     library()
                     playback()
                     audio()
@@ -193,8 +205,10 @@ private fun SettingsPageLightPreview() {
             artworkPreferences = ArtworkPreferences.Default,
             playbackPreferences = PlaybackPreferences.Default,
             burnReport = EmbedReport.Idle,
+            lyricsPreferences = LyricsPreferences.Default,
             onColorModeChange = {}, onDynamicColorChange = {}, onAlbumArtColorChange = {},
-            onDownloadRemoteArtChange = {}, onBurnMetadataClick = {},
+            onDownloadRemoteArtChange = {}, onDownloadRemoteLyricsChange = {},
+            onBurnMetadataClick = {},
             onCrossfadeEnabledChange = {}, onCrossfadeDurationChange = {},
             onAcknowledgeBurnReport = {},
             onPickFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
@@ -215,8 +229,10 @@ private fun SettingsPageDarkPreview() {
             artworkPreferences = ArtworkPreferences.Default,
             playbackPreferences = PlaybackPreferences(crossfadeEnabled = false, crossfadeDurationSeconds = 6),
             burnReport = EmbedReport.Idle,
+            lyricsPreferences = LyricsPreferences.Default,
             onColorModeChange = {}, onDynamicColorChange = {}, onAlbumArtColorChange = {},
-            onDownloadRemoteArtChange = {}, onBurnMetadataClick = {},
+            onDownloadRemoteArtChange = {}, onDownloadRemoteLyricsChange = {},
+            onBurnMetadataClick = {},
             onCrossfadeEnabledChange = {}, onCrossfadeDurationChange = {},
             onAcknowledgeBurnReport = {},
             onPickFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
@@ -242,8 +258,10 @@ private fun SettingsPageScanningPreview() {
             ),
             playbackPreferences = PlaybackPreferences(crossfadeEnabled = true, crossfadeDurationSeconds = 10),
             burnReport = EmbedReport.Running(10, 100, 8, 2),
+            lyricsPreferences = LyricsPreferences.Default,
             onColorModeChange = {}, onDynamicColorChange = {}, onAlbumArtColorChange = {},
-            onDownloadRemoteArtChange = {}, onBurnMetadataClick = {},
+            onDownloadRemoteArtChange = {}, onDownloadRemoteLyricsChange = {},
+            onBurnMetadataClick = {},
             onCrossfadeEnabledChange = {}, onCrossfadeDurationChange = {},
             onAcknowledgeBurnReport = {},
             onPickFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},

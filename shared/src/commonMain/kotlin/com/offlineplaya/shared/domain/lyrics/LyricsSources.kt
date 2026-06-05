@@ -20,3 +20,17 @@ interface EmbeddedLyricsSource {
 interface SidecarLyricsSource {
     suspend fun read(track: Track): String?
 }
+
+/**
+ * Fetches lyrics for a track from a remote service (LRCLIB in the current
+ * Android impl). Returns the raw text — synced LRC when available, plain
+ * unsynced text as a fallback — or `null` when nothing was found or the
+ * lookup was already recorded as a persistent miss.
+ *
+ * Implementations are expected to be polite (rate-limited / pooled) and to
+ * persist negative results so a clean miss for one track doesn't translate
+ * into a fresh request every time the user revisits Now Playing.
+ */
+interface RemoteLyricsSource {
+    suspend fun resolve(track: Track): String?
+}

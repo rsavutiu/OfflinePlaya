@@ -113,6 +113,9 @@
     <string name="lyrics_empty_title">No lyrics</string>
     <string name="lyrics_empty_subtitle">No lyrics were found for this track.</string>
     <string name="cd_lyrics">Lyrics</string>
+    <string name="settings_section_lyrics">Lyrics</string>
+    <string name="lyrics_download_remote">Download lyrics</string>
+    <string name="lyrics_download_remote_subtitle">Look up missing lyrics from LRCLIB when no embedded tag or .lrc sidecar is found.</string>
 
     <!-- Playback / crossfade -->
     <string name="playback_crossfade">Crossfade</string>

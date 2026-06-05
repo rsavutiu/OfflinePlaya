@@ -1,6 +1,7 @@
 package com.offlineplaya.shared.data.repository
 
 import com.offlineplaya.shared.domain.model.ColorMode
+import com.offlineplaya.shared.domain.model.LyricsPreferences
 import com.offlineplaya.shared.domain.model.PlaybackPreferences
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import com.offlineplaya.shared.testsupport.createInMemoryDatabase
@@ -94,6 +95,25 @@ class SqlSettingsRepositoryTest {
         )
         val stored = repo.getPlaybackPreferences()
         assertEquals(PlaybackPreferences.MAX_DURATION_SECONDS, stored.crossfadeDurationSeconds)
+    }
+
+    @Test
+    fun `empty store returns the default lyrics preferences`() = runTest {
+        val repo = newRepository()
+        assertEquals(LyricsPreferences.Default, repo.getLyricsPreferences())
+        assertEquals(LyricsPreferences.Default, repo.observeLyricsPreferences().first())
+    }
+
+    @Test
+    fun `setLyricsPreferences round-trips the download toggle`() = runTest {
+        val repo = newRepository()
+        // Default is ON; flip OFF so the round-trip proves the key/parse
+        // path actually persists the value rather than just defaulting.
+        repo.setLyricsPreferences(LyricsPreferences(downloadRemoteLyrics = false))
+        assertEquals(false, repo.getLyricsPreferences().downloadRemoteLyrics)
+
+        repo.setLyricsPreferences(LyricsPreferences(downloadRemoteLyrics = true))
+        assertEquals(true, repo.getLyricsPreferences().downloadRemoteLyrics)
     }
 
     @Test

@@ -28,6 +28,7 @@ import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
+import com.offlineplaya.shared.presentation.settings.LyricsPreferencesStateHolder
 import com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
@@ -116,6 +117,16 @@ val sharedModule: Module = module {
     // Artwork preferences (download from MusicBrainz / embed back into files).
     single {
         ArtworkStateHolder(
+            settings = get(),
+            scope = get(),
+        )
+    }
+
+    // Lyrics preferences (download from LRCLIB toggle). Mirrors
+    // ArtworkStateHolder — read by the UI for the Settings toggle and by
+    // SqlLyricsRepository at resolve time to decide whether to hit remote.
+    single {
+        LyricsPreferencesStateHolder(
             settings = get(),
             scope = get(),
         )

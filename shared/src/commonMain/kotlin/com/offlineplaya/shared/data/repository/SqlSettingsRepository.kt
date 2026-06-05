@@ -8,6 +8,7 @@ import com.offlineplaya.shared.domain.model.ArtworkPreferences
 import com.offlineplaya.shared.domain.model.ColorMode
 import com.offlineplaya.shared.domain.model.EqMode
 import com.offlineplaya.shared.domain.model.EqPreferences
+import com.offlineplaya.shared.domain.model.LyricsPreferences
 import com.offlineplaya.shared.domain.model.PlaybackPreferences
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import com.offlineplaya.shared.domain.repository.SettingsRepository
@@ -69,6 +70,20 @@ internal class SqlSettingsRepository(
                 queries.insertOrReplace(KEY_DOWNLOAD_REMOTE_ART, preferences.downloadRemoteArt.toString())
                 queries.insertOrReplace(KEY_EMBED_DOWNLOADED_ART, preferences.embedDownloadedArt.toString())
             }
+        }
+
+    override fun observeLyricsPreferences(): Flow<LyricsPreferences> =
+        queries.selectAll().asFlow().mapToList(ioDispatcher).map { rows ->
+            rows.toLyricsPreferences()
+        }
+
+    override suspend fun getLyricsPreferences(): LyricsPreferences = withContext(ioDispatcher) {
+        queries.selectAll().executeAsList().toLyricsPreferences()
+    }
+
+    override suspend fun setLyricsPreferences(preferences: LyricsPreferences) =
+        withContext(ioDispatcher) {
+            queries.insertOrReplace(KEY_DOWNLOAD_REMOTE_LYRICS, preferences.downloadRemoteLyrics.toString())
         }
 
     override fun observeEqPreferences(): Flow<EqPreferences> =
@@ -136,6 +151,15 @@ internal class SqlSettingsRepository(
         )
     }
 
+    private fun List<Setting>.toLyricsPreferences(): LyricsPreferences {
+        val map: Map<String, String> = associate { it.key to it.value_ }
+        val defaults = LyricsPreferences.Default
+        return LyricsPreferences(
+            downloadRemoteLyrics = map[KEY_DOWNLOAD_REMOTE_LYRICS]?.toBoolean()
+                ?: defaults.downloadRemoteLyrics,
+        )
+    }
+
     private fun List<Setting>.toEqPreferences(): EqPreferences {
         val map: Map<String, String> = associate { it.key to it.value_ }
         val defaults = EqPreferences.Default
@@ -178,6 +202,7 @@ internal class SqlSettingsRepository(
         const val KEY_LAST_SEED_COLOR = "theme.last_seed_color"
         const val KEY_DOWNLOAD_REMOTE_ART = "artwork.download_remote"
         const val KEY_EMBED_DOWNLOADED_ART = "artwork.embed_downloaded"
+        const val KEY_DOWNLOAD_REMOTE_LYRICS = "lyrics.download_remote"
         const val KEY_EQ_MODE = "eq.mode"
         const val KEY_EQ_MANUAL_PRESET = "eq.manual_preset"
         const val KEY_EQ_MANUAL_GAINS = "eq.manual_gains"

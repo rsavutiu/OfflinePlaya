@@ -5,27 +5,32 @@ import com.offlineplaya.shared.domain.lyrics.EmbeddedLyricsSource
 import com.offlineplaya.shared.domain.lyrics.LrcParser
 import com.offlineplaya.shared.domain.lyrics.Lyrics
 import com.offlineplaya.shared.domain.lyrics.LyricsRepository
+import com.offlineplaya.shared.domain.lyrics.RemoteLyricsSource
 import com.offlineplaya.shared.domain.lyrics.SidecarLyricsSource
 import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.domain.repository.SettingsRepository
 import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
- * [LyricsRepository] orchestrating the resolution chain (Slice 1: local only):
- * positive cache → embedded tags → `.lrc`/`.txt` sidecar. The raw source text
- * is run through [LrcParser], and any non-empty result is persisted to the
+ * [LyricsRepository] orchestrating the resolution chain:
+ * positive cache → embedded tags → `.lrc`/`.txt` sidecar → LRCLIB (when the
+ * download-remote-lyrics preference is on). The raw source text is run
+ * through [LrcParser], and any non-empty result is persisted to the
  * `Lyrics` table so the next play is instant.
  *
- * Local misses are deliberately NOT cached — a user can drop an `.lrc` next to
- * a track later, and the next play should pick it up. (Remote misses, added in
- * Slice 2, use the shared `RemoteArtMiss` negative cache instead.)
+ * Local misses are deliberately NOT cached — a user can drop an `.lrc` next
+ * to a track later, and the next play should pick it up. Remote misses use
+ * the shared `RemoteArtMiss` negative cache, owned by [remote].
  */
 internal class SqlLyricsRepository(
     private val db: OfflinePlayaDatabase,
     private val embedded: EmbeddedLyricsSource,
     private val sidecar: SidecarLyricsSource,
+    private val remote: RemoteLyricsSource?,
+    private val settings: SettingsRepository?,
     private val logger: AppLogger,
     private val now: () -> Long = { System.currentTimeMillis() },
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
@@ -44,6 +49,13 @@ internal class SqlLyricsRepository(
         resolveAndPersist(track, SOURCE_SIDECAR) { sidecar.read(track) }
             ?.let { return@withContext it }
 
+        // LRCLIB. Gated by the download-remote-lyrics preference; on first
+        // install the default is ON (mirroring artwork.download_remote).
+        if (remote != null && downloadRemoteLyricsEnabled()) {
+            resolveAndPersist(track, SOURCE_LRCLIB) { remote.resolve(track) }
+                ?.let { return@withContext it }
+        }
+
         Lyrics.None
     }
 
@@ -52,6 +64,12 @@ internal class SqlLyricsRepository(
         // Re-parse the stored source text — authoritative and keeps a single
         // code path. (is_synced is stored for possible future querying.)
         return LrcParser.parse(row.raw_text).takeIf { it !is Lyrics.None }
+    }
+
+    private suspend fun downloadRemoteLyricsEnabled(): Boolean {
+        val s = settings ?: return true
+        return runCatching { s.getLyricsPreferences().downloadRemoteLyrics }
+            .getOrDefault(true)
     }
 
     private inline fun resolveAndPersist(
@@ -77,5 +95,6 @@ internal class SqlLyricsRepository(
         const val TAG = "SqlLyricsRepository"
         const val SOURCE_EMBEDDED = "embedded"
         const val SOURCE_SIDECAR = "sidecar"
+        const val SOURCE_LRCLIB = "lrclib"
     }
 }
