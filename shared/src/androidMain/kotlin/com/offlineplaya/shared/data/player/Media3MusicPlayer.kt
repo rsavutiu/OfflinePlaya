@@ -109,14 +109,26 @@ internal class Media3MusicPlayer(
 
     // --- queue ---
 
-    override fun setQueue(tracks: List<Track>, startIndex: Int) = onMain {
-        val ctrl = controller ?: return@onMain
-        queueTracks = tracks
-        val items = tracks.map { TrackMediaItemMapper.toMediaItem(it, artworkUriFor(it)) }
-        val safeIndex = startIndex.coerceIn(0, (items.size - 1).coerceAtLeast(0))
-        ctrl.setMediaItems(items, safeIndex, /* startPositionMs = */ 0L)
-        ctrl.prepare()
-        ctrl.playWhenReady = true
+    override fun setQueue(tracks: List<Track>, startIndex: Int) {
+        // Building the MediaItem list is heavy: every track triggers
+        // file.exists() + mkdirs() + six grantUriPermission() binder calls
+        // inside artworkUriFor. For a 1300-track queue that's ~8 000 binder
+        // round-trips, which froze the UI for several seconds when the
+        // mapping ran on the main thread. Compute the items off-main and
+        // submit only the cheap controller calls inside [onMain].
+        scope.launch {
+            val items = withContext(Dispatchers.IO) {
+                tracks.map { TrackMediaItemMapper.toMediaItem(it, artworkUriFor(it)) }
+            }
+            withContext(mainDispatcher) {
+                val ctrl = controller ?: return@withContext
+                queueTracks = tracks
+                val safeIndex = startIndex.coerceIn(0, (items.size - 1).coerceAtLeast(0))
+                ctrl.setMediaItems(items, safeIndex, /* startPositionMs = */ 0L)
+                ctrl.prepare()
+                ctrl.playWhenReady = true
+            }
+        }
     }
 
     override fun addToQueue(track: Track) = onMain {
