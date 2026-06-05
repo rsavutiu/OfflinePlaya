@@ -34,3 +34,25 @@ interface SidecarLyricsSource {
 interface RemoteLyricsSource {
     suspend fun resolve(track: Track): String?
 }
+
+/**
+ * Writes lyric text out as a sidecar file next to the audio file, so a
+ * cache wipe / reinstall doesn't lose remote-fetched lyrics and other
+ * players can pick them up too. Synced text becomes `<basename>.lrc`,
+ * plain text becomes `<basename>.txt`.
+ *
+ * Implementations must be no-ops for tracks the user did not grant SAF
+ * write access to (e.g. MediaStore-only audio under `device://audio/`)
+ * and must skip silently when a sidecar already exists — overwriting a
+ * hand-edited `.lrc` would surprise the user. Failures are logged, not
+ * thrown; the in-app cache row is still valid even when the sidecar
+ * write loses.
+ */
+interface LyricsSidecarWriter {
+    /**
+     * Returns `true` when a sidecar was successfully created, `false`
+     * when skipped (no SAF access, sidecar already exists, empty text,
+     * `device://` track) or when the write failed.
+     */
+    suspend fun write(track: Track, text: String, isSynced: Boolean): Boolean
+}

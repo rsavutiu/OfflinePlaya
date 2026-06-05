@@ -9,6 +9,7 @@ import com.offlineplaya.shared.data.image.SafFolderArtSource
 import com.offlineplaya.shared.data.image.createMusicBrainzSource
 import com.offlineplaya.shared.data.lyrics.JaudiotaggerLyricsSource
 import com.offlineplaya.shared.data.lyrics.LrclibLyricsSource
+import com.offlineplaya.shared.data.lyrics.SafLyricsSidecarWriter
 import com.offlineplaya.shared.data.lyrics.SafSidecarLyricsSource
 import com.offlineplaya.shared.data.lyrics.SqlLyricsRepository
 import com.offlineplaya.shared.data.lyrics.createLrclibLyricsSource
@@ -24,6 +25,7 @@ import com.offlineplaya.shared.domain.image.FolderArtSource
 import com.offlineplaya.shared.domain.image.RemoteArtSource
 import com.offlineplaya.shared.domain.lyrics.EmbeddedLyricsSource
 import com.offlineplaya.shared.domain.lyrics.LyricsRepository
+import com.offlineplaya.shared.domain.lyrics.LyricsSidecarWriter
 import com.offlineplaya.shared.domain.lyrics.RemoteLyricsSource
 import com.offlineplaya.shared.domain.lyrics.SidecarLyricsSource
 import com.offlineplaya.shared.domain.scanner.DeviceAudioScanner
@@ -89,12 +91,17 @@ val androidModule: Module = module {
     single<EmbeddedLyricsSource> { JaudiotaggerLyricsSource(androidContext(), get()) }
     single<SidecarLyricsSource> { SafSidecarLyricsSource(androidContext(), get()) }
     single<RemoteLyricsSource> { createLrclibLyricsSource(get(), get()) }
+    // SAF-backed sidecar writer — used when the user has the
+    // "Save lyrics as sidecar" toggle on, so LRCLIB hits survive a
+    // cache wipe and become visible to other players.
+    single<LyricsSidecarWriter> { SafLyricsSidecarWriter(androidContext(), get()) }
     single<LyricsRepository> {
         SqlLyricsRepository(
             db = get(),
             embedded = get(),
             sidecar = get(),
             remote = get(),
+            sidecarWriter = get(),
             settings = get(),
             logger = get(),
         )

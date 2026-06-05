@@ -63,6 +63,7 @@ fun SettingsPage(
     onAlbumArtColorChange: (Boolean) -> Unit,
     onDownloadRemoteArtChange: (Boolean) -> Unit,
     onDownloadRemoteLyricsChange: (Boolean) -> Unit,
+    onSaveLyricsAsSidecarChange: (Boolean) -> Unit,
     onCrossfadeEnabledChange: (Boolean) -> Unit,
     onCrossfadeDurationChange: (Int) -> Unit,
     onBurnMetadataClick: () -> Unit,
@@ -110,6 +111,7 @@ fun SettingsPage(
                 LyricsSettings(
                     preferences = lyricsPreferences,
                     onDownloadRemoteLyricsChange = onDownloadRemoteLyricsChange,
+                    onSaveLyricsAsSidecarChange = onSaveLyricsAsSidecarChange,
                 )
             }
             val library: @Composable () -> Unit = {
@@ -208,6 +210,7 @@ private fun SettingsPageLightPreview() {
             lyricsPreferences = LyricsPreferences.Default,
             onColorModeChange = {}, onDynamicColorChange = {}, onAlbumArtColorChange = {},
             onDownloadRemoteArtChange = {}, onDownloadRemoteLyricsChange = {},
+            onSaveLyricsAsSidecarChange = {},
             onBurnMetadataClick = {},
             onCrossfadeEnabledChange = {}, onCrossfadeDurationChange = {},
             onAcknowledgeBurnReport = {},
@@ -232,6 +235,7 @@ private fun SettingsPageDarkPreview() {
             lyricsPreferences = LyricsPreferences.Default,
             onColorModeChange = {}, onDynamicColorChange = {}, onAlbumArtColorChange = {},
             onDownloadRemoteArtChange = {}, onDownloadRemoteLyricsChange = {},
+            onSaveLyricsAsSidecarChange = {},
             onBurnMetadataClick = {},
             onCrossfadeEnabledChange = {}, onCrossfadeDurationChange = {},
             onAcknowledgeBurnReport = {},
@@ -261,6 +265,7 @@ private fun SettingsPageScanningPreview() {
             lyricsPreferences = LyricsPreferences.Default,
             onColorModeChange = {}, onDynamicColorChange = {}, onAlbumArtColorChange = {},
             onDownloadRemoteArtChange = {}, onDownloadRemoteLyricsChange = {},
+            onSaveLyricsAsSidecarChange = {},
             onBurnMetadataClick = {},
             onCrossfadeEnabledChange = {}, onCrossfadeDurationChange = {},
             onAcknowledgeBurnReport = {},

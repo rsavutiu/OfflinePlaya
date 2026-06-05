@@ -197,6 +197,7 @@ private fun AndroidApp() {
         onAlbumArtColorChange = themeStateHolder::setUseAlbumArtColor,
         onDownloadRemoteArtChange = artworkStateHolder::setDownloadRemoteArt,
         onDownloadRemoteLyricsChange = lyricsPreferencesStateHolder::setDownloadRemoteLyrics,
+        onSaveLyricsAsSidecarChange = lyricsPreferencesStateHolder::setSaveLyricsAsSidecar,
         onCrossfadeEnabledChange = playbackTuningStateHolder::setCrossfadeEnabled,
         onCrossfadeDurationChange = playbackTuningStateHolder::setCrossfadeDurationSeconds,
         dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,

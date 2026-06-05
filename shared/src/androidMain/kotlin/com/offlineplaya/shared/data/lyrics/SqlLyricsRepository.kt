@@ -5,8 +5,10 @@ import com.offlineplaya.shared.domain.lyrics.EmbeddedLyricsSource
 import com.offlineplaya.shared.domain.lyrics.LrcParser
 import com.offlineplaya.shared.domain.lyrics.Lyrics
 import com.offlineplaya.shared.domain.lyrics.LyricsRepository
+import com.offlineplaya.shared.domain.lyrics.LyricsSidecarWriter
 import com.offlineplaya.shared.domain.lyrics.RemoteLyricsSource
 import com.offlineplaya.shared.domain.lyrics.SidecarLyricsSource
+import com.offlineplaya.shared.domain.model.LyricsPreferences
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.domain.repository.SettingsRepository
 import com.offlineplaya.shared.util.AppLogger
@@ -24,12 +26,19 @@ import kotlinx.coroutines.withContext
  * Local misses are deliberately NOT cached — a user can drop an `.lrc` next
  * to a track later, and the next play should pick it up. Remote misses use
  * the shared `RemoteArtMiss` negative cache, owned by [remote].
+ *
+ * When a remote hit lands and the save-sidecar preference is on, the text
+ * is also written out via [sidecarWriter] so the lyrics survive a cache
+ * wipe and become visible to other players. The write is inline (a few
+ * KB at most) and any failure is swallowed by the writer — the in-app
+ * cache row is the source of truth.
  */
 internal class SqlLyricsRepository(
     private val db: OfflinePlayaDatabase,
     private val embedded: EmbeddedLyricsSource,
     private val sidecar: SidecarLyricsSource,
     private val remote: RemoteLyricsSource?,
+    private val sidecarWriter: LyricsSidecarWriter?,
     private val settings: SettingsRepository?,
     private val logger: AppLogger,
     private val now: () -> Long = { System.currentTimeMillis() },
@@ -51,9 +60,25 @@ internal class SqlLyricsRepository(
 
         // LRCLIB. Gated by the download-remote-lyrics preference; on first
         // install the default is ON (mirroring artwork.download_remote).
-        if (remote != null && downloadRemoteLyricsEnabled()) {
-            resolveAndPersist(track, SOURCE_LRCLIB) { remote.resolve(track) }
-                ?.let { return@withContext it }
+        val prefs = lyricsPreferences()
+        if (remote != null && prefs.downloadRemoteLyrics) {
+            val remoteHit = resolveAndPersist(track, SOURCE_LRCLIB) { remote.resolve(track) }
+            if (remoteHit != null) {
+                if (sidecarWriter != null && prefs.saveLyricsAsSidecar) {
+                    // The Lyrics cache row already has the raw text; the
+                    // sidecar write is a best-effort durability step.
+                    val rawText = queries.selectByUri(track.documentUri)
+                        .executeAsOneOrNull()?.raw_text
+                    if (rawText != null) {
+                        sidecarWriter.write(
+                            track = track,
+                            text = rawText,
+                            isSynced = remoteHit is Lyrics.Synced,
+                        )
+                    }
+                }
+                return@withContext remoteHit
+            }
         }
 
         Lyrics.None
@@ -66,10 +91,10 @@ internal class SqlLyricsRepository(
         return LrcParser.parse(row.raw_text).takeIf { it !is Lyrics.None }
     }
 
-    private suspend fun downloadRemoteLyricsEnabled(): Boolean {
-        val s = settings ?: return true
-        return runCatching { s.getLyricsPreferences().downloadRemoteLyrics }
-            .getOrDefault(true)
+    private suspend fun lyricsPreferences(): LyricsPreferences {
+        val s = settings ?: return LyricsPreferences.Default
+        return runCatching { s.getLyricsPreferences() }
+            .getOrDefault(LyricsPreferences.Default)
     }
 
     private inline fun resolveAndPersist(

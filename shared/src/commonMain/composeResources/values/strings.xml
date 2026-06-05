@@ -116,6 +116,8 @@
     <string name="settings_section_lyrics">Lyrics</string>
     <string name="lyrics_download_remote">Download lyrics</string>
     <string name="lyrics_download_remote_subtitle">Look up missing lyrics from LRCLIB when no embedded tag or .lrc sidecar is found.</string>
+    <string name="lyrics_save_sidecar">Save as .lrc sidecar</string>
+    <string name="lyrics_save_sidecar_subtitle">Write fetched lyrics next to the audio file so they survive a reinstall and other players can read them.</string>
 
     <!-- Playback / crossfade -->
     <string name="playback_crossfade">Crossfade</string>

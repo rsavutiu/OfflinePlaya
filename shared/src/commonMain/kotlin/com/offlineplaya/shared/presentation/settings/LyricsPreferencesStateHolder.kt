@@ -10,10 +10,9 @@ import kotlinx.coroutines.launch
 
 /**
  * UI-facing state holder for [LyricsPreferences]. Mirrors
- * [ArtworkStateHolder]: hot flow + a single mutator for the download
- * toggle. The repository reads the same preference each lookup, so
- * flipping this off immediately disables remote LRCLIB lookups — already
- * cached lyrics keep showing.
+ * [ArtworkStateHolder]: hot flow + narrow mutators. The "save sidecar"
+ * toggle is automatically cleared if the user turns off "download" —
+ * there's no point saving something we can't download.
  */
 class LyricsPreferencesStateHolder(
     private val settings: SettingsRepository,
@@ -28,9 +27,25 @@ class LyricsPreferencesStateHolder(
 
     fun setDownloadRemoteLyrics(enabled: Boolean) {
         scope.launch {
+            val current = preferences.value
             settings.setLyricsPreferences(
-                preferences.value.copy(downloadRemoteLyrics = enabled),
+                current.copy(
+                    downloadRemoteLyrics = enabled,
+                    // Saving a sidecar requires downloading; cascade-disable.
+                    saveLyricsAsSidecar = current.saveLyricsAsSidecar && enabled,
+                ),
             )
+        }
+    }
+
+    fun setSaveLyricsAsSidecar(enabled: Boolean) {
+        scope.launch {
+            val current = preferences.value
+            // Don't allow saving sidecars without downloading — UI will gate
+            // the toggle too, but this keeps state consistent if both paths
+            // fire concurrently.
+            if (enabled && !current.downloadRemoteLyrics) return@launch
+            settings.setLyricsPreferences(current.copy(saveLyricsAsSidecar = enabled))
         }
     }
 }

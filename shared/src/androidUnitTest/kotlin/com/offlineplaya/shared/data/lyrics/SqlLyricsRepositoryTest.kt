@@ -2,6 +2,7 @@ package com.offlineplaya.shared.data.lyrics
 
 import com.offlineplaya.shared.domain.lyrics.EmbeddedLyricsSource
 import com.offlineplaya.shared.domain.lyrics.Lyrics
+import com.offlineplaya.shared.domain.lyrics.LyricsSidecarWriter
 import com.offlineplaya.shared.domain.lyrics.RemoteLyricsSource
 import com.offlineplaya.shared.domain.lyrics.SidecarLyricsSource
 import com.offlineplaya.shared.domain.model.ArtworkPreferences
@@ -36,17 +37,32 @@ class SqlLyricsRepositoryTest {
         override suspend fun resolve(track: Track): String? { calls++; return text }
     }
 
+    private class FakeSidecarWriter(
+        var returns: Boolean = true,
+    ) : LyricsSidecarWriter {
+        data class Call(val text: String, val isSynced: Boolean)
+        val calls = mutableListOf<Call>()
+        override suspend fun write(track: Track, text: String, isSynced: Boolean): Boolean {
+            calls += Call(text, isSynced)
+            return returns
+        }
+    }
+
     /**
      * Settings stub backing only the lyrics-preference accessors used by
      * the repository. The other typed setters are unreachable in this test.
      */
-    private class FakeSettings(var downloadRemoteLyrics: Boolean = true) : SettingsRepository {
+    private class FakeSettings(
+        var downloadRemoteLyrics: Boolean = true,
+        var saveLyricsAsSidecar: Boolean = false,
+    ) : SettingsRepository {
         override fun observeLyricsPreferences(): Flow<LyricsPreferences> =
-            flowOf(LyricsPreferences(downloadRemoteLyrics))
+            flowOf(LyricsPreferences(downloadRemoteLyrics, saveLyricsAsSidecar))
         override suspend fun getLyricsPreferences(): LyricsPreferences =
-            LyricsPreferences(downloadRemoteLyrics)
+            LyricsPreferences(downloadRemoteLyrics, saveLyricsAsSidecar)
         override suspend fun setLyricsPreferences(preferences: LyricsPreferences) {
             downloadRemoteLyrics = preferences.downloadRemoteLyrics
+            saveLyricsAsSidecar = preferences.saveLyricsAsSidecar
         }
 
         // Unused in lyrics resolution — throw so a regression that wires
@@ -71,12 +87,14 @@ class SqlLyricsRepositoryTest {
         embedded: FakeEmbedded = FakeEmbedded(),
         sidecar: FakeSidecar = FakeSidecar(),
         remote: FakeRemote? = FakeRemote(),
+        sidecarWriter: FakeSidecarWriter? = FakeSidecarWriter(),
         settings: FakeSettings = FakeSettings(),
     ) = SqlLyricsRepository(
         db = createInMemoryDatabase(),
         embedded = embedded,
         sidecar = sidecar,
         remote = remote,
+        sidecarWriter = sidecarWriter,
         settings = settings,
         logger = TestLogger(),
         now = { 0L },
@@ -170,6 +188,84 @@ class SqlLyricsRepositoryTest {
         val second = repo.lyricsFor(track())
         assertTrue(second is Lyrics.Synced)
         assertEquals(1, embedded.calls, "embedded source should not be read again")
+    }
+
+    @Test
+    fun `remote hit triggers sidecar write when save toggle is on`() = runTest {
+        val writer = FakeSidecarWriter()
+        val repo = newRepo(
+            remote = FakeRemote("[00:01.00]synced"),
+            sidecarWriter = writer,
+            settings = FakeSettings(
+                downloadRemoteLyrics = true,
+                saveLyricsAsSidecar = true,
+            ),
+        )
+        repo.lyricsFor(track())
+        assertEquals(1, writer.calls.size)
+        assertEquals(true, writer.calls.first().isSynced)
+        assertEquals("[00:01.00]synced", writer.calls.first().text)
+    }
+
+    @Test
+    fun `plain remote hit writes sidecar with isSynced=false`() = runTest {
+        val writer = FakeSidecarWriter()
+        val repo = newRepo(
+            remote = FakeRemote("just plain lines\nno timestamps"),
+            sidecarWriter = writer,
+            settings = FakeSettings(
+                downloadRemoteLyrics = true,
+                saveLyricsAsSidecar = true,
+            ),
+        )
+        repo.lyricsFor(track())
+        assertEquals(1, writer.calls.size)
+        assertEquals(false, writer.calls.first().isSynced)
+    }
+
+    @Test
+    fun `sidecar write is skipped when save toggle is off`() = runTest {
+        val writer = FakeSidecarWriter()
+        val repo = newRepo(
+            remote = FakeRemote("[00:01.00]synced"),
+            sidecarWriter = writer,
+            settings = FakeSettings(
+                downloadRemoteLyrics = true,
+                saveLyricsAsSidecar = false,
+            ),
+        )
+        repo.lyricsFor(track())
+        assertTrue(writer.calls.isEmpty(), "writer must not be called when save toggle is off")
+    }
+
+    @Test
+    fun `sidecar write is skipped for local hits regardless of save toggle`() = runTest {
+        val writer = FakeSidecarWriter()
+        val repo = newRepo(
+            embedded = FakeEmbedded("embedded text"),
+            sidecarWriter = writer,
+            settings = FakeSettings(
+                downloadRemoteLyrics = true,
+                saveLyricsAsSidecar = true,
+            ),
+        )
+        repo.lyricsFor(track())
+        assertTrue(writer.calls.isEmpty(), "embedded hits are already durable in the audio file")
+    }
+
+    @Test
+    fun `null sidecar writer is tolerated`() = runTest {
+        val repo = newRepo(
+            remote = FakeRemote("[00:01.00]synced"),
+            sidecarWriter = null,
+            settings = FakeSettings(
+                downloadRemoteLyrics = true,
+                saveLyricsAsSidecar = true,
+            ),
+        )
+        // Should not throw — repo treats missing writer the same as toggle off.
+        val result = repo.lyricsFor(track())
+        assertTrue(result is Lyrics.Synced)
     }
 
     @Test

@@ -83,7 +83,10 @@ internal class SqlSettingsRepository(
 
     override suspend fun setLyricsPreferences(preferences: LyricsPreferences) =
         withContext(ioDispatcher) {
-            queries.insertOrReplace(KEY_DOWNLOAD_REMOTE_LYRICS, preferences.downloadRemoteLyrics.toString())
+            queries.transaction {
+                queries.insertOrReplace(KEY_DOWNLOAD_REMOTE_LYRICS, preferences.downloadRemoteLyrics.toString())
+                queries.insertOrReplace(KEY_SAVE_LYRICS_SIDECAR, preferences.saveLyricsAsSidecar.toString())
+            }
         }
 
     override fun observeEqPreferences(): Flow<EqPreferences> =
@@ -157,6 +160,8 @@ internal class SqlSettingsRepository(
         return LyricsPreferences(
             downloadRemoteLyrics = map[KEY_DOWNLOAD_REMOTE_LYRICS]?.toBoolean()
                 ?: defaults.downloadRemoteLyrics,
+            saveLyricsAsSidecar = map[KEY_SAVE_LYRICS_SIDECAR]?.toBoolean()
+                ?: defaults.saveLyricsAsSidecar,
         )
     }
 
@@ -203,6 +208,7 @@ internal class SqlSettingsRepository(
         const val KEY_DOWNLOAD_REMOTE_ART = "artwork.download_remote"
         const val KEY_EMBED_DOWNLOADED_ART = "artwork.embed_downloaded"
         const val KEY_DOWNLOAD_REMOTE_LYRICS = "lyrics.download_remote"
+        const val KEY_SAVE_LYRICS_SIDECAR = "lyrics.save_sidecar"
         const val KEY_EQ_MODE = "eq.mode"
         const val KEY_EQ_MANUAL_PRESET = "eq.manual_preset"
         const val KEY_EQ_MANUAL_GAINS = "eq.manual_gains"

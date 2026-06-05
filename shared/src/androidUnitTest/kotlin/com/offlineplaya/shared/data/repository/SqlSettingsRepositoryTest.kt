@@ -105,15 +105,30 @@ class SqlSettingsRepositoryTest {
     }
 
     @Test
-    fun `setLyricsPreferences round-trips the download toggle`() = runTest {
+    fun `setLyricsPreferences round-trips both fields`() = runTest {
         val repo = newRepository()
-        // Default is ON; flip OFF so the round-trip proves the key/parse
-        // path actually persists the value rather than just defaulting.
-        repo.setLyricsPreferences(LyricsPreferences(downloadRemoteLyrics = false))
-        assertEquals(false, repo.getLyricsPreferences().downloadRemoteLyrics)
+        // Both default to ON; flip each independently so the round-trip
+        // proves the keys are distinct, not aliased.
+        repo.setLyricsPreferences(
+            LyricsPreferences(downloadRemoteLyrics = false, saveLyricsAsSidecar = false),
+        )
+        val off = repo.getLyricsPreferences()
+        assertEquals(false, off.downloadRemoteLyrics)
+        assertEquals(false, off.saveLyricsAsSidecar)
 
-        repo.setLyricsPreferences(LyricsPreferences(downloadRemoteLyrics = true))
-        assertEquals(true, repo.getLyricsPreferences().downloadRemoteLyrics)
+        repo.setLyricsPreferences(
+            LyricsPreferences(downloadRemoteLyrics = true, saveLyricsAsSidecar = false),
+        )
+        val onOff = repo.getLyricsPreferences()
+        assertEquals(true, onOff.downloadRemoteLyrics)
+        assertEquals(false, onOff.saveLyricsAsSidecar)
+
+        repo.setLyricsPreferences(
+            LyricsPreferences(downloadRemoteLyrics = true, saveLyricsAsSidecar = true),
+        )
+        val onOn = repo.getLyricsPreferences()
+        assertEquals(true, onOn.downloadRemoteLyrics)
+        assertEquals(true, onOn.saveLyricsAsSidecar)
     }
 
     @Test
