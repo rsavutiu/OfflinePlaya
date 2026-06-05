@@ -66,6 +66,7 @@ fun LibraryAlbumDetailPage(
                         track = track,
                         onClick = { onPlayTracks(tracks, index) },
                         onLongClick = { onTrackLongPress(track) },
+                        sharedArtEnabled = true,
                     )
                 }
                 item { Spacer(Modifier.height(80.dp)) }

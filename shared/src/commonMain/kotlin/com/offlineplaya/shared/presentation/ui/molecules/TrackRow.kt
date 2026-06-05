@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
+import com.offlineplaya.shared.presentation.ui.nowPlayingSharedArtKey
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
@@ -30,6 +31,12 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
  *
  * [onClick] plays the track; [onLongClick] (when supplied) opens the track
  * actions sheet — the long-press → add-to-playlist / queue entry point.
+ *
+ * Set [sharedArtEnabled] to make this row's thumbnail the source of the
+ * list → Now Playing shared-element morph. Only safe on lists where a track
+ * appears at most once (album / folder / all-tracks / search); leave it off
+ * for playlists and the queue, where the same track id can repeat and the
+ * shared key would collide.
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -39,6 +46,7 @@ fun TrackRow(
     modifier: Modifier = Modifier,
     isPlaying: Boolean = false,
     onLongClick: (() -> Unit)? = null,
+    sharedArtEnabled: Boolean = false,
 ) {
     val bgModifier = if (isPlaying) {
         Modifier.background(MaterialTheme.colorScheme.primary.copy(alpha = 0.08f))
@@ -54,7 +62,12 @@ fun TrackRow(
             .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        AlbumArtThumb(track = track, size = 44.dp, cornerRadius = 8.dp)
+        AlbumArtThumb(
+            track = track,
+            size = 44.dp,
+            cornerRadius = 8.dp,
+            sharedKey = if (sharedArtEnabled) nowPlayingSharedArtKey(track.id) else null,
+        )
         Column(
             modifier = Modifier
                 .padding(start = AppSpacing.lg)

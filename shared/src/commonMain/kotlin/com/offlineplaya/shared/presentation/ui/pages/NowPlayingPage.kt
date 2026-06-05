@@ -1,8 +1,11 @@
 package com.offlineplaya.shared.presentation.ui.pages
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.ui.Alignment
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Article
 import androidx.compose.material.icons.automirrored.filled.QueueMusic
@@ -21,6 +24,7 @@ import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.lyrics.LyricsUiState
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
+import com.offlineplaya.shared.presentation.ui.molecules.NowPlayingArtPanel
 import com.offlineplaya.shared.presentation.ui.organisms.NowPlayingContent
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
@@ -54,6 +58,8 @@ fun NowPlayingPage(
     modifier: Modifier = Modifier,
     lyricsState: LyricsUiState = LyricsUiState.None,
     onSeekToLine: (LyricLine) -> Unit = {},
+    onSkipToIndex: (Int) -> Unit = {},
+    sharedArtTrack: Track? = null,
 ) {
     Scaffold(
         modifier = modifier,
@@ -85,12 +91,27 @@ fun NowPlayingPage(
             )
         },
     ) { padding ->
-        if (state.currentTrack == null) {
+        if (state.currentTrack == null && sharedArtTrack == null) {
             EmptyState(
                 title = stringResource(Res.string.now_playing_empty_title),
                 subtitle = stringResource(Res.string.now_playing_empty_subtitle),
                 modifier = Modifier.padding(padding),
             )
+        } else if (state.currentTrack == null) {
+            // Cold-start window: the user tapped a track with nothing playing,
+            // so the player hasn't loaded currentTrack yet. Render just the
+            // keyed hero art for the tapped track so the list → Now Playing
+            // morph still lands; the full content swaps in a frame later.
+            Box(
+                modifier = Modifier.padding(padding).fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                NowPlayingArtPanel(
+                    track = sharedArtTrack!!,
+                    sharedArtTrack = sharedArtTrack,
+                    modifier = Modifier.padding(32.dp),
+                )
+            }
         } else {
             NowPlayingContent(
                 state = state,
@@ -103,6 +124,8 @@ fun NowPlayingPage(
                 modifier = Modifier.padding(padding),
                 lyricsState = lyricsState,
                 onSeekToLine = onSeekToLine,
+                onSkipToIndex = onSkipToIndex,
+                sharedArtTrack = sharedArtTrack,
             )
         }
     }

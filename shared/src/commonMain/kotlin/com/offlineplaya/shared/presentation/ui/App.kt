@@ -1,6 +1,8 @@
 package com.offlineplaya.shared.presentation.ui
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -117,10 +119,23 @@ fun App(
         var actionsTrack by remember { mutableStateOf<Track?>(null) }
         val onTrackLongPress: (Track) -> Unit = { actionsTrack = it }
 
+        // The track the user just tapped to open Now Playing. setQueue runs
+        // off-main, so playback.currentTrack hasn't caught up on the first
+        // Now Playing frame — this drives the shared-element art key through
+        // that window so the cover morph lands on the right track. Cleared
+        // once the player reflects it (below).
+        var pendingNowPlayingTrack by remember { mutableStateOf<Track?>(null) }
+        LaunchedEffect(playback.currentTrack?.id) {
+            if (playback.currentTrack?.id == pendingNowPlayingTrack?.id) {
+                pendingNowPlayingTrack = null
+            }
+        }
+
         val onTabSelected: (LibraryTab) -> Unit = { tab ->
             navigator.swapTop(tab.toDestination())
         }
         val onPlayTracks: (List<Track>, Int) -> Unit = { tracks, index ->
+            pendingNowPlayingTrack = tracks.getOrNull(index)
             musicPlayer.setQueue(tracks, index)
             // Mark the played track's album as just-used so the home
             // page's cover-fan shelf reflects what the user actually
@@ -197,6 +212,7 @@ fun App(
                             onTabSelected = onTabSelected,
                             onPlayTracks = onPlayTracks,
                             onTrackLongPress = onTrackLongPress,
+                            sharedArtTrack = pendingNowPlayingTrack ?: playback.currentTrack,
                         )
                     }
 
@@ -222,6 +238,7 @@ fun App(
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun DestinationContent(
     current: AppDestination,
@@ -255,16 +272,107 @@ private fun DestinationContent(
     onTabSelected: (LibraryTab) -> Unit,
     onPlayTracks: (List<Track>, Int) -> Unit,
     onTrackLongPress: (Track) -> Unit,
+    sharedArtTrack: Track?,
 ) {
     val scope = rememberCoroutineScope()
-    AnimatedContent(
-        targetState = current,
-        transitionSpec = {
-            fadeIn(animationSpec = tween(durationMillis = 180)) togetherWith
-                    fadeOut(animationSpec = tween(durationMillis = 180))
-        },
-        label = "destination",
-    ) { dest ->
+    // One SharedTransitionLayout spanning the nav AnimatedContent so the
+    // album-art cover can morph from a tapped list row into the Now Playing
+    // panel. The scopes are published via composition locals (see
+    // SharedTransition.kt) so leaf art thumbnails opt in without prop-drilling.
+    SharedTransitionLayout {
+        CompositionLocalProvider(LocalSharedTransitionScope provides this) {
+            AnimatedContent(
+                targetState = current,
+                transitionSpec = {
+                    fadeIn(animationSpec = tween(durationMillis = 180)) togetherWith
+                            fadeOut(animationSpec = tween(durationMillis = 180))
+                },
+                label = "destination",
+            ) { dest ->
+                CompositionLocalProvider(LocalNavAnimatedVisibilityScope provides this) {
+                    DestinationBody(
+                        dest = dest,
+                        navigator = navigator,
+                        library = library,
+                        playlists = playlists,
+                        syncCoordinator = syncCoordinator,
+                        musicPlayer = musicPlayer,
+                        equalizerStateHolder = equalizerStateHolder,
+                        lyricsStateHolder = lyricsStateHolder,
+                        playback = playback,
+                        themePreferences = themePreferences,
+                        artworkPreferences = artworkPreferences,
+                        lyricsPreferences = lyricsPreferences,
+                        playbackPreferences = playbackPreferences,
+                        burnReport = burnReport,
+                        syncStatus = syncStatus,
+                        trackCount = trackCount,
+                        onPickFolder = onPickFolder,
+                        onColorModeChange = onColorModeChange,
+                        onDynamicColorChange = onDynamicColorChange,
+                        onAlbumArtColorChange = onAlbumArtColorChange,
+                        onDownloadRemoteArtChange = onDownloadRemoteArtChange,
+                        onDownloadRemoteLyricsChange = onDownloadRemoteLyricsChange,
+                        onSaveLyricsAsSidecarChange = onSaveLyricsAsSidecarChange,
+                        onCrossfadeEnabledChange = onCrossfadeEnabledChange,
+                        onCrossfadeDurationChange = onCrossfadeDurationChange,
+                        onBurnMetadataClick = onBurnMetadataClick,
+                        onAcknowledgeBurnReport = onAcknowledgeBurnReport,
+                        dynamicColorSupported = dynamicColorSupported,
+                        onTabSelected = onTabSelected,
+                        onPlayTracks = onPlayTracks,
+                        onTrackLongPress = onTrackLongPress,
+                        sharedArtTrack = sharedArtTrack,
+                        scope = scope,
+                    )
+                }
+            }
+        }
+    }
+}
+
+/**
+ * The per-destination `when` body, split out of [DestinationContent] so the
+ * `SharedTransitionLayout` + `AnimatedContent` + composition-local plumbing
+ * stays readable. Renders exactly one destination.
+ */
+@Composable
+private fun DestinationBody(
+    dest: AppDestination,
+    navigator: AppNavigator,
+    library: LibraryStateHolder,
+    playlists: PlaylistStateHolder,
+    syncCoordinator: com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator,
+    musicPlayer: MusicPlayer,
+    equalizerStateHolder: EqualizerStateHolder,
+    lyricsStateHolder: LyricsStateHolder,
+    playback: PlaybackState,
+    themePreferences: ThemePreferences,
+    artworkPreferences: com.offlineplaya.shared.domain.model.ArtworkPreferences,
+    lyricsPreferences: com.offlineplaya.shared.domain.model.LyricsPreferences,
+    playbackPreferences: com.offlineplaya.shared.domain.model.PlaybackPreferences,
+    burnReport: EmbedReport,
+    syncStatus: SyncStatus,
+    trackCount: Long,
+    onPickFolder: () -> Unit,
+    onColorModeChange: (ColorMode) -> Unit,
+    onDynamicColorChange: (Boolean) -> Unit,
+    onAlbumArtColorChange: (Boolean) -> Unit,
+    onDownloadRemoteArtChange: (Boolean) -> Unit,
+    onDownloadRemoteLyricsChange: (Boolean) -> Unit,
+    onSaveLyricsAsSidecarChange: (Boolean) -> Unit,
+    onCrossfadeEnabledChange: (Boolean) -> Unit,
+    onCrossfadeDurationChange: (Int) -> Unit,
+    onBurnMetadataClick: () -> Unit,
+    onAcknowledgeBurnReport: () -> Unit,
+    dynamicColorSupported: Boolean,
+    onTabSelected: (LibraryTab) -> Unit,
+    onPlayTracks: (List<Track>, Int) -> Unit,
+    onTrackLongPress: (Track) -> Unit,
+    sharedArtTrack: Track?,
+    scope: kotlinx.coroutines.CoroutineScope,
+) {
+    run {
         when (dest) {
             AppDestination.Home -> {
                 val rootFolders by library.rootFolders.collectAsState()
@@ -342,6 +450,8 @@ private fun DestinationContent(
                     onOpenLyrics = { navigator.push(AppDestination.Lyrics) },
                     lyricsState = lyricsState,
                     onSeekToLine = { lyricsStateHolder.seekToLine(it) },
+                    onSkipToIndex = { musicPlayer.seekToIndex(it) },
+                    sharedArtTrack = sharedArtTrack,
                     onBack = { navigator.pop() },
                 )
             }

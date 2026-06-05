@@ -17,6 +17,7 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
+import com.offlineplaya.shared.presentation.ui.sharedAlbumArt
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 /**
@@ -26,6 +27,12 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
  *
  * The Surface itself stays edge-to-edge with a rounded corner so adjacent
  * layouts (rows, NowPlaying art panel) can drop it in at any size.
+ *
+ * [sharedKey] opts this thumbnail into the list → Now Playing shared-element
+ * morph. Pass a stable per-track key (the same string on the source row and
+ * the Now Playing panel) to make the cover fly between them. Leave it `null`
+ * — the default — everywhere the morph shouldn't apply (the mini-player, grid
+ * cards, previews); [sharedAlbumArt] no-ops outside a `SharedTransitionLayout`.
  */
 @Composable
 fun AlbumArtThumb(
@@ -34,9 +41,11 @@ fun AlbumArtThumb(
     size: Dp? = 40.dp,
     cornerRadius: Dp = 6.dp,
     glyphStyle: androidx.compose.ui.text.TextStyle = MaterialTheme.typography.titleMedium,
+    sharedKey: String? = null,
 ) {
+    val sizeModifier = if (size != null) modifier.size(size) else modifier
     Surface(
-        modifier = if (size != null) modifier.size(size) else modifier,
+        modifier = sizeModifier.sharedAlbumArt(sharedKey),
         color = MaterialTheme.colorScheme.tertiaryContainer,
         shape = RoundedCornerShape(cornerRadius),
     ) {
