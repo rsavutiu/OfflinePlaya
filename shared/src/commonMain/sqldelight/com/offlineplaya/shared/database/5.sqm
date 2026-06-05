@@ -1,0 +1,11 @@
+-- Add the Lyrics positive-cache table. Exists so installs that already have
+-- everything through schema v4 gain the table on upgrade. See Lyrics.sq for
+-- column comments.
+
+CREATE TABLE IF NOT EXISTS Lyrics (
+    track_document_uri TEXT PRIMARY KEY NOT NULL,
+    raw_text TEXT NOT NULL,
+    is_synced INTEGER NOT NULL,
+    source TEXT NOT NULL,
+    fetched_at INTEGER NOT NULL
+);

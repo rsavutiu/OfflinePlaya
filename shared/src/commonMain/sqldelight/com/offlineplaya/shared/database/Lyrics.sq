@@ -1,0 +1,23 @@
+-- Positive cache for resolved lyrics, keyed by the track's document URI.
+-- Local misses are NOT cached here (so adding a sidecar later is picked up on
+-- the next play); remote misses use the shared RemoteArtMiss negative cache.
+-- raw_text is the source text (LRC for synced, plain otherwise); is_synced
+-- records which it is so we can skip re-parsing to decide; source is
+-- informational ("embedded" / "sidecar" / "lrclib").
+CREATE TABLE Lyrics (
+    track_document_uri TEXT PRIMARY KEY NOT NULL,
+    raw_text TEXT NOT NULL,
+    is_synced INTEGER NOT NULL,
+    source TEXT NOT NULL,
+    fetched_at INTEGER NOT NULL
+);
+
+selectByUri:
+SELECT raw_text, is_synced, source FROM Lyrics WHERE track_document_uri = ?;
+
+insertOrReplace:
+INSERT OR REPLACE INTO Lyrics(track_document_uri, raw_text, is_synced, source, fetched_at)
+VALUES (?, ?, ?, ?, ?);
+
+deleteByUri:
+DELETE FROM Lyrics WHERE track_document_uri = ?;

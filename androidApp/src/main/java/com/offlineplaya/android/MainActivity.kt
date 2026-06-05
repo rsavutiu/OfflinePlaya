@@ -91,6 +91,7 @@ private fun AndroidApp() {
     val playlists: PlaylistStateHolder = koinInject()
     val musicPlayer: MusicPlayer = koinInject()
     val equalizerStateHolder: com.offlineplaya.shared.presentation.eq.EqualizerStateHolder = koinInject()
+    val lyricsStateHolder: com.offlineplaya.shared.presentation.lyrics.LyricsStateHolder = koinInject()
     val albumColorStateHolder: com.offlineplaya.shared.presentation.theme.AlbumColorStateHolder = koinInject()
     val themePreferences by themeStateHolder.preferences.collectAsState()
     val seedColor by albumColorStateHolder.seedColor.collectAsState()
@@ -179,6 +180,7 @@ private fun AndroidApp() {
         burnMetadataCoordinator = burnMetadataCoordinator,
         musicPlayer = musicPlayer,
         equalizerStateHolder = equalizerStateHolder,
+        lyricsStateHolder = lyricsStateHolder,
         themePreferences = themePreferences,
         artworkPreferences = artworkPreferences,
         playbackPreferences = playbackPreferences,

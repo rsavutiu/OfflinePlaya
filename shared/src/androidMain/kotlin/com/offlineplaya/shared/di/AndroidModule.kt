@@ -7,6 +7,9 @@ import com.offlineplaya.shared.data.image.JaudiotaggerArtWriter
 import com.offlineplaya.shared.data.image.MusicBrainzArtSource
 import com.offlineplaya.shared.data.image.SafFolderArtSource
 import com.offlineplaya.shared.data.image.createMusicBrainzSource
+import com.offlineplaya.shared.data.lyrics.JaudiotaggerLyricsSource
+import com.offlineplaya.shared.data.lyrics.SafSidecarLyricsSource
+import com.offlineplaya.shared.data.lyrics.SqlLyricsRepository
 import com.offlineplaya.shared.data.metadata.AndroidMetadataReader
 import com.offlineplaya.shared.data.scanner.MediaStoreDeviceAudioScanner
 import com.offlineplaya.shared.data.scanner.SafFolderScanner
@@ -17,6 +20,9 @@ import com.offlineplaya.shared.domain.image.AlbumArtColorExtractor
 import com.offlineplaya.shared.domain.image.AlbumArtWriter
 import com.offlineplaya.shared.domain.image.FolderArtSource
 import com.offlineplaya.shared.domain.image.RemoteArtSource
+import com.offlineplaya.shared.domain.lyrics.EmbeddedLyricsSource
+import com.offlineplaya.shared.domain.lyrics.LyricsRepository
+import com.offlineplaya.shared.domain.lyrics.SidecarLyricsSource
 import com.offlineplaya.shared.domain.scanner.DeviceAudioScanner
 import com.offlineplaya.shared.domain.scanner.FolderScanner
 import com.offlineplaya.shared.domain.scanner.MetadataReader
@@ -71,6 +77,20 @@ val androidModule: Module = module {
     // writer; reads via Jaudiotagger too since MediaMetadataRetriever doesn't
     // round-trip the genre string reliably across container formats.
     single<GenreTagWriter> { JaudiotaggerGenreWriter(androidContext(), get()) }
+
+    // Lyrics sources + repository. Embedded reads via the Jaudiotagger
+    // temp-file dance; sidecar reads <basename>.lrc/.txt via DocumentsContract.
+    // The repository orchestrates cache → embedded → sidecar and persists hits.
+    single<EmbeddedLyricsSource> { JaudiotaggerLyricsSource(androidContext(), get()) }
+    single<SidecarLyricsSource> { SafSidecarLyricsSource(androidContext(), get()) }
+    single<LyricsRepository> {
+        SqlLyricsRepository(
+            db = get(),
+            embedded = get(),
+            sidecar = get(),
+            logger = get(),
+        )
+    }
 
     // WorkManager-backed dispatch for long-running tasks declared in commonMain
     // (BackgroundTaskKind). Other targets will bind their own implementation —

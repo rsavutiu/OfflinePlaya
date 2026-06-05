@@ -40,6 +40,7 @@ import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.domain.usecase.EmbedReport
 import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
+import com.offlineplaya.shared.presentation.lyrics.LyricsStateHolder
 import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import com.offlineplaya.shared.presentation.navigation.AppDestination
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
@@ -60,6 +61,7 @@ import com.offlineplaya.shared.presentation.ui.pages.LibraryArtistsPage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryFlatPage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryFolderDetailPage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryFolderRootsPage
+import com.offlineplaya.shared.presentation.ui.pages.LyricsPage
 import com.offlineplaya.shared.presentation.ui.pages.NowPlayingPage
 import com.offlineplaya.shared.presentation.ui.pages.PlaylistDetailPage
 import com.offlineplaya.shared.presentation.ui.pages.PlaylistsPage
@@ -80,6 +82,7 @@ fun App(
     burnMetadataCoordinator: BurnMetadataCoordinator,
     musicPlayer: MusicPlayer,
     equalizerStateHolder: EqualizerStateHolder,
+    lyricsStateHolder: LyricsStateHolder,
     themePreferences: ThemePreferences,
     artworkPreferences: com.offlineplaya.shared.domain.model.ArtworkPreferences,
     playbackPreferences: com.offlineplaya.shared.domain.model.PlaybackPreferences,
@@ -167,6 +170,7 @@ fun App(
                             syncCoordinator = syncCoordinator,
                             musicPlayer = musicPlayer,
                             equalizerStateHolder = equalizerStateHolder,
+                            lyricsStateHolder = lyricsStateHolder,
                             playback = playback,
                             themePreferences = themePreferences,
                             artworkPreferences = artworkPreferences,
@@ -221,6 +225,7 @@ private fun DestinationContent(
     syncCoordinator: com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator,
     musicPlayer: MusicPlayer,
     equalizerStateHolder: EqualizerStateHolder,
+    lyricsStateHolder: LyricsStateHolder,
     playback: PlaybackState,
     themePreferences: ThemePreferences,
     artworkPreferences: com.offlineplaya.shared.domain.model.ArtworkPreferences,
@@ -310,18 +315,34 @@ private fun DestinationContent(
                 )
             }
 
-            AppDestination.NowPlaying -> NowPlayingPage(
-                state = playback,
-                onPlayPause = { if (playback.isPlaying) musicPlayer.pause() else musicPlayer.play() },
-                onPrevious = { musicPlayer.skipToPrevious() },
-                onNext = { musicPlayer.skipToNext() },
-                onSeek = { musicPlayer.seekTo(it) },
-                onShuffleToggle = { musicPlayer.setShuffleEnabled(!playback.shuffleEnabled) },
-                onRepeatChange = { musicPlayer.setRepeatMode(it) },
-                onOpenQueue = { navigator.push(AppDestination.Queue) },
-                onOpenEqualizer = { navigator.push(AppDestination.Equalizer) },
-                onBack = { navigator.pop() },
-            )
+            AppDestination.NowPlaying -> {
+                val lyricsState by lyricsStateHolder.state.collectAsState()
+                NowPlayingPage(
+                    state = playback,
+                    onPlayPause = { if (playback.isPlaying) musicPlayer.pause() else musicPlayer.play() },
+                    onPrevious = { musicPlayer.skipToPrevious() },
+                    onNext = { musicPlayer.skipToNext() },
+                    onSeek = { musicPlayer.seekTo(it) },
+                    onShuffleToggle = { musicPlayer.setShuffleEnabled(!playback.shuffleEnabled) },
+                    onRepeatChange = { musicPlayer.setRepeatMode(it) },
+                    onOpenQueue = { navigator.push(AppDestination.Queue) },
+                    onOpenEqualizer = { navigator.push(AppDestination.Equalizer) },
+                    onOpenLyrics = { navigator.push(AppDestination.Lyrics) },
+                    lyricsState = lyricsState,
+                    onSeekToLine = { lyricsStateHolder.seekToLine(it) },
+                    onBack = { navigator.pop() },
+                )
+            }
+
+            AppDestination.Lyrics -> {
+                val lyricsState by lyricsStateHolder.state.collectAsState()
+                LyricsPage(
+                    state = lyricsState,
+                    trackTitle = playback.currentTrack?.title,
+                    onSeekToLine = { lyricsStateHolder.seekToLine(it) },
+                    onBack = { navigator.pop() },
+                )
+            }
 
             AppDestination.Search -> {
                 val query by library.searchQuery.collectAsState()

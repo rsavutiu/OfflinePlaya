@@ -32,4 +32,7 @@ sealed interface AppDestination {
 
     /** Equalizer page — accessible from NowPlaying and from Settings. */
     data object Equalizer : AppDestination
+
+    /** Lyrics page — accessible from the NowPlaying aux row. */
+    data object Lyrics : AppDestination
 }

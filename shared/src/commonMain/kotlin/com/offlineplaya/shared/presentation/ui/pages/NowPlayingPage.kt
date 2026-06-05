@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Article
 import androidx.compose.material.icons.automirrored.filled.QueueMusic
 import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material3.Icon
@@ -12,10 +13,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.offlineplaya.shared.domain.lyrics.LyricLine
 import com.offlineplaya.shared.domain.model.PlaybackState
 import com.offlineplaya.shared.domain.model.RepeatMode
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.presentation.lyrics.LyricsUiState
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.organisms.NowPlayingContent
@@ -24,6 +27,7 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.cd_equalizer
+import offlineplaya.shared.generated.resources.cd_lyrics
 import offlineplaya.shared.generated.resources.now_playing_empty_subtitle
 import offlineplaya.shared.generated.resources.now_playing_empty_title
 import offlineplaya.shared.generated.resources.now_playing_title
@@ -45,8 +49,11 @@ fun NowPlayingPage(
     onRepeatChange: (RepeatMode) -> Unit,
     onOpenQueue: () -> Unit,
     onOpenEqualizer: () -> Unit,
+    onOpenLyrics: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
+    lyricsState: LyricsUiState = LyricsUiState.None,
+    onSeekToLine: (LyricLine) -> Unit = {},
 ) {
     Scaffold(
         modifier = modifier,
@@ -56,6 +63,12 @@ fun NowPlayingPage(
                 title = stringResource(Res.string.now_playing_title),
                 onBack = onBack,
                 actions = {
+                    IconButton(onClick = onOpenLyrics) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.Article,
+                            contentDescription = stringResource(Res.string.cd_lyrics),
+                        )
+                    }
                     IconButton(onClick = onOpenEqualizer) {
                         Icon(
                             imageVector = Icons.Default.GraphicEq,
@@ -88,6 +101,8 @@ fun NowPlayingPage(
                 onShuffleToggle = onShuffleToggle,
                 onRepeatChange = onRepeatChange,
                 modifier = Modifier.padding(padding),
+                lyricsState = lyricsState,
+                onSeekToLine = onSeekToLine,
             )
         }
     }
@@ -110,7 +125,7 @@ private fun NowPlayingPagePopulatedPreview() {
                 volume = 1f,
             ),
             onPlayPause = {}, onPrevious = {}, onNext = {}, onSeek = {},
-            onShuffleToggle = {}, onRepeatChange = {}, onOpenQueue = {}, onOpenEqualizer = {}, onBack = {},
+            onShuffleToggle = {}, onRepeatChange = {}, onOpenQueue = {}, onOpenEqualizer = {}, onOpenLyrics = {}, onBack = {},
         )
     }
 }
@@ -139,6 +154,7 @@ private fun NowPlayingPageWidePreview() {
             onRepeatChange = {},
             onOpenQueue = {},
             onOpenEqualizer = {},
+            onOpenLyrics = {},
             onBack = {},
             modifier = Modifier.size(width = 900.dp, height = 480.dp),
         )
@@ -152,7 +168,7 @@ private fun NowPlayingPageEmptyPreview() {
         NowPlayingPage(
             state = PlaybackState.Empty,
             onPlayPause = {}, onPrevious = {}, onNext = {}, onSeek = {},
-            onShuffleToggle = {}, onRepeatChange = {}, onOpenQueue = {}, onOpenEqualizer = {}, onBack = {},
+            onShuffleToggle = {}, onRepeatChange = {}, onOpenQueue = {}, onOpenEqualizer = {}, onOpenLyrics = {}, onBack = {},
         )
     }
 }

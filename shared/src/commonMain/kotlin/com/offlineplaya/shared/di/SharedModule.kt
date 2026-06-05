@@ -23,6 +23,7 @@ import com.offlineplaya.shared.domain.usecase.BurnMetadataUseCase
 import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
 import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
+import com.offlineplaya.shared.presentation.lyrics.LyricsStateHolder
 import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
@@ -169,6 +170,17 @@ val sharedModule: Module = module {
     single {
         PlaylistStateHolder(
             playlists = get(),
+            scope = get(),
+        )
+    }
+
+    // Lyrics state — resolves lyrics for the current track (embedded → sidecar
+    // → remote) and exposes the active line for the Lyrics page and the
+    // tap-to-flip view on Now Playing. Single so one resolver runs app-wide.
+    single {
+        LyricsStateHolder(
+            musicPlayer = get(),
+            repository = get(),
             scope = get(),
         )
     }
