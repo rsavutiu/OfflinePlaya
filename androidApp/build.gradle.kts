@@ -19,6 +19,13 @@ val keystoreProps = Properties().apply {
     if (keystorePropsFile.exists()) keystorePropsFile.inputStream().use { load(it) }
 }
 
+// Version is driven by CI on a tag push (see .github/workflows/release.yml):
+// VERSION_CODE is the monotonic commit count, VERSION_NAME is the tag (sans
+// leading "v"). Local/dev builds fall back to the committed defaults so
+// `assembleDebug` works with no env set.
+val appVersionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: 2
+val appVersionName = System.getenv("VERSION_NAME") ?: "0.1.1"
+
 android {
     namespace = "com.offlineplaya.android"
     compileSdk = libs.versions.compileSdk.get().toInt()
@@ -27,8 +34,8 @@ android {
         applicationId = "com.offlineplaya.android"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 2
-        versionName = "0.1.1"
+        versionCode = appVersionCode
+        versionName = appVersionName
 
         // The default AndroidJUnitRunner is enough — no custom runner needed
         // until we want Hilt/Koin lifecycle hooks for instrumented Koin tests.
@@ -89,6 +96,19 @@ android {
         compose = true
     }
 
+    // Strip the ~70 locales that AndroidX / Compose-Material libraries bundle
+    // in their res/values-XX tables — that's pure framework chrome (default
+    // widget a11y text etc.) and was ~138 KB of dead weight.
+    //
+    // This does NOT affect the app's own translations: those live in
+    // shared/composeResources and ship as assets (assets/composeResources/
+    // values-XX/strings.commonMain.cvr), which Compose Resources resolves at
+    // runtime by itself — independent of this res/ locale filter. Verified by
+    // unzipping the release AAB: values-ru/-ja/-de/... assets are all present.
+    androidResources {
+        localeFilters += "en"
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -111,7 +131,14 @@ kotlin {
 }
 
 dependencies {
-    implementation(project(":shared"))
+    // androidx.appcompat is dragged in transitively by Koin's android
+    // artifacts (both directly and via :shared). This app is Compose-only
+    // with a single Activity — AppCompat's resources (the abc_*.xml
+    // drawables and layouts) and dex are dead weight. Excluding here at
+    // the final-app level catches every transitive path.
+    implementation(project(":shared")) {
+        exclude(group = "androidx.appcompat")
+    }
 
     val compose = ComposePlugin.Dependencies(project)
     implementation(compose.runtime)
@@ -126,8 +153,17 @@ dependencies {
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.documentfile)
 
-    implementation(libs.koin.android)
-    implementation(libs.koin.androidxCompose)
+    // Koin's android artifacts transitively bring in androidx.appcompat for
+    // a Fragment/AppCompatActivity scope helper we don't use — this app is
+    // Compose-only with a single Activity. The exclusion strips the
+    // AppCompat resources (the abc_*.xml drawables/layouts in the bundle)
+    // and dex.
+    implementation(libs.koin.android) {
+        exclude(group = "androidx.appcompat")
+    }
+    implementation(libs.koin.androidxCompose) {
+        exclude(group = "androidx.appcompat")
+    }
     implementation(libs.koin.compose)
 
     implementation(libs.coil.compose)

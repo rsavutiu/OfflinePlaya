@@ -30,17 +30,43 @@
 }
 
 # ── Jaudiotagger (writes embedded album art / tags) ────────────────────
-# Uses reflection to instantiate ID3 frame body classes by name. Stripping
-# any of them turns "save tag" into a NoSuchMethodException at runtime.
--keep class org.jaudiotagger.** { *; }
+# Narrow keep rules — Jaudiotagger ships ~600 classes (every ID3 frame
+# variant, every audio-container reader/writer, plus tests). R8 can trace
+# almost everything we reach statically; only the reflectively loaded
+# pieces need explicit keeps:
+#
+#   1. ID3v2 frame body classes — `AbstractID3v2Frame.readBody()` does
+#      `Class.forName("...FrameBody" + frameId)` then invokes the public
+#      ctor by name. Strip any of them and tag-read throws at runtime.
+#   2. Per-format AudioFileReader/Writer SPI lookup. AudioFileIO holds a
+#      hardcoded registry that R8 sees, but the registry entries point at
+#      no-arg constructors that R8 would otherwise inline away.
+#   3. The bits of public API surface we hold direct references to
+#      (AudioFileIO, FieldKey, FlacTag, VorbisCommentTag, ArtworkFactory,
+#      MetadataBlockDataPicture, TagOptionSingleton).
+#
+# If a tag-write crashes with NoSuchMethodException or ClassNotFoundException
+# later, the missing class belongs in this list. The blanket
+# `-keep class org.jaudiotagger.** { *; }` is the fallback.
+-keep class org.jaudiotagger.tag.id3.framebody.** { *; }
+-keep class org.jaudiotagger.tag.id3.valuepair.** { *; }
+-keep class org.jaudiotagger.tag.reference.** { *; }
+-keep class * extends org.jaudiotagger.audio.generic.AudioFileReader { <init>(); }
+-keep class * extends org.jaudiotagger.audio.generic.AudioFileWriter { <init>(); }
+-keep class org.jaudiotagger.audio.AudioFileIO { *; }
+-keep class org.jaudiotagger.tag.TagOptionSingleton { *; }
+-keep class org.jaudiotagger.tag.FieldKey { *; }
+-keep class org.jaudiotagger.tag.flac.** { *; }
+-keep class org.jaudiotagger.tag.vorbiscomment.** { *; }
+-keep class org.jaudiotagger.tag.images.** { *; }
+-keep class org.jaudiotagger.audio.flac.metadatablock.** { *; }
 -dontwarn org.jaudiotagger.**
 
 # ── Compose @Preview ───────────────────────────────────────────────────
-# Not strictly required for release (Studio renders previews against the
-# debug variant) but keeping the annotation lets release builds opened
-# in Studio still surface previews.
--keep class androidx.compose.ui.tooling.preview.Preview { *; }
--keep @androidx.compose.ui.tooling.preview.Preview class *
+# We don't keep previewed composables in release — Android Studio renders
+# previews against the debug variant, so release has no reason to retain
+# every @Preview function (and the PreviewTheme / sample data they pull
+# in). Dropping the wildcard keep lets R8 prune the whole preview graph.
 
 # ── Stack-trace readability ────────────────────────────────────────────
 # Keep file:line info so Play Console crash reports stay decodable with

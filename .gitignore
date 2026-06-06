@@ -17,3 +17,9 @@ screenshots/
 keystore.properties
 *.jks
 *.keystore
+
+# Locally-exported release artifacts (build output, not source)
+androidApp/release/
+
+# deep-translator output cache (regenerable; tools/translate_via_google.py)
+tools/.trcache/
