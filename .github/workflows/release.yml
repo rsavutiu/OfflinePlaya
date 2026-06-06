@@ -70,7 +70,9 @@ jobs:
         run: python3 tools/validate_translations.py
 
       - name: Build signed release bundle
-        run: ./gradlew :androidApp:bundleRelease --no-daemon
+        run: |
+          chmod +x ./gradlew
+          ./gradlew :androidApp:bundleRelease --no-daemon
 
       - name: Upload to Google Play (production)
         uses: r0adkll/upload-google-play@v1
