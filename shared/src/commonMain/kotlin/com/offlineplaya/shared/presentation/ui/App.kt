@@ -284,8 +284,13 @@ private fun DestinationContent(
             AnimatedContent(
                 targetState = current,
                 transitionSpec = {
-                    fadeIn(animationSpec = tween(durationMillis = 180)) togetherWith
-                            fadeOut(animationSpec = tween(durationMillis = 180))
+                    // Outlast the cover morph (SHARED_ART_MORPH_MS) so the
+                    // shared element's overlay→layout handoff lands *after* the
+                    // morph visually completes — a shorter fade snaps mid-flight
+                    // and reads as choppy.
+                    val fade = SHARED_ART_MORPH_MS + 100
+                    fadeIn(animationSpec = tween(durationMillis = fade)) togetherWith
+                            fadeOut(animationSpec = tween(durationMillis = fade))
                 },
                 label = "destination",
             ) { dest ->

@@ -1,11 +1,33 @@
 package com.offlineplaya.shared.presentation.ui
 
 import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.BoundsTransform
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+
+/**
+ * Morph duration for the list → Now Playing cover. The nav `AnimatedContent`
+ * cross-fade in [App] is set to clearly *outlast* this (see `NAV_FADE_MS`) so
+ * the shared element's overlay→layout handoff happens after the morph has
+ * visually completed — otherwise the cover snaps when the page transition ends
+ * mid-flight, which reads as "choppy".
+ */
+const val SHARED_ART_MORPH_MS = 300
+
+/**
+ * Predictable, bracketed bounds animation for the cover morph. A tween (not the
+ * default spring) so the morph has a *definite* completion frame the nav fade
+ * can be timed to outlast.
+ */
+@OptIn(ExperimentalSharedTransitionApi::class)
+private val CoverBoundsTransform = BoundsTransform { _, _ ->
+    tween(durationMillis = SHARED_ART_MORPH_MS, easing = FastOutSlowInEasing)
+}
 
 /**
  * Carries the [SharedTransitionScope] from the app-level `SharedTransitionLayout`
@@ -53,6 +75,7 @@ fun Modifier.sharedAlbumArt(key: String?): Modifier {
         return this@sharedAlbumArt.sharedElement(
             state = rememberSharedContentState(key = key),
             animatedVisibilityScope = visibilityScope,
+            boundsTransform = CoverBoundsTransform,
         )
     }
 }

@@ -1,6 +1,9 @@
 package com.offlineplaya.shared.presentation.ui.organisms
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
@@ -29,6 +32,7 @@ import com.offlineplaya.shared.domain.model.PlaybackState
 import com.offlineplaya.shared.domain.model.RepeatMode
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.lyrics.LyricsUiState
+import com.offlineplaya.shared.presentation.ui.LocalSharedTransitionScope
 import com.offlineplaya.shared.presentation.ui.molecules.NowPlayingArtPanel
 import com.offlineplaya.shared.presentation.ui.molecules.NowPlayingHeadline
 import com.offlineplaya.shared.presentation.ui.molecules.SeekRow
@@ -183,6 +187,7 @@ private fun FlippableArt(
  * [PlaybackState.queueIndex] keeps the two directions from forming a feedback
  * loop. Falls back to a single static panel when the queue has 0–1 entries.
  */
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun QueueArtPager(
     state: PlaybackState,
@@ -204,7 +209,13 @@ private fun QueueArtPager(
         state.queueIndex in queue.indices &&
         queue[state.queueIndex].id == effectiveTrack.id
 
-    if (!aligned) {
+    // Don't swap single-panel → pager *during* the list → Now Playing morph:
+    // tearing down and recreating the shared-element host node mid-flight makes
+    // the cover jump. Keep the single keyed panel until the transition settles,
+    // then swap to the swipeable pager.
+    val morphActive = LocalSharedTransitionScope.current?.isTransitionActive == true
+
+    if (!aligned || morphActive) {
         NowPlayingArtPanel(
             track = effectiveTrack,
             sharedArtTrack = effectiveTrack,
@@ -218,10 +229,15 @@ private fun QueueArtPager(
         pageCount = { queue.size },
     )
 
-    // External skip / track-end → animate the pager to the new page.
+    // External skip / track-end → animate the pager to the new page. Use a
+    // deliberate tween (~420ms) rather than the pager's default fast spring so
+    // a Next-button tap / auto-advance glides instead of snapping across.
     LaunchedEffect(state.queueIndex) {
         if (state.queueIndex in queue.indices && state.queueIndex != pagerState.currentPage) {
-            pagerState.animateScrollToPage(state.queueIndex)
+            pagerState.animateScrollToPage(
+                page = state.queueIndex,
+                animationSpec = tween(durationMillis = 420, easing = FastOutSlowInEasing),
+            )
         }
     }
 
