@@ -119,23 +119,10 @@ fun App(
         var actionsTrack by remember { mutableStateOf<Track?>(null) }
         val onTrackLongPress: (Track) -> Unit = { actionsTrack = it }
 
-        // The track the user just tapped to open Now Playing. setQueue runs
-        // off-main, so playback.currentTrack hasn't caught up on the first
-        // Now Playing frame — this drives the shared-element art key through
-        // that window so the cover morph lands on the right track. Cleared
-        // once the player reflects it (below).
-        var pendingNowPlayingTrack by remember { mutableStateOf<Track?>(null) }
-        LaunchedEffect(playback.currentTrack?.id) {
-            if (playback.currentTrack?.id == pendingNowPlayingTrack?.id) {
-                pendingNowPlayingTrack = null
-            }
-        }
-
         val onTabSelected: (LibraryTab) -> Unit = { tab ->
             navigator.swapTop(tab.toDestination())
         }
         val onPlayTracks: (List<Track>, Int) -> Unit = { tracks, index ->
-            pendingNowPlayingTrack = tracks.getOrNull(index)
             musicPlayer.setQueue(tracks, index)
             // Mark the played track's album as just-used so the home
             // page's cover-fan shelf reflects what the user actually
@@ -212,7 +199,7 @@ fun App(
                             onTabSelected = onTabSelected,
                             onPlayTracks = onPlayTracks,
                             onTrackLongPress = onTrackLongPress,
-                            sharedArtTrack = pendingNowPlayingTrack ?: playback.currentTrack,
+                            sharedArtTrack = playback.currentTrack,
                         )
                     }
 

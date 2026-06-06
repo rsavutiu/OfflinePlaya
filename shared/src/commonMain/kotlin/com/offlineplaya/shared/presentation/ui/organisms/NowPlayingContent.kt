@@ -8,6 +8,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -241,14 +242,24 @@ private fun QueueArtPager(
         }
     }
 
-    // User swipe settles on a new page → tell the player to seek there. Use
-    // settledPage (not currentPage) so we don't fire mid-drag; the != guard
-    // means re-syncing to an external change never bounces back.
+    // Only a *user-dragged* settle should seek the player. A settle caused by
+    // our own animateScrollToPage (re-syncing to an external skip) or by a
+    // queue swap must NOT call onSkipToIndex — otherwise the pager and the
+    // player ping-pong and a stale page seeks the audio to the wrong track.
+    // The pager's interactionSource tells a drag apart from a programmatic
+    // scroll; settledPage (not currentPage) means we fire once, after the fling.
+    var userDragged by remember { mutableStateOf(false) }
+    LaunchedEffect(pagerState) {
+        pagerState.interactionSource.interactions.collect { interaction ->
+            if (interaction is DragInteraction.Start) userDragged = true
+        }
+    }
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.settledPage }.collect { page ->
-            if (page != state.queueIndex && page in queue.indices) {
+            if (userDragged && page != state.queueIndex && page in queue.indices) {
                 onSkipToIndex(page)
             }
+            userDragged = false
         }
     }
 
