@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Escaneado %1$d tracks en %2$d carpetas</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d fallidos)</string>
     <string name="sync_status_failed">Escaneo fallido: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" ya está en tu biblioteca.</string>
+    <string name="sync_status_already_added">"%1$s" ya está en tu biblioteca.</string>
     <string name="top_bar_equalizer">Ecualizador</string>
     <string name="top_bar_playlists">Listas de reproducción</string>
     <string name="top_bar_search">Buscar</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Reproduciendo ahora</string>
     <string name="eq_no_genre_tag">— sin etiqueta de género —</string>
     <string name="eq_fallback_no_tag">Este archivo no tiene etiqueta de género, por lo tanto Auto no puede inferir un estilo — la curva permanece plana. Etiqueta tus archivos o cambia a Manual.</string>
-    <string name="eq_fallback_unknown_tag">La etiqueta \"%1$s\" no se mapeó a un estilo conocido — permaneciendo plana. Cambia a Manual para elegir una curva.</string>
+    <string name="eq_fallback_unknown_tag">La etiqueta "%1$s" no se mapeó a un estilo conocido — permaneciendo plana. Cambia a Manual para elegir una curva.</string>
     <string name="empty_album_title">Sin álbumes</string>
     <string name="empty_album_subtitle">Este artista no tiene álbumes en la biblioteca escaneada.</string>
     <string name="empty_artist_title">Sin artistas aún</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">No se escaneó nada bajo esta carpeta.</string>
     <string name="folder_section_folders">Carpetas</string>
     <string name="folder_section_tracks">Canciones</string>
-    <string name="empty_library_no_folders">No se han agregado carpetas aún. Toca \"Añadir carpeta de música\" arriba para comenzar.</string>
+    <string name="empty_library_no_folders">No se han agregado carpetas aún. Toca "Añadir carpeta de música" arriba para comenzar.</string>
     <string name="library_add_music_folder">Añadir carpeta de música</string>
     <string name="library_rescan_all">Re-escanear todas las carpetas</string>
     <string name="library_scanning">Escaneando…</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Título, artista o álbum</string>
     <string name="search_empty_title">Busca en tu biblioteca</string>
     <string name="search_empty_subtitle">Escribe al menos dos caracteres para encontrar un título, artista o álbum.</string>
-    <string name="search_no_results_title">No hay coincidencias con \"%1$s\"</string>
+    <string name="search_no_results_title">No hay coincidencias con "%1$s"</string>
     <string name="search_no_results_subtitle">Intenta una ortografía diferente o menos caracteres.</string>
     <string name="common_loading">Cargando…</string>
     <string name="playlist_name_label">Nombre</string>
     <string name="remove_folder_confirmation">¿Eliminar esta carpeta?</string>
-    <string name="remove_folder_body">\"%1$s\" desaparecerá de tu biblioteca, junto con las pistas escaneadas en ella. Los archivos en el disco no se tocan.</string>
+    <string name="remove_folder_body">"%1$s" desaparecerá de tu biblioteca, junto con las pistas escaneadas en ella. Los archivos en el disco no se tocan.</string>
     <string name="remove_button">Quitar</string>
     <string name="eq_reset_to_preset">Restablecer a preestablecido</string>
     <string name="library_shuffle_artist">Artista aleatorio</string>

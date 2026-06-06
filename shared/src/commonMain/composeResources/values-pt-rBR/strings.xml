@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Varredura concluída: %1$d faixas em %2$d pastas</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d falhados)</string>
     <string name="sync_status_failed">Varredura falhou: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" já está na sua biblioteca.</string>
+    <string name="sync_status_already_added">"%1$s" já está na sua biblioteca.</string>
     <string name="top_bar_equalizer">Ecualizador</string>
     <string name="top_bar_playlists">Listas de reprodução</string>
     <string name="top_bar_search">Pesquisa</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Agora tocando</string>
     <string name="eq_no_genre_tag">— nenhum gênero —</string>
     <string name="eq_fallback_no_tag">Este arquivo não tem tag de gênero, então Auto não consegue inferir um estilo — a curva permanece plana. Marque seus arquivos ou mude para Manual.</string>
-    <string name="eq_fallback_unknown_tag">A tag \"%1$s\" não mapeou para um estilo conhecido — permanecendo plana. Mude para Manual para escolher uma curva.</string>
+    <string name="eq_fallback_unknown_tag">A tag "%1$s" não mapeou para um estilo conhecido — permanecendo plana. Mude para Manual para escolher uma curva.</string>
     <string name="empty_album_title">Nenhum álbum</string>
     <string name="empty_album_subtitle">Este artista não tem álbuns na biblioteca escaneada.</string>
     <string name="empty_artist_title">Nenhum artista ainda</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">Nada foi escaneado nesta pasta.</string>
     <string name="folder_section_folders">Pastas</string>
     <string name="folder_section_tracks">Faixas</string>
-    <string name="empty_library_no_folders">Nenhuma pasta adicionada ainda. Toque em \"Adicionar pasta de música\" acima para começar.</string>
+    <string name="empty_library_no_folders">Nenhuma pasta adicionada ainda. Toque em "Adicionar pasta de música" acima para começar.</string>
     <string name="library_add_music_folder">Adicionar pasta de música</string>
     <string name="library_rescan_all">Reescanear todas as pastas</string>
     <string name="library_scanning">Escaneando…</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Título, artista ou álbum</string>
     <string name="search_empty_title">Pesquise sua biblioteca</string>
     <string name="search_empty_subtitle">Digite pelo menos dois caracteres para encontrar um título, artista ou álbum.</string>
-    <string name="search_no_results_title">Nada corresponde a \"%1$s\"</string>
+    <string name="search_no_results_title">Nada corresponde a "%1$s"</string>
     <string name="search_no_results_subtitle">Tente uma escrita diferente ou menos caracteres.</string>
     <string name="common_loading">Carregando…</string>
     <string name="playlist_name_label">Nome</string>
     <string name="remove_folder_confirmation">Remover esta pasta?</string>
-    <string name="remove_folder_body">\"%1$s\" desaparecerá da sua biblioteca, junto com as faixas digitalizadas dela. Os arquivos no disco não são tocados.</string>
+    <string name="remove_folder_body">"%1$s" desaparecerá da sua biblioteca, junto com as faixas digitalizadas dela. Os arquivos no disco não são tocados.</string>
     <string name="remove_button">Remover</string>
     <string name="eq_reset_to_preset">Redefinir para predefinição</string>
     <string name="library_shuffle_artist">Artista aleatório</string>

@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Gescannt %1$d Titel über %2$d Ordner</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d fehlgeschlagen)</string>
     <string name="sync_status_failed">Scan fehlgeschlagen: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" ist bereits in Ihrer Bibliothek.</string>
+    <string name="sync_status_already_added">"%1$s" ist bereits in Ihrer Bibliothek.</string>
     <string name="top_bar_equalizer">Equalizer</string>
     <string name="top_bar_playlists">Playlists</string>
     <string name="top_bar_search">Suche</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Jetzt wiedergegeben</string>
     <string name="eq_no_genre_tag">— kein Genre-Tag —</string>
     <string name="eq_fallback_no_tag">Diese Datei hat kein Genre-Tag, daher kann Auto keinen Stil erkennen — der Verlauf bleibt flach. Tag deine Dateien oder wechsle zu Manuell.</string>
-    <string name="eq_fallback_unknown_tag">Das Tag \"%1$s\" passte nicht zu einem bekannten Stil — bleibt flach. Wechsle zu Manuell, um einen Verlauf auszuwählen.</string>
+    <string name="eq_fallback_unknown_tag">Das Tag "%1$s" passte nicht zu einem bekannten Stil — bleibt flach. Wechsle zu Manuell, um einen Verlauf auszuwählen.</string>
     <string name="empty_album_title">Keine Alben</string>
     <string name="empty_album_subtitle">Dieser Künstler hat keine Alben in der gescannten Bibliothek.</string>
     <string name="empty_artist_title">Noch keine Künstler</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">Unter diesem Ordner wurde nichts gescannt.</string>
     <string name="folder_section_folders">Ordner</string>
     <string name="folder_section_tracks">Tracks</string>
-    <string name="empty_library_no_folders">Noch keine Ordner hinzugefügt. Tippe auf \"Musikordner hinzufügen\" oben, um zu starten.</string>
+    <string name="empty_library_no_folders">Noch keine Ordner hinzugefügt. Tippe auf "Musikordner hinzufügen" oben, um zu starten.</string>
     <string name="library_add_music_folder">Musikordner hinzufügen</string>
     <string name="library_rescan_all">Alle Ordner erneut scannen</string>
     <string name="library_scanning">Wird gescannt…</string>
@@ -144,7 +144,7 @@
     <string name="search_field_label">Titel, Künstler oder Album</string>
     <string name="search_empty_title">Durchsuche deine Bibliothek</string>
     <string name="search_empty_subtitle">Gib mindestens zwei Zeichen ein, um einen Titel, Künstler oder Album zu finden.</string>
-    <string name="search_no_results_title">Nichts passt zu \"%1$s\"</string>
+    <string name="search_no_results_title">Nichts passt zu "%1$s"</string>
     <string name="search_no_results_subtitle">Versuche eine andere Schreibweise oder weniger Zeichen.</string>
     <string name="common_loading">Laden…</string>
     <string name="playlist_name_label">Name</string>

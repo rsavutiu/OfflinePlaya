@@ -58,7 +58,7 @@
     <string name="sync_status_completed">已扫描 %1$d 曲目，覆盖 %2$d 个文件夹</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d 个失败)</string>
     <string name="sync_status_failed">扫描失败: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" 已经在你的库中。</string>
+    <string name="sync_status_already_added">"%1$s" 已经在你的库中。</string>
     <string name="top_bar_equalizer">均衡器</string>
     <string name="top_bar_playlists">歌单</string>
     <string name="top_bar_search">搜索</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">正在播放</string>
     <string name="eq_no_genre_tag">— 无流派标签 —</string>
     <string name="eq_fallback_no_tag">此文件没有流派标签，因此 Auto 无法推断风格 — 曲线保持平直。请标记文件或切换到手动模式。</string>
-    <string name="eq_fallback_unknown_tag">标签 \"%1$s\" 未映射到已知风格 — 保持平直。切换到手动模式以选择曲线。</string>
+    <string name="eq_fallback_unknown_tag">标签 "%1$s" 未映射到已知风格 — 保持平直。切换到手动模式以选择曲线。</string>
     <string name="empty_album_title">无专辑</string>
     <string name="empty_album_subtitle">此艺术家在扫描的库中没有专辑。</string>
     <string name="empty_artist_title">无艺术家</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">此文件夹下未扫描到任何内容。</string>
     <string name="folder_section_folders">文件夹</string>
     <string name="folder_section_tracks">轨道</string>
-    <string name="empty_library_no_folders">尚未添加文件夹。轻点 \"添加音乐文件夹\" 以开始。</string>
+    <string name="empty_library_no_folders">尚未添加文件夹。轻点 "添加音乐文件夹" 以开始。</string>
     <string name="library_add_music_folder">添加音乐文件夹</string>
     <string name="library_rescan_all">重新扫描所有文件夹</string>
     <string name="library_scanning">正在扫描…</string>
@@ -144,7 +144,7 @@
     <string name="search_field_label">标题、艺术家或专辑</string>
     <string name="search_empty_title">搜索你的库</string>
     <string name="search_empty_subtitle">输入至少两个字符以查找标题、艺术家或专辑。</string>
-    <string name="search_no_results_title">没有匹配 \"%1$s\"</string>
+    <string name="search_no_results_title">没有匹配 "%1$s"</string>
     <string name="search_no_results_subtitle">尝试不同的拼写或更少的字符。</string>
     <string name="common_loading">加载中...</string>
     <string name="playlist_name_label">名称</string>

@@ -58,7 +58,7 @@
     <string name="sync_status_completed">تم مسح %1$d من المسارات عبر %2$d مجلد</string>
     <string name="sync_status_completed_with_failed">%1$s (فشل %2$d)</string>
     <string name="sync_status_failed">فشل الفحص: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" موجود بالفعل في مكتبتك.</string>
+    <string name="sync_status_already_added">"%1$s" موجود بالفعل في مكتبتك.</string>
     <string name="top_bar_equalizer">المعادل</string>
     <string name="top_bar_playlists">قوائم التشغيل</string>
     <string name="top_bar_search">بحث</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">العب الآن</string>
     <string name="eq_no_genre_tag">- لا توجد علامة النوع -</string>
     <string name="eq_fallback_no_tag">لا يحتوي هذا الملف على علامة نوع، لذلك لا يمكن لـ Auto استنتاج النمط — ويظل المنحنى مسطحًا. قم بوضع علامة على ملفاتك أو قم بالتبديل إلى يدوي.</string>
-    <string name="eq_fallback_unknown_tag">لم يتم تعيين العلامة \"%1$s\" إلى نمط معروف - حيث ظلت ثابتة. قم بالتبديل إلى يدوي لاختيار منحنى.</string>
+    <string name="eq_fallback_unknown_tag">لم يتم تعيين العلامة "%1$s" إلى نمط معروف - حيث ظلت ثابتة. قم بالتبديل إلى يدوي لاختيار منحنى.</string>
     <string name="empty_album_title">لا توجد ألبومات</string>
     <string name="empty_album_subtitle">هذا الفنان ليس لديه ألبومات في المكتبة الممسوحة ضوئيا.</string>
     <string name="empty_artist_title">لا يوجد فنانين بعد</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">لم يتم فحص أي شيء ضمن هذا المجلد.</string>
     <string name="folder_section_folders">المجلدات</string>
     <string name="folder_section_tracks">المسارات</string>
-    <string name="empty_library_no_folders">لم تتم إضافة أي مجلدات حتى الآن. اضغط على \"إضافة مجلد موسيقى\" أعلاه للبدء.</string>
+    <string name="empty_library_no_folders">لم تتم إضافة أي مجلدات حتى الآن. اضغط على "إضافة مجلد موسيقى" أعلاه للبدء.</string>
     <string name="library_add_music_folder">إضافة مجلد الموسيقى</string>
     <string name="library_rescan_all">إعادة فحص كافة المجلدات</string>
     <string name="library_scanning">جارٍ المسح…</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">العنوان أو الفنان أو الألبوم</string>
     <string name="search_empty_title">ابحث في مكتبتك</string>
     <string name="search_empty_subtitle">اكتب حرفين على الأقل للعثور على عنوان أو فنان أو ألبوم.</string>
-    <string name="search_no_results_title">لا شيء يطابق \"%1$s\"</string>
+    <string name="search_no_results_title">لا شيء يطابق "%1$s"</string>
     <string name="search_no_results_subtitle">جرب تهجئة مختلفة أو أحرف أقل.</string>
     <string name="common_loading">جارٍ التحميل…</string>
     <string name="playlist_name_label">الاسم</string>
     <string name="remove_folder_confirmation">هل تريد إزالة هذا المجلد؟</string>
-    <string name="remove_folder_body">سيختفي \"%1$s\" من مكتبتك، بالإضافة إلى المسارات التي تم مسحها ضوئيًا منها. لا يتم لمس الملفات الموجودة على القرص.</string>
+    <string name="remove_folder_body">سيختفي "%1$s" من مكتبتك، بالإضافة إلى المسارات التي تم مسحها ضوئيًا منها. لا يتم لمس الملفات الموجودة على القرص.</string>
     <string name="remove_button">إزالة</string>
     <string name="eq_reset_to_preset">إعادة التعيين إلى الإعداد المسبق</string>
     <string name="library_shuffle_artist">خلط ورق اللعب الفنان</string>

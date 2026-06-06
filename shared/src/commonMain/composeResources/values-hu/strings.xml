@@ -58,7 +58,7 @@
     <string name="sync_status_completed">%1$d szám beolvasva %2$d mappában</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d sikertelen)</string>
     <string name="sync_status_failed">A beolvasás sikertelen: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" már megtalálható a könyvtárában.</string>
+    <string name="sync_status_already_added">"%1$s" már megtalálható a könyvtárában.</string>
     <string name="top_bar_equalizer">Equalizer</string>
     <string name="top_bar_playlists">Lejátszási listák</string>
     <string name="top_bar_search">Keresés</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Most játszik</string>
     <string name="eq_no_genre_tag">— nincs műfaji címke —</string>
     <string name="eq_fallback_no_tag">Ennek a fájlnak nincs műfaji címkéje, így az Auto nem tud stílusra következtetni – a görbe lapos marad. Jelölje meg fájljait, vagy váltson a Kézi módra.</string>
-    <string name="eq_fallback_unknown_tag">A(z) \"%1$s\" címke nem felelt meg egy ismert stílusnak – változatlan marad. Görbe kiválasztásához váltson a Kézi módra.</string>
+    <string name="eq_fallback_unknown_tag">A(z) "%1$s" címke nem felelt meg egy ismert stílusnak – változatlan marad. Görbe kiválasztásához váltson a Kézi módra.</string>
     <string name="empty_album_title">Nincsenek albumok</string>
     <string name="empty_album_subtitle">Ennek az előadónak nincsenek albumai a beolvasott könyvtárban.</string>
     <string name="empty_artist_title">Még nincsenek művészek</string>
@@ -144,7 +144,7 @@
     <string name="search_field_label">Cím, előadó vagy album</string>
     <string name="search_empty_title">Keressen a könyvtárában</string>
     <string name="search_empty_subtitle">Írjon be legalább két karaktert a cím, előadó vagy album megtalálásához.</string>
-    <string name="search_no_results_title">Semmi sem felel meg a következőnek: \"%1$s\"</string>
+    <string name="search_no_results_title">Semmi sem felel meg a következőnek: "%1$s"</string>
     <string name="search_no_results_subtitle">Próbálkozzon más helyesírással vagy kevesebb karakterrel.</string>
     <string name="common_loading">Betöltés…</string>
     <string name="playlist_name_label">Név</string>

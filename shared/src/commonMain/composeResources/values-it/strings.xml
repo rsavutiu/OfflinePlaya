@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Scansionati %1$d brani in %2$d cartelle</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d falliti)</string>
     <string name="sync_status_failed">Scansione fallita: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" è già nella tua libreria.</string>
+    <string name="sync_status_already_added">"%1$s" è già nella tua libreria.</string>
     <string name="top_bar_equalizer">Equalizzatore</string>
     <string name="top_bar_playlists">Playlist</string>
     <string name="top_bar_search">Ricerca</string>
@@ -72,7 +72,7 @@
     <string name="settings_section_preset">Preset</string>
     <string name="settings_section_bands">Banda</string>
     <string name="appearance_album_art_color">Colori delle copertine degli album</string>
-    <string name="appearance_album_art_color_subtitle">Colora l\'intera app con la cover dell\'ultima canzone</string>
+    <string name="appearance_album_art_color_subtitle">Colora l'intera app con la cover dell'ultima canzone</string>
     <string name="appearance_material_you">Material You</string>
     <string name="appearance_material_you_subtitle">Usa colori basati sul wallpaper (Android 12+)</string>
     <string name="appearance_material_you_supported">Usa colori basati sul wallpaper</string>
@@ -87,13 +87,13 @@
     <string name="lyrics_save_sidecar">Salva come sidecar .lrc</string>
     <string name="lyrics_save_sidecar_subtitle">Scrivi i testi recuperati accanto al file audio in modo che sopravvivano a una reinstallazione e altri giocatori possano leggerli.</string>
     <string name="playback_crossfade">Dissolvenza incrociata</string>
-    <string name="playback_crossfade_subtitle">Sovrapponi la fine di una traccia con l\'inizio della successiva. Disattivato riproduce i brani senza interruzioni, uno dopo l\'altro.</string>
+    <string name="playback_crossfade_subtitle">Sovrapponi la fine di una traccia con l'inizio della successiva. Disattivato riproduce i brani senza interruzioni, uno dopo l'altro.</string>
     <string name="playback_crossfade_duration">Lunghezza della dissolvenza incrociata</string>
     <string name="playback_crossfade_duration_value">%1$d s</string>
-    <string name="burn_download_remote_art">Scarica l\'arte remota</string>
+    <string name="burn_download_remote_art">Scarica l'arte remota</string>
     <string name="burn_download_remote_art_subtitle">Cerca copertine mancanti da MusicBrainz quando necessario.</string>
     <string name="burn_button">Incolla i tag nei file</string>
-    <string name="burn_explainer">Scrive i tag dell\'album e del genere direttamente nei tuoi file audio. Questo aiuta altre app a vedere le informazioni corrette e attiva la modalità EQ Auto.</string>
+    <string name="burn_explainer">Scrive i tag dell'album e del genere direttamente nei tuoi file audio. Questo aiuta altre app a vedere le informazioni corrette e attiva la modalità EQ Auto.</string>
     <string name="burn_progress">Incollatura metadati: %1$d / %2$d</string>
     <string name="burn_result">Successo: %1$d • Fallito: %2$d</string>
     <string name="burn_completed_message">Aggiornamento completato: %1$d file (%2$d falliti).</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Ora in riproduzione</string>
     <string name="eq_no_genre_tag">— nessun tag genere —</string>
     <string name="eq_fallback_no_tag">Questo file non ha un tag genere, quindi Auto non può inferire uno stile — la curva rimane piatta. Taglia i file o passa a Manuale.</string>
-    <string name="eq_fallback_unknown_tag">Il tag \"%1$s\" non si è mappato a uno stile noto — rimane piatto. Passa a Manuale per selezionare una curva.</string>
+    <string name="eq_fallback_unknown_tag">Il tag "%1$s" non si è mappato a uno stile noto — rimane piatto. Passa a Manuale per selezionare una curva.</string>
     <string name="empty_album_title">Nessun album</string>
     <string name="empty_album_subtitle">Questo artista non ha album nella libreria scansionata.</string>
     <string name="empty_artist_title">Nessun artista ancora</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">Niente è stato scansionato in questa cartella.</string>
     <string name="folder_section_folders">Cartelle</string>
     <string name="folder_section_tracks">Tracce</string>
-    <string name="empty_library_no_folders">Nessuna cartella aggiunta ancora. Tocca \"Aggiungi cartella musicale\" sopra per iniziare.</string>
+    <string name="empty_library_no_folders">Nessuna cartella aggiunta ancora. Tocca "Aggiungi cartella musicale" sopra per iniziare.</string>
     <string name="library_add_music_folder">Aggiungi cartella musicale</string>
     <string name="library_rescan_all">Riscansiona tutte le cartelle</string>
     <string name="library_scanning">In scansione…</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Titolo, artista o album</string>
     <string name="search_empty_title">Cerca nella tua libreria</string>
     <string name="search_empty_subtitle">Scrivi almeno due caratteri per trovare un titolo, un artista o un album.</string>
-    <string name="search_no_results_title">Niente corrisponde a \"%1$s\"</string>
+    <string name="search_no_results_title">Niente corrisponde a "%1$s"</string>
     <string name="search_no_results_subtitle">Prova un diverso spelling o meno caratteri.</string>
     <string name="common_loading">Caricamento…</string>
     <string name="playlist_name_label">Nome</string>
     <string name="remove_folder_confirmation">Rimuovere questa cartella?</string>
-    <string name="remove_folder_body">\"%1$s\" scomparirà dalla tua libreria, insieme ai brani scansionati da essa. I file sul disco non vengono toccati.</string>
+    <string name="remove_folder_body">"%1$s" scomparirà dalla tua libreria, insieme ai brani scansionati da essa. I file sul disco non vengono toccati.</string>
     <string name="remove_button">Rimuovi</string>
     <string name="eq_reset_to_preset">Ripristina la preimpostazione</string>
     <string name="library_shuffle_artist">Artista casuale</string>

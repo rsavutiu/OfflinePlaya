@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Scannede %1$d spor på tværs af %2$d mapper</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d mislykkedes)</string>
     <string name="sync_status_failed">Scanning mislykkedes: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" er allerede i dit bibliotek.</string>
+    <string name="sync_status_already_added">"%1$s" er allerede i dit bibliotek.</string>
     <string name="top_bar_equalizer">Equalizer</string>
     <string name="top_bar_playlists">Afspilningslister</string>
     <string name="top_bar_search">Søg</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Spiller nu</string>
     <string name="eq_no_genre_tag">— ingen genre-tag —</string>
     <string name="eq_fallback_no_tag">Denne fil har ikke noget genremærke, så Auto kan ikke udlede en stilart – kurven forbliver flad. Tag dine filer eller skift til Manual.</string>
-    <string name="eq_fallback_unknown_tag">Tagget \"%1$s\" blev ikke knyttet til en kendt stil – forblev flad. Skift til Manuel for at vælge en kurve.</string>
+    <string name="eq_fallback_unknown_tag">Tagget "%1$s" blev ikke knyttet til en kendt stil – forblev flad. Skift til Manuel for at vælge en kurve.</string>
     <string name="empty_album_title">Ingen albums</string>
     <string name="empty_album_subtitle">Denne kunstner har ingen album i det scannede bibliotek.</string>
     <string name="empty_artist_title">Ingen kunstnere endnu</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">Intet blev scannet under denne mappe.</string>
     <string name="folder_section_folders">Mapper</string>
     <string name="folder_section_tracks">Spor</string>
-    <string name="empty_library_no_folders">Ingen mapper tilføjet endnu. Tryk på \"Tilføj musikmappe\" ovenfor for at komme i gang.</string>
+    <string name="empty_library_no_folders">Ingen mapper tilføjet endnu. Tryk på "Tilføj musikmappe" ovenfor for at komme i gang.</string>
     <string name="library_add_music_folder">Tilføj musikmappe</string>
     <string name="library_rescan_all">Scan alle mapper igen</string>
     <string name="library_scanning">Scanner...</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Titel, kunstner eller album</string>
     <string name="search_empty_title">Søg i dit bibliotek</string>
     <string name="search_empty_subtitle">Indtast mindst to tegn for at finde en titel, kunstner eller album.</string>
-    <string name="search_no_results_title">Intet matcher \"%1$s\"</string>
+    <string name="search_no_results_title">Intet matcher "%1$s"</string>
     <string name="search_no_results_subtitle">Prøv en anden stavemåde eller færre tegn.</string>
     <string name="common_loading">Indlæser...</string>
     <string name="playlist_name_label">Navn</string>
     <string name="remove_folder_confirmation">Vil du fjerne denne mappe?</string>
-    <string name="remove_folder_body">\"%1$s\" forsvinder fra dit bibliotek sammen med de spor, der er scannet fra det. Filerne på disken røres ikke.</string>
+    <string name="remove_folder_body">"%1$s" forsvinder fra dit bibliotek sammen med de spor, der er scannet fra det. Filerne på disken røres ikke.</string>
     <string name="remove_button">Fjern</string>
     <string name="eq_reset_to_preset">Nulstil til forudindstilling</string>
     <string name="library_shuffle_artist">Bland kunstner</string>

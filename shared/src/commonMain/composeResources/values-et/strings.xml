@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Skannitud %1$d rada %2$d kaustas</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d ebaõnnestus)</string>
     <string name="sync_status_failed">Skannimine ebaõnnestus: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" on juba teie teegis.</string>
+    <string name="sync_status_already_added">"%1$s" on juba teie teegis.</string>
     <string name="top_bar_equalizer">Ekvalaiser</string>
     <string name="top_bar_playlists">Esitusloendid</string>
     <string name="top_bar_search">Otsi</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Nüüd mängib</string>
     <string name="eq_no_genre_tag">— žanrimärgendit pole —</string>
     <string name="eq_fallback_no_tag">Sellel failil puudub žanrimärgend, seega ei saa automaatne stiili järeldada – kõver jääb tasaseks. Märgistage failid või lülituge valikule Käsitsi.</string>
-    <string name="eq_fallback_unknown_tag">Märgend \"%1$s\" ei vastanud teadaolevale stiilile – jäi ühtlaseks. Lülitage kõvera valimiseks valikule Käsitsi.</string>
+    <string name="eq_fallback_unknown_tag">Märgend "%1$s" ei vastanud teadaolevale stiilile – jäi ühtlaseks. Lülitage kõvera valimiseks valikule Käsitsi.</string>
     <string name="empty_album_title">Albumeid pole</string>
     <string name="empty_album_subtitle">Sellel esitajal pole skannitud teegis ühtegi albumit.</string>
     <string name="empty_artist_title">Kunstnikke veel pole</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">Selle kausta alt ei kontrollitud midagi.</string>
     <string name="folder_section_folders">Kaustad</string>
     <string name="folder_section_tracks">Lood</string>
-    <string name="empty_library_no_folders">Ühtegi kausta pole veel lisatud. Alustamiseks puudutage ülal \"Lisa muusikakaust\".</string>
+    <string name="empty_library_no_folders">Ühtegi kausta pole veel lisatud. Alustamiseks puudutage ülal "Lisa muusikakaust".</string>
     <string name="library_add_music_folder">Lisage muusikakaust</string>
     <string name="library_rescan_all">Skannige kõik kaustad uuesti</string>
     <string name="library_scanning">Skannimine…</string>
@@ -144,7 +144,7 @@
     <string name="search_field_label">Pealkiri, esitaja või album</string>
     <string name="search_empty_title">Otsige oma raamatukogust</string>
     <string name="search_empty_subtitle">Pealkirja, esitaja või albumi leidmiseks sisestage vähemalt kaks tähemärki.</string>
-    <string name="search_no_results_title">Miski ei vasta \"%1$s\"</string>
+    <string name="search_no_results_title">Miski ei vasta "%1$s"</string>
     <string name="search_no_results_subtitle">Proovige teist õigekirja või vähem tähemärke.</string>
     <string name="common_loading">Laadimine…</string>
     <string name="playlist_name_label">Nimi</string>

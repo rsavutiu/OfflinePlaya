@@ -82,7 +82,7 @@
     <string name="sync_status_completed">Scanned %1$d tracks across %2$d folders</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d failed)</string>
     <string name="sync_status_failed">Scan failed: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" is already in your library.</string>
+    <string name="sync_status_already_added">"%1$s" is already in your library.</string>
 
     <!-- Top bar titles -->
     <string name="top_bar_equalizer">Equalizer</string>
@@ -102,7 +102,7 @@
 
     <!-- Appearance -->
     <string name="appearance_album_art_color">Album art colors</string>
-    <string name="appearance_album_art_color_subtitle">Tint the whole app to the last song\'s cover</string>
+    <string name="appearance_album_art_color_subtitle">Tint the whole app to the last song's cover</string>
     <string name="appearance_material_you">Material You</string>
     <string name="appearance_material_you_subtitle">Use wallpaper-based colors (Android 12+)</string>
     <string name="appearance_material_you_supported">Use wallpaper-based colors</string>
@@ -146,8 +146,8 @@
     <string name="eq_label_from_tag">From tag</string>
     <string name="eq_label_now_playing">Now playing</string>
     <string name="eq_no_genre_tag">— no genre tag —</string>
-    <string name="eq_fallback_no_tag">This file has no genre tag, so Auto can\'t infer a style — the curve stays flat. Tag your files or switch to Manual.</string>
-    <string name="eq_fallback_unknown_tag">The tag \"%1$s\" didn\'t map to a known style — staying flat. Switch to Manual to pick a curve.</string>
+    <string name="eq_fallback_no_tag">This file has no genre tag, so Auto can't infer a style — the curve stays flat. Tag your files or switch to Manual.</string>
+    <string name="eq_fallback_unknown_tag">The tag "%1$s" didn't map to a known style — staying flat. Switch to Manual to pick a curve.</string>
 
     <!-- Empty states -->
     <string name="empty_album_title">No albums</string>
@@ -158,7 +158,7 @@
     <string name="empty_folder_subtitle">Nothing was scanned under this folder.</string>
     <string name="folder_section_folders">Folders</string>
     <string name="folder_section_tracks">Tracks</string>
-    <string name="empty_library_no_folders">No folders added yet. Tap \"Add music folder\" above to get started.</string>
+    <string name="empty_library_no_folders">No folders added yet. Tap "Add music folder" above to get started.</string>
     <string name="library_add_music_folder">Add music folder</string>
     <string name="library_rescan_all">Re-scan all folders</string>
     <string name="library_scanning">Scanning…</string>
@@ -192,7 +192,7 @@
     <string name="search_field_label">Title, artist, or album</string>
     <string name="search_empty_title">Search your library</string>
     <string name="search_empty_subtitle">Type at least two characters to find a title, artist, or album.</string>
-    <string name="search_no_results_title">Nothing matches \"%1$s\"</string>
+    <string name="search_no_results_title">Nothing matches "%1$s"</string>
     <string name="search_no_results_subtitle">Try a different spelling or fewer characters.</string>
 
     <!-- Common / shared labels -->
@@ -201,7 +201,7 @@
     <!-- Dialogs &amp; misc UI labels -->
     <string name="playlist_name_label">Name</string>
     <string name="remove_folder_confirmation">Remove this folder?</string>
-    <string name="remove_folder_body">\"%1$s\" will disappear from your library, along with the tracks scanned from it. The files on disk aren\'t touched.</string>
+    <string name="remove_folder_body">"%1$s" will disappear from your library, along with the tracks scanned from it. The files on disk aren't touched.</string>
     <string name="remove_button">Remove</string>
     <string name="eq_reset_to_preset">Reset to preset</string>
     <string name="library_shuffle_artist">Shuffle Artist</string>

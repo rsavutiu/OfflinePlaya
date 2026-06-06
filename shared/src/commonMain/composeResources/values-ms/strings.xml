@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Mengimbas %1$d runut merentas %2$d folder</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d gagal)</string>
     <string name="sync_status_failed">Imbasan gagal: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" sudah ada dalam pustaka anda.</string>
+    <string name="sync_status_already_added">"%1$s" sudah ada dalam pustaka anda.</string>
     <string name="top_bar_equalizer">Penyamaan</string>
     <string name="top_bar_playlists">Senarai main</string>
     <string name="top_bar_search">Cari</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Sekarang bermain</string>
     <string name="eq_no_genre_tag">— tiada tag genre —</string>
     <string name="eq_fallback_no_tag">Fail ini tidak mempunyai teg genre, jadi Auto tidak boleh membuat kesimpulan gaya — lengkung kekal rata. Tandai fail anda atau tukar kepada Manual.</string>
-    <string name="eq_fallback_unknown_tag">Teg \"%1$s\" tidak dipetakan kepada gaya yang diketahui — kekal rata. Tukar kepada Manual untuk memilih lengkung.</string>
+    <string name="eq_fallback_unknown_tag">Teg "%1$s" tidak dipetakan kepada gaya yang diketahui — kekal rata. Tukar kepada Manual untuk memilih lengkung.</string>
     <string name="empty_album_title">Tiada album</string>
     <string name="empty_album_subtitle">Artis ini tidak mempunyai album dalam pustaka yang diimbas.</string>
     <string name="empty_artist_title">Belum ada artis</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">Tiada apa-apa yang diimbas di bawah folder ini.</string>
     <string name="folder_section_folders">Folder</string>
     <string name="folder_section_tracks">Trek</string>
-    <string name="empty_library_no_folders">Tiada folder ditambahkan lagi. Ketik \"Tambah folder muzik\" di atas untuk bermula.</string>
+    <string name="empty_library_no_folders">Tiada folder ditambahkan lagi. Ketik "Tambah folder muzik" di atas untuk bermula.</string>
     <string name="library_add_music_folder">Tambah folder muzik</string>
     <string name="library_rescan_all">Imbas semula semua folder</string>
     <string name="library_scanning">Mengimbas…</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Tajuk, artis atau album</string>
     <string name="search_empty_title">Cari perpustakaan anda</string>
     <string name="search_empty_subtitle">Taip sekurang-kurangnya dua aksara untuk mencari tajuk, artis atau album.</string>
-    <string name="search_no_results_title">Tiada apa yang sepadan dengan \"%1$s\"</string>
+    <string name="search_no_results_title">Tiada apa yang sepadan dengan "%1$s"</string>
     <string name="search_no_results_subtitle">Cuba ejaan yang berbeza atau kurang aksara.</string>
     <string name="common_loading">Memuatkan…</string>
     <string name="playlist_name_label">Nama</string>
     <string name="remove_folder_confirmation">Alih keluar folder ini?</string>
-    <string name="remove_folder_body">\"%1$s\" akan hilang daripada pustaka anda, bersama-sama dengan trek yang diimbas daripadanya. Fail pada cakera tidak disentuh.</string>
+    <string name="remove_folder_body">"%1$s" akan hilang daripada pustaka anda, bersama-sama dengan trek yang diimbas daripadanya. Fail pada cakera tidak disentuh.</string>
     <string name="remove_button">Alih keluar</string>
     <string name="eq_reset_to_preset">Tetapkan semula kepada pratetap</string>
     <string name="library_shuffle_artist">Kocok Artis</string>

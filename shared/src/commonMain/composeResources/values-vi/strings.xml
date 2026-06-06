@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Đã quét %1$d bản nhạc trên %2$d thư mục</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d không thành công)</string>
     <string name="sync_status_failed">Quét không thành công: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" đã có trong thư viện của bạn.</string>
+    <string name="sync_status_already_added">"%1$s" đã có trong thư viện của bạn.</string>
     <string name="top_bar_equalizer">Bộ chỉnh âm</string>
     <string name="top_bar_playlists">Danh sách phát</string>
     <string name="top_bar_search">Tìm kiếm</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Đang chơi</string>
     <string name="eq_no_genre_tag">— không có thẻ thể loại —</string>
     <string name="eq_fallback_no_tag">Tệp này không có thẻ thể loại nên Tự động không thể suy ra kiểu — đường cong vẫn phẳng. Gắn thẻ các tập tin của bạn hoặc chuyển sang Thủ công.</string>
-    <string name="eq_fallback_unknown_tag">Thẻ \"%1$s\" không ánh xạ tới kiểu đã biết — giữ nguyên. Chuyển sang Thủ công để chọn đường cong.</string>
+    <string name="eq_fallback_unknown_tag">Thẻ "%1$s" không ánh xạ tới kiểu đã biết — giữ nguyên. Chuyển sang Thủ công để chọn đường cong.</string>
     <string name="empty_album_title">Không có album nào</string>
     <string name="empty_album_subtitle">Nghệ sĩ này không có album nào trong thư viện được quét.</string>
     <string name="empty_artist_title">Chưa có nghệ sĩ nào</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">Không có gì được quét trong thư mục này.</string>
     <string name="folder_section_folders">Thư mục</string>
     <string name="folder_section_tracks">Bài hát</string>
-    <string name="empty_library_no_folders">Chưa có thư mục nào được thêm vào. Nhấn vào \"Thêm thư mục nhạc\" ở trên để bắt đầu.</string>
+    <string name="empty_library_no_folders">Chưa có thư mục nào được thêm vào. Nhấn vào "Thêm thư mục nhạc" ở trên để bắt đầu.</string>
     <string name="library_add_music_folder">Thêm thư mục nhạc</string>
     <string name="library_rescan_all">Quét lại tất cả các thư mục</string>
     <string name="library_scanning">Đang quét…</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Tiêu đề, nghệ sĩ hoặc album</string>
     <string name="search_empty_title">Tìm kiếm thư viện của bạn</string>
     <string name="search_empty_subtitle">Nhập ít nhất hai ký tự để tìm tiêu đề, nghệ sĩ hoặc album.</string>
-    <string name="search_no_results_title">Không có gì khớp với \"%1$s\"</string>
+    <string name="search_no_results_title">Không có gì khớp với "%1$s"</string>
     <string name="search_no_results_subtitle">Hãy thử cách viết khác hoặc ít ký tự hơn.</string>
     <string name="common_loading">Đang tải…</string>
     <string name="playlist_name_label">Tên</string>
     <string name="remove_folder_confirmation">Xóa thư mục này?</string>
-    <string name="remove_folder_body">\"%1$s\" sẽ biến mất khỏi thư viện của bạn cùng với các bản nhạc được quét từ đó. Các tập tin trên đĩa không được chạm vào.</string>
+    <string name="remove_folder_body">"%1$s" sẽ biến mất khỏi thư viện của bạn cùng với các bản nhạc được quét từ đó. Các tập tin trên đĩa không được chạm vào.</string>
     <string name="remove_button">Xóa</string>
     <string name="eq_reset_to_preset">Đặt lại về giá trị đặt trước</string>
     <string name="library_shuffle_artist">Nghệ sĩ ngẫu nhiên</string>

@@ -58,7 +58,7 @@
     <string name="sync_status_completed">%2$d फ़ोल्डरों में %1$d ट्रैक स्कैन किए गए</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d विफल)</string>
     <string name="sync_status_failed">स्कैन विफल: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" पहले से ही आपकी लाइब्रेरी में है।</string>
+    <string name="sync_status_already_added">"%1$s" पहले से ही आपकी लाइब्रेरी में है।</string>
     <string name="top_bar_equalizer">तुल्यकारक</string>
     <string name="top_bar_playlists">प्लेलिस्ट</string>
     <string name="top_bar_search">खोजें</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">अभी खेल रहे हैं</string>
     <string name="eq_no_genre_tag">- कोई शैली टैग नहीं -</string>
     <string name="eq_fallback_no_tag">इस फ़ाइल में कोई शैली टैग नहीं है, इसलिए ऑटो किसी शैली का अनुमान नहीं लगा सकता - वक्र समतल रहता है। अपनी फ़ाइलों को टैग करें या मैन्युअल पर स्विच करें।</string>
-    <string name="eq_fallback_unknown_tag">टैग \"%1$s\" किसी ज्ञात शैली पर मैप नहीं किया गया - स्थिर रहा। वक्र चुनने के लिए मैनुअल पर स्विच करें।</string>
+    <string name="eq_fallback_unknown_tag">टैग "%1$s" किसी ज्ञात शैली पर मैप नहीं किया गया - स्थिर रहा। वक्र चुनने के लिए मैनुअल पर स्विच करें।</string>
     <string name="empty_album_title">कोई एल्बम नहीं</string>
     <string name="empty_album_subtitle">स्कैन की गई लाइब्रेरी में इस कलाकार का कोई एल्बम नहीं है।</string>
     <string name="empty_artist_title">अभी तक कोई कलाकार नहीं</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">इस फ़ोल्डर के अंतर्गत कुछ भी स्कैन नहीं किया गया था.</string>
     <string name="folder_section_folders">फ़ोल्डर</string>
     <string name="folder_section_tracks">ट्रैक</string>
-    <string name="empty_library_no_folders">अभी तक कोई फ़ोल्डर नहीं जोड़ा गया. आरंभ करने के लिए ऊपर \"संगीत फ़ोल्डर जोड़ें\" टैप करें।</string>
+    <string name="empty_library_no_folders">अभी तक कोई फ़ोल्डर नहीं जोड़ा गया. आरंभ करने के लिए ऊपर "संगीत फ़ोल्डर जोड़ें" टैप करें।</string>
     <string name="library_add_music_folder">संगीत फ़ोल्डर जोड़ें</string>
     <string name="library_rescan_all">सभी फ़ोल्डरों को पुनः स्कैन करें</string>
     <string name="library_scanning">स्कैन किया जा रहा है...</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">शीर्षक, कलाकार, या एल्बम</string>
     <string name="search_empty_title">अपनी लाइब्रेरी खोजें</string>
     <string name="search_empty_subtitle">शीर्षक, कलाकार या एल्बम ढूंढने के लिए कम से कम दो अक्षर टाइप करें।</string>
-    <string name="search_no_results_title">\"%1$s\" से कुछ भी मेल नहीं खाता</string>
+    <string name="search_no_results_title">"%1$s" से कुछ भी मेल नहीं खाता</string>
     <string name="search_no_results_subtitle">भिन्न वर्तनी या कम वर्ण आज़माएँ.</string>
     <string name="common_loading">लोड हो रहा है...</string>
     <string name="playlist_name_label">नाम</string>
     <string name="remove_folder_confirmation">यह फ़ोल्डर हटाएं?</string>
-    <string name="remove_folder_body">\"%1$s\" आपकी लाइब्रेरी से स्कैन किए गए ट्रैक के साथ गायब हो जाएगा। डिस्क पर फ़ाइलें स्पर्श नहीं की गई हैं.</string>
+    <string name="remove_folder_body">"%1$s" आपकी लाइब्रेरी से स्कैन किए गए ट्रैक के साथ गायब हो जाएगा। डिस्क पर फ़ाइलें स्पर्श नहीं की गई हैं.</string>
     <string name="remove_button">हटाओ</string>
     <string name="eq_reset_to_preset">प्रीसेट पर रीसेट करें</string>
     <string name="library_shuffle_artist">शफ़ल कलाकार</string>

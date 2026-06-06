@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Проскановано %1$d треків у %2$d папках</string>
     <string name="sync_status_completed_with_failed">%1$s (не вдалося: %2$d)</string>
     <string name="sync_status_failed">Помилка сканування: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" уже у вашій бібліотеці.</string>
+    <string name="sync_status_already_added">"%1$s" уже у вашій бібліотеці.</string>
     <string name="top_bar_equalizer">Еквалайзер</string>
     <string name="top_bar_playlists">Списки відтворення</string>
     <string name="top_bar_search">Пошук</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Зараз грає</string>
     <string name="eq_no_genre_tag">— немає позначки жанру —</string>
     <string name="eq_fallback_no_tag">Цей файл не має тегу жанру, тому Auto не може визначити стиль — крива залишається пласкою. Позначте файли тегами або перейдіть на ручний режим.</string>
-    <string name="eq_fallback_unknown_tag">Тег \"%1$s\" не відповідає відомому стилю — залишається рівним. Щоб вибрати криву, перейдіть на ручний режим.</string>
+    <string name="eq_fallback_unknown_tag">Тег "%1$s" не відповідає відомому стилю — залишається рівним. Щоб вибрати криву, перейдіть на ручний режим.</string>
     <string name="empty_album_title">Немає альбомів</string>
     <string name="empty_album_subtitle">У відсканованій бібліотеці цього виконавця немає альбомів.</string>
     <string name="empty_artist_title">Виконавців ще немає</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Назва, виконавець або альбом</string>
     <string name="search_empty_title">Пошук у вашій бібліотеці</string>
     <string name="search_empty_subtitle">Введіть принаймні два символи, щоб знайти назву, виконавця чи альбом.</string>
-    <string name="search_no_results_title">Нічого не відповідає \"%1$s\"</string>
+    <string name="search_no_results_title">Нічого не відповідає "%1$s"</string>
     <string name="search_no_results_subtitle">Спробуйте інший варіант написання або менше символів.</string>
     <string name="common_loading">Завантаження…</string>
-    <string name="playlist_name_label">Ім\'я</string>
+    <string name="playlist_name_label">Ім'я</string>
     <string name="remove_folder_confirmation">Видалити цю папку?</string>
-    <string name="remove_folder_body">\"%1$s\" зникне з вашої бібліотеки разом із відсканованими доріжками. Файли на диску не чіпаються.</string>
+    <string name="remove_folder_body">"%1$s" зникне з вашої бібліотеки разом із відсканованими доріжками. Файли на диску не чіпаються.</string>
     <string name="remove_button">видалити</string>
     <string name="eq_reset_to_preset">Скинути до попереднього налаштування</string>
     <string name="library_shuffle_artist">Shuffle Artist</string>

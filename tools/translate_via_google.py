@@ -71,8 +71,11 @@ def android_unescape(s):
 
 
 def android_escape(s):
-    s = s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-    return s.replace('"', '\\"').replace("'", "\\'")
+    # Compose Resources renders the raw text content; it does NOT process
+    # Android-style \' \" backslash escapes (those render literally as a
+    # visible backslash). So only the XML-special characters are escaped;
+    # apostrophes and quotes are written raw.
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
 def mask(text):

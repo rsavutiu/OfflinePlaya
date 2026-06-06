@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Na-scan ang %1$d mga track sa %2$d mga folder</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d nabigo)</string>
     <string name="sync_status_failed">Nabigo ang pag-scan: %1$s</string>
-    <string name="sync_status_already_added">Ang \"%1$s\" ay nasa iyong library na.</string>
+    <string name="sync_status_already_added">Ang "%1$s" ay nasa iyong library na.</string>
     <string name="top_bar_equalizer">Equalizer</string>
     <string name="top_bar_playlists">Mga playlist</string>
     <string name="top_bar_search">Maghanap</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Naglalaro ngayon</string>
     <string name="eq_no_genre_tag">— walang tag ng genre —</string>
     <string name="eq_fallback_no_tag">Walang tag ng genre ang file na ito, kaya hindi makapaghihinuha ng istilo ang Auto — nananatiling flat ang curve. I-tag ang iyong mga file o lumipat sa Manual.</string>
-    <string name="eq_fallback_unknown_tag">Ang tag na \"%1$s\" ay hindi na-map sa isang kilalang istilo — nananatiling patag. Lumipat sa Manual para pumili ng curve.</string>
+    <string name="eq_fallback_unknown_tag">Ang tag na "%1$s" ay hindi na-map sa isang kilalang istilo — nananatiling patag. Lumipat sa Manual para pumili ng curve.</string>
     <string name="empty_album_title">Walang mga album</string>
     <string name="empty_album_subtitle">Ang artist na ito ay walang mga album sa na-scan na library.</string>
     <string name="empty_artist_title">Wala pang artista</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">Walang na-scan sa ilalim ng folder na ito.</string>
     <string name="folder_section_folders">Mga folder</string>
     <string name="folder_section_tracks">Mga track</string>
-    <string name="empty_library_no_folders">Wala pang naidagdag na mga folder. I-tap ang \"Magdagdag ng folder ng musika\" sa itaas para makapagsimula.</string>
+    <string name="empty_library_no_folders">Wala pang naidagdag na mga folder. I-tap ang "Magdagdag ng folder ng musika" sa itaas para makapagsimula.</string>
     <string name="library_add_music_folder">Magdagdag ng folder ng musika</string>
     <string name="library_rescan_all">Muling i-scan ang lahat ng mga folder</string>
     <string name="library_scanning">Ini-scan...</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Pamagat, artist, o album</string>
     <string name="search_empty_title">Hanapin ang iyong library</string>
     <string name="search_empty_subtitle">Mag-type ng hindi bababa sa dalawang character upang makahanap ng pamagat, artist, o album.</string>
-    <string name="search_no_results_title">Walang tumutugma sa \"%1$s\"</string>
+    <string name="search_no_results_title">Walang tumutugma sa "%1$s"</string>
     <string name="search_no_results_subtitle">Subukan ang ibang spelling o mas kaunting mga character.</string>
     <string name="common_loading">Naglo-load…</string>
     <string name="playlist_name_label">Pangalan</string>
     <string name="remove_folder_confirmation">Alisin ang folder na ito?</string>
-    <string name="remove_folder_body">Mawawala ang \"%1$s\" sa iyong library, kasama ang mga track na na-scan mula rito. Ang mga file sa disk ay hindi hinawakan.</string>
+    <string name="remove_folder_body">Mawawala ang "%1$s" sa iyong library, kasama ang mga track na na-scan mula rito. Ang mga file sa disk ay hindi hinawakan.</string>
     <string name="remove_button">Alisin</string>
     <string name="eq_reset_to_preset">I-reset sa preset</string>
     <string name="library_shuffle_artist">Balasahin ang Artist</string>

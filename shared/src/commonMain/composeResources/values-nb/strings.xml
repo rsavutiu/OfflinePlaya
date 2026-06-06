@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Spiller nå</string>
     <string name="eq_no_genre_tag">— ingen sjangermerke —</string>
     <string name="eq_fallback_no_tag">Denne filen har ingen sjangertag, så Auto kan ikke utlede en stil – kurven forblir flat. Merk filene dine eller bytt til manuell.</string>
-    <string name="eq_fallback_unknown_tag">Taggen \"%1$s\" ble ikke tilordnet en kjent stil – forblir flat. Bytt til manuell for å velge en kurve.</string>
+    <string name="eq_fallback_unknown_tag">Taggen "%1$s" ble ikke tilordnet en kjent stil – forblir flat. Bytt til manuell for å velge en kurve.</string>
     <string name="empty_album_title">Ingen album</string>
     <string name="empty_album_subtitle">Denne artisten har ingen album i det skannede biblioteket.</string>
     <string name="empty_artist_title">Ingen artister ennå</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Tittel, artist eller album</string>
     <string name="search_empty_title">Søk i biblioteket ditt</string>
     <string name="search_empty_subtitle">Skriv inn minst to tegn for å finne en tittel, artist eller album.</string>
-    <string name="search_no_results_title">Ingenting samsvarer med \"%1$s\"</string>
+    <string name="search_no_results_title">Ingenting samsvarer med "%1$s"</string>
     <string name="search_no_results_subtitle">Prøv en annen stavemåte eller færre tegn.</string>
     <string name="common_loading">Laster inn …</string>
     <string name="playlist_name_label">Navn</string>
     <string name="remove_folder_confirmation">Vil du fjerne denne mappen?</string>
-    <string name="remove_folder_body">\"%1$s\" vil forsvinne fra biblioteket ditt, sammen med sporene som er skannet fra det. Filene på disken blir ikke berørt.</string>
+    <string name="remove_folder_body">"%1$s" vil forsvinne fra biblioteket ditt, sammen med sporene som er skannet fra det. Filene på disken blir ikke berørt.</string>
     <string name="remove_button">Fjern</string>
     <string name="eq_reset_to_preset">Tilbakestill til forhåndsinnstilling</string>
     <string name="library_shuffle_artist">Bland artist</string>

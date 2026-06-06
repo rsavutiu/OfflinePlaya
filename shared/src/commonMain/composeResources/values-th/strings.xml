@@ -58,7 +58,7 @@
     <string name="sync_status_completed">สแกนแล้ว %1$d แทร็กจาก %2$d โฟลเดอร์</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d ล้มเหลว)</string>
     <string name="sync_status_failed">การสแกนล้มเหลว: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" อยู่ในห้องสมุดของคุณแล้ว</string>
+    <string name="sync_status_already_added">"%1$s" อยู่ในห้องสมุดของคุณแล้ว</string>
     <string name="top_bar_equalizer">อีควอไลเซอร์</string>
     <string name="top_bar_playlists">เพลย์ลิสต์</string>
     <string name="top_bar_search">ค้นหา</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">กำลังเล่นอยู่</string>
     <string name="eq_no_genre_tag">— ไม่มีแท็กประเภท —</string>
     <string name="eq_fallback_no_tag">ไฟล์นี้ไม่มีแท็กประเภท ดังนั้น Auto จึงไม่สามารถอนุมานสไตล์ได้ เนื่องจากเส้นโค้งจะคงที่ แท็กไฟล์ของคุณหรือเปลี่ยนไปใช้ด้วยตนเอง</string>
-    <string name="eq_fallback_unknown_tag">แท็ก \"%1$s\" ไม่ได้แมปกับสไตล์ที่รู้จัก — ยังคงไม่เปลี่ยนแปลง สลับไปใช้แบบแมนนวลเพื่อเลือกเส้นโค้ง</string>
+    <string name="eq_fallback_unknown_tag">แท็ก "%1$s" ไม่ได้แมปกับสไตล์ที่รู้จัก — ยังคงไม่เปลี่ยนแปลง สลับไปใช้แบบแมนนวลเพื่อเลือกเส้นโค้ง</string>
     <string name="empty_album_title">ไม่มีอัลบั้ม</string>
     <string name="empty_album_subtitle">ศิลปินนี้ไม่มีอัลบั้มในไลบรารีที่สแกน</string>
     <string name="empty_artist_title">ยังไม่มีศิลปิน</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">ไม่มีการสแกนสิ่งใดในโฟลเดอร์นี้</string>
     <string name="folder_section_folders">โฟลเดอร์</string>
     <string name="folder_section_tracks">แทร็ก</string>
-    <string name="empty_library_no_folders">ยังไม่มีการเพิ่มโฟลเดอร์ แตะ \"เพิ่มโฟลเดอร์เพลง\" ด้านบนเพื่อเริ่มต้น</string>
+    <string name="empty_library_no_folders">ยังไม่มีการเพิ่มโฟลเดอร์ แตะ "เพิ่มโฟลเดอร์เพลง" ด้านบนเพื่อเริ่มต้น</string>
     <string name="library_add_music_folder">เพิ่มโฟลเดอร์เพลง</string>
     <string name="library_rescan_all">สแกนโฟลเดอร์ทั้งหมดอีกครั้ง</string>
     <string name="library_scanning">กำลังสแกน...</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">ชื่อศิลปินหรืออัลบั้ม</string>
     <string name="search_empty_title">ค้นหาห้องสมุดของคุณ</string>
     <string name="search_empty_subtitle">พิมพ์อย่างน้อยสองตัวอักขระเพื่อค้นหาชื่อ ศิลปิน หรืออัลบั้ม</string>
-    <string name="search_no_results_title">ไม่มีสิ่งใดที่ตรงกับ \"%1$s\"</string>
+    <string name="search_no_results_title">ไม่มีสิ่งใดที่ตรงกับ "%1$s"</string>
     <string name="search_no_results_subtitle">ลองสะกดคำอื่นหรือลดอักขระลง</string>
     <string name="common_loading">กำลังโหลด...</string>
     <string name="playlist_name_label">ชื่อ</string>
     <string name="remove_folder_confirmation">ลบโฟลเดอร์นี้ใช่ไหม</string>
-    <string name="remove_folder_body">\"%1$s\" จะหายไปจากห้องสมุดของคุณพร้อมกับแทร็กที่สแกน ไฟล์บนดิสก์ไม่ได้รับการสัมผัส</string>
+    <string name="remove_folder_body">"%1$s" จะหายไปจากห้องสมุดของคุณพร้อมกับแทร็กที่สแกน ไฟล์บนดิสก์ไม่ได้รับการสัมผัส</string>
     <string name="remove_button">ลบ</string>
     <string name="eq_reset_to_preset">รีเซ็ตเป็นค่าที่ตั้งล่วงหน้า</string>
     <string name="library_shuffle_artist">ศิลปินสับเปลี่ยน</string>

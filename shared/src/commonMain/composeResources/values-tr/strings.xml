@@ -13,7 +13,7 @@
     <string name="home_label_add_folders">Klasör Ekle</string>
     <string name="home_label_import_more_tracks">Daha fazla parçayı içe aktar</string>
     <string name="home_title_start_your_music_journey">Müzik Yolculuğunuza Başlayın</string>
-    <string name="home_label_select_folder">Müziğinizin bulunduğu bir klasör seçin. Modern Android\'de sistem standart medya klasörlerinin (Müzik, İndirilenler vb.) seçilmesini engeller; Müzik/Albümler gibi bir alt klasöre gidin ve onun yerine onu seçin. Engellenen klasörlerdeki ses, müzik erişim izni aracılığıyla kitaplığınızda görünmeye devam eder; etiket yazma özelliği için yalnızca klasörleri seçmeniz gerekir.</string>
+    <string name="home_label_select_folder">Müziğinizin bulunduğu bir klasör seçin. Modern Android'de sistem standart medya klasörlerinin (Müzik, İndirilenler vb.) seçilmesini engeller; Müzik/Albümler gibi bir alt klasöre gidin ve onun yerine onu seçin. Engellenen klasörlerdeki ses, müzik erişim izni aracılığıyla kitaplığınızda görünmeye devam eder; etiket yazma özelliği için yalnızca klasörleri seçmeniz gerekir.</string>
     <string name="home_status_picking_music_folder">Müzik klasörü seçiliyor</string>
     <string name="home_status_scanning">Taranıyor…</string>
     <string name="home_label_pick_music_folder">Müzik klasörünü seç</string>
@@ -58,7 +58,7 @@
     <string name="sync_status_completed">%2$d klasörde %1$d parça tarandı</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d başarısız oldu)</string>
     <string name="sync_status_failed">Tarama başarısız oldu: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" zaten kitaplığınızda.</string>
+    <string name="sync_status_already_added">"%1$s" zaten kitaplığınızda.</string>
     <string name="top_bar_equalizer">Ekolayzer</string>
     <string name="top_bar_playlists">Çalma listeleri</string>
     <string name="top_bar_search">Ara</string>
@@ -83,7 +83,7 @@
     <string name="cd_lyrics">Şarkı sözleri</string>
     <string name="settings_section_lyrics">Şarkı sözleri</string>
     <string name="lyrics_download_remote">Şarkı sözlerini indir</string>
-    <string name="lyrics_download_remote_subtitle">Gömülü etiket veya .lrc sepeti bulunmadığında LRCLIB\'den eksik şarkı sözlerini arayın.</string>
+    <string name="lyrics_download_remote_subtitle">Gömülü etiket veya .lrc sepeti bulunmadığında LRCLIB'den eksik şarkı sözlerini arayın.</string>
     <string name="lyrics_save_sidecar">.lrc sepeti olarak kaydet</string>
     <string name="lyrics_save_sidecar_subtitle">Getirilen şarkı sözlerini ses dosyasının yanına yazın, böylece yeniden yüklemeden sonra hayatta kalırlar ve diğer oyuncular bunları okuyabilir.</string>
     <string name="playback_crossfade">Çapraz solma</string>
@@ -91,7 +91,7 @@
     <string name="playback_crossfade_duration">Geçiş uzunluğu</string>
     <string name="playback_crossfade_duration_value">%1$d saniye</string>
     <string name="burn_download_remote_art">Uzak sanatı indirin</string>
-    <string name="burn_download_remote_art_subtitle">Gerektiğinde MusicBrainz\'in eksik cover\'larına bakın.</string>
+    <string name="burn_download_remote_art_subtitle">Gerektiğinde MusicBrainz'in eksik cover'larına bakın.</string>
     <string name="burn_button">Etiketleri dosyalara yazın</string>
     <string name="burn_explainer">Albüm resmini ve tür etiketlerini doğrudan ses dosyalarınıza yazar. Bu, diğer uygulamaların doğru bilgileri görmesine yardımcı olur ve EQ Auto modunu etkinleştirir.</string>
     <string name="burn_progress">Meta verileri yazma: %1$d / %2$d</string>
@@ -108,8 +108,8 @@
     <string name="eq_label_from_tag">Etiketten</string>
     <string name="eq_label_now_playing">Şimdi oynatılıyor</string>
     <string name="eq_no_genre_tag">— tür etiketi yok —</string>
-    <string name="eq_fallback_no_tag">Bu dosyanın tür etiketi yoktur, dolayısıyla Otomatik bir stil çıkarımı yapamaz; eğri düz kalır. Dosyalarınızı etiketleyin veya Manuel\'e geçin.</string>
-    <string name="eq_fallback_unknown_tag">\"%1$s\" etiketi bilinen bir stille eşleşmiyordu; düz kalıyordu. Bir eğri seçmek için Manuel\'e geçin.</string>
+    <string name="eq_fallback_no_tag">Bu dosyanın tür etiketi yoktur, dolayısıyla Otomatik bir stil çıkarımı yapamaz; eğri düz kalır. Dosyalarınızı etiketleyin veya Manuel'e geçin.</string>
+    <string name="eq_fallback_unknown_tag">"%1$s" etiketi bilinen bir stille eşleşmiyordu; düz kalıyordu. Bir eğri seçmek için Manuel'e geçin.</string>
     <string name="empty_album_title">Albüm yok</string>
     <string name="empty_album_subtitle">Bu sanatçının taranan kütüphanede albümü yok.</string>
     <string name="empty_artist_title">Henüz sanatçı yok</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">Bu klasörün altında hiçbir şey taranmadı.</string>
     <string name="folder_section_folders">Klasörler</string>
     <string name="folder_section_tracks">Parçalar</string>
-    <string name="empty_library_no_folders">Henüz klasör eklenmedi. Başlamak için yukarıdaki \"Müzik klasörü ekle\"ye dokunun.</string>
+    <string name="empty_library_no_folders">Henüz klasör eklenmedi. Başlamak için yukarıdaki "Müzik klasörü ekle"ye dokunun.</string>
     <string name="library_add_music_folder">Müzik klasörü ekle</string>
     <string name="library_rescan_all">Tüm klasörleri yeniden tarayın</string>
     <string name="library_scanning">Taranıyor…</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Başlık, sanatçı veya albüm</string>
     <string name="search_empty_title">Kütüphanenizde arama yapın</string>
     <string name="search_empty_subtitle">Bir başlığı, sanatçıyı veya albümü bulmak için en az iki karakter yazın.</string>
-    <string name="search_no_results_title">\"%1$s\" ile eşleşen hiçbir şey yok</string>
+    <string name="search_no_results_title">"%1$s" ile eşleşen hiçbir şey yok</string>
     <string name="search_no_results_subtitle">Farklı bir yazım veya daha az karakter kullanmayı deneyin.</string>
     <string name="common_loading">Yükleniyor…</string>
     <string name="playlist_name_label">İsim</string>
     <string name="remove_folder_confirmation">Bu klasör kaldırılsın mı?</string>
-    <string name="remove_folder_body">\"%1$s\", taranan parçalarla birlikte kitaplığınızdan kaybolacak. Diskteki dosyalara dokunulmaz.</string>
+    <string name="remove_folder_body">"%1$s", taranan parçalarla birlikte kitaplığınızdan kaybolacak. Diskteki dosyalara dokunulmaz.</string>
     <string name="remove_button">Kaldır</string>
     <string name="eq_reset_to_preset">Ön ayara sıfırla</string>
     <string name="library_shuffle_artist">Sanatçıyı Karıştır</string>

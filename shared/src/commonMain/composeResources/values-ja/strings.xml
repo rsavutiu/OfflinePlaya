@@ -58,7 +58,7 @@
     <string name="sync_status_completed">合計 %1$d トラックを %2$d フォルダでスキャンしました</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d 失敗)</string>
     <string name="sync_status_failed">スキャン失敗: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\"はすでにライブラリにあります。</string>
+    <string name="sync_status_already_added">"%1$s"はすでにライブラリにあります。</string>
     <string name="top_bar_equalizer">イコライザー</string>
     <string name="top_bar_playlists">プレイリスト</string>
     <string name="top_bar_search">検索</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">今プレイリスト中</string>
     <string name="eq_no_genre_tag">— ジャンルタグなし —</string>
     <string name="eq_fallback_no_tag">このファイルにはジャンルタグがありませんので、Autoはスタイルを推測できません — 曲線は平らのままです。ファイルにタグを付けたり、Manualに切り替えてください。</string>
-    <string name="eq_fallback_unknown_tag">タグ \"%1$s\" は既知のスタイルにマップされませんでした — 曲線は平らのままです。曲線を選択するにはManualに切り替えてください。</string>
+    <string name="eq_fallback_unknown_tag">タグ "%1$s" は既知のスタイルにマップされませんでした — 曲線は平らのままです。曲線を選択するにはManualに切り替えてください。</string>
     <string name="empty_album_title">アルバムなし</string>
     <string name="empty_album_subtitle">このアーティストのスキャンされたライブラリにはアルバムがありません。</string>
     <string name="empty_artist_title">アーティストがまだありません</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">このフォルダの下にスキャンされませんでした。</string>
     <string name="folder_section_folders">フォルダ</string>
     <string name="folder_section_tracks">トラック</string>
-    <string name="empty_library_no_folders">フォルダがまだ追加されていません。上記の \"音楽フォルダを追加\" をタップして開始してください。</string>
+    <string name="empty_library_no_folders">フォルダがまだ追加されていません。上記の "音楽フォルダを追加" をタップして開始してください。</string>
     <string name="library_add_music_folder">音楽フォルダを追加</string>
     <string name="library_rescan_all">すべてのフォルダを再スキャン</string>
     <string name="library_scanning">スキャン中…</string>
@@ -144,7 +144,7 @@
     <string name="search_field_label">タイトル、アーティスト、またはアルバム</string>
     <string name="search_empty_title">ライブラリを検索</string>
     <string name="search_empty_subtitle">タイトル、アーティスト、またはアルバムを検索するには少なくとも2文字入力してください。</string>
-    <string name="search_no_results_title">\"%1$s\" に一致するものがありません</string>
+    <string name="search_no_results_title">"%1$s" に一致するものがありません</string>
     <string name="search_no_results_subtitle">誤字を試してみたり、文字を減らしてみてください。</string>
     <string name="common_loading">読み込み中…</string>
     <string name="playlist_name_label">名前</string>

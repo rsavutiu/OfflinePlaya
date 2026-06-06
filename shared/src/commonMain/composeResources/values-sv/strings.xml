@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Skannade %1$d spår i %2$d mappar</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d misslyckades)</string>
     <string name="sync_status_failed">Skanningen misslyckades: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" finns redan i ditt bibliotek.</string>
+    <string name="sync_status_already_added">"%1$s" finns redan i ditt bibliotek.</string>
     <string name="top_bar_equalizer">Equalizer</string>
     <string name="top_bar_playlists">Spellistor</string>
     <string name="top_bar_search">Sök</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Spelar nu</string>
     <string name="eq_no_genre_tag">— ingen genretagg —</string>
     <string name="eq_fallback_no_tag">Den här filen har ingen genretagg, så Auto kan inte sluta sig till en stil – kurvan förblir platt. Tagga dina filer eller byt till Manual.</string>
-    <string name="eq_fallback_unknown_tag">Taggen \"%1$s\" mappades inte till en känd stil – förblir platt. Växla till Manuell för att välja en kurva.</string>
+    <string name="eq_fallback_unknown_tag">Taggen "%1$s" mappades inte till en känd stil – förblir platt. Växla till Manuell för att välja en kurva.</string>
     <string name="empty_album_title">Inga album</string>
     <string name="empty_album_subtitle">Den här artisten har inga album i det skannade biblioteket.</string>
     <string name="empty_artist_title">Inga artister än</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">Inget skannades under den här mappen.</string>
     <string name="folder_section_folders">Mappar</string>
     <string name="folder_section_tracks">Spår</string>
-    <string name="empty_library_no_folders">Inga mappar har lagts till ännu. Tryck på \"Lägg till musikmapp\" ovan för att komma igång.</string>
+    <string name="empty_library_no_folders">Inga mappar har lagts till ännu. Tryck på "Lägg till musikmapp" ovan för att komma igång.</string>
     <string name="library_add_music_folder">Lägg till musikmapp</string>
     <string name="library_rescan_all">Skanna alla mappar igen</string>
     <string name="library_scanning">Skannar...</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Titel, artist eller album</string>
     <string name="search_empty_title">Sök i ditt bibliotek</string>
     <string name="search_empty_subtitle">Skriv minst två tecken för att hitta en titel, artist eller album.</string>
-    <string name="search_no_results_title">Inget matchar \"%1$s\"</string>
+    <string name="search_no_results_title">Inget matchar "%1$s"</string>
     <string name="search_no_results_subtitle">Prova en annan stavning eller färre tecken.</string>
     <string name="common_loading">Laddar...</string>
     <string name="playlist_name_label">Namn</string>
     <string name="remove_folder_confirmation">Vill du ta bort den här mappen?</string>
-    <string name="remove_folder_body">\"%1$s\" försvinner från ditt bibliotek, tillsammans med spåren som skannats från det. Filerna på disken berörs inte.</string>
+    <string name="remove_folder_body">"%1$s" försvinner från ditt bibliotek, tillsammans med spåren som skannats från det. Filerna på disken berörs inte.</string>
     <string name="remove_button">Ta bort</string>
     <string name="eq_reset_to_preset">Återställ till förinställning</string>
     <string name="library_shuffle_artist">Blanda artist</string>

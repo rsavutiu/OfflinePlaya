@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Сканировано %1$d треков в %2$d папках</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d неудачных)</string>
     <string name="sync_status_failed">Сканирование завершилось с ошибкой: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" уже есть в вашей библиотеке.</string>
+    <string name="sync_status_already_added">"%1$s" уже есть в вашей библиотеке.</string>
     <string name="top_bar_equalizer">Эквалайзер</string>
     <string name="top_bar_playlists">Плейлисты</string>
     <string name="top_bar_search">Поиск</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Сейчас воспроизводится</string>
     <string name="eq_no_genre_tag">— нет метки жанра —</string>
     <string name="eq_fallback_no_tag">Этот файл не имеет метки жанра, поэтому Auto не может определить стиль — кривая остаётся плоской. Добавьте метки к файлам или переключитесь на Manual.</string>
-    <string name="eq_fallback_unknown_tag">Метка \"%1$s\" не соответствует известному стилю — остаётся плоской. Переключитесь на Manual, чтобы выбрать кривую.</string>
+    <string name="eq_fallback_unknown_tag">Метка "%1$s" не соответствует известному стилю — остаётся плоской. Переключитесь на Manual, чтобы выбрать кривую.</string>
     <string name="empty_album_title">Нет альбомов</string>
     <string name="empty_album_subtitle">Этот исполнитель не имеет альбомов в сканированной библиотеке.</string>
     <string name="empty_artist_title">Ещё нет исполнителей</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">Ниже этой папки не было сканировано ничего.</string>
     <string name="folder_section_folders">Папки</string>
     <string name="folder_section_tracks">Треки</string>
-    <string name="empty_library_no_folders">Ещё не добавлено папок. Нажмите \"Добавить музыкальную папку\" выше, чтобы начать.</string>
+    <string name="empty_library_no_folders">Ещё не добавлено папок. Нажмите "Добавить музыкальную папку" выше, чтобы начать.</string>
     <string name="library_add_music_folder">Добавить музыкальную папку</string>
     <string name="library_rescan_all">Пересканировать все папки</string>
     <string name="library_scanning">Сканирование…</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Название, исполнитель, или альбом</string>
     <string name="search_empty_title">Поиск в библиотеке</string>
     <string name="search_empty_subtitle">Введите минимум два символа, чтобы найти название, исполнителя или альбом.</string>
-    <string name="search_no_results_title">Ничего не соответствует \"%1$s\"</string>
+    <string name="search_no_results_title">Ничего не соответствует "%1$s"</string>
     <string name="search_no_results_subtitle">Попробуйте другой вариант написания или меньше символов.</string>
     <string name="common_loading">Загрузка…</string>
     <string name="playlist_name_label">Имя</string>
     <string name="remove_folder_confirmation">Удалить эту папку?</string>
-    <string name="remove_folder_body">\"%1$s\" исчезнет из вашей библиотеки вместе со сканированными из нее треками. Файлы на диске не трогаются.</string>
+    <string name="remove_folder_body">"%1$s" исчезнет из вашей библиотеки вместе со сканированными из нее треками. Файлы на диске не трогаются.</string>
     <string name="remove_button">Удалить</string>
     <string name="eq_reset_to_preset">Сбросить настройки</string>
     <string name="library_shuffle_artist">Перетасовать артиста</string>

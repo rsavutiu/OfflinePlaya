@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Memindai %1$d trek di %2$d folder</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d gagal)</string>
     <string name="sync_status_failed">Pemindaian gagal: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" sudah ada di perpustakaan Anda.</string>
+    <string name="sync_status_already_added">"%1$s" sudah ada di perpustakaan Anda.</string>
     <string name="top_bar_equalizer">Ekualiser</string>
     <string name="top_bar_playlists">Daftar Putar</string>
     <string name="top_bar_search">Cari</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Sekarang sedang diputar</string>
     <string name="eq_no_genre_tag">— tidak ada tag genre —</string>
     <string name="eq_fallback_no_tag">File ini tidak memiliki tag genre, jadi Otomatis tidak dapat menyimpulkan gaya — kurvanya tetap datar. Tandai file Anda atau alihkan ke Manual.</string>
-    <string name="eq_fallback_unknown_tag">Tag \"%1$s\" tidak dipetakan ke gaya yang dikenal — tetap datar. Beralih ke Manual untuk memilih kurva.</string>
+    <string name="eq_fallback_unknown_tag">Tag "%1$s" tidak dipetakan ke gaya yang dikenal — tetap datar. Beralih ke Manual untuk memilih kurva.</string>
     <string name="empty_album_title">Tidak ada album</string>
     <string name="empty_album_subtitle">Artis ini tidak memiliki album di perpustakaan yang dipindai.</string>
     <string name="empty_artist_title">Belum ada artis</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">Tidak ada yang dipindai di bawah folder ini.</string>
     <string name="folder_section_folders">Folder</string>
     <string name="folder_section_tracks">Trek</string>
-    <string name="empty_library_no_folders">Belum ada folder yang ditambahkan. Ketuk \"Tambahkan folder musik\" di atas untuk memulai.</string>
+    <string name="empty_library_no_folders">Belum ada folder yang ditambahkan. Ketuk "Tambahkan folder musik" di atas untuk memulai.</string>
     <string name="library_add_music_folder">Tambahkan folder musik</string>
     <string name="library_rescan_all">Pindai ulang semua folder</string>
     <string name="library_scanning">Memindai…</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Judul, artis, atau album</string>
     <string name="search_empty_title">Telusuri perpustakaan Anda</string>
     <string name="search_empty_subtitle">Ketikkan setidaknya dua karakter untuk menemukan judul, artis, atau album.</string>
-    <string name="search_no_results_title">Tidak ada yang cocok dengan \"%1$s\"</string>
+    <string name="search_no_results_title">Tidak ada yang cocok dengan "%1$s"</string>
     <string name="search_no_results_subtitle">Coba ejaan yang berbeda atau karakter yang lebih sedikit.</string>
     <string name="common_loading">Memuat…</string>
     <string name="playlist_name_label">Nama</string>
     <string name="remove_folder_confirmation">Hapus folder ini?</string>
-    <string name="remove_folder_body">\"%1$s\" akan hilang dari perpustakaan Anda, bersama dengan trek yang dipindai darinya. File di disk tidak disentuh.</string>
+    <string name="remove_folder_body">"%1$s" akan hilang dari perpustakaan Anda, bersama dengan trek yang dipindai darinya. File di disk tidak disentuh.</string>
     <string name="remove_button">Hapus</string>
     <string name="eq_reset_to_preset">Atur ulang ke preset</string>
     <string name="library_shuffle_artist">Artis Acak</string>

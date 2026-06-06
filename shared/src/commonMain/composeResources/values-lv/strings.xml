@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Skenēti %1$d celiņi %2$d mapēs</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d neizdevās)</string>
     <string name="sync_status_failed">Skenēšana neizdevās: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" jau ir jūsu bibliotēkā.</string>
+    <string name="sync_status_already_added">"%1$s" jau ir jūsu bibliotēkā.</string>
     <string name="top_bar_equalizer">Ekvalaizers</string>
     <string name="top_bar_playlists">Atskaņošanas saraksti</string>
     <string name="top_bar_search">Meklēt</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Nosaukums, izpildītājs vai albums</string>
     <string name="search_empty_title">Meklējiet savā bibliotēkā</string>
     <string name="search_empty_subtitle">Ievadiet vismaz divas rakstzīmes, lai atrastu nosaukumu, izpildītāju vai albumu.</string>
-    <string name="search_no_results_title">Nekas neatbilst \"%1$s\"</string>
+    <string name="search_no_results_title">Nekas neatbilst "%1$s"</string>
     <string name="search_no_results_subtitle">Izmēģiniet citu pareizrakstību vai mazāk rakstzīmju.</string>
     <string name="common_loading">Notiek ielāde…</string>
     <string name="playlist_name_label">Vārds</string>
     <string name="remove_folder_confirmation">Vai noņemt šo mapi?</string>
-    <string name="remove_folder_body">\"%1$s\" pazudīs no jūsu bibliotēkas kopā ar no tās skenētajiem ierakstiem. Diskā esošie faili netiek aiztikti.</string>
+    <string name="remove_folder_body">"%1$s" pazudīs no jūsu bibliotēkas kopā ar no tās skenētajiem ierakstiem. Diskā esošie faili netiek aiztikti.</string>
     <string name="remove_button">Noņemt</string>
     <string name="eq_reset_to_preset">Atiestatīt uz iepriekš iestatīto</string>
     <string name="library_shuffle_artist">Sajaukšanas izpildītājs</string>

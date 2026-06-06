@@ -58,7 +58,7 @@
     <string name="sync_status_completed">%1$d nummers gescand in %2$d mappen</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d mislukt)</string>
     <string name="sync_status_failed">Scannen mislukt: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" staat al in uw bibliotheek.</string>
+    <string name="sync_status_already_added">"%1$s" staat al in uw bibliotheek.</string>
     <string name="top_bar_equalizer">Equalizer</string>
     <string name="top_bar_playlists">Afspeellijsten</string>
     <string name="top_bar_search">Zoeken</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Nu aan het spelen</string>
     <string name="eq_no_genre_tag">— geen genretag —</string>
     <string name="eq_fallback_no_tag">Dit bestand heeft geen genretag, dus Auto kan geen stijl afleiden; de curve blijft vlak. Tag uw bestanden of schakel over naar Handmatig.</string>
-    <string name="eq_fallback_unknown_tag">De tag \'%1$s\' kwam niet overeen met een bekende stijl en bleef plat. Schakel over naar Handmatig om een ​​curve te kiezen.</string>
+    <string name="eq_fallback_unknown_tag">De tag '%1$s' kwam niet overeen met een bekende stijl en bleef plat. Schakel over naar Handmatig om een ​​curve te kiezen.</string>
     <string name="empty_album_title">Geen albums</string>
     <string name="empty_album_subtitle">Deze artiest heeft geen albums in de gescande bibliotheek.</string>
     <string name="empty_artist_title">Nog geen artiesten</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">Er is niets gescand onder deze map.</string>
     <string name="folder_section_folders">Mappen</string>
     <string name="folder_section_tracks">Sporen</string>
-    <string name="empty_library_no_folders">Er zijn nog geen mappen toegevoegd. Tik hierboven op \'Muziekmap toevoegen\' om aan de slag te gaan.</string>
+    <string name="empty_library_no_folders">Er zijn nog geen mappen toegevoegd. Tik hierboven op 'Muziekmap toevoegen' om aan de slag te gaan.</string>
     <string name="library_add_music_folder">Muziekmap toevoegen</string>
     <string name="library_rescan_all">Scan alle mappen opnieuw</string>
     <string name="library_scanning">Scannen…</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Titel, artiest of album</string>
     <string name="search_empty_title">Zoek in uw bibliotheek</string>
     <string name="search_empty_subtitle">Typ minimaal twee tekens om een titel, artiest of album te vinden.</string>
-    <string name="search_no_results_title">Niets komt overeen met \'%1$s\'</string>
+    <string name="search_no_results_title">Niets komt overeen met '%1$s'</string>
     <string name="search_no_results_subtitle">Probeer een andere spelling of minder tekens.</string>
     <string name="common_loading">Laden…</string>
     <string name="playlist_name_label">Naam</string>
     <string name="remove_folder_confirmation">Deze map verwijderen?</string>
-    <string name="remove_folder_body">\"%1$s\" verdwijnt uit uw bibliotheek, samen met de nummers die daaruit zijn gescand. De bestanden op schijf worden niet gewijzigd.</string>
+    <string name="remove_folder_body">"%1$s" verdwijnt uit uw bibliotheek, samen met de nummers die daaruit zijn gescand. De bestanden op schijf worden niet gewijzigd.</string>
     <string name="remove_button">Verwijderen</string>
     <string name="eq_reset_to_preset">Terugzetten naar voorinstelling</string>
     <string name="library_shuffle_artist">Shuffle-artiest</string>

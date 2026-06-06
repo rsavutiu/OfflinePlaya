@@ -144,7 +144,7 @@
     <string name="search_field_label">Naslov, izvajalec ali album</string>
     <string name="search_empty_title">Poiščite svojo knjižnico</string>
     <string name="search_empty_subtitle">Vnesite vsaj dva znaka, da poiščete naslov, izvajalca ali album.</string>
-    <string name="search_no_results_title">Nič se ne ujema z \"%1$s\"</string>
+    <string name="search_no_results_title">Nič se ne ujema z "%1$s"</string>
     <string name="search_no_results_subtitle">Poskusite drugače črkovati ali manj znakov.</string>
     <string name="common_loading">Nalaganje ...</string>
     <string name="playlist_name_label">Ime</string>

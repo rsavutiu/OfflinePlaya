@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Сканирани са %1$d песни в %2$d папки</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d неуспешни)</string>
     <string name="sync_status_failed">Неуспешно сканиране: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" is already in your library.</string>
+    <string name="sync_status_already_added">"%1$s" is already in your library.</string>
     <string name="top_bar_equalizer">Еквалайзер</string>
     <string name="top_bar_playlists">Плейлисти</string>
     <string name="top_bar_search">Търсене</string>

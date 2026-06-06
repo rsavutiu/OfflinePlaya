@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Skenirano %1$d zapisa u %2$d mapa</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d nije uspjelo)</string>
     <string name="sync_status_failed">Skeniranje nije uspjelo: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" je već u vašoj knjižnici.</string>
+    <string name="sync_status_already_added">"%1$s" je već u vašoj knjižnici.</string>
     <string name="top_bar_equalizer">Ekvilajzer</string>
     <string name="top_bar_playlists">Popisi pjesama</string>
     <string name="top_bar_search">Traži</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Sada svira</string>
     <string name="eq_no_genre_tag">— nema oznake žanra —</string>
     <string name="eq_fallback_no_tag">Ova datoteka nema oznaku žanra, tako da Auto ne može zaključiti stil — krivulja ostaje ravna. Označite svoje datoteke ili prijeđite na Ručno.</string>
-    <string name="eq_fallback_unknown_tag">Oznaka \"%1$s\" nije preslikana na poznati stil — ostaje ravna. Prijeđite na Ručno za odabir krivulje.</string>
+    <string name="eq_fallback_unknown_tag">Oznaka "%1$s" nije preslikana na poznati stil — ostaje ravna. Prijeđite na Ručno za odabir krivulje.</string>
     <string name="empty_album_title">Nema albuma</string>
     <string name="empty_album_subtitle">Ovaj izvođač nema albuma u skeniranoj knjižnici.</string>
     <string name="empty_artist_title">Još nema umjetnika</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">U ovoj mapi ništa nije skenirano.</string>
     <string name="folder_section_folders">mape</string>
     <string name="folder_section_tracks">Pjesme</string>
-    <string name="empty_library_no_folders">Još nije dodana nijedna mapa. Za početak dodirnite \"Dodaj glazbenu mapu\" iznad.</string>
+    <string name="empty_library_no_folders">Još nije dodana nijedna mapa. Za početak dodirnite "Dodaj glazbenu mapu" iznad.</string>
     <string name="library_add_music_folder">Dodajte glazbenu mapu</string>
     <string name="library_rescan_all">Ponovno skenirajte sve mape</string>
     <string name="library_scanning">Skeniranje...</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Naslov, izvođač ili album</string>
     <string name="search_empty_title">Pretražite svoju knjižnicu</string>
     <string name="search_empty_subtitle">Upišite najmanje dva znaka da pronađete naslov, izvođača ili album.</string>
-    <string name="search_no_results_title">Ništa ne odgovara \"%1$s\"</string>
+    <string name="search_no_results_title">Ništa ne odgovara "%1$s"</string>
     <string name="search_no_results_subtitle">Pokušajte drugačije pisati ili manje znakova.</string>
     <string name="common_loading">učitavanje...</string>
     <string name="playlist_name_label">Ime</string>
     <string name="remove_folder_confirmation">Ukloniti ovu mapu?</string>
-    <string name="remove_folder_body">\"%1$s\" će nestati iz vaše biblioteke, zajedno sa pjesmama skeniranim iz nje. Datoteke na disku se ne diraju.</string>
+    <string name="remove_folder_body">"%1$s" će nestati iz vaše biblioteke, zajedno sa pjesmama skeniranim iz nje. Datoteke na disku se ne diraju.</string>
     <string name="remove_button">Ukloniti</string>
     <string name="eq_reset_to_preset">Vrati na unaprijed postavljeno</string>
     <string name="library_shuffle_artist">Shuffle Izvođač</string>

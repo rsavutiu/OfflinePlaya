@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Έγινε σάρωση %1$d κομματιών σε %2$d φακέλους</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d απέτυχε)</string>
     <string name="sync_status_failed">Η σάρωση απέτυχε: %1$s</string>
-    <string name="sync_status_already_added">Το \"%1$s\" βρίσκεται ήδη στη βιβλιοθήκη σας.</string>
+    <string name="sync_status_already_added">Το "%1$s" βρίσκεται ήδη στη βιβλιοθήκη σας.</string>
     <string name="top_bar_equalizer">Ισοσταθμιστής</string>
     <string name="top_bar_playlists">Λίστες αναπαραγωγής</string>
     <string name="top_bar_search">Αναζήτηση</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Τώρα παίζει</string>
     <string name="eq_no_genre_tag">— χωρίς ετικέτα είδους —</string>
     <string name="eq_fallback_no_tag">Αυτό το αρχείο δεν έχει ετικέτα είδους, επομένως το Auto δεν μπορεί να συναγάγει ένα στυλ — η καμπύλη παραμένει επίπεδη. Προσθέστε ετικέτα στα αρχεία σας ή μεταβείτε στο Μη αυτόματο.</string>
-    <string name="eq_fallback_unknown_tag">Η ετικέτα \"%1$s\" δεν αντιστοιχίστηκε σε ένα γνωστό στυλ — παραμένοντας επίπεδη. Μεταβείτε στο Μη αυτόματο για να επιλέξετε μια καμπύλη.</string>
+    <string name="eq_fallback_unknown_tag">Η ετικέτα "%1$s" δεν αντιστοιχίστηκε σε ένα γνωστό στυλ — παραμένοντας επίπεδη. Μεταβείτε στο Μη αυτόματο για να επιλέξετε μια καμπύλη.</string>
     <string name="empty_album_title">Χωρίς άλμπουμ</string>
     <string name="empty_album_subtitle">Αυτός ο καλλιτέχνης δεν έχει άλμπουμ στη σαρωμένη βιβλιοθήκη.</string>
     <string name="empty_artist_title">Δεν υπάρχουν καλλιτέχνες ακόμα</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">Δεν σαρώθηκε τίποτα σε αυτόν τον φάκελο.</string>
     <string name="folder_section_folders">Φάκελοι</string>
     <string name="folder_section_tracks">Κομμάτια</string>
-    <string name="empty_library_no_folders">Δεν έχουν προστεθεί ακόμη φάκελοι. Πατήστε \"Προσθήκη φακέλου μουσικής\" παραπάνω για να ξεκινήσετε.</string>
+    <string name="empty_library_no_folders">Δεν έχουν προστεθεί ακόμη φάκελοι. Πατήστε "Προσθήκη φακέλου μουσικής" παραπάνω για να ξεκινήσετε.</string>
     <string name="library_add_music_folder">Προσθήκη φακέλου μουσικής</string>
     <string name="library_rescan_all">Επαναλάβετε τη σάρωση όλων των φακέλων</string>
     <string name="library_scanning">Σάρωση…</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Τίτλος, καλλιτέχνης ή άλμπουμ</string>
     <string name="search_empty_title">Αναζητήστε τη βιβλιοθήκη σας</string>
     <string name="search_empty_subtitle">Πληκτρολογήστε τουλάχιστον δύο χαρακτήρες για να βρείτε έναν τίτλο, έναν καλλιτέχνη ή ένα άλμπουμ.</string>
-    <string name="search_no_results_title">Τίποτα δεν ταιριάζει με το \"%1$s\"</string>
+    <string name="search_no_results_title">Τίποτα δεν ταιριάζει με το "%1$s"</string>
     <string name="search_no_results_subtitle">Δοκιμάστε διαφορετική ορθογραφία ή λιγότερους χαρακτήρες.</string>
     <string name="common_loading">Φόρτωση…</string>
     <string name="playlist_name_label">Όνομα</string>
     <string name="remove_folder_confirmation">Κατάργηση αυτού του φακέλου;</string>
-    <string name="remove_folder_body">Το \"%1$s\" θα εξαφανιστεί από τη βιβλιοθήκη σας, μαζί με τα κομμάτια που έχουν σαρωθεί από αυτήν. Τα αρχεία στο δίσκο δεν αγγίζονται.</string>
+    <string name="remove_folder_body">Το "%1$s" θα εξαφανιστεί από τη βιβλιοθήκη σας, μαζί με τα κομμάτια που έχουν σαρωθεί από αυτήν. Τα αρχεία στο δίσκο δεν αγγίζονται.</string>
     <string name="remove_button">Αφαίρεση</string>
     <string name="eq_reset_to_preset">Επαναφορά σε προεπιλογή</string>
     <string name="library_shuffle_artist">Ανακάτεμα Καλλιτέχνη</string>

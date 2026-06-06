@@ -58,7 +58,7 @@
     <string name="sync_status_completed">Skannattu %1$d raitaa %2$d kansiosta</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d epäonnistui)</string>
     <string name="sync_status_failed">Skannaus epäonnistui: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" on jo kirjastossasi.</string>
+    <string name="sync_status_already_added">"%1$s" on jo kirjastossasi.</string>
     <string name="top_bar_equalizer">Taajuuskorjain</string>
     <string name="top_bar_playlists">Soittolistat</string>
     <string name="top_bar_search">Etsi</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">Nyt pelaa</string>
     <string name="eq_no_genre_tag">- ei genretunnistetta -</string>
     <string name="eq_fallback_no_tag">Tässä tiedostossa ei ole genretunnistetta, joten Auto ei voi päätellä tyyliä – käyrä pysyy tasaisena. Merkitse tiedostosi tai vaihda manuaaliseen.</string>
-    <string name="eq_fallback_unknown_tag">Tunniste \"%1$s\" ei sopinut tunnettuun tyyliin – pysyy tasaisena. Valitse käyrä valitsemalla Manuaalinen.</string>
+    <string name="eq_fallback_unknown_tag">Tunniste "%1$s" ei sopinut tunnettuun tyyliin – pysyy tasaisena. Valitse käyrä valitsemalla Manuaalinen.</string>
     <string name="empty_album_title">Ei albumeita</string>
     <string name="empty_album_subtitle">Tällä esittäjällä ei ole albumeita skannatussa kirjastossa.</string>
     <string name="empty_artist_title">Ei taiteilijoita vielä</string>
@@ -118,7 +118,7 @@
     <string name="empty_folder_subtitle">Tämän kansion alta ei skannattu mitään.</string>
     <string name="folder_section_folders">Kansiot</string>
     <string name="folder_section_tracks">Kappaleet</string>
-    <string name="empty_library_no_folders">Ei kansioita vielä lisätty. Aloita napauttamalla \"Lisää musiikkikansio\" yllä.</string>
+    <string name="empty_library_no_folders">Ei kansioita vielä lisätty. Aloita napauttamalla "Lisää musiikkikansio" yllä.</string>
     <string name="library_add_music_folder">Lisää musiikkikansio</string>
     <string name="library_rescan_all">Skannaa kaikki kansiot uudelleen</string>
     <string name="library_scanning">Skannataan…</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">Nimi, esittäjä tai albumi</string>
     <string name="search_empty_title">Hae kirjastostasi</string>
     <string name="search_empty_subtitle">Kirjoita vähintään kaksi merkkiä löytääksesi nimikkeen, esittäjän tai albumin.</string>
-    <string name="search_no_results_title">Mikään ei vastaa \"%1$s\"</string>
+    <string name="search_no_results_title">Mikään ei vastaa "%1$s"</string>
     <string name="search_no_results_subtitle">Kokeile eri kirjoitusasua tai vähemmän merkkejä.</string>
     <string name="common_loading">Ladataan…</string>
     <string name="playlist_name_label">Nimi</string>
     <string name="remove_folder_confirmation">Poistetaanko tämä kansio?</string>
-    <string name="remove_folder_body">\"%1$s\" katoaa kirjastostasi ja siitä skannatut kappaleet. Levyllä oleviin tiedostoihin ei kosketa.</string>
+    <string name="remove_folder_body">"%1$s" katoaa kirjastostasi ja siitä skannatut kappaleet. Levyllä oleviin tiedostoihin ei kosketa.</string>
     <string name="remove_button">Poista</string>
     <string name="eq_reset_to_preset">Palauta esiasetukseen</string>
     <string name="library_shuffle_artist">Sekoita artisti</string>

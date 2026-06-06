@@ -58,7 +58,7 @@
     <string name="sync_status_completed">%1$d آهنگ در %2$d پوشه اسکن شد</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d ناموفق)</string>
     <string name="sync_status_failed">اسکن انجام نشد: %1$s</string>
-    <string name="sync_status_already_added">\"%1$s\" در حال حاضر در کتابخانه شما است.</string>
+    <string name="sync_status_already_added">"%1$s" در حال حاضر در کتابخانه شما است.</string>
     <string name="top_bar_equalizer">اکولایزر</string>
     <string name="top_bar_playlists">لیست های پخش</string>
     <string name="top_bar_search">جستجو کنید</string>
@@ -109,7 +109,7 @@
     <string name="eq_label_now_playing">در حال حاضر بازی</string>
     <string name="eq_no_genre_tag">- بدون برچسب ژانر -</string>
     <string name="eq_fallback_no_tag">این فایل هیچ برچسب ژانری ندارد، بنابراین خودکار نمی‌تواند یک سبک استنتاج کند - منحنی صاف می‌ماند. فایل های خود را تگ کنید یا به دستی بروید.</string>
-    <string name="eq_fallback_unknown_tag">برچسب \"%1$s\" به یک سبک شناخته شده نگاشت - صاف ماندن. برای انتخاب یک منحنی به Manual بروید.</string>
+    <string name="eq_fallback_unknown_tag">برچسب "%1$s" به یک سبک شناخته شده نگاشت - صاف ماندن. برای انتخاب یک منحنی به Manual بروید.</string>
     <string name="empty_album_title">بدون آلبوم</string>
     <string name="empty_album_subtitle">این هنرمند هیچ آلبومی در کتابخانه اسکن شده ندارد.</string>
     <string name="empty_artist_title">هنوز هنرمندی وجود ندارد</string>
@@ -144,12 +144,12 @@
     <string name="search_field_label">عنوان، هنرمند یا آلبوم</string>
     <string name="search_empty_title">کتابخانه خود را جستجو کنید</string>
     <string name="search_empty_subtitle">برای یافتن عنوان، هنرمند یا آلبوم حداقل دو نویسه تایپ کنید.</string>
-    <string name="search_no_results_title">هیچ چیزی با \"%1$s\" مطابقت ندارد</string>
+    <string name="search_no_results_title">هیچ چیزی با "%1$s" مطابقت ندارد</string>
     <string name="search_no_results_subtitle">املای متفاوت یا نویسه های کمتری را امتحان کنید.</string>
     <string name="common_loading">در حال بارگیری…</string>
     <string name="playlist_name_label">نام</string>
     <string name="remove_folder_confirmation">این پوشه حذف شود؟</string>
-    <string name="remove_folder_body">\"%1$s\" به همراه آهنگ های اسکن شده از کتابخانه شما ناپدید می شود. فایل های روی دیسک لمس نمی شوند.</string>
+    <string name="remove_folder_body">"%1$s" به همراه آهنگ های اسکن شده از کتابخانه شما ناپدید می شود. فایل های روی دیسک لمس نمی شوند.</string>
     <string name="remove_button">حذف کنید</string>
     <string name="eq_reset_to_preset">بازنشانی به از پیش تعیین شده</string>
     <string name="library_shuffle_artist">هنرمند مختلط</string>
