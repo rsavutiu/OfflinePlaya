@@ -1,7 +1,8 @@
 package com.offlineplaya.shared.presentation.ui.pages
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -13,10 +14,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.BuiltInPresets
 import com.offlineplaya.shared.domain.model.EqMode
 import com.offlineplaya.shared.domain.model.EqPreferences
 import com.offlineplaya.shared.domain.model.EqPreset
+import com.offlineplaya.shared.presentation.ui.LocalOrientation
+import com.offlineplaya.shared.presentation.ui.Orientation
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.EqModeChooser
 import com.offlineplaya.shared.presentation.ui.molecules.EqPresetChooser
@@ -63,74 +67,102 @@ fun EqualizerPage(
                 title = stringResource(Res.string.top_bar_equalizer),
                 onBack = onBack
             )
-        },
-        contentWindowInsets = WindowInsets(0),
+        }
     ) { padding ->
+        // The page is three groups: Mode (+ auto card / hint), Preset (Manual
+        // only), and the interactive Bands graph. Portrait stacks them in one
+        // scroll column; landscape splits the controls (left) from the band
+        // graph (right) so the graph gets the wider pane and the bands are
+        // easier to drag — a single page in two content columns, not a
+        // navigation two-pane (see CLAUDE.md).
+        @Composable
+        fun modeSection() {
+            SettingsSection(title = stringResource(Res.string.settings_section_mode)) {
+                EqModeChooser(
+                    selected = preferences.mode,
+                    onModeChange = onModeChange,
+                    modifier = Modifier.padding(horizontal = AppSpacing.lg, vertical = AppSpacing.sm),
+                )
+                if (preferences.mode == EqMode.AUTO) {
+                    EqAutoDetectionCard(
+                        nowPlayingTitle = nowPlayingTitle,
+                        rawGenreTag = rawGenreTag,
+                        detectedGenreLabel = autoGenreLabel,
+                        appliedPresetName = activePreset.name,
+                        modifier = Modifier.padding(horizontal = AppSpacing.lg, vertical = AppSpacing.sm),
+                    )
+                } else {
+                    ModeHint(
+                        mode = preferences.mode,
+                        activePreset = activePreset,
+                        modifier = Modifier.padding(horizontal = AppSpacing.lg, vertical = AppSpacing.sm),
+                    )
+                }
+            }
+        }
+
+        @Composable
+        fun presetSection() {
+            if (preferences.mode == EqMode.MANUAL) {
+                SettingsSection(title = stringResource(Res.string.settings_section_preset)) {
+                    EqPresetChooser(
+                        selectedName = preferences.manualPresetName,
+                        onPresetChange = onPresetChange,
+                    )
+                }
+            }
+        }
+
+        @Composable
+        fun bandsSection() {
+            SettingsSection(title = stringResource(Res.string.settings_section_bands)) {
+                EqualizerGraph(
+                    gains = activePreset.gainsMillibels.toPersistentList(),
+                    enabled = preferences.mode != EqMode.OFF,
+                    onBandGainChange = onBandGainChange,
+                    modifier = Modifier.padding(horizontal = AppSpacing.lg, vertical = AppSpacing.sm),
+                )
+                if (preferences.mode == EqMode.MANUAL && preferences.manualGains.isNotEmpty()) {
+                    TextButton(
+                        onClick = onResetOverrides,
+                        modifier = Modifier.padding(horizontal = AppSpacing.lg),
+                    ) {
+                        Text("Reset to preset")
+                    }
+                }
+            }
+        }
+
         ResponsiveContent(modifier = Modifier.padding(padding)) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
-            ) {
-                SettingsSection(title = stringResource(Res.string.settings_section_mode)) {
-                    EqModeChooser(
-                        selected = preferences.mode,
-                        onModeChange = onModeChange,
-                        modifier = Modifier.padding(
-                            horizontal = AppSpacing.lg,
-                            vertical = AppSpacing.sm
-                        ),
-                    )
-                    if (preferences.mode == EqMode.AUTO) {
-                        EqAutoDetectionCard(
-                            nowPlayingTitle = nowPlayingTitle,
-                            rawGenreTag = rawGenreTag,
-                            detectedGenreLabel = autoGenreLabel,
-                            appliedPresetName = activePreset.name,
-                            modifier = Modifier.padding(
-                                horizontal = AppSpacing.lg,
-                                vertical = AppSpacing.sm
-                            ),
-                        )
-                    } else {
-                        ModeHint(
-                            mode = preferences.mode,
-                            activePreset = activePreset,
-                            modifier = Modifier.padding(
-                                horizontal = AppSpacing.lg,
-                                vertical = AppSpacing.sm
-                            ),
-                        )
+            if (LocalOrientation.current == Orientation.LANDSCAPE) {
+                Row(modifier = Modifier.fillMaxSize()) {
+                    Column(
+                        modifier = Modifier
+                            .weight(0.42f)
+                            .fillMaxHeight()
+                            .verticalScroll(rememberScrollState()),
+                    ) {
+                        modeSection()
+                        presetSection()
+                    }
+                    Column(
+                        modifier = Modifier
+                            .weight(0.58f)
+                            .fillMaxHeight()
+                            .verticalScroll(rememberScrollState()),
+                    ) {
+                        bandsSection()
                     }
                 }
-
-                if (preferences.mode == EqMode.MANUAL) {
-                    SettingsSection(title = stringResource(Res.string.settings_section_preset)) {
-                        EqPresetChooser(
-                            selectedName = preferences.manualPresetName,
-                            onPresetChange = onPresetChange,
-                        )
-                    }
-                }
-
-                SettingsSection(title = stringResource(Res.string.settings_section_bands)) {
-                    EqualizerGraph(
-                        gains = activePreset.gainsMillibels.toPersistentList(),
-                        enabled = preferences.mode != EqMode.OFF,
-                        onBandGainChange = onBandGainChange,
-                        modifier = Modifier.padding(
-                            horizontal = AppSpacing.lg,
-                            vertical = AppSpacing.sm
-                        ),
-                    )
-                    if (preferences.mode == EqMode.MANUAL && preferences.manualGains.isNotEmpty()) {
-                        TextButton(
-                            onClick = onResetOverrides,
-                            modifier = Modifier.padding(horizontal = AppSpacing.lg),
-                        ) {
-                            Text("Reset to preset")
-                        }
-                    }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
+                ) {
+                    modeSection()
+                    presetSection()
+                    bandsSection()
                 }
             }
         }
