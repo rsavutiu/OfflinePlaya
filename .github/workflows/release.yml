@@ -78,6 +78,11 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: com.offlineplaya.android
           releaseFiles: androidApp/build/outputs/bundle/release/androidApp-release.aab
+          # Per-release notes. Files are named whatsnew-<lang>-<COUNTRY> and must
+          # match a language your Play listing actually has. Today that's English
+          # only (store-listing/whatsnew/whatsnew-en-US); add more files when you
+          # add localized listings in Play Console.
+          whatsNewDirectory: store-listing/whatsnew
           mappingFile: androidApp/build/outputs/mapping/release/mapping.txt
           debugSymbols: androidApp/build/outputs/native-debug-symbols/release/native-debug-symbols.zip
           track: production

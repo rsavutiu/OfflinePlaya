@@ -1,0 +1,18 @@
+OfflinePlaya is a music player for the music you actually own. No streaming, no accounts, no ads, no cloud — just your files, on your device.
+
+Point it at your music and it builds a clean library you can browse by artist, album, folder, or track, and organize into playlists.
+
+FEATURES
+• 100% offline — plays the audio files already on your phone (MP3, FLAC, OGG, M4A and more)
+• Built-in equalizer — hand-tuned presets, a manual band graph, or Auto mode that picks a preset from each track's genre
+• Synced lyrics — reads embedded lyrics and .lrc files, or fetches them when missing
+• Album art that just works — uses embedded covers, folder images, or looks them up online when needed
+• Crossfade between tracks
+• Write tags back into your files — embed album art and genre so other apps see them too
+• Material 3 design with a dark theme, optional Material You wallpaper colors, and theming drawn from your album art
+• Available in 41 languages
+
+PRIVACY
+OfflinePlaya has no accounts and no tracking. It only reaches the internet to look up the album art and lyrics you ask for — your library never leaves your device.
+
+OfflinePlaya is for people who keep their own music collection and want a fast, private, good-looking player — not another streaming subscription.

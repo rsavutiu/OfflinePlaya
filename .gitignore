@@ -23,3 +23,6 @@ androidApp/release/
 
 # deep-translator output cache (regenerable; tools/translate_via_google.py)
 tools/.trcache/
+
+# Captured device screenshots (working dir; final ones uploaded to Play manually)
+store_screenshots/
