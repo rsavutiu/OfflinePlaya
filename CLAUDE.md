@@ -50,6 +50,14 @@ shared/                     → all real code, KMP module
 into `navigator.pop()`. The app is phone-only single-pane today; if multi-pane lands later, that's
 where adaptive layouts would slot in.
 
+**Scope of the "no two-pane" rule:** it bans *navigation-level* two-pane — list-detail where two
+**destinations** co-display, coordinated by a nav framework (Nav3 / Scenes). That's the complexity
+we're avoiding. It does **not** ban a single page laying its own content into multiple columns in
+landscape. A page is free to branch on `LocalOrientation` and render a `Row { leftColumn;
+rightColumn }` for better use of horizontal space (see `HomePage.LandscapeHome` — left: header /
+stats / recently-played; right: the Browse grid at full height). That's responsive content within
+one destination, not a navigation Scene.
+
 ## Tech stack
 
 - **Compose Multiplatform** for UI (commonMain)
@@ -195,7 +203,8 @@ Android impl using `java.time.LocalTime`. If you need more datetime APIs, decide
 
 ## What this project does NOT do
 
-- No Nav3 / Scenes / list-detail / two-pane adaptive layouts.
+- No Nav3 / Scenes / list-detail / two-pane *navigation* (a single page may still split into
+  multiple columns in landscape — see the Navigation section).
 - No remote streaming — strictly offline, files the user already has.
 - No accounts, no cloud sync.
 - No ReplayGain / LUFS normalization.
