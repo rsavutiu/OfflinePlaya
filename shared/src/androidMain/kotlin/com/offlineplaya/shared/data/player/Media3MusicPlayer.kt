@@ -205,9 +205,18 @@ internal class Media3MusicPlayer(
             Player.REPEAT_MODE_ALL -> RepeatMode.ALL
             else -> RepeatMode.OFF
         }
+        // Drive the UI play/pause icon from play *intent*, not raw isPlaying.
+        // ExoPlayer.isPlaying is false during STATE_BUFFERING — so skipping to
+        // the next track (which re-buffers for 1-2s) would otherwise flip the
+        // toggle play -> pause -> play. playWhenReady stays true across the
+        // buffer, so the icon holds steady; only a genuine pause or the end of
+        // the queue (no repeat) clears it.
+        val playIntent = ctrl.playWhenReady &&
+            ctrl.playbackState != Player.STATE_ENDED &&
+            ctrl.playbackState != Player.STATE_IDLE
         _playbackState.value = PlaybackState(
             currentTrack = currentTrack,
-            isPlaying = ctrl.isPlaying,
+            isPlaying = playIntent,
             positionMs = ctrl.currentPosition.coerceAtLeast(0L),
             durationMs = ctrl.duration.takeIf { it > 0 } ?: (currentTrack?.durationMs ?: 0L),
             shuffleEnabled = ctrl.shuffleModeEnabled,
