@@ -1,10 +1,10 @@
 package com.offlineplaya.shared.presentation.ui.molecules
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
@@ -18,21 +18,25 @@ import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 /**
- * Horizontal LazyRow of built-in EQ presets as filter chips. Shown only when
- * the equalizer is in Manual mode — selecting a chip swaps the curve.
+ * Built-in EQ presets as filter chips that wrap onto multiple rows (no
+ * horizontal scroll), so the full set is visible at once — important in the
+ * narrow left column of the landscape equalizer. Shown only in Manual mode.
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun EqPresetChooser(
     selectedName: String,
     onPresetChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LazyRow(
-        modifier = modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(horizontal = AppSpacing.lg),
+    FlowRow(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = AppSpacing.lg),
         horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
+        verticalArrangement = Arrangement.spacedBy(AppSpacing.sm),
     ) {
-        items(items = BuiltInPresets.all, key = { it.name }) { preset ->
+        BuiltInPresets.all.forEach { preset ->
             FilterChip(
                 selected = preset.name == selectedName,
                 onClick = { onPresetChange(preset.name) },
