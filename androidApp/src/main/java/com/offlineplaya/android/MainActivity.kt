@@ -1,6 +1,7 @@
 package com.offlineplaya.android
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,9 +13,11 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,11 +25,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.LocalView
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.offlineplaya.android.picker.OpenDocumentTreeContract
+import com.offlineplaya.shared.domain.model.ColorMode
 import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
@@ -105,6 +111,38 @@ private fun AndroidApp() {
     val stack by navigator.stack.collectAsState()
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
+
+    // Drive the system-bar icon appearance from the *app's* resolved theme,
+    // not the OS theme. enableEdgeToEdge()'s auto-detection keys off the system
+    // dark/light setting, so with the in-app "Appearance: Dark" override active
+    // on a light-system device it chose dark icons against our dark background —
+    // the status-bar clock/icons (and the 3-button nav glyphs) were near
+    // invisible. Mirror OfflinePlayaTheme's ColorMode → dark resolution here and
+    // re-assert on every commit (SideEffect) so a config change can't revert to
+    // the auto value.
+    val view = LocalView.current
+    val systemDark = isSystemInDarkTheme()
+    val appDark = when (themePreferences.colorMode) {
+        ColorMode.SYSTEM -> systemDark
+        ColorMode.LIGHT -> false
+        ColorMode.DARK -> true
+    }
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as? Activity)?.window ?: return@SideEffect
+            val controller = WindowCompat.getInsetsController(window, view)
+            // Light bars (dark icons) only in light mode; in dark mode use light
+            // (white) icons so the clock/battery and nav glyphs stay legible.
+            controller.isAppearanceLightStatusBars = !appDark
+            controller.isAppearanceLightNavigationBars = !appDark
+            // Drop the translucent scrim the system paints behind the 3-button
+            // nav bar so the app background runs edge-to-edge to the bottom and
+            // the bar stops reading as a separate grey strip. API 29+.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                window.isNavigationBarContrastEnforced = false
+            }
+        }
+    }
 
     // Re-scan whenever the app comes back to the foreground AND we still
     // hold the audio-read permission. If the user toggled it off in system
