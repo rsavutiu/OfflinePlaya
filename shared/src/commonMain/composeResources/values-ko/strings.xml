@@ -13,12 +13,21 @@
     <string name="home_label_add_folders">폴더 추가</string>
     <string name="home_label_import_more_tracks">추가 트랙 가져오기</string>
     <string name="home_title_start_your_music_journey">음악 여행 시작</string>
+    <string name="home_label_select_folder">음악이 있는 폴더를 선택하세요. 현대 Android에서는 시스템이 표준 미디어 폴더(음악, 다운로드 등)를 선택하는 것을 차단합니다 — Music/Albums와 같은 하위 폴더를 선택하세요. 차단된 폴더의 음악은 음악 접근 권한을 통해 라이브러리에 계속 나타납니다. 태그 블랭킹 기능을 위해만 폴더를 선택해야 합니다.</string>
     <string name="home_status_picking_music_folder">음악 폴더 선택 중</string>
     <string name="home_status_scanning">스캔 중…</string>
     <string name="home_label_pick_music_folder">음악 폴더 선택</string>
     <string name="home_label_tracks">트랙</string>
     <string name="home_label_folders">폴더</string>
     <string name="home_label_total">총</string>
+    <string name="home_greeting_morning">좋은 아침입니다</string>
+    <string name="home_greeting_afternoon">좋은 오후입니다</string>
+    <string name="home_greeting_evening">좋은 저녁입니다</string>
+    <string name="home_label_recently_played">최근에 재생한</string>
+    <string name="home_label_songs_count">%1$d 곡</string>
+    <string name="home_label_albums_count">%1$d 앨범</string>
+    <string name="home_label_artists_count">%1$d 아티스트</string>
+    <string name="home_label_playlists_count">%1$d 플레이리스트</string>
     <string name="now_playing_title">재생 중</string>
     <string name="now_playing_up_next">다음</string>
     <string name="now_playing_back">뒤로</string>
@@ -37,7 +46,6 @@
     <string name="track_details_bitrate">비트레이트</string>
     <string name="track_details_path">경로</string>
     <string name="track_details_status">상태</string>
-    <string name="track_details_playing_in">재생 중…</string>
     <string name="track_details_play_now">▶  지금 재생</string>
     <string name="track_details_kbps"> kbps</string>
     <string name="library_album_detail_track">트랙</string>
@@ -50,14 +58,6 @@
     <string name="sync_status_completed">총 %1$d 트랙을 %2$d 폴더에서 스캔했습니다</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d 실패)</string>
     <string name="sync_status_failed">스캔 실패: %1$s</string>
-    <string name="home_greeting_morning">좋은 아침입니다</string>
-    <string name="home_greeting_afternoon">좋은 오후입니다</string>
-    <string name="home_greeting_evening">좋은 저녁입니다</string>
-    <string name="home_label_recently_played">최근에 재생한</string>
-    <string name="home_label_songs_count">%1$d 곡</string>
-    <string name="home_label_albums_count">%1$d 앨범</string>
-    <string name="home_label_artists_count">%1$d 아티스트</string>
-    <string name="home_label_playlists_count">%1$d 플레이리스트</string>
     <string name="sync_status_already_added">\"%1$s\"은(는) 이미 당신의 라이브러리에 있습니다.</string>
     <string name="top_bar_equalizer">이퀄라이저</string>
     <string name="top_bar_playlists">플레이리스트</string>
@@ -67,13 +67,29 @@
     <string name="settings_section_appearance">외관</string>
     <string name="settings_section_library">라이브러리</string>
     <string name="settings_section_metadata_tags">메타데이터 &amp; 태그</string>
+    <string name="settings_section_playback">재생</string>
     <string name="settings_section_mode">모드</string>
     <string name="settings_section_preset">프리셋</string>
     <string name="settings_section_bands">밴드</string>
+    <string name="appearance_album_art_color">앨범 아트 색상</string>
+    <string name="appearance_album_art_color_subtitle">앱 전체를 마지막 노래 커버에 맞춰보세요.</string>
     <string name="appearance_material_you">Material You</string>
     <string name="appearance_material_you_subtitle">벽지 기반 색상 사용 (Android 12+)</string>
     <string name="appearance_material_you_supported">벽지 기반 색상 사용</string>
     <string name="appearance_material_you_unsupported">Android 12 이상이 필요합니다</string>
+    <string name="lyrics_title">가사</string>
+    <string name="lyrics_empty_title">가사 없음</string>
+    <string name="lyrics_empty_subtitle">이 트랙에 대한 가사를 찾을 수 없습니다.</string>
+    <string name="cd_lyrics">가사</string>
+    <string name="settings_section_lyrics">가사</string>
+    <string name="lyrics_download_remote">가사 다운로드</string>
+    <string name="lyrics_download_remote_subtitle">내장된 태그나 .lrc 사이드카가 발견되지 않은 경우 LRCLIB에서 누락된 가사를 찾아보세요.</string>
+    <string name="lyrics_save_sidecar">.lrc 사이드카로 저장</string>
+    <string name="lyrics_save_sidecar_subtitle">가져온 가사를 오디오 파일 옆에 적어 재설치 후에도 유지되고 다른 플레이어가 읽을 수 있도록 하세요.</string>
+    <string name="playback_crossfade">크로스페이드</string>
+    <string name="playback_crossfade_subtitle">한 트랙의 끝을 다음 트랙의 시작과 겹칩니다. Off는 연속적으로 트랙을 끊김 없이 재생합니다.</string>
+    <string name="playback_crossfade_duration">크로스페이드 길이</string>
+    <string name="playback_crossfade_duration_value">%1$d초</string>
     <string name="burn_download_remote_art">원격 아트 다운로드</string>
     <string name="burn_download_remote_art_subtitle">필요할 때 MusicBrainz에서 누락된 표지 정보를 검색합니다.</string>
     <string name="burn_button">태그를 파일에 새겨 넣기</string>
@@ -130,6 +146,13 @@
     <string name="search_empty_subtitle">제목, 아티스트, 또는 앨범을 찾으려면 최소 두 개의 문자를 입력하세요.</string>
     <string name="search_no_results_title">\"%1$s\"와 일치하는 항목이 없습니다</string>
     <string name="search_no_results_subtitle">다른 맞춤법이나 적은 문자를 사용해 보세요.</string>
+    <string name="common_loading">로드 중…</string>
+    <string name="playlist_name_label">이름</string>
+    <string name="remove_folder_confirmation">이 폴더를 삭제하시겠습니까?</string>
+    <string name="remove_folder_body">\"%1$s\"은(는) 스캔한 트랙과 함께 라이브러리에서 사라집니다. 디스크의 파일은 건드리지 않습니다.</string>
+    <string name="remove_button">제거</string>
+    <string name="eq_reset_to_preset">사전 설정으로 재설정</string>
+    <string name="library_shuffle_artist">셔플 아티스트</string>
     <string name="cd_back">뒤로</string>
     <string name="cd_settings">설정</string>
     <string name="cd_play">재생</string>
@@ -148,7 +171,12 @@
     <string name="cd_delete_playlist">플레이리스트 삭제</string>
     <string name="cd_new_playlist">새 플레이리스트</string>
     <string name="cd_repeat_mode">반복: %1$s</string>
-
-    <!-- Auto-translated to Korean via local LLM; review and refine. -->
-    <string name="home_label_select_folder">음악이 있는 폴더를 선택하세요. 현대 Android에서는 시스템이 표준 미디어 폴더(음악, 다운로드 등)를 선택하는 것을 차단합니다 — Music/Albums와 같은 하위 폴더를 선택하세요. 차단된 폴더의 음악은 음악 접근 권한을 통해 라이브러리에 계속 나타납니다. 태그 블랭킹 기능을 위해만 폴더를 선택해야 합니다.</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">%1$d초 후에 재생 중…</item>
+        <item quantity="other">%1$d초 후에 재생됩니다…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d 결과</item>
+        <item quantity="other">%1$d 결과</item>
+    </plurals>
 </resources>

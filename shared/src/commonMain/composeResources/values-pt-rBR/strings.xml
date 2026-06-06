@@ -13,12 +13,21 @@
     <string name="home_label_add_folders">Adicionar pastas</string>
     <string name="home_label_import_more_tracks">Importar mais faixas</string>
     <string name="home_title_start_your_music_journey">Inicie sua jornada musical</string>
+    <string name="home_label_select_folder">Escolha uma pasta com sua música. No Android moderno, o sistema bloqueia a seleção das pastas de mídia padrão (Música, Downloads, etc.) — entre em uma subpasta como Música/Álbuns e escolha essa em vez disso. Áudio nas pastas bloqueadas ainda aparece na sua biblioteca via permissão de acesso à música; você só precisa escolher pastas para o recurso de gravação de tags.</string>
     <string name="home_status_picking_music_folder">Selecionando pasta de música</string>
     <string name="home_status_scanning">Varrendo...</string>
     <string name="home_label_pick_music_folder">Selecione pasta de música</string>
     <string name="home_label_tracks">Faixas</string>
     <string name="home_label_folders">Pastas</string>
     <string name="home_label_total">Total</string>
+    <string name="home_greeting_morning">Bom dia</string>
+    <string name="home_greeting_afternoon">Boa tarde</string>
+    <string name="home_greeting_evening">Boa noite</string>
+    <string name="home_label_recently_played">Tocados recentemente</string>
+    <string name="home_label_songs_count">%1$d músicas</string>
+    <string name="home_label_albums_count">%1$d álbuns</string>
+    <string name="home_label_artists_count">%1$d artistas</string>
+    <string name="home_label_playlists_count">%1$d listas de reprodução</string>
     <string name="now_playing_title">Tocando agora</string>
     <string name="now_playing_up_next">Próximo</string>
     <string name="now_playing_back">Voltar</string>
@@ -37,7 +46,6 @@
     <string name="track_details_bitrate">Bitrate</string>
     <string name="track_details_path">Caminho</string>
     <string name="track_details_status">Status</string>
-    <string name="track_details_playing_in">Reproduzindo em…</string>
     <string name="track_details_play_now">▶ Reproduzir agora</string>
     <string name="track_details_kbps"> kbps</string>
     <string name="library_album_detail_track">faixa</string>
@@ -50,14 +58,6 @@
     <string name="sync_status_completed">Varredura concluída: %1$d faixas em %2$d pastas</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d falhados)</string>
     <string name="sync_status_failed">Varredura falhou: %1$s</string>
-    <string name="home_greeting_morning">Bom dia</string>
-    <string name="home_greeting_afternoon">Boa tarde</string>
-    <string name="home_greeting_evening">Boa noite</string>
-    <string name="home_label_recently_played">Tocados recentemente</string>
-    <string name="home_label_songs_count">%1$d músicas</string>
-    <string name="home_label_albums_count">%1$d álbuns</string>
-    <string name="home_label_artists_count">%1$d artistas</string>
-    <string name="home_label_playlists_count">%1$d listas de reprodução</string>
     <string name="sync_status_already_added">\"%1$s\" já está na sua biblioteca.</string>
     <string name="top_bar_equalizer">Ecualizador</string>
     <string name="top_bar_playlists">Listas de reprodução</string>
@@ -67,13 +67,29 @@
     <string name="settings_section_appearance">Aparência</string>
     <string name="settings_section_library">Biblioteca</string>
     <string name="settings_section_metadata_tags">Metadados &amp; Tags</string>
+    <string name="settings_section_playback">Reprodução</string>
     <string name="settings_section_mode">Modo</string>
     <string name="settings_section_preset">Preset</string>
     <string name="settings_section_bands">Faixas</string>
+    <string name="appearance_album_art_color">Cores da arte do álbum</string>
+    <string name="appearance_album_art_color_subtitle">Pinte todo o aplicativo com a capa da última música</string>
     <string name="appearance_material_you">Material You</string>
     <string name="appearance_material_you_subtitle">Use colors based on wallpaper (Android 12+)</string>
     <string name="appearance_material_you_supported">Use colors based on wallpaper</string>
     <string name="appearance_material_you_unsupported">Requires Android 12 or later</string>
+    <string name="lyrics_title">Letras</string>
+    <string name="lyrics_empty_title">Sem letras</string>
+    <string name="lyrics_empty_subtitle">Nenhuma letra foi encontrada para esta faixa.</string>
+    <string name="cd_lyrics">Letras</string>
+    <string name="settings_section_lyrics">Letras</string>
+    <string name="lyrics_download_remote">Baixar letras</string>
+    <string name="lyrics_download_remote_subtitle">Procure letras ausentes do LRCLIB quando nenhuma tag incorporada ou arquivo secundário .lrc for encontrado.</string>
+    <string name="lyrics_save_sidecar">Salvar como arquivo secundário .lrc</string>
+    <string name="lyrics_save_sidecar_subtitle">Escreva as letras obtidas ao lado do arquivo de áudio para que sobrevivam à reinstalação e outros jogadores possam lê-las.</string>
+    <string name="playback_crossfade">Crossfade</string>
+    <string name="playback_crossfade_subtitle">Sobreponha o final de uma faixa com o início da próxima. Off reproduz faixas sem intervalos, consecutivas.</string>
+    <string name="playback_crossfade_duration">Comprimento do crossfade</string>
+    <string name="playback_crossfade_duration_value">%1$d segundos</string>
     <string name="burn_download_remote_art">Download remote art</string>
     <string name="burn_download_remote_art_subtitle">Look up missing covers from MusicBrainz when needed.</string>
     <string name="burn_button">Burn tags into files</string>
@@ -130,6 +146,13 @@
     <string name="search_empty_subtitle">Digite pelo menos dois caracteres para encontrar um título, artista ou álbum.</string>
     <string name="search_no_results_title">Nada corresponde a \"%1$s\"</string>
     <string name="search_no_results_subtitle">Tente uma escrita diferente ou menos caracteres.</string>
+    <string name="common_loading">Carregando…</string>
+    <string name="playlist_name_label">Nome</string>
+    <string name="remove_folder_confirmation">Remover esta pasta?</string>
+    <string name="remove_folder_body">\"%1$s\" desaparecerá da sua biblioteca, junto com as faixas digitalizadas dela. Os arquivos no disco não são tocados.</string>
+    <string name="remove_button">Remover</string>
+    <string name="eq_reset_to_preset">Redefinir para predefinição</string>
+    <string name="library_shuffle_artist">Artista aleatório</string>
     <string name="cd_back">Voltar</string>
     <string name="cd_settings">Ajustes</string>
     <string name="cd_play">Tocar</string>
@@ -148,7 +171,12 @@
     <string name="cd_delete_playlist">Excluir playlist</string>
     <string name="cd_new_playlist">Nova playlist</string>
     <string name="cd_repeat_mode">Repetir: %1$s</string>
-
-    <!-- Auto-translated to Brazilian Portuguese via local LLM; review and refine. -->
-    <string name="home_label_select_folder">Escolha uma pasta com sua música. No Android moderno, o sistema bloqueia a seleção das pastas de mídia padrão (Música, Downloads, etc.) — entre em uma subpasta como Música/Álbuns e escolha essa em vez disso. Áudio nas pastas bloqueadas ainda aparece na sua biblioteca via permissão de acesso à música; você só precisa escolher pastas para o recurso de gravação de tags.</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Jogando em %1$d segundo…</item>
+        <item quantity="other">Jogando em %1$d segundos…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d resultado</item>
+        <item quantity="other">%1$d resultados</item>
+    </plurals>
 </resources>

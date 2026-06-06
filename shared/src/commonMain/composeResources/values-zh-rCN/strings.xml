@@ -13,12 +13,21 @@
     <string name="home_label_add_folders">添加文件夹</string>
     <string name="home_label_import_more_tracks">导入更多曲目</string>
     <string name="home_title_start_your_music_journey">开始你的音乐之旅</string>
+    <string name="home_label_select_folder">选择包含音乐的文件夹。在现代Android系统中，系统会阻止选择标准媒体文件夹（如音乐、下载等）——请进入一个子文件夹，如音乐/专辑，然后选择该文件夹。被阻止的文件夹中的音频仍会通过音乐访问权限显示在您的库中；您只需选择文件夹以用于标签烧录功能。</string>
     <string name="home_status_picking_music_folder">正在选择音乐文件夹</string>
     <string name="home_status_scanning">扫描中…</string>
     <string name="home_label_pick_music_folder">选择音乐文件夹</string>
     <string name="home_label_tracks">曲目</string>
     <string name="home_label_folders">文件夹</string>
     <string name="home_label_total">总计</string>
+    <string name="home_greeting_morning">早上好</string>
+    <string name="home_greeting_afternoon">下午好</string>
+    <string name="home_greeting_evening">晚上好</string>
+    <string name="home_label_recently_played">最近播放</string>
+    <string name="home_label_songs_count">%1$d 首歌曲</string>
+    <string name="home_label_albums_count">%1$d 张专辑</string>
+    <string name="home_label_artists_count">%1$d 位艺术家</string>
+    <string name="home_label_playlists_count">%1$d 个歌单</string>
     <string name="now_playing_title">正在播放</string>
     <string name="now_playing_up_next">下一首</string>
     <string name="now_playing_back">返回</string>
@@ -37,7 +46,6 @@
     <string name="track_details_bitrate">比特率</string>
     <string name="track_details_path">路径</string>
     <string name="track_details_status">状态</string>
-    <string name="track_details_playing_in">正在播放中…</string>
     <string name="track_details_play_now">▶ 立即播放</string>
     <string name="track_details_kbps"> kbps</string>
     <string name="library_album_detail_track">曲目</string>
@@ -50,14 +58,6 @@
     <string name="sync_status_completed">已扫描 %1$d 曲目，覆盖 %2$d 个文件夹</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d 个失败)</string>
     <string name="sync_status_failed">扫描失败: %1$s</string>
-    <string name="home_greeting_morning">早上好</string>
-    <string name="home_greeting_afternoon">下午好</string>
-    <string name="home_greeting_evening">晚上好</string>
-    <string name="home_label_recently_played">最近播放</string>
-    <string name="home_label_songs_count">%1$d 首歌曲</string>
-    <string name="home_label_albums_count">%1$d 张专辑</string>
-    <string name="home_label_artists_count">%1$d 位艺术家</string>
-    <string name="home_label_playlists_count">%1$d 个歌单</string>
     <string name="sync_status_already_added">\"%1$s\" 已经在你的库中。</string>
     <string name="top_bar_equalizer">均衡器</string>
     <string name="top_bar_playlists">歌单</string>
@@ -67,13 +67,29 @@
     <string name="settings_section_appearance">外观</string>
     <string name="settings_section_library">库</string>
     <string name="settings_section_metadata_tags">元数据 &amp; 标签</string>
+    <string name="settings_section_playback">回放</string>
     <string name="settings_section_mode">模式</string>
     <string name="settings_section_preset">预设</string>
     <string name="settings_section_bands">频段</string>
+    <string name="appearance_album_art_color">专辑封面颜色</string>
+    <string name="appearance_album_art_color_subtitle">将整个应用程序设置为最后一首歌曲的封面</string>
     <string name="appearance_material_you">材料你</string>
     <string name="appearance_material_you_subtitle">使用基于壁纸的颜色（Android 12+）</string>
     <string name="appearance_material_you_supported">使用基于壁纸的颜色</string>
     <string name="appearance_material_you_unsupported">需要 Android 12 或更高版本</string>
+    <string name="lyrics_title">歌词</string>
+    <string name="lyrics_empty_title">没有歌词</string>
+    <string name="lyrics_empty_subtitle">没有找到这首歌的歌词。</string>
+    <string name="cd_lyrics">歌词</string>
+    <string name="settings_section_lyrics">歌词</string>
+    <string name="lyrics_download_remote">下载歌词</string>
+    <string name="lyrics_download_remote_subtitle">当未找到嵌入标签或 .lrc sidecar 时，从 LRCLIB 查找丢失的歌词。</string>
+    <string name="lyrics_save_sidecar">另存为 .lrc sidecar</string>
+    <string name="lyrics_save_sidecar_subtitle">将获取的歌词写在音频文件旁边，以便它们在重新安装后仍然存在，并且其他玩家可以阅读它们。</string>
+    <string name="playback_crossfade">交叉淡入淡出</string>
+    <string name="playback_crossfade_subtitle">将一个曲目的结尾与下一曲目的开头重叠。场外曲目无缝、连续。</string>
+    <string name="playback_crossfade_duration">淡入淡出长度</string>
+    <string name="playback_crossfade_duration_value">%1$d秒</string>
     <string name="burn_download_remote_art">下载远程艺术</string>
     <string name="burn_download_remote_art_subtitle">在需要时从 MusicBrainz 查找缺失的封面。</string>
     <string name="burn_button">将标签烧录到文件</string>
@@ -130,6 +146,13 @@
     <string name="search_empty_subtitle">输入至少两个字符以查找标题、艺术家或专辑。</string>
     <string name="search_no_results_title">没有匹配 \"%1$s\"</string>
     <string name="search_no_results_subtitle">尝试不同的拼写或更少的字符。</string>
+    <string name="common_loading">加载中...</string>
+    <string name="playlist_name_label">名称</string>
+    <string name="remove_folder_confirmation">删除这个文件夹吗？</string>
+    <string name="remove_folder_body">“%1$s”以及从中扫描的曲目将从您的音乐库中消失。磁盘上的文件不会被触及。</string>
+    <string name="remove_button">删除</string>
+    <string name="eq_reset_to_preset">重置为预设</string>
+    <string name="library_shuffle_artist">随机播放艺术家</string>
     <string name="cd_back">返回</string>
     <string name="cd_settings">设置</string>
     <string name="cd_play">播放</string>
@@ -148,7 +171,12 @@
     <string name="cd_delete_playlist">删除播放列表</string>
     <string name="cd_new_playlist">新建播放列表</string>
     <string name="cd_repeat_mode">循环: %1$s</string>
-
-    <!-- Auto-translated to Simplified Chinese via local LLM; review and refine. -->
-    <string name="home_label_select_folder">选择包含音乐的文件夹。在现代Android系统中，系统会阻止选择标准媒体文件夹（如音乐、下载等）——请进入一个子文件夹，如音乐/专辑，然后选择该文件夹。被阻止的文件夹中的音频仍会通过音乐访问权限显示在您的库中；您只需选择文件夹以用于标签烧录功能。</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">%1$d 秒后播放...</item>
+        <item quantity="other">%1$d 秒后播放...</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d 结果</item>
+        <item quantity="other">%1$d 个结果</item>
+    </plurals>
 </resources>

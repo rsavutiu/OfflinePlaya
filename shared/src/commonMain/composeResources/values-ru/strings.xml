@@ -13,12 +13,21 @@
     <string name="home_label_add_folders">Добавить папки</string>
     <string name="home_label_import_more_tracks">Импортировать больше треков</string>
     <string name="home_title_start_your_music_journey">Начните ваше музыкальное путешествие</string>
+    <string name="home_label_select_folder">Выберите папку с вашей музыкой. На современных Android система блокирует выбор стандартных медиа-папок (Музыка, Загрузки и т.д.) — перейдите в подпапку, например, Музыка/Альбомы, и выберите её вместо этого. Аудио в заблокированных папках всё равно отображается в вашей библиотеке через разрешение на доступ к музыке; вам нужно только выбрать папки для функции записи метаданных.</string>
     <string name="home_status_picking_music_folder">Выбор папки с музыкой</string>
     <string name="home_status_scanning">Сканирование…</string>
     <string name="home_label_pick_music_folder">Выберите папку с музыкой</string>
     <string name="home_label_tracks">Треки</string>
     <string name="home_label_folders">Папки</string>
     <string name="home_label_total">Всего</string>
+    <string name="home_greeting_morning">Доброе утро</string>
+    <string name="home_greeting_afternoon">Добрый день</string>
+    <string name="home_greeting_evening">Добрый вечер</string>
+    <string name="home_label_recently_played">Недавно воспроизводили</string>
+    <string name="home_label_songs_count">%1$d песен</string>
+    <string name="home_label_albums_count">%1$d альбомов</string>
+    <string name="home_label_artists_count">%1$d исполнителей</string>
+    <string name="home_label_playlists_count">%1$d плейлистов</string>
     <string name="now_playing_title">Плеер</string>
     <string name="now_playing_up_next">Следующее</string>
     <string name="now_playing_back">Назад</string>
@@ -37,7 +46,6 @@
     <string name="track_details_bitrate">Битрейт</string>
     <string name="track_details_path">Путь</string>
     <string name="track_details_status">Статус</string>
-    <string name="track_details_playing_in">Воспроизводится в…</string>
     <string name="track_details_play_now">▶ Воспроизвести сейчас</string>
     <string name="track_details_kbps"> kbps</string>
     <string name="library_album_detail_track">трек</string>
@@ -50,14 +58,6 @@
     <string name="sync_status_completed">Сканировано %1$d треков в %2$d папках</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d неудачных)</string>
     <string name="sync_status_failed">Сканирование завершилось с ошибкой: %1$s</string>
-    <string name="home_greeting_morning">Доброе утро</string>
-    <string name="home_greeting_afternoon">Добрый день</string>
-    <string name="home_greeting_evening">Добрый вечер</string>
-    <string name="home_label_recently_played">Недавно воспроизводили</string>
-    <string name="home_label_songs_count">%1$d песен</string>
-    <string name="home_label_albums_count">%1$d альбомов</string>
-    <string name="home_label_artists_count">%1$d исполнителей</string>
-    <string name="home_label_playlists_count">%1$d плейлистов</string>
     <string name="sync_status_already_added">\"%1$s\" уже есть в вашей библиотеке.</string>
     <string name="top_bar_equalizer">Эквалайзер</string>
     <string name="top_bar_playlists">Плейлисты</string>
@@ -67,13 +67,29 @@
     <string name="settings_section_appearance">Внешний вид</string>
     <string name="settings_section_library">Библиотека</string>
     <string name="settings_section_metadata_tags">Метаданные &amp; Значки</string>
+    <string name="settings_section_playback">Воспроизведение</string>
     <string name="settings_section_mode">Режим</string>
     <string name="settings_section_preset">Предустановка</string>
     <string name="settings_section_bands">Банды</string>
+    <string name="appearance_album_art_color">Цвета обложки альбома</string>
+    <string name="appearance_album_art_color_subtitle">Подкрасьте все приложение под кавер последней песни</string>
     <string name="appearance_material_you">Material You</string>
     <string name="appearance_material_you_subtitle">Использовать цвета на основе обоев (Android 12+)</string>
     <string name="appearance_material_you_supported">Использовать цвета на основе обоев</string>
     <string name="appearance_material_you_unsupported">Требуется Android 12 или более поздняя версия</string>
+    <string name="lyrics_title">Тексты песен</string>
+    <string name="lyrics_empty_title">Нет текстов</string>
+    <string name="lyrics_empty_subtitle">Текст для этого трека не найден.</string>
+    <string name="cd_lyrics">Тексты песен</string>
+    <string name="settings_section_lyrics">Тексты песен</string>
+    <string name="lyrics_download_remote">Скачать тексты песен</string>
+    <string name="lyrics_download_remote_subtitle">Найдите недостающие тексты песен в LRCLIB, если не найден встроенный тег или дополнительный файл .lrc.</string>
+    <string name="lyrics_save_sidecar">Сохранить как коляску .lrc</string>
+    <string name="lyrics_save_sidecar_subtitle">Запишите извлеченные тексты рядом с аудиофайлом, чтобы они сохранились после переустановки и чтобы другие игроки могли их прочитать.</string>
+    <string name="playback_crossfade">Кроссфейд</string>
+    <string name="playback_crossfade_subtitle">Перекрытие конца одной дорожки с началом следующей. Выкл. треки воспроизводятся без пауз, подряд.</string>
+    <string name="playback_crossfade_duration">Длина кроссфейда</string>
+    <string name="playback_crossfade_duration_value">%1$d с</string>
     <string name="burn_download_remote_art">Скачать удаленные изображения</string>
     <string name="burn_download_remote_art_subtitle">Искать отсутствующие обложки из MusicBrainz при необходимости.</string>
     <string name="burn_button">Записать метаданные в файлы</string>
@@ -130,6 +146,13 @@
     <string name="search_empty_subtitle">Введите минимум два символа, чтобы найти название, исполнителя или альбом.</string>
     <string name="search_no_results_title">Ничего не соответствует \"%1$s\"</string>
     <string name="search_no_results_subtitle">Попробуйте другой вариант написания или меньше символов.</string>
+    <string name="common_loading">Загрузка…</string>
+    <string name="playlist_name_label">Имя</string>
+    <string name="remove_folder_confirmation">Удалить эту папку?</string>
+    <string name="remove_folder_body">\"%1$s\" исчезнет из вашей библиотеки вместе со сканированными из нее треками. Файлы на диске не трогаются.</string>
+    <string name="remove_button">Удалить</string>
+    <string name="eq_reset_to_preset">Сбросить настройки</string>
+    <string name="library_shuffle_artist">Перетасовать артиста</string>
     <string name="cd_back">Назад</string>
     <string name="cd_settings">Настройки</string>
     <string name="cd_play">Воспроизвести</string>
@@ -148,7 +171,12 @@
     <string name="cd_delete_playlist">Удалить плейлист</string>
     <string name="cd_new_playlist">Новый плейлист</string>
     <string name="cd_repeat_mode">Повтор: %1$s</string>
-
-    <!-- Auto-translated to Russian via local LLM; review and refine. -->
-    <string name="home_label_select_folder">Выберите папку с вашей музыкой. На современных Android система блокирует выбор стандартных медиа-папок (Музыка, Загрузки и т.д.) — перейдите в подпапку, например, Музыка/Альбомы, и выберите её вместо этого. Аудио в заблокированных папках всё равно отображается в вашей библиотеке через разрешение на доступ к музыке; вам нужно только выбрать папки для функции записи метаданных.</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Воспроизведение через %1$d секунду…</item>
+        <item quantity="other">Воспроизведение через %1$d секунд…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d результат</item>
+        <item quantity="other">%1$d результатов</item>
+    </plurals>
 </resources>

@@ -13,12 +13,21 @@
     <string name="home_label_add_folders">フォルダを追加</string>
     <string name="home_label_import_more_tracks">さらにトラックをインポート</string>
     <string name="home_title_start_your_music_journey">音楽の旅を開始</string>
+    <string name="home_label_select_folder">音楽があるフォルダを選んでください。現代のAndroidでは、システムが標準のメディアフォルダ（Music、Downloadsなど）の選択をブロックしています — 代わりにMusic/Albumsなどのサブフォルダを選んでください。ブロックされたフォルダ内の音楽は、ミュージックアクセス権限を通じてライブラリに表示されます。タグ焼却機能のためにフォルダを選ばなければならないだけです。</string>
     <string name="home_status_picking_music_folder">音楽フォルダを選択中</string>
     <string name="home_status_scanning">スキャン中…</string>
     <string name="home_label_pick_music_folder">音楽フォルダを選択</string>
     <string name="home_label_tracks">トラック</string>
     <string name="home_label_folders">フォルダ</string>
     <string name="home_label_total">合計</string>
+    <string name="home_greeting_morning">おはようございます</string>
+    <string name="home_greeting_afternoon">こんにちは</string>
+    <string name="home_greeting_evening">こんばんは</string>
+    <string name="home_label_recently_played">最近再生した</string>
+    <string name="home_label_songs_count">%1$d曲</string>
+    <string name="home_label_albums_count">%1$dアルバム</string>
+    <string name="home_label_artists_count">%1$dアーティスト</string>
+    <string name="home_label_playlists_count">%1$dプレイリスト</string>
     <string name="now_playing_title">今再生中</string>
     <string name="now_playing_up_next">次は</string>
     <string name="now_playing_back">戻る</string>
@@ -37,7 +46,6 @@
     <string name="track_details_bitrate">ビットレート</string>
     <string name="track_details_path">パス</string>
     <string name="track_details_status">状態</string>
-    <string name="track_details_playing_in">再生中…</string>
     <string name="track_details_play_now">▶ 再生</string>
     <string name="track_details_kbps"> kbps</string>
     <string name="library_album_detail_track">トラック</string>
@@ -50,14 +58,6 @@
     <string name="sync_status_completed">合計 %1$d トラックを %2$d フォルダでスキャンしました</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d 失敗)</string>
     <string name="sync_status_failed">スキャン失敗: %1$s</string>
-    <string name="home_greeting_morning">おはようございます</string>
-    <string name="home_greeting_afternoon">こんにちは</string>
-    <string name="home_greeting_evening">こんばんは</string>
-    <string name="home_label_recently_played">最近再生した</string>
-    <string name="home_label_songs_count">%1$d曲</string>
-    <string name="home_label_albums_count">%1$dアルバム</string>
-    <string name="home_label_artists_count">%1$dアーティスト</string>
-    <string name="home_label_playlists_count">%1$dプレイリスト</string>
     <string name="sync_status_already_added">\"%1$s\"はすでにライブラリにあります。</string>
     <string name="top_bar_equalizer">イコライザー</string>
     <string name="top_bar_playlists">プレイリスト</string>
@@ -67,13 +67,29 @@
     <string name="settings_section_appearance">外観</string>
     <string name="settings_section_library">ライブラリ</string>
     <string name="settings_section_metadata_tags">メタデータ＆タグ</string>
+    <string name="settings_section_playback">再生</string>
     <string name="settings_section_mode">モード</string>
     <string name="settings_section_preset">プリセット</string>
     <string name="settings_section_bands">バンド</string>
+    <string name="appearance_album_art_color">アルバムアートの色</string>
+    <string name="appearance_album_art_color_subtitle">アプリ全体を最後の曲のカバーに合わせて着色する</string>
     <string name="appearance_material_you">マテリアル・ユー</string>
     <string name="appearance_material_you_subtitle">ウォールペーパーに基づいたカラーモードを使用 (Android 12以降)</string>
     <string name="appearance_material_you_supported">ウォールペーパーに基づいたカラーモードを使用</string>
     <string name="appearance_material_you_unsupported">Android 12以降が必要です</string>
+    <string name="lyrics_title">歌詞</string>
+    <string name="lyrics_empty_title">歌詞なし</string>
+    <string name="lyrics_empty_subtitle">このトラックの歌詞は見つかりませんでした。</string>
+    <string name="cd_lyrics">歌詞</string>
+    <string name="settings_section_lyrics">歌詞</string>
+    <string name="lyrics_download_remote">歌詞をダウンロードする</string>
+    <string name="lyrics_download_remote_subtitle">埋め込みタグまたは .lrc サイドカーが見つからない場合は、LRCLIB から欠落している歌詞を検索します。</string>
+    <string name="lyrics_save_sidecar">.lrc サイドカーとして保存</string>
+    <string name="lyrics_save_sidecar_subtitle">取得した歌詞をオーディオ ファイルの横に書き込むと、再インストール後も残り、他のプレイヤーが歌詞を読めるようになります。</string>
+    <string name="playback_crossfade">クロスフェード</string>
+    <string name="playback_crossfade_subtitle">1 つのトラックの終わりを次のトラックの始まりと重ねます。オフにすると、トラックをギャップレスで連続して再生します。</string>
+    <string name="playback_crossfade_duration">クロスフェードの長さ</string>
+    <string name="playback_crossfade_duration_value">%1$d 秒</string>
     <string name="burn_download_remote_art">リモートアートをダウンロード</string>
     <string name="burn_download_remote_art_subtitle">音楽情報を取得する必要がある場合は、MusicBrainzから欠けているアルバムジャケットを検索します。</string>
     <string name="burn_button">メタデータをファイルに焼く</string>
@@ -130,6 +146,13 @@
     <string name="search_empty_subtitle">タイトル、アーティスト、またはアルバムを検索するには少なくとも2文字入力してください。</string>
     <string name="search_no_results_title">\"%1$s\" に一致するものがありません</string>
     <string name="search_no_results_subtitle">誤字を試してみたり、文字を減らしてみてください。</string>
+    <string name="common_loading">読み込み中…</string>
+    <string name="playlist_name_label">名前</string>
+    <string name="remove_folder_confirmation">このフォルダを削除しますか?</string>
+    <string name="remove_folder_body">「%1$s」は、そこからスキャンされたトラックとともにライブラリから消えます。ディスク上のファイルには触れません。</string>
+    <string name="remove_button">削除</string>
+    <string name="eq_reset_to_preset">プリセットにリセット</string>
+    <string name="library_shuffle_artist">シャッフルアーティスト</string>
     <string name="cd_back">戻る</string>
     <string name="cd_settings">設定</string>
     <string name="cd_play">再生</string>
@@ -148,7 +171,12 @@
     <string name="cd_delete_playlist">プレイリストを削除</string>
     <string name="cd_new_playlist">新しいプレイリスト</string>
     <string name="cd_repeat_mode">リピート: %1$s</string>
-
-    <!-- Auto-translated to Japanese via local LLM; review and refine. -->
-    <string name="home_label_select_folder">音楽があるフォルダを選んでください。現代のAndroidでは、システムが標準のメディアフォルダ（Music、Downloadsなど）の選択をブロックしています — 代わりにMusic/Albumsなどのサブフォルダを選んでください。ブロックされたフォルダ内の音楽は、ミュージックアクセス権限を通じてライブラリに表示されます。タグ焼却機能のためにフォルダを選ばなければならないだけです。</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">%1$d 秒後に再生します…</item>
+        <item quantity="other">%1$d 秒後に再生します…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d の結果</item>
+        <item quantity="other">%1$d 件の結果</item>
+    </plurals>
 </resources>

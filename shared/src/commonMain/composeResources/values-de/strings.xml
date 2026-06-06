@@ -13,12 +13,21 @@
     <string name="home_label_add_folders">Ordner hinzufügen</string>
     <string name="home_label_import_more_tracks">Weitere Titel importieren</string>
     <string name="home_title_start_your_music_journey">Deine Musikreise starten</string>
+    <string name="home_label_select_folder">Wählen Sie einen Ordner mit Ihrer Musik aus. Auf modernen Android-Geräten blockiert das System das Auswählen der Standardmediaverzeichnisse (Music, Downloads usw.) — navigieren Sie in ein Unterverzeichnis wie Music/Albums und wählen Sie dieses stattdessen aus. Audiodateien in den blockierten Verzeichnissen werden immer noch in Ihrer Bibliothek angezeigt, da Sie das music-access-Recht haben; Sie müssen lediglich Ordner für die Funktion zur Beschriftung von Tags auswählen.</string>
     <string name="home_status_picking_music_folder">Musikordner auswählen</string>
     <string name="home_status_scanning">Scanne…</string>
     <string name="home_label_pick_music_folder">Musikordner auswählen</string>
     <string name="home_label_tracks">Titel</string>
     <string name="home_label_folders">Ordner</string>
     <string name="home_label_total">Gesamt</string>
+    <string name="home_greeting_morning">Guten Morgen</string>
+    <string name="home_greeting_afternoon">Guten Tag</string>
+    <string name="home_greeting_evening">Guten Abend</string>
+    <string name="home_label_recently_played">Letzten Zeit gespielt</string>
+    <string name="home_label_songs_count">%1$d Lieder</string>
+    <string name="home_label_albums_count">%1$d Alben</string>
+    <string name="home_label_artists_count">%1$d Künstler</string>
+    <string name="home_label_playlists_count">%1$d Playlists</string>
     <string name="now_playing_title">Während der Wiedergabe</string>
     <string name="now_playing_up_next">Als Nächstes</string>
     <string name="now_playing_back">Zurück</string>
@@ -37,7 +46,6 @@
     <string name="track_details_bitrate">Bitrate</string>
     <string name="track_details_path">Pfad</string>
     <string name="track_details_status">Status</string>
-    <string name="track_details_playing_in">Wird abgespielt in…</string>
     <string name="track_details_play_now">▶  Jetzt abspielen</string>
     <string name="track_details_kbps"> kbps</string>
     <string name="library_album_detail_track">Titel</string>
@@ -50,14 +58,6 @@
     <string name="sync_status_completed">Gescannt %1$d Titel über %2$d Ordner</string>
     <string name="sync_status_completed_with_failed">%1$s (%2$d fehlgeschlagen)</string>
     <string name="sync_status_failed">Scan fehlgeschlagen: %1$s</string>
-    <string name="home_greeting_morning">Guten Morgen</string>
-    <string name="home_greeting_afternoon">Guten Tag</string>
-    <string name="home_greeting_evening">Guten Abend</string>
-    <string name="home_label_recently_played">Letzten Zeit gespielt</string>
-    <string name="home_label_songs_count">%1$d Lieder</string>
-    <string name="home_label_albums_count">%1$d Alben</string>
-    <string name="home_label_artists_count">%1$d Künstler</string>
-    <string name="home_label_playlists_count">%1$d Playlists</string>
     <string name="sync_status_already_added">\"%1$s\" ist bereits in Ihrer Bibliothek.</string>
     <string name="top_bar_equalizer">Equalizer</string>
     <string name="top_bar_playlists">Playlists</string>
@@ -67,13 +67,29 @@
     <string name="settings_section_appearance">Erscheinungsbild</string>
     <string name="settings_section_library">Bibliothek</string>
     <string name="settings_section_metadata_tags">Metadaten &amp; Tags</string>
+    <string name="settings_section_playback">Wiedergabe</string>
     <string name="settings_section_mode">Modus</string>
     <string name="settings_section_preset">Vorlage</string>
     <string name="settings_section_bands">Bänder</string>
+    <string name="appearance_album_art_color">Farben des Albumcovers</string>
+    <string name="appearance_album_art_color_subtitle">Färben Sie die gesamte App auf das Cover des letzten Songs</string>
     <string name="appearance_material_you">Material You</string>
     <string name="appearance_material_you_subtitle">Farben basierend auf dem Hintergrundbild verwenden (Android 12+)</string>
     <string name="appearance_material_you_supported">Farben basierend auf dem Hintergrundbild verwenden</string>
     <string name="appearance_material_you_unsupported">Erfordert Android 12 oder höher</string>
+    <string name="lyrics_title">Songtexte</string>
+    <string name="lyrics_empty_title">Keine Texte</string>
+    <string name="lyrics_empty_subtitle">Für diesen Titel wurden keine Liedtexte gefunden.</string>
+    <string name="cd_lyrics">Songtexte</string>
+    <string name="settings_section_lyrics">Songtexte</string>
+    <string name="lyrics_download_remote">Songtexte herunterladen</string>
+    <string name="lyrics_download_remote_subtitle">Suchen Sie in LRCLIB nach fehlenden Liedtexten, wenn kein eingebettetes Tag oder .lrc-Sidecar gefunden wird.</string>
+    <string name="lyrics_save_sidecar">Als .lrc-Sidecar speichern</string>
+    <string name="lyrics_save_sidecar_subtitle">Schreiben Sie abgerufene Liedtexte neben die Audiodatei, damit sie eine Neuinstallation überstehen und andere Spieler sie lesen können.</string>
+    <string name="playback_crossfade">Überblendung</string>
+    <string name="playback_crossfade_subtitle">Überlappen Sie das Ende einer Spur mit dem Anfang der nächsten. Off spielt Titel lückenlos hintereinander ab.</string>
+    <string name="playback_crossfade_duration">Crossfade-Länge</string>
+    <string name="playback_crossfade_duration_value">%1$d s</string>
     <string name="burn_download_remote_art">Fernart herunterladen</string>
     <string name="burn_download_remote_art_subtitle">Sucht bei Bedarf fehlende Covers über MusicBrainz auf.</string>
     <string name="burn_button">Metadaten in Dateien brennen</string>
@@ -130,6 +146,13 @@
     <string name="search_empty_subtitle">Gib mindestens zwei Zeichen ein, um einen Titel, Künstler oder Album zu finden.</string>
     <string name="search_no_results_title">Nichts passt zu \"%1$s\"</string>
     <string name="search_no_results_subtitle">Versuche eine andere Schreibweise oder weniger Zeichen.</string>
+    <string name="common_loading">Laden…</string>
+    <string name="playlist_name_label">Name</string>
+    <string name="remove_folder_confirmation">Diesen Ordner entfernen?</string>
+    <string name="remove_folder_body">„%1$s“ verschwindet zusammen mit den darin gescannten Titeln aus Ihrer Bibliothek. Die Dateien auf der Festplatte werden nicht berührt.</string>
+    <string name="remove_button">Entfernen</string>
+    <string name="eq_reset_to_preset">Auf Voreinstellung zurücksetzen</string>
+    <string name="library_shuffle_artist">Shuffle-Künstler</string>
     <string name="cd_back">Zurück</string>
     <string name="cd_settings">Einstellungen</string>
     <string name="cd_play">Wiedergeben</string>
@@ -148,7 +171,12 @@
     <string name="cd_delete_playlist">Playlist löschen</string>
     <string name="cd_new_playlist">Neue Playlist</string>
     <string name="cd_repeat_mode">Wiederholen: %1$s</string>
-
-    <!-- Auto-translated to German via local LLM; review and refine. -->
-    <string name="home_label_select_folder">Wählen Sie einen Ordner mit Ihrer Musik aus. Auf modernen Android-Geräten blockiert das System das Auswählen der Standardmediaverzeichnisse (Music, Downloads usw.) — navigieren Sie in ein Unterverzeichnis wie Music/Albums und wählen Sie dieses stattdessen aus. Audiodateien in den blockierten Verzeichnissen werden immer noch in Ihrer Bibliothek angezeigt, da Sie das music-access-Recht haben; Sie müssen lediglich Ordner für die Funktion zur Beschriftung von Tags auswählen.</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Spielt in %1$d Sekunde…</item>
+        <item quantity="other">Spielt in %1$d Sekunden…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d Ergebnis</item>
+        <item quantity="other">%1$d Ergebnisse</item>
+    </plurals>
 </resources>
