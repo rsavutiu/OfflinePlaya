@@ -74,6 +74,9 @@ import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.common_loading
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun App(
@@ -503,7 +506,7 @@ private fun DestinationBody(
                 }.collectAsState(initial = kotlinx.collections.immutable.persistentListOf<Track>())
 
                 PlaylistDetailPage(
-                    playlistName = playlist?.name ?: "Loading…",
+                    playlistName = playlist?.name ?: stringResource(Res.string.common_loading),
                     tracks = tracks,
                     onPlayTracks = onPlayTracks,
                     onTrackLongPress = onTrackLongPress,
@@ -620,7 +623,7 @@ private fun DestinationBody(
                 }.collectAsState(initial = kotlinx.collections.immutable.persistentListOf<Track>())
 
                 LibraryFolderDetailPage(
-                    folderName = folder?.displayName ?: "Loading…",
+                    folderName = folder?.displayName ?: stringResource(Res.string.common_loading),
                     subfolders = subfolders,
                     tracks = tracks,
                     onFolderClick = { id ->

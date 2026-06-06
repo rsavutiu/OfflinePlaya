@@ -40,6 +40,7 @@ import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.library_album_detail_play
 import offlineplaya.shared.generated.resources.library_album_detail_track
+import offlineplaya.shared.generated.resources.library_album_detail_shuffle
 import offlineplaya.shared.generated.resources.library_album_detail_tracks
 import org.jetbrains.compose.resources.stringResource
 
@@ -167,7 +168,7 @@ private fun PortraitBody(
         ) {
             Icon(Icons.Default.Shuffle, contentDescription = null)
             Spacer(Modifier.width(6.dp))
-            Text("Shuffle")
+            Text(stringResource(Res.string.library_album_detail_shuffle))
         }
     }
     Spacer(Modifier.height(AppSpacing.sm))

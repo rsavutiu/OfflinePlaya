@@ -195,6 +195,21 @@
     <string name="search_no_results_title">Nothing matches \"%1$s\"</string>
     <string name="search_no_results_subtitle">Try a different spelling or fewer characters.</string>
 
+    <!-- Common / shared labels -->
+    <string name="common_loading">Loading…</string>
+
+    <!-- Dialogs &amp; misc UI labels -->
+    <string name="playlist_name_label">Name</string>
+    <string name="remove_folder_confirmation">Remove this folder?</string>
+    <string name="remove_folder_body">\"%1$s\" will disappear from your library, along with the tracks scanned from it. The files on disk aren\'t touched.</string>
+    <string name="remove_button">Remove</string>
+    <string name="eq_reset_to_preset">Reset to preset</string>
+    <string name="library_shuffle_artist">Shuffle Artist</string>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d result</item>
+        <item quantity="other">%1$d results</item>
+    </plurals>
+
     <!-- Accessibility content descriptions -->
     <string name="cd_back">Back</string>
     <string name="cd_settings">Settings</string>

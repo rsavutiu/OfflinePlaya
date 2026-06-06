@@ -34,6 +34,7 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.eq_reset_to_preset
 import offlineplaya.shared.generated.resources.settings_section_bands
 import offlineplaya.shared.generated.resources.settings_section_mode
 import offlineplaya.shared.generated.resources.settings_section_preset
@@ -127,7 +128,7 @@ fun EqualizerPage(
                         onClick = onResetOverrides,
                         modifier = Modifier.padding(horizontal = AppSpacing.lg),
                     ) {
-                        Text("Reset to preset")
+                        Text(stringResource(Res.string.eq_reset_to_preset))
                     }
                 }
             }

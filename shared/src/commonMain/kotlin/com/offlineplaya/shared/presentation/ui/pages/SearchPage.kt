@@ -23,12 +23,14 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.search_results_count
 import offlineplaya.shared.generated.resources.search_empty_subtitle
 import offlineplaya.shared.generated.resources.search_empty_title
 import offlineplaya.shared.generated.resources.search_field_label
 import offlineplaya.shared.generated.resources.search_no_results_subtitle
 import offlineplaya.shared.generated.resources.search_no_results_title
 import offlineplaya.shared.generated.resources.top_bar_search
+import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -79,7 +81,7 @@ fun SearchPage(
 
                 else -> {
                     Text(
-                        text = "${results.size} ${if (results.size == 1) "result" else "results"}",
+                        text = pluralStringResource(Res.plurals.search_results_count, results.size, results.size),
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,

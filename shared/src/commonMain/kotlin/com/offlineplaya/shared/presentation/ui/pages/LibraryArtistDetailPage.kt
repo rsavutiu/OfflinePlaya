@@ -23,6 +23,10 @@ import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.common_loading
+import offlineplaya.shared.generated.resources.library_shuffle_artist
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Artist detail: adaptive header + grid of the artist's albums. A "Shuffle
@@ -42,13 +46,18 @@ fun LibraryArtistDetailPage(
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
-        topBar = { AppTopBar(title = artist?.name ?: "Loading…", onBack = onBack) },
+        topBar = {
+            AppTopBar(
+                title = artist?.name ?: stringResource(Res.string.common_loading),
+                onBack = onBack,
+            )
+        },
         floatingActionButton = {
             if (albums.isNotEmpty()) {
                 ExtendedFloatingActionButton(
                     onClick = onPlayArtist,
                     icon = { Icon(Icons.Default.PlayArrow, contentDescription = null) },
-                    text = { Text("Shuffle Artist") },
+                    text = { Text(stringResource(Res.string.library_shuffle_artist)) },
                 )
             }
         },

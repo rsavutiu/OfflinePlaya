@@ -5,6 +5,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import com.offlineplaya.shared.domain.model.ManagedTreeRoot
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.playlist_dialog_cancel
+import offlineplaya.shared.generated.resources.remove_button
+import offlineplaya.shared.generated.resources.remove_folder_body
+import offlineplaya.shared.generated.resources.remove_folder_confirmation
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Confirmation dialog for removing a managed library root. The destructive
@@ -19,19 +25,15 @@ fun RemoveManagedRootDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Remove this folder?") },
+        title = { Text(stringResource(Res.string.remove_folder_confirmation)) },
         text = {
-            Text(
-                "\"${root.displayName}\" will disappear from your library, " +
-                        "along with the tracks scanned from it. " +
-                        "The files on disk aren't touched.",
-            )
+            Text(stringResource(Res.string.remove_folder_body, root.displayName))
         },
         confirmButton = {
-            TextButton(onClick = onConfirm) { Text("Remove") }
+            TextButton(onClick = onConfirm) { Text(stringResource(Res.string.remove_button)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(stringResource(Res.string.playlist_dialog_cancel)) }
         },
     )
 }

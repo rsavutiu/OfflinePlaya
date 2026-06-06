@@ -22,6 +22,9 @@ import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.common_loading
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Album detail page: gradient header (art + metadata + Play/Shuffle) followed
@@ -42,7 +45,12 @@ fun LibraryAlbumDetailPage(
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
-        topBar = { AppTopBar(title = album?.name ?: "Loading…", onBack = onBack) },
+        topBar = {
+            AppTopBar(
+                title = album?.name ?: stringResource(Res.string.common_loading),
+                onBack = onBack,
+            )
+        },
     ) { padding ->
         ResponsiveContent(modifier = Modifier.padding(padding)) {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
