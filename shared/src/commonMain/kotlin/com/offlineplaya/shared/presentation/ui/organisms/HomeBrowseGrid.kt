@@ -259,7 +259,9 @@ private fun BrowseCard(
                     Text(
                         text = subtitle,
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.outline,
+                        // Secondary-text token, not `outline` (a border color too
+                        // dim for text — failed WCAG AA on the dark surface).
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }

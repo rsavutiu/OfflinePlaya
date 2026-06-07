@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -102,7 +102,10 @@ fun BurnMetadataSettings(
                     )
                 }
             } else {
-                Button(
+                // Tonal, not filled: this is the heavier, less-frequent action.
+                // Keeping it filled made it compete with "Add music folder" as a
+                // second primary button. One filled primary per settings surface.
+                FilledTonalButton(
                     onClick = onBurnClick,
                     enabled = !isRunning,
                     modifier = Modifier

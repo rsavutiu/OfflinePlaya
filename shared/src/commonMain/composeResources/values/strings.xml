@@ -23,7 +23,9 @@
     <string name="home_status_scanning">Scanning…</string>
     <string name="home_label_pick_music_folder">Pick music folder</string>
     <string name="home_label_tracks">Tracks</string>
+    <string name="home_label_track">Track</string>
     <string name="home_label_folders">Folders</string>
+    <string name="home_label_folder">Folder</string>
     <string name="home_label_total">Total</string>
     <string name="home_greeting_morning">Good morning</string>
     <string name="home_greeting_afternoon">Good afternoon</string>

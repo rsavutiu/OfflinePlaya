@@ -4,6 +4,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,7 +20,8 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 enum class LibraryTab(val label: String) {
     ARTISTS("Artists"),
     FOLDERS("Folders"),
-    FLAT("All tracks"),
+    // Title Case to match the Home Browse card ("All Tracks").
+    FLAT("All Tracks"),
 }
 
 @Composable
@@ -29,11 +32,22 @@ fun LibraryTabRow(
 ) {
     // Brand accent drives the indicator + selected-tab text so the nav
     // identity is constant even when album-art Palette repaints colorScheme.
+    // The indicator is an explicit slot — M3's default underline is
+    // colorScheme.primary and ignores contentColor, so it must be colored here.
+    val brandAccent = LocalBrandAccent.current.accent
     TabRow(
         selectedTabIndex = selected.ordinal,
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.surface,
-        contentColor = LocalBrandAccent.current.accent,
+        contentColor = brandAccent,
+        indicator = { tabPositions ->
+            if (selected.ordinal < tabPositions.size) {
+                TabRowDefaults.SecondaryIndicator(
+                    modifier = Modifier.tabIndicatorOffset(tabPositions[selected.ordinal]),
+                    color = brandAccent,
+                )
+            }
+        },
     ) {
         LibraryTab.entries.forEach { tab ->
             Tab(

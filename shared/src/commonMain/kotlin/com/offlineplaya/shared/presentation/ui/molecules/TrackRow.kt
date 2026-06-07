@@ -37,6 +37,10 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
  * appears at most once (album / folder / all-tracks / search); leave it off
  * for playlists and the queue, where the same track id can repeat and the
  * shared key would collide.
+ *
+ * [showTrackNumber] prefixes the artist sub-line with the in-album track
+ * number ("4 · Artist"). Meaningful inside an album/folder; noise on a global
+ * alphabetical list, so the all-tracks / search list passes false.
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -47,6 +51,7 @@ fun TrackRow(
     isPlaying: Boolean = false,
     onLongClick: (() -> Unit)? = null,
     sharedArtEnabled: Boolean = false,
+    showTrackNumber: Boolean = true,
 ) {
     val bgModifier = if (isPlaying) {
         Modifier.background(MaterialTheme.colorScheme.primary.copy(alpha = 0.08f))
@@ -89,6 +94,7 @@ fun TrackRow(
                 "▶ ${track.artistName}"
             } else {
                 track.trackNumber
+                    ?.takeIf { showTrackNumber }
                     ?.let { "$it · ${track.artistName}" }
                     ?: track.artistName
             }

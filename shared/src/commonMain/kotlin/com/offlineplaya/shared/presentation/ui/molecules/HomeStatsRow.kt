@@ -22,8 +22,10 @@ import com.offlineplaya.shared.presentation.sync.SyncStatus
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.home_label_folder
 import offlineplaya.shared.generated.resources.home_label_folders
 import offlineplaya.shared.generated.resources.home_label_total
+import offlineplaya.shared.generated.resources.home_label_track
 import offlineplaya.shared.generated.resources.home_label_tracks
 import org.jetbrains.compose.resources.stringResource
 
@@ -50,13 +52,18 @@ fun HomeStatsRow(
     ) {
         StatCell(
             value = trackCount.toString(),
-            label = stringResource(Res.string.home_label_tracks),
+            // Singular label when the count is exactly 1 ("1 Track", not "1 Tracks").
+            label = stringResource(
+                if (trackCount == 1L) Res.string.home_label_track else Res.string.home_label_tracks
+            ),
             modifier = Modifier.weight(1f),
         )
         VerticalDivider(borderColor)
         StatCell(
             value = folderCount.toString(),
-            label = stringResource(Res.string.home_label_folders),
+            label = stringResource(
+                if (folderCount == 1) Res.string.home_label_folder else Res.string.home_label_folders
+            ),
             modifier = Modifier.weight(1f),
         )
         VerticalDivider(borderColor)
@@ -86,7 +93,8 @@ private fun StatCell(
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.outline,
+            // Secondary-text token, not the dimmer `outline` border color.
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }

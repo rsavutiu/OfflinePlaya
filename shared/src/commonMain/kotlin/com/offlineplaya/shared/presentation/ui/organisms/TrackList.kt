@@ -49,6 +49,8 @@ fun TrackList(
                 // Both callers (all-tracks, search) list each track once, so
                 // the per-track shared-element key can't collide here.
                 sharedArtEnabled = true,
+                // Global alphabetical list: the in-album track number is noise.
+                showTrackNumber = false,
             )
         }
     }
