@@ -27,7 +27,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -44,6 +43,7 @@ import offlineplaya.shared.generated.resources.home_label_playlists
 import offlineplaya.shared.generated.resources.home_label_playlists_count
 import offlineplaya.shared.generated.resources.home_label_songs_count
 import offlineplaya.shared.generated.resources.home_title_all_tracks
+import offlineplaya.shared.generated.resources.vinyl_record
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -165,6 +165,21 @@ private fun BrowseCard(
                     .padding(top = 16.dp, bottom = 6.dp, start = 6.dp, end = 44.dp),
             )
         }
+        // The vinyl motif is a monochrome trace of a real turntable photo
+        // (vinyl_record vector), tinted to the accent as a watermark — same
+        // treatment as the performer silhouette.
+        if (motif == BrowseMotif.VINYL) {
+            Image(
+                painter = painterResource(Res.drawable.vinyl_record),
+                contentDescription = null,
+                contentScale = ContentScale.Fit,
+                alignment = Alignment.Center,
+                colorFilter = ColorFilter.tint(motifColor.copy(alpha = 0.28f)),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(10.dp),
+            )
+        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -223,9 +238,9 @@ private fun DrawScope.drawBrowseMotif(motif: BrowseMotif, base: Color) {
     )
     when (motif) {
         BrowseMotif.WAVEFORM -> drawWaveform(base)
-        BrowseMotif.VINYL -> drawVinyl(base)
-        // PERFORMER's figure is a tinted Image overlay in BrowseCard; here we
-        // only lay down the shared gradient glow behind it.
+        // VINYL and PERFORMER are tinted Image overlays in BrowseCard; here we
+        // only lay down the shared gradient glow behind them.
+        BrowseMotif.VINYL -> Unit
         BrowseMotif.PERFORMER -> Unit
         BrowseMotif.PLAYLIST -> drawPlaylist(base)
     }
@@ -255,30 +270,6 @@ private fun DrawScope.drawWaveform(base: Color) {
             cornerRadius = CornerRadius(barW / 2f, barW / 2f),
         )
     }
-}
-
-private fun DrawScope.drawVinyl(base: Color) {
-    val center = Offset(size.width * 0.44f, size.height * 0.60f)
-    val outer = size.minDimension * 0.72f
-    // Solid disc body — this is what makes it read as a record rather than
-    // a wireframe of rings.
-    drawCircle(color = base.copy(alpha = 0.32f), radius = outer, center = center)
-    // Grooves cut into the disc: thin concentric rings, a touch brighter
-    // than the body so they catch the eye like real grooves.
-    val grooveWidth = size.minDimension * 0.011f
-    val rings = 7
-    for (i in 1..rings) {
-        val r = outer * (0.30f + 0.68f * i / rings)
-        drawCircle(
-            color = base.copy(alpha = 0.16f),
-            radius = r,
-            center = center,
-            style = Stroke(width = grooveWidth),
-        )
-    }
-    // Solid centre label + bright spindle pin.
-    drawCircle(color = base.copy(alpha = 0.55f), radius = outer * 0.26f, center = center)
-    drawCircle(color = base.copy(alpha = 0.85f), radius = outer * 0.05f, center = center)
 }
 
 private fun DrawScope.drawPlaylist(base: Color) {
