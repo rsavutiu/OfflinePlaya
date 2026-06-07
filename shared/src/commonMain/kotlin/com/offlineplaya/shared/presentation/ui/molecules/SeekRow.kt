@@ -1,10 +1,15 @@
 package com.offlineplaya.shared.presentation.ui.molecules
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -15,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.PlaybackState
@@ -25,6 +31,7 @@ import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
  * so the thumb tracks the finger smoothly; the seek is only committed on
  * release to avoid spamming the player with intermediate positions.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SeekRow(
     state: PlaybackState,
@@ -48,12 +55,23 @@ fun SeekRow(
                 dragging = false
                 onSeek(draftMs)
             },
-            // Brand accent on the thumb + filled track so the playhead pops
-            // against whatever ambient album-art tint the Now Playing wears.
+            // Brand accent on the filled track so the playhead pops against
+            // whatever ambient album-art tint the Now Playing wears.
             colors = SliderDefaults.colors(
                 thumbColor = brand,
                 activeTrackColor = brand,
             ),
+            // A single clean circular thumb. M3's default thumb is a tall
+            // rounded bar that — with the active-track stop indicator — read
+            // as two overlapping elements; this is one unambiguous handle.
+            thumb = {
+                Box(
+                    modifier = Modifier
+                        .size(16.dp)
+                        .clip(CircleShape)
+                        .background(brand),
+                )
+            },
         )
         Row(
             modifier = Modifier

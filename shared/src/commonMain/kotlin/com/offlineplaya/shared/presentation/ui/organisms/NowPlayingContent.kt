@@ -113,7 +113,9 @@ fun NowPlayingContent(
                     .fillMaxSize()
                     .padding(horizontal = 32.dp, vertical = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically),
+                // Tighter rhythm so the art doesn't float stranded above the
+                // title; the headline sits closer to the cover it labels.
+                verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
             ) {
                 FlippableArt(
                     state = state,

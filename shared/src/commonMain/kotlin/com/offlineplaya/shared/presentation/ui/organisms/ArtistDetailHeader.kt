@@ -9,12 +9,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
@@ -57,6 +60,19 @@ private fun PortraitBody(artist: Artist?, modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .height(200.dp)) {
             ArtistImage(artist = artist, fallbackSize = 120.dp)
+            // Soft bottom scrim: blends the hard cropped edge into the page
+            // and keeps the counts line legible if the image is light there.
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(72.dp)
+                    .align(Alignment.BottomCenter)
+                    .background(
+                        Brush.verticalGradient(
+                            listOf(Color.Transparent, MaterialTheme.colorScheme.surface),
+                        ),
+                    ),
+            )
         }
         if (artist != null) {
             Spacer(Modifier.height(AppSpacing.sm))
@@ -102,6 +118,9 @@ private fun ArtistImage(
         model = model,
         contentDescription = null,
         contentScale = ContentScale.Crop,
+        // Anchor the crop to the top: faces and heads sit in the upper half of
+        // most artist photos, so a center crop decapitates them.
+        alignment = Alignment.TopCenter,
         modifier = Modifier.fillMaxSize(),
         loading = {
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

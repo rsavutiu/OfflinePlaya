@@ -1,12 +1,14 @@
 package com.offlineplaya.shared.presentation.ui.organisms
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -21,6 +23,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.lyrics.LyricLine
@@ -56,7 +59,28 @@ fun SyncedLyricsView(
             is LyricsUiState.Plain -> PlainLyrics(state.text)
             is LyricsUiState.Synced -> SyncedLyrics(state, onSeekToLine)
         }
+        // Top + bottom fade so lines dissolve at the edges instead of being
+        // hard-clipped mid-sentence against the header / transport. Only the
+        // scrolling states need it; the centered empty/loading states don't.
+        if (state is LyricsUiState.Synced || state is LyricsUiState.Plain) {
+            EdgeFade(top = true, modifier = Modifier.align(Alignment.TopCenter))
+            EdgeFade(top = false, modifier = Modifier.align(Alignment.BottomCenter))
+        }
     }
+}
+
+/** A vertical scrim that fades the surface color into transparent. */
+@Composable
+private fun EdgeFade(top: Boolean, modifier: Modifier = Modifier) {
+    val surface = MaterialTheme.colorScheme.surface
+    val colors = if (top) listOf(surface, androidx.compose.ui.graphics.Color.Transparent)
+    else listOf(androidx.compose.ui.graphics.Color.Transparent, surface)
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(72.dp)
+            .background(Brush.verticalGradient(colors)),
+    )
 }
 
 @Composable
