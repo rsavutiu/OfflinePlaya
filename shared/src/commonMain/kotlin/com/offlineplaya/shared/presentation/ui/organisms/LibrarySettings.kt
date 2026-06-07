@@ -19,6 +19,7 @@ import com.offlineplaya.shared.domain.model.ManagedTreeRoot
 import com.offlineplaya.shared.presentation.ui.molecules.ManagedFolderRow
 import com.offlineplaya.shared.presentation.ui.molecules.SettingsSection
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
+import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
@@ -50,10 +51,12 @@ fun LibrarySettings(
         modifier = modifier
     ) {
         Column {
+            val brand = LocalBrandAccent.current
             Button(
                 onClick = onAddFolder,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
+                    containerColor = brand.accent,
+                    contentColor = brand.onAccent,
                 ),
                 modifier = Modifier
                     .fillMaxWidth()

@@ -35,6 +35,7 @@ import com.offlineplaya.shared.presentation.ui.LocalOrientation
 import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
+import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
@@ -152,7 +153,8 @@ private fun PortraitBody(
             enabled = canPlay,
             shape = RoundedCornerShape(24.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
+                containerColor = LocalBrandAccent.current.accent,
+                contentColor = LocalBrandAccent.current.onAccent,
             ),
             modifier = Modifier.weight(1f),
         ) {
@@ -222,7 +224,8 @@ private fun LandscapeBody(
             enabled = canPlay,
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
+                containerColor = LocalBrandAccent.current.accent,
+                contentColor = LocalBrandAccent.current.onAccent,
             ),
             contentPadding = PaddingValues(
                 horizontal = AppSpacing.md,

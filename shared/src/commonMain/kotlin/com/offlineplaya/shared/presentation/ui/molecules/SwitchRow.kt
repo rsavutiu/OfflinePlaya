@@ -9,12 +9,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
+import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 /**
@@ -56,7 +58,18 @@ fun SwitchRow(
                 )
             }
         }
-        Switch(checked = checked, onCheckedChange = onCheckedChange, enabled = enabled)
+        val brand = LocalBrandAccent.current
+        Switch(
+            checked = checked,
+            onCheckedChange = onCheckedChange,
+            enabled = enabled,
+            // "On" state in the fixed brand accent so toggles read as active
+            // regardless of the ambient album-art tint.
+            colors = SwitchDefaults.colors(
+                checkedTrackColor = brand.accent,
+                checkedThumbColor = brand.onAccent,
+            ),
+        )
     }
 }
 
