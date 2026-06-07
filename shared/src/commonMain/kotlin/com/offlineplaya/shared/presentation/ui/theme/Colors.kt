@@ -6,14 +6,50 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
 /**
- * Brand color tokens for OfflinePlaya. Single-accent violet (#7C5CBF) design
- * system — every accent surface uses this family. The deep dark background
- * (#0C0C12) maximises contrast on AMOLED screens.
+ * Brand color tokens for OfflinePlaya.
+ *
+ * Two roles, deliberately separated:
+ *  - **Ambient violet** (the `BrandViolet*` family + Material `ColorScheme`):
+ *    a *default* tonal palette that the dynamic Palette / Material You pipeline
+ *    is free to overwrite at runtime. When album art drives the scheme,
+ *    `colorScheme.primary` becomes whatever the cover seeds.
+ *  - **Brand accent** ([BrandAccent]): a FIXED Walkman orange that the dynamic
+ *    pipeline must NOT touch. Used for identity surfaces — primary action
+ *    buttons, FAB, the active tab underline, toggle "on" state, seek-fill —
+ *    so the app has a recognisable identity that pops against any ambient
+ *    tint Palette throws at us.
+ *
+ * Read [BrandAccent] via `LocalBrandAccent.current` from a Composable; reading
+ * `colorScheme.primary` is correct for ambient/tonal surfaces but wrong for
+ * brand-identity surfaces.
  */
 private val BrandViolet = Color(0xFF7C5CBF)
 private val BrandVioletLight = Color(0xFFB0A0F0)
 private val BrandVioletDim = Color(0xFF9B8CE0)
 private val BrandVioletDeep = Color(0xFF3D2E7C)
+
+/**
+ * Fixed brand accent — classic Walkman orange. Lives outside the Material
+ * `ColorScheme` so the album-art / Material You recolor pipeline cannot
+ * overwrite it. See [BrandAccentColors] / `LocalBrandAccent`.
+ */
+internal val BrandAccent: Color = Color(0xFFF47B20)
+internal val OnBrandAccent: Color = Color.White
+
+/**
+ * Bundle of fixed brand accent colors exposed via `LocalBrandAccent`.
+ * Grouped so callsites that need both bg + foreground can read one composition
+ * local instead of two.
+ */
+data class BrandAccentColors(
+    val accent: Color,
+    val onAccent: Color,
+)
+
+internal val DefaultBrandAccentColors: BrandAccentColors = BrandAccentColors(
+    accent = BrandAccent,
+    onAccent = OnBrandAccent,
+)
 
 internal val DefaultLightColors: ColorScheme = lightColorScheme(
     primary = BrandViolet,

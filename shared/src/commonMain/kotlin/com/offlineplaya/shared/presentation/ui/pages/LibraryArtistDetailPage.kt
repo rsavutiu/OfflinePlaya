@@ -20,6 +20,7 @@ import com.offlineplaya.shared.presentation.ui.organisms.AlbumList
 import com.offlineplaya.shared.presentation.ui.organisms.ArtistDetailHeader
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
+import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
@@ -54,10 +55,13 @@ fun LibraryArtistDetailPage(
         },
         floatingActionButton = {
             if (albums.isNotEmpty()) {
+                val brand = LocalBrandAccent.current
                 ExtendedFloatingActionButton(
                     onClick = onPlayArtist,
                     icon = { Icon(Icons.Default.PlayArrow, contentDescription = null) },
                     text = { Text(stringResource(Res.string.library_shuffle_artist)) },
+                    containerColor = brand.accent,
+                    contentColor = brand.onAccent,
                 )
             }
         },

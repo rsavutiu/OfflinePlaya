@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.PlaybackState
+import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
 
 /**
  * Playback seek slider with elapsed / total labels. Drags update a local draft
@@ -32,6 +34,7 @@ fun SeekRow(
     var dragging by remember { mutableStateOf(false) }
     var draftMs by remember { mutableStateOf(state.positionMs) }
     val displayedMs = if (dragging) draftMs else state.positionMs
+    val brand = LocalBrandAccent.current.accent
 
     Column(modifier = modifier.fillMaxWidth()) {
         Slider(
@@ -45,6 +48,12 @@ fun SeekRow(
                 dragging = false
                 onSeek(draftMs)
             },
+            // Brand accent on the thumb + filled track so the playhead pops
+            // against whatever ambient album-art tint the Now Playing wears.
+            colors = SliderDefaults.colors(
+                thumbColor = brand,
+                activeTrackColor = brand,
+            ),
         )
         Row(
             modifier = Modifier

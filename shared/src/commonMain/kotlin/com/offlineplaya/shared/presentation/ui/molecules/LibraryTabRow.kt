@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
+import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 
 /**
@@ -26,11 +27,13 @@ fun LibraryTabRow(
     onTabSelected: (LibraryTab) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    // Brand accent drives the indicator + selected-tab text so the nav
+    // identity is constant even when album-art Palette repaints colorScheme.
     TabRow(
         selectedTabIndex = selected.ordinal,
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.surface,
-        contentColor = MaterialTheme.colorScheme.primary,
+        contentColor = LocalBrandAccent.current.accent,
     ) {
         LibraryTab.entries.forEach { tab ->
             Tab(

@@ -32,6 +32,7 @@ import com.offlineplaya.shared.presentation.ui.molecules.TrackRow
 import com.offlineplaya.shared.presentation.ui.organisms.PlaylistDetailHeader
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
+import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
@@ -83,10 +84,13 @@ fun PlaylistDetailPage(
         },
         floatingActionButton = {
             if (tracks.isNotEmpty()) {
+                val brand = LocalBrandAccent.current
                 ExtendedFloatingActionButton(
                     onClick = { onPlayTracks(tracks, 0) },
                     icon = { Icon(Icons.Default.PlayArrow, contentDescription = null) },
                     text = { Text(stringResource(Res.string.playlist_play_all)) },
+                    containerColor = brand.accent,
+                    contentColor = brand.onAccent,
                 )
             }
         },

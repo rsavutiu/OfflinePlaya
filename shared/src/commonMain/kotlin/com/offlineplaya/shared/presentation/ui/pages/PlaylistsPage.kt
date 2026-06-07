@@ -18,6 +18,7 @@ import com.offlineplaya.shared.presentation.ui.molecules.CreatePlaylistDialog
 import com.offlineplaya.shared.presentation.ui.organisms.PlaylistList
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
+import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
@@ -45,7 +46,12 @@ fun PlaylistsPage(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { showCreateDialog = true }) {
+            val brand = LocalBrandAccent.current
+            FloatingActionButton(
+                onClick = { showCreateDialog = true },
+                containerColor = brand.accent,
+                contentColor = brand.onAccent,
+            ) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = stringResource(Res.string.cd_new_playlist)

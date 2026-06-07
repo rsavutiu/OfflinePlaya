@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
+import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.cd_next
@@ -97,7 +98,7 @@ fun PlaybackControlsLarge(
                     Res.string.cd_play
                 ),
                 modifier = Modifier.size(56.dp),
-                tint = MaterialTheme.colorScheme.primary,
+                tint = LocalBrandAccent.current.accent,
             )
         }
         IconButton(onClick = onNext, modifier = Modifier.size(56.dp)) {

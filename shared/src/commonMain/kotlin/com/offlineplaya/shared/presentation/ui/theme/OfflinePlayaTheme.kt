@@ -5,6 +5,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import com.materialkolor.PaletteStyle
 import com.materialkolor.rememberDynamicColorScheme
@@ -65,13 +67,26 @@ fun OfflinePlayaTheme(
         ThemeColorSource.BRAND -> brand
     }
 
-    MaterialTheme(
-        colorScheme = colors,
-        typography = OfflinePlayaTypography,
-        shapes = OfflinePlayaShapes,
-        content = content,
-    )
+    CompositionLocalProvider(LocalBrandAccent provides DefaultBrandAccentColors) {
+        MaterialTheme(
+            colorScheme = colors,
+            typography = OfflinePlayaTypography,
+            shapes = OfflinePlayaShapes,
+            content = content,
+        )
+    }
 }
+
+/**
+ * The fixed brand accent. Always [DefaultBrandAccentColors] (Walkman orange) —
+ * provided at the theme root so it survives the dynamic Palette / Material You
+ * pipeline that rewrites `MaterialTheme.colorScheme`.
+ *
+ * Use for identity surfaces: primary action buttons, FAB, active tab underline,
+ * toggle "on" state, seek-fill. For tonal/ambient surfaces (card washes, Now
+ * Playing background, scrims) keep using `MaterialTheme.colorScheme`.
+ */
+val LocalBrandAccent = staticCompositionLocalOf { DefaultBrandAccentColors }
 
 /** Which of the three color sources the theme should draw from. */
 internal enum class ThemeColorSource { ALBUM_ART, WALLPAPER, BRAND }
