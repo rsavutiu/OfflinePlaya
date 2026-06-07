@@ -14,12 +14,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.QueueMusic
-import androidx.compose.material.icons.filled.Album
-import androidx.compose.material.icons.filled.MusicNote
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,7 +36,6 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -118,7 +111,6 @@ fun HomeBrowseGrid(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             BrowseCard(
-                icon = Icons.Default.MusicNote,
                 title = stringResource(Res.string.home_title_all_tracks),
                 subtitle = stringResource(Res.string.home_label_songs_count, trackCount.toInt()),
                 motif = BrowseMotif.WAVEFORM,
@@ -130,7 +122,6 @@ fun HomeBrowseGrid(
                     .fillMaxSize(),
             )
             BrowseCard(
-                icon = Icons.Default.Album,
                 title = stringResource(Res.string.home_label_albums),
                 subtitle = stringResource(Res.string.home_label_albums_count, albumCount),
                 motif = BrowseMotif.VINYL,
@@ -149,7 +140,6 @@ fun HomeBrowseGrid(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             BrowseCard(
-                icon = Icons.Default.Person,
                 title = stringResource(Res.string.home_label_artists),
                 subtitle = stringResource(Res.string.home_label_artists_count, artistCount),
                 motif = BrowseMotif.PERFORMER,
@@ -161,7 +151,6 @@ fun HomeBrowseGrid(
                     .fillMaxSize(),
             )
             BrowseCard(
-                icon = Icons.AutoMirrored.Filled.QueueMusic,
                 title = stringResource(Res.string.home_label_playlists),
                 subtitle = stringResource(Res.string.home_label_playlists_count, playlistCount),
                 motif = BrowseMotif.PLAYLIST,
@@ -178,7 +167,6 @@ fun HomeBrowseGrid(
 
 @Composable
 private fun BrowseCard(
-    icon: ImageVector,
     title: String,
     subtitle: String,
     motif: BrowseMotif,
@@ -236,14 +224,10 @@ private fun BrowseCard(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
-            verticalArrangement = Arrangement.SpaceBetween,
+            // Title/subtitle pinned to the bottom (the top-left icon was
+            // removed; the per-card motif watermark carries the identity).
+            verticalArrangement = Arrangement.Bottom,
         ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(36.dp),
-            )
             Column {
                 Text(
                     text = title,

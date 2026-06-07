@@ -25,13 +25,12 @@ import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.home_greeting_afternoon
 import offlineplaya.shared.generated.resources.home_greeting_evening
 import offlineplaya.shared.generated.resources.home_greeting_morning
-import offlineplaya.shared.generated.resources.home_label_library
 import offlineplaya.shared.generated.resources.now_playing_search
 import offlineplaya.shared.generated.resources.now_playing_settings
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * Home-page header: time-of-day greeting + big "Library" title on the left,
+ * Home-page header: the time-of-day greeting as the hero title on the left,
  * search and settings icons on the right. Replaces an [AppTopBar] for the
  * landing surface so the title carries more weight than a system bar.
  */
@@ -49,19 +48,14 @@ fun HomeHeader(
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Column {
+            // The greeting is now the hero title (the redundant "Library" line
+            // was dropped). It wears the album accent so the page's biggest
+            // text visibly reacts to the cover.
             Text(
                 text = greetingText(),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline,
-            )
-            Text(
-                text = stringResource(Res.string.home_label_library),
                 style = MaterialTheme.typography.headlineMedium.copy(
                     fontWeight = FontWeight.ExtraBold,
                 ),
-                // Hero title wears the album accent so the page's biggest text
-                // visibly reacts to the cover. Body text stays neutral
-                // (onSurface) for legibility; this is the one deliberate accent.
                 color = MaterialTheme.colorScheme.primary,
             )
         }
