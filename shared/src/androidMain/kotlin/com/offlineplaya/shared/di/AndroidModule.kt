@@ -14,6 +14,7 @@ import com.offlineplaya.shared.data.lyrics.SafSidecarLyricsSource
 import com.offlineplaya.shared.data.lyrics.SqlLyricsRepository
 import com.offlineplaya.shared.data.lyrics.createLrclibLyricsSource
 import com.offlineplaya.shared.data.metadata.AndroidMetadataReader
+import com.offlineplaya.shared.data.tag.JaudiotaggerTrackTagWriter
 import com.offlineplaya.shared.data.scanner.MediaStoreDeviceAudioScanner
 import com.offlineplaya.shared.data.scanner.SafFolderScanner
 import com.offlineplaya.shared.data.scheduling.WorkManagerTaskRunner
@@ -29,6 +30,7 @@ import com.offlineplaya.shared.domain.lyrics.LyricsSidecarWriter
 import com.offlineplaya.shared.domain.lyrics.RemoteLyricsSource
 import com.offlineplaya.shared.domain.lyrics.SidecarLyricsSource
 import com.offlineplaya.shared.domain.scanner.DeviceAudioScanner
+import com.offlineplaya.shared.domain.tag.TrackTagWriter
 import com.offlineplaya.shared.domain.scanner.FolderScanner
 import com.offlineplaya.shared.domain.scanner.MetadataReader
 import com.offlineplaya.shared.domain.scheduling.BackgroundTaskRunner
@@ -82,6 +84,9 @@ val androidModule: Module = module {
     // writer; reads via Jaudiotagger too since MediaMetadataRetriever doesn't
     // round-trip the genre string reliably across container formats.
     single<GenreTagWriter> { JaudiotaggerGenreWriter(androidContext(), get()) }
+
+    // Multi-field tag writer for the manual tag editor. Same temp-file dance.
+    single<TrackTagWriter> { JaudiotaggerTrackTagWriter(androidContext(), get()) }
 
     // Lyrics sources + repository. Embedded reads via the Jaudiotagger
     // temp-file dance; sidecar reads <basename>.lrc/.txt via DocumentsContract;

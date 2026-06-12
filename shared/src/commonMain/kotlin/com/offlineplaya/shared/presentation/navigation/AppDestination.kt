@@ -16,6 +16,11 @@ sealed interface AppDestination {
     data object Playlists : AppDestination
     data class PlaylistDetail(val playlistId: Long) : AppDestination
 
+    /** Built-in history-derived playlist (Most played, Recently added, …). */
+    data class SmartPlaylist(
+        val kind: com.offlineplaya.shared.domain.model.SmartPlaylistKind,
+    ) : AppDestination
+
     data object Search : AppDestination
 
     data object LibraryArtists : AppDestination
@@ -35,4 +40,7 @@ sealed interface AppDestination {
 
     /** Lyrics page — accessible from the NowPlaying aux row. */
     data object Lyrics : AppDestination
+
+    /** Manual tag editor for a single track — reached from the track actions sheet. */
+    data class TagEditor(val trackId: Long) : AppDestination
 }

@@ -47,6 +47,7 @@ import offlineplaya.shared.generated.resources.track_details_add_to_playlist
 import offlineplaya.shared.generated.resources.track_details_bitrate
 import offlineplaya.shared.generated.resources.track_details_codec
 import offlineplaya.shared.generated.resources.track_details_duration
+import offlineplaya.shared.generated.resources.track_details_edit_tags
 import offlineplaya.shared.generated.resources.track_details_genre
 import offlineplaya.shared.generated.resources.track_details_path
 import offlineplaya.shared.generated.resources.track_details_play_next
@@ -80,6 +81,7 @@ fun TrackDetailsSheet(
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
     onPlay: (() -> Unit)? = null,
+    onEditTags: (() -> Unit)? = null,
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showAddToPlaylistDialog by remember { mutableStateOf(false) }
@@ -96,6 +98,7 @@ fun TrackDetailsSheet(
             onPlayNext = onPlayNext,
             onAddToQueue = onAddToQueue,
             onShowAddToPlaylist = { showAddToPlaylistDialog = true },
+            onEditTags = onEditTags,
         )
     }
 
@@ -136,6 +139,7 @@ fun TrackDetailsContent(
     onPlayNext: (() -> Unit)? = null,
     onAddToQueue: (() -> Unit)? = null,
     onShowAddToPlaylist: (() -> Unit)? = null,
+    onEditTags: (() -> Unit)? = null,
 ) {
     Column(
         modifier = modifier
@@ -184,6 +188,14 @@ fun TrackDetailsContent(
                 onClick = onShowAddToPlaylist,
                 modifier = Modifier.fillMaxWidth(),
             ) { Text(stringResource(Res.string.track_details_add_to_playlist)) }
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+
+        if (onEditTags != null) {
+            OutlinedButton(
+                onClick = onEditTags,
+                modifier = Modifier.fillMaxWidth(),
+            ) { Text(stringResource(Res.string.track_details_edit_tags)) }
             Spacer(modifier = Modifier.height(20.dp))
         }
 
@@ -315,6 +327,7 @@ private fun TrackDetailsContentFullPreview() {
                 onPlayNext = {},
                 onAddToQueue = {},
                 onShowAddToPlaylist = {},
+                onEditTags = {},
             )
         }
     }
