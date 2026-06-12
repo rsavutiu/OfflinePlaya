@@ -64,6 +64,11 @@ internal class SqlFolderRepository(
         queries.deleteByTreeUri(treeUri)
     }
 
+    override suspend fun deleteByPathPrefix(treeUri: String, pathPrefix: String) =
+        withContext(ioDispatcher) {
+            queries.deleteByPathPrefix(treeUri = treeUri, prefix = pathPrefix)
+        }
+
     override suspend fun deleteAll() = withContext(ioDispatcher) {
         queries.deleteAll()
     }

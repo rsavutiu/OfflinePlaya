@@ -2,12 +2,14 @@ package com.offlineplaya.shared.presentation.sync
 
 import com.offlineplaya.shared.data.repository.SqlAlbumRepository
 import com.offlineplaya.shared.data.repository.SqlArtistRepository
+import com.offlineplaya.shared.data.repository.SqlExcludedFolderRepository
 import com.offlineplaya.shared.data.repository.SqlFolderRepository
 import com.offlineplaya.shared.data.repository.SqlManagedTreeRootRepository
 import com.offlineplaya.shared.data.repository.SqlTrackRepository
 import com.offlineplaya.shared.domain.scanner.AudioFolder
 import com.offlineplaya.shared.domain.scanner.AudioMetadata
 import com.offlineplaya.shared.domain.scanner.RawAudioFile
+import com.offlineplaya.shared.domain.usecase.ExcludeFolderUseCase
 import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
 import com.offlineplaya.shared.testsupport.FakeDeviceAudioScanner
 import com.offlineplaya.shared.testsupport.FakeFolderScanner
@@ -41,9 +43,10 @@ class LibrarySyncCoordinatorTest {
         val artists = SqlArtistRepository(db, TestLogger(), Dispatchers.Unconfined)
         val albums = SqlAlbumRepository(db, TestLogger(), Dispatchers.Unconfined)
         val tracks = SqlTrackRepository(db, TestLogger(), Dispatchers.Unconfined)
+        val excludedFolders = SqlExcludedFolderRepository(db, TestLogger(), Dispatchers.Unconfined)
         val useCase = LibrarySyncUseCase(
             managedRoots, folders, artists, albums, tracks, scanner, reader,
-            FakeDeviceAudioScanner(),
+            FakeDeviceAudioScanner(), excludedFolders,
             TestLogger(),
         )
         return Harness(
@@ -54,6 +57,10 @@ class LibrarySyncCoordinatorTest {
                 folders = folders,
                 artists = artists,
                 albums = albums,
+                excludedFolders = excludedFolders,
+                excludeFolderUseCase = ExcludeFolderUseCase(
+                    excludedFolders, tracks, folders, artists, albums, TestLogger(),
+                ),
                 scope = testScope,
             ),
             managedRoots,
@@ -283,12 +290,16 @@ class LibrarySyncCoordinatorTest {
         val artists = SqlArtistRepository(db, TestLogger(), Dispatchers.Unconfined)
         val albums = SqlAlbumRepository(db, TestLogger(), Dispatchers.Unconfined)
         val tracks = SqlTrackRepository(db, TestLogger(), Dispatchers.Unconfined)
+        val excludedFolders = SqlExcludedFolderRepository(db, TestLogger(), Dispatchers.Unconfined)
         val useCase = LibrarySyncUseCase(
             managedRoots, folders, artists, albums, tracks, scanner, reader,
-            FakeDeviceAudioScanner(), TestLogger(),
+            FakeDeviceAudioScanner(), excludedFolders, TestLogger(),
         )
         val coordinator = LibrarySyncCoordinator(
-            useCase, managedRoots, tracks, folders, artists, albums, scope,
+            useCase, managedRoots, tracks, folders, artists, albums,
+            excludedFolders,
+            ExcludeFolderUseCase(excludedFolders, tracks, folders, artists, albums, TestLogger()),
+            scope,
         )
 
         coordinator.addAndSync(uri, "Removable").join()

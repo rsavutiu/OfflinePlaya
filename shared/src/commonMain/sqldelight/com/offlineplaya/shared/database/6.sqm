@@ -1,0 +1,9 @@
+CREATE TABLE ExcludedFolder (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tree_uri TEXT NOT NULL,
+    relative_path TEXT NOT NULL,
+    display_name TEXT NOT NULL,
+    created_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+);
+
+CREATE UNIQUE INDEX idx_excluded_tree_path ON ExcludedFolder(tree_uri, relative_path);

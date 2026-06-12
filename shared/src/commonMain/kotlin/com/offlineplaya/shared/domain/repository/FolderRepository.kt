@@ -11,5 +11,9 @@ interface FolderRepository {
     suspend fun upsert(treeUri: String, relativePath: String, displayName: String, parentId: Long?): Long
     suspend fun refreshTrackCount(id: Long)
     suspend fun deleteByTreeUri(treeUri: String)
+
+    /** Drop a folder subtree (the folder + every descendant). */
+    suspend fun deleteByPathPrefix(treeUri: String, pathPrefix: String)
+
     suspend fun deleteAll()
 }

@@ -1,11 +1,15 @@
 package com.offlineplaya.shared.presentation.sync
 
+import com.offlineplaya.shared.domain.model.ExcludedFolder
+import com.offlineplaya.shared.domain.model.Folder
 import com.offlineplaya.shared.domain.model.ManagedTreeRoot
 import com.offlineplaya.shared.domain.repository.AlbumRepository
 import com.offlineplaya.shared.domain.repository.ArtistRepository
+import com.offlineplaya.shared.domain.repository.ExcludedFolderRepository
 import com.offlineplaya.shared.domain.repository.FolderRepository
 import com.offlineplaya.shared.domain.repository.ManagedTreeRootRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
+import com.offlineplaya.shared.domain.usecase.ExcludeFolderUseCase
 import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
@@ -34,6 +38,8 @@ class LibrarySyncCoordinator(
     private val folders: FolderRepository,
     private val artists: ArtistRepository,
     private val albums: AlbumRepository,
+    private val excludedFolders: ExcludedFolderRepository,
+    private val excludeFolderUseCase: ExcludeFolderUseCase,
     private val scope: CoroutineScope,
 ) {
     private val _status = MutableStateFlow<SyncStatus>(SyncStatus.Idle)
@@ -47,6 +53,24 @@ class LibrarySyncCoordinator(
      */
     val managedRootsFlow: Flow<PersistentList<ManagedTreeRoot>> =
         managedRoots.observeAll().map { it.toPersistentList() }
+
+    /** Folders the user has hidden from the library (Settings renders these). */
+    val excludedFoldersFlow: Flow<PersistentList<ExcludedFolder>> =
+        excludedFolders.observeAll().map { it.toPersistentList() }
+
+    /**
+     * Hide [folder] from the library: future scans skip it and everything
+     * already indexed under it is removed. Files on disk are untouched.
+     */
+    fun excludeFolder(folder: Folder): Job = scope.launch {
+        excludeFolderUseCase.exclude(folder)
+    }
+
+    /** Forget an exclusion and rescan so the folder's tracks come back. */
+    fun includeFolder(excludedFolderId: Long): Job = scope.launch {
+        excludeFolderUseCase.include(excludedFolderId)
+        resyncAll()
+    }
 
     /**
      * Register a newly-picked tree URI as a managed root and immediately sync

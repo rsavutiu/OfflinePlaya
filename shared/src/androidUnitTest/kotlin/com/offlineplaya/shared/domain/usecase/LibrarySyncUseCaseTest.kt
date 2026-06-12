@@ -3,6 +3,7 @@ package com.offlineplaya.shared.domain.usecase
 import com.offlineplaya.shared.domain.model.CanonicalGenre
 import com.offlineplaya.shared.data.repository.SqlAlbumRepository
 import com.offlineplaya.shared.data.repository.SqlArtistRepository
+import com.offlineplaya.shared.data.repository.SqlExcludedFolderRepository
 import com.offlineplaya.shared.data.repository.SqlFolderRepository
 import com.offlineplaya.shared.data.repository.SqlManagedTreeRootRepository
 import com.offlineplaya.shared.data.repository.SqlTrackRepository
@@ -36,6 +37,7 @@ class LibrarySyncUseCaseTest {
         val artists: SqlArtistRepository,
         val albums: SqlAlbumRepository,
         val tracks: SqlTrackRepository,
+        val excludedFolders: SqlExcludedFolderRepository,
     )
 
     private fun fixture(): Fixture {
@@ -47,6 +49,7 @@ class LibrarySyncUseCaseTest {
             artists = SqlArtistRepository(db, TestLogger(), Dispatchers.Unconfined),
             albums = SqlAlbumRepository(db, TestLogger(), Dispatchers.Unconfined),
             tracks = SqlTrackRepository(db, TestLogger(), Dispatchers.Unconfined),
+            excludedFolders = SqlExcludedFolderRepository(db, TestLogger(), Dispatchers.Unconfined),
         )
     }
 
@@ -64,6 +67,7 @@ class LibrarySyncUseCaseTest {
         scanner = scanner,
         metadataReader = reader,
         deviceAudio = deviceAudio,
+        excludedFolders = f.excludedFolders,
         logger = TestLogger(),
     )
 
@@ -387,6 +391,92 @@ class LibrarySyncUseCaseTest {
     }
 
     @Test
+    fun `device-then-SAF dedup survives sub-second mtime precision mismatch`() = runTest {
+        // Real-device scenario: MediaStore DATE_MODIFIED is whole seconds
+        // (always ...000 after the *1000 conversion) while SAF's
+        // COLUMN_LAST_MODIFIED carries sub-second millis. Same file, same
+        // second, different raw values — this is the Downloads duplicate bug.
+        val f = fixture()
+        val safUri = "content://tree/safroot"
+        val safDoc = "$safUri/song.mp3"
+        val deviceDoc = "${DeviceAudioScanner.ROOT_URI}/Download/song.mp3"
+        val name = "song.mp3"
+        val size = 4_000_000L
+        val deviceMtime = 1_700_000_000_000L // MediaStore: whole-second millis
+        val safMtime = 1_700_000_000_123L    // SAF: same second, real millis
+
+        val device = FakeDeviceAudioScanner(
+            tracks = listOf(
+                DeviceAudioTrack(
+                    sourceUri = deviceDoc,
+                    relativePath = "Download/song.mp3",
+                    fileName = name,
+                    fileSize = size,
+                    lastModified = deviceMtime,
+                    metadata = AudioMetadata.Empty.copy(title = "Song", artist = "A", album = "Al"),
+                ),
+            ),
+        )
+        useCase(f, FakeFolderScanner(scripted = emptyMap()), FakeMetadataReader(), device)
+            .syncDeviceAudio()
+        assertEquals(1L, f.tracks.count(), "device row should be present after first pass")
+
+        val scanner = FakeFolderScanner.scan(
+            treeUri = safUri,
+            folders = listOf(AudioFolder(safUri, "", "SAF", null)),
+            files = listOf(RawAudioFile(safDoc, safUri, "song.mp3", name, size, safMtime)),
+        )
+        val reader = FakeMetadataReader(
+            scripted = mapOf(safDoc to md(artist = "A", album = "Al", title = "Song")),
+        )
+        useCase(f, scanner, reader, device).syncOne(safUri)
+
+        assertEquals(1L, f.tracks.count(), "sub-second mtime mismatch must still dedup")
+        assertNotNull(f.tracks.findByDocumentUri(safDoc))
+        assertNull(f.tracks.findByDocumentUri(deviceDoc))
+    }
+
+    @Test
+    fun `SAF-then-device dedup survives sub-second mtime precision mismatch`() = runTest {
+        val f = fixture()
+        val safUri = "content://tree/safroot"
+        val safDoc = "$safUri/song.mp3"
+        val deviceDoc = "${DeviceAudioScanner.ROOT_URI}/Download/song.mp3"
+        val name = "song.mp3"
+        val size = 4_000_000L
+
+        val scanner = FakeFolderScanner.scan(
+            treeUri = safUri,
+            folders = listOf(AudioFolder(safUri, "", "SAF", null)),
+            files = listOf(
+                RawAudioFile(safDoc, safUri, "song.mp3", name, size, lastModified = 1_700_000_000_123L),
+            ),
+        )
+        val reader = FakeMetadataReader(
+            scripted = mapOf(safDoc to md(artist = "A", album = "Al", title = "Song")),
+        )
+        val device = FakeDeviceAudioScanner(
+            tracks = listOf(
+                DeviceAudioTrack(
+                    sourceUri = deviceDoc,
+                    relativePath = "Download/song.mp3",
+                    fileName = name,
+                    fileSize = size,
+                    lastModified = 1_700_000_000_000L, // same second, no sub-second part
+                    metadata = AudioMetadata.Empty.copy(title = "Song", artist = "A", album = "Al"),
+                ),
+            ),
+        )
+        f.managedRoots.add(safUri, "SAF")
+
+        useCase(f, scanner, reader, device).syncAll()
+
+        assertEquals(1L, f.tracks.count(), "sub-second mtime mismatch must still dedup")
+        assertNotNull(f.tracks.findByDocumentUri(safDoc))
+        assertNull(f.tracks.findByDocumentUri(deviceDoc))
+    }
+
+    @Test
     fun `near-match with different lastModified is treated as a distinct file`() = runTest {
         val f = fixture()
         val safUri = "content://tree/safroot"
@@ -420,6 +510,67 @@ class LibrarySyncUseCaseTest {
         useCase(f, scanner, reader, device).syncAll()
 
         assertEquals(2L, f.tracks.count(), "different mtime means different physical file — keep both")
+    }
+
+    @Test
+    fun `SAF scan skips files under an excluded folder`() = runTest {
+        val f = fixture()
+        val uri = "content://tree/root"
+        f.excludedFolders.add(uri, "Voice Notes", "Voice Notes")
+
+        val scanner = FakeFolderScanner.scan(
+            treeUri = uri,
+            folders = listOf(
+                AudioFolder(uri, "", "Music", null),
+                AudioFolder(uri, "Voice Notes", "Voice Notes", ""),
+            ),
+            files = listOf(
+                RawAudioFile("$uri/song.mp3", uri, "song.mp3", "song.mp3", 1L, 1L),
+                RawAudioFile("$uri/vn.mp3", uri, "Voice Notes/vn.mp3", "vn.mp3", 2L, 2L),
+            ),
+        )
+        val reader = FakeMetadataReader(
+            scripted = mapOf("$uri/song.mp3" to md(artist = "A", album = "Al", title = "Song")),
+        )
+
+        val report = useCase(f, scanner, reader).syncOne(uri)
+
+        assertEquals(1, report.tracksDiscovered, "excluded file must not count as discovered")
+        assertEquals(1L, f.tracks.count())
+        assertNull(f.tracks.findByDocumentUri("$uri/vn.mp3"))
+        assertNull(
+            f.folders.findByPath(uri, "Voice Notes"),
+            "excluded folder must not be materialized",
+        )
+    }
+
+    @Test
+    fun `device scan skips tracks under an excluded folder`() = runTest {
+        val f = fixture()
+        f.excludedFolders.add(DeviceAudioScanner.ROOT_URI, "WhatsApp/Audio", "Audio")
+
+        val device = FakeDeviceAudioScanner(
+            tracks = listOf(
+                DeviceAudioTrack(
+                    sourceUri = "${DeviceAudioScanner.ROOT_URI}/Music/keep.mp3",
+                    relativePath = "Music/keep.mp3",
+                    fileName = "keep.mp3", fileSize = 1L, lastModified = 1L,
+                    metadata = AudioMetadata.Empty.copy(title = "Keep", artist = "A", album = "Al"),
+                ),
+                DeviceAudioTrack(
+                    sourceUri = "${DeviceAudioScanner.ROOT_URI}/WhatsApp/Audio/note.opus",
+                    relativePath = "WhatsApp/Audio/note.opus",
+                    fileName = "note.opus", fileSize = 2L, lastModified = 2L,
+                    metadata = AudioMetadata.Empty,
+                ),
+            ),
+        )
+
+        useCase(f, FakeFolderScanner(scripted = emptyMap()), FakeMetadataReader(), device)
+            .syncDeviceAudio()
+
+        assertEquals(1L, f.tracks.count())
+        assertNull(f.tracks.findByDocumentUri("${DeviceAudioScanner.ROOT_URI}/WhatsApp/Audio/note.opus"))
     }
 
     @Test

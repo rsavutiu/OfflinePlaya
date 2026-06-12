@@ -75,6 +75,9 @@ fun SettingsPage(
     onOpenDesignSystem: () -> Unit,
     onBack: () -> Unit,
     dynamicColorSupported: Boolean = true,
+    excludedFolders: PersistentList<com.offlineplaya.shared.domain.model.ExcludedFolder> =
+        kotlinx.collections.immutable.persistentListOf(),
+    onRemoveExcludedFolder: (com.offlineplaya.shared.domain.model.ExcludedFolder) -> Unit = {},
 ) {
     var pendingRemoval by remember { mutableStateOf<ManagedTreeRoot?>(null) }
 
@@ -121,6 +124,8 @@ fun SettingsPage(
                     onAddFolder = onPickFolder,
                     onRescanAll = onRescanAll,
                     onRemoveManagedRoot = { pendingRemoval = it },
+                    excludedFolders = excludedFolders,
+                    onRemoveExcludedFolder = onRemoveExcludedFolder,
                 )
             }
             val playback: @Composable () -> Unit = {

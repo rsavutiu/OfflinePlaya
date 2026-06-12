@@ -53,5 +53,12 @@ SELECT last_insert_rowid();
 deleteByTreeUri:
 DELETE FROM Folder WHERE tree_uri = ?;
 
+-- Drop a folder subtree (the folder itself + every descendant) when the user
+-- excludes it from the library. Same boundary-safe prefix match as Track.
+deleteByPathPrefix:
+DELETE FROM Folder
+WHERE tree_uri = :treeUri
+  AND (relative_path = :prefix OR relative_path LIKE :prefix || '/%');
+
 deleteAll:
 DELETE FROM Folder;

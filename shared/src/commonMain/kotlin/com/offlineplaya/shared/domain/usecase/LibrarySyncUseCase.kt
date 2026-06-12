@@ -1,7 +1,9 @@
 package com.offlineplaya.shared.domain.usecase
 
+import com.offlineplaya.shared.domain.model.ExcludedFolder
 import com.offlineplaya.shared.domain.repository.AlbumRepository
 import com.offlineplaya.shared.domain.repository.ArtistRepository
+import com.offlineplaya.shared.domain.repository.ExcludedFolderRepository
 import com.offlineplaya.shared.domain.repository.FolderRepository
 import com.offlineplaya.shared.domain.repository.ManagedTreeRootRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
@@ -43,6 +45,7 @@ class LibrarySyncUseCase(
     private val scanner: FolderScanner,
     private val metadataReader: MetadataReader,
     private val deviceAudio: DeviceAudioScanner,
+    private val excludedFolders: ExcludedFolderRepository,
     private val logger: AppLogger,
 ) {
     private companion object {
@@ -139,8 +142,17 @@ class LibrarySyncUseCase(
             val scan = scanner.scan(treeUri)
             logger.d(TAG, "Scanned $treeUri: ${scan.folders.size} folders, ${scan.files.size} files")
 
-            val folderIds = materializeFolders(scan.folders)
-            val pendingTracks = insertPendingTracks(scan.files, folderIds)
+            // User-excluded subtrees are invisible to the sync — folders
+            // aren't materialized and files aren't inserted.
+            val exclusions = excludedFolders.getAll()
+            val keptFolders = scan.folders.filterNot { isExcluded(treeUri, it.relativePath, exclusions) }
+            val keptFiles = scan.files.filterNot { isExcluded(treeUri, it.relativePath, exclusions) }
+            if (keptFiles.size != scan.files.size) {
+                logger.i(TAG, "Skipping ${scan.files.size - keptFiles.size} file(s) under excluded folders")
+            }
+
+            val folderIds = materializeFolders(keptFolders)
+            val pendingTracks = insertPendingTracks(keptFiles, folderIds)
             // After inserting SAF tracks, promote them over any device-audio
             // row representing the same physical file. Otherwise a file picked
             // up by both scanners would show as a duplicate in the library.
@@ -153,7 +165,7 @@ class LibrarySyncUseCase(
 
             val report = SyncReport(
                 foldersUpserted = folderIds.size,
-                tracksDiscovered = scan.files.size,
+                tracksDiscovered = keptFiles.size,
                 tracksScanned = scanned,
                 tracksFailed = failed,
             )
@@ -180,7 +192,19 @@ class LibrarySyncUseCase(
      */
     suspend fun syncDeviceAudio(force: Boolean = false): SyncReport {
         logger.i(TAG, "Starting syncDeviceAudio (force=$force)")
-        val deviceTracks = deviceAudio.scan()
+        val allDeviceTracks = deviceAudio.scan()
+        // Drop tracks under user-excluded folders before any other handling
+        // so they don't count as discovered/failed in the report either.
+        val exclusions = excludedFolders.getAll()
+        val deviceTracks = allDeviceTracks.filterNot {
+            isExcluded(DeviceAudioScanner.ROOT_URI, it.relativePath, exclusions)
+        }
+        if (deviceTracks.size != allDeviceTracks.size) {
+            logger.i(
+                TAG,
+                "Skipping ${allDeviceTracks.size - deviceTracks.size} device track(s) under excluded folders",
+            )
+        }
         if (deviceTracks.isEmpty()) {
             logger.d(TAG, "No device tracks found")
             return SyncReport.Empty
@@ -349,6 +373,13 @@ class LibrarySyncUseCase(
         val idx = path.lastIndexOf('/')
         return if (idx < 0) "" else path.substring(0, idx)
     }
+
+    /** True when [path] within [treeUri] falls under any user exclusion. */
+    private fun isExcluded(
+        treeUri: String,
+        path: String,
+        exclusions: List<ExcludedFolder>,
+    ): Boolean = exclusions.any { it.covers(treeUri, path) }
 
     // --- private helpers ---
 
