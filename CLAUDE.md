@@ -7,7 +7,7 @@ An Android offline music player. Kotlin Multiplatform skeleton today, Android-on
 
 - **Compile shared**: `./gradlew :shared:compileDebugKotlinAndroid`
 - **Compile app**: `./gradlew :androidApp:compileDebugKotlin`
-- **Run unit tests**: `./gradlew :shared:testDebugUnitTest` (70 tests as of last edit)
+- **Run unit tests**: `./gradlew :shared:testDebugUnitTest` (215 tests as of last edit)
 - **Full check**: `./gradlew :shared:testDebugUnitTest :androidApp:compileDebugKotlin`
 
 PowerShell is the default shell on this machine — use PowerShell syntax when invoking gradle from
@@ -61,8 +61,8 @@ one destination, not a navigation Scene.
 ## Tech stack
 
 - **Compose Multiplatform** for UI (commonMain)
-- **Media3 / ExoPlayer** for playback — bound via `MediaController` ↔ `MediaSessionService` (
-  `androidApp/service/PlaybackService.kt`)
+- **Media3 / ExoPlayer** for playback — bound via `MediaController` ↔ `MediaLibrarySession` (
+  `androidApp/service/PlaybackService.kt`; `MediaLibraryService` so Android Auto can browse)
 - **Coil 3** for image loading
 - **SQLDelight** for persistence; driver factory is `expect`/`actual`
 - **Koin** for DI (`shared/di/SharedModule.kt`, `shared/di/AndroidModule.kt`,
@@ -120,15 +120,49 @@ OkHttp client used by `ArtistArtFetcher` and `MusicBrainzArtSource` has a 50 MB 
 
 ### Playback — `PlaybackService`
 
-- `MediaSessionService` hosting one `ExoPlayer` + one `MediaSession`.
-- **System audio-effects broadcast** is wired:
-  `AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION` in `onCreate`, matching close in
-  `onDestroy`. Without this OEM EQ / Dolby / Spatial Audio services skip our stream and the audio
-  comes out flat.
+- `MediaLibraryService` hosting one `ExoPlayer` + one `MediaLibrarySession`.
+  `AutoLibraryCallback` serves the Android Auto browse tree off the shared state holders; dormant
+  on phone.
+- **Audio-effects pipeline is owned by `AppEqualizerController`** (androidApp/audio). It mutually
+  excludes our in-app `Equalizer` + `LoudnessEnhancer` (preamp) with the OEM system-EQ broadcast:
+  when our EQ mode is OFF it sends `ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION` so Dolby/OEM
+  services attach; when ON it closes that session and runs our own effects. The audio session id
+  is generated explicitly and pinned so EQ + crossfade share it.
+- **`PreampVolumePlayer`** wraps the session player and claims hardware-volume control by
+  reporting `DeviceInfo.PLAYBACK_TYPE_REMOTE` with an extended range: volume keys ramp past max
+  stream volume into 10 preamp steps (LoudnessEnhancer boost). Platform side effect (accepted,
+  keep as is): the system volume dialog renders cast-style — remote playback type IS the Cast
+  API. The claim is dropped while Android Auto is connected (Auto would print "playing on another
+  device"). `MainActivity.onKeyDown` mirrors the ramp when the app is foreground without an
+  active session.
+- **`CrossfadeController`** drives a second engine for track-to-track overlap; no-op while the
+  user has crossfade disabled (default-off path is native gapless).
 - `AudioAttributes(CONTENT_TYPE_MUSIC, USAGE_MEDIA)` + `setHandleAudioBecomingNoisy(true)` + auto
   audio-focus.
 - `stopSelf()` on task-removed when nothing is playing — otherwise the foreground notification can
   linger.
+
+### Exclude folders
+
+Long-press a folder row → `ExcludeFolderDialog` → `LibrarySyncCoordinator.excludeFolder` →
+`ExcludeFolderUseCase` records the subtree in `ExcludedFolder`, deletes indexed rows
+(boundary-safe path-prefix SQL: `= :prefix OR LIKE :prefix || '/%'`), and refreshes aggregates.
+`LibrarySyncUseCase` filters excluded subtrees on every scan so they don't resurrect. Un-exclude
+lives in Settings → Library (triggers a rescan).
+
+### Play history & smart playlists
+
+`PlayHistoryRecorder` (started once in `OfflinePlayaApp`) watches `playbackState` and appends a
+`PlayHistory` row per played track. `SmartPlaylistsStateHolder` derives the five smart playlists
+on `PlaylistsPage` (Recently played / Most played / Recently added / Forgotten favorites / Never
+played). History accumulates from install time.
+
+### Tag editor
+
+Long-press a track → details sheet → Edit tags → `AppDestination.TagEditor`.
+`EditTrackTagsUseCase` writes via `TrackTagWriter` (Jaudiotagger temp-file dance), then refreshes
+the row's (size, mtime) fingerprint via `updateContentStats` — without that, the SAF-vs-MediaStore
+content-key dedup breaks for edited files (see "bitten us" list).
 
 ### Startup
 
@@ -146,9 +180,9 @@ frame.
 ## Database & migrations
 
 - Schema: `shared/src/commonMain/sqldelight/com/offlineplaya/shared/database/*.sq`
-- Migrations: `*.sqm` files in the same dir. `2.sqm` exists (untracked at last check). When you
-  change schema, **add a numbered migration** rather than editing existing `.sq` definitions or
-  production DBs need wipes.
+- Migrations: `*.sqm` files in the same dir, numbered up to `7.sqm` (schema v8: `6.sqm` =
+  ExcludedFolder, `7.sqm` = PlayHistory). When you change schema, **add a numbered migration**
+  rather than editing existing `.sq` definitions or production DBs need wipes.
 - Indexes worth knowing: `Folder(tree_uri, relative_path)` UNIQUE, `Track.document_uri` UNIQUE,
   `Album(name COLLATE NOCASE, artist_id)` UNIQUE, `Artist.name` UNIQUE COLLATE NOCASE.
 
@@ -164,8 +198,13 @@ aware materializing every track row just to count them was a real bottleneck.
 Elevation, Motion. Use `AppSpacing.sm/md/lg/xl` etc. rather than hard-coded `dp` values where you
 have a choice. There's a `DesignSystemGalleryPage` you can navigate to from Settings.
 
-Single accent (violet `#7C5CBF`) throughout — if you find another accent color in code, that's a
-regression from the redesign pass.
+Two accent layers, deliberately decoupled:
+
+- **Brand accent** — fixed Walkman orange `#F47B20`, read via `LocalBrandAccent.current`. Worn by
+  FABs, the tab indicator, seek fill, play tints, filled buttons, switch on-states. The dynamic
+  album-art palette must NEVER overwrite it.
+- **M3 scheme** — seeded violet `#7C5CBF`, optionally re-seeded from album art
+  (`AlbumColorStateHolder`) when the user enables album-art color.
 
 ## Time / clock
 
@@ -207,14 +246,14 @@ Android impl using `java.time.LocalTime`. If you need more datetime APIs, decide
   multiple columns in landscape — see the Navigation section).
 - No remote streaming — strictly offline, files the user already has.
 - No accounts, no cloud sync.
-- No ReplayGain / LUFS normalization.
-- No equalizer UI — the user gets whatever the OEM system audio-effects service provides (now that
-  the broadcast is wired).
+- No ReplayGain / LUFS normalization (the preamp is a manual loudness boost, not per-track
+  normalization).
 - No iOS / desktop targets implemented even though the structure supports them.
 
 ## When the user asks for "design feedback"
 
 There's a redesign HTML mockup that lives on the user's desktop (`offlineplaya_redesign.html`). It's
-the source of truth for visual direction — single violet accent, atomic design, large browse cards,
-recently-played shelf on home, compact gradient album header, sidebar/playing-state highlighting on
-the track list.
+the source of truth for visual direction — atomic design, large browse cards, recently-played shelf
+on home, compact gradient album header, sidebar/playing-state highlighting on the track list. The
+accent model has since evolved past the mockup: fixed Walkman-orange brand accent + violet-seeded
+M3 scheme (see Theme section).
