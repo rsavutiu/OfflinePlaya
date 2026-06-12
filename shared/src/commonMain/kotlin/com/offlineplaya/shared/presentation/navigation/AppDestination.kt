@@ -43,4 +43,7 @@ sealed interface AppDestination {
 
     /** Manual tag editor for a single track — reached from the track actions sheet. */
     data class TagEditor(val trackId: Long) : AppDestination
+
+    /** Listening stats (play-history aggregates) — reached from the Home stats row. */
+    data object ListeningStats : AppDestination
 }

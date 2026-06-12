@@ -59,6 +59,7 @@ fun HomeStatsRow(
     modifier: Modifier = Modifier,
     onTracksClick: (() -> Unit)? = null,
     onFoldersClick: (() -> Unit)? = null,
+    onTotalClick: (() -> Unit)? = null,
 ) {
     var entered by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { entered = true }
@@ -97,6 +98,7 @@ fun HomeStatsRow(
             icon = Icons.Outlined.Schedule,
             value = formatTotalDuration(trackCount),
             label = stringResource(Res.string.home_label_total),
+            onClick = onTotalClick,
             modifier = Modifier.weight(1f).alpha(alpha2),
         )
     }

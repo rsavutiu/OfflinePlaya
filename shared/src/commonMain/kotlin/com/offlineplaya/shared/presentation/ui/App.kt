@@ -39,6 +39,7 @@ import com.offlineplaya.shared.domain.model.Artist
 import com.offlineplaya.shared.domain.model.ColorMode
 import com.offlineplaya.shared.domain.model.Folder
 import com.offlineplaya.shared.domain.model.PlaybackState
+import com.offlineplaya.shared.domain.model.StatsPeriod
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.domain.player.MusicPlayer
@@ -69,6 +70,7 @@ import com.offlineplaya.shared.presentation.ui.pages.LibraryArtistsPage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryFlatPage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryFolderDetailPage
 import com.offlineplaya.shared.presentation.ui.pages.LibraryFolderRootsPage
+import com.offlineplaya.shared.presentation.ui.pages.ListeningStatsPage
 import com.offlineplaya.shared.presentation.ui.pages.LyricsPage
 import com.offlineplaya.shared.presentation.ui.pages.NowPlayingPage
 import com.offlineplaya.shared.presentation.ui.pages.PlaylistDetailPage
@@ -432,9 +434,42 @@ private fun DestinationBody(
                     onOpenArtists = { navigator.push(AppDestination.LibraryArtists) },
                     onOpenPlaylists = { navigator.push(AppDestination.Playlists) },
                     onOpenFolders = { navigator.push(AppDestination.LibraryFolderRoots) },
+                    onOpenStats = { navigator.push(AppDestination.ListeningStats) },
                     onOpenAlbum = { id -> navigator.push(AppDestination.LibraryAlbumDetail(id)) },
                     onOpenSearch = { navigator.push(AppDestination.Search) },
                     onOpenSettings = { navigator.push(AppDestination.Settings) },
+                )
+            }
+
+            AppDestination.ListeningStats -> {
+                var period by remember { mutableStateOf(StatsPeriod.ALL) }
+                val stats by remember(period) { smartPlaylists.stats(period) }
+                    .collectAsState(initial = com.offlineplaya.shared.domain.model.ListeningStats.Empty)
+                val topArtists by remember(period) { smartPlaylists.topArtists(period) }
+                    .collectAsState(initial = emptyList())
+                val topAlbums by remember(period) { smartPlaylists.topAlbums(period) }
+                    .collectAsState(initial = emptyList())
+                val topTracks by remember(period) { smartPlaylists.topTracks(period) }
+                    .collectAsState(initial = emptyList())
+
+                ListeningStatsPage(
+                    period = period,
+                    stats = stats,
+                    topArtists = topArtists.toPersistentList(),
+                    topAlbums = topAlbums.toPersistentList(),
+                    topTracks = topTracks.toPersistentList(),
+                    onPeriodChange = { period = it },
+                    onArtistClick = { id ->
+                        navigator.push(AppDestination.LibraryArtistDetail(id))
+                    },
+                    onAlbumClick = { id ->
+                        navigator.push(AppDestination.LibraryAlbumDetail(id))
+                    },
+                    onPlayTopTrack = { index ->
+                        onPlayTracks(topTracks.map { it.track }, index)
+                    },
+                    onTrackLongPress = onTrackLongPress,
+                    onBack = { navigator.pop() },
                 )
             }
 

@@ -31,3 +31,10 @@ data class TopAlbumStat(
     val artistName: String?,
     val plays: Long,
 )
+
+/** Time window the stats page aggregates over. */
+enum class StatsPeriod {
+    WEEK,
+    MONTH,
+    ALL,
+}
