@@ -1,20 +1,27 @@
 package com.offlineplaya.shared.presentation.ui.pages
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Playlist
+import com.offlineplaya.shared.domain.model.SmartPlaylistKind
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.CreatePlaylistDialog
+import com.offlineplaya.shared.presentation.ui.molecules.SmartPlaylistRow
 import com.offlineplaya.shared.presentation.ui.organisms.PlaylistList
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
@@ -24,6 +31,7 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.cd_new_playlist
+import offlineplaya.shared.generated.resources.smart_playlists_section
 import offlineplaya.shared.generated.resources.top_bar_playlists
 import org.jetbrains.compose.resources.stringResource
 
@@ -34,6 +42,7 @@ fun PlaylistsPage(
     onCreate: (String) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
+    onSmartPlaylistClick: ((SmartPlaylistKind) -> Unit)? = null,
 ) {
     var showCreateDialog by remember { mutableStateOf(false) }
     Scaffold(
@@ -60,11 +69,30 @@ fun PlaylistsPage(
         },
     ) { padding ->
         ResponsiveContent {
-            PlaylistList(
-                playlists = playlists,
-                onPlaylistClick = onPlaylistClick,
-                contentPadding = padding,
-            )
+            Column(modifier = Modifier.padding(padding)) {
+                // Always-fresh derived lists above the user's own playlists.
+                if (onSmartPlaylistClick != null) {
+                    Text(
+                        text = stringResource(Res.string.smart_playlists_section).uppercase(),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                    )
+                    SmartPlaylistKind.entries.forEach { kind ->
+                        SmartPlaylistRow(kind = kind, onClick = { onSmartPlaylistClick(kind) })
+                    }
+                    Text(
+                        text = stringResource(Res.string.top_bar_playlists).uppercase(),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                    )
+                }
+                PlaylistList(
+                    playlists = playlists,
+                    onPlaylistClick = onPlaylistClick,
+                )
+            }
         }
     }
 

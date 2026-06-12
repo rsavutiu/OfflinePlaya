@@ -12,6 +12,7 @@ import com.offlineplaya.shared.di.androidModule
 import com.offlineplaya.shared.di.initKoin
 import com.offlineplaya.shared.domain.image.RemoteArtSource
 import com.offlineplaya.shared.domain.repository.SettingsRepository
+import com.offlineplaya.shared.presentation.history.PlayHistoryRecorder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.koin.androidContext
@@ -37,6 +38,9 @@ class OfflinePlayaApp : Application() {
         val koin = GlobalContext.get()
         val appScope = koin.get<CoroutineScope>()
         appScope.launch {
+            // Listening-history recorder: one observer for the app's
+            // lifetime, appending a PlayHistory row per played track.
+            koin.get<PlayHistoryRecorder>().start()
             installTrackArtImageLoader(
                 context = this@OfflinePlayaApp,
                 settings = koin.get<SettingsRepository>(),

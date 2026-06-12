@@ -1,0 +1,8 @@
+CREATE TABLE PlayHistory (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    track_id INTEGER NOT NULL REFERENCES Track(id) ON DELETE CASCADE,
+    played_at INTEGER NOT NULL
+);
+
+CREATE INDEX idx_play_history_track ON PlayHistory(track_id);
+CREATE INDEX idx_play_history_played_at ON PlayHistory(played_at DESC);
