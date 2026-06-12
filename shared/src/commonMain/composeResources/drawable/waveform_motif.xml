@@ -1,0 +1,35 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="260dp"
+    android:height="130dp"
+    android:viewportWidth="520"
+    android:viewportHeight="260"
+    android:tint="#FFFFFFFF">
+    <!-- Audio waveform: rounded bars with a natural amplitude envelope -->
+    <path
+        android:strokeColor="#FF000000"
+        android:strokeWidth="13"
+        android:strokeLineCap="round"
+        android:pathData="M18,130 L18,118 M18,130 L18,142
+M48,130 L48,100 M48,130 L48,160
+M78,130 L78,76 M78,130 L78,184
+M108,130 L108,46 M108,130 L108,214
+M138,130 L138,90 M138,130 L138,170
+M168,130 L168,62 M168,130 L168,198
+M198,130 L198,26 M198,130 L198,234
+M228,130 L228,72 M228,130 L228,188
+M258,130 L258,108 M258,130 L258,152
+M288,130 L288,54 M288,130 L288,206
+M318,130 L318,20 M318,130 L318,240
+M348,130 L348,84 M348,130 L348,176
+M378,130 L378,40 M378,130 L378,220
+M408,130 L408,96 M408,130 L408,164
+M438,130 L438,66 M438,130 L438,194
+M468,130 L468,110 M468,130 L468,150
+M498,130 L498,122 M498,130 L498,138" />
+    <!-- Faint center line ties the bars together like a track scrubber -->
+    <path
+        android:strokeColor="#4D000000"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:pathData="M10,130 L510,130" />
+</vector>

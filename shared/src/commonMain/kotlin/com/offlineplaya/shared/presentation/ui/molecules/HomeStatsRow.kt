@@ -8,7 +8,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Folder
+import androidx.compose.material.icons.outlined.MusicNote
+import androidx.compose.material.icons.outlined.Schedule
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -16,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.sync.SyncStatus
@@ -51,6 +58,7 @@ fun HomeStatsRow(
             .padding(vertical = 10.dp),
     ) {
         StatCell(
+            icon = Icons.Outlined.MusicNote,
             value = trackCount.toString(),
             // Singular label when the count is exactly 1 ("1 Track", not "1 Tracks").
             label = stringResource(
@@ -60,6 +68,7 @@ fun HomeStatsRow(
         )
         VerticalDivider(borderColor)
         StatCell(
+            icon = Icons.Outlined.Folder,
             value = folderCount.toString(),
             label = stringResource(
                 if (folderCount == 1) Res.string.home_label_folder else Res.string.home_label_folders
@@ -68,6 +77,7 @@ fun HomeStatsRow(
         )
         VerticalDivider(borderColor)
         StatCell(
+            icon = Icons.Outlined.Schedule,
             value = formatTotalDuration(trackCount),
             label = stringResource(Res.string.home_label_total),
             modifier = Modifier.weight(1f),
@@ -77,6 +87,7 @@ fun HomeStatsRow(
 
 @Composable
 private fun StatCell(
+    icon: ImageVector,
     value: String,
     label: String,
     modifier: Modifier = Modifier,
@@ -85,11 +96,22 @@ private fun StatCell(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            text = value,
-            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-            color = MaterialTheme.colorScheme.primary,
-        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                imageVector = icon,
+                // Decorative — the text label right below carries the meaning.
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .padding(end = 4.dp)
+                    .size(16.dp),
+            )
+            Text(
+                text = value,
+                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                color = MaterialTheme.colorScheme.primary,
+            )
+        }
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,

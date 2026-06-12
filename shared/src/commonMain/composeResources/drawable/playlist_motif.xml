@@ -1,0 +1,64 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="260dp"
+    android:height="130dp"
+    android:viewportWidth="520"
+    android:viewportHeight="260"
+    android:tint="#FFFFFFFF">
+    <!-- Queue rows: play triangle on the active row, dots on the rest -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M34,22 L74,45 A6,6 0 0 1 74,55 L34,78 A6,6 0 0 1 25,70 L25,30 A6,6 0 0 1 34,22 Z" />
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M50,118 m-14,0 a14,14 0 1 0 28,0 a14,14 0 1 0 -28,0 Z" />
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M50,186 m-14,0 a14,14 0 1 0 28,0 a14,14 0 1 0 -28,0 Z" />
+    <!-- Title lines, rounded, tapering like real track titles -->
+    <path
+        android:strokeColor="#FF000000"
+        android:strokeWidth="20"
+        android:strokeLineCap="round"
+        android:pathData="M104,50 L426,50" />
+    <path
+        android:strokeColor="#FF000000"
+        android:strokeWidth="20"
+        android:strokeLineCap="round"
+        android:pathData="M104,118 L362,118" />
+    <path
+        android:strokeColor="#FF000000"
+        android:strokeWidth="20"
+        android:strokeLineCap="round"
+        android:pathData="M104,186 L398,186" />
+    <!-- Subtitle lines under each title, thinner and dimmer -->
+    <path
+        android:strokeColor="#66000000"
+        android:strokeWidth="10"
+        android:strokeLineCap="round"
+        android:pathData="M104,82 L268,82" />
+    <path
+        android:strokeColor="#66000000"
+        android:strokeWidth="10"
+        android:strokeLineCap="round"
+        android:pathData="M104,150 L236,150" />
+    <path
+        android:strokeColor="#66000000"
+        android:strokeWidth="10"
+        android:strokeLineCap="round"
+        android:pathData="M104,218 L252,218" />
+    <!-- Beamed eighth notes floating right of the queue -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M448,196 m-15,0 a15,15 0 1 0 30,0 a15,15 0 1 0 -30,0 Z" />
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M494,182 m-15,0 a15,15 0 1 0 30,0 a15,15 0 1 0 -30,0 Z" />
+    <path
+        android:strokeColor="#FF000000"
+        android:strokeWidth="9"
+        android:strokeLineCap="round"
+        android:pathData="M463,194 L463,108 M509,180 L509,94" />
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M458,100 L514,86 L514,112 L458,126 Z" />
+</vector>
