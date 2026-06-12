@@ -15,7 +15,11 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -24,6 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -34,6 +39,7 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.offlineplaya.android.picker.OpenDocumentTreeContract
+import com.offlineplaya.android.ui.IntroVideoOverlay
 import com.offlineplaya.shared.domain.model.ColorMode
 import com.offlineplaya.shared.domain.model.EqPreferences
 import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
@@ -259,33 +265,50 @@ private fun AndroidApp() {
         coordinator.addAndSync(uri.toString(), displayName)
     }
 
-    App(
-        navigator = navigator,
-        library = library,
-        playlists = playlists,
-        syncCoordinator = coordinator,
-        burnMetadataCoordinator = burnMetadataCoordinator,
-        musicPlayer = musicPlayer,
-        equalizerStateHolder = equalizerStateHolder,
-        lyricsStateHolder = lyricsStateHolder,
-        tagEditorCoordinator = tagEditorCoordinator,
-        smartPlaylists = smartPlaylists,
-        themePreferences = themePreferences,
-        artworkPreferences = artworkPreferences,
-        lyricsPreferences = lyricsPreferences,
-        playbackPreferences = playbackPreferences,
-        syncStatus = syncStatus,
-        trackCount = trackCount,
-        seedColor = seedColor,
-        onPickFolder = { readPickerLauncher.launch(Unit) },
-        onColorModeChange = themeStateHolder::setColorMode,
-        onDynamicColorChange = themeStateHolder::setUseDynamicColor,
-        onAlbumArtColorChange = themeStateHolder::setUseAlbumArtColor,
-        onDownloadRemoteArtChange = artworkStateHolder::setDownloadRemoteArt,
-        onDownloadRemoteLyricsChange = lyricsPreferencesStateHolder::setDownloadRemoteLyrics,
-        onSaveLyricsAsSidecarChange = lyricsPreferencesStateHolder::setSaveLyricsAsSidecar,
-        onCrossfadeEnabledChange = playbackTuningStateHolder::setCrossfadeEnabled,
-        onCrossfadeDurationChange = playbackTuningStateHolder::setCrossfadeDurationSeconds,
-        dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
-    )
+    // Launch intro overlay. rememberSaveable so a rotation mid-clip doesn't
+    // replay it; skipped outright when the activity opens over live playback
+    // (e.g. tapped the media notification) — covering Now Playing with a
+    // five-second ceremony would be hostile.
+    var introDone by rememberSaveable {
+        mutableStateOf(musicPlayer.playbackState.value.isPlaying)
+    }
+
+    Box {
+        App(
+            navigator = navigator,
+            library = library,
+            playlists = playlists,
+            syncCoordinator = coordinator,
+            burnMetadataCoordinator = burnMetadataCoordinator,
+            musicPlayer = musicPlayer,
+            equalizerStateHolder = equalizerStateHolder,
+            lyricsStateHolder = lyricsStateHolder,
+            tagEditorCoordinator = tagEditorCoordinator,
+            smartPlaylists = smartPlaylists,
+            themePreferences = themePreferences,
+            artworkPreferences = artworkPreferences,
+            lyricsPreferences = lyricsPreferences,
+            playbackPreferences = playbackPreferences,
+            syncStatus = syncStatus,
+            trackCount = trackCount,
+            seedColor = seedColor,
+            onPickFolder = { readPickerLauncher.launch(Unit) },
+            onColorModeChange = themeStateHolder::setColorMode,
+            onDynamicColorChange = themeStateHolder::setUseDynamicColor,
+            onAlbumArtColorChange = themeStateHolder::setUseAlbumArtColor,
+            onDownloadRemoteArtChange = artworkStateHolder::setDownloadRemoteArt,
+            onDownloadRemoteLyricsChange = lyricsPreferencesStateHolder::setDownloadRemoteLyrics,
+            onSaveLyricsAsSidecarChange = lyricsPreferencesStateHolder::setSaveLyricsAsSidecar,
+            onCrossfadeEnabledChange = playbackTuningStateHolder::setCrossfadeEnabled,
+            onCrossfadeDurationChange = playbackTuningStateHolder::setCrossfadeDurationSeconds,
+            dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
+        )
+
+        AnimatedVisibility(
+            visible = !introDone,
+            exit = fadeOut(animationSpec = tween(durationMillis = 450)),
+        ) {
+            IntroVideoOverlay(onFinished = { introDone = true })
+        }
+    }
 }

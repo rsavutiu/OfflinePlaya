@@ -3,4 +3,5 @@
     <string name="app_name">OfflinePlaya</string>
     <string name="background_channel_name">Music Playback</string>
     <string name="background_channel_description">Controls music playback in the background</string>
+    <string name="intro_skip">Skip intro</string>
 </resources>
