@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Surface
@@ -31,6 +32,10 @@ fun AlbumList(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     representativeTrackProvider: suspend (Long) -> Track? = { null },
+    // Optional grid items rendered before the albums — lets a host page
+    // (artist detail's "Top tracks") scroll its section WITH the grid
+    // instead of pinning it above. Use full-line spans for list-like rows.
+    leadingContent: (LazyGridScope.() -> Unit)? = null,
 ) {
     if (albums.isEmpty()) {
         EmptyState(
@@ -48,6 +53,7 @@ fun AlbumList(
         contentPadding = contentPadding,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
+        leadingContent?.invoke(this)
         items(items = albums, key = { it.id }) { album ->
             AlbumRow(
                 album = album,

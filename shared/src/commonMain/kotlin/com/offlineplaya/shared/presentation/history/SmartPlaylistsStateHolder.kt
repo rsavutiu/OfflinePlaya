@@ -1,5 +1,6 @@
 package com.offlineplaya.shared.presentation.history
 
+import com.offlineplaya.shared.domain.model.PlayedTrack
 import com.offlineplaya.shared.domain.model.SmartPlaylistKind
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.domain.repository.PlayHistoryRepository
@@ -27,8 +28,13 @@ class SmartPlaylistsStateHolder(
         SmartPlaylistKind.NEVER_PLAYED -> playHistory.observeNeverPlayed(LIMIT)
     }
 
+    /** The artist-detail "Top tracks" section: all-time, ranked by plays. */
+    fun topTracksForArtist(artistId: Long): Flow<List<PlayedTrack>> =
+        playHistory.observeTopPlayed(artistId = artistId, sinceMs = 0L, limit = TOP_TRACKS_LIMIT)
+
     private companion object {
         const val LIMIT = 200
+        const val TOP_TRACKS_LIMIT = 5
         /** "Favorite" = played at least this many times overall. */
         const val FORGOTTEN_MIN_PLAYS = 3
         /** "Forgotten" = not played within this window. */

@@ -264,4 +264,23 @@
     <string name="cd_new_playlist">New playlist</string>
     <string name="cd_repeat_mode">Repeat: %1$s</string>
 
+    <!-- Artist top tracks + listening stats -->
+    <string name="artist_top_tracks">Top tracks</string>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d play</item>
+        <item quantity="other">%1$d plays</item>
+    </plurals>
+    <string name="stats_title">Listening stats</string>
+    <string name="stats_period_week">Week</string>
+    <string name="stats_period_month">Month</string>
+    <string name="stats_period_all">All time</string>
+    <string name="stats_label_plays">Plays</string>
+    <string name="stats_label_listening_time">Listening time</string>
+    <string name="stats_label_distinct_tracks">Different tracks</string>
+    <string name="stats_top_artists">Top artists</string>
+    <string name="stats_top_albums">Top albums</string>
+    <string name="stats_top_tracks">Top tracks</string>
+    <string name="stats_empty_title">No listening history yet</string>
+    <string name="stats_empty_subtitle">Play some music and check back here.</string>
+
 </resources>

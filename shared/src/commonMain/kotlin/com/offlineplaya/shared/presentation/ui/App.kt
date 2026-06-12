@@ -607,10 +607,18 @@ private fun DestinationBody(
                 val albums by remember(dest.artistId) {
                     library.albumsByArtist(dest.artistId)
                 }.collectAsState(initial = kotlinx.collections.immutable.persistentListOf<Album>())
+                val topTracks by remember(dest.artistId) {
+                    smartPlaylists.topTracksForArtist(dest.artistId)
+                }.collectAsState(initial = emptyList())
 
                 LibraryArtistDetailPage(
                     artist = artist,
                     albums = albums,
+                    topTracks = topTracks.toPersistentList(),
+                    onPlayTopTrack = { index ->
+                        onPlayTracks(topTracks.map { it.track }, index)
+                    },
+                    onTopTrackLongPress = onTrackLongPress,
                     onAlbumClick = { id ->
                         navigator.push(AppDestination.LibraryAlbumDetail(id))
                     },

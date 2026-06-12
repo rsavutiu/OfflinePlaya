@@ -55,5 +55,58 @@ HAVING COUNT(PlayHistory.id) >= :minPlays AND MAX(PlayHistory.played_at) < :cuto
 ORDER BY COUNT(PlayHistory.id) DESC
 LIMIT :limit;
 
+-- Most-played tracks with their play counts, optionally scoped to one artist
+-- (NULL = whole library) and to plays at/after :since (0 = all time). One
+-- query serves both the artist-detail "Top tracks" section and the stats
+-- page so they share a single generated row type + mapper.
+selectTopPlayed:
+SELECT Track.*, COUNT(PlayHistory.id) AS play_count
+FROM Track
+JOIN PlayHistory ON PlayHistory.track_id = Track.id
+WHERE (:artistId IS NULL OR Track.artist_id = :artistId)
+  AND PlayHistory.played_at >= :since
+GROUP BY Track.id
+ORDER BY COUNT(PlayHistory.id) DESC, MAX(PlayHistory.played_at) DESC
+LIMIT :limit;
+
+-- Headline stats: total plays, distinct tracks, and listening time
+-- approximated as the sum of each played track's duration.
+selectStatsTotals:
+SELECT
+    COUNT(PlayHistory.id) AS plays,
+    COUNT(DISTINCT PlayHistory.track_id) AS distinct_tracks,
+    CAST(COALESCE(SUM(Track.duration_ms), 0) AS INTEGER) AS listened_ms
+FROM PlayHistory
+JOIN Track ON Track.id = PlayHistory.track_id
+WHERE PlayHistory.played_at >= :since;
+
+-- MAX(name) rather than a bare un-aggregated column: per-track tag spellings
+-- can differ within one artist/album id, and SQLite would pick an arbitrary
+-- row's value — MAX keeps the choice deterministic.
+selectTopArtists:
+SELECT
+    Track.artist_id AS artist_id,
+    MAX(Track.artist_name) AS artist_name,
+    COUNT(PlayHistory.id) AS plays
+FROM PlayHistory
+JOIN Track ON Track.id = PlayHistory.track_id
+WHERE PlayHistory.played_at >= :since AND Track.artist_id IS NOT NULL
+GROUP BY Track.artist_id
+ORDER BY COUNT(PlayHistory.id) DESC, MAX(PlayHistory.played_at) DESC
+LIMIT :limit;
+
+selectTopAlbums:
+SELECT
+    Track.album_id AS album_id,
+    MAX(Track.album_name) AS album_name,
+    MAX(Track.artist_name) AS artist_name,
+    COUNT(PlayHistory.id) AS plays
+FROM PlayHistory
+JOIN Track ON Track.id = PlayHistory.track_id
+WHERE PlayHistory.played_at >= :since AND Track.album_id IS NOT NULL
+GROUP BY Track.album_id
+ORDER BY COUNT(PlayHistory.id) DESC, MAX(PlayHistory.played_at) DESC
+LIMIT :limit;
+
 clearAll:
 DELETE FROM PlayHistory;
