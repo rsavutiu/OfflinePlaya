@@ -124,6 +124,7 @@ class PlaybackService : MediaLibraryService() {
             context = applicationContext,
             library = koin.get<LibraryStateHolder>(),
             playlists = koin.get<PlaylistStateHolder>(),
+            queue = koin.get(),
             scope = serviceScope,
             logger = logger,
             onCarConnectionChanged = volumePlayer::setCarConnected,

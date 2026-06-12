@@ -40,6 +40,12 @@ interface PlaybackEngine {
      */
     suspend fun applyQueue(tracks: List<Track>, startIndex: Int)
 
+    /**
+     * Like [applyQueue] but prepared **paused** at [positionMs] — the restore
+     * path after process death. Suspends until applied.
+     */
+    suspend fun restoreQueue(tracks: List<Track>, startIndex: Int, positionMs: Long)
+
     /** Jump to [index] in the existing timeline and play. Suspends until applied. */
     suspend fun jumpTo(index: Int)
 

@@ -27,6 +27,7 @@ import com.offlineplaya.shared.domain.usecase.BurnMetadataUseCase
 import com.offlineplaya.shared.domain.usecase.EditTrackTagsUseCase
 import com.offlineplaya.shared.domain.usecase.ExcludeFolderUseCase
 import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
+import com.offlineplaya.shared.domain.usecase.RestorePersistedQueueUseCase
 import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
 import com.offlineplaya.shared.presentation.history.PlayHistoryRecorder
 import com.offlineplaya.shared.presentation.history.SmartPlaylistsStateHolder
@@ -35,6 +36,7 @@ import com.offlineplaya.shared.presentation.lyrics.LyricsStateHolder
 import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
+import com.offlineplaya.shared.presentation.queue.QueueStateRecorder
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
 import com.offlineplaya.shared.presentation.settings.LyricsPreferencesStateHolder
 import com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder
@@ -239,6 +241,24 @@ val sharedModule: Module = module {
             musicPlayer = get(),
             playHistory = get(),
             scope = get(),
+            logger = get(),
+        )
+    }
+
+    // Queue persistence: the recorder mirrors the live queue + position into
+    // the DB; the use case replays it (paused) on the next cold start.
+    single {
+        QueueStateRecorder(
+            musicPlayer = get(),
+            queue = get(),
+            scope = get(),
+            logger = get(),
+        )
+    }
+    factory {
+        RestorePersistedQueueUseCase(
+            queue = get(),
+            player = get(),
             logger = get(),
         )
     }

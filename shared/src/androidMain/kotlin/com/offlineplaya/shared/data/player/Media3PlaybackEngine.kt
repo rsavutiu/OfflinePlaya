@@ -107,6 +107,19 @@ internal class Media3PlaybackEngine(
         }
     }
 
+    override suspend fun restoreQueue(tracks: List<Track>, startIndex: Int, positionMs: Long) {
+        val items = withContext(Dispatchers.IO) {
+            tracks.map { TrackMediaItemMapper.toMediaItem(it, artworkUriFor(it)) }
+        }
+        val c = controllerReady.await()
+        withContext(mainDispatcher) {
+            val safeIndex = startIndex.coerceIn(0, (items.size - 1).coerceAtLeast(0))
+            c.setMediaItems(items, safeIndex, positionMs.coerceAtLeast(0L))
+            c.playWhenReady = false
+            c.prepare()
+        }
+    }
+
     override suspend fun jumpTo(index: Int) = onControllerAwait { c ->
         if (index in 0 until c.mediaItemCount) {
             c.seekTo(index, /* positionMs = */ 0L)

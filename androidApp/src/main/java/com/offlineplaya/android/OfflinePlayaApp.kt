@@ -12,7 +12,9 @@ import com.offlineplaya.shared.di.androidModule
 import com.offlineplaya.shared.di.initKoin
 import com.offlineplaya.shared.domain.image.RemoteArtSource
 import com.offlineplaya.shared.domain.repository.SettingsRepository
+import com.offlineplaya.shared.domain.usecase.RestorePersistedQueueUseCase
 import com.offlineplaya.shared.presentation.history.PlayHistoryRecorder
+import com.offlineplaya.shared.presentation.queue.QueueStateRecorder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.koin.androidContext
@@ -38,6 +40,11 @@ class OfflinePlayaApp : Application() {
         val koin = GlobalContext.get()
         val appScope = koin.get<CoroutineScope>()
         appScope.launch {
+            // Last session's queue comes back paused before the queue
+            // recorder starts watching, so the recorder's first sight of the
+            // player is the restored queue, never a clobbering empty state.
+            koin.get<RestorePersistedQueueUseCase>().invoke()
+            koin.get<QueueStateRecorder>().start()
             // Listening-history recorder: one observer for the app's
             // lifetime, appending a PlayHistory row per played track.
             koin.get<PlayHistoryRecorder>().start()

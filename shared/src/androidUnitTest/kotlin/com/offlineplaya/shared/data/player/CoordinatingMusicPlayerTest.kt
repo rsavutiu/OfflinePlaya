@@ -195,6 +195,67 @@ class CoordinatingMusicPlayerTest {
         assertEquals(listOf(7L), engine.appliedTracks.map { it.id })
     }
 
+    // --- cold-start restore ---
+
+    @Test
+    fun `restoreQueue publishes a paused queue at the saved position`() = runTest {
+        val engine = FakeEngine(autoComplete = true)
+        val player = coordinator(engine)
+
+        player.restoreQueue(listOf(t(1), t(2), t(3)), startIndex = 1, positionMs = 42_000L)
+
+        // Optimistic state is correct before the engine settles…
+        val optimistic = player.playbackState.value
+        assertEquals(2L, optimistic.currentTrack?.id)
+        assertEquals(1, optimistic.queueIndex)
+        assertEquals(42_000L, optimistic.positionMs)
+        assertTrue(!optimistic.isPlaying, "restore must come back paused")
+        assertInvariant(optimistic)
+
+        advanceUntilIdle()
+        // …and the engine really is paused at the saved spot.
+        assertTrue(!engine.playWhenReady, "engine must not autoplay on restore")
+        assertEquals(42_000L, engine.positionMs)
+        val s = player.playbackState.value
+        assertEquals(2L, s.currentTrack?.id)
+        assertTrue(!s.isPlaying)
+        assertInvariant(s)
+    }
+
+    @Test
+    fun `restoreQueue is a no-op once anything was queued this session`() = runTest {
+        val engine = FakeEngine(autoComplete = true)
+        val player = coordinator(engine)
+
+        player.setQueue(listOf(t(7)), startIndex = 0)
+        advanceUntilIdle()
+
+        player.restoreQueue(listOf(t(1), t(2)), startIndex = 0, positionMs = 0L)
+        advanceUntilIdle()
+
+        assertEquals(listOf(7L), engine.appliedTracks.map { it.id })
+        assertEquals(7L, player.playbackState.value.currentTrack?.id)
+        assertTrue(player.playbackState.value.isPlaying)
+    }
+
+    @Test
+    fun `a user tap during a slow restore wins`() = runTest {
+        val engine = FakeEngine(autoComplete = false)
+        val player = coordinator(engine)
+
+        player.restoreQueue(listOf(t(1), t(2)), startIndex = 0, positionMs = 9_000L)
+        player.setQueue(listOf(t(50)), startIndex = 0)
+
+        engine.releaseAll()
+        advanceUntilIdle()
+
+        // The superseded restore apply must be skipped entirely.
+        assertEquals(listOf(50L), engine.appliedTracks.map { it.id })
+        assertTrue(engine.playWhenReady, "user-initiated playback must not stay paused")
+        assertEquals(50L, player.playbackState.value.currentTrack?.id)
+        assertInvariant(player.playbackState.value)
+    }
+
     // --- helpers ---
 
     /** The core consistency invariant the whole class defends. */
@@ -225,7 +286,10 @@ private class FakeEngine(var autoComplete: Boolean) : PlaybackEngine {
         private set
     var index: Int = -1
         private set
-    private var playWhenReady = false
+    var playWhenReady = false
+        private set
+    var positionMs = 0L
+        private set
 
     private val gates = ArrayDeque<CompletableDeferred<Unit>>()
 
@@ -256,7 +320,7 @@ private class FakeEngine(var autoComplete: Boolean) : PlaybackEngine {
         itemCount = appliedTracks.size,
         playWhenReady = playWhenReady,
         isActive = appliedTracks.isNotEmpty(),
-        positionMs = 0L,
+        positionMs = positionMs,
         durationMs = 0L,
         shuffleEnabled = false,
         repeatMode = RepeatMode.OFF,
@@ -268,6 +332,15 @@ private class FakeEngine(var autoComplete: Boolean) : PlaybackEngine {
         appliedTracks = tracks
         index = startIndex.coerceIn(0, (tracks.size - 1).coerceAtLeast(0))
         playWhenReady = tracks.isNotEmpty()
+        emitChange()
+    }
+
+    override suspend fun restoreQueue(tracks: List<Track>, startIndex: Int, positionMs: Long) {
+        gate()
+        appliedTracks = tracks
+        index = startIndex.coerceIn(0, (tracks.size - 1).coerceAtLeast(0))
+        playWhenReady = false
+        this.positionMs = positionMs
         emitChange()
     }
 

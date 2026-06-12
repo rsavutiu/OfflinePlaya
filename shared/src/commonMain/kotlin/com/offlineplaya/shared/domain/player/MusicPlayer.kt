@@ -35,6 +35,13 @@ interface MusicPlayer {
     /** Replace the queue with [tracks] and start playback at [startIndex]. */
     fun setQueue(tracks: List<Track>, startIndex: Int = 0)
 
+    /**
+     * Load a previously persisted queue **paused** at [startIndex]/[positionMs]
+     * — the cold-start restore path. No-op if anything was already queued this
+     * session, so it can never clobber a queue the user just started.
+     */
+    fun restoreQueue(tracks: List<Track>, startIndex: Int, positionMs: Long)
+
     /** Append [track] to the end of the current queue. */
     fun addToQueue(track: Track)
 

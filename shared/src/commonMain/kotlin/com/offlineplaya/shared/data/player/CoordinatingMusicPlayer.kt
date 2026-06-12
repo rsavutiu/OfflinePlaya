@@ -143,6 +143,29 @@ class CoordinatingMusicPlayer(
         }
     }
 
+    override fun restoreQueue(tracks: List<Track>, startIndex: Int, positionMs: Long) {
+        // Restore must never win a race against anything the user (or a
+        // resumption callback) already queued — it only fills a still-empty
+        // session. generation > 0 means a setQueue/clearQueue happened first.
+        if (queueTracks.isNotEmpty() || generation > 0 || tracks.isEmpty()) return
+        val gen = ++generation
+        val index = startIndex.coerceIn(0, tracks.size - 1)
+        val track = tracks[index]
+        val position = positionMs.coerceIn(0L, track.durationMs ?: Long.MAX_VALUE)
+        queueTracks = tracks
+        _playbackState.value = _playbackState.value.copy(
+            currentTrack = track,
+            queue = tracks,
+            queueIndex = index,
+            isPlaying = false,
+            positionMs = position,
+            durationMs = track.durationMs ?: 0L,
+        )
+        enqueueApply {
+            if (gen == generation) engine.restoreQueue(tracks, index, position)
+        }
+    }
+
     override fun addToQueue(track: Track) {
         queueTracks = queueTracks + track
         enqueueApply { engine.append(track) }

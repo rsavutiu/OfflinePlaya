@@ -15,7 +15,9 @@ import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.SettableFuture
 import com.offlineplaya.shared.data.image.TrackArtCache
+import com.offlineplaya.shared.data.player.loadPersistedQueueForResumption
 import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.domain.repository.QueueRepository
 import com.offlineplaya.shared.presentation.auto.BrowseEntry
 import com.offlineplaya.shared.presentation.auto.BrowseStyle
 import com.offlineplaya.shared.presentation.auto.BrowseTreeBuilder
@@ -46,6 +48,7 @@ class AutoLibraryCallback(
     private val context: Context,
     private val library: LibraryStateHolder,
     private val playlists: PlaylistStateHolder,
+    private val queue: QueueRepository,
     private val scope: CoroutineScope,
     private val logger: AppLogger,
     private val onCarConnectionChanged: (Boolean) -> Unit = {},
@@ -97,6 +100,34 @@ class AutoLibraryCallback(
                 TrackArtCache.uriForTrack(context, track)?.toString()
             },
         )
+    }
+
+    // ─── Playback resumption ─────────────────────────────────────────────
+
+    /**
+     * The system asking a dead service "what were you playing?" — Bluetooth /
+     * headset play with no live session, or the persistent media controls
+     * Android 13+ shows after a reboot. Answer with the persisted queue,
+     * paused position included; failing the future (the Media3 contract for
+     * "nothing to resume") leaves the button a no-op.
+     */
+    override fun onPlaybackResumption(
+        mediaSession: MediaSession,
+        controller: MediaSession.ControllerInfo,
+    ): ListenableFuture<MediaSession.MediaItemsWithStartPosition> {
+        val future = SettableFuture.create<MediaSession.MediaItemsWithStartPosition>()
+        scope.launch {
+            val resumption = runCatching { loadPersistedQueueForResumption(context, queue) }
+                .onFailure { logger.w(TAG, "Playback resumption failed: ${it.message}") }
+                .getOrNull()
+            if (resumption != null) {
+                logger.i(TAG, "Resuming ${resumption.mediaItems.size} items at ${resumption.startIndex}")
+                future.set(resumption)
+            } else {
+                future.setException(UnsupportedOperationException("nothing to resume"))
+            }
+        }
+        return future
     }
 
     // ─── Root ────────────────────────────────────────────────────────────

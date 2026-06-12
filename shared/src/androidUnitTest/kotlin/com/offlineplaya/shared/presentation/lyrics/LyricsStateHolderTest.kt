@@ -116,6 +116,7 @@ class LyricsStateHolderTest {
         override fun skipToPrevious() {}
         override fun seekToIndex(index: Int) {}
         override fun setQueue(tracks: List<Track>, startIndex: Int) {}
+        override fun restoreQueue(tracks: List<Track>, startIndex: Int, positionMs: Long) {}
         override fun addToQueue(track: Track) {}
         override fun addNext(track: Track) {}
         override fun removeFromQueue(index: Int) {}
