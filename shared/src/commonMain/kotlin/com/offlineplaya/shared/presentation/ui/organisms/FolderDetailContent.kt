@@ -45,6 +45,8 @@ fun FolderDetailContent(
     modifier: Modifier = Modifier,
     onTrackLongPress: ((Track) -> Unit)? = null,
     previewTracksProvider: ((Long) -> Flow<List<Track>>)? = null,
+    onFolderLongPress: ((Folder) -> Unit)? = null,
+    onFolderPlay: ((Folder) -> Unit)? = null,
 ) {
     if (subfolders.isEmpty() && tracks.isEmpty()) {
         EmptyState(
@@ -71,6 +73,8 @@ fun FolderDetailContent(
                 FolderRow(
                     folder = folder,
                     onClick = { onFolderClick(folder.id) },
+                    onLongClick = onFolderLongPress?.let { handler -> { handler(folder) } },
+                    onPlay = onFolderPlay?.let { handler -> { handler(folder) } },
                     previewTracks = previewTracks,
                 )
             }

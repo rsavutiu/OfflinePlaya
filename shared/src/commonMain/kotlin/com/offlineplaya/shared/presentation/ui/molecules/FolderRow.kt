@@ -1,6 +1,7 @@
 package com.offlineplaya.shared.presentation.ui.molecules
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Folder
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
+import com.offlineplaya.shared.presentation.ui.atoms.PlayButton
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.AppShapes
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
@@ -34,17 +36,20 @@ import kotlinx.collections.immutable.persistentListOf
 // ArtistRow template; Claude added the missing `layout.size` import and
 // removed an unused `ui.draw.clip` import before committing.
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FolderRow(
     folder: Folder,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onLongClick: (() -> Unit)? = null,
+    onPlay: (() -> Unit)? = null,
     previewTracks: PersistentList<Track> = persistentListOf(),
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
             .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.md),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -67,6 +72,9 @@ fun FolderRow(
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+        }
+        if (onPlay != null) {
+            PlayButton(onPlay = onPlay)
         }
     }
 }
@@ -181,6 +189,7 @@ private fun FolderRowPopulatedPreview() {
                     trackCount = 142,
                 ),
                 onClick = {},
+                onPlay = {},
             )
         }
     }

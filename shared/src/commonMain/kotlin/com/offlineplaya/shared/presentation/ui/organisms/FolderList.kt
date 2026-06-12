@@ -31,6 +31,8 @@ fun FolderList(
     emptyTitle: String = "No folders yet",
     emptySubtitle: String = "Scan a folder from the home page to populate the library.",
     previewTracksProvider: ((Long) -> Flow<List<Track>>)? = null,
+    onFolderLongPress: ((Folder) -> Unit)? = null,
+    onFolderPlay: ((Folder) -> Unit)? = null,
 ) {
     if (folders.isEmpty()) {
         EmptyState(title = emptyTitle, subtitle = emptySubtitle, modifier = modifier)
@@ -52,6 +54,8 @@ fun FolderList(
             FolderRow(
                 folder = folder,
                 onClick = { onFolderClick(folder.id) },
+                onLongClick = onFolderLongPress?.let { handler -> { handler(folder) } },
+                onPlay = onFolderPlay?.let { handler -> { handler(folder) } },
                 previewTracks = previewTracks,
             )
         }

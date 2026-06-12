@@ -136,6 +136,13 @@ class LibraryStateHolder(
         tracks.observeByFolder(folderId).map { it.toPersistentList() }
 
     /**
+     * Every scanned track at or under [folder] (subfolders included), in
+     * path order — the queue for the folder-row play button.
+     */
+    suspend fun tracksUnderFolder(folder: Folder): List<Track> =
+        tracks.findByPathPrefix(folder.treeUri, folder.relativePath)
+
+    /**
      * Up to [limit] tracks for [folderId], one per distinct album, used to
      * build the folder-row collage thumbnail. Derived off the existing
      * folder-tracks flow so it picks up new scans automatically.

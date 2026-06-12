@@ -48,6 +48,10 @@ internal class SqlTrackRepository(
     override fun observeCount(): Flow<Long> =
         queries.countAll().asFlow().mapToOne(ioDispatcher)
 
+    override fun observeRecentlyAdded(limit: Int): Flow<List<Track>> =
+        queries.selectRecentlyAdded(limit.toLong()).asFlow().mapToList(ioDispatcher)
+            .map { rows -> rows.map { it.toDomain() } }
+
     override suspend fun count(): Long = withContext(ioDispatcher) {
         queries.countAll().executeAsOne()
     }
@@ -151,6 +155,11 @@ internal class SqlTrackRepository(
         queries.markError(id)
     }
 
+    override suspend fun updateContentStats(id: Long, fileSize: Long, lastModified: Long) =
+        withContext(ioDispatcher) {
+            queries.updateContentStats(file_size = fileSize, last_modified = lastModified, id = id)
+        }
+
     override suspend fun findByContentKeyExcludingTree(
         fileName: String,
         fileSize: Long,
@@ -186,6 +195,27 @@ internal class SqlTrackRepository(
     override suspend fun deleteByTreeUri(treeUri: String) = withContext(ioDispatcher) {
         queries.deleteByTreeUri(treeUri)
     }
+
+    override suspend fun selectAggregatesByPathPrefix(
+        treeUri: String,
+        pathPrefix: String,
+    ): List<TrackAggregateRef> = withContext(ioDispatcher) {
+        queries.selectIdsByPathPrefix(treeUri = treeUri, prefix = pathPrefix)
+            .executeAsList()
+            .map { row -> TrackAggregateRef(row.id, row.artist_id, row.album_id) }
+    }
+
+    override suspend fun deleteByPathPrefix(treeUri: String, pathPrefix: String) =
+        withContext(ioDispatcher) {
+            queries.deleteByPathPrefix(treeUri = treeUri, prefix = pathPrefix)
+        }
+
+    override suspend fun findByPathPrefix(treeUri: String, pathPrefix: String): List<Track> =
+        withContext(ioDispatcher) {
+            queries.selectScannedByPathPrefix(treeUri = treeUri, prefix = pathPrefix)
+                .executeAsList()
+                .map { it.toDomain() }
+        }
 
     override suspend fun deleteAll() = withContext(ioDispatcher) {
         queries.deleteAll()

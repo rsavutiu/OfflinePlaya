@@ -21,6 +21,8 @@ fun LibraryFolderRootsPage(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     previewTracksProvider: ((Long) -> Flow<List<Track>>)? = null,
+    onFolderLongPress: ((Folder) -> Unit)? = null,
+    onFolderPlay: ((Folder) -> Unit)? = null,
 ) {
     LibraryScaffold(
         selectedTab = LibraryTab.FOLDERS,
@@ -32,6 +34,8 @@ fun LibraryFolderRootsPage(
             folders = roots,
             onFolderClick = onFolderClick,
             previewTracksProvider = previewTracksProvider,
+            onFolderLongPress = onFolderLongPress,
+            onFolderPlay = onFolderPlay,
         )
     }
 }

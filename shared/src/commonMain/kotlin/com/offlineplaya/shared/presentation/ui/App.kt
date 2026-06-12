@@ -48,7 +48,10 @@ import com.offlineplaya.shared.presentation.navigation.AppDestination
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.sync.SyncStatus
+import com.offlineplaya.shared.presentation.tag.TagEditorCoordinator
+import com.offlineplaya.shared.presentation.tag.TagEditorStatus
 import com.offlineplaya.shared.presentation.ui.atoms.LocalOpenSettings
+import com.offlineplaya.shared.presentation.ui.molecules.ExcludeFolderDialog
 import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
 import com.offlineplaya.shared.presentation.ui.organisms.MiniPlayer
 import com.offlineplaya.shared.presentation.ui.organisms.MiniPlayerReservedSpace
@@ -70,6 +73,8 @@ import com.offlineplaya.shared.presentation.ui.pages.PlaylistsPage
 import com.offlineplaya.shared.presentation.ui.pages.QueuePage
 import com.offlineplaya.shared.presentation.ui.pages.SearchPage
 import com.offlineplaya.shared.presentation.ui.pages.SettingsPage
+import com.offlineplaya.shared.presentation.ui.pages.SmartPlaylistPage
+import com.offlineplaya.shared.presentation.ui.pages.TagEditorPage
 import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.first
@@ -88,6 +93,8 @@ fun App(
     musicPlayer: MusicPlayer,
     equalizerStateHolder: EqualizerStateHolder,
     lyricsStateHolder: LyricsStateHolder,
+    tagEditorCoordinator: TagEditorCoordinator,
+    smartPlaylists: com.offlineplaya.shared.presentation.history.SmartPlaylistsStateHolder,
     themePreferences: ThemePreferences,
     artworkPreferences: com.offlineplaya.shared.domain.model.ArtworkPreferences,
     lyricsPreferences: com.offlineplaya.shared.domain.model.LyricsPreferences,
@@ -179,6 +186,8 @@ fun App(
                             musicPlayer = musicPlayer,
                             equalizerStateHolder = equalizerStateHolder,
                             lyricsStateHolder = lyricsStateHolder,
+                            tagEditorCoordinator = tagEditorCoordinator,
+                            smartPlaylists = smartPlaylists,
                             playback = playback,
                             themePreferences = themePreferences,
                             artworkPreferences = artworkPreferences,
@@ -219,6 +228,10 @@ fun App(
                             onCreatePlaylistAndAdd = { name ->
                                 playlists.createAndAddTrack(name, track.id)
                             },
+                            onEditTags = {
+                                navigator.push(AppDestination.TagEditor(track.id))
+                                actionsTrack = null
+                            },
                             onDismiss = { actionsTrack = null },
                         )
                     }
@@ -239,6 +252,8 @@ private fun DestinationContent(
     musicPlayer: MusicPlayer,
     equalizerStateHolder: EqualizerStateHolder,
     lyricsStateHolder: LyricsStateHolder,
+    tagEditorCoordinator: TagEditorCoordinator,
+    smartPlaylists: com.offlineplaya.shared.presentation.history.SmartPlaylistsStateHolder,
     playback: PlaybackState,
     themePreferences: ThemePreferences,
     artworkPreferences: com.offlineplaya.shared.domain.model.ArtworkPreferences,
@@ -294,6 +309,8 @@ private fun DestinationContent(
                         musicPlayer = musicPlayer,
                         equalizerStateHolder = equalizerStateHolder,
                         lyricsStateHolder = lyricsStateHolder,
+                        tagEditorCoordinator = tagEditorCoordinator,
+                        smartPlaylists = smartPlaylists,
                         playback = playback,
                         themePreferences = themePreferences,
                         artworkPreferences = artworkPreferences,
@@ -341,6 +358,8 @@ private fun DestinationBody(
     musicPlayer: MusicPlayer,
     equalizerStateHolder: EqualizerStateHolder,
     lyricsStateHolder: LyricsStateHolder,
+    tagEditorCoordinator: TagEditorCoordinator,
+    smartPlaylists: com.offlineplaya.shared.presentation.history.SmartPlaylistsStateHolder,
     playback: PlaybackState,
     themePreferences: ThemePreferences,
     artworkPreferences: com.offlineplaya.shared.domain.model.ArtworkPreferences,
@@ -402,6 +421,8 @@ private fun DestinationBody(
             AppDestination.Settings -> {
                 val managedRoots by syncCoordinator.managedRootsFlow
                     .collectAsState(initial = emptyList<com.offlineplaya.shared.domain.model.ManagedTreeRoot>())
+                val excludedFolders by syncCoordinator.excludedFoldersFlow
+                    .collectAsState(initial = emptyList<com.offlineplaya.shared.domain.model.ExcludedFolder>())
                 SettingsPage(
                     preferences = themePreferences,
                     artworkPreferences = artworkPreferences,
@@ -427,6 +448,8 @@ private fun DestinationBody(
                     onOpenDesignSystem = { navigator.push(AppDestination.DesignSystemGallery) },
                     onBack = { navigator.pop() },
                     dynamicColorSupported = dynamicColorSupported,
+                    excludedFolders = excludedFolders.toPersistentList(),
+                    onRemoveExcludedFolder = { syncCoordinator.includeFolder(it.id) },
                 )
             }
 
@@ -480,6 +503,7 @@ private fun DestinationBody(
                 onRemove = { idx -> musicPlayer.removeFromQueue(idx) },
                 onClearQueue = { musicPlayer.clearQueue() },
                 onBack = { navigator.pop() },
+                onMove = { from, to -> musicPlayer.moveInQueue(from, to) },
             )
 
             AppDestination.Playlists -> {
@@ -490,6 +514,21 @@ private fun DestinationBody(
                         navigator.push(AppDestination.PlaylistDetail(id))
                     },
                     onCreate = { name -> playlists.create(name) },
+                    onBack = { navigator.pop() },
+                    onSmartPlaylistClick = { kind ->
+                        navigator.push(AppDestination.SmartPlaylist(kind))
+                    },
+                )
+            }
+
+            is AppDestination.SmartPlaylist -> {
+                val tracks by remember(dest.kind) { smartPlaylists.observe(dest.kind) }
+                    .collectAsState(initial = emptyList())
+                SmartPlaylistPage(
+                    kind = dest.kind,
+                    tracks = tracks.toPersistentList(),
+                    onPlayTracks = onPlayTracks,
+                    onTrackLongPress = onTrackLongPress,
                     onBack = { navigator.pop() },
                 )
             }
@@ -599,6 +638,7 @@ private fun DestinationBody(
 
             AppDestination.LibraryFolderRoots -> {
                 val roots by library.rootFolders.collectAsState()
+                var folderToExclude by remember { mutableStateOf<Folder?>(null) }
                 LibraryFolderRootsPage(
                     roots = roots,
                     onFolderClick = { id ->
@@ -607,7 +647,24 @@ private fun DestinationBody(
                     onTabSelected = onTabSelected,
                     onBack = { navigator.pop() },
                     previewTracksProvider = { id -> library.previewTracksInFolder(id) },
+                    onFolderLongPress = { folderToExclude = it },
+                    onFolderPlay = { folder ->
+                        scope.launch {
+                            val tracks = library.tracksUnderFolder(folder)
+                            if (tracks.isNotEmpty()) onPlayTracks(tracks, 0)
+                        }
+                    },
                 )
+                folderToExclude?.let { folder ->
+                    ExcludeFolderDialog(
+                        folder = folder,
+                        onConfirm = {
+                            syncCoordinator.excludeFolder(folder)
+                            folderToExclude = null
+                        },
+                        onDismiss = { folderToExclude = null },
+                    )
+                }
             }
 
             is AppDestination.LibraryFolderDetail -> {
@@ -622,6 +679,7 @@ private fun DestinationBody(
                     library.tracksInFolder(dest.folderId)
                 }.collectAsState(initial = kotlinx.collections.immutable.persistentListOf<Track>())
 
+                var folderToExclude by remember { mutableStateOf<Folder?>(null) }
                 LibraryFolderDetailPage(
                     folderName = folder?.displayName ?: stringResource(Res.string.common_loading),
                     subfolders = subfolders,
@@ -633,7 +691,24 @@ private fun DestinationBody(
                     onTrackLongPress = onTrackLongPress,
                     onBack = { navigator.pop() },
                     previewTracksProvider = { id -> library.previewTracksInFolder(id) },
+                    onFolderLongPress = { folderToExclude = it },
+                    onFolderPlay = { playFolder ->
+                        scope.launch {
+                            val folderTracks = library.tracksUnderFolder(playFolder)
+                            if (folderTracks.isNotEmpty()) onPlayTracks(folderTracks, 0)
+                        }
+                    },
                 )
+                folderToExclude?.let { excluding ->
+                    ExcludeFolderDialog(
+                        folder = excluding,
+                        onConfirm = {
+                            syncCoordinator.excludeFolder(excluding)
+                            folderToExclude = null
+                        },
+                        onDismiss = { folderToExclude = null },
+                    )
+                }
             }
 
             AppDestination.LibraryFlat -> {
@@ -666,6 +741,24 @@ private fun DestinationBody(
                         equalizerStateHolder.setBandGain(idx, mb, gains)
                     },
                     onResetOverrides = { equalizerStateHolder.resetManualOverrides() },
+                    onPreampChange = { equalizerStateHolder.setPreampPercent(it) },
+                    onBack = { navigator.pop() },
+                )
+            }
+
+            is AppDestination.TagEditor -> {
+                LaunchedEffect(dest.trackId) { tagEditorCoordinator.load(dest.trackId) }
+                val state by tagEditorCoordinator.state.collectAsState()
+                // Saved → leave the editor; the library row was already updated.
+                LaunchedEffect(state.status) {
+                    if (state.status == TagEditorStatus.Saved) {
+                        tagEditorCoordinator.consumeResult()
+                        navigator.pop()
+                    }
+                }
+                TagEditorPage(
+                    state = state,
+                    onSave = { track, edits -> tagEditorCoordinator.save(track, edits) },
                     onBack = { navigator.pop() },
                 )
             }

@@ -101,6 +101,8 @@
     <string name="settings_section_mode">Mode</string>
     <string name="settings_section_preset">Preset</string>
     <string name="settings_section_bands">Bands</string>
+    <string name="settings_section_preamp">Preamp</string>
+    <string name="eq_preamp_hint">Boost beyond max volume. Vol+ at full volume raises it; Vol− lowers it before reducing volume. High boost can clip.</string>
 
     <!-- Appearance -->
     <string name="appearance_album_art_color">Album art colors</string>
@@ -115,6 +117,23 @@
     <string name="lyrics_empty_title">No lyrics</string>
     <string name="lyrics_empty_subtitle">No lyrics were found for this track.</string>
     <string name="cd_lyrics">Lyrics</string>
+
+    <!-- Tag editor -->
+    <string name="tag_editor_title">Edit tags</string>
+    <string name="track_details_edit_tags">Edit tags</string>
+    <string name="tag_editor_field_title">Title</string>
+    <string name="tag_editor_field_artist">Artist</string>
+    <string name="tag_editor_field_album_artist">Album artist</string>
+    <string name="tag_editor_field_album">Album</string>
+    <string name="tag_editor_field_genre">Genre</string>
+    <string name="tag_editor_field_year">Year</string>
+    <string name="tag_editor_field_track">Track #</string>
+    <string name="tag_editor_field_disc">Disc #</string>
+    <string name="tag_editor_save">Save</string>
+    <string name="tag_editor_saving">Saving…</string>
+    <string name="tag_editor_error">Couldn\'t save tags: %1$s</string>
+    <string name="tag_editor_write_hint">Writes tags into the file. Files the app can\'t write to (some device-indexed tracks) will fail.</string>
+    <string name="tag_editor_not_found">Track not found.</string>
     <string name="settings_section_lyrics">Lyrics</string>
     <string name="lyrics_download_remote">Download lyrics</string>
     <string name="lyrics_download_remote_subtitle">Look up missing lyrics from LRCLIB when no embedded tag or .lrc sidecar is found.</string>
@@ -162,6 +181,19 @@
     <string name="folder_section_tracks">Tracks</string>
     <string name="empty_library_no_folders">No folders added yet. Tap "Add music folder" above to get started.</string>
     <string name="library_add_music_folder">Add music folder</string>
+    <string name="library_add_folder_hint">Adding a folder gives the app write access to it — needed to burn metadata, album art and lyrics into the audio files themselves. Without it, edits live only inside this app.</string>
+    <string name="library_excluded_folders">Excluded folders</string>
+    <string name="library_excluded_remove">Include again</string>
+    <string name="exclude_folder_title">Exclude from library?</string>
+    <string name="exclude_folder_body">"%1$s" and everything inside it will be hidden from the library and skipped by future scans. The files on disk aren\'t touched. You can undo this from Settings.</string>
+    <string name="exclude_button">Exclude</string>
+    <string name="smart_playlists_section">Smart playlists</string>
+    <string name="smart_recently_played">Recently played</string>
+    <string name="smart_most_played">Most played</string>
+    <string name="smart_recently_added">Recently added</string>
+    <string name="smart_forgotten_favorites">Forgotten favorites</string>
+    <string name="smart_never_played">Never played</string>
+    <string name="cd_reorder_queue">Drag to reorder</string>
     <string name="library_rescan_all">Re-scan all folders</string>
     <string name="library_scanning">Scanning…</string>
     <string name="empty_playlist_title">No playlists yet</string>

@@ -3,8 +3,10 @@ package com.offlineplaya.shared.di
 import com.offlineplaya.shared.data.database.createDatabase
 import com.offlineplaya.shared.data.repository.SqlAlbumRepository
 import com.offlineplaya.shared.data.repository.SqlArtistRepository
+import com.offlineplaya.shared.data.repository.SqlExcludedFolderRepository
 import com.offlineplaya.shared.data.repository.SqlFolderRepository
 import com.offlineplaya.shared.data.repository.SqlManagedTreeRootRepository
+import com.offlineplaya.shared.data.repository.SqlPlayHistoryRepository
 import com.offlineplaya.shared.data.repository.SqlPlaylistRepository
 import com.offlineplaya.shared.data.repository.SqlQueueRepository
 import com.offlineplaya.shared.data.repository.SqlRecentAlbumRepository
@@ -12,16 +14,22 @@ import com.offlineplaya.shared.data.repository.SqlSettingsRepository
 import com.offlineplaya.shared.data.repository.SqlTrackRepository
 import com.offlineplaya.shared.domain.repository.AlbumRepository
 import com.offlineplaya.shared.domain.repository.ArtistRepository
+import com.offlineplaya.shared.domain.repository.ExcludedFolderRepository
 import com.offlineplaya.shared.domain.repository.FolderRepository
 import com.offlineplaya.shared.domain.repository.ManagedTreeRootRepository
+import com.offlineplaya.shared.domain.repository.PlayHistoryRepository
 import com.offlineplaya.shared.domain.repository.PlaylistRepository
 import com.offlineplaya.shared.domain.repository.QueueRepository
 import com.offlineplaya.shared.domain.repository.RecentAlbumRepository
 import com.offlineplaya.shared.domain.repository.SettingsRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
 import com.offlineplaya.shared.domain.usecase.BurnMetadataUseCase
+import com.offlineplaya.shared.domain.usecase.EditTrackTagsUseCase
+import com.offlineplaya.shared.domain.usecase.ExcludeFolderUseCase
 import com.offlineplaya.shared.domain.usecase.LibrarySyncUseCase
 import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
+import com.offlineplaya.shared.presentation.history.PlayHistoryRecorder
+import com.offlineplaya.shared.presentation.history.SmartPlaylistsStateHolder
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.lyrics.LyricsStateHolder
 import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
@@ -32,6 +40,7 @@ import com.offlineplaya.shared.presentation.settings.LyricsPreferencesStateHolde
 import com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
+import com.offlineplaya.shared.presentation.tag.TagEditorCoordinator
 import com.offlineplaya.shared.presentation.theme.AlbumColorStateHolder
 import com.offlineplaya.shared.util.createLogger
 import kotlinx.coroutines.CoroutineScope
@@ -52,7 +61,9 @@ val sharedModule: Module = module {
     single { SqlAlbumRepository(get(), get()) } bind AlbumRepository::class
     single { SqlRecentAlbumRepository(get(), get()) } bind RecentAlbumRepository::class
     single { SqlFolderRepository(get(), get()) } bind FolderRepository::class
+    single { SqlExcludedFolderRepository(get(), get()) } bind ExcludedFolderRepository::class
     single { SqlPlaylistRepository(get()) } bind PlaylistRepository::class
+    single { SqlPlayHistoryRepository(get(), get()) } bind PlayHistoryRepository::class
     single { SqlQueueRepository(get()) } bind QueueRepository::class
     single { SqlManagedTreeRootRepository(get()) } bind ManagedTreeRootRepository::class
     single { SqlSettingsRepository(get()) } bind SettingsRepository::class
@@ -69,6 +80,20 @@ val sharedModule: Module = module {
             scanner = get(),
             metadataReader = get(),
             deviceAudio = get(),
+            excludedFolders = get(),
+            logger = get(),
+        )
+    }
+
+    // Hide-folder-from-library pass: records the exclusion and drops the
+    // already-indexed subtree.
+    factory {
+        ExcludeFolderUseCase(
+            excluded = get(),
+            tracks = get(),
+            folders = get(),
+            artists = get(),
+            albums = get(),
             logger = get(),
         )
     }
@@ -83,6 +108,25 @@ val sharedModule: Module = module {
             genreSource = get(),
             genreWriter = get(),
             logger = get(),
+        )
+    }
+
+    // Manual tag editor: per-track tag write + library regroup, and the
+    // coordinator that drives the editor screen.
+    factory {
+        EditTrackTagsUseCase(
+            tracks = get(),
+            artists = get(),
+            albums = get(),
+            tagWriter = get(),
+            logger = get(),
+        )
+    }
+    single {
+        TagEditorCoordinator(
+            tracks = get(),
+            editUseCase = get(),
+            scope = get(),
         )
     }
 
@@ -102,6 +146,8 @@ val sharedModule: Module = module {
             folders = get(),
             artists = get(),
             albums = get(),
+            excludedFolders = get(),
+            excludeFolderUseCase = get(),
             scope = get(),
         )
     }
@@ -182,6 +228,24 @@ val sharedModule: Module = module {
         PlaylistStateHolder(
             playlists = get(),
             scope = get(),
+        )
+    }
+
+    // Listening history: the recorder appends a row per played track (started
+    // from Application.onCreate); the state holder resolves the smart
+    // playlists' live track lists.
+    single {
+        PlayHistoryRecorder(
+            musicPlayer = get(),
+            playHistory = get(),
+            scope = get(),
+            logger = get(),
+        )
+    }
+    single {
+        SmartPlaylistsStateHolder(
+            playHistory = get(),
+            tracks = get(),
         )
     }
 

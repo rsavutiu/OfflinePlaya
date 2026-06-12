@@ -18,6 +18,9 @@ interface TrackRepository {
      */
     fun observeCount(): Flow<Long>
 
+    /** Newest additions first — the "Recently added" smart playlist. */
+    fun observeRecentlyAdded(limit: Int): Flow<List<Track>>
+
     suspend fun count(): Long
     suspend fun countByStatus(status: ScanStatus): Long
     suspend fun findById(id: Long): Track?
@@ -48,6 +51,13 @@ interface TrackRepository {
         inTreeUri: String,
     ): List<Long>
 
+    /**
+     * Refresh the stored (file_size, last_modified) fingerprint after the
+     * file was rewritten in place (tag edit). Keeps the SAF-vs-device
+     * content-key dedup matching across the next resync.
+     */
+    suspend fun updateContentStats(id: Long, fileSize: Long, lastModified: Long)
+
     suspend fun deleteById(id: Long)
 
     /**
@@ -58,6 +68,20 @@ interface TrackRepository {
     suspend fun selectAggregatesByTreeUri(treeUri: String): List<TrackAggregateRef>
 
     suspend fun deleteByTreeUri(treeUri: String)
+
+    /**
+     * Same pair scoped to a folder subtree: every track at or under
+     * (treeUri, pathPrefix). Used when the user excludes a folder.
+     */
+    suspend fun selectAggregatesByPathPrefix(treeUri: String, pathPrefix: String): List<TrackAggregateRef>
+
+    suspend fun deleteByPathPrefix(treeUri: String, pathPrefix: String)
+
+    /**
+     * Every scanned track at or under (treeUri, pathPrefix), in path order.
+     * An empty prefix means the whole tree. Backs the folder play button.
+     */
+    suspend fun findByPathPrefix(treeUri: String, pathPrefix: String): List<Track>
 
     /**
      * One representative track for [albumId] — used as the source for album-art

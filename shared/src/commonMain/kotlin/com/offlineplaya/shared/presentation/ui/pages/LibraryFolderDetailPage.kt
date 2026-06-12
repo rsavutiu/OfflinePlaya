@@ -27,6 +27,8 @@ fun LibraryFolderDetailPage(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     previewTracksProvider: ((Long) -> Flow<List<Track>>)? = null,
+    onFolderLongPress: ((Folder) -> Unit)? = null,
+    onFolderPlay: ((Folder) -> Unit)? = null,
 ) {
     Scaffold(
         modifier = modifier,
@@ -41,6 +43,8 @@ fun LibraryFolderDetailPage(
                 onTrackClick = { onPlayTracks(tracks, tracks.indexOf(it).coerceAtLeast(0)) },
                 onTrackLongPress = onTrackLongPress,
                 previewTracksProvider = previewTracksProvider,
+                onFolderLongPress = onFolderLongPress,
+                onFolderPlay = onFolderPlay,
             )
         }
     }
