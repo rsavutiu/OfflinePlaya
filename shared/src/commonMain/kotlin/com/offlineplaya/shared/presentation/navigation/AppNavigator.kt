@@ -18,9 +18,6 @@ import kotlinx.coroutines.flow.update
 class AppNavigator(
     initial: AppDestination = AppDestination.Home,
 ) {
-    // PersistentList of destinations — Compose-stable so every recomposition
-    // triggered by some other state change (sync progress, theme toggle…)
-    // doesn't invalidate the App scaffold's stack-based dispatch.
     private val _stack = MutableStateFlow<PersistentList<AppDestination>>(persistentListOf(initial))
 
     /** Read-only view of the current stack (root first). */
@@ -32,19 +29,28 @@ class AppNavigator(
     /** `true` when there is something to pop back to. */
     val canGoBack: Boolean get() = _stack.value.size > 1
 
+    /** Direction of the last navigation action, for transition animation. */
+    var direction: Direction = Direction.FORWARD
+        private set
+
+    enum class Direction { FORWARD, BACKWARD, SWAP }
+
     fun push(destination: AppDestination) {
+        direction = Direction.FORWARD
         _stack.update { it.add(destination) }
     }
 
     /** Pop the top destination. Returns `false` if already at the root. */
     fun pop(): Boolean {
         if (!canGoBack) return false
+        direction = Direction.BACKWARD
         _stack.update { it.removeAt(it.lastIndex) }
         return true
     }
 
     /** Reset the stack to a single destination — used for top-level switches. */
     fun replaceWith(destination: AppDestination) {
+        direction = Direction.FORWARD
         _stack.value = persistentListOf(destination)
     }
 
@@ -54,6 +60,7 @@ class AppNavigator(
      * Back should still pop to whatever was below (e.g. Home).
      */
     fun swapTop(destination: AppDestination) {
+        direction = Direction.SWAP
         _stack.update { it.set(it.lastIndex, destination) }
     }
 }

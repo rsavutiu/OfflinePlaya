@@ -110,6 +110,7 @@ fun QueueList(
                 onClick = { onJumpTo(idx) },
                 onRemove = { onRemove(idx) },
                 modifier = Modifier
+                    .animateItem()
                     .zIndex(if (isDragging) 1f else 0f)
                     .graphicsLayer { translationY = if (isDragging) dragDelta else 0f },
                 dragHandle = if (onMove == null) null else {

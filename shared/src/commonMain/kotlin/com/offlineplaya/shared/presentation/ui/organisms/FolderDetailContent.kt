@@ -76,6 +76,7 @@ fun FolderDetailContent(
                     onLongClick = onFolderLongPress?.let { handler -> { handler(folder) } },
                     onPlay = onFolderPlay?.let { handler -> { handler(folder) } },
                     previewTracks = previewTracks,
+                    modifier = Modifier.animateItem(),
                 )
             }
         }
@@ -86,8 +87,8 @@ fun FolderDetailContent(
                     track = track,
                     onClick = { onTrackClick(track) },
                     onLongClick = onTrackLongPress?.let { { it(track) } },
-                    // Folder listings show each file once → safe shared key.
                     sharedArtEnabled = true,
+                    modifier = Modifier.animateItem(),
                 )
             }
         }

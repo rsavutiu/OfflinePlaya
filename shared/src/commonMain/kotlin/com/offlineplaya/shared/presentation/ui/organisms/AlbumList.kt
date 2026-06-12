@@ -53,7 +53,8 @@ fun AlbumList(
                 album = album,
                 onClick = { onAlbumClick(album.id) },
                 representativeTrackProvider = representativeTrackProvider,
-                onPlay = { onPlayAlbum(album) }
+                onPlay = { onPlayAlbum(album) },
+                modifier = Modifier.animateItem(),
             )
         }
     }

@@ -1,11 +1,14 @@
 package com.offlineplaya.shared.presentation.ui
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -75,6 +78,7 @@ import com.offlineplaya.shared.presentation.ui.pages.SearchPage
 import com.offlineplaya.shared.presentation.ui.pages.SettingsPage
 import com.offlineplaya.shared.presentation.ui.pages.SmartPlaylistPage
 import com.offlineplaya.shared.presentation.ui.pages.TagEditorPage
+import com.offlineplaya.shared.presentation.ui.theme.AppMotion
 import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.first
@@ -150,8 +154,18 @@ fun App(
                 modifier = Modifier.fillMaxSize(),
                 snackbarHost = { SnackbarHost(snackbarHostState) },
                 bottomBar = {
-                    when {
-                        showMini -> MiniPlayer(
+                    AnimatedVisibility(
+                        visible = showMini,
+                        enter = slideInVertically(
+                            animationSpec = tween(AppMotion.medium),
+                            initialOffsetY = { it },
+                        ) + fadeIn(animationSpec = tween(AppMotion.medium)),
+                        exit = slideOutVertically(
+                            animationSpec = tween(AppMotion.medium),
+                            targetOffsetY = { it },
+                        ) + fadeOut(animationSpec = tween(AppMotion.medium)),
+                    ) {
+                        MiniPlayer(
                             state = playback,
                             onExpand = { navigator.push(AppDestination.NowPlaying) },
                             onPlayPause = {
@@ -160,8 +174,8 @@ fun App(
                             onPrevious = { musicPlayer.skipToPrevious() },
                             onNext = { musicPlayer.skipToNext() },
                         )
-                        !onNowPlaying -> MiniPlayerReservedSpace()
                     }
+                    if (!showMini && !onNowPlaying) MiniPlayerReservedSpace()
                 },
             ) { outerPadding ->
                 Box(
@@ -289,13 +303,18 @@ private fun DestinationContent(
             AnimatedContent(
                 targetState = current,
                 transitionSpec = {
-                    // Outlast the cover morph (SHARED_ART_MORPH_MS) so the
-                    // shared element's overlay→layout handoff lands *after* the
-                    // morph visually completes — a shorter fade snaps mid-flight
-                    // and reads as choppy.
                     val fade = SHARED_ART_MORPH_MS + 100
-                    fadeIn(animationSpec = tween(durationMillis = fade)) togetherWith
-                            fadeOut(animationSpec = tween(durationMillis = fade))
+                    val slideOffset = { size: Int -> size / 12 }
+                    when (navigator.direction) {
+                        AppNavigator.Direction.FORWARD ->
+                            slideInVertically(tween(fade), slideOffset) + fadeIn(tween(fade)) togetherWith
+                                    slideOutVertically(tween(fade)) { -it / 12 } + fadeOut(tween(fade))
+                        AppNavigator.Direction.BACKWARD ->
+                            slideInVertically(tween(fade)) { -it / 12 } + fadeIn(tween(fade)) togetherWith
+                                    slideOutVertically(tween(fade), slideOffset) + fadeOut(tween(fade))
+                        AppNavigator.Direction.SWAP ->
+                            fadeIn(tween(fade)) togetherWith fadeOut(tween(fade))
+                    }
                 },
                 label = "destination",
             ) { dest ->
@@ -412,6 +431,7 @@ private fun DestinationBody(
                     onOpenAlbums = { navigator.push(AppDestination.LibraryArtists) },
                     onOpenArtists = { navigator.push(AppDestination.LibraryArtists) },
                     onOpenPlaylists = { navigator.push(AppDestination.Playlists) },
+                    onOpenFolders = { navigator.push(AppDestination.LibraryFolderRoots) },
                     onOpenAlbum = { id -> navigator.push(AppDestination.LibraryAlbumDetail(id)) },
                     onOpenSearch = { navigator.push(AppDestination.Search) },
                     onOpenSettings = { navigator.push(AppDestination.Settings) },

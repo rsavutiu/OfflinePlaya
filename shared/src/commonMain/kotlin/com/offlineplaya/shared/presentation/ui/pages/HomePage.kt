@@ -58,6 +58,7 @@ fun HomePage(
     onOpenAlbums: () -> Unit,
     onOpenArtists: () -> Unit,
     onOpenPlaylists: () -> Unit,
+    onOpenFolders: () -> Unit = {},
     onOpenAlbum: (Long) -> Unit = {},
     onOpenSearch: () -> Unit,
     onOpenSettings: () -> Unit,
@@ -82,6 +83,7 @@ fun HomePage(
                 onOpenAlbums = onOpenAlbums,
                 onOpenArtists = onOpenArtists,
                 onOpenPlaylists = onOpenPlaylists,
+                onOpenFolders = onOpenFolders,
                 onOpenAlbum = onOpenAlbum,
                 onOpenSearch = onOpenSearch,
                 onOpenSettings = onOpenSettings,
@@ -104,6 +106,7 @@ private fun PopulatedHome(
     onOpenAlbums: () -> Unit,
     onOpenArtists: () -> Unit,
     onOpenPlaylists: () -> Unit,
+    onOpenFolders: () -> Unit,
     onOpenAlbum: (Long) -> Unit,
     onOpenSearch: () -> Unit,
     onOpenSettings: () -> Unit,
@@ -122,6 +125,7 @@ private fun PopulatedHome(
             onOpenAlbums = onOpenAlbums,
             onOpenArtists = onOpenArtists,
             onOpenPlaylists = onOpenPlaylists,
+            onOpenFolders = onOpenFolders,
             onOpenAlbum = onOpenAlbum,
             onOpenSearch = onOpenSearch,
             onOpenSettings = onOpenSettings,
@@ -140,6 +144,7 @@ private fun PopulatedHome(
             onOpenAlbums = onOpenAlbums,
             onOpenArtists = onOpenArtists,
             onOpenPlaylists = onOpenPlaylists,
+            onOpenFolders = onOpenFolders,
             onOpenAlbum = onOpenAlbum,
             onOpenSearch = onOpenSearch,
             onOpenSettings = onOpenSettings,
@@ -166,6 +171,7 @@ private fun PortraitHome(
     onOpenAlbums: () -> Unit,
     onOpenArtists: () -> Unit,
     onOpenPlaylists: () -> Unit,
+    onOpenFolders: () -> Unit,
     onOpenAlbum: (Long) -> Unit,
     onOpenSearch: () -> Unit,
     onOpenSettings: () -> Unit,
@@ -176,6 +182,8 @@ private fun PortraitHome(
             trackCount = trackCount,
             folderCount = folderCount,
             status = status,
+            onTracksClick = onOpenAllTracks,
+            onFoldersClick = onOpenFolders,
             modifier = Modifier.padding(horizontal = 16.dp),
         )
 
@@ -239,6 +247,7 @@ private fun LandscapeHome(
     onOpenAlbums: () -> Unit,
     onOpenArtists: () -> Unit,
     onOpenPlaylists: () -> Unit,
+    onOpenFolders: () -> Unit,
     onOpenAlbum: (Long) -> Unit,
     onOpenSearch: () -> Unit,
     onOpenSettings: () -> Unit,
@@ -256,6 +265,8 @@ private fun LandscapeHome(
                 trackCount = trackCount,
                 folderCount = folderCount,
                 status = status,
+                onTracksClick = onOpenAllTracks,
+                onFoldersClick = onOpenFolders,
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
             if (recentAlbums.isNotEmpty()) {
@@ -309,7 +320,8 @@ private fun HomePageIdlePreview() {
             recentAlbums = persistentListOf(),
             onOpenLibrary = {}, onOpenAllTracks = {},
             onOpenAlbums = {}, onOpenArtists = {},
-            onOpenPlaylists = {}, onOpenSearch = {}, onOpenSettings = {},
+            onOpenPlaylists = {}, onOpenFolders = {},
+            onOpenSearch = {}, onOpenSettings = {},
         )
     }
 }
@@ -333,7 +345,8 @@ private fun HomePagePopulatedPreview() {
             ),
             onOpenLibrary = {}, onOpenAllTracks = {},
             onOpenAlbums = {}, onOpenArtists = {},
-            onOpenPlaylists = {}, onOpenSearch = {}, onOpenSettings = {},
+            onOpenPlaylists = {}, onOpenFolders = {},
+            onOpenSearch = {}, onOpenSettings = {},
         )
     }
 }
@@ -359,7 +372,8 @@ private fun HomePageLandscapePreview() {
             ),
             onOpenLibrary = {}, onOpenAllTracks = {},
             onOpenAlbums = {}, onOpenArtists = {},
-            onOpenPlaylists = {}, onOpenSearch = {}, onOpenSettings = {},
+            onOpenPlaylists = {}, onOpenFolders = {},
+            onOpenSearch = {}, onOpenSettings = {},
             modifier = Modifier.size(width = 900.dp, height = 420.dp),
         )
     }

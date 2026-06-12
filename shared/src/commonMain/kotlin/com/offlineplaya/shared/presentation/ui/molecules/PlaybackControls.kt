@@ -1,5 +1,7 @@
 package com.offlineplaya.shared.presentation.ui.molecules
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
@@ -51,13 +53,15 @@ fun PlaybackControls(
             )
         }
         IconButton(onClick = onPlayPause) {
-            Icon(
-                imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
-                contentDescription = if (isPlaying) stringResource(Res.string.cd_pause) else stringResource(
-                    Res.string.cd_play
-                ),
-                tint = MaterialTheme.colorScheme.onSurface,
-            )
+            Crossfade(targetState = isPlaying, animationSpec = tween(150), label = "playPause") { playing ->
+                Icon(
+                    imageVector = if (playing) Icons.Default.Pause else Icons.Default.PlayArrow,
+                    contentDescription = if (playing) stringResource(Res.string.cd_pause) else stringResource(
+                        Res.string.cd_play
+                    ),
+                    tint = MaterialTheme.colorScheme.onSurface,
+                )
+            }
         }
         IconButton(onClick = onNext) {
             Icon(
@@ -92,14 +96,16 @@ fun PlaybackControlsLarge(
             )
         }
         IconButton(onClick = onPlayPause, modifier = Modifier.size(72.dp)) {
-            Icon(
-                imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
-                contentDescription = if (isPlaying) stringResource(Res.string.cd_pause) else stringResource(
-                    Res.string.cd_play
-                ),
-                modifier = Modifier.size(56.dp),
-                tint = LocalBrandAccent.current.accent,
-            )
+            Crossfade(targetState = isPlaying, animationSpec = tween(150), label = "playPauseLg") { playing ->
+                Icon(
+                    imageVector = if (playing) Icons.Default.Pause else Icons.Default.PlayArrow,
+                    contentDescription = if (playing) stringResource(Res.string.cd_pause) else stringResource(
+                        Res.string.cd_play
+                    ),
+                    modifier = Modifier.size(56.dp),
+                    tint = LocalBrandAccent.current.accent,
+                )
+            }
         }
         IconButton(onClick = onNext, modifier = Modifier.size(56.dp)) {
             Icon(

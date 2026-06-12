@@ -49,6 +49,7 @@ fun RecentAlbumsShelf(
                 album = album,
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
                 onClick = { onOpenAlbum(album.id) },
+                modifier = Modifier.animateItem(),
             )
         }
     }
@@ -59,12 +60,13 @@ private fun RecentAlbumItem(
     album: Album,
     representativeTrackOfAlbum: suspend (Long) -> Track?,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     var rep by remember(album.id) { mutableStateOf<Track?>(null) }
     LaunchedEffect(album.id) { rep = representativeTrackOfAlbum(album.id) }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .width(96.dp)
             .clickable(onClick = onClick),
     ) {

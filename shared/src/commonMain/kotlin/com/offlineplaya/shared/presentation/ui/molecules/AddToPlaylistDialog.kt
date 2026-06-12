@@ -73,6 +73,7 @@ fun AddToPlaylistDialog(
                         items(items = playlists, key = { it.id }) { playlist ->
                             Column(
                                 modifier = Modifier
+                                    .animateItem()
                                     .fillMaxWidth()
                                     .clickable {
                                         onPickPlaylist(playlist.id)

@@ -1,5 +1,11 @@
 package com.offlineplaya.shared.presentation.ui.organisms
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
@@ -17,6 +23,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
@@ -95,25 +102,31 @@ fun MiniPlayer(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 AlbumArtThumb(track = track, size = 44.dp, cornerRadius = 8.dp)
-                Column(
+                AnimatedContent(
+                    targetState = track,
+                    transitionSpec = { fadeIn() togetherWith fadeOut() },
+                    contentKey = { it.id },
+                    label = "miniTrackInfo",
                     modifier = Modifier
                         .padding(horizontal = 12.dp)
                         .weight(1f),
-                ) {
-                    Text(
-                        text = track.title,
-                        style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        maxLines = 1,
-                        modifier = Modifier.basicMarquee(),
-                    )
-                    Text(
-                        text = track.artistName,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
+                ) { t ->
+                    Column {
+                        Text(
+                            text = t.title,
+                            style = MaterialTheme.typography.titleSmall,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            maxLines = 1,
+                            modifier = Modifier.basicMarquee(),
+                        )
+                        Text(
+                            text = t.artistName,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
                 }
                 PlaybackControls(
                     isPlaying = state.isPlaying,
@@ -130,7 +143,12 @@ fun MiniPlayer(
 @Composable
 private fun ProgressLine(state: PlaybackState) {
     val total = state.durationMs.coerceAtLeast(1L)
-    val progress = (state.positionMs.toFloat() / total).coerceIn(0f, 1f)
+    val raw = (state.positionMs.toFloat() / total).coerceIn(0f, 1f)
+    val progress by animateFloatAsState(
+        targetValue = raw,
+        animationSpec = tween(durationMillis = 300),
+        label = "miniProgress",
+    )
     Box(
         modifier = Modifier
             .fillMaxWidth()

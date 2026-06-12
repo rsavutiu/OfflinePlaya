@@ -40,7 +40,11 @@ fun PlaylistList(
         contentPadding = contentPadding,
     ) {
         items(items = playlists, key = { it.id }) { playlist ->
-            PlaylistRow(playlist = playlist, onClick = { onPlaylistClick(playlist.id) })
+            PlaylistRow(
+                playlist = playlist,
+                onClick = { onPlaylistClick(playlist.id) },
+                modifier = Modifier.animateItem(),
+            )
         }
     }
 }

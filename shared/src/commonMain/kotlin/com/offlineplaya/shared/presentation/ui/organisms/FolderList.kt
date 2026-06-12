@@ -57,6 +57,7 @@ fun FolderList(
                 onLongClick = onFolderLongPress?.let { handler -> { handler(folder) } },
                 onPlay = onFolderPlay?.let { handler -> { handler(folder) } },
                 previewTracks = previewTracks,
+                modifier = Modifier.animateItem(),
             )
         }
     }

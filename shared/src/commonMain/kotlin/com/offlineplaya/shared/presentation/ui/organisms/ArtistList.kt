@@ -51,7 +51,8 @@ fun ArtistList(
             ArtistRow(
                 artist = artist,
                 onClick = { onArtistClick(artist.id) },
-                onPlay = { onPlayArtist(artist) }
+                onPlay = { onPlayArtist(artist) },
+                modifier = Modifier.animateItem(),
             )
         }
     }

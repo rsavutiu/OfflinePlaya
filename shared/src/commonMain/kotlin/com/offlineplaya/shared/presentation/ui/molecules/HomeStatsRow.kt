@@ -1,6 +1,9 @@
 package com.offlineplaya.shared.presentation.ui.molecules
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +13,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.alpha
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.MusicNote
@@ -48,7 +57,14 @@ fun HomeStatsRow(
     folderCount: Int,
     status: SyncStatus,
     modifier: Modifier = Modifier,
+    onTracksClick: (() -> Unit)? = null,
+    onFoldersClick: (() -> Unit)? = null,
 ) {
+    var entered by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) { entered = true }
+    val alpha0 by animateFloatAsState(if (entered) 1f else 0f, tween(400), label = "stat0")
+    val alpha1 by animateFloatAsState(if (entered) 1f else 0f, tween(400, delayMillis = 80), label = "stat1")
+    val alpha2 by animateFloatAsState(if (entered) 1f else 0f, tween(400, delayMillis = 160), label = "stat2")
     val borderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f)
     Row(
         modifier = modifier
@@ -60,11 +76,11 @@ fun HomeStatsRow(
         StatCell(
             icon = Icons.Outlined.MusicNote,
             value = trackCount.toString(),
-            // Singular label when the count is exactly 1 ("1 Track", not "1 Tracks").
             label = stringResource(
                 if (trackCount == 1L) Res.string.home_label_track else Res.string.home_label_tracks
             ),
-            modifier = Modifier.weight(1f),
+            onClick = onTracksClick,
+            modifier = Modifier.weight(1f).alpha(alpha0),
         )
         VerticalDivider(borderColor)
         StatCell(
@@ -73,14 +89,15 @@ fun HomeStatsRow(
             label = stringResource(
                 if (folderCount == 1) Res.string.home_label_folder else Res.string.home_label_folders
             ),
-            modifier = Modifier.weight(1f),
+            onClick = onFoldersClick,
+            modifier = Modifier.weight(1f).alpha(alpha1),
         )
         VerticalDivider(borderColor)
         StatCell(
             icon = Icons.Outlined.Schedule,
             value = formatTotalDuration(trackCount),
             label = stringResource(Res.string.home_label_total),
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f).alpha(alpha2),
         )
     }
 }
@@ -91,9 +108,12 @@ private fun StatCell(
     value: String,
     label: String,
     modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.then(
+            if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier
+        ),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
