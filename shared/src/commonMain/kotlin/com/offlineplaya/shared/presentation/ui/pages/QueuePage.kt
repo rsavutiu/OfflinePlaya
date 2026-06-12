@@ -37,6 +37,7 @@ fun QueuePage(
     onClearQueue: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
+    onMove: ((from: Int, to: Int) -> Unit)? = null,
 ) {
     Scaffold(
         modifier = modifier,
@@ -65,6 +66,7 @@ fun QueuePage(
                 onJumpTo = onJumpTo,
                 onRemove = onRemove,
                 contentPadding = padding,
+                onMove = onMove,
             )
         }
     }
