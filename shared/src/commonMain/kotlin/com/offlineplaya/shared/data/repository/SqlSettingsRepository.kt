@@ -109,6 +109,7 @@ internal class SqlSettingsRepository(
                     KEY_EQ_MANUAL_GAINS,
                     preferences.manualGains.joinToString(separator = ","),
                 )
+                queries.insertOrReplace(KEY_EQ_PREAMP, preferences.preampPercent.toString())
             }
         }
 
@@ -183,6 +184,8 @@ internal class SqlSettingsRepository(
             mode = mode,
             manualPresetName = manualName,
             manualGains = gains,
+            preampPercent = (map[KEY_EQ_PREAMP]?.toIntOrNull() ?: defaults.preampPercent)
+                .coerceIn(0, EqPreferences.MAX_PREAMP_PERCENT),
         )
     }
 
@@ -212,6 +215,7 @@ internal class SqlSettingsRepository(
         const val KEY_EQ_MODE = "eq.mode"
         const val KEY_EQ_MANUAL_PRESET = "eq.manual_preset"
         const val KEY_EQ_MANUAL_GAINS = "eq.manual_gains"
+        const val KEY_EQ_PREAMP = "eq.preamp_percent"
         const val KEY_CROSSFADE_ENABLED = "playback.crossfade_enabled"
         const val KEY_CROSSFADE_DURATION = "playback.crossfade_duration_s"
     }

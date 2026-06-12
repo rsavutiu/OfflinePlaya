@@ -167,6 +167,49 @@ class EqualizerStateHolder(
         }
     }
 
+    /**
+     * Serializes preamp mutations. Volume-key autorepeat fires faster than
+     * the settings write → flow round-trip, so concurrent updates reading
+     * [preferences].value would all see the same stale percent and collapse
+     * a burst of presses into one step. Each mutation instead re-reads the
+     * persisted value under this lock.
+     */
+    private val preampLock = Mutex()
+
+    /**
+     * Set the preamp boost (0..[EqPreferences.MAX_PREAMP_PERCENT]). Driven by
+     * the slider on the Equalizer page.
+     */
+    fun setPreampPercent(percent: Int) {
+        scope.launch {
+            preampLock.withLock {
+                val current = settings.getEqPreferences()
+                val clamped = percent.coerceIn(0, EqPreferences.MAX_PREAMP_PERCENT)
+                if (clamped != current.preampPercent) {
+                    settings.setEqPreferences(current.copy(preampPercent = clamped))
+                }
+            }
+        }
+    }
+
+    /**
+     * Step the preamp by [deltaPercent], clamped to the supported range.
+     * Driven by volume keys (activity handler and the session volume
+     * provider); steps accumulate correctly under key autorepeat.
+     */
+    fun adjustPreampBy(deltaPercent: Int) {
+        scope.launch {
+            preampLock.withLock {
+                val current = settings.getEqPreferences()
+                val target = (current.preampPercent + deltaPercent)
+                    .coerceIn(0, EqPreferences.MAX_PREAMP_PERCENT)
+                if (target != current.preampPercent) {
+                    settings.setEqPreferences(current.copy(preampPercent = target))
+                }
+            }
+        }
+    }
+
     /** Reset slider-overrides back to the current preset's published gains. */
     fun resetManualOverrides() {
         scope.launch {

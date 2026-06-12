@@ -5,8 +5,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -33,6 +35,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.offlineplaya.android.picker.OpenDocumentTreeContract
 import com.offlineplaya.shared.domain.model.ColorMode
+import com.offlineplaya.shared.domain.model.EqPreferences
+import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
 import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
@@ -46,8 +50,14 @@ import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import com.offlineplaya.shared.presentation.ui.App
 import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
+import org.koin.core.context.GlobalContext
 
 class MainActivity : ComponentActivity() {
+
+    private val equalizerStateHolder: EqualizerStateHolder by lazy {
+        GlobalContext.get().get<EqualizerStateHolder>()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
@@ -56,6 +66,40 @@ class MainActivity : ComponentActivity() {
                 AndroidApp()
             }
         }
+    }
+
+    /**
+     * Volume keys drive the preamp at the edges of the normal volume range
+     * (while the app is foreground — background presses stay system-handled):
+     *
+     *  - Vol+ with the music stream already at max → bump the preamp one step
+     *    instead, up to [EqPreferences.MAX_PREAMP_PERCENT] (+100% ≈ +6 dB).
+     *  - Vol− with any preamp engaged → drain the preamp back to 0 first;
+     *    only then do further presses lower the stream volume as usual.
+     *
+     * Key autorepeat means holding the button steps repeatedly.
+     */
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        when (keyCode) {
+            KeyEvent.KEYCODE_VOLUME_UP -> {
+                val audio = getSystemService(AUDIO_SERVICE) as AudioManager
+                val atMax = audio.getStreamVolume(AudioManager.STREAM_MUSIC) >=
+                    audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+                val preamp = equalizerStateHolder.preferences.value.preampPercent
+                if (atMax && preamp < EqPreferences.MAX_PREAMP_PERCENT) {
+                    equalizerStateHolder.adjustPreampBy(EqPreferences.PREAMP_STEP_PERCENT)
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_VOLUME_DOWN -> {
+                val preamp = equalizerStateHolder.preferences.value.preampPercent
+                if (preamp > 0) {
+                    equalizerStateHolder.adjustPreampBy(-EqPreferences.PREAMP_STEP_PERCENT)
+                    return true
+                }
+            }
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }
 
@@ -101,6 +145,8 @@ private fun AndroidApp() {
     val equalizerStateHolder: com.offlineplaya.shared.presentation.eq.EqualizerStateHolder = koinInject()
     val lyricsStateHolder: com.offlineplaya.shared.presentation.lyrics.LyricsStateHolder = koinInject()
     val albumColorStateHolder: com.offlineplaya.shared.presentation.theme.AlbumColorStateHolder = koinInject()
+    val tagEditorCoordinator: com.offlineplaya.shared.presentation.tag.TagEditorCoordinator = koinInject()
+    val smartPlaylists: com.offlineplaya.shared.presentation.history.SmartPlaylistsStateHolder = koinInject()
     val themePreferences by themeStateHolder.preferences.collectAsState()
     val seedColor by albumColorStateHolder.seedColor.collectAsState()
     val artworkPreferences by artworkStateHolder.preferences.collectAsState()
@@ -222,6 +268,8 @@ private fun AndroidApp() {
         musicPlayer = musicPlayer,
         equalizerStateHolder = equalizerStateHolder,
         lyricsStateHolder = lyricsStateHolder,
+        tagEditorCoordinator = tagEditorCoordinator,
+        smartPlaylists = smartPlaylists,
         themePreferences = themePreferences,
         artworkPreferences = artworkPreferences,
         lyricsPreferences = lyricsPreferences,

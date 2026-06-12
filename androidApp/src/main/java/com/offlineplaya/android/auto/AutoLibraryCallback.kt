@@ -48,7 +48,35 @@ class AutoLibraryCallback(
     private val playlists: PlaylistStateHolder,
     private val scope: CoroutineScope,
     private val logger: AppLogger,
+    private val onCarConnectionChanged: (Boolean) -> Unit = {},
 ) : MediaLibrarySession.Callback {
+
+    /** Connected car-host controllers; non-empty ⇒ a car is attached. */
+    private val carControllers = mutableSetOf<MediaSession.ControllerInfo>()
+
+    // ─── Car-host connection tracking ────────────────────────────────────
+
+    override fun onConnect(
+        session: MediaSession,
+        controller: MediaSession.ControllerInfo,
+    ): MediaSession.ConnectionResult {
+        if (controller.packageName == CAR_HOST_PACKAGE) {
+            val wasEmpty = carControllers.isEmpty()
+            carControllers += controller
+            if (wasEmpty) onCarConnectionChanged(true)
+        }
+        return super.onConnect(session, controller)
+    }
+
+    override fun onDisconnected(
+        session: MediaSession,
+        controller: MediaSession.ControllerInfo,
+    ) {
+        if (carControllers.remove(controller) && carControllers.isEmpty()) {
+            onCarConnectionChanged(false)
+        }
+        super.onDisconnected(session, controller)
+    }
 
     /**
      * Lazy because [BrowseTreeBuilder] takes a lookup for the per-album
@@ -454,6 +482,9 @@ class AutoLibraryCallback(
 
     private companion object {
         const val TAG = "AutoLibraryCallback"
+
+        /** Android Auto projection host. */
+        const val CAR_HOST_PACKAGE = "com.google.android.projection.gearhead"
 
         // Android Auto / Automotive content-style contract. Set on a browsable
         // item's extras to control how its children are presented.

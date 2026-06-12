@@ -1,6 +1,8 @@
 package com.offlineplaya.shared.data.repository
 
 import com.offlineplaya.shared.domain.model.ColorMode
+import com.offlineplaya.shared.domain.model.EqMode
+import com.offlineplaya.shared.domain.model.EqPreferences
 import com.offlineplaya.shared.domain.model.LyricsPreferences
 import com.offlineplaya.shared.domain.model.PlaybackPreferences
 import com.offlineplaya.shared.domain.model.ThemePreferences
@@ -129,6 +131,33 @@ class SqlSettingsRepositoryTest {
         val onOn = repo.getLyricsPreferences()
         assertEquals(true, onOn.downloadRemoteLyrics)
         assertEquals(true, onOn.saveLyricsAsSidecar)
+    }
+
+    @Test
+    fun `eq preferences round-trip preamp percent`() = runTest {
+        val repo = newRepository()
+        assertEquals(0, repo.getEqPreferences().preampPercent, "preamp defaults to off")
+
+        val target = EqPreferences(
+            mode = EqMode.MANUAL,
+            manualPresetName = "Rock",
+            manualGains = listOf(1, 2, 3),
+            preampPercent = 60,
+        )
+        repo.setEqPreferences(target)
+        assertEquals(target, repo.getEqPreferences())
+    }
+
+    @Test
+    fun `preamp percent is clamped to the cap on read`() = runTest {
+        val repo = newRepository()
+        // A value persisted by a different build (or hand-edited row) must
+        // still read back within the supported range.
+        repo.setEqPreferences(EqPreferences.Default.copy(preampPercent = 500))
+        assertEquals(
+            EqPreferences.MAX_PREAMP_PERCENT,
+            repo.getEqPreferences().preampPercent,
+        )
     }
 
     @Test

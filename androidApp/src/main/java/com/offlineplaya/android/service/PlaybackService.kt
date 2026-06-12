@@ -12,6 +12,7 @@ import androidx.media3.session.MediaSession
 import com.offlineplaya.android.MainActivity
 import com.offlineplaya.android.audio.AppEqualizerController
 import com.offlineplaya.android.audio.CrossfadeController
+import com.offlineplaya.android.audio.PreampVolumePlayer
 import com.offlineplaya.android.auto.AutoLibraryCallback
 import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
@@ -102,18 +103,32 @@ class PlaybackService : MediaLibraryService() {
             PendingIntent.FLAG_IMMUTABLE,
         )
 
+        // Wrap the raw player so the session claims hardware-volume control
+        // with an extended range: the top 10 indices past max stream volume
+        // are the preamp zone. Releasing the session player releases the
+        // wrapper, which releases the ExoPlayer underneath.
+        val volumePlayer = PreampVolumePlayer(
+            player = player,
+            context = this,
+            stateHolder = stateHolder,
+            scope = serviceScope,
+            logger = logger,
+        )
         // MediaLibrarySession (not MediaSession) so Android Auto can browse
         // our library. Callback wires the browse tree into shared state
         // holders; on phone (no Auto browser) this is dormant and behaves
-        // identically to the previous MediaSession.
+        // identically to the previous MediaSession. It also tells the volume
+        // wrapper when the car host attaches so it drops the remote-volume
+        // claim (Auto otherwise shows "playing on another device").
         val autoCallback = AutoLibraryCallback(
             context = applicationContext,
             library = koin.get<LibraryStateHolder>(),
             playlists = koin.get<PlaylistStateHolder>(),
             scope = serviceScope,
             logger = logger,
+            onCarConnectionChanged = volumePlayer::setCarConnected,
         )
-        mediaSession = MediaLibrarySession.Builder(this, player, autoCallback)
+        mediaSession = MediaLibrarySession.Builder(this, volumePlayer, autoCallback)
             .setSessionActivity(sessionActivityIntent)
             .build()
     }

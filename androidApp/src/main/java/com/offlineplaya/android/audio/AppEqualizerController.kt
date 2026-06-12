@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.audiofx.AudioEffect
 import android.media.audiofx.Equalizer
+import android.media.audiofx.LoudnessEnhancer
 import androidx.media3.common.C
 import com.offlineplaya.shared.domain.model.EqMode
 import com.offlineplaya.shared.domain.model.EqPreset
@@ -13,7 +14,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlin.math.log10
+import kotlin.math.roundToInt
 
 /**
  * Owns the [android.media.audiofx.Equalizer] instance bound to the playback
@@ -48,8 +52,10 @@ class AppEqualizerController(
 ) {
 
     private var equalizer: Equalizer? = null
+    private var loudnessEnhancer: LoudnessEnhancer? = null
     private var systemEffectsOpen: Boolean = false
     private var collectJob: Job? = null
+    private var preampJob: Job? = null
 
     /**
      * Snapshot of the platform's reported band layout, captured the first
@@ -78,6 +84,52 @@ class AppEqualizerController(
                 apply(mode, preset)
             }
         }
+
+        // Preamp is independent of EQ mode — a LoudnessEnhancer on the same
+        // session, so the boost works whether the user runs our EQ or the
+        // OEM pipeline.
+        preampJob = scope.launch {
+            stateHolder.preferences.map { it.preampPercent }
+                .distinctUntilChanged()
+                .collect { percent -> applyPreamp(percent) }
+        }
+    }
+
+    /**
+     * Map the boost percentage onto the enhancer's millibel scale and apply.
+     * Perceived "+p% louder" = amplitude factor (1 + p/100), so
+     * gain mB = 2000 · log10(1 + p/100) — +50% ≈ 352 mB, +100% ≈ 602 mB.
+     * 0% releases the effect entirely so the audio path stays untouched.
+     */
+    private fun applyPreamp(percent: Int) {
+        if (percent <= 0) {
+            releaseLoudnessEnhancer()
+            return
+        }
+        val gainMb = (2000.0 * log10(1.0 + percent / 100.0)).roundToInt()
+        try {
+            val enhancer = loudnessEnhancer
+                ?: LoudnessEnhancer(audioSessionId).also { loudnessEnhancer = it }
+            enhancer.setTargetGain(gainMb)
+            enhancer.enabled = true
+            logger.i(TAG, "Preamp set to +$percent% ($gainMb mB)")
+        } catch (t: Throwable) {
+            // Same caveat as the Equalizer ctor: some emulators/ROMs throw.
+            logger.e(TAG, "Failed to apply preamp +$percent%: ${t.message}", t)
+            releaseLoudnessEnhancer()
+        }
+    }
+
+    private fun releaseLoudnessEnhancer() {
+        loudnessEnhancer?.let {
+            try {
+                it.enabled = false
+                it.release()
+            } catch (t: Throwable) {
+                logger.w(TAG, "LoudnessEnhancer release threw: ${t.message}")
+            }
+        }
+        loudnessEnhancer = null
     }
 
     /**
@@ -189,7 +241,10 @@ class AppEqualizerController(
     fun release() {
         collectJob?.cancel()
         collectJob = null
+        preampJob?.cancel()
+        preampJob = null
         releaseEqualizer()
+        releaseLoudnessEnhancer()
         closeSystemEffects()
     }
 
