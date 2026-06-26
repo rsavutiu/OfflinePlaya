@@ -176,7 +176,10 @@ class BurnMetadataUseCase(
                 if (res.isFailure) trackSuccess = false
             }
 
-            if (needsGenre && trackSuccess) {
+            // Genre is independent of art — a different writer and a different
+            // tag field — so don't gate it on the art write succeeding. Either
+            // can fail on its own; trackSuccess just records that both worked.
+            if (needsGenre) {
                 val res = genreWriter.writeGenre(track.documentUri, rawGenre!!)
                 if (res.isSuccess) {
                     val canonical = GenreClassifier.classify(rawGenre)
