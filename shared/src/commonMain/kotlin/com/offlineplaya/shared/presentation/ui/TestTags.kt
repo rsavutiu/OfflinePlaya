@@ -18,6 +18,78 @@ object TestTags {
         const val ROOT = "library_artists_page"
     }
 
+    object Home {
+        /** Page root. */
+        const val ROOT = "home_page"
+
+        /** The three-cell stat strip (tracks / folders / total). */
+        const val STAT_STRIP = "home_stat_strip"
+
+        /** Total-duration stat cell — the only route to onOpenStats. */
+        const val STAT_TOTAL = "home_stat_total"
+
+        /** Recently-played albums shelf (present only with recent albums). */
+        const val RECENT_SHELF = "home_recent_shelf"
+
+        /** Browse-grid cards, one per library facet. */
+        const val BROWSE_TRACKS = "home_browse_tracks"
+        const val BROWSE_ALBUMS = "home_browse_albums"
+        const val BROWSE_ARTISTS = "home_browse_artists"
+        const val BROWSE_PLAYLISTS = "home_browse_playlists"
+    }
+
+    object Flat {
+        /** Page root. */
+        const val ROOT = "library_flat_page"
+    }
+
+    object Settings {
+        /** Page root. */
+        const val ROOT = "settings_page"
+
+        /** Album-art color on/off switch row (Appearance section). */
+        const val ALBUM_ART_COLOR_TOGGLE = "settings_album_art_color_toggle"
+
+        /** Crossfade on/off switch row (Playback section). */
+        const val CROSSFADE_TOGGLE = "settings_crossfade_toggle"
+    }
+
+    object Playlists {
+        /** Page root. */
+        const val ROOT = "playlists_page"
+
+        /** Each smart-playlist row (five of them when wired). */
+        const val SMART_ROW = "playlists_smart_row"
+    }
+
+    object Lyrics {
+        /** Page root. */
+        const val ROOT = "lyrics_page"
+
+        /** Spinner while lyrics are being resolved. */
+        const val LOADING = "lyrics_loading"
+
+        /** Empty-state body — no lyrics found for the track. */
+        const val EMPTY = "lyrics_empty"
+
+        /** Plain (un-timed) lyrics block. */
+        const val PLAIN = "lyrics_plain"
+
+        /** Synced (timestamped) lyrics list. */
+        const val SYNCED = "lyrics_synced"
+    }
+
+    object NowPlaying {
+        /** Page root. */
+        const val ROOT = "now_playing_page"
+
+        /** Empty-state body — nothing loaded into the player. */
+        const val EMPTY = "now_playing_empty"
+
+        /** The large play / pause toggle in the transport row. */
+        const val PLAY_PAUSE = "now_playing_play_pause"
+    }
+
     object Search {
         /** Page root. */
         const val ROOT = "search_page"

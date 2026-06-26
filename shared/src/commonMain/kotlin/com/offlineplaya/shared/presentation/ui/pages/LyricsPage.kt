@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import com.offlineplaya.shared.domain.lyrics.LyricLine
 import com.offlineplaya.shared.presentation.lyrics.LyricsUiState
+import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.organisms.SyncedLyricsView
 
@@ -31,7 +33,7 @@ fun LyricsPage(
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.testTag(TestTags.Lyrics.ROOT),
         contentWindowInsets = WindowInsets(0),
         topBar = {
             AppTopBar(

@@ -3,8 +3,10 @@ package com.offlineplaya.shared.presentation.ui.organisms
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import com.offlineplaya.shared.domain.model.ColorMode
 import com.offlineplaya.shared.domain.model.ThemePreferences
+import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.molecules.ColorModeChooser
 import com.offlineplaya.shared.presentation.ui.molecules.SettingsSection
 import com.offlineplaya.shared.presentation.ui.molecules.SwitchRow
@@ -48,6 +50,7 @@ fun AppearanceSettings(
             subtitle = stringResource(Res.string.appearance_album_art_color_subtitle),
             checked = preferences.useAlbumArtColor,
             onCheckedChange = onAlbumArtColorChange,
+            modifier = Modifier.testTag(TestTags.Settings.ALBUM_ART_COLOR_TOGGLE),
         )
         SwitchRow(
             title = stringResource(Res.string.appearance_material_you),

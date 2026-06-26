@@ -17,7 +17,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
@@ -95,7 +97,7 @@ fun PlaybackControlsLarge(
                 tint = MaterialTheme.colorScheme.onSurface,
             )
         }
-        IconButton(onClick = onPlayPause, modifier = Modifier.size(72.dp)) {
+        IconButton(onClick = onPlayPause, modifier = Modifier.size(72.dp).testTag(TestTags.NowPlaying.PLAY_PAUSE)) {
             Crossfade(targetState = isPlaying, animationSpec = tween(150), label = "playPauseLg") { playing ->
                 Icon(
                     imageVector = if (playing) Icons.Default.Pause else Icons.Default.PlayArrow,

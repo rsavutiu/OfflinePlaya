@@ -16,11 +16,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Album
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.domain.usecase.SyncReport
 import com.offlineplaya.shared.presentation.sync.SyncStatus
+import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.LocalOrientation
 import com.offlineplaya.shared.presentation.ui.Orientation
 import com.offlineplaya.shared.presentation.ui.atoms.SectionLabel
@@ -66,7 +68,7 @@ fun HomePage(
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.testTag(TestTags.Home.ROOT),
         contentWindowInsets = WindowInsets(0),
         containerColor = MaterialTheme.colorScheme.background,
     ) { padding ->
@@ -191,7 +193,9 @@ private fun PortraitHome(
             onTracksClick = onOpenAllTracks,
             onFoldersClick = onOpenFolders,
             onTotalClick = onOpenStats,
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .testTag(TestTags.Home.STAT_STRIP),
         )
 
         if (recentAlbums.isNotEmpty()) {
@@ -202,6 +206,7 @@ private fun PortraitHome(
                 albums = recentAlbums,
                 representativeTrackOfAlbum = representativeTrackOfAlbum,
                 onOpenAlbum = onOpenAlbum,
+                modifier = Modifier.testTag(TestTags.Home.RECENT_SHELF),
             )
         }
 

@@ -113,19 +113,39 @@ mechanical when taken up.
 5. **Success criterion:** one screen smoke test green (on device or Robolectric,
    per spike outcome).
 
-### Phase 1 — isolated-screen tests (the stable bulk)
+### Phase 1 — isolated-screen tests (the stable bulk) — ✅ DONE
 
-Construct each page with fakes; add `testTag`s as you go. High-value pages only:
+All high-value pages below are covered: **19 UI tests green on device**
+(moto g54, API 35) — `:androidApp:connectedDebugAndroidTest
+-Pandroid.testInstrumentationRunnerArguments.package=com.offlineplaya.android.ui`.
+Construct each page with fakes; `testTag`s added per page in `TestTags`.
 
-- **HomePage** — stat strip, recently-played shelf, browse grid; row tap routes.
+- **HomePage** ✅ — recently-played shelf renders with albums (omitted when
+  empty); browse-grid cards route to their open-facet callbacks
+  (`HomePageTest`, 2 cases green on device).
 - **LibraryArtistsPage** ✅ — renders given artists / empty library
-  (`LibraryArtistsPageTest`, 2 cases green on device). **LibraryFlatPage** — TODO.
+  (`LibraryArtistsPageTest`, 2 cases green on device).
+- **LibraryFlatPage** ✅ — renders given tracks / empty library
+  (`LibraryFlatPageTest`, 2 cases green on device).
 - **SearchPage** ✅ — prompt / results / no-results states (`SearchPageTest`,
   3 cases green on device).
-- **NowPlayingPage** — title/artist/seek/transport reflect fake player state.
-- **PlaylistsPage** — five smart playlists + user playlists render.
-- **SettingsPage** — key toggles flip (EQ mode, album-art color, crossfade).
-- **LyricsPage** — Loading / None / Plain / Synced states.
+- **NowPlayingPage** ✅ — current track reflected, play/pause routes to
+  callback, empty state when nothing loaded (`NowPlayingPageTest`, 2 cases
+  green on device).
+- **PlaylistsPage** ✅ — five smart-playlist rows + user playlists render;
+  smart rows omitted without the callback (`PlaylistsPageTest`, 2 cases green).
+- **SettingsPage** ✅ — album-art-color and crossfade toggles route their
+  negated value back (`SettingsPageTest`, 1 case green). EQ is a separate page
+  (`onOpenEqualizer`), so it isn't a toggle here.
+- **LyricsPage** ✅ — Loading / None / Plain / Synced states each render their
+  tagged body (`LyricsPageTest`, 4 cases green on device).
+
+**Device gotcha (cost real time):** the `runComposeUiTest` host Activity can't
+register a composition while the device screen is **off / dozing / on the
+keyguard** — every assertion then fails with `IllegalStateException: No compose
+hierarchies found`, which masquerades as a code bug. Before a device run, wake
+and unlock: `adb shell input keyevent KEYCODE_WAKEUP; adb shell wm
+dismiss-keyguard; adb shell svc power stayon true`.
 
 ### Phase 2 — full E2E happy paths (Android-only, 2–3 max)
 

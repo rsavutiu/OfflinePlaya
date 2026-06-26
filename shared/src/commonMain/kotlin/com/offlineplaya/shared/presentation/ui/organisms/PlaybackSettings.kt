@@ -12,8 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.PlaybackPreferences
+import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.molecules.SettingsSection
 import com.offlineplaya.shared.presentation.ui.molecules.SwitchRow
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
@@ -49,6 +51,7 @@ fun PlaybackSettings(
             subtitle = stringResource(Res.string.playback_crossfade_subtitle),
             checked = preferences.crossfadeEnabled,
             onCheckedChange = onCrossfadeEnabledChange,
+            modifier = Modifier.testTag(TestTags.Settings.CROSSFADE_TOGGLE),
         )
         AnimatedVisibility(visible = preferences.crossfadeEnabled) {
             Column(

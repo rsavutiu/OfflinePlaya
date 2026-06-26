@@ -41,6 +41,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -58,6 +59,7 @@ import offlineplaya.shared.generated.resources.home_label_playlists
 import offlineplaya.shared.generated.resources.home_label_playlists_count
 import offlineplaya.shared.generated.resources.home_label_songs_count
 import offlineplaya.shared.generated.resources.home_title_all_tracks
+import com.offlineplaya.shared.presentation.ui.TestTags
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -99,7 +101,8 @@ fun HomeBrowseGrid(
                 onClick = onOpenAllTracks,
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .testTag(TestTags.Home.BROWSE_TRACKS),
             )
             BrowseCard(
                 title = stringResource(Res.string.home_label_albums),
@@ -108,7 +111,8 @@ fun HomeBrowseGrid(
                 onClick = onOpenAlbums,
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .testTag(TestTags.Home.BROWSE_ALBUMS),
             )
         }
         Row(
@@ -124,7 +128,8 @@ fun HomeBrowseGrid(
                 onClick = onOpenArtists,
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .testTag(TestTags.Home.BROWSE_ARTISTS),
             )
             BrowseCard(
                 title = stringResource(Res.string.home_label_playlists),
@@ -133,7 +138,8 @@ fun HomeBrowseGrid(
                 onClick = onOpenPlaylists,
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .testTag(TestTags.Home.BROWSE_PLAYLISTS),
             )
         }
     }

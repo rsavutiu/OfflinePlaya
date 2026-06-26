@@ -2,8 +2,10 @@ package com.offlineplaya.shared.presentation.ui.pages
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
 import com.offlineplaya.shared.presentation.ui.organisms.TrackList
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
@@ -25,7 +27,7 @@ fun LibraryFlatPage(
         selectedTab = LibraryTab.FLAT,
         onTabSelected = onTabSelected,
         onBack = onBack,
-        modifier = modifier,
+        modifier = modifier.testTag(TestTags.Flat.ROOT),
     ) {
         TrackList(
             tracks = tracks,

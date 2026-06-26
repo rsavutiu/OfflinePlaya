@@ -24,10 +24,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.lyrics.LyricLine
 import com.offlineplaya.shared.presentation.lyrics.LyricsUiState
+import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
@@ -49,12 +51,18 @@ fun SyncedLyricsView(
     onSeekToLine: (LyricLine) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    // NB: the TestTags.Lyrics.* state tags below live in this shared view, which
+    // NowPlaying also reuses for its tap-to-flip lyrics face. A future
+    // NowPlaying-lyrics test would therefore also match these tags.
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         when (state) {
-            LyricsUiState.Loading -> CircularProgressIndicator()
+            LyricsUiState.Loading -> CircularProgressIndicator(
+                modifier = Modifier.testTag(TestTags.Lyrics.LOADING),
+            )
             LyricsUiState.None -> EmptyState(
                 title = stringResource(Res.string.lyrics_empty_title),
                 subtitle = stringResource(Res.string.lyrics_empty_subtitle),
+                modifier = Modifier.testTag(TestTags.Lyrics.EMPTY),
             )
             is LyricsUiState.Plain -> PlainLyrics(state.text)
             is LyricsUiState.Synced -> SyncedLyrics(state, onSeekToLine)
@@ -89,7 +97,8 @@ private fun PlainLyrics(text: String) {
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 24.dp, vertical = 32.dp),
+            .padding(horizontal = 24.dp, vertical = 32.dp)
+            .testTag(TestTags.Lyrics.PLAIN),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
@@ -122,7 +131,7 @@ private fun SyncedLyrics(
 
     LazyColumn(
         state = listState,
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().testTag(TestTags.Lyrics.SYNCED),
         contentPadding = PaddingValues(vertical = 120.dp, horizontal = 24.dp),
     ) {
         itemsIndexed(state.lines) { index, line ->

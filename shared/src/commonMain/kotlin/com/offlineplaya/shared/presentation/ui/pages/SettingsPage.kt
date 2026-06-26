@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.ArtworkPreferences
 import com.offlineplaya.shared.domain.model.ColorMode
@@ -25,6 +26,7 @@ import com.offlineplaya.shared.domain.model.PlaybackPreferences
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import com.offlineplaya.shared.domain.usecase.EmbedReport
 import com.offlineplaya.shared.presentation.ui.LocalOrientation
+import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.RemoveManagedRootDialog
 import com.offlineplaya.shared.presentation.ui.molecules.SettingsLinkSection
@@ -82,7 +84,7 @@ fun SettingsPage(
     var pendingRemoval by remember { mutableStateOf<ManagedTreeRoot?>(null) }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.testTag(TestTags.Settings.ROOT),
         contentWindowInsets = WindowInsets(0),
         topBar = {
             AppTopBar(

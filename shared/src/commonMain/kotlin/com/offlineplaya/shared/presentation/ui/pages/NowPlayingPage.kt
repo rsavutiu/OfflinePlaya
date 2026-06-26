@@ -15,6 +15,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.lyrics.LyricLine
 import com.offlineplaya.shared.domain.model.PlaybackState
@@ -22,6 +23,7 @@ import com.offlineplaya.shared.domain.model.RepeatMode
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.presentation.lyrics.LyricsUiState
+import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.molecules.NowPlayingArtPanel
@@ -62,7 +64,7 @@ fun NowPlayingPage(
     sharedArtTrack: Track? = null,
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.testTag(TestTags.NowPlaying.ROOT),
         contentWindowInsets = WindowInsets(0),
         topBar = {
             AppTopBar(
@@ -95,7 +97,7 @@ fun NowPlayingPage(
             EmptyState(
                 title = stringResource(Res.string.now_playing_empty_title),
                 subtitle = stringResource(Res.string.now_playing_empty_subtitle),
-                modifier = Modifier.padding(padding),
+                modifier = Modifier.padding(padding).testTag(TestTags.NowPlaying.EMPTY),
             )
         } else if (state.currentTrack == null) {
             // Cold-start window: the user tapped a track with nothing playing,

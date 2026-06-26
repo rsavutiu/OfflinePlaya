@@ -32,9 +32,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.sync.SyncStatus
+import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import offlineplaya.shared.generated.resources.Res
@@ -99,7 +101,7 @@ fun HomeStatsRow(
             value = formatTotalDuration(trackCount),
             label = stringResource(Res.string.home_label_total),
             onClick = onTotalClick,
-            modifier = Modifier.weight(1f).alpha(alpha2),
+            modifier = Modifier.weight(1f).alpha(alpha2).testTag(TestTags.Home.STAT_TOTAL),
         )
     }
 }
