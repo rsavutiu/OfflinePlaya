@@ -199,4 +199,12 @@ dependencies {
     @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
     androidTestImplementation(compose.uiTest)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    // Phase-2 E2E: the test boots the real Koin graph with an in-memory
+    // AndroidSqliteDriver, so it needs Koin + the SQLDelight Android driver on
+    // the test compile classpath directly (shared exposes both as
+    // implementation, so they aren't transitively visible here).
+    androidTestImplementation(libs.koin.core)
+    androidTestImplementation(libs.koin.android)
+    androidTestImplementation(libs.sqldelight.driver.android)
 }

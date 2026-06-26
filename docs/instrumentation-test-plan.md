@@ -147,18 +147,39 @@ hierarchies found`, which masquerades as a code bug. Before a device run, wake
 and unlock: `adb shell input keyevent KEYCODE_WAKEUP; adb shell wm
 dismiss-keyguard; adb shell svc power stayon true`.
 
-### Phase 2 — full E2E happy paths (Android-only, 2–3 max)
+### Phase 2 — full E2E happy paths (Android-only) — ✅ DONE (2 paths)
 
-`createAndroidComposeRule<MainActivity>()` + a Koin **override module** (in-memory
-SQLDelight driver + fake scanners + `silence-1s.*` fixtures). The override is
-installed by a custom `AndroidJUnitRunner` whose test `Application` calls
-`initKoin(platformModules = … + overrides)`. Assert **UI state transitions**,
-not audio:
+**2 E2E paths green on device** (`com.offlineplaya.android.e2e`). Assert **UI
+state transitions, not audio**.
 
-1. Launch → seeded library visible → tap track → Now Playing appears →
-   pause/skip reflected.
-2. Library → add track to queue → QueuePage shows it.
-3. Search → result → play → Now Playing.
+**Harness (deviated from the original sketch, for a proven reason):** *not*
+`createAndroidComposeRule<MainActivity>()` — the AndroidX activity rule can't see
+this app's JetBrains-Compose composition (same Phase-0 finding), and launching
+`MainActivity` adds rule-ordering + host-starvation risk. Instead the E2E test
+boots the **real** DI graph and drives the real `App()` on the proven
+`runComposeUiTest` harness, faking only the platform leaves:
+
+- `startE2EKoin(context)` (`E2EKoin.kt`) does `startKoin { allowOverride(true);
+  modules(sharedModule, androidModule, appPlayerModule, overrides) }`. The bare
+  `TestApplication` starts no Koin, so the **test owns the Koin lifetime**
+  (`startE2EKoin` in the body, `stopE2EKoin()` in `finally`) — no custom runner /
+  Application needed, and the isolated-screen layer is untouched.
+- Overrides: **DB** → in-memory `AndroidSqliteDriver` (`name = null`);
+  **MusicPlayer** → `FakeMusicPlayer` (in-memory state, no Media3/service/audio);
+  **scanners** → fakes over `E2ELibrary` (3 fixture tracks via the device-audio
+  path, so a real `resyncAll()` seeds with no SAF/MediaStore).
+- `E2EAppHost(koin)` wires `App()` exactly as `MainActivity.AndroidApp` does,
+  minus the Android plumbing (SAF picker, permission prompt, system bars).
+- The test holds the `FakeMusicPlayer`, so transport is asserted off its state.
+
+Paths covered:
+
+1. ✅ `LibraryToNowPlayingE2ETest` — launch → All Tracks shows the seed → tap
+   track → Now Playing shows it → pause reflected in player state.
+2. ✅ `SearchToNowPlayingE2ETest` — open Search → type query → result appears →
+   play → Now Playing shows it, player playing.
+3. *(deferred)* Library → add-to-queue → QueuePage — needs the long-press
+   actions-sheet tagged; the harness above makes it a small add when wanted.
 
 ### Phase 3 — regression guards for the 2026-06-26 review fixes (UI-observable)
 

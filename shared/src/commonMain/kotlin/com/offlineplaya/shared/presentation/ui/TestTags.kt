@@ -22,6 +22,9 @@ object TestTags {
         /** Page root. */
         const val ROOT = "home_page"
 
+        /** Search affordance in the header. */
+        const val SEARCH = "home_search"
+
         /** The three-cell stat strip (tracks / folders / total). */
         const val STAT_STRIP = "home_stat_strip"
 

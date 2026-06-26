@@ -37,8 +37,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import com.offlineplaya.shared.util.currentHourOfDay
@@ -87,7 +89,7 @@ fun HomeHeader(
             )
         }
         Row {
-            IconButton(onClick = onOpenSearch) {
+            IconButton(onClick = onOpenSearch, modifier = Modifier.testTag(TestTags.Home.SEARCH)) {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = stringResource(Res.string.now_playing_search),
