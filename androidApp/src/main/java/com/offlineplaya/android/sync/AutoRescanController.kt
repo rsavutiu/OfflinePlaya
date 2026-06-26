@@ -48,6 +48,7 @@ class AutoRescanController(
 ) {
     private val handler = Handler(Looper.getMainLooper())
     private var observer: ContentObserver? = null
+    private var lifecycleObserver: DefaultLifecycleObserver? = null
     private var pendingScan: Job? = null
     private var registeredAtMillis: Long = 0L
 
@@ -78,18 +79,41 @@ class AutoRescanController(
         // [start] is called from the application-scoped background coroutine
         // (Dispatchers.Default) so we don't block the first frame on DB init.
         // Lifecycle.addObserver requires the main thread — post it.
-        handler.post {
-            ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
-                override fun onStart(owner: LifecycleOwner) {
-                    // Skip the very first ON_START — the cold-start scan from
-                    // OfflinePlayaApp.onCreate is already running and a foreground
-                    // rescan moments later is just churn. After that, every return
-                    // to the app does a quiet reconcile.
-                    if (System.currentTimeMillis() - registeredAtMillis < FOREGROUND_GRACE_MILLIS) return
-                    schedule()
-                }
-            })
+        val lifecycleObs = object : DefaultLifecycleObserver {
+            override fun onStart(owner: LifecycleOwner) {
+                // Skip the very first ON_START — the cold-start scan from
+                // OfflinePlayaApp.onCreate is already running and a foreground
+                // rescan moments later is just churn. After that, every return
+                // to the app does a quiet reconcile.
+                if (System.currentTimeMillis() - registeredAtMillis < FOREGROUND_GRACE_MILLIS) return
+                schedule()
+            }
         }
+        lifecycleObserver = lifecycleObs
+        handler.post {
+            ProcessLifecycleOwner.get().lifecycle.addObserver(lifecycleObs)
+        }
+
+        // Neither observer is owned by [scope], so coroutine cancellation alone
+        // leaves both registered for the app's lifetime. Tear them down when the
+        // owning scope completes (app shutdown).
+        scope.coroutineContext[Job]?.invokeOnCompletion { stop() }
+    }
+
+    /**
+     * Unregister both triggers and drop any pending scan. Idempotent; safe to
+     * call off the main thread (the lifecycle removal hops to main, matching
+     * [start]). Wired to scope-job completion, but exposed so an explicit owner
+     * can tear down early if needed.
+     */
+    fun stop() {
+        pendingScan?.cancel()
+        pendingScan = null
+        observer?.let { context.contentResolver.unregisterContentObserver(it) }
+        observer = null
+        val lo = lifecycleObserver ?: return
+        lifecycleObserver = null
+        handler.post { ProcessLifecycleOwner.get().lifecycle.removeObserver(lo) }
     }
 
     /**
