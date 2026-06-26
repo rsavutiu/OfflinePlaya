@@ -133,7 +133,18 @@ val sharedModule: Module = module {
     }
 
     // Application-scoped CoroutineScope for fire-and-forget background work
-    // (sync, future re-scan). SupervisorJob so a single failure doesn't kill it.
+    // (sync, re-scan, the long-lived recorders/state holders). SupervisorJob so
+    // one child's failure doesn't tear down its siblings.
+    //
+    // Deliberately never cancelled: it is meant to live for the whole process.
+    // Android gives no reliable shutdown hook — Application.onTerminate() is not
+    // called on real devices — so there is nothing to cancel it *from*, and on
+    // process death the OS reclaims every coroutine anyway (no leak). Components
+    // that hook teardown to this scope's Job completion (the Media3 engine, the
+    // AutoRescanController) are therefore best-effort: that cleanup runs under
+    // tests and any explicit early teardown, with process death as the
+    // production backstop. Don't add an onTerminate() cancel — it would be
+    // emulator-only dead code.
     single<CoroutineScope> {
         CoroutineScope(SupervisorJob() + Dispatchers.Default)
     }
