@@ -10,9 +10,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.molecules.SearchField
@@ -50,7 +52,7 @@ fun SearchPage(
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.testTag(TestTags.Search.ROOT),
         contentWindowInsets = WindowInsets(0),
         topBar = { AppTopBar(title = stringResource(Res.string.top_bar_search), onBack = onBack) },
     ) { padding ->
@@ -66,17 +68,20 @@ fun SearchPage(
                     query = query,
                     onQueryChange = onQueryChange,
                     label = stringResource(Res.string.search_field_label),
+                    modifier = Modifier.testTag(TestTags.Search.FIELD),
             )
 
             when {
                 query.trim().length < 2 -> EmptyState(
                     title = stringResource(Res.string.search_empty_title),
                     subtitle = stringResource(Res.string.search_empty_subtitle),
+                    modifier = Modifier.testTag(TestTags.Search.PROMPT),
                 )
 
                 results.isEmpty() -> EmptyState(
                     title = stringResource(Res.string.search_no_results_title, query.trim()),
                     subtitle = stringResource(Res.string.search_no_results_subtitle),
+                    modifier = Modifier.testTag(TestTags.Search.NO_RESULTS),
                 )
 
                 else -> {
@@ -90,6 +95,7 @@ fun SearchPage(
                         tracks = results,
                         onTrackClick = { onPlayTracks(results, results.indexOf(it).coerceAtLeast(0)) },
                         onTrackLongPress = onTrackLongPress,
+                        modifier = Modifier.testTag(TestTags.Search.RESULTS),
                     )
                 }
             }
