@@ -41,6 +41,7 @@ class PlaybackService : MediaLibraryService() {
     private var audioSessionId: Int = AudioEffect.ERROR_BAD_VALUE
     private var equalizerController: AppEqualizerController? = null
     private var crossfadeController: CrossfadeController? = null
+    private var logger: AppLogger? = null
 
     /**
      * Service-scoped coroutine context. Used by [equalizerController] so
@@ -72,7 +73,7 @@ class PlaybackService : MediaLibraryService() {
         // for why these can't co-exist.
         val koin = GlobalContext.get()
         val stateHolder = koin.get<EqualizerStateHolder>()
-        val logger = koin.get<AppLogger>()
+        val logger = koin.get<AppLogger>().also { this.logger = it }
         equalizerController = AppEqualizerController(
             context = this,
             audioSessionId = audioSessionId,
@@ -148,20 +149,35 @@ class PlaybackService : MediaLibraryService() {
     }
 
     override fun onDestroy() {
-        crossfadeController?.release()
+        // Teardown must be all-or-most: a throw in any single step must not skip
+        // the rest — especially the native player/session release — or the
+        // mandatory super.onDestroy(). Isolate every step.
+        safeRelease("crossfade") { crossfadeController?.release() }
         crossfadeController = null
-        equalizerController?.release()
+        safeRelease("equalizer") { equalizerController?.release() }
         equalizerController = null
-        serviceScope.cancel()
-        mediaSession?.run {
-            player.release()
-            release()
-            mediaSession = null
+        safeRelease("serviceScope") { serviceScope.cancel() }
+        mediaSession?.let { session ->
+            safeRelease("player") { session.player.release() }
+            safeRelease("mediaSession") { session.release() }
         }
+        mediaSession = null
+        logger = null
         super.onDestroy()
     }
 
+    /** Run one teardown step, logging (not propagating) any failure. */
+    private inline fun safeRelease(what: String, block: () -> Unit) {
+        try {
+            block()
+        } catch (e: Exception) {
+            logger?.e(TAG, "Failed to release $what during onDestroy", e)
+        }
+    }
+
     private companion object {
+        const val TAG = "PlaybackService"
+
         val MUSIC_ATTRIBUTES: AudioAttributes = AudioAttributes.Builder()
             .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
             .setUsage(C.USAGE_MEDIA)
