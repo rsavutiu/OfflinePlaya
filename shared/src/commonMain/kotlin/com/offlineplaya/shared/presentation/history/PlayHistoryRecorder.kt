@@ -3,6 +3,7 @@ package com.offlineplaya.shared.presentation.history
 import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.domain.repository.PlayHistoryRepository
 import com.offlineplaya.shared.util.AppLogger
+import com.offlineplaya.shared.util.currentTimeMillis
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -35,7 +36,7 @@ class PlayHistoryRecorder(
                 if (trackId != null && state.isPlaying && trackId != lastRecordedTrackId) {
                     lastRecordedTrackId = trackId
                     try {
-                        playHistory.recordPlay(trackId, System.currentTimeMillis())
+                        playHistory.recordPlay(trackId, currentTimeMillis())
                     } catch (t: Throwable) {
                         // History is best-effort — never let a DB hiccup
                         // bubble into the player pipeline.

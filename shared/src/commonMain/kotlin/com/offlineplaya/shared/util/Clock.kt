@@ -5,3 +5,11 @@ package com.offlineplaya.shared.util
  * commonMain has no platform clock — Android uses `java.time.LocalTime`.
  */
 expect fun currentHourOfDay(): Int
+
+/**
+ * Wall-clock time in epoch milliseconds. expect/actual so commonMain callers
+ * (play-history timestamps, recent-album use, smart-playlist cutoffs) don't
+ * reach for the JVM-only `System.currentTimeMillis()` — that would break the
+ * moment a non-JVM target (iOS/desktop) is added.
+ */
+expect fun currentTimeMillis(): Long

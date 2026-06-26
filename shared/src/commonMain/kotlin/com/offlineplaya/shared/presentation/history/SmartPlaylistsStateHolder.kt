@@ -9,6 +9,7 @@ import com.offlineplaya.shared.domain.model.TopArtistStat
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.domain.repository.PlayHistoryRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
+import com.offlineplaya.shared.util.currentTimeMillis
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -27,7 +28,7 @@ class SmartPlaylistsStateHolder(
         SmartPlaylistKind.RECENTLY_ADDED -> tracks.observeRecentlyAdded(LIMIT)
         SmartPlaylistKind.FORGOTTEN_FAVORITES -> playHistory.observeForgottenFavorites(
             minPlays = FORGOTTEN_MIN_PLAYS,
-            cutoffMs = System.currentTimeMillis() - FORGOTTEN_DAYS * DAY_MS,
+            cutoffMs = currentTimeMillis() - FORGOTTEN_DAYS * DAY_MS,
             limit = LIMIT,
         )
         SmartPlaylistKind.NEVER_PLAYED -> playHistory.observeNeverPlayed(LIMIT)
@@ -52,8 +53,8 @@ class SmartPlaylistsStateHolder(
         playHistory.observeTopPlayed(artistId = null, sinceMs = period.sinceMs(), limit = STATS_LIMIT)
 
     private fun StatsPeriod.sinceMs(): Long = when (this) {
-        StatsPeriod.WEEK -> System.currentTimeMillis() - 7L * DAY_MS
-        StatsPeriod.MONTH -> System.currentTimeMillis() - 30L * DAY_MS
+        StatsPeriod.WEEK -> currentTimeMillis() - 7L * DAY_MS
+        StatsPeriod.MONTH -> currentTimeMillis() - 30L * DAY_MS
         StatsPeriod.ALL -> 0L
     }
 

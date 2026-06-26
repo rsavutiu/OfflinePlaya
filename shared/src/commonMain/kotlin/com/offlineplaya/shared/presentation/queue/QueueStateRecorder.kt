@@ -4,6 +4,7 @@ import com.offlineplaya.shared.domain.model.PlaybackSnapshot
 import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.domain.repository.QueueRepository
 import com.offlineplaya.shared.util.AppLogger
+import com.offlineplaya.shared.util.currentTimeMillis
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -30,7 +31,7 @@ class QueueStateRecorder(
     private val queue: QueueRepository,
     private val scope: CoroutineScope,
     private val logger: AppLogger,
-    private val now: () -> Long = { System.currentTimeMillis() },
+    private val now: () -> Long = { currentTimeMillis() },
 ) {
     private var job: Job? = null
 

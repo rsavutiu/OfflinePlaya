@@ -10,6 +10,7 @@ import com.offlineplaya.shared.domain.repository.FolderRepository
 import com.offlineplaya.shared.domain.repository.RecentAlbumRepository
 import com.offlineplaya.shared.domain.repository.TrackRepository
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder.Companion.RECENT_ALBUMS_LIMIT
+import com.offlineplaya.shared.util.currentTimeMillis
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
@@ -100,7 +101,7 @@ class LibraryStateHolder(
      */
     fun recordAlbumUse(albumId: Long?) {
         if (albumId == null) return
-        scope.launch { recentAlbumsRepo.recordUse(albumId, System.currentTimeMillis()) }
+        scope.launch { recentAlbumsRepo.recordUse(albumId, currentTimeMillis()) }
     }
 
     /**
