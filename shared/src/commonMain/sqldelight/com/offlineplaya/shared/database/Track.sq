@@ -21,6 +21,12 @@ CREATE TABLE Track (
     channels INTEGER,
     codec TEXT,
 
+    -- These three references deliberately DO NOT cascade, unlike the leaf
+    -- tables that point AT Track (PlayHistory / PlaylistTrack / QueueItem) and
+    -- use ON DELETE CASCADE. Artist/Album/Folder are shared aggregates — many
+    -- tracks point at one artist — so deleting a track must not delete its
+    -- artist out from under its siblings. Orphaned aggregates are swept
+    -- explicitly after a (re)scan via Artist.deleteOrphans / Album.deleteEmpty.
     artist_id INTEGER REFERENCES Artist(id),
     album_id INTEGER REFERENCES Album(id),
     folder_id INTEGER REFERENCES Folder(id),
