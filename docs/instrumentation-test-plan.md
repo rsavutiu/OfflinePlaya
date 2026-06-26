@@ -80,9 +80,24 @@ needs its own host + platform tests written fresh. No test strategy changes that
 
 ## Phases
 
-### Phase 0 — de-risk the infrastructure (the gate)
+### Phase 0 — de-risk the infrastructure (the gate) — ✅ DONE
 
-Nothing else is written until a smoke test is green.
+Smoke test + first screen test green on a physical device (moto g54, API 35).
+Two non-obvious blockers were found and fixed:
+
+- **Harness API:** use `compose.uiTest` (`runComposeUiTest`), *not* AndroidX
+  `createComposeRule` — the UI is built on the JetBrains Compose runtime and the
+  AndroidX rule can't see that composition's root.
+- **Test Application:** instrumented tests run in the app process, so
+  `OfflinePlayaApp` was booting Koin + PlaybackService + sync under every test,
+  starving the Compose host activity ("No compose hierarchies found"). A custom
+  `HarnessTestRunner` swaps in a bare `TestApplication`. Isolated screen tests
+  use fakes, so they need no Koin graph; the Koin-override Application for E2E is
+  still Phase 2.
+
+Screen tests currently live in `androidApp/androidTest` (proven path) with
+bodies written against portable APIs only, so the `commonTest` migration is
+mechanical when taken up.
 
 1. Add the Compose-MP UI-test dependency to `commonTest` (version catalog +
    `shared/build.gradle.kts`).
@@ -104,7 +119,8 @@ Construct each page with fakes; add `testTag`s as you go. High-value pages only:
 
 - **HomePage** — stat strip, recently-played shelf, browse grid; row tap routes.
 - **LibraryFlatPage / LibraryArtistsPage** — seeded list renders; row tap.
-- **SearchPage** — type → results; empty-state for short / no-match queries.
+- **SearchPage** ✅ — prompt / results / no-results states (`SearchPageTest`,
+  3 cases green on device).
 - **NowPlayingPage** — title/artist/seek/transport reflect fake player state.
 - **PlaylistsPage** — five smart playlists + user playlists render.
 - **SettingsPage** — key toggles flip (EQ mode, album-art color, crossfade).
