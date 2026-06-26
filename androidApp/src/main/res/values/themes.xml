@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.OfflinePlaya" parent="android:Theme.Material.NoActionBar" />
+    <style name="Theme.OfflinePlaya" parent="android:Theme.Material.NoActionBar">
+        <!-- Transparent system bars so enableEdgeToEdge() draws Compose content
+             edge-to-edge; without these the Material parent's default
+             colorPrimaryDark leaks through after the splash dismisses. -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <!-- Activity window background while Compose is still laying out — kept
+             dark so the post-splash hand-off doesn't flash white in dark mode. -->
+        <item name="android:windowBackground">@color/window_background_dark</item>
+    </style>
+
+    <style name="Theme.OfflinePlaya.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#1E1F24</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ezgif_anim</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="postSplashScreenTheme">@style/Theme.OfflinePlaya</item>
+    </style>
 </resources>

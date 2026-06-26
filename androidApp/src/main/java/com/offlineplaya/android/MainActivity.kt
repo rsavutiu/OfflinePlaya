@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -15,9 +16,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
@@ -28,22 +26,21 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalView
 import androidx.core.content.ContextCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.offlineplaya.android.picker.OpenDocumentTreeContract
-import com.offlineplaya.android.ui.IntroVideoOverlay
 import com.offlineplaya.shared.domain.model.ColorMode
 import com.offlineplaya.shared.domain.model.EqPreferences
-import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
 import com.offlineplaya.shared.domain.player.MusicPlayer
+import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
@@ -65,8 +62,23 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
+        // installSplashScreen() must run before super.onCreate so it can swap
+        // the activity theme from Theme.MyApp.Splash to postSplashScreenTheme
+        // before the window is created.
+        val splashScreen = installSplashScreen()
+        // The system dismisses the splash as soon as the first frame is ready,
+        // which usually beats the Walkman clip. Hold it for the clip duration
+        // so the user sees the whole animation.
+        val splashStartedAt = SystemClock.uptimeMillis()
+        splashScreen.setKeepOnScreenCondition {
+            SystemClock.uptimeMillis() - splashStartedAt < SPLASH_HOLD_MS
+        }
         super.onCreate(savedInstanceState)
+        // enableEdgeToEdge must run AFTER super.onCreate — the activity window
+        // doesn't exist before that, so any pre-super call lands on the splash
+        // window instead and the post-splash status bar comes back wrong (light
+        // icons stuck on a transparent bar under dark Compose content).
+        enableEdgeToEdge()
         setContent {
             KoinContext {
                 AndroidApp()
@@ -108,6 +120,9 @@ class MainActivity : ComponentActivity() {
         return super.onKeyDown(keyCode, event)
     }
 }
+
+/** How long to hold the splash so the Walkman clip plays through. */
+private const val SPLASH_HOLD_MS = 3000L
 
 /**
  * The runtime permission we need to enumerate music files via MediaStore.
@@ -265,14 +280,6 @@ private fun AndroidApp() {
         coordinator.addAndSync(uri.toString(), displayName)
     }
 
-    // Launch intro overlay. rememberSaveable so a rotation mid-clip doesn't
-    // replay it; skipped outright when the activity opens over live playback
-    // (e.g. tapped the media notification) — covering Now Playing with a
-    // five-second ceremony would be hostile.
-    var introDone by rememberSaveable {
-        mutableStateOf(musicPlayer.playbackState.value.isPlaying)
-    }
-
     Box {
         App(
             navigator = navigator,
@@ -303,12 +310,5 @@ private fun AndroidApp() {
             onCrossfadeDurationChange = playbackTuningStateHolder::setCrossfadeDurationSeconds,
             dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
         )
-
-        AnimatedVisibility(
-            visible = !introDone,
-            exit = fadeOut(animationSpec = tween(durationMillis = 450)),
-        ) {
-            IntroVideoOverlay(onFinished = { introDone = true })
-        }
     }
 }

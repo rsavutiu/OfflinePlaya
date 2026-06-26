@@ -1,0 +1,24 @@
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+    <item
+        android:drawable="@drawable/ezgifframe001"
+        android:duration="111" />
+    <item
+        android:drawable="@drawable/ezgifframe002"
+        android:duration="111" />
+    <item
+        android:drawable="@drawable/ezgifframe003"
+        android:duration="111" />
+    <item
+        android:drawable="@drawable/ezgifframe004"
+        android:duration="111" />
+    <item
+        android:drawable="@drawable/ezgifframe018"
+        android:duration="111" />
+    <item
+        android:drawable="@drawable/ezgifframe019"
+        android:duration="111" />
+    <item
+        android:drawable="@drawable/ezgifframe021"
+        android:duration="111" />
+</animation-list>

@@ -152,6 +152,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.documentfile)
+    implementation(libs.androidx.splashscreen)
 
     // Koin's android artifacts transitively bring in androidx.appcompat for
     // a Fragment/AppCompatActivity scope helper we don't use — this app is
@@ -176,8 +177,8 @@ dependencies {
     implementation(libs.lifecycle.process)
 
     // Compose Preview: annotation (always) + renderer (debug only, for Android Studio)
-    implementation(compose.components.uiToolingPreview)
-    debugImplementation(compose.uiTooling)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 
     // Instrumented tests — exercise the real Android stack (SAF, MediaStore,
     // Jaudiotagger over real files) against the fixture audio committed under
