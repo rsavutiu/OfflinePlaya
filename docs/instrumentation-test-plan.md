@@ -147,10 +147,10 @@ hierarchies found`, which masquerades as a code bug. Before a device run, wake
 and unlock: `adb shell input keyevent KEYCODE_WAKEUP; adb shell wm
 dismiss-keyguard; adb shell svc power stayon true`.
 
-### Phase 2 — full E2E happy paths (Android-only) — ✅ DONE (2 paths)
+### Phase 2 — full E2E happy paths (Android-only) — ✅ DONE (3 paths)
 
-**2 E2E paths green on device** (`com.offlineplaya.android.e2e`). Assert **UI
-state transitions, not audio**.
+**3 E2E paths** (`com.offlineplaya.android.e2e`). Assert **UI state transitions,
+not audio**.
 
 **Harness (deviated from the original sketch, for a proven reason):** *not*
 `createAndroidComposeRule<MainActivity>()` — the AndroidX activity rule can't see
@@ -171,6 +171,11 @@ boots the **real** DI graph and drives the real `App()` on the proven
 - `E2EAppHost(koin)` wires `App()` exactly as `MainActivity.AndroidApp` does,
   minus the Android plumbing (SAF picker, permission prompt, system bars).
 - The test holds the `FakeMusicPlayer`, so transport is asserted off its state.
+- **Launch robustness:** `launchSeededE2EApp` *warms the graph* (constructs every
+  singleton before `setContent`) and only kicks `resyncAll()` **after** Home is
+  on screen — booting the full graph on the first frame starved the host
+  ("No compose hierarchies found"). Front-loading construction off the
+  composition frame fixed the flakiness.
 
 Paths covered:
 
@@ -178,15 +183,28 @@ Paths covered:
    track → Now Playing shows it → pause reflected in player state.
 2. ✅ `SearchToNowPlayingE2ETest` — open Search → type query → result appears →
    play → Now Playing shows it, player playing.
-3. *(deferred)* Library → add-to-queue → QueuePage — needs the long-press
-   actions-sheet tagged; the harness above makes it a small add when wanted.
+3. ✅ `AddToQueueE2ETest` — All Tracks → long-press → "Add to queue" (×2) →
+   QueuePage shows both. Tap-to-play replaces the whole queue, so this uses the
+   long-press action; with nothing playing there is no in-UI route to Queue, so
+   the final hop is pushed on the held navigator.
 
-### Phase 3 — regression guards for the 2026-06-26 review fixes (UI-observable)
+> **Device note:** the host Activity needs the foreground. Beyond screen-awake,
+> if another app is the resumed Activity (the phone is in active use), every
+> `runComposeUiTest` test fails with "No compose hierarchies found". Run idle.
 
-- **Search resilience** (`8028a29`): throwing `TrackRepository` fake → search
-  degrades to empty, UI stays usable (no crash/hang).
-- **Lyrics resilience** (`047387d`): throwing `LyricsRepository` → `None`, next
-  track still resolves.
+### Phase 3 — regression guards for the 2026-06-26 review fixes — ✅ DONE
+
+Implemented as **headless `StateHolder` unit tests** (`:shared:testDebugUnitTest`,
+JVM, no device) — the resilience is in the state-holder flow wiring, so a unit
+test pins it directly and runs anywhere.
+
+- **Search resilience** (`8028a29`) ✅ —
+  `LibraryStateHolderSearchResilienceTest`: a `TrackRepository` whose `search()`
+  throws (via interface delegation) degrades that query to empty results, and a
+  later query still resolves — proving `.catch` keeps `searchResults` alive.
+- **Lyrics resilience** (`047387d`) ✅ — already guarded by
+  `LyricsStateHolderTest` ("a failing lookup falls back to None and the
+  collector survives for the next track"); no new test needed.
 - *Splash:* hard to assert on-device → **manual verification, not automated.**
 
 ## Out of scope

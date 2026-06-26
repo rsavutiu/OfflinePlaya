@@ -31,11 +31,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.Playlist
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.molecules.AddToPlaylistDialog
 import com.offlineplaya.shared.presentation.ui.molecules.CreatePlaylistDialog
 import com.offlineplaya.shared.presentation.ui.molecules.formatDuration
@@ -176,7 +178,7 @@ fun TrackDetailsContent(
                 if (onAddToQueue != null) {
                     OutlinedButton(
                         onClick = onAddToQueue,
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f).testTag(TestTags.TrackActions.ADD_TO_QUEUE),
                     ) { Text(stringResource(Res.string.track_details_queue)) }
                 }
             }

@@ -9,7 +9,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import androidx.test.core.app.ApplicationProvider
-import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import com.offlineplaya.shared.presentation.ui.TestTags
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -38,10 +37,8 @@ class LibraryToNowPlayingE2ETest {
     fun play_a_seeded_track_then_pause() = runComposeUiTest {
         val handle = startE2EKoin(ApplicationProvider.getApplicationContext())
         try {
-            // Seed the library through the real sync path (fake device scanner).
-            handle.koin.get<LibrarySyncCoordinator>().resyncAll()
-
-            setContent { E2EAppHost(handle.koin) }
+            // Bring the host up on a quiet main thread, then seed.
+            launchSeededE2EApp(handle)
 
             // Home is the landing screen.
             onNodeWithTag(TestTags.Home.ROOT).assertIsDisplayed()

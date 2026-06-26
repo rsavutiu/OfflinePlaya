@@ -8,10 +8,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import com.offlineplaya.shared.domain.model.PlaybackState
 import com.offlineplaya.shared.domain.model.RepeatMode
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.organisms.QueueList
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
@@ -40,7 +42,7 @@ fun QueuePage(
     onMove: ((from: Int, to: Int) -> Unit)? = null,
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.testTag(TestTags.Queue.ROOT),
         contentWindowInsets = WindowInsets(0),
         topBar = {
             AppTopBar(

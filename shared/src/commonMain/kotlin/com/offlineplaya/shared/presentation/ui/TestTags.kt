@@ -46,6 +46,16 @@ object TestTags {
         const val ROOT = "library_flat_page"
     }
 
+    object Queue {
+        /** Page root. */
+        const val ROOT = "queue_page"
+    }
+
+    object TrackActions {
+        /** "Add to queue" action in the long-press track-details sheet. */
+        const val ADD_TO_QUEUE = "track_actions_add_to_queue"
+    }
+
     object Settings {
         /** Page root. */
         const val ROOT = "settings_page"

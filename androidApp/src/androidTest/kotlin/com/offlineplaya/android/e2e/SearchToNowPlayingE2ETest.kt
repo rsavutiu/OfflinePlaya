@@ -10,7 +10,6 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.runComposeUiTest
 import androidx.test.core.app.ApplicationProvider
-import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import com.offlineplaya.shared.presentation.ui.TestTags
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -32,9 +31,7 @@ class SearchToNowPlayingE2ETest {
     fun search_for_a_track_then_play_it() = runComposeUiTest {
         val handle = startE2EKoin(ApplicationProvider.getApplicationContext())
         try {
-            handle.koin.get<LibrarySyncCoordinator>().resyncAll()
-
-            setContent { E2EAppHost(handle.koin) }
+            launchSeededE2EApp(handle)
 
             onNodeWithTag(TestTags.Home.ROOT).assertIsDisplayed()
 

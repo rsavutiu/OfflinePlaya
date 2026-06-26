@@ -3,6 +3,9 @@ package com.offlineplaya.android.e2e
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.test.ComposeUiTest
+import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.onAllNodesWithTag
 import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
 import com.offlineplaya.shared.presentation.history.SmartPlaylistsStateHolder
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
@@ -18,6 +21,7 @@ import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import com.offlineplaya.shared.presentation.tag.TagEditorCoordinator
 import com.offlineplaya.shared.presentation.theme.AlbumColorStateHolder
 import com.offlineplaya.shared.presentation.ui.App
+import com.offlineplaya.shared.presentation.ui.TestTags
 import org.koin.core.Koin
 
 /**
@@ -82,4 +86,44 @@ fun E2EAppHost(koin: Koin) {
         onCrossfadeDurationChange = {},
         dynamicColorSupported = true,
     )
+}
+
+/**
+ * Construct every singleton [E2EAppHost] resolves, **before** `setContent`, so
+ * the composition's first frame isn't competing with graph construction (DB
+ * open, repositories, OkHttp clients, flow subscriptions) on the main thread —
+ * that contention starves the `runComposeUiTest` host and surfaces as flaky
+ * "No compose hierarchies found". Koin caches the singletons, so the in-compose
+ * `koin.get()`s then return instantly.
+ */
+fun warmUpE2EGraph(koin: Koin) {
+    koin.get<AppNavigator>()
+    koin.get<LibraryStateHolder>()
+    koin.get<PlaylistStateHolder>()
+    koin.get<LibrarySyncCoordinator>()
+    koin.get<BurnMetadataCoordinator>()
+    koin.get<EqualizerStateHolder>()
+    koin.get<LyricsStateHolder>()
+    koin.get<TagEditorCoordinator>()
+    koin.get<SmartPlaylistsStateHolder>()
+    koin.get<ThemeStateHolder>()
+    koin.get<ArtworkStateHolder>()
+    koin.get<LyricsPreferencesStateHolder>()
+    koin.get<PlaybackTuningStateHolder>()
+    koin.get<AlbumColorStateHolder>()
+}
+
+/**
+ * Standard E2E entry: warm the graph, render the host, wait for Home to come up
+ * **before** kicking the seed scan — so the host registers its composition on a
+ * quiet main thread, then the library populates via a real `resyncAll()`.
+ */
+@OptIn(ExperimentalTestApi::class)
+fun ComposeUiTest.launchSeededE2EApp(handle: E2EKoinHandle) {
+    warmUpE2EGraph(handle.koin)
+    setContent { E2EAppHost(handle.koin) }
+    waitUntil(timeoutMillis = 15_000) {
+        onAllNodesWithTag(TestTags.Home.ROOT).fetchSemanticsNodes().isNotEmpty()
+    }
+    handle.koin.get<LibrarySyncCoordinator>().resyncAll()
 }
