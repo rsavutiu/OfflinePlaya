@@ -3,10 +3,9 @@ package com.offlineplaya.shared.data.repository
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.offlineplaya.shared.data.mapper.toDomain
+import com.offlineplaya.shared.data.mapper.trackFromColumns
 import com.offlineplaya.shared.database.OfflinePlayaDatabase
-import com.offlineplaya.shared.domain.model.CanonicalGenre
 import com.offlineplaya.shared.domain.model.Playlist
-import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.domain.repository.PlaylistRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -97,29 +96,29 @@ internal class SqlPlaylistRepository(
         canonicalGenre: String?,
         createdAt: Long,
         updatedAt: Long,
-    ): Track = Track(
+    ): Track = trackFromColumns(
         id = trackId,
         documentUri = documentUri,
         treeUri = treeUri,
         relativePath = relativePath,
         fileName = fileName,
-        title = title?.takeIf { it.isNotBlank() } ?: fileName,
-        artistName = artistName?.takeIf { it.isNotBlank() } ?: "Unknown Artist",
-        albumArtistName = albumArtistName?.takeIf { it.isNotBlank() },
-        albumName = albumName?.takeIf { it.isNotBlank() } ?: "Unknown Album",
-        genre = genre?.takeIf { it.isNotBlank() },
-        year = year?.toInt(),
-        trackNumber = trackNumber?.toInt(),
-        discNumber = discNumber?.toInt(),
+        title = title,
+        artistName = artistName,
+        albumArtistName = albumArtistName,
+        albumName = albumName,
+        genre = genre,
+        year = year,
+        trackNumber = trackNumber,
+        discNumber = discNumber,
         durationMs = durationMs,
-        bitrate = bitrate?.toInt(),
-        sampleRate = sampleRate?.toInt(),
-        channels = channels?.toInt(),
-        codec = codec?.takeIf { it.isNotBlank() },
+        bitrate = bitrate,
+        sampleRate = sampleRate,
+        channels = channels,
+        codec = codec,
         artistId = artistId,
         albumId = albumId,
         folderId = folderId,
-        scanStatus = ScanStatus.fromDbValue(scanStatus),
-        canonicalGenre = canonicalGenre?.let { CanonicalGenre.fromDbValue(it) },
+        scanStatus = scanStatus,
+        canonicalGenre = canonicalGenre,
     )
 }
