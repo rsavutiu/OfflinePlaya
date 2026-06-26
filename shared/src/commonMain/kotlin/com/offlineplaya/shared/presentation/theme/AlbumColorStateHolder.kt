@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 /**
  * Holds the ARGB seed color that drives the album-art reactive theme.
@@ -57,9 +58,20 @@ class AlbumColorStateHolder(
                 .distinctUntilChanged { old, new -> coverKey(old) == coverKey(new) }
                 .collect { track ->
                     if (track == null) return@collect
-                    val seed = extractor.seedColor(track) ?: return@collect
-                    _seedColor.value = seed
-                    settings.setLastSeedColor(seed)
+                    // Extraction (Palette over the art chain) and the persist are
+                    // both fallible — a corrupt cover or a DB hiccup must not tear
+                    // down the collector and freeze album-art theming for the rest
+                    // of the session. Keep the current seed; the next cover change
+                    // retries. Cancellation still propagates.
+                    try {
+                        val seed = extractor.seedColor(track) ?: return@collect
+                        _seedColor.value = seed
+                        settings.setLastSeedColor(seed)
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        // swallow — leave the existing tint in place.
+                    }
                 }
         }
     }
