@@ -55,6 +55,10 @@ LIMIT :limit;
 
 -- The caller escapes %/_/\ in the query and wraps it in %…%; ESCAPE '\' makes
 -- those literal so a search for "50%" or "a_b" matches text, not wildcards.
+-- No index on title/artist_name/album_name on purpose: the leading-% pattern
+-- defeats SQLite's LIKE index optimization (it needs a fixed prefix), so such
+-- an index would never be used yet would tax every write. A full scan is fine
+-- at this library's scale; FTS5 would be the move only if it ever grew huge.
 search:
 SELECT * FROM Track
 WHERE scan_status = 'scanned'
