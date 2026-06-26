@@ -48,10 +48,15 @@ internal class Media3PlaybackEngine(
 
     private val controllerReady = CompletableDeferred<MediaController>()
     private var controller: MediaController? = null
+    private var playerListener: Player.Listener? = null
     private var positionTicker: Job? = null
 
     init {
         scope.launch { connect() }
+        // The controller and its listener are not owned by [scope] — coroutine
+        // cancellation alone won't release them. Tear them down when the owning
+        // scope completes (app shutdown) so neither leaks past it.
+        scope.coroutineContext[Job]?.invokeOnCompletion { release() }
     }
 
     private suspend fun connect() = withContext(mainDispatcher) {
@@ -65,16 +70,36 @@ internal class Media3PlaybackEngine(
 
     private fun onControllerReady(ctrl: MediaController) {
         controller = ctrl
-        ctrl.addListener(object : Player.Listener {
+        val listener = object : Player.Listener {
             override fun onEvents(player: Player, events: Player.Events) {
                 _changes.tryEmit(Unit)
                 if (events.contains(Player.EVENT_IS_PLAYING_CHANGED)) {
                     if (player.isPlaying) startPositionTicker() else stopPositionTicker()
                 }
             }
-        })
+        }
+        playerListener = listener
+        ctrl.addListener(listener)
         controllerReady.complete(ctrl)
         _changes.tryEmit(Unit)
+    }
+
+    /**
+     * Detach the listener and release the controller. Hooked to scope-job
+     * completion; the controller's calls must run on the main looper it was
+     * built on, so hop there explicitly (the scope is already cancelled, so
+     * its dispatchers can't be relied on here).
+     */
+    private fun release() {
+        stopPositionTicker()
+        Handler(Looper.getMainLooper()).post {
+            controller?.let { c ->
+                playerListener?.let(c::removeListener)
+                c.release()
+            }
+            playerListener = null
+            controller = null
+        }
     }
 
     override fun readState(): EngineState {
