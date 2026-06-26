@@ -81,7 +81,14 @@ internal class SqlTrackRepository(
     override suspend fun search(query: String, limit: Int): List<Track> = withContext(ioDispatcher) {
         val trimmed = query.trim()
         if (trimmed.isEmpty()) return@withContext emptyList()
-        val pattern = "%$trimmed%"
+        // Escape LIKE metacharacters so a literal % or _ in the user's query
+        // matches text instead of acting as a wildcard. Backslash first, since
+        // it's the escape char declared via ESCAPE '\' in the search query.
+        val escaped = trimmed
+            .replace("\\", "\\\\")
+            .replace("%", "\\%")
+            .replace("_", "\\_")
+        val pattern = "%$escaped%"
         queries.search(pattern, pattern, pattern, limit.toLong())
             .executeAsList()
             .map { it.toDomain() }

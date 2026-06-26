@@ -181,4 +181,28 @@ class SqlTrackRepositoryTest {
         }
         assertEquals(2, repo.search("Match", limit = 2).size)
     }
+
+    @Test
+    fun `search treats LIKE wildcards in the query as literal characters`() = runTest {
+        val repo = newRepository()
+        val a = repo.insertFile("u-a", "t", "p", "a.mp3", 0, 0, null)
+        val b = repo.insertFile("u-b", "t", "p", "b.mp3", 0, 0, null)
+        val c = repo.insertFile("u-c", "t", "p", "c.mp3", 0, 0, null)
+        repo.updateMetadata(repo.findById(a)!!.copy(title = "100% Pure"))
+        repo.updateMetadata(repo.findById(b)!!.copy(title = "100 Years"))
+        repo.updateMetadata(repo.findById(c)!!.copy(title = "a_b"))
+
+        // "100%" must match the literal percent, not act as "anything after 100".
+        val pct = repo.search("100%")
+        assertEquals(1, pct.size, "'%' should be literal, not a wildcard")
+        assertEquals("u-a", pct.single().documentUri)
+
+        // "a_b" must match only the literal underscore, not "a<any char>b".
+        repo.insertFile("u-d", "t", "p", "d.mp3", 0, 0, null).let {
+            repo.updateMetadata(repo.findById(it)!!.copy(title = "axb"))
+        }
+        val under = repo.search("a_b")
+        assertEquals(1, under.size, "'_' should be literal, not a single-char wildcard")
+        assertEquals("u-c", under.single().documentUri)
+    }
 }

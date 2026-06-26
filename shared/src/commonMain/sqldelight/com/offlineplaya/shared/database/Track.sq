@@ -53,13 +53,15 @@ WHERE scan_status = 'scanned'
 ORDER BY created_at DESC, id DESC
 LIMIT :limit;
 
+-- The caller escapes %/_/\ in the query and wraps it in %…%; ESCAPE '\' makes
+-- those literal so a search for "50%" or "a_b" matches text, not wildcards.
 search:
 SELECT * FROM Track
 WHERE scan_status = 'scanned'
   AND (
-       title LIKE ? COLLATE NOCASE
-    OR artist_name LIKE ? COLLATE NOCASE
-    OR album_name LIKE ? COLLATE NOCASE
+       title COLLATE NOCASE LIKE ? ESCAPE '\'
+    OR artist_name COLLATE NOCASE LIKE ? ESCAPE '\'
+    OR album_name COLLATE NOCASE LIKE ? ESCAPE '\'
   )
 ORDER BY title COLLATE NOCASE
 LIMIT ?;
