@@ -47,6 +47,13 @@
             </intent-filter>
         </activity>
 
+        <!-- exported="true" is REQUIRED by Media3: the system media-notification
+             controller, Bluetooth media buttons, Android Auto and Assistant all
+             bind to a MediaLibraryService/MediaSessionService cross-process. A
+             signature-level permission would lock those out (they're signed by
+             Google/OEMs, not us). Access control for a media session is the
+             session's connection callback (MediaSession.Callback.onConnect),
+             not a manifest permission — do not "harden" this to exported=false. -->
         <service
             android:name=".service.PlaybackService"
             android:exported="true"
