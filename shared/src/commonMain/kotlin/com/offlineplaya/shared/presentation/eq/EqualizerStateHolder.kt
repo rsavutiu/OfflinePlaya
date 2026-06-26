@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlin.coroutines.cancellation.CancellationException
 
 /**
  * Combines [SettingsRepository]'s [EqPreferences] flow with the currently-playing
@@ -118,7 +119,17 @@ class EqualizerStateHolder(
         } else {
             listOf(track)
         }
-        burnMetadata.tagAlbumOpportunistically(artist, album, tracksOnAlbum)
+        // A failed MB/network lookup must not tear down the collector — we've
+        // already recorded the attempt so it won't re-fire for this album, and
+        // the next track will still be evaluated. Cancellation (the user skipped
+        // mid-lookup) still propagates so collectLatest can drop this job.
+        try {
+            burnMetadata.tagAlbumOpportunistically(artist, album, tracksOnAlbum)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            // swallow: recorded the attempt above; nothing to surface to the UI.
+        }
         // Result reaches the UI via the DB → observeAll → preset flow.
         // Nothing to do here on success; on miss we've recorded the attempt
         // and won't re-fire for the same album this process.
