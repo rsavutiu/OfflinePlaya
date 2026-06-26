@@ -23,6 +23,13 @@ import org.koin.core.context.GlobalContext
 import org.koin.core.logger.Level
 
 class OfflinePlayaApp : Application() {
+
+    // Explicitly owned so the Application — not the ContentResolver's internal
+    // observer list — holds the controller's lifetime. It self-tears-down on app
+    // scope completion (see AutoRescanController.stop); this reference just makes
+    // that ownership explicit instead of relying on implicit reachability.
+    private var autoRescanController: AutoRescanController? = null
+
     override fun onCreate() {
         super.onCreate()
         createBackgroundChannel()
@@ -59,11 +66,11 @@ class OfflinePlayaApp : Application() {
             // (torrents, downloads, sync clients) and app foreground events
             // each trigger a debounced reconcile. See [AutoRescanController].
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                AutoRescanController(
+                autoRescanController = AutoRescanController(
                     context = this@OfflinePlayaApp,
                     coordinator = koin.get(),
                     scope = appScope,
-                ).start()
+                ).also { it.start() }
             }
         }
     }
