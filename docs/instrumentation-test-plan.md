@@ -118,7 +118,8 @@ mechanical when taken up.
 Construct each page with fakes; add `testTag`s as you go. High-value pages only:
 
 - **HomePage** — stat strip, recently-played shelf, browse grid; row tap routes.
-- **LibraryFlatPage / LibraryArtistsPage** — seeded list renders; row tap.
+- **LibraryArtistsPage** ✅ — renders given artists / empty library
+  (`LibraryArtistsPageTest`, 2 cases green on device). **LibraryFlatPage** — TODO.
 - **SearchPage** ✅ — prompt / results / no-results states (`SearchPageTest`,
   3 cases green on device).
 - **NowPlayingPage** — title/artist/seek/transport reflect fake player state.

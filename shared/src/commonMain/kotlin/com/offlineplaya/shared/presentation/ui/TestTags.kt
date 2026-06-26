@@ -13,6 +13,11 @@ package com.offlineplaya.shared.presentation.ui
  * docs/instrumentation-test-plan.md), not all at once.
  */
 object TestTags {
+    object Artists {
+        /** Page root. */
+        const val ROOT = "library_artists_page"
+    }
+
     object Search {
         /** Page root. */
         const val ROOT = "search_page"
