@@ -64,6 +64,12 @@ class CrossfadeController(
     @Volatile
     private var prefs: PlaybackPreferences = PlaybackPreferences.Default
 
+    // phase and targetVolume are NOT volatile on purpose: every reader/writer
+    // (tick, arm, trigger, the fade loop, finishFade, abort, the player listener,
+    // release) runs on the main looper. tickJob and fadeJob are both launched on
+    // mainDispatcher, so they interleave cooperatively at suspension points but
+    // never run in parallel — single-thread confinement, no data race. Only
+    // [prefs] crosses threads (collector → tick), which is why only it is @Volatile.
     private enum class Phase { IDLE, ARMED, FADING }
     private var phase = Phase.IDLE
 
