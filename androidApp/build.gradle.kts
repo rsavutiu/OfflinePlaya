@@ -189,4 +189,9 @@ dependencies {
     androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.kotlinx.coroutines.test)
+
+    // Compose UI testing. createComposeRule (junit4) + the empty host activity
+    // (ui-test-manifest, merged into the debug test APK's manifest).
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
