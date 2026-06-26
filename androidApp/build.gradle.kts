@@ -37,9 +37,10 @@ android {
         versionCode = appVersionCode
         versionName = appVersionName
 
-        // The default AndroidJUnitRunner is enough — no custom runner needed
-        // until we want Hilt/Koin lifecycle hooks for instrumented Koin tests.
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // Custom runner swaps OfflinePlayaApp for a bare Application so the
+        // full app (Koin, PlaybackService, sync) doesn't boot under every
+        // instrumented test and starve the Compose host. See HarnessTestRunner.
+        testInstrumentationRunner = "com.offlineplaya.android.HarnessTestRunner"
 
         // Make AGP package the native debug symbols (function names only —
         // FULL would also include line numbers, ~10x larger) for every .so
@@ -190,8 +191,12 @@ dependencies {
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.kotlinx.coroutines.test)
 
-    // Compose UI testing. createComposeRule (junit4) + the empty host activity
-    // (ui-test-manifest, merged into the debug test APK's manifest).
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    // Compose UI testing. compose.uiTest is the Compose Multiplatform test
+    // artifact (runComposeUiTest) — version-aligned with the JetBrains Compose
+    // runtime the UI is built on, unlike the raw AndroidX ui-test-junit4 which
+    // can't see a CMP composition's root. ui-test-manifest still supplies the
+    // empty host activity setContent renders into.
+    @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+    androidTestImplementation(compose.uiTest)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
