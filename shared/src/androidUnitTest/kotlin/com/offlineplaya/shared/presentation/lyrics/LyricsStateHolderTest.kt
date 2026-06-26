@@ -76,6 +76,29 @@ class LyricsStateHolderTest {
     }
 
     @Test
+    fun `a failing lookup falls back to None and the collector survives for the next track`() = runTest {
+        val scope = CoroutineScope(UnconfinedTestDispatcher(testScheduler))
+        try {
+            val player = FakePlayer()
+            // Throws for the first track, succeeds for any other.
+            val repo = LyricsRepository { t ->
+                if (t.id == 1L) throw RuntimeException("network down") else Lyrics.Plain("ok")
+            }
+            val holder = LyricsStateHolder(player, repo, scope)
+
+            player.emit(track(id = 1), positionMs = 0L)
+            // Lookup threw — must degrade to None, not crash the collector.
+            assertEquals(LyricsUiState.None, holder.state.value)
+
+            // A later track must still resolve, proving the collector is alive.
+            player.emit(track(id = 2), positionMs = 0L)
+            assertTrue(holder.state.value is LyricsUiState.Plain)
+        } finally {
+            scope.cancel()
+        }
+    }
+
+    @Test
     fun `seekToLine forwards to the player`() = runTest {
         val player = FakePlayer()
         val holder = LyricsStateHolder(player, LyricsRepository { Lyrics.None }, backgroundScope)
@@ -90,8 +113,8 @@ class LyricsStateHolderTest {
             override suspend fun lyricsFor(track: Track): Lyrics = block(track)
         }
 
-    private fun track() = Track(
-        id = 1, documentUri = "content://t/1", treeUri = "content://tree", relativePath = "b.mp3",
+    private fun track(id: Long = 1) = Track(
+        id = id, documentUri = "content://t/$id", treeUri = "content://tree", relativePath = "b.mp3",
         fileName = "b.mp3", title = "T", artistName = "A", albumArtistName = null, albumName = "Al",
         genre = null, year = null, trackNumber = null, discNumber = null, durationMs = 200_000L,
         bitrate = null, sampleRate = null, channels = null, codec = null, artistId = null,

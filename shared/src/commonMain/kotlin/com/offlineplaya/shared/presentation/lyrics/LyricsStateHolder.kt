@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 /**
  * UI-facing lyrics state. Resolves lyrics for the currently-playing track via
@@ -45,7 +46,18 @@ class LyricsStateHolder(
                         return@collectLatest
                     }
                     _state.value = LyricsUiState.Loading
-                    when (val lyrics = repository.lyricsFor(track)) {
+                    // A failed lookup (network error, tag read) must not tear
+                    // down the whole collector — fall back to "no lyrics" so the
+                    // next track still resolves. Cancellation (track changed
+                    // mid-flight) still propagates to honour collectLatest.
+                    val lyrics = try {
+                        repository.lyricsFor(track)
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        Lyrics.None
+                    }
+                    when (lyrics) {
                         Lyrics.None -> _state.value = LyricsUiState.None
                         is Lyrics.Plain -> _state.value = LyricsUiState.Plain(lyrics.text)
                         is Lyrics.Synced -> {
