@@ -538,15 +538,20 @@ class LibrarySyncUseCase(
         if (primaries.isEmpty()) return null
 
         val countsByKey = primaries.groupingBy { it.lowercase() }.eachCount()
-        val topKey = countsByKey.maxByOrNull { it.value }!!.key
+        // primaries is non-empty (guarded above), so this is always present;
+        // the elvis is defensive, not a reachable branch.
+        val topKey = countsByKey.maxByOrNull { it.value }?.key ?: return null
         val topCount = countsByKey.getValue(topKey)
 
         // It's a compilation ONLY if no single artist owns the majority of the
         // tracks. One dominant artist (with occasional guests) keeps their name;
         // a genuinely mixed album (no majority) becomes Various Artists.
         return if (countsByKey.size == 1 || topCount * 2 > primaries.size) {
+            // At least one primary matches topKey case-insensitively (topKey is
+            // a lowercased primary), so the filtered list is non-empty; fall
+            // back to topKey only to avoid a hard crash if that ever changes.
             val display = primaries.filter { it.equals(topKey, ignoreCase = true) }
-                .groupingBy { it }.eachCount().maxByOrNull { it.value }!!.key
+                .groupingBy { it }.eachCount().maxByOrNull { it.value }?.key ?: topKey
             artists.upsert(display)
         } else {
             artists.upsert(VARIOUS_ARTISTS)
