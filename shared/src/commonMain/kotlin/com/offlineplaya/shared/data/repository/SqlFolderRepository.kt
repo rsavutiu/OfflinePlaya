@@ -48,6 +48,10 @@ internal class SqlFolderRepository(
         parentId: Long?,
     ): Long = withContext(ioDispatcher) {
         logger.d(TAG, "Upserting folder: $relativePath in $treeUri")
+        // INSERT OR IGNORE + SELECT (not lastInsertId): the ignore path inserts
+        // nothing, so last_insert_rowid() would be stale. UNIQUE(tree_uri,
+        // relative_path) guarantees selectByPath returns exactly one row, and
+        // SQLite's single writer serializes the insert/select pair.
         queries.transactionWithResult {
             queries.insert(treeUri, relativePath, displayName, parentId)
             val id = queries.selectByPath(treeUri, relativePath).executeAsOne().id

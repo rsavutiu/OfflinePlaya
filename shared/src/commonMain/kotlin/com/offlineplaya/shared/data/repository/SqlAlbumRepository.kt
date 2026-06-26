@@ -44,6 +44,11 @@ internal class SqlAlbumRepository(
     override suspend fun upsert(name: String, artistId: Long?, year: Int?): Long =
         withContext(ioDispatcher) {
             logger.d(TAG, "Upserting album: $name (artistId: $artistId)")
+            // INSERT OR IGNORE + SELECT (not lastInsertId): on the ignore path no
+            // row is inserted, so last_insert_rowid() would return a stale id. The
+            // UNIQUE(name COLLATE NOCASE, artist_id) index plus the matching NOCASE
+            // collation in selectByNameAndArtist guarantee executeAsOne sees exactly
+            // one row, and SQLite serializes writers so the pair can't interleave.
             queries.transactionWithResult {
                 queries.insert(name, artistId, year?.toLong())
                 val id = queries.selectByNameAndArtist(name, artistId).executeAsOne().id

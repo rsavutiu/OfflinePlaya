@@ -38,6 +38,10 @@ internal class SqlArtistRepository(
 
     override suspend fun upsert(name: String): Long = withContext(ioDispatcher) {
         logger.d(TAG, "Upserting artist: $name")
+        // INSERT OR IGNORE + SELECT (not lastInsertId): the ignore path inserts
+        // nothing, so last_insert_rowid() would be stale. UNIQUE(name COLLATE
+        // NOCASE) plus the NOCASE selectByName guarantee exactly one row, and
+        // SQLite's single writer serializes the insert/select pair.
         queries.transactionWithResult {
             queries.insert(name)
             val id = queries.selectByName(name).executeAsOne().id
