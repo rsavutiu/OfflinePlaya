@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
@@ -182,7 +183,12 @@ class LibraryStateHolder(
         .distinctUntilChanged()
         .flatMapLatest { query ->
             if (query.length < 2) flowOf(persistentListOf())
+            // .catch is on the inner flow so a failed search degrades to empty
+            // results for *this* query only — without it, an exception would
+            // propagate to stateIn and kill search for the whole session.
+            // (catch already rethrows CancellationException.)
             else flow { emit(tracks.search(query).toPersistentList()) }
+                .catch { emit(persistentListOf()) }
         }
         .stateIn(scope, SharingStarted.WhileSubscribed(5_000L), persistentListOf())
 }
