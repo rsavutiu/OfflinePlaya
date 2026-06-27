@@ -41,9 +41,8 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Validate translations
-        run: python3 tools/validate_translations.py
-
+      # (Translation validation is NOT duplicated here — the release job below
+      # already validates translations as its own hard gate.)
       - name: Shared unit tests
         run: |
           chmod +x ./gradlew

@@ -222,19 +222,25 @@ edits beyond adding the `TestTags` constants.
 
 **CI pipeline (`.github/workflows/`):**
 
-- **`ci.yml`** runs on every PR and push to `main`. Two jobs:
-  - `unit-tests` (**blocking gate**): `validate_translations.py` +
-    `:shared:testDebugUnitTest :androidApp:compileDebugKotlin`. Fast,
-    deterministic — this is the 215+ unit suite plus the Phase 3 guards.
+- **`ci.yml`** runs on every PR and push to `main`. Three jobs:
+  - `unit-tests` (**blocking gate**): `:shared:testDebugUnitTest
+    :androidApp:compileDebugKotlin`. Fast, deterministic — the 215+ unit suite
+    plus the Phase 3 guards.
   - `instrumented-tests` (**non-blocking**, `continue-on-error`): the full
     `:androidApp:connectedDebugAndroidTest` on an API-35 emulator via
     `reactivecircus/android-emulator-runner`. Kept informational because the
     `runComposeUiTest` host has device-focus/screen sensitivities only ever
     verified on physical hardware; promote to a hard gate once it's proven
     green on the emulator a few times.
+  - `translations` (**non-blocking**, `continue-on-error`):
+    `validate_translations.py`. NON-blocking because many locales are currently
+    missing recently-added string keys (stats / tag-editor / EQ / smart
+    playlists) — it surfaces that debt without walling off merges.
 - **`release.yml`** (tag-triggered Play Store release) now has a `test` job
   (unit suite) that the `release` job `needs:`, so a tagged release can't ship
-  a red build.
+  a red build. Translation validation stays a **hard gate on the release path**
+  (the release job's own pre-existing step) — fill in the locales before
+  cutting a tagged release.
 
 ## Out of scope
 
