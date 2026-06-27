@@ -207,11 +207,44 @@ test pins it directly and runs anywhere.
   collector survives for the next track"); no new test needed.
 - *Splash:* hard to assert on-device → **manual verification, not automated.**
 
+### Phase 4 — render-smoke sweep over the remaining pages + CI — ✅ DONE (2026-06-27)
+
+The user asked to "finish all of them" — so every page that Phase 1 left
+uncovered now has a lightweight isolated-screen test (`com.offlineplaya.android.ui`):
+`QueuePage`, `LibraryAlbumDetailPage`, `LibraryArtistDetailPage`,
+`LibraryFolderRootsPage`, `LibraryFolderDetailPage`, `PlaylistDetailPage`,
+`SmartPlaylistPage`, `ListeningStatsPage`, `EqualizerPage`, `TagEditorPage`,
+`DesignSystemGalleryPage`. Each asserts render (populated + one other state) and,
+where there's a non-localized data affordance, one routing tap. Root tags are
+applied **from the test** via `modifier = Modifier.testTag(TestTags.<Page>.ROOT)`
+(every page routes its `modifier` to its root Scaffold) — no production-page
+edits beyond adding the `TestTags` constants.
+
+**CI pipeline (`.github/workflows/`):**
+
+- **`ci.yml`** runs on every PR and push to `main`. Two jobs:
+  - `unit-tests` (**blocking gate**): `validate_translations.py` +
+    `:shared:testDebugUnitTest :androidApp:compileDebugKotlin`. Fast,
+    deterministic — this is the 215+ unit suite plus the Phase 3 guards.
+  - `instrumented-tests` (**non-blocking**, `continue-on-error`): the full
+    `:androidApp:connectedDebugAndroidTest` on an API-35 emulator via
+    `reactivecircus/android-emulator-runner`. Kept informational because the
+    `runComposeUiTest` host has device-focus/screen sensitivities only ever
+    verified on physical hardware; promote to a hard gate once it's proven
+    green on the emulator a few times.
+- **`release.yml`** (tag-triggered Play Store release) now has a `test` job
+  (unit suite) that the `release` job `needs:`, so a tagged release can't ship
+  a red build.
+
 ## Out of scope
 
 - Automating SAF or the splash window.
-- Targeting all 19 pages — high-value screens + the 2–3 E2E paths only. A
-  19-page matrix is the failure mode.
+- An **exhaustive interaction matrix** across all 19 pages — that's the failure
+  mode (brittle, high-maintenance). **Update (2026-06-27):** every page now has a
+  *lightweight render-smoke test* (render populated + one other state + at most
+  one routing tap on non-localized data). That honours the warning's intent — no
+  page is gold-plated — while giving each screen a basic regression net. See
+  Phase 1 (the original high-value subset) and Phase 4 (the render-smoke sweep).
 - Adding a JVM/desktop or iOS target to the shared module (separate project;
   every `expect` needs new actuals).
 

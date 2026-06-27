@@ -103,6 +103,56 @@ object TestTags {
         const val PLAY_PAUSE = "now_playing_play_pause"
     }
 
+    object AlbumDetail {
+        /** Page root. */
+        const val ROOT = "album_detail_page"
+    }
+
+    object ArtistDetail {
+        /** Page root. */
+        const val ROOT = "artist_detail_page"
+    }
+
+    object FolderRoots {
+        /** Page root. */
+        const val ROOT = "folder_roots_page"
+    }
+
+    object FolderDetail {
+        /** Page root. */
+        const val ROOT = "folder_detail_page"
+    }
+
+    object PlaylistDetail {
+        /** Page root. */
+        const val ROOT = "playlist_detail_page"
+    }
+
+    object SmartPlaylist {
+        /** Page root. */
+        const val ROOT = "smart_playlist_page"
+    }
+
+    object TagEditor {
+        /** Page root. */
+        const val ROOT = "tag_editor_page"
+    }
+
+    object Equalizer {
+        /** Page root. */
+        const val ROOT = "equalizer_page"
+    }
+
+    object Stats {
+        /** Page root. */
+        const val ROOT = "listening_stats_page"
+    }
+
+    object DesignGallery {
+        /** Page root. */
+        const val ROOT = "design_gallery_page"
+    }
+
     object Search {
         /** Page root. */
         const val ROOT = "search_page"
