@@ -21,7 +21,36 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Gate the release on the fast, deterministic unit suite — a tagged release
+  # must never ship a red build. (Instrumented/emulator tests are intentionally
+  # NOT on this path; they run non-blocking in ci.yml. See
+  # docs/instrumentation-test-plan.md.)
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Validate translations
+        run: python3 tools/validate_translations.py
+
+      - name: Shared unit tests
+        run: |
+          chmod +x ./gradlew
+          ./gradlew :shared:testDebugUnitTest --no-daemon
+
   release:
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       contents: read
