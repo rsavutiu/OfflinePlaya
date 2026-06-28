@@ -2,6 +2,7 @@ package com.offlineplaya.shared.presentation.history
 
 import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.domain.repository.PlayHistoryRepository
+import com.offlineplaya.shared.presentation.review.ReviewPromptCoordinator
 import com.offlineplaya.shared.util.AppLogger
 import com.offlineplaya.shared.util.currentTimeMillis
 import kotlinx.coroutines.CoroutineScope
@@ -24,6 +25,9 @@ class PlayHistoryRecorder(
     private val playHistory: PlayHistoryRepository,
     private val scope: CoroutineScope,
     private val logger: AppLogger,
+    // Optional so the test/E2E fixtures that construct the recorder directly
+    // don't need to supply it; production wires it via Koin.
+    private val reviewPromptCoordinator: ReviewPromptCoordinator? = null,
 ) {
     private var job: Job? = null
 
@@ -42,6 +46,10 @@ class PlayHistoryRecorder(
                         // bubble into the player pipeline.
                         logger.w(TAG, "Failed to record play of $trackId: ${t.message}")
                     }
+                    // Counts toward the in-app review nudge milestones. The
+                    // coordinator only *counts* here; the prompt itself fires at
+                    // a foreground checkpoint (ON_RESUME) where an Activity exists.
+                    reviewPromptCoordinator?.onTrackPlayed()
                 }
             }
         }

@@ -10,6 +10,7 @@ import com.offlineplaya.shared.domain.model.EqMode
 import com.offlineplaya.shared.domain.model.EqPreferences
 import com.offlineplaya.shared.domain.model.LyricsPreferences
 import com.offlineplaya.shared.domain.model.PlaybackPreferences
+import com.offlineplaya.shared.domain.model.ReviewPromptState
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import com.offlineplaya.shared.domain.repository.SettingsRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -52,6 +53,26 @@ internal class SqlSettingsRepository(
             queries.deleteByKey(KEY_LAST_SEED_COLOR)
         } else {
             queries.insertOrReplace(KEY_LAST_SEED_COLOR, argb.toString())
+        }
+    }
+
+    override suspend fun getReviewPromptState(): ReviewPromptState = withContext(ioDispatcher) {
+        val rows = queries.selectAll().executeAsList().associate { it.key to it.value_ }
+        val defaults = ReviewPromptState.Default
+        ReviewPromptState(
+            playsCounted = rows[KEY_REVIEW_PLAYS]?.toIntOrNull() ?: defaults.playsCounted,
+            highestMilestoneFired = rows[KEY_REVIEW_MILESTONE]?.toIntOrNull()
+                ?: defaults.highestMilestoneFired,
+            lastPromptAtMillis = rows[KEY_REVIEW_LAST_PROMPT]?.toLongOrNull()
+                ?: defaults.lastPromptAtMillis,
+        )
+    }
+
+    override suspend fun setReviewPromptState(state: ReviewPromptState) = withContext(ioDispatcher) {
+        queries.transaction {
+            queries.insertOrReplace(KEY_REVIEW_PLAYS, state.playsCounted.toString())
+            queries.insertOrReplace(KEY_REVIEW_MILESTONE, state.highestMilestoneFired.toString())
+            queries.insertOrReplace(KEY_REVIEW_LAST_PROMPT, state.lastPromptAtMillis.toString())
         }
     }
 
@@ -218,5 +239,8 @@ internal class SqlSettingsRepository(
         const val KEY_EQ_PREAMP = "eq.preamp_percent"
         const val KEY_CROSSFADE_ENABLED = "playback.crossfade_enabled"
         const val KEY_CROSSFADE_DURATION = "playback.crossfade_duration_s"
+        const val KEY_REVIEW_PLAYS = "review.plays_counted"
+        const val KEY_REVIEW_MILESTONE = "review.highest_milestone"
+        const val KEY_REVIEW_LAST_PROMPT = "review.last_prompt_at"
     }
 }

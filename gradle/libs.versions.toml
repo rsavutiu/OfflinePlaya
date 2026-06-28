@@ -29,6 +29,7 @@ kotlinx-collections-immutable = "0.3.8"
 materialKolor = "2.0.2"
 palette = "1.0.0"
 workManager = "2.9.1"
+playReview = "2.0.2"
 materialWindowSizeClass = "1.7.0"
 lifecycleProcess = "2.10.0"
 runtime = "1.11.2"
@@ -105,6 +106,10 @@ androidx-palette = { module = "androidx.palette:palette-ktx", version.ref = "pal
 
 # WorkManager (Android only — backs BackgroundTaskRunner)
 androidx-work-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "workManager" }
+
+# Google Play in-app review (Android only). The -ktx artifact pulls in the base
+# review library and adds the suspend requestReview()/launchReview() extensions.
+play-review-ktx = { module = "com.google.android.play:review-ktx", version.ref = "playReview" }
 
 # Instrumentation testing
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test-core" }

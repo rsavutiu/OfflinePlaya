@@ -7,6 +7,7 @@ import android.os.Build
 import com.offlineplaya.android.di.appPlayerModule
 import com.offlineplaya.android.sync.AutoRescanController
 import com.offlineplaya.shared.data.image.installTrackArtImageLoader
+import com.offlineplaya.shared.data.review.CurrentActivityHolder
 import com.offlineplaya.shared.data.scheduling.WorkManagerTaskRunner
 import com.offlineplaya.shared.di.androidModule
 import com.offlineplaya.shared.di.initKoin
@@ -45,6 +46,11 @@ class OfflinePlayaApp : Application() {
         // background scope so Application.onCreate returns quickly and the
         // first frame isn't waiting on SQLite open + a full library scan.
         val koin = GlobalContext.get()
+        // Register synchronously (not on appScope) so the holder is watching
+        // before MainActivity resumes — the in-app review prompt needs the
+        // resumed Activity. The holder is lightweight (no DB/network), so this
+        // doesn't pull the slow singletons onto the main thread.
+        registerActivityLifecycleCallbacks(koin.get<CurrentActivityHolder>())
         val appScope = koin.get<CoroutineScope>()
         appScope.launch {
             // Last session's queue comes back paused before the queue

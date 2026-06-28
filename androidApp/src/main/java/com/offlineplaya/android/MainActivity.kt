@@ -26,6 +26,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -45,12 +46,14 @@ import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
+import com.offlineplaya.shared.presentation.review.ReviewPromptCoordinator
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
 import com.offlineplaya.shared.presentation.settings.LyricsPreferencesStateHolder
 import com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import com.offlineplaya.shared.presentation.ui.App
+import kotlinx.coroutines.launch
 import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 import org.koin.core.context.GlobalContext
@@ -159,6 +162,7 @@ private fun AndroidApp() {
     val lyricsPreferencesStateHolder: LyricsPreferencesStateHolder = koinInject()
     val playbackTuningStateHolder: PlaybackTuningStateHolder = koinInject()
     val coordinator: LibrarySyncCoordinator = koinInject()
+    val reviewPromptCoordinator: ReviewPromptCoordinator = koinInject()
     val burnMetadataCoordinator: BurnMetadataCoordinator = koinInject()
     val library: LibraryStateHolder = koinInject()
     val playlists: PlaylistStateHolder = koinInject()
@@ -178,6 +182,7 @@ private fun AndroidApp() {
     val stack by navigator.stack.collectAsState()
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
+    val reviewScope = rememberCoroutineScope()
 
     // Drive the system-bar icon appearance from the *app's* resolved theme,
     // not the OS theme. enableEdgeToEdge()'s auto-detection keys off the system
@@ -223,6 +228,14 @@ private fun AndroidApp() {
                 // scan itself is now cheap when nothing changed (already-scanned
                 // device rows are short-circuited in syncDeviceAudio).
                 coordinator.resyncIfIdle()
+            }
+            if (event == Lifecycle.Event.ON_RESUME) {
+                // Foreground checkpoint for the in-app review nudge: a prompt can
+                // only be shown from a resumed Activity, so the milestone /
+                // post-resync decision happens here (not at play time). The
+                // coordinator gates spam internally; this is cheap when nothing
+                // is due.
+                reviewScope.launch { reviewPromptCoordinator.maybePromptForReview() }
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)

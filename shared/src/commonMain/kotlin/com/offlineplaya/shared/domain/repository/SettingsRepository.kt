@@ -4,6 +4,7 @@ import com.offlineplaya.shared.domain.model.ArtworkPreferences
 import com.offlineplaya.shared.domain.model.EqPreferences
 import com.offlineplaya.shared.domain.model.LyricsPreferences
 import com.offlineplaya.shared.domain.model.PlaybackPreferences
+import com.offlineplaya.shared.domain.model.ReviewPromptState
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import kotlinx.coroutines.flow.Flow
 
@@ -68,4 +69,10 @@ interface SettingsRepository {
 
     /** Persist (or clear, with `null`) the last album-art seed color. */
     suspend fun setLastSeedColor(argb: Int?)
+
+    /** In-app review nudge bookkeeping (defaults applied when missing). */
+    suspend fun getReviewPromptState(): ReviewPromptState
+
+    /** Replace the stored in-app review nudge bookkeeping atomically. */
+    suspend fun setReviewPromptState(state: ReviewPromptState)
 }

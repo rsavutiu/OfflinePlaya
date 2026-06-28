@@ -9,6 +9,7 @@ import com.offlineplaya.shared.domain.model.ArtworkPreferences
 import com.offlineplaya.shared.domain.model.EqPreferences
 import com.offlineplaya.shared.domain.model.LyricsPreferences
 import com.offlineplaya.shared.domain.model.PlaybackPreferences
+import com.offlineplaya.shared.domain.model.ReviewPromptState
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import com.offlineplaya.shared.domain.model.Track
@@ -81,6 +82,8 @@ class SqlLyricsRepositoryTest {
         override suspend fun setPlaybackPreferences(preferences: PlaybackPreferences) = error("unused")
         override suspend fun getLastSeedColor(): Int? = null
         override suspend fun setLastSeedColor(argb: Int?) = Unit
+        override suspend fun getReviewPromptState(): ReviewPromptState = ReviewPromptState.Default
+        override suspend fun setReviewPromptState(state: ReviewPromptState) = Unit
     }
 
     private fun newRepo(

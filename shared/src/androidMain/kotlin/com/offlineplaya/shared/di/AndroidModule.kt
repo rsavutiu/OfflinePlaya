@@ -14,6 +14,8 @@ import com.offlineplaya.shared.data.lyrics.SafSidecarLyricsSource
 import com.offlineplaya.shared.data.lyrics.SqlLyricsRepository
 import com.offlineplaya.shared.data.lyrics.createLrclibLyricsSource
 import com.offlineplaya.shared.data.metadata.AndroidMetadataReader
+import com.offlineplaya.shared.data.review.CurrentActivityHolder
+import com.offlineplaya.shared.data.review.PlayReviewPrompter
 import com.offlineplaya.shared.data.tag.JaudiotaggerTrackTagWriter
 import com.offlineplaya.shared.data.scanner.MediaStoreDeviceAudioScanner
 import com.offlineplaya.shared.data.scanner.SafFolderScanner
@@ -33,6 +35,7 @@ import com.offlineplaya.shared.domain.scanner.DeviceAudioScanner
 import com.offlineplaya.shared.domain.tag.TrackTagWriter
 import com.offlineplaya.shared.domain.scanner.FolderScanner
 import com.offlineplaya.shared.domain.scanner.MetadataReader
+import com.offlineplaya.shared.domain.review.ReviewPrompter
 import com.offlineplaya.shared.domain.scheduling.BackgroundTaskRunner
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
@@ -108,6 +111,18 @@ val androidModule: Module = module {
             remote = get(),
             sidecarWriter = get(),
             settings = get(),
+            logger = get(),
+        )
+    }
+
+    // In-app review flow + the current-Activity seam it needs. The holder is
+    // registered as an ActivityLifecycleCallbacks in OfflinePlayaApp so the
+    // prompter always launches against the resumed Activity (or no-ops when
+    // backgrounded). Same singleton must be retrieved for registration and use.
+    single { CurrentActivityHolder() }
+    single<ReviewPrompter> {
+        PlayReviewPrompter(
+            activityProvider = { get<CurrentActivityHolder>().current },
             logger = get(),
         )
     }

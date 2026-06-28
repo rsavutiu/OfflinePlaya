@@ -37,6 +37,7 @@ import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.queue.QueueStateRecorder
+import com.offlineplaya.shared.presentation.review.ReviewPromptCoordinator
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
 import com.offlineplaya.shared.presentation.settings.LyricsPreferencesStateHolder
 import com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder
@@ -252,6 +253,18 @@ val sharedModule: Module = module {
             musicPlayer = get(),
             playHistory = get(),
             scope = get(),
+            logger = get(),
+            reviewPromptCoordinator = get(),
+        )
+    }
+
+    // In-app review nudges: counts plays (background) and decides when to show
+    // Google Play's review flow (foreground checkpoint). `ReviewPrompter` is
+    // platform-provided — androidModule binds the Play implementation.
+    single {
+        ReviewPromptCoordinator(
+            settings = get(),
+            prompter = get(),
             logger = get(),
         )
     }
