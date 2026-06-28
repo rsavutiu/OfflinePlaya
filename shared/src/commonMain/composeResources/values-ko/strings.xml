@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d 앨범</string>
     <string name="home_label_artists_count">%1$d 아티스트</string>
     <string name="home_label_playlists_count">%1$d 플레이리스트</string>
+    <string name="empty_library_title">아직 음악이 없습니다</string>
+    <string name="empty_library_subtitle">OfflinePlaya는 이미 기기에 있는 오디오 파일을 재생합니다 — 스트리밍은 전혀 하지 않습니다. 음악을 추가하는 방법은 다음과 같습니다:</string>
+    <string name="empty_library_step1_title">1 · 컴퓨터로 파일 가져오기</string>
+    <string name="empty_library_step1_body">PC나 Mac에서 음원(MP3, FLAC, M4A, OGG…)을 구매하거나 다운로드하거나, CD 또는 기존 컬렉션에서 복사하세요.</string>
+    <string name="empty_library_step2_title">2 · 휴대폰으로 복사하기</string>
+    <string name="empty_library_step2_body">휴대폰을 USB로 연결하고 파일을 Downloads 또는 Music 폴더로 끌어다 놓으세요. microSD 카드, 클라우드 다운로드, Bluetooth 전송도 가능합니다 — 파일을 기기 저장소에 넣을 수 있는 방법이면 무엇이든 좋습니다.</string>
+    <string name="empty_library_step3_title">3 · OfflinePlaya 다시 시작하기</string>
+    <string name="empty_library_step3_body">앱을 완전히 종료한 뒤(최근 앱에서 밀어 닫기) 다시 여세요. 실행할 때마다 다시 스캔하므로 새 음원이 자동으로 표시됩니다.</string>
+    <string name="empty_library_permission_note">Downloads와 Music의 음악은 음악 액세스 권한을 허용하면 자동으로 인식됩니다. 다른 폴더를 색인하려면 설정 → 라이브러리를 열어 거기에 추가하세요.</string>
+    <string name="empty_library_open_settings">설정 열기</string>
     <string name="now_playing_title">재생 중</string>
     <string name="now_playing_up_next">다음</string>
     <string name="now_playing_back">뒤로</string>

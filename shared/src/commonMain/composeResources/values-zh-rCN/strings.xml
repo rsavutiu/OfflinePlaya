@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d 张专辑</string>
     <string name="home_label_artists_count">%1$d 位艺术家</string>
     <string name="home_label_playlists_count">%1$d 个歌单</string>
+    <string name="empty_library_title">还没有音乐</string>
+    <string name="empty_library_subtitle">OfflinePlaya 播放设备上已有的音频文件——它从不进行流媒体播放。添加音乐的方法如下：</string>
+    <string name="empty_library_step1_title">1 · 在电脑上获取文件</string>
+    <string name="empty_library_step1_body">在 PC 或 Mac 上购买或下载你的曲目（MP3、FLAC、M4A、OGG…），或从 CD 或你现有的收藏中复制。</string>
+    <string name="empty_library_step2_title">2 · 复制到你的手机</string>
+    <string name="empty_library_step2_body">通过 USB 连接手机，并将文件拖入 Downloads 或 Music 文件夹。microSD 卡、云端下载或蓝牙传输同样可行——只要能把文件放到设备存储里即可。</string>
+    <string name="empty_library_step3_title">3 · 重启 OfflinePlaya</string>
+    <string name="empty_library_step3_body">彻底关闭应用（从最近任务中划掉），然后重新打开。每次启动都会重新扫描，因此你的新曲目会自动出现。</string>
+    <string name="empty_library_permission_note">授予音乐访问权限后，Downloads 和 Music 中的音乐会被自动收录。若要索引其他文件夹，请打开 设置 → 媒体库 并在那里添加。</string>
+    <string name="empty_library_open_settings">打开设置</string>
     <string name="now_playing_title">正在播放</string>
     <string name="now_playing_up_next">下一首</string>
     <string name="now_playing_back">返回</string>

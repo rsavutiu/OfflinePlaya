@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$dアルバム</string>
     <string name="home_label_artists_count">%1$dアーティスト</string>
     <string name="home_label_playlists_count">%1$dプレイリスト</string>
+    <string name="empty_library_title">まだ音楽がありません</string>
+    <string name="empty_library_subtitle">OfflinePlaya は端末にすでにあるオーディオファイルを再生します — ストリーミングは一切行いません。音楽を追加する方法は次のとおりです：</string>
+    <string name="empty_library_step1_title">1 · ファイルをパソコンに用意する</string>
+    <string name="empty_library_step1_body">曲（MP3、FLAC、M4A、OGG…）をパソコンや Mac で購入またはダウンロードするか、CD や既存のコレクションからコピーします。</string>
+    <string name="empty_library_step2_title">2 · スマホにコピーする</string>
+    <string name="empty_library_step2_body">スマホを USB で接続し、ファイルを Downloads または Music フォルダにドラッグします。microSD カード、クラウドからのダウンロード、Bluetooth 転送でも構いません — ファイルを端末のストレージに置けるものなら何でも大丈夫です。</string>
+    <string name="empty_library_step3_title">3 · OfflinePlaya を再起動する</string>
+    <string name="empty_library_step3_body">アプリを完全に終了し（最近のアプリからスワイプして消す）、もう一度開きます。起動のたびに再スキャンするので、新しい曲は自動的に表示されます。</string>
+    <string name="empty_library_permission_note">Downloads と Music の音楽は、音楽アクセス権限を許可すると自動的に検出されます。別のフォルダをインデックスするには、設定 → ライブラリ を開いてそこに追加してください。</string>
+    <string name="empty_library_open_settings">設定を開く</string>
     <string name="now_playing_title">今再生中</string>
     <string name="now_playing_up_next">次は</string>
     <string name="now_playing_back">戻る</string>

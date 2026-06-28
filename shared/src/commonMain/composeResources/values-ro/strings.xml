@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d albume</string>
     <string name="home_label_artists_count">%1$d artiști</string>
     <string name="home_label_playlists_count">%1$d liste de redare</string>
+    <string name="empty_library_title">Încă nicio muzică</string>
+    <string name="empty_library_subtitle">OfflinePlaya redă fișiere audio care se află deja pe dispozitivul tău — nu transmite niciodată în streaming. Iată cum să-ți adaugi muzica:</string>
+    <string name="empty_library_step1_title">1 · Adu fișierele pe un computer</string>
+    <string name="empty_library_step1_body">Cumpără sau descarcă piesele tale (MP3, FLAC, M4A, OGG…) pe PC sau pe Mac, ori copiază-le de pe un CD sau din colecția ta existentă.</string>
+    <string name="empty_library_step2_title">2 · Copiază-le pe telefon</string>
+    <string name="empty_library_step2_body">Conectează telefonul prin USB și trage fișierele în folderul Downloads sau Music. Funcționează și un card microSD, o descărcare din cloud sau un transfer prin Bluetooth — orice aduce fișierele în stocarea dispozitivului.</string>
+    <string name="empty_library_step3_title">3 · Repornește OfflinePlaya</string>
+    <string name="empty_library_step3_body">Închide complet aplicația (gliseaz-o din aplicațiile recente) și deschide-o din nou. Rescanează la fiecare pornire, așa că piesele tale noi apar automat.</string>
+    <string name="empty_library_permission_note">Muzica din Downloads și Music este detectată automat de îndată ce acorzi permisiunea de acces la muzică. Pentru a indexa alt folder, deschide Setări → Bibliotecă și adaugă-l acolo.</string>
+    <string name="empty_library_open_settings">Deschide setările</string>
     <string name="now_playing_title">Acum se joacă</string>
     <string name="now_playing_up_next">Mai departe</string>
     <string name="now_playing_back">Înapoi</string>

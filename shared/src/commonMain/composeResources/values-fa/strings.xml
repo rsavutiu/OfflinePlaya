@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d آلبوم</string>
     <string name="home_label_artists_count">%1$d هنرمند</string>
     <string name="home_label_playlists_count">%1$d لیست پخش</string>
+    <string name="empty_library_title">هنوز موسیقی‌ای نیست</string>
+    <string name="empty_library_subtitle">OfflinePlaya فایل‌های صوتی‌ای را که از پیش روی دستگاه شماست پخش می‌کند — هرگز پخش آنلاین نمی‌کند. روش افزودن موسیقی شما چنین است:</string>
+    <string name="empty_library_step1_title">1 · فایل‌ها را روی یک رایانه بیاورید</string>
+    <string name="empty_library_step1_body">آهنگ‌های خود (MP3، FLAC، M4A، OGG…) را روی رایانه شخصی یا Mac بخرید یا دانلود کنید، یا آن‌ها را از یک CD یا مجموعه موجود خود کپی کنید.</string>
+    <string name="empty_library_step2_title">2 · آن‌ها را به گوشی خود کپی کنید</string>
+    <string name="empty_library_step2_body">گوشی را با USB متصل کنید و فایل‌ها را به پوشه Downloads یا Music بکشید. کارت microSD، دانلود ابری یا انتقال با Bluetooth هم کار می‌کند — هر چیزی که فایل‌ها را در حافظه دستگاه قرار دهد.</string>
+    <string name="empty_library_step3_title">3 · OfflinePlaya را دوباره راه‌اندازی کنید</string>
+    <string name="empty_library_step3_body">برنامه را کاملاً ببندید (آن را از برنامه‌های اخیر کنار بزنید) و دوباره باز کنید. در هر بار اجرا دوباره پویش می‌کند، بنابراین آهنگ‌های جدید شما به‌طور خودکار ظاهر می‌شوند.</string>
+    <string name="empty_library_permission_note">موسیقی موجود در Downloads و Music به‌محض اعطای مجوز دسترسی به موسیقی، به‌طور خودکار شناسایی می‌شود. برای نمایه‌سازی پوشه‌ای دیگر، تنظیمات → کتابخانه را باز کنید و آن را آنجا اضافه کنید.</string>
+    <string name="empty_library_open_settings">باز کردن تنظیمات</string>
     <string name="now_playing_title">در حال پخش</string>
     <string name="now_playing_up_next">بعدی</string>
     <string name="now_playing_back">برگشت</string>

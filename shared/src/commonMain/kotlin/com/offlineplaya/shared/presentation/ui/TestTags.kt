@@ -34,6 +34,9 @@ object TestTags {
         /** Recently-played albums shelf (present only with recent albums). */
         const val RECENT_SHELF = "home_recent_shelf"
 
+        /** Onboarding guide shown when the library is loaded and empty. */
+        const val EMPTY_GUIDE = "home_empty_guide"
+
         /** Browse-grid cards, one per library facet. */
         const val BROWSE_TRACKS = "home_browse_tracks"
         const val BROWSE_ALBUMS = "home_browse_albums"

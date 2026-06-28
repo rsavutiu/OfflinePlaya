@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d album</string>
     <string name="home_label_artists_count">%1$d artis</string>
     <string name="home_label_playlists_count">%1$d senarai main</string>
+    <string name="empty_library_title">Belum ada muzik</string>
+    <string name="empty_library_subtitle">OfflinePlaya memainkan fail audio yang sudah ada pada peranti anda — ia tidak pernah menstrim. Berikut cara menambah muzik anda:</string>
+    <string name="empty_library_step1_title">1 · Dapatkan fail pada komputer</string>
+    <string name="empty_library_step1_body">Beli atau muat turun lagu anda (MP3, FLAC, M4A, OGG…) pada PC atau Mac anda, atau salin daripada CD atau koleksi sedia ada anda.</string>
+    <string name="empty_library_step2_title">2 · Salin ke telefon anda</string>
+    <string name="empty_library_step2_body">Sambungkan telefon melalui USB dan seret fail ke folder Downloads atau Music. Kad microSD, muat turun awan atau pemindahan Bluetooth juga boleh — apa-apa sahaja yang meletakkan fail dalam storan peranti.</string>
+    <string name="empty_library_step3_title">3 · Mulakan semula OfflinePlaya</string>
+    <string name="empty_library_step3_body">Tutup apl sepenuhnya (leret keluar daripada terbaharu) dan buka semula. Ia mengimbas semula pada setiap pelancaran, jadi lagu baharu anda muncul secara automatik.</string>
+    <string name="empty_library_permission_note">Muzik dalam Downloads dan Music dikesan secara automatik sebaik sahaja anda memberikan kebenaran akses muzik. Untuk mengindeks folder lain, buka Tetapan → Pustaka dan tambahkannya di sana.</string>
+    <string name="empty_library_open_settings">Buka tetapan</string>
     <string name="now_playing_title">Kini Dimainkan</string>
     <string name="now_playing_up_next">Seterusnya</string>
     <string name="now_playing_back">belakang</string>

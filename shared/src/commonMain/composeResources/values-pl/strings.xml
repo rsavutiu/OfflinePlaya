@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d albumów</string>
     <string name="home_label_artists_count">%1$d artystów</string>
     <string name="home_label_playlists_count">%1$d playlist</string>
+    <string name="empty_library_title">Jeszcze brak muzyki</string>
+    <string name="empty_library_subtitle">OfflinePlaya odtwarza pliki audio, które już są na Twoim urządzeniu — nigdy nie strumieniuje. Oto jak dodać swoją muzykę:</string>
+    <string name="empty_library_step1_title">1 · Pobierz pliki na komputer</string>
+    <string name="empty_library_step1_body">Kup lub pobierz swoje utwory (MP3, FLAC, M4A, OGG…) na komputer PC lub Mac, albo skopiuj je z płyty CD lub istniejącej kolekcji.</string>
+    <string name="empty_library_step2_title">2 · Skopiuj je na telefon</string>
+    <string name="empty_library_step2_body">Podłącz telefon przez USB i przeciągnij pliki do folderu Downloads lub Music. Działa też karta microSD, pobieranie z chmury lub przesyłanie przez Bluetooth — wszystko, co umieści pliki w pamięci urządzenia.</string>
+    <string name="empty_library_step3_title">3 · Uruchom ponownie OfflinePlaya</string>
+    <string name="empty_library_step3_body">Zamknij aplikację całkowicie (przesuń ją z ostatnich) i otwórz ją ponownie. Skanuje przy każdym uruchomieniu, więc Twoje nowe utwory pojawiają się automatycznie.</string>
+    <string name="empty_library_permission_note">Muzyka w folderach Downloads i Music jest wykrywana automatycznie po udzieleniu uprawnienia dostępu do muzyki. Aby zindeksować inny folder, otwórz Ustawienia → Biblioteka i dodaj go tam.</string>
+    <string name="empty_library_open_settings">Otwórz ustawienia</string>
     <string name="now_playing_title">Teraz odtwarzane</string>
     <string name="now_playing_up_next">Następny</string>
     <string name="now_playing_back">Powrót</string>

@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d אלבומים</string>
     <string name="home_label_artists_count">%1$d אמנים</string>
     <string name="home_label_playlists_count">%1$d רשימות השמעה</string>
+    <string name="empty_library_title">עדיין אין מוזיקה</string>
+    <string name="empty_library_subtitle">‏OfflinePlaya מנגן קובצי שמע שכבר נמצאים במכשיר שלך — הוא אף פעם לא מזרים. כך מוסיפים את המוזיקה שלך:</string>
+    <string name="empty_library_step1_title">1 · העבר את הקבצים למחשב</string>
+    <string name="empty_library_step1_body">קנה או הורד את הרצועות שלך (MP3, FLAC, M4A, OGG…) ל‑PC או ל‑Mac, או העתק אותן מתקליטור או מהאוסף הקיים שלך.</string>
+    <string name="empty_library_step2_title">2 · העתק אותן לטלפון שלך</string>
+    <string name="empty_library_step2_body">חבר את הטלפון ב‑USB וגרור את הקבצים לתיקייה Downloads או Music. גם כרטיס microSD, הורדה מהענן או העברה ב‑Bluetooth עובדים — כל דבר שמכניס את הקבצים לאחסון המכשיר.</string>
+    <string name="empty_library_step3_title">3 · הפעל מחדש את OfflinePlaya</string>
+    <string name="empty_library_step3_body">סגור את האפליקציה לגמרי (החלק אותה החוצה מהאחרונות) ופתח אותה שוב. היא סורקת מחדש בכל הפעלה, ולכן הרצועות החדשות שלך מופיעות אוטומטית.</string>
+    <string name="empty_library_permission_note">מוזיקה בתיקיות Downloads ו‑Music מזוהה אוטומטית ברגע שאתה מעניק הרשאת גישה למוזיקה. כדי לאנדקס תיקייה אחרת, פתח הגדרות → ספרייה והוסף אותה שם.</string>
+    <string name="empty_library_open_settings">פתח הגדרות</string>
     <string name="now_playing_title">עכשיו משחק</string>
     <string name="now_playing_up_next">למעלה הבא</string>
     <string name="now_playing_back">חזרה</string>

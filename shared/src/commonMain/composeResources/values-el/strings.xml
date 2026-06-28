@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d άλμπουμ</string>
     <string name="home_label_artists_count">%1$d καλλιτέχνες</string>
     <string name="home_label_playlists_count">%1$d λίστες αναπαραγωγής</string>
+    <string name="empty_library_title">Δεν υπάρχει μουσική ακόμη</string>
+    <string name="empty_library_subtitle">Το OfflinePlaya αναπαράγει αρχεία ήχου που βρίσκονται ήδη στη συσκευή σου — δεν κάνει ποτέ streaming. Δες πώς να προσθέσεις τη μουσική σου:</string>
+    <string name="empty_library_step1_title">1 · Βάλε τα αρχεία σε έναν υπολογιστή</string>
+    <string name="empty_library_step1_body">Αγόρασε ή κατέβασε τα κομμάτια σου (MP3, FLAC, M4A, OGG…) στον υπολογιστή ή στο Mac σου, ή αντίγραψέ τα από CD ή από την υπάρχουσα συλλογή σου.</string>
+    <string name="empty_library_step2_title">2 · Αντίγραψέ τα στο τηλέφωνό σου</string>
+    <string name="empty_library_step2_body">Σύνδεσε το τηλέφωνό σου μέσω USB και σύρε τα αρχεία στον φάκελο Downloads ή Music. Λειτουργεί επίσης κάρτα microSD, λήψη από το cloud ή μεταφορά μέσω Bluetooth — οτιδήποτε βάζει τα αρχεία στον αποθηκευτικό χώρο της συσκευής.</string>
+    <string name="empty_library_step3_title">3 · Επανεκκίνησε το OfflinePlaya</string>
+    <string name="empty_library_step3_body">Κλείσε εντελώς την εφαρμογή (σύρε την έξω από τις πρόσφατες) και άνοιξέ την ξανά. Σαρώνει σε κάθε εκκίνηση, οπότε τα νέα σου κομμάτια εμφανίζονται αυτόματα.</string>
+    <string name="empty_library_permission_note">Η μουσική στους φακέλους Downloads και Music εντοπίζεται αυτόματα μόλις παραχωρήσεις την άδεια πρόσβασης στη μουσική. Για να κάνεις ευρετηρίαση άλλου φακέλου, άνοιξε Ρυθμίσεις → Βιβλιοθήκη και πρόσθεσέ τον εκεί.</string>
+    <string name="empty_library_open_settings">Άνοιγμα ρυθμίσεων</string>
     <string name="now_playing_title">Παίζει τώρα</string>
     <string name="now_playing_up_next">Επόμενο</string>
     <string name="now_playing_back">Πίσω</string>

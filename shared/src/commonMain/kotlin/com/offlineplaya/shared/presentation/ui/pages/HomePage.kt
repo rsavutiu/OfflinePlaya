@@ -28,6 +28,7 @@ import com.offlineplaya.shared.presentation.ui.Orientation
 import com.offlineplaya.shared.presentation.ui.atoms.SectionLabel
 import com.offlineplaya.shared.presentation.ui.molecules.HomeHeader
 import com.offlineplaya.shared.presentation.ui.molecules.HomeStatsRow
+import com.offlineplaya.shared.presentation.ui.organisms.EmptyLibraryGuide
 import com.offlineplaya.shared.presentation.ui.organisms.HomeBrowseGrid
 import com.offlineplaya.shared.presentation.ui.organisms.RecentAlbumsShelf
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
@@ -44,6 +45,12 @@ import org.jetbrains.compose.resources.stringResource
  * Landing page. When the library has content (or a scan is in flight), shows
  * header + stats + recently-played + browse grid stacked into the available
  * height (no scroll — the grid absorbs leftover space via `weight(1f)`).
+ *
+ * When [isEmpty] is true — the library is *loaded and has zero tracks* — the
+ * page swaps in [EmptyLibraryGuide], which walks the user through adding music.
+ * The flag is computed upstream from a loaded-and-empty signal (never raw
+ * `trackCount == 0`), so a returning user with a large library never flashes
+ * the onboarding guide while the count is still resolving.
  */
 @Composable
 fun HomePage(
@@ -55,6 +62,7 @@ fun HomePage(
     playlistCount: Int,
     recentAlbums: PersistentList<Album>,
     representativeTrackOfAlbum: suspend (Long) -> Track? = { null },
+    isEmpty: Boolean = false,
     onOpenLibrary: () -> Unit,
     onOpenAllTracks: () -> Unit,
     onOpenAlbums: () -> Unit,
@@ -72,6 +80,14 @@ fun HomePage(
         contentWindowInsets = WindowInsets(0),
         containerColor = MaterialTheme.colorScheme.background,
     ) { padding ->
+        if (isEmpty) {
+            EmptyLibraryGuide(
+                onOpenSearch = onOpenSearch,
+                onOpenSettings = onOpenSettings,
+                modifier = Modifier.padding(padding),
+            )
+            return@Scaffold
+        }
         ResponsiveContent(modifier = Modifier.padding(padding)) {
             PopulatedHome(
                 status = status,
@@ -323,7 +339,8 @@ private fun LandscapeHome(
 
 @PreviewScreenSizes
 @Composable
-private fun HomePageIdlePreview() {
+private fun HomePageEmptyPreview() {
+    // Loaded-and-empty: the onboarding guide replaces the browse grid.
     PreviewTheme(darkTheme = true) {
         HomePage(
             status = SyncStatus.Idle,
@@ -331,6 +348,7 @@ private fun HomePageIdlePreview() {
             folderCount = 0,
             albumCount = 0, artistCount = 0, playlistCount = 0,
             recentAlbums = persistentListOf(),
+            isEmpty = true,
             onOpenLibrary = {}, onOpenAllTracks = {},
             onOpenAlbums = {}, onOpenArtists = {},
             onOpenPlaylists = {}, onOpenFolders = {},

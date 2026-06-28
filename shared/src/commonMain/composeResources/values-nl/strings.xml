@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d albums</string>
     <string name="home_label_artists_count">%1$d artiesten</string>
     <string name="home_label_playlists_count">%1$d afspeellijsten</string>
+    <string name="empty_library_title">Nog geen muziek</string>
+    <string name="empty_library_subtitle">OfflinePlaya speelt audiobestanden af die al op je apparaat staan — het streamt nooit. Zo voeg je je muziek toe:</string>
+    <string name="empty_library_step1_title">1 · Zet de bestanden op een computer</string>
+    <string name="empty_library_step1_body">Koop of download je nummers (MP3, FLAC, M4A, OGG…) op je pc of Mac, of kopieer ze van een cd of uit je bestaande collectie.</string>
+    <string name="empty_library_step2_title">2 · Kopieer ze naar je telefoon</string>
+    <string name="empty_library_step2_body">Verbind je telefoon via USB en sleep de bestanden naar de map Downloads of Music. Een microSD-kaart, een clouddownload of een Bluetooth-overdracht werkt ook — alles wat de bestanden in de opslag van het apparaat plaatst.</string>
+    <string name="empty_library_step3_title">3 · Start OfflinePlaya opnieuw</string>
+    <string name="empty_library_step3_body">Sluit de app volledig (veeg hem weg uit recente apps) en open hem opnieuw. Hij scant bij elke start opnieuw, dus je nieuwe nummers verschijnen automatisch.</string>
+    <string name="empty_library_permission_note">Muziek in Downloads en Music wordt automatisch opgepikt zodra je de muziektoegangsmachtiging verleent. Open Instellingen → Bibliotheek om een andere map te indexeren en voeg die daar toe.</string>
+    <string name="empty_library_open_settings">Instellingen openen</string>
     <string name="now_playing_title">Nu aan het spelen</string>
     <string name="now_playing_up_next">Volgende</string>
     <string name="now_playing_back">Terug</string>

@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d àlbums</string>
     <string name="home_label_artists_count">%1$d artistes</string>
     <string name="home_label_playlists_count">%1$d llistes de reproducció</string>
+    <string name="empty_library_title">Encara no hi ha música</string>
+    <string name="empty_library_subtitle">OfflinePlaya reprodueix fitxers d\'àudio que ja són al teu dispositiu — mai no fa streaming. Així pots afegir la teva música:</string>
+    <string name="empty_library_step1_title">1 · Aconsegueix els fitxers en un ordinador</string>
+    <string name="empty_library_step1_body">Compra o descarrega les teves cançons (MP3, FLAC, M4A, OGG…) al teu PC o Mac, o copia-les d\'un CD o de la teva col·lecció existent.</string>
+    <string name="empty_library_step2_title">2 · Copia-les al teu telèfon</string>
+    <string name="empty_library_step2_body">Connecta el telèfon per USB i arrossega els fitxers a la carpeta Downloads o Music. També funciona una targeta microSD, una descàrrega al núvol o una transferència per Bluetooth — qualsevol cosa que deixi els fitxers a l\'emmagatzematge del dispositiu.</string>
+    <string name="empty_library_step3_title">3 · Reinicia OfflinePlaya</string>
+    <string name="empty_library_step3_body">Tanca completament l\'aplicació (llisca-la fora de les recents) i torna-la a obrir. Torna a escanejar a cada inici, així que les teves cançons noves apareixen automàticament.</string>
+    <string name="empty_library_permission_note">La música a Downloads i Music es detecta automàticament un cop concedeixes el permís d\'accés a la música. Per indexar una altra carpeta, obre Configuració → Biblioteca i afegeix-la allà.</string>
+    <string name="empty_library_open_settings">Obre la configuració</string>
     <string name="now_playing_title">Ara jugant</string>
     <string name="now_playing_up_next">A continuació</string>
     <string name="now_playing_back">Enrere</string>

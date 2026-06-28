@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d 張專輯</string>
     <string name="home_label_artists_count">%1$d 位藝術家</string>
     <string name="home_label_playlists_count">%1$d 個播放列表</string>
+    <string name="empty_library_title">還沒有音樂</string>
+    <string name="empty_library_subtitle">OfflinePlaya 會播放裝置上已有的音訊檔案——它從不進行串流。新增音樂的方法如下：</string>
+    <string name="empty_library_step1_title">1 · 在電腦上取得檔案</string>
+    <string name="empty_library_step1_body">在 PC 或 Mac 上購買或下載你的曲目（MP3、FLAC、M4A、OGG…），或從 CD 或你現有的收藏中複製。</string>
+    <string name="empty_library_step2_title">2 · 複製到你的手機</string>
+    <string name="empty_library_step2_body">透過 USB 連接手機，並將檔案拖入 Downloads 或 Music 資料夾。microSD 卡、雲端下載或藍牙傳輸同樣可行——只要能把檔案放進裝置儲存空間即可。</string>
+    <string name="empty_library_step3_title">3 · 重新啟動 OfflinePlaya</string>
+    <string name="empty_library_step3_body">完全關閉應用程式（從最近工作中滑掉），然後重新開啟。每次啟動都會重新掃描，因此你的新曲目會自動出現。</string>
+    <string name="empty_library_permission_note">授予音樂存取權限後，Downloads 和 Music 中的音樂會被自動收錄。若要為其他資料夾建立索引，請開啟 設定 → 媒體庫 並在那裡新增。</string>
+    <string name="empty_library_open_settings">開啟設定</string>
     <string name="now_playing_title">正在播放</string>
     <string name="now_playing_up_next">接下來</string>
     <string name="now_playing_back">返回</string>

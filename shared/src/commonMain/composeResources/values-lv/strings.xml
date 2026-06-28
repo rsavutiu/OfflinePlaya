@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d albumi</string>
     <string name="home_label_artists_count">%1$d mākslinieki</string>
     <string name="home_label_playlists_count">%1$d atskaņošanas saraksti</string>
+    <string name="empty_library_title">Vēl nav mūzikas</string>
+    <string name="empty_library_subtitle">OfflinePlaya atskaņo audio failus, kas jau ir tavā ierīcē — tas nekad nestraumē. Lūk, kā pievienot savu mūziku:</string>
+    <string name="empty_library_step1_title">1 · Iegūsti failus datorā</string>
+    <string name="empty_library_step1_body">Iegādājies vai lejupielādē savus ierakstus (MP3, FLAC, M4A, OGG…) datorā vai Mac, vai nokopē tos no CD vai savas esošās kolekcijas.</string>
+    <string name="empty_library_step2_title">2 · Nokopē tos savā tālrunī</string>
+    <string name="empty_library_step2_body">Pievieno tālruni, izmantojot USB, un ievelc failus mapē Downloads vai Music. Der arī microSD karte, lejupielāde no mākoņa vai pārsūtīšana caur Bluetooth — viss, kas ievieto failus ierīces krātuvē.</string>
+    <string name="empty_library_step3_title">3 · Restartē OfflinePlaya</string>
+    <string name="empty_library_step3_body">Pilnībā aizver lietotni (aizvelc to no nesenajām) un atver to vēlreiz. Tā skenē katrā palaišanas reizē, tāpēc tavi jaunie ieraksti parādās automātiski.</string>
+    <string name="empty_library_permission_note">Mūzika mapēs Downloads un Music tiek atrasta automātiski, tiklīdz piešķir mūzikas piekļuves atļauju. Lai indeksētu citu mapi, atver Iestatījumi → Bibliotēka un pievieno to tur.</string>
+    <string name="empty_library_open_settings">Atvērt iestatījumus</string>
     <string name="now_playing_title">Tagad spēlē</string>
     <string name="now_playing_up_next">Nākamais</string>
     <string name="now_playing_back">Atpakaļ</string>

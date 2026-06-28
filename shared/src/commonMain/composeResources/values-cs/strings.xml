@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">Alba: %1$d</string>
     <string name="home_label_artists_count">%1$d umělců</string>
     <string name="home_label_playlists_count">%1$d seznamů videí</string>
+    <string name="empty_library_title">Zatím žádná hudba</string>
+    <string name="empty_library_subtitle">OfflinePlaya přehrává zvukové soubory, které už máte v zařízení — nikdy nestreamuje. Takto přidáte svou hudbu:</string>
+    <string name="empty_library_step1_title">1 · Získejte soubory do počítače</string>
+    <string name="empty_library_step1_body">Kupte si nebo stáhněte své skladby (MP3, FLAC, M4A, OGG…) na PC nebo Mac, případně je zkopírujte z CD nebo ze své stávající sbírky.</string>
+    <string name="empty_library_step2_title">2 · Zkopírujte je do telefonu</string>
+    <string name="empty_library_step2_body">Připojte telefon přes USB a přetáhněte soubory do složky Downloads nebo Music. Funguje i karta microSD, stažení z cloudu nebo přenos přes Bluetooth — cokoli, co dostane soubory do úložiště zařízení.</string>
+    <string name="empty_library_step3_title">3 · Restartujte OfflinePlaya</string>
+    <string name="empty_library_step3_body">Aplikaci úplně zavřete (odsuňte ji z naposledy použitých) a znovu ji otevřete. Při každém spuštění provede nové skenování, takže se vaše nové skladby zobrazí automaticky.</string>
+    <string name="empty_library_permission_note">Hudba ve složkách Downloads a Music se načte automaticky, jakmile udělíte oprávnění pro přístup k hudbě. Chcete-li indexovat jinou složku, otevřete Nastavení → Knihovna a přidejte ji tam.</string>
+    <string name="empty_library_open_settings">Otevřít nastavení</string>
     <string name="now_playing_title">Právě se přehrává</string>
     <string name="now_playing_up_next">Další</string>
     <string name="now_playing_back">Zpět</string>

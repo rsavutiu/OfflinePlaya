@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d (na) album</string>
     <string name="home_label_artists_count">%1$d mga artista</string>
     <string name="home_label_playlists_count">%1$d (na) playlist</string>
+    <string name="empty_library_title">Wala pang musika</string>
+    <string name="empty_library_subtitle">Pinapatugtog ng OfflinePlaya ang mga audio file na nasa iyong device na — hindi ito kailanman nag-stream. Narito kung paano idagdag ang iyong musika:</string>
+    <string name="empty_library_step1_title">1 · Kunin ang mga file sa isang computer</string>
+    <string name="empty_library_step1_body">Bumili o mag-download ng iyong mga track (MP3, FLAC, M4A, OGG…) sa iyong PC o Mac, o kopyahin ang mga ito mula sa isang CD o sa iyong umiiral na koleksyon.</string>
+    <string name="empty_library_step2_title">2 · Kopyahin ang mga ito sa iyong telepono</string>
+    <string name="empty_library_step2_body">Ikonekta ang iyong telepono sa USB at i-drag ang mga file papunta sa folder na Downloads o Music. Gumagana rin ang microSD card, cloud download, o paglilipat sa Bluetooth — anumang maglalagay ng mga file sa storage ng device.</string>
+    <string name="empty_library_step3_title">3 · I-restart ang OfflinePlaya</string>
+    <string name="empty_library_step3_body">Isara nang lubusan ang app (i-swipe ito palabas ng mga kamakailan) at buksan itong muli. Nag-i-scan ito sa bawat paglulunsad, kaya awtomatikong lumalabas ang iyong mga bagong track.</string>
+    <string name="empty_library_permission_note">Ang musika sa Downloads at Music ay awtomatikong nakukuha kapag binigyan mo ng pahintulot sa pag-access sa musika. Upang i-index ang ibang folder, buksan ang Mga Setting → Aklatan at idagdag ito roon.</string>
+    <string name="empty_library_open_settings">Buksan ang mga setting</string>
     <string name="now_playing_title">Naglalaro Ngayon</string>
     <string name="now_playing_up_next">Sa susunod</string>
     <string name="now_playing_back">Bumalik</string>

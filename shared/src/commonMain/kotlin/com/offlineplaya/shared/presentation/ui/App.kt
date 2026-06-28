@@ -419,6 +419,10 @@ private fun DestinationBody(
                 // the home grid's fans stay empty on a fresh install
                 // and only grow when the user actually plays something.
                 val recentAlbums by library.recentAlbums.collectAsState()
+                // Loaded-and-empty signal — false while observeCount() is still
+                // resolving, so a returning user never flashes the onboarding
+                // guide (see LibraryStateHolder.isLibraryEmpty).
+                val libraryEmpty by library.isLibraryEmpty.collectAsState()
                 HomePage(
                     status = syncStatus,
                     trackCount = trackCount,
@@ -428,6 +432,7 @@ private fun DestinationBody(
                     playlistCount = playlistList.size,
                     recentAlbums = recentAlbums,
                     representativeTrackOfAlbum = { id -> library.representativeTrackOfAlbum(id) },
+                    isEmpty = libraryEmpty,
                     onOpenLibrary = { navigator.push(AppDestination.LibraryArtists) },
                     onOpenAllTracks = { navigator.push(AppDestination.LibraryFlat) },
                     onOpenAlbums = { navigator.push(AppDestination.LibraryArtists) },

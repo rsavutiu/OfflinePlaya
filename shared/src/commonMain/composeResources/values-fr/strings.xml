@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d albums</string>
     <string name="home_label_artists_count">%1$d artistes</string>
     <string name="home_label_playlists_count">%1$d listes de lecture</string>
+    <string name="empty_library_title">Pas encore de musique</string>
+    <string name="empty_library_subtitle">OfflinePlaya lit les fichiers audio déjà présents sur votre appareil — il ne diffuse jamais en streaming. Voici comment ajouter votre musique :</string>
+    <string name="empty_library_step1_title">1 · Récupérez les fichiers sur un ordinateur</string>
+    <string name="empty_library_step1_body">Achetez ou téléchargez vos morceaux (MP3, FLAC, M4A, OGG…) sur votre PC ou Mac, ou copiez-les depuis un CD ou votre collection existante.</string>
+    <string name="empty_library_step2_title">2 · Copiez-les sur votre téléphone</string>
+    <string name="empty_library_step2_body">Connectez votre téléphone en USB et glissez les fichiers dans le dossier Downloads ou Music. Une carte microSD, un téléchargement cloud ou un transfert Bluetooth fonctionnent aussi — tout ce qui place les fichiers dans le stockage de l\'appareil.</string>
+    <string name="empty_library_step3_title">3 · Redémarrez OfflinePlaya</string>
+    <string name="empty_library_step3_body">Fermez complètement l\'application (balayez-la depuis les applications récentes) puis rouvrez-la. Elle relance une analyse à chaque démarrage, vos nouveaux morceaux apparaissent donc automatiquement.</string>
+    <string name="empty_library_permission_note">La musique dans Downloads et Music est détectée automatiquement dès que vous accordez l\'autorisation d\'accès à la musique. Pour indexer un autre dossier, ouvrez Paramètres → Bibliothèque et ajoutez-le là.</string>
+    <string name="empty_library_open_settings">Ouvrir les paramètres</string>
     <string name="now_playing_title">En lecture</string>
     <string name="now_playing_up_next">À venir</string>
     <string name="now_playing_back">Retour</string>

@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d ألبومات</string>
     <string name="home_label_artists_count">%1$d فنانين</string>
     <string name="home_label_playlists_count">%1$d قوائم التشغيل</string>
+    <string name="empty_library_title">لا توجد موسيقى بعد</string>
+    <string name="empty_library_subtitle">يشغّل OfflinePlaya الملفات الصوتية الموجودة بالفعل على جهازك — فهو لا يبثّ عبر الإنترنت إطلاقًا. إليك كيفية إضافة موسيقاك:</string>
+    <string name="empty_library_step1_title">1 · احصل على الملفات على حاسوب</string>
+    <string name="empty_library_step1_body">اشترِ أو نزّل مقاطعك (MP3، FLAC، M4A، OGG…) على حاسوبك الشخصي أو جهاز Mac، أو انسخها من قرص مدمج أو من مجموعتك الحالية.</string>
+    <string name="empty_library_step2_title">2 · انسخها إلى هاتفك</string>
+    <string name="empty_library_step2_body">وصّل هاتفك عبر USB واسحب الملفات إلى مجلد Downloads أو Music. تعمل بطاقة microSD أو التنزيل السحابي أو النقل عبر Bluetooth أيضًا — أي شيء يضع الملفات في تخزين الجهاز.</string>
+    <string name="empty_library_step3_title">3 · أعد تشغيل OfflinePlaya</string>
+    <string name="empty_library_step3_body">أغلق التطبيق تمامًا (مرّره بعيدًا من قائمة التطبيقات الأخيرة) ثم افتحه مجددًا. يُعيد الفحص عند كل تشغيل، لذا تظهر مقاطعك الجديدة تلقائيًا.</string>
+    <string name="empty_library_permission_note">تُلتقط الموسيقى في Downloads وMusic تلقائيًا بمجرد منح إذن الوصول إلى الموسيقى. لفهرسة مجلد آخر، افتح الإعدادات → المكتبة وأضِفه هناك.</string>
+    <string name="empty_library_open_settings">فتح الإعدادات</string>
     <string name="now_playing_title">التشغيل الآن</string>
     <string name="now_playing_up_next">التالي</string>
     <string name="now_playing_back">العودة</string>

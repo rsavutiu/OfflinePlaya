@@ -112,6 +112,19 @@ class LibraryStateHolder(
     val totalTrackCount: StateFlow<Long> = tracks.observeCount()
         .stateIn(scope, SharingStarted.Eagerly, 0L)
 
+    /**
+     * "The library is loaded and has no tracks" — drives the Home onboarding
+     * guide. Crucially starts at `false`, NOT by reading [totalTrackCount]
+     * directly: that flow seeds at `0L` while `observeCount()` is still
+     * resolving, so a returning user with a full library would briefly look
+     * empty. By seeding this at `false` and only flipping `true` once a real
+     * `count == 0` emission arrives, we never flash the guide at someone who
+     * actually has music.
+     */
+    val isLibraryEmpty: StateFlow<Boolean> = tracks.observeCount()
+        .map { it == 0L }
+        .stateIn(scope, SharingStarted.Eagerly, false)
+
     suspend fun findArtist(id: Long): Artist? = artists.findById(id)
     suspend fun findAlbum(id: Long): Album? = albums.findById(id)
     suspend fun findFolder(id: Long): Folder? = folders.findById(id)

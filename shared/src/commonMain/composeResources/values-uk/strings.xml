@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d альбомів</string>
     <string name="home_label_artists_count">Виконавців: %1$d</string>
     <string name="home_label_playlists_count">Списків відтворення: %1$d</string>
+    <string name="empty_library_title">Музики ще немає</string>
+    <string name="empty_library_subtitle">OfflinePlaya відтворює аудіофайли, які вже є на вашому пристрої, — він ніколи не транслює онлайн. Ось як додати свою музику:</string>
+    <string name="empty_library_step1_title">1 · Перенесіть файли на комп\'ютер</string>
+    <string name="empty_library_step1_body">Придбайте або завантажте свої треки (MP3, FLAC, M4A, OGG…) на ПК чи Mac, або скопіюйте їх із CD чи наявної колекції.</string>
+    <string name="empty_library_step2_title">2 · Скопіюйте їх на телефон</string>
+    <string name="empty_library_step2_body">Підключіть телефон через USB і перетягніть файли до папки Downloads або Music. Підійде також картка microSD, завантаження з хмари чи передавання через Bluetooth — усе, що розмістить файли у сховищі пристрою.</string>
+    <string name="empty_library_step3_title">3 · Перезапустіть OfflinePlaya</string>
+    <string name="empty_library_step3_body">Повністю закрийте застосунок (змахніть його з нещодавніх) і відкрийте знову. Він сканує під час кожного запуску, тож ваші нові треки з\'являються автоматично.</string>
+    <string name="empty_library_permission_note">Музика в папках Downloads і Music розпізнається автоматично, щойно ви надасте дозвіл на доступ до музики. Щоб проіндексувати іншу папку, відкрийте Налаштування → Бібліотека й додайте її там.</string>
+    <string name="empty_library_open_settings">Відкрити налаштування</string>
     <string name="now_playing_title">Зараз грає</string>
     <string name="now_playing_up_next">Далі</string>
     <string name="now_playing_back">Назад</string>

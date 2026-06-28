@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d album</string>
     <string name="home_label_artists_count">%1$d előadó</string>
     <string name="home_label_playlists_count">%1$d lejátszási lista</string>
+    <string name="empty_library_title">Még nincs zene</string>
+    <string name="empty_library_subtitle">Az OfflinePlaya az eszközödön már meglévő hangfájlokat játssza le — soha nem streamel. Így adhatod hozzá a zenédet:</string>
+    <string name="empty_library_step1_title">1 · Szerezd meg a fájlokat egy számítógépre</string>
+    <string name="empty_library_step1_body">Vásárold meg vagy töltsd le a számaidat (MP3, FLAC, M4A, OGG…) a PC-dre vagy Mac-edre, vagy másold át őket egy CD-ről vagy a meglévő gyűjteményedből.</string>
+    <string name="empty_library_step2_title">2 · Másold át őket a telefonodra</string>
+    <string name="empty_library_step2_body">Csatlakoztasd a telefont USB-n, és húzd a fájlokat a Downloads vagy a Music mappába. Egy microSD-kártya, felhős letöltés vagy Bluetooth-átvitel is működik — bármi, ami az eszköz tárhelyére juttatja a fájlokat.</string>
+    <string name="empty_library_step3_title">3 · Indítsd újra az OfflinePlaya-t</string>
+    <string name="empty_library_step3_body">Zárd be teljesen az alkalmazást (húzd ki a legutóbbiak közül), majd nyisd meg újra. Minden indításkor újraolvas, így az új számaid automatikusan megjelennek.</string>
+    <string name="empty_library_permission_note">A Downloads és a Music mappában lévő zene automatikusan bekerül, amint megadod a zenehozzáférési engedélyt. Másik mappa indexeléséhez nyisd meg a Beállítások → Könyvtár menüt, és add hozzá ott.</string>
+    <string name="empty_library_open_settings">Beállítások megnyitása</string>
     <string name="now_playing_title">Most játszik</string>
     <string name="now_playing_up_next">Legközelebb</string>
     <string name="now_playing_back">Vissza</string>

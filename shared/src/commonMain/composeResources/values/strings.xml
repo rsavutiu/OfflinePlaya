@@ -36,6 +36,18 @@
     <string name="home_label_artists_count">%1$d artists</string>
     <string name="home_label_playlists_count">%1$d playlists</string>
 
+    <!-- Empty-library onboarding (shown on Home when no audio is indexed yet) -->
+    <string name="empty_library_title">No music yet</string>
+    <string name="empty_library_subtitle">OfflinePlaya plays audio files that are already on your device — it never streams. Here\'s how to add your music:</string>
+    <string name="empty_library_step1_title">1 · Get the files on a computer</string>
+    <string name="empty_library_step1_body">Buy or download your tracks (MP3, FLAC, M4A, OGG…) on your PC or Mac, or copy them from a CD or your existing collection.</string>
+    <string name="empty_library_step2_title">2 · Copy them to your phone</string>
+    <string name="empty_library_step2_body">Connect your phone over USB and drag the files into its Downloads or Music folder. A microSD card, cloud download, or Bluetooth transfer works too — anything that lands the files in on-device storage.</string>
+    <string name="empty_library_step3_title">3 · Restart OfflinePlaya</string>
+    <string name="empty_library_step3_body">Fully close the app (swipe it away from Recents) and open it again. It rescans on every launch, so your new tracks show up automatically.</string>
+    <string name="empty_library_permission_note">Music in Downloads and Music is picked up automatically once you grant the music-access permission. To index a different folder, open Settings → Library and add it there.</string>
+    <string name="empty_library_open_settings">Open Settings</string>
+
     <!-- Now Playing Page Strings -->
     <!-- Player UI elements -->
     <string name="now_playing_title">Now Playing</string>

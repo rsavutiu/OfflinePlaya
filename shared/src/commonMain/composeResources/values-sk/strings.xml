@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d albumov</string>
     <string name="home_label_artists_count">%1$d interpretov</string>
     <string name="home_label_playlists_count">%1$d zoznamov skladieb</string>
+    <string name="empty_library_title">Zatiaľ žiadna hudba</string>
+    <string name="empty_library_subtitle">OfflinePlaya prehráva zvukové súbory, ktoré už máte v zariadení — nikdy nestreamuje. Takto pridáte svoju hudbu:</string>
+    <string name="empty_library_step1_title">1 · Získajte súbory do počítača</string>
+    <string name="empty_library_step1_body">Kúpte si alebo stiahnite svoje skladby (MP3, FLAC, M4A, OGG…) do počítača alebo Macu, prípadne ich skopírujte z CD alebo z existujúcej zbierky.</string>
+    <string name="empty_library_step2_title">2 · Skopírujte ich do telefónu</string>
+    <string name="empty_library_step2_body">Pripojte telefón cez USB a presuňte súbory do priečinka Downloads alebo Music. Funguje aj karta microSD, stiahnutie z cloudu alebo prenos cez Bluetooth — čokoľvek, čo dostane súbory do úložiska zariadenia.</string>
+    <string name="empty_library_step3_title">3 · Reštartujte OfflinePlaya</string>
+    <string name="empty_library_step3_body">Aplikáciu úplne zatvorte (potiahnite ju z naposledy použitých) a znova ju otvorte. Pri každom spustení vykoná nové skenovanie, takže vaše nové skladby sa zobrazia automaticky.</string>
+    <string name="empty_library_permission_note">Hudba v priečinkoch Downloads a Music sa načíta automaticky, hneď ako udelíte povolenie na prístup k hudbe. Ak chcete indexovať iný priečinok, otvorte Nastavenia → Knižnica a pridajte ho tam.</string>
+    <string name="empty_library_open_settings">Otvoriť nastavenia</string>
     <string name="now_playing_title">Prehráva sa</string>
     <string name="now_playing_up_next">Ďalej</string>
     <string name="now_playing_back">Späť</string>

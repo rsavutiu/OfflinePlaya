@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d albumit</string>
     <string name="home_label_artists_count">%1$d artisti</string>
     <string name="home_label_playlists_count">%1$d esitusloendit</string>
+    <string name="empty_library_title">Muusikat veel pole</string>
+    <string name="empty_library_subtitle">OfflinePlaya esitab helifaile, mis on juba sinu seadmes — see ei voogesita kunagi. Nii lisad oma muusika:</string>
+    <string name="empty_library_step1_title">1 · Hangi failid arvutisse</string>
+    <string name="empty_library_step1_body">Osta või laadi oma lood (MP3, FLAC, M4A, OGG…) alla oma arvutisse või Maci, või kopeeri need CD-lt või olemasolevast kogust.</string>
+    <string name="empty_library_step2_title">2 · Kopeeri need oma telefoni</string>
+    <string name="empty_library_step2_body">Ühenda telefon USB kaudu ja lohista failid kausta Downloads või Music. Toimib ka microSD-kaart, pilvest allalaadimine või Bluetoothi kaudu ülekanne — kõik, mis viib failid seadme mällu.</string>
+    <string name="empty_library_step3_title">3 · Taaskäivita OfflinePlaya</string>
+    <string name="empty_library_step3_body">Sulge rakendus täielikult (pühi see hiljutiste seast välja) ja ava uuesti. See skannib igal käivitusel, nii et su uued lood ilmuvad automaatselt.</string>
+    <string name="empty_library_permission_note">Muusika kaustades Downloads ja Music leitakse automaatselt, kui annad muusikale juurdepääsu loa. Mõne muu kausta indekseerimiseks ava Seaded → Teek ja lisa see sealt.</string>
+    <string name="empty_library_open_settings">Ava seaded</string>
     <string name="now_playing_title">Mängib</string>
     <string name="now_playing_up_next">Järgmisena</string>
     <string name="now_playing_back">Tagasi</string>

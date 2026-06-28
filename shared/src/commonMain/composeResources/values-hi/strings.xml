@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d एल्बम</string>
     <string name="home_label_artists_count">%1$d कलाकार</string>
     <string name="home_label_playlists_count">%1$d प्लेलिस्ट</string>
+    <string name="empty_library_title">अभी कोई संगीत नहीं</string>
+    <string name="empty_library_subtitle">OfflinePlaya उन ऑडियो फ़ाइलों को चलाता है जो पहले से आपके डिवाइस पर हैं — यह कभी स्ट्रीम नहीं करता। अपना संगीत इस तरह जोड़ें:</string>
+    <string name="empty_library_step1_title">1 · फ़ाइलें कंप्यूटर पर लाएँ</string>
+    <string name="empty_library_step1_body">अपने ट्रैक (MP3, FLAC, M4A, OGG…) अपने PC या Mac पर खरीदें या डाउनलोड करें, या उन्हें किसी CD या अपने मौजूदा संग्रह से कॉपी करें.</string>
+    <string name="empty_library_step2_title">2 · उन्हें अपने फ़ोन में कॉपी करें</string>
+    <string name="empty_library_step2_body">अपना फ़ोन USB से कनेक्ट करें और फ़ाइलों को उसके Downloads या Music फ़ोल्डर में खींचें. microSD कार्ड, क्लाउड डाउनलोड या Bluetooth ट्रांसफ़र भी काम करता है — कुछ भी जो फ़ाइलों को डिवाइस के स्टोरेज में रखे.</string>
+    <string name="empty_library_step3_title">3 · OfflinePlaya को पुनः आरंभ करें</string>
+    <string name="empty_library_step3_body">ऐप को पूरी तरह बंद करें (इसे हाल के ऐप्स से हटाएँ) और फिर से खोलें. यह हर बार शुरू होने पर दोबारा स्कैन करता है, इसलिए आपके नए ट्रैक अपने आप दिख जाते हैं.</string>
+    <string name="empty_library_permission_note">Downloads और Music में मौजूद संगीत, संगीत-एक्सेस अनुमति देते ही अपने आप पहचान लिया जाता है. किसी अन्य फ़ोल्डर को इंडेक्स करने के लिए सेटिंग → लाइब्रेरी खोलें और उसे वहाँ जोड़ें.</string>
+    <string name="empty_library_open_settings">सेटिंग खोलें</string>
     <string name="now_playing_title">अभी चल रहा है</string>
     <string name="now_playing_up_next">आगे</string>
     <string name="now_playing_back">वापस</string>

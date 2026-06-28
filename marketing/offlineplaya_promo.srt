@@ -1,0 +1,47 @@
+1
+00:00:05,000 --> 00:00:10,000
+Spotify wants ten bucks a month.
+
+2
+00:00:10,000 --> 00:00:14,000
+Your music is already on your phone.
+
+3
+00:00:14,000 --> 00:00:20,000
+OfflinePlaya plays the files you own.
+
+4
+00:00:20,000 --> 00:00:24,000
+Point it at a folder. Done.
+
+5
+00:00:24,000 --> 00:00:29,000
+Browse. Tap. Play.
+
+6
+00:00:29,000 --> 00:00:35,000
+Smart playlists you didn't have to build —
+
+7
+00:00:35,000 --> 00:00:40,000
+recently played, forgotten favorites,
+
+8
+00:00:40,000 --> 00:00:45,000
+the ones you've never tried.
+
+9
+00:00:45,000 --> 00:00:51,000
+Volume keys push past max into a 10-step preamp.
+
+10
+00:00:51,000 --> 00:00:56,000
+Real EQ. Android Auto. Tag editor built in.
+
+11
+00:01:00,000 --> 00:01:05,000
+No account. No cloud. No telemetry.
+
+12
+00:01:05,000 --> 00:01:12,000
+OfflinePlaya. On Google Play.

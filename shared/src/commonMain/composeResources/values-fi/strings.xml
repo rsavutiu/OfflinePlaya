@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d albumia</string>
     <string name="home_label_artists_count">%1$d artistia</string>
     <string name="home_label_playlists_count">%1$d soittolistaa</string>
+    <string name="empty_library_title">Ei vielä musiikkia</string>
+    <string name="empty_library_subtitle">OfflinePlaya toistaa äänitiedostoja, jotka ovat jo laitteellasi — se ei koskaan suoratoista. Näin lisäät musiikkisi:</string>
+    <string name="empty_library_step1_title">1 · Hae tiedostot tietokoneelle</string>
+    <string name="empty_library_step1_body">Osta tai lataa kappaleesi (MP3, FLAC, M4A, OGG…) PC:lle tai Macille, tai kopioi ne CD:ltä tai olemassa olevasta kokoelmastasi.</string>
+    <string name="empty_library_step2_title">2 · Kopioi ne puhelimeesi</string>
+    <string name="empty_library_step2_body">Yhdistä puhelin USB:llä ja vedä tiedostot kansioon Downloads tai Music. Myös microSD-kortti, pilvilataus tai Bluetooth-siirto käy — mikä tahansa, joka saa tiedostot laitteen tallennustilaan.</string>
+    <string name="empty_library_step3_title">3 · Käynnistä OfflinePlaya uudelleen</string>
+    <string name="empty_library_step3_body">Sulje sovellus kokonaan (pyyhkäise se pois viimeaikaisista) ja avaa se uudelleen. Se skannaa joka käynnistyksellä, joten uudet kappaleesi tulevat näkyviin automaattisesti.</string>
+    <string name="empty_library_permission_note">Downloads- ja Music-kansioiden musiikki havaitaan automaattisesti, kun myönnät musiikin käyttöoikeuden. Indeksoidaksesi toisen kansion avaa Asetukset → Kirjasto ja lisää se sieltä.</string>
+    <string name="empty_library_open_settings">Avaa asetukset</string>
     <string name="now_playing_title">Nyt pelaa</string>
     <string name="now_playing_up_next">Seuraavaksi</string>
     <string name="now_playing_back">Takaisin</string>

@@ -94,4 +94,35 @@ class HomePageTest {
         onNodeWithTag(TestTags.Home.RECENT_SHELF).assertDoesNotExist()
         onNodeWithTag(TestTags.Home.BROWSE_TRACKS).assertIsDisplayed()
     }
+
+    @Test
+    fun shows_onboarding_guide_when_library_loaded_and_empty() = runComposeUiTest {
+        setContent {
+            PreviewTheme {
+                HomePage(
+                    status = SyncStatus.Idle,
+                    trackCount = 0,
+                    folderCount = 0,
+                    albumCount = 0,
+                    artistCount = 0,
+                    playlistCount = 0,
+                    recentAlbums = persistentListOf(),
+                    isEmpty = true,
+                    onOpenLibrary = {},
+                    onOpenAllTracks = {},
+                    onOpenAlbums = {},
+                    onOpenArtists = {},
+                    onOpenPlaylists = {},
+                    onOpenSearch = {},
+                    onOpenSettings = {},
+                )
+            }
+        }
+
+        // The guide replaces the browse grid entirely; the page root stays
+        // present so navigation assertions keep working.
+        onNodeWithTag(TestTags.Home.ROOT).assertIsDisplayed()
+        onNodeWithTag(TestTags.Home.EMPTY_GUIDE).assertIsDisplayed()
+        onNodeWithTag(TestTags.Home.BROWSE_TRACKS).assertDoesNotExist()
+    }
 }

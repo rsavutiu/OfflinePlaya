@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d albumov</string>
     <string name="home_label_artists_count">%1$d umetnikov</string>
     <string name="home_label_playlists_count">%1$d seznamov predvajanja</string>
+    <string name="empty_library_title">Glasbe še ni</string>
+    <string name="empty_library_subtitle">OfflinePlaya predvaja zvočne datoteke, ki so že v vaši napravi — nikoli ne pretaka. Tako dodate svojo glasbo:</string>
+    <string name="empty_library_step1_title">1 · Datoteke prenesite v računalnik</string>
+    <string name="empty_library_step1_body">Kupite ali prenesite svoje skladbe (MP3, FLAC, M4A, OGG…) v računalnik ali Mac, ali jih kopirajte s CD-ja ali iz obstoječe zbirke.</string>
+    <string name="empty_library_step2_title">2 · Kopirajte jih v telefon</string>
+    <string name="empty_library_step2_body">Telefon povežite prek USB-ja in datoteke povlecite v mapo Downloads ali Music. Deluje tudi kartica microSD, prenos iz oblaka ali prenos prek Bluetootha — karkoli, kar datoteke shrani v pomnilnik naprave.</string>
+    <string name="empty_library_step3_title">3 · Znova zaženite OfflinePlaya</string>
+    <string name="empty_library_step3_body">Aplikacijo popolnoma zaprite (povlecite jo iz nedavnih) in jo znova odprite. Ob vsakem zagonu znova pregleda, zato se vaše nove skladbe prikažejo samodejno.</string>
+    <string name="empty_library_permission_note">Glasba v mapah Downloads in Music se samodejno zazna, ko odobrite dovoljenje za dostop do glasbe. Za indeksiranje druge mape odprite Nastavitve → Knjižnica in jo dodajte tam.</string>
+    <string name="empty_library_open_settings">Odpri nastavitve</string>
     <string name="now_playing_title">Zdaj se predvaja</string>
     <string name="now_playing_up_next">Naslednja</string>
     <string name="now_playing_back">Nazaj</string>

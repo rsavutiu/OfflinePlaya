@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d anbom</string>
     <string name="home_label_artists_count">%1$d nghệ sĩ</string>
     <string name="home_label_playlists_count">%1$d danh sách phát</string>
+    <string name="empty_library_title">Chưa có nhạc</string>
+    <string name="empty_library_subtitle">OfflinePlaya phát các tệp âm thanh đã có sẵn trên thiết bị của bạn — nó không bao giờ phát trực tuyến. Đây là cách thêm nhạc của bạn:</string>
+    <string name="empty_library_step1_title">1 · Đưa tệp vào máy tính</string>
+    <string name="empty_library_step1_body">Mua hoặc tải các bản nhạc của bạn (MP3, FLAC, M4A, OGG…) trên PC hoặc Mac, hoặc sao chép chúng từ CD hay bộ sưu tập hiện có của bạn.</string>
+    <string name="empty_library_step2_title">2 · Sao chép chúng vào điện thoại</string>
+    <string name="empty_library_step2_body">Kết nối điện thoại qua USB và kéo các tệp vào thư mục Downloads hoặc Music. Thẻ microSD, tải xuống từ đám mây hay chuyển qua Bluetooth cũng được — bất cứ cách nào đưa tệp vào bộ nhớ thiết bị.</string>
+    <string name="empty_library_step3_title">3 · Khởi động lại OfflinePlaya</string>
+    <string name="empty_library_step3_body">Đóng hẳn ứng dụng (vuốt nó ra khỏi danh sách gần đây) rồi mở lại. Ứng dụng quét lại mỗi lần khởi động, nên các bản nhạc mới của bạn tự động xuất hiện.</string>
+    <string name="empty_library_permission_note">Nhạc trong Downloads và Music được tự động nhận diện ngay khi bạn cấp quyền truy cập nhạc. Để lập chỉ mục một thư mục khác, hãy mở Cài đặt → Thư viện và thêm nó ở đó.</string>
+    <string name="empty_library_open_settings">Mở cài đặt</string>
     <string name="now_playing_title">Đang phát</string>
     <string name="now_playing_up_next">Tiếp theo</string>
     <string name="now_playing_back">Quay lại</string>

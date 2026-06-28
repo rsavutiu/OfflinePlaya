@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d албума</string>
     <string name="home_label_artists_count">%1$d уметника</string>
     <string name="home_label_playlists_count">%1$d плејлисте</string>
+    <string name="empty_library_title">Још нема музике</string>
+    <string name="empty_library_subtitle">OfflinePlaya репродукује аудио датотеке које су већ на вашем уређају — никада не стримује. Ево како да додате своју музику:</string>
+    <string name="empty_library_step1_title">1 · Пренесите датотеке на рачунар</string>
+    <string name="empty_library_step1_body">Купите или преузмите своје нумере (MP3, FLAC, M4A, OGG…) на рачунар или Mac, или их копирајте са CD-а или из постојеће колекције.</string>
+    <string name="empty_library_step2_title">2 · Копирајте их на телефон</string>
+    <string name="empty_library_step2_body">Повежите телефон преко USB-а и превуците датотеке у фасциклу Downloads или Music. Функционише и microSD картица, преузимање са облака или пренос преко Bluetooth-а — било шта што смести датотеке у меморију уређаја.</string>
+    <string name="empty_library_step3_title">3 · Поново покрените OfflinePlaya</string>
+    <string name="empty_library_step3_body">Потпуно затворите апликацију (превуците је из недавних) и поново је отворите. Скенира при сваком покретању, па се ваше нове нумере приказују аутоматски.</string>
+    <string name="empty_library_permission_note">Музика у фасциклама Downloads и Music се аутоматски открива чим дате дозволу за приступ музици. Да бисте индексирали другу фасциклу, отворите Подешавања → Библиотека и додајте је тамо.</string>
+    <string name="empty_library_open_settings">Отвори подешавања</string>
     <string name="now_playing_title">Нов Плаиинг</string>
     <string name="now_playing_up_next">Следеће</string>
     <string name="now_playing_back">Назад</string>

@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d albumai</string>
     <string name="home_label_artists_count">%1$d atlikėjai</string>
     <string name="home_label_playlists_count">%1$d grojaraščiai</string>
+    <string name="empty_library_title">Kol kas muzikos nėra</string>
+    <string name="empty_library_subtitle">„OfflinePlaya“ groja garso failus, kurie jau yra jūsų įrenginyje — ji niekada netransliuoja. Štai kaip pridėti savo muziką:</string>
+    <string name="empty_library_step1_title">1 · Parsisiųskite failus į kompiuterį</string>
+    <string name="empty_library_step1_body">Įsigykite arba atsisiųskite savo kūrinius (MP3, FLAC, M4A, OGG…) į kompiuterį ar „Mac“, arba nukopijuokite juos iš CD ar esamos kolekcijos.</string>
+    <string name="empty_library_step2_title">2 · Nukopijuokite juos į telefoną</string>
+    <string name="empty_library_step2_body">Prijunkite telefoną per USB ir nuvilkite failus į aplanką Downloads arba Music. Tinka ir microSD kortelė, atsisiuntimas iš debesies ar perdavimas per „Bluetooth“ — bet kas, kas patalpina failus į įrenginio atmintį.</string>
+    <string name="empty_library_step3_title">3 · Iš naujo paleiskite „OfflinePlaya“</string>
+    <string name="empty_library_step3_body">Visiškai uždarykite programą (nubraukite ją iš neseniai naudotų) ir vėl ją atidarykite. Ji nuskaito iš naujo kiekvieną kartą paleidžiama, todėl jūsų nauji kūriniai pasirodo automatiškai.</string>
+    <string name="empty_library_permission_note">Muzika aplankuose Downloads ir Music aptinkama automatiškai, kai suteikiate prieigos prie muzikos leidimą. Norėdami indeksuoti kitą aplanką, atidarykite Nustatymai → Biblioteka ir pridėkite jį ten.</string>
+    <string name="empty_library_open_settings">Atidaryti nustatymus</string>
     <string name="now_playing_title">Dabar žaidžiama</string>
     <string name="now_playing_up_next">Toliau</string>
     <string name="now_playing_back">Atgal</string>

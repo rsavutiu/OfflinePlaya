@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d album</string>
     <string name="home_label_artists_count">%1$d artister</string>
     <string name="home_label_playlists_count">%1$d spellistor</string>
+    <string name="empty_library_title">Ingen musik ännu</string>
+    <string name="empty_library_subtitle">OfflinePlaya spelar upp ljudfiler som redan finns på din enhet — den strömmar aldrig. Så här lägger du till din musik:</string>
+    <string name="empty_library_step1_title">1 · Hämta filerna till en dator</string>
+    <string name="empty_library_step1_body">Köp eller ladda ner dina låtar (MP3, FLAC, M4A, OGG…) på din PC eller Mac, eller kopiera dem från en CD eller din befintliga samling.</string>
+    <string name="empty_library_step2_title">2 · Kopiera dem till din telefon</string>
+    <string name="empty_library_step2_body">Anslut telefonen via USB och dra filerna till mappen Downloads eller Music. Ett microSD-kort, en molnnedladdning eller en Bluetooth-överföring fungerar också — allt som lägger filerna i enhetens lagring.</string>
+    <string name="empty_library_step3_title">3 · Starta om OfflinePlaya</string>
+    <string name="empty_library_step3_body">Stäng appen helt (svep bort den från de senaste) och öppna den igen. Den söker igenom på nytt vid varje start, så dina nya låtar dyker upp automatiskt.</string>
+    <string name="empty_library_permission_note">Musik i Downloads och Music hittas automatiskt så snart du beviljar behörigheten för musikåtkomst. Öppna Inställningar → Bibliotek för att indexera en annan mapp och lägg till den där.</string>
+    <string name="empty_library_open_settings">Öppna inställningar</string>
     <string name="now_playing_title">Spelar nu</string>
     <string name="now_playing_up_next">Nästa</string>
     <string name="now_playing_back">Tillbaka</string>

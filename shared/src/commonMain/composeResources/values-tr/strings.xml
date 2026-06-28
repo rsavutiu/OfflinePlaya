@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d albüm</string>
     <string name="home_label_artists_count">%1$d sanatçı</string>
     <string name="home_label_playlists_count">%1$d oynatma listesi</string>
+    <string name="empty_library_title">Henüz müzik yok</string>
+    <string name="empty_library_subtitle">OfflinePlaya cihazınızda zaten bulunan ses dosyalarını çalar — asla yayın akışı yapmaz. Müziğinizi şöyle ekleyebilirsiniz:</string>
+    <string name="empty_library_step1_title">1 · Dosyaları bir bilgisayara aktarın</string>
+    <string name="empty_library_step1_body">Parçalarınızı (MP3, FLAC, M4A, OGG…) PC veya Mac\'inize satın alın ya da indirin, veya bir CD\'den ya da mevcut koleksiyonunuzdan kopyalayın.</string>
+    <string name="empty_library_step2_title">2 · Bunları telefonunuza kopyalayın</string>
+    <string name="empty_library_step2_body">Telefonunuzu USB ile bağlayın ve dosyaları Downloads veya Music klasörüne sürükleyin. microSD kart, buluttan indirme ya da Bluetooth aktarımı da işe yarar — dosyaları cihaz deposuna koyan her şey olur.</string>
+    <string name="empty_library_step3_title">3 · OfflinePlaya\'yı yeniden başlatın</string>
+    <string name="empty_library_step3_body">Uygulamayı tamamen kapatın (son uygulamalardan kaydırarak çıkarın) ve yeniden açın. Her açılışta yeniden tarar, böylece yeni parçalarınız otomatik olarak görünür.</string>
+    <string name="empty_library_permission_note">Downloads ve Music içindeki müzik, müzik erişim iznini verir vermez otomatik olarak alınır. Başka bir klasörü dizine eklemek için Ayarlar → Kitaplık\'ı açın ve klasörü oradan ekleyin.</string>
+    <string name="empty_library_open_settings">Ayarları aç</string>
     <string name="now_playing_title">Şimdi Oynanıyor</string>
     <string name="now_playing_up_next">Sıradaki</string>
     <string name="now_playing_back">Geri</string>

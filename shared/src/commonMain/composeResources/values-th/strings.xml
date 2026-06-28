@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d อัลบั้ม</string>
     <string name="home_label_artists_count">ศิลปิน %1$d คน</string>
     <string name="home_label_playlists_count">%1$d เพลย์ลิสต์</string>
+    <string name="empty_library_title">ยังไม่มีเพลง</string>
+    <string name="empty_library_subtitle">OfflinePlaya เล่นไฟล์เสียงที่อยู่บนอุปกรณ์ของคุณอยู่แล้ว — ไม่มีการสตรีมเลย วิธีเพิ่มเพลงของคุณมีดังนี้:</string>
+    <string name="empty_library_step1_title">1 · นำไฟล์มาไว้บนคอมพิวเตอร์</string>
+    <string name="empty_library_step1_body">ซื้อหรือดาวน์โหลดเพลงของคุณ (MP3, FLAC, M4A, OGG…) บนพีซีหรือ Mac หรือคัดลอกจากแผ่นซีดีหรือคอลเลกชันที่มีอยู่</string>
+    <string name="empty_library_step2_title">2 · คัดลอกไปยังโทรศัพท์ของคุณ</string>
+    <string name="empty_library_step2_body">เชื่อมต่อโทรศัพท์ผ่าน USB แล้วลากไฟล์ไปยังโฟลเดอร์ Downloads หรือ Music การ์ด microSD การดาวน์โหลดจากคลาวด์ หรือการถ่ายโอนผ่าน Bluetooth ก็ใช้ได้ — อะไรก็ตามที่ทำให้ไฟล์ไปอยู่ในที่จัดเก็บของอุปกรณ์</string>
+    <string name="empty_library_step3_title">3 · เริ่ม OfflinePlaya ใหม่</string>
+    <string name="empty_library_step3_body">ปิดแอปจนสุด (ปัดออกจากแอปล่าสุด) แล้วเปิดอีกครั้ง แอปจะสแกนใหม่ทุกครั้งที่เปิด เพลงใหม่ของคุณจึงปรากฏโดยอัตโนมัติ</string>
+    <string name="empty_library_permission_note">เพลงใน Downloads และ Music จะถูกตรวจพบโดยอัตโนมัติเมื่อคุณให้สิทธิ์เข้าถึงเพลง หากต้องการจัดทำดัชนีโฟลเดอร์อื่น ให้เปิด การตั้งค่า → คลังเพลง แล้วเพิ่มที่นั่น</string>
+    <string name="empty_library_open_settings">เปิดการตั้งค่า</string>
     <string name="now_playing_title">กำลังเล่นอยู่</string>
     <string name="now_playing_up_next">ต่อไป</string>
     <string name="now_playing_back">กลับ</string>

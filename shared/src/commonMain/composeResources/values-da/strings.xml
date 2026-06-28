@@ -28,6 +28,16 @@
     <string name="home_label_albums_count">%1$d album</string>
     <string name="home_label_artists_count">%1$d kunstnere</string>
     <string name="home_label_playlists_count">%1$d afspilningslister</string>
+    <string name="empty_library_title">Ingen musik endnu</string>
+    <string name="empty_library_subtitle">OfflinePlaya afspiller lydfiler, der allerede er på din enhed — den streamer aldrig. Sådan tilføjer du din musik:</string>
+    <string name="empty_library_step1_title">1 · Hent filerne på en computer</string>
+    <string name="empty_library_step1_body">Køb eller download dine numre (MP3, FLAC, M4A, OGG…) på din pc eller Mac, eller kopiér dem fra en cd eller din eksisterende samling.</string>
+    <string name="empty_library_step2_title">2 · Kopiér dem til din telefon</string>
+    <string name="empty_library_step2_body">Forbind din telefon via USB, og træk filerne ind i mappen Downloads eller Music. Et microSD-kort, en cloud-download eller en Bluetooth-overførsel virker også — alt, der lægger filerne i enhedens lager.</string>
+    <string name="empty_library_step3_title">3 · Genstart OfflinePlaya</string>
+    <string name="empty_library_step3_body">Luk appen helt (svirp den væk fra de seneste) og åbn den igen. Den scanner ved hver opstart, så dine nye numre vises automatisk.</string>
+    <string name="empty_library_permission_note">Musik i Downloads og Music registreres automatisk, når du giver tilladelse til musikadgang. Vil du indeksere en anden mappe, så åbn Indstillinger → Bibliotek og tilføj den der.</string>
+    <string name="empty_library_open_settings">Åbn indstillinger</string>
     <string name="now_playing_title">Spiller nu</string>
     <string name="now_playing_up_next">Næste</string>
     <string name="now_playing_back">Tilbage</string>
