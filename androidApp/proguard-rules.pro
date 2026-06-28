@@ -62,6 +62,13 @@
 -keep class org.jaudiotagger.audio.flac.metadatablock.** { *; }
 -dontwarn org.jaudiotagger.**
 
+# ── Google Play in-app review (review-ktx) ─────────────────────────────
+# review-ktx's Tasks→coroutines bridge (ReviewManagerKtxKt) references a GMS
+# nullness annotation that isn't on the app classpath. It's a compile-time
+# annotation, absent at runtime, so the reference is harmless — but R8 fails
+# the release build on the missing class. Suppress just that one.
+-dontwarn com.google.android.gms.common.annotation.NoNullnessRewrite
+
 # ── Compose @Preview ───────────────────────────────────────────────────
 # We don't keep previewed composables in release — Android Studio renders
 # previews against the debug variant, so release has no reason to retain
