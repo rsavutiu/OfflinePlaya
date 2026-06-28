@@ -24,7 +24,7 @@ val keystoreProps = Properties().apply {
 // leading "v"). Local/dev builds fall back to the committed defaults so
 // `assembleDebug` works with no env set.
 val appVersionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: 2
-val appVersionName = System.getenv("VERSION_NAME") ?: "0.3.0"
+val appVersionName = System.getenv("VERSION_NAME") ?: "0.3.1"
 
 android {
     namespace = "com.offlineplaya.android"
