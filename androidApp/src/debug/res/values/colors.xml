@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Debug-build override: teal adaptive-icon background (production is
+     near-black #0C0C12) so the two launcher icons are distinguishable. -->
+<resources>
+    <color name="ic_launcher_background">#0E5F55</color>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Debug-build overrides: distinct launcher label so the side-by-side
+     debug install is tellable from the Play-store app at a glance. -->
+<resources>
+    <string name="app_name">Offline Debug</string>
+</resources>
