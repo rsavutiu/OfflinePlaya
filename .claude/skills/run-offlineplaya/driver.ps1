@@ -30,8 +30,12 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-$Pkg = 'com.offlineplaya.android'
-$Activity = "$Pkg/.MainActivity"
+# Debug builds carry an applicationIdSuffix so they install next to the
+# Play-store app (see androidApp/build.gradle.kts buildTypes.debug).
+$Pkg = 'com.offlineplaya.android.debug'
+# applicationIdSuffix changes the package id but NOT the class namespace:
+# the activity class stays com.offlineplaya.android.MainActivity.
+$Activity = "$Pkg/com.offlineplaya.android.MainActivity"
 $RepoRoot = (Resolve-Path "$PSScriptRoot\..\..\..").Path
 $ShotDir = Join-Path $PSScriptRoot 'screenshots'
 

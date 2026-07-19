@@ -71,6 +71,13 @@ android {
         debug {
             isMinifyEnabled = false
             isShrinkResources = false
+            // Side-by-side with the Play-store install: the phone carries the
+            // production build (upload-key signed), which blocks installing a
+            // debug-keyed APK under the same package. The suffix makes debug
+            // its own app (separate data, separate library) so `installDebug`
+            // always works on a device that has the store version.
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
         }
         release {
             isMinifyEnabled = true
