@@ -1,4 +1,3 @@
-• Now fully translated into 40+ languages
-• Friendlier first-run guide when your library is still empty
-• Home screen polish
+• Fixed: song transitions no longer spike in volume — crossfade now fades smoothly
+• Better TalkBack support: labeled playback controls, seek bar, and discoverable track options
 • Stability fixes and under-the-hood improvements
