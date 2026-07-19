@@ -242,4 +242,13 @@
         <item quantity="many">%1$d تشغيلًا</item>
         <item quantity="other">%1$d تشغيل</item>
     </plurals>
+    <string name="cd_shuffle">تشغيل عشوائي</string>
+    <string name="state_on">مفعّل</string>
+    <string name="state_off">متوقف</string>
+    <string name="state_playing">قيد التشغيل</string>
+    <string name="action_options">خيارات</string>
+    <string name="repeat_off">إيقاف</string>
+    <string name="repeat_all">كل المقاطع</string>
+    <string name="repeat_one">المقطع الحالي</string>
+    <string name="cd_seek_position">موضع التشغيل</string>
 </resources>

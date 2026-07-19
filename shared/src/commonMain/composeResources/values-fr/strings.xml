@@ -238,4 +238,13 @@
         <item quantity="one">%1$d écoute</item>
         <item quantity="other">%1$d écoutes</item>
     </plurals>
+    <string name="cd_shuffle">Lecture aléatoire</string>
+    <string name="state_on">Activé</string>
+    <string name="state_off">Désactivé</string>
+    <string name="state_playing">En cours de lecture</string>
+    <string name="action_options">Options</string>
+    <string name="repeat_off">Désactivé</string>
+    <string name="repeat_all">Tous les titres</string>
+    <string name="repeat_one">Titre actuel</string>
+    <string name="cd_seek_position">Position de lecture</string>
 </resources>

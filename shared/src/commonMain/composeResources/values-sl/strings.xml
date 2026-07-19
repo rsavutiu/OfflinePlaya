@@ -240,4 +240,13 @@
         <item quantity="few">%1$d predvajanja</item>
         <item quantity="other">%1$d predvajanj</item>
     </plurals>
+    <string name="cd_shuffle">Naključno predvajanje</string>
+    <string name="state_on">Vklopljeno</string>
+    <string name="state_off">Izklopljeno</string>
+    <string name="state_playing">Se predvaja</string>
+    <string name="action_options">Možnosti</string>
+    <string name="repeat_off">Izklopljeno</string>
+    <string name="repeat_all">Vse skladbe</string>
+    <string name="repeat_one">Trenutna skladba</string>
+    <string name="cd_seek_position">Položaj predvajanja</string>
 </resources>

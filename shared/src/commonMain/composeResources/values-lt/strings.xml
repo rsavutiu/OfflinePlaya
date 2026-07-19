@@ -240,4 +240,13 @@
         <item quantity="many">%1$d grojimo</item>
         <item quantity="other">%1$d grojimų</item>
     </plurals>
+    <string name="cd_shuffle">Maišymas</string>
+    <string name="state_on">Įjungta</string>
+    <string name="state_off">Išjungta</string>
+    <string name="state_playing">Grojama</string>
+    <string name="action_options">Parinktys</string>
+    <string name="repeat_off">Išjungta</string>
+    <string name="repeat_all">Visi takeliai</string>
+    <string name="repeat_one">Dabartinis takelis</string>
+    <string name="cd_seek_position">Atkūrimo padėtis</string>
 </resources>

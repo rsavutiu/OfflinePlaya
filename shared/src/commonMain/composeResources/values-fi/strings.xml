@@ -238,4 +238,13 @@
         <item quantity="one">%1$d soittokerta</item>
         <item quantity="other">%1$d soittokertaa</item>
     </plurals>
+    <string name="cd_shuffle">Satunnaistoisto</string>
+    <string name="state_on">Päällä</string>
+    <string name="state_off">Pois</string>
+    <string name="state_playing">Toistetaan</string>
+    <string name="action_options">Valinnat</string>
+    <string name="repeat_off">Pois</string>
+    <string name="repeat_all">Kaikki kappaleet</string>
+    <string name="repeat_one">Nykyinen kappale</string>
+    <string name="cd_seek_position">Toistokohta</string>
 </resources>

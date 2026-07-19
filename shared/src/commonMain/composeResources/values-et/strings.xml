@@ -238,4 +238,13 @@
         <item quantity="one">%1$d esitus</item>
         <item quantity="other">%1$d esitust</item>
     </plurals>
+    <string name="cd_shuffle">Juhuesitus</string>
+    <string name="state_on">Sees</string>
+    <string name="state_off">Väljas</string>
+    <string name="state_playing">Esitamisel</string>
+    <string name="action_options">Valikud</string>
+    <string name="repeat_off">Väljas</string>
+    <string name="repeat_all">Kõik lood</string>
+    <string name="repeat_one">Praegune lugu</string>
+    <string name="cd_seek_position">Esituskoht</string>
 </resources>

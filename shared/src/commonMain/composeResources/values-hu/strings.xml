@@ -238,4 +238,13 @@
         <item quantity="one">%1$d lejátszás</item>
         <item quantity="other">%1$d lejátszás</item>
     </plurals>
+    <string name="cd_shuffle">Keverés</string>
+    <string name="state_on">Be</string>
+    <string name="state_off">Ki</string>
+    <string name="state_playing">Lejátszás alatt</string>
+    <string name="action_options">Lehetőségek</string>
+    <string name="repeat_off">Ki</string>
+    <string name="repeat_all">Összes szám</string>
+    <string name="repeat_one">Aktuális szám</string>
+    <string name="cd_seek_position">Lejátszási pozíció</string>
 </resources>

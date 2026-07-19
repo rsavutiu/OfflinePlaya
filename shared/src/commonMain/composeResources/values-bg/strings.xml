@@ -238,4 +238,13 @@
         <item quantity="one">%1$d изпълнение</item>
         <item quantity="other">%1$d изпълнения</item>
     </plurals>
+    <string name="cd_shuffle">Разбъркване</string>
+    <string name="state_on">Включено</string>
+    <string name="state_off">Изключено</string>
+    <string name="state_playing">Възпроизвежда се</string>
+    <string name="action_options">Опции</string>
+    <string name="repeat_off">Изключено</string>
+    <string name="repeat_all">Всички песни</string>
+    <string name="repeat_one">Текущата песен</string>
+    <string name="cd_seek_position">Позиция на възпроизвеждане</string>
 </resources>

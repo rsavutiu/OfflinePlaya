@@ -238,4 +238,13 @@
         <item quantity="one">%1$d keer afgespeeld</item>
         <item quantity="other">%1$d keer afgespeeld</item>
     </plurals>
+    <string name="cd_shuffle">Shuffle</string>
+    <string name="state_on">Aan</string>
+    <string name="state_off">Uit</string>
+    <string name="state_playing">Wordt afgespeeld</string>
+    <string name="action_options">Opties</string>
+    <string name="repeat_off">Uit</string>
+    <string name="repeat_all">Alle nummers</string>
+    <string name="repeat_one">Huidig nummer</string>
+    <string name="cd_seek_position">Afspeelpositie</string>
 </resources>

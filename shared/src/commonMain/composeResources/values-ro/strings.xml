@@ -239,4 +239,13 @@
         <item quantity="few">%1$d redări</item>
         <item quantity="other">%1$d de redări</item>
     </plurals>
+    <string name="cd_shuffle">Redare aleatorie</string>
+    <string name="state_on">Activat</string>
+    <string name="state_off">Dezactivat</string>
+    <string name="state_playing">În redare</string>
+    <string name="action_options">Opțiuni</string>
+    <string name="repeat_off">Dezactivat</string>
+    <string name="repeat_all">Toate piesele</string>
+    <string name="repeat_one">Piesa curentă</string>
+    <string name="cd_seek_position">Poziția de redare</string>
 </resources>

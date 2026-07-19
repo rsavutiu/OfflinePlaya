@@ -238,4 +238,13 @@
         <item quantity="one">%1$d reprodução</item>
         <item quantity="other">%1$d reproduções</item>
     </plurals>
+    <string name="cd_shuffle">Aleatório</string>
+    <string name="state_on">Ativado</string>
+    <string name="state_off">Desativado</string>
+    <string name="state_playing">A reproduzir</string>
+    <string name="action_options">Opções</string>
+    <string name="repeat_off">Desativado</string>
+    <string name="repeat_all">Todas as faixas</string>
+    <string name="repeat_one">Faixa atual</string>
+    <string name="cd_seek_position">Posição de reprodução</string>
 </resources>

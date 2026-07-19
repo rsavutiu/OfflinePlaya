@@ -238,4 +238,13 @@
         <item quantity="one">%1$d αναπαραγωγή</item>
         <item quantity="other">%1$d αναπαραγωγές</item>
     </plurals>
+    <string name="cd_shuffle">Τυχαία αναπαραγωγή</string>
+    <string name="state_on">Ενεργό</string>
+    <string name="state_off">Ανενεργό</string>
+    <string name="state_playing">Αναπαράγεται</string>
+    <string name="action_options">Επιλογές</string>
+    <string name="repeat_off">Ανενεργό</string>
+    <string name="repeat_all">Όλα τα κομμάτια</string>
+    <string name="repeat_one">Τρέχον κομμάτι</string>
+    <string name="cd_seek_position">Θέση αναπαραγωγής</string>
 </resources>

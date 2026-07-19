@@ -240,4 +240,13 @@
         <item quantity="many">%1$d přehrání</item>
         <item quantity="other">%1$d přehrání</item>
     </plurals>
+    <string name="cd_shuffle">Náhodné přehrávání</string>
+    <string name="state_on">Zapnuto</string>
+    <string name="state_off">Vypnuto</string>
+    <string name="state_playing">Přehrává se</string>
+    <string name="action_options">Možnosti</string>
+    <string name="repeat_off">Vypnuto</string>
+    <string name="repeat_all">Všechny skladby</string>
+    <string name="repeat_one">Aktuální skladba</string>
+    <string name="cd_seek_position">Pozice přehrávání</string>
 </resources>

@@ -15,6 +15,9 @@ import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.cd_repeat_mode
+import offlineplaya.shared.generated.resources.repeat_all
+import offlineplaya.shared.generated.resources.repeat_off
+import offlineplaya.shared.generated.resources.repeat_one
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -42,10 +45,19 @@ fun RepeatToggle(
     } else {
         MaterialTheme.colorScheme.primary
     }
+    // Localized mode name — mode.toString() would leak English enum names
+    // into TalkBack on the other 40 locales.
+    val modeName = stringResource(
+        when (mode) {
+            RepeatMode.OFF -> Res.string.repeat_off
+            RepeatMode.ALL -> Res.string.repeat_all
+            RepeatMode.ONE -> Res.string.repeat_one
+        },
+    )
     IconButton(onClick = { onCycle(next) }, modifier = modifier) {
         Icon(
             imageVector = icon,
-            contentDescription = stringResource(Res.string.cd_repeat_mode, mode.toString()),
+            contentDescription = stringResource(Res.string.cd_repeat_mode, modeName),
             tint = tint
         )
     }

@@ -238,4 +238,13 @@
         <item quantity="one">%1$d پخش</item>
         <item quantity="other">%1$d پخش</item>
     </plurals>
+    <string name="cd_shuffle">پخش تصادفی</string>
+    <string name="state_on">روشن</string>
+    <string name="state_off">خاموش</string>
+    <string name="state_playing">در حال پخش</string>
+    <string name="action_options">گزینه‌ها</string>
+    <string name="repeat_off">خاموش</string>
+    <string name="repeat_all">همه آهنگ‌ها</string>
+    <string name="repeat_one">آهنگ فعلی</string>
+    <string name="cd_seek_position">موقعیت پخش</string>
 </resources>

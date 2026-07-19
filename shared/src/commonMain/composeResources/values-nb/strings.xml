@@ -238,4 +238,13 @@
         <item quantity="one">%1$d avspilling</item>
         <item quantity="other">%1$d avspillinger</item>
     </plurals>
+    <string name="cd_shuffle">Tilfeldig rekkefølge</string>
+    <string name="state_on">På</string>
+    <string name="state_off">Av</string>
+    <string name="state_playing">Spilles av</string>
+    <string name="action_options">Alternativer</string>
+    <string name="repeat_off">Av</string>
+    <string name="repeat_all">Alle spor</string>
+    <string name="repeat_one">Gjeldende spor</string>
+    <string name="cd_seek_position">Avspillingsposisjon</string>
 </resources>

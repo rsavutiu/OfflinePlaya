@@ -31,6 +31,9 @@ import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.action_options
+import org.jetbrains.compose.resources.stringResource
 
 // [LOCAL-LLM] (model: qwen3:8b-ctx16k) — initial draft generated from the
 // ArtistRow template; Claude added the missing `layout.size` import and
@@ -49,7 +52,11 @@ fun FolderRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = onLongClick,
+                onLongClickLabel = onLongClick?.let { stringResource(Res.string.action_options) },
+            )
             .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.md),
         verticalAlignment = Alignment.CenterVertically,
     ) {

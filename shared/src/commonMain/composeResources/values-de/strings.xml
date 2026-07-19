@@ -238,4 +238,13 @@
         <item quantity="one">%1$d Wiedergabe</item>
         <item quantity="other">%1$d Wiedergaben</item>
     </plurals>
+    <string name="cd_shuffle">Zufallswiedergabe</string>
+    <string name="state_on">Ein</string>
+    <string name="state_off">Aus</string>
+    <string name="state_playing">Wird wiedergegeben</string>
+    <string name="action_options">Optionen</string>
+    <string name="repeat_off">Aus</string>
+    <string name="repeat_all">Alle Titel</string>
+    <string name="repeat_one">Aktueller Titel</string>
+    <string name="cd_seek_position">Wiedergabeposition</string>
 </resources>

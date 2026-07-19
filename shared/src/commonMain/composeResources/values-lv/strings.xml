@@ -239,4 +239,13 @@
         <item quantity="one">%1$d atskaņojums</item>
         <item quantity="other">%1$d atskaņojumi</item>
     </plurals>
+    <string name="cd_shuffle">Jaukšana</string>
+    <string name="state_on">Ieslēgts</string>
+    <string name="state_off">Izslēgts</string>
+    <string name="state_playing">Tiek atskaņots</string>
+    <string name="action_options">Opcijas</string>
+    <string name="repeat_off">Izslēgts</string>
+    <string name="repeat_all">Visi celiņi</string>
+    <string name="repeat_one">Pašreizējais celiņš</string>
+    <string name="cd_seek_position">Atskaņošanas pozīcija</string>
 </resources>

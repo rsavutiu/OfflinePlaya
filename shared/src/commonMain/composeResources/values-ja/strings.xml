@@ -237,4 +237,13 @@
     <plurals name="stats_plays">
         <item quantity="other">%1$d 回再生</item>
     </plurals>
+    <string name="cd_shuffle">シャッフル</string>
+    <string name="state_on">オン</string>
+    <string name="state_off">オフ</string>
+    <string name="state_playing">再生中</string>
+    <string name="action_options">オプション</string>
+    <string name="repeat_off">オフ</string>
+    <string name="repeat_all">すべての曲</string>
+    <string name="repeat_one">現在の曲</string>
+    <string name="cd_seek_position">再生位置</string>
 </resources>

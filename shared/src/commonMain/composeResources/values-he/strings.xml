@@ -240,4 +240,13 @@
         <item quantity="many">%1$d השמעות</item>
         <item quantity="other">%1$d השמעות</item>
     </plurals>
+    <string name="cd_shuffle">ערבוב</string>
+    <string name="state_on">פועל</string>
+    <string name="state_off">כבוי</string>
+    <string name="state_playing">מתנגן</string>
+    <string name="action_options">אפשרויות</string>
+    <string name="repeat_off">כבוי</string>
+    <string name="repeat_all">כל השירים</string>
+    <string name="repeat_one">השיר הנוכחי</string>
+    <string name="cd_seek_position">מיקום ההשמעה</string>
 </resources>

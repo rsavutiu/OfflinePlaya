@@ -237,4 +237,13 @@
     <plurals name="stats_plays">
         <item quantity="other">%1$d ครั้ง</item>
     </plurals>
+    <string name="cd_shuffle">สุ่มเพลง</string>
+    <string name="state_on">เปิด</string>
+    <string name="state_off">ปิด</string>
+    <string name="state_playing">กำลังเล่น</string>
+    <string name="action_options">ตัวเลือก</string>
+    <string name="repeat_off">ปิด</string>
+    <string name="repeat_all">ทุกเพลง</string>
+    <string name="repeat_one">เพลงปัจจุบัน</string>
+    <string name="cd_seek_position">ตำแหน่งการเล่น</string>
 </resources>

@@ -237,4 +237,13 @@
     <plurals name="stats_plays">
         <item quantity="other">%1$d lượt phát</item>
     </plurals>
+    <string name="cd_shuffle">Phát ngẫu nhiên</string>
+    <string name="state_on">Bật</string>
+    <string name="state_off">Tắt</string>
+    <string name="state_playing">Đang phát</string>
+    <string name="action_options">Tùy chọn</string>
+    <string name="repeat_off">Tắt</string>
+    <string name="repeat_all">Tất cả bài hát</string>
+    <string name="repeat_one">Bài hát hiện tại</string>
+    <string name="cd_seek_position">Vị trí phát</string>
 </resources>

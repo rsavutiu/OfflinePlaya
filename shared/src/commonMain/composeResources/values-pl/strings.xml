@@ -240,4 +240,13 @@
         <item quantity="many">%1$d odtworzeń</item>
         <item quantity="other">%1$d odtworzenia</item>
     </plurals>
+    <string name="cd_shuffle">Odtwarzanie losowe</string>
+    <string name="state_on">Włączone</string>
+    <string name="state_off">Wyłączone</string>
+    <string name="state_playing">Odtwarzane</string>
+    <string name="action_options">Opcje</string>
+    <string name="repeat_off">Wyłączone</string>
+    <string name="repeat_all">Wszystkie utwory</string>
+    <string name="repeat_one">Bieżący utwór</string>
+    <string name="cd_seek_position">Pozycja odtwarzania</string>
 </resources>

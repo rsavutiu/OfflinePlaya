@@ -237,4 +237,13 @@
     <plurals name="stats_plays">
         <item quantity="other">%1$d회 재생</item>
     </plurals>
+    <string name="cd_shuffle">셔플</string>
+    <string name="state_on">켜짐</string>
+    <string name="state_off">꺼짐</string>
+    <string name="state_playing">재생 중</string>
+    <string name="action_options">옵션</string>
+    <string name="repeat_off">꺼짐</string>
+    <string name="repeat_all">모든 곡</string>
+    <string name="repeat_one">현재 곡</string>
+    <string name="cd_seek_position">재생 위치</string>
 </resources>

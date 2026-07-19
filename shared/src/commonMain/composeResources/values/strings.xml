@@ -275,6 +275,15 @@
     <string name="cd_delete_playlist">Delete playlist</string>
     <string name="cd_new_playlist">New playlist</string>
     <string name="cd_repeat_mode">Repeat: %1$s</string>
+    <string name="cd_shuffle">Shuffle</string>
+    <string name="state_on">On</string>
+    <string name="state_off">Off</string>
+    <string name="state_playing">Playing</string>
+    <string name="action_options">Options</string>
+    <string name="repeat_off">Off</string>
+    <string name="repeat_all">All tracks</string>
+    <string name="repeat_one">Current track</string>
+    <string name="cd_seek_position">Playback position</string>
 
     <!-- Artist top tracks + listening stats -->
     <string name="artist_top_tracks">Top tracks</string>

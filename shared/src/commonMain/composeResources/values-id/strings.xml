@@ -237,4 +237,13 @@
     <plurals name="stats_plays">
         <item quantity="other">%1$d pemutaran</item>
     </plurals>
+    <string name="cd_shuffle">Acak</string>
+    <string name="state_on">Aktif</string>
+    <string name="state_off">Nonaktif</string>
+    <string name="state_playing">Sedang diputar</string>
+    <string name="action_options">Opsi</string>
+    <string name="repeat_off">Nonaktif</string>
+    <string name="repeat_all">Semua lagu</string>
+    <string name="repeat_one">Lagu saat ini</string>
+    <string name="cd_seek_position">Posisi pemutaran</string>
 </resources>

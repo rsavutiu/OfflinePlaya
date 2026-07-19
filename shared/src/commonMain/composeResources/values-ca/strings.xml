@@ -238,4 +238,13 @@
         <item quantity="one">%1$d reproducció</item>
         <item quantity="other">%1$d reproduccions</item>
     </plurals>
+    <string name="cd_shuffle">Reproducció aleatòria</string>
+    <string name="state_on">Activat</string>
+    <string name="state_off">Desactivat</string>
+    <string name="state_playing">En reproducció</string>
+    <string name="action_options">Opcions</string>
+    <string name="repeat_off">Desactivat</string>
+    <string name="repeat_all">Totes les cançons</string>
+    <string name="repeat_one">Cançó actual</string>
+    <string name="cd_seek_position">Posició de reproducció</string>
 </resources>

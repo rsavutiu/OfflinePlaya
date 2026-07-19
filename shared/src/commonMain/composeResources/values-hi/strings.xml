@@ -238,4 +238,13 @@
         <item quantity="one">%1$d प्ले</item>
         <item quantity="other">%1$d प्ले</item>
     </plurals>
+    <string name="cd_shuffle">शफ़ल</string>
+    <string name="state_on">चालू</string>
+    <string name="state_off">बंद</string>
+    <string name="state_playing">चल रहा है</string>
+    <string name="action_options">विकल्प</string>
+    <string name="repeat_off">बंद</string>
+    <string name="repeat_all">सभी ट्रैक</string>
+    <string name="repeat_one">वर्तमान ट्रैक</string>
+    <string name="cd_seek_position">प्लेबैक स्थिति</string>
 </resources>

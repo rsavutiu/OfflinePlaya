@@ -239,4 +239,13 @@
         <item quantity="few">%1$d reprodukcije</item>
         <item quantity="other">%1$d reprodukcija</item>
     </plurals>
+    <string name="cd_shuffle">Nasumična reprodukcija</string>
+    <string name="state_on">Uključeno</string>
+    <string name="state_off">Isključeno</string>
+    <string name="state_playing">Reproducira se</string>
+    <string name="action_options">Opcije</string>
+    <string name="repeat_off">Isključeno</string>
+    <string name="repeat_all">Sve pjesme</string>
+    <string name="repeat_one">Trenutna pjesma</string>
+    <string name="cd_seek_position">Položaj reprodukcije</string>
 </resources>

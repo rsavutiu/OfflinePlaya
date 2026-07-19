@@ -239,4 +239,13 @@
         <item quantity="few">%1$d репродукције</item>
         <item quantity="other">%1$d репродукција</item>
     </plurals>
+    <string name="cd_shuffle">Насумична репродукција</string>
+    <string name="state_on">Укључено</string>
+    <string name="state_off">Искључено</string>
+    <string name="state_playing">Репродукује се</string>
+    <string name="action_options">Опције</string>
+    <string name="repeat_off">Искључено</string>
+    <string name="repeat_all">Све нумере</string>
+    <string name="repeat_one">Тренутна нумера</string>
+    <string name="cd_seek_position">Позиција репродукције</string>
 </resources>

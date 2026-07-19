@@ -238,4 +238,13 @@
         <item quantity="one">%1$d çalınma</item>
         <item quantity="other">%1$d çalınma</item>
     </plurals>
+    <string name="cd_shuffle">Karıştır</string>
+    <string name="state_on">Açık</string>
+    <string name="state_off">Kapalı</string>
+    <string name="state_playing">Çalıyor</string>
+    <string name="action_options">Seçenekler</string>
+    <string name="repeat_off">Kapalı</string>
+    <string name="repeat_all">Tüm parçalar</string>
+    <string name="repeat_one">Geçerli parça</string>
+    <string name="cd_seek_position">Oynatma konumu</string>
 </resources>

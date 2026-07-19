@@ -238,4 +238,13 @@
         <item quantity="one">%1$d uppspelning</item>
         <item quantity="other">%1$d uppspelningar</item>
     </plurals>
+    <string name="cd_shuffle">Blanda</string>
+    <string name="state_on">På</string>
+    <string name="state_off">Av</string>
+    <string name="state_playing">Spelas upp</string>
+    <string name="action_options">Alternativ</string>
+    <string name="repeat_off">Av</string>
+    <string name="repeat_all">Alla spår</string>
+    <string name="repeat_one">Aktuellt spår</string>
+    <string name="cd_seek_position">Uppspelningsposition</string>
 </resources>

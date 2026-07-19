@@ -240,4 +240,13 @@
         <item quantity="many">%1$d прослушиваний</item>
         <item quantity="other">%1$d прослушивания</item>
     </plurals>
+    <string name="cd_shuffle">Перемешивание</string>
+    <string name="state_on">Включено</string>
+    <string name="state_off">Выключено</string>
+    <string name="state_playing">Воспроизводится</string>
+    <string name="action_options">Параметры</string>
+    <string name="repeat_off">Выключено</string>
+    <string name="repeat_all">Все треки</string>
+    <string name="repeat_one">Текущий трек</string>
+    <string name="cd_seek_position">Позиция воспроизведения</string>
 </resources>

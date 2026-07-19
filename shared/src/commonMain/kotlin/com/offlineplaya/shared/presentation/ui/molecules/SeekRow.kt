@@ -21,10 +21,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.PlaybackState
 import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.cd_seek_position
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Playback seek slider with elapsed / total labels. Drags update a local draft
@@ -43,8 +48,13 @@ fun SeekRow(
     val displayedMs = if (dragging) draftMs else state.positionMs
     val brand = LocalBrandAccent.current.accent
 
+    // M3 Slider ships full seek semantics (setProgress); it just needs a
+    // name, or TalkBack announces a bare "slider".
+    val seekLabel = stringResource(Res.string.cd_seek_position)
+
     Column(modifier = modifier.fillMaxWidth()) {
         Slider(
+            modifier = Modifier.semantics { contentDescription = seekLabel },
             value = displayedMs.toFloat(),
             valueRange = 0f..state.durationMs.coerceAtLeast(1L).toFloat(),
             onValueChange = {

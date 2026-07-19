@@ -25,8 +25,10 @@ import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.action_options
 import offlineplaya.shared.generated.resources.stats_plays
 import org.jetbrains.compose.resources.pluralStringResource
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Ranked most-played row: rank numeral, art, title/artist, trailing play
@@ -45,7 +47,11 @@ fun TopTrackRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = onLongClick,
+                onLongClickLabel = onLongClick?.let { stringResource(Res.string.action_options) },
+            )
             .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {

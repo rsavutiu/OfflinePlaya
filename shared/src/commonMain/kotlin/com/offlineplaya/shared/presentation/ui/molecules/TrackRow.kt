@@ -13,6 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -22,6 +24,10 @@ import com.offlineplaya.shared.presentation.ui.nowPlayingSharedArtKey
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.action_options
+import offlineplaya.shared.generated.resources.state_playing
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Track list row with album art, title, artist, and duration.
@@ -58,12 +64,23 @@ fun TrackRow(
     } else {
         Modifier
     }
+    // TalkBack: the row is one merged focus target (combinedClickable merges
+    // descendants). The long-press label makes the hidden actions sheet
+    // discoverable ("double-tap and hold for Options"); stateDescription
+    // announces the playing state instead of the visual "▶" glyph.
+    val optionsLabel = stringResource(Res.string.action_options)
+    val playingState = stringResource(Res.string.state_playing)
 
     Row(
         modifier = modifier
             .fillMaxWidth()
             .then(bgModifier)
-            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = onLongClick,
+                onLongClickLabel = onLongClick?.let { optionsLabel },
+            )
+            .semantics { if (isPlaying) stateDescription = playingState }
             .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {

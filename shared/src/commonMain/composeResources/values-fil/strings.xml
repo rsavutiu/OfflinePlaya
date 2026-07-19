@@ -238,4 +238,13 @@
         <item quantity="one">%1$d play</item>
         <item quantity="other">%1$d (na) play</item>
     </plurals>
+    <string name="cd_shuffle">Shuffle</string>
+    <string name="state_on">Naka-on</string>
+    <string name="state_off">Naka-off</string>
+    <string name="state_playing">Nagpe-play</string>
+    <string name="action_options">Mga opsyon</string>
+    <string name="repeat_off">Naka-off</string>
+    <string name="repeat_all">Lahat ng track</string>
+    <string name="repeat_one">Kasalukuyang track</string>
+    <string name="cd_seek_position">Posisyon ng pag-play</string>
 </resources>

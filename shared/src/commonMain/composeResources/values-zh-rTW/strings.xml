@@ -237,4 +237,13 @@
     <plurals name="stats_plays">
         <item quantity="other">%1$d 次播放</item>
     </plurals>
+    <string name="cd_shuffle">隨機播放</string>
+    <string name="state_on">開</string>
+    <string name="state_off">關</string>
+    <string name="state_playing">播放中</string>
+    <string name="action_options">選項</string>
+    <string name="repeat_off">關</string>
+    <string name="repeat_all">全部曲目</string>
+    <string name="repeat_one">目前曲目</string>
+    <string name="cd_seek_position">播放位置</string>
 </resources>
