@@ -38,9 +38,15 @@ import kotlinx.coroutines.withContext
  *  both audible at once  ⇒  real crossfade
  * ```
  *
- * The secondary shares [audioSessionId] with the main player so the EQ applies
- * to both halves of the overlap. It deliberately does **not** request audio
- * focus — the main player already holds it.
+ * The secondary deliberately gets its **own** audio session. Sharing the main
+ * player's session looked attractive (EQ'd tail) but broke the fade outright:
+ * once an effect chain (our Equalizer/LoudnessEnhancer, or the OEM/Dolby chain
+ * attached via the effect-control broadcast) sits on a session, AudioFlinger
+ * delegates volume to the chain — and with two tracks at different volumes in
+ * one chain'd session, per-track setVolume is ignored. Both tracks then play
+ * at full volume for the whole overlap (~+6 dB, "transitions are louder").
+ * An un-EQ'd tail for a few seconds is the far smaller evil. The secondary
+ * also does **not** request audio focus — the main player already holds it.
  *
  * Lifecycle mirrors [AppEqualizerController]: built by `PlaybackService` after
  * the ExoPlayer exists, released with the service. Every player touch happens
@@ -49,7 +55,6 @@ import kotlinx.coroutines.withContext
 class CrossfadeController(
     private val context: Context,
     private val mainPlayer: ExoPlayer,
-    private val audioSessionId: Int,
     private val preferences: StateFlow<PlaybackPreferences>,
     private val scope: CoroutineScope,
     private val logger: AppLogger,
@@ -231,10 +236,10 @@ class CrossfadeController(
             .setAudioAttributes(MUSIC_ATTRIBUTES, /* handleAudioFocus = */ false)
             .build()
             .apply {
-                // Share the EQ session so the fading-out tail is EQ'd identically
-                // to the main stream. OEM-dependent; if a device dislikes two
-                // tracks on one session the only downside is an un-EQ'd tail.
-                setAudioSessionId(audioSessionId)
+                // Own audio session on purpose — see the class kdoc. Joining the
+                // main player's (effect-laden) session lets the effect chain take
+                // over volume for both tracks, which nukes the fade and makes the
+                // overlap play at double loudness.
                 volume = 0f
             }
         secondaryPlayer = player

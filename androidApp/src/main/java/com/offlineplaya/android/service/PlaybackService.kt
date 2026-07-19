@@ -84,12 +84,13 @@ class PlaybackService : MediaLibraryService() {
 
         // Crossfade overlay: leaves `player` as the untouched MediaSession
         // player and drives a second engine for the track-to-track overlap.
-        // Shares the EQ audio session and the service scope. No-op while the
-        // user has crossfade disabled (the default-off path is native gapless).
+        // The secondary runs on its OWN audio session — sharing the EQ session
+        // broke per-track volume (effect chain takes over volume for the
+        // session), which made the overlap play both tracks at full loudness.
+        // No-op while crossfade is disabled (that path is native gapless).
         crossfadeController = CrossfadeController(
             context = this,
             mainPlayer = player,
-            audioSessionId = audioSessionId,
             preferences = koin.get<PlaybackTuningStateHolder>().preferences,
             scope = serviceScope,
             logger = logger,
