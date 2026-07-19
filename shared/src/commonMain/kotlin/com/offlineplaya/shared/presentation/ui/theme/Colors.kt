@@ -51,35 +51,49 @@ internal val DefaultBrandAccentColors: BrandAccentColors = BrandAccentColors(
     onAccent = OnBrandAccent,
 )
 
+// Light scheme: a deliberate violet WASH, not a near-white neutral. The old
+// values (#FCF9FF background, gray-lavender variant) read as a stock Material
+// template next to the dark theme's ink-violet ambience. Surfaces carry a
+// visible lavender tint, the surfaceContainer ladder is set explicitly so
+// cards / sheets / dialogs / bottom bars inherit the wash instead of M3's
+// neutral defaults, and primary is deepened a step so controls punch on the
+// tinted ground. All on-colors keep ≥ 4.5:1 on their surfaces.
 internal val DefaultLightColors: ColorScheme = lightColorScheme(
-    primary = BrandViolet,
+    primary = Color(0xFF6A45B8),
     onPrimary = Color.White,
-    primaryContainer = Color(0xFFE3DDFF),
-    onPrimaryContainer = Color(0xFF1B0F5C),
+    primaryContainer = Color(0xFFE7DCFF),
+    onPrimaryContainer = Color(0xFF21105E),
 
-    secondary = BrandViolet,
+    secondary = Color(0xFF6A45B8),
     onSecondary = Color.White,
-    secondaryContainer = Color(0xFFE3DDFF),
-    onSecondaryContainer = Color(0xFF1B0F5C),
+    secondaryContainer = Color(0xFFE7DCFF),
+    onSecondaryContainer = Color(0xFF21105E),
 
-    tertiary = BrandViolet,
+    tertiary = Color(0xFF6A45B8),
     onTertiary = Color.White,
-    tertiaryContainer = Color(0xFFE3DDFF),
-    onTertiaryContainer = Color(0xFF1B0F5C),
+    tertiaryContainer = Color(0xFFE7DCFF),
+    onTertiaryContainer = Color(0xFF21105E),
 
-    background = Color(0xFFFCF9FF),
-    onBackground = Color(0xFF1B1B22),
-    surface = Color(0xFFFCF9FF),
-    onSurface = Color(0xFF1B1B22),
-    surfaceVariant = Color(0xFFE5E0EC),
-    onSurfaceVariant = Color(0xFF49454E),
+    background = Color(0xFFF5F0FB),
+    onBackground = Color(0xFF1C1729),
+    surface = Color(0xFFF5F0FB),
+    onSurface = Color(0xFF1C1729),
+    surfaceVariant = Color(0xFFE7DEF4),
+    onSurfaceVariant = Color(0xFF4A4361),
+
+    surfaceContainerLowest = Color(0xFFFFFFFF),
+    surfaceContainerLow = Color(0xFFEFE8F8),
+    surfaceContainer = Color(0xFFEAE1F5),
+    surfaceContainerHigh = Color(0xFFE4D9F1),
+    surfaceContainerHighest = Color(0xFFDDD1ED),
 
     error = Color(0xFFBA1A1A),
     onError = Color.White,
     errorContainer = Color(0xFFFFDAD6),
     onErrorContainer = Color(0xFF410002),
 
-    outline = Color(0xFF7A757F),
+    outline = Color(0xFF7B7292),
+    outlineVariant = Color(0xFFCBC0DF),
 )
 
 internal val DefaultDarkColors: ColorScheme = darkColorScheme(
