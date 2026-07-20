@@ -253,4 +253,6 @@
     <string name="action_open_now_playing">Atvērt ekrānu Tagad atskaņo</string>
     <string name="eq_band">Josla %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Atsākt ar Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Sākt atskaņošanu, kad pievienojas austiņas vai auto</string>
 </resources>

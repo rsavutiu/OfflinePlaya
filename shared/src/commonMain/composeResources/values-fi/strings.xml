@@ -252,4 +252,6 @@
     <string name="action_open_now_playing">Avaa Toistetaan nyt</string>
     <string name="eq_band">Kaista %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Jatka Bluetoothilla</string>
+    <string name="playback_bt_autoplay_subtitle">Aloita toisto, kun kuulokkeet tai auto yhdistyvät</string>
 </resources>

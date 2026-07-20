@@ -76,11 +76,15 @@ class SqlSettingsRepositoryTest {
     }
 
     @Test
-    fun `setPlaybackPreferences round-trips both fields`() = runTest {
+    fun `setPlaybackPreferences round-trips all fields`() = runTest {
         val repo = newRepository()
-        // Flipped away from the default (enabled, 6s) so the round-trip proves
-        // each field is actually persisted, not just defaulted.
-        val target = PlaybackPreferences(crossfadeEnabled = false, crossfadeDurationSeconds = 11)
+        // Flipped away from the default (enabled, 6s, autoplay off) so the
+        // round-trip proves each field is actually persisted, not defaulted.
+        val target = PlaybackPreferences(
+            crossfadeEnabled = false,
+            crossfadeDurationSeconds = 11,
+            bluetoothAutoplayEnabled = true,
+        )
 
         repo.setPlaybackPreferences(target)
 

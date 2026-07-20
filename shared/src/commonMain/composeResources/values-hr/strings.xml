@@ -253,4 +253,6 @@
     <string name="action_open_now_playing">Otvori Sada svira</string>
     <string name="eq_band">Pojas %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Nastavi putem Bluetootha</string>
+    <string name="playback_bt_autoplay_subtitle">Pokreni reprodukciju kad se povežu slušalice ili auto</string>
 </resources>

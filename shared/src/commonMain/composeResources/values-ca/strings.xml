@@ -252,4 +252,6 @@
     <string name="action_open_now_playing">Obre la reproducció actual</string>
     <string name="eq_band">Banda %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Reprèn amb Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Comença a reproduir quan es connectin els auriculars o el cotxe</string>
 </resources>

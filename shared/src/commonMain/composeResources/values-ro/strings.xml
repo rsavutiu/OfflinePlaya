@@ -253,4 +253,6 @@
     <string name="action_open_now_playing">Deschide În redare</string>
     <string name="eq_band">Banda %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Reia prin Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Pornește redarea când se conectează căștile sau mașina</string>
 </resources>

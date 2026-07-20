@@ -33,6 +33,14 @@ class PlaybackTuningStateHolder(
         }
     }
 
+    fun setBluetoothAutoplayEnabled(enabled: Boolean) {
+        scope.launch {
+            settings.setPlaybackPreferences(
+                preferences.value.copy(bluetoothAutoplayEnabled = enabled),
+            )
+        }
+    }
+
     fun setCrossfadeDurationSeconds(seconds: Int) {
         scope.launch {
             val clamped = seconds.coerceIn(

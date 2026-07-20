@@ -252,4 +252,6 @@
     <string name="action_open_now_playing">Most szól megnyitása</string>
     <string name="eq_band">%1$s sáv</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Folytatás Bluetooth-on</string>
+    <string name="playback_bt_autoplay_subtitle">Lejátszás indítása fülhallgató vagy autó csatlakozásakor</string>
 </resources>

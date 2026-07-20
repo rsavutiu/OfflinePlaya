@@ -251,4 +251,6 @@
     <string name="action_open_now_playing">เปิดหน้ากำลังเล่น</string>
     <string name="eq_band">ย่านความถี่ %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">เล่นต่อผ่านบลูทูธ</string>
+    <string name="playback_bt_autoplay_subtitle">เริ่มเล่นเมื่อหูฟังหรือรถยนต์เชื่อมต่อ</string>
 </resources>

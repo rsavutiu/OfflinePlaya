@@ -252,4 +252,6 @@
     <string name="action_open_now_playing">Åbn Afspiller nu</string>
     <string name="eq_band">Bånd %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Genoptag via Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Start afspilning når hovedtelefoner eller bil forbindes</string>
 </resources>

@@ -254,4 +254,6 @@
     <string name="action_open_now_playing">Otvoriť Práve hrá</string>
     <string name="eq_band">Pásmo %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Pokračovať cez Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Spustiť prehrávanie po pripojení slúchadiel alebo auta</string>
 </resources>

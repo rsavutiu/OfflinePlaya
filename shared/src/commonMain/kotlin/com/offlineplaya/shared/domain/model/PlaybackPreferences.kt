@@ -15,10 +15,15 @@ package com.offlineplaya.shared.domain.model
  * @property crossfadeDurationSeconds length of the overlap, in seconds. Only
  *   meaningful when [crossfadeEnabled]. Clamped to
  *   [MIN_DURATION_SECONDS]..[MAX_DURATION_SECONDS].
+ * @property bluetoothAutoplayEnabled when `true`, playback resumes
+ *   automatically the moment a Bluetooth audio device connects while a queue
+ *   is loaded but paused (walk to the car, music starts). Default off —
+ *   auto-starting audio on connect surprises anyone who didn't opt in.
  */
 data class PlaybackPreferences(
     val crossfadeEnabled: Boolean,
     val crossfadeDurationSeconds: Int,
+    val bluetoothAutoplayEnabled: Boolean = false,
 ) {
     /** Overlap length in milliseconds, or `0` when crossfade is disabled. */
     val crossfadeDurationMs: Long

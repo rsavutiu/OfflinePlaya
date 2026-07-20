@@ -251,4 +251,6 @@
     <string name="action_open_now_playing">지금 재생 중 열기</string>
     <string name="eq_band">밴드 %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">블루투스 연결 시 재개</string>
+    <string name="playback_bt_autoplay_subtitle">헤드폰이나 차량 연결 시 재생 시작</string>
 </resources>

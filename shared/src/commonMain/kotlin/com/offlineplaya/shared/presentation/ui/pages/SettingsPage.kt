@@ -68,6 +68,7 @@ fun SettingsPage(
     onSaveLyricsAsSidecarChange: (Boolean) -> Unit,
     onCrossfadeEnabledChange: (Boolean) -> Unit,
     onCrossfadeDurationChange: (Int) -> Unit,
+    onBluetoothAutoplayChange: (Boolean) -> Unit,
     onBurnMetadataClick: () -> Unit,
     onAcknowledgeBurnReport: () -> Unit,
     onPickFolder: () -> Unit,
@@ -135,6 +136,7 @@ fun SettingsPage(
                     preferences = playbackPreferences,
                     onCrossfadeEnabledChange = onCrossfadeEnabledChange,
                     onCrossfadeDurationChange = onCrossfadeDurationChange,
+                    onBluetoothAutoplayChange = onBluetoothAutoplayChange,
                 )
             }
             val audio: @Composable () -> Unit = {
@@ -220,6 +222,7 @@ private fun SettingsPageLightPreview() {
             onSaveLyricsAsSidecarChange = {},
             onBurnMetadataClick = {},
             onCrossfadeEnabledChange = {}, onCrossfadeDurationChange = {},
+            onBluetoothAutoplayChange = {},
             onAcknowledgeBurnReport = {},
             onPickFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
             onOpenEqualizer = {}, onOpenDesignSystem = {},
@@ -245,6 +248,7 @@ private fun SettingsPageDarkPreview() {
             onSaveLyricsAsSidecarChange = {},
             onBurnMetadataClick = {},
             onCrossfadeEnabledChange = {}, onCrossfadeDurationChange = {},
+            onBluetoothAutoplayChange = {},
             onAcknowledgeBurnReport = {},
             onPickFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
             onOpenEqualizer = {}, onOpenDesignSystem = {},
@@ -275,6 +279,7 @@ private fun SettingsPageScanningPreview() {
             onSaveLyricsAsSidecarChange = {},
             onBurnMetadataClick = {},
             onCrossfadeEnabledChange = {}, onCrossfadeDurationChange = {},
+            onBluetoothAutoplayChange = {},
             onAcknowledgeBurnReport = {},
             onPickFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
             onOpenEqualizer = {}, onOpenDesignSystem = {},

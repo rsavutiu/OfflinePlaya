@@ -252,4 +252,6 @@
     <string name="action_open_now_playing">अभी चल रहा है स्क्रीन खोलें</string>
     <string name="eq_band">बैंड %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">ब्लूटूथ पर फिर से चलाएँ</string>
+    <string name="playback_bt_autoplay_subtitle">हेडफ़ोन या कार कनेक्ट होने पर चलाना शुरू करें</string>
 </resources>

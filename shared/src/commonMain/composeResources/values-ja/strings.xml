@@ -251,4 +251,6 @@
     <string name="action_open_now_playing">再生中画面を開く</string>
     <string name="eq_band">バンド %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Bluetooth接続で再開</string>
+    <string name="playback_bt_autoplay_subtitle">ヘッドホンや車が接続されたら再生を開始</string>
 </resources>

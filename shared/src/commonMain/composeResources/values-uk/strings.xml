@@ -254,4 +254,6 @@
     <string name="action_open_now_playing">Відкрити екран відтворення</string>
     <string name="eq_band">Смуга %1$s</string>
     <string name="eq_gain_db">%1$s дБ</string>
+    <string name="playback_bt_autoplay">Продовжити через Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Починати відтворення при підключенні навушників або авто</string>
 </resources>

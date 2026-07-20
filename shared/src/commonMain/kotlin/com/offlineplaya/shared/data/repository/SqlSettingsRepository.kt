@@ -151,6 +151,10 @@ internal class SqlSettingsRepository(
                     KEY_CROSSFADE_DURATION,
                     preferences.crossfadeDurationSeconds.toString(),
                 )
+                queries.insertOrReplace(
+                    KEY_BT_AUTOPLAY,
+                    preferences.bluetoothAutoplayEnabled.toString(),
+                )
             }
         }
 
@@ -221,6 +225,8 @@ internal class SqlSettingsRepository(
                     PlaybackPreferences.MIN_DURATION_SECONDS,
                     PlaybackPreferences.MAX_DURATION_SECONDS,
                 ),
+            bluetoothAutoplayEnabled = map[KEY_BT_AUTOPLAY]?.toBoolean()
+                ?: defaults.bluetoothAutoplayEnabled,
         )
     }
 
@@ -239,6 +245,7 @@ internal class SqlSettingsRepository(
         const val KEY_EQ_PREAMP = "eq.preamp_percent"
         const val KEY_CROSSFADE_ENABLED = "playback.crossfade_enabled"
         const val KEY_CROSSFADE_DURATION = "playback.crossfade_duration_s"
+        const val KEY_BT_AUTOPLAY = "playback.bluetooth_autoplay"
         const val KEY_REVIEW_PLAYS = "review.plays_counted"
         const val KEY_REVIEW_MILESTONE = "review.highest_milestone"
         const val KEY_REVIEW_LAST_PROMPT = "review.last_prompt_at"

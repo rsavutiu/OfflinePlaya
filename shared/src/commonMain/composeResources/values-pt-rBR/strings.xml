@@ -252,4 +252,6 @@
     <string name="action_open_now_playing">Abrir Tocando agora</string>
     <string name="eq_band">Banda %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Retomar via Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Começar a tocar quando fones ou carro conectarem</string>
 </resources>

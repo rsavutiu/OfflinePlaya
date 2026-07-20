@@ -252,4 +252,6 @@
     <string name="action_open_now_playing">Άνοιγμα οθόνης αναπαραγωγής</string>
     <string name="eq_band">Ζώνη %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Συνέχεια μέσω Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Έναρξη αναπαραγωγής όταν συνδεθούν ακουστικά ή αυτοκίνητο</string>
 </resources>

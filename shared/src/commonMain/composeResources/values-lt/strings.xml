@@ -254,4 +254,6 @@
     <string name="action_open_now_playing">Atidaryti Dabar grojama</string>
     <string name="eq_band">Juosta %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Tęsti per Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Pradėti groti prijungus ausines ar automobilį</string>
 </resources>

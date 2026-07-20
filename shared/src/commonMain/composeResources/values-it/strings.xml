@@ -252,4 +252,6 @@
     <string name="action_open_now_playing">Apri In riproduzione</string>
     <string name="eq_band">Banda %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Riprendi con Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Avvia la riproduzione quando si collegano cuffie o auto</string>
 </resources>

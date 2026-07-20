@@ -254,4 +254,6 @@
     <string name="action_open_now_playing">Odpri Zdaj se predvaja</string>
     <string name="eq_band">Pas %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Nadaljuj prek Bluetootha</string>
+    <string name="playback_bt_autoplay_subtitle">Začni predvajanje, ko se povežejo slušalke ali avto</string>
 </resources>

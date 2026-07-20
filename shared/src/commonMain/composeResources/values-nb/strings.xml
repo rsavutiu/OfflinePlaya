@@ -252,4 +252,6 @@
     <string name="action_open_now_playing">Åpne Spilles nå</string>
     <string name="eq_band">Bånd %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Fortsett via Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Start avspilling når hodetelefoner eller bil kobles til</string>
 </resources>

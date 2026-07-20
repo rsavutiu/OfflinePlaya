@@ -21,6 +21,8 @@ import com.offlineplaya.shared.presentation.ui.molecules.SwitchRow
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.playback_bt_autoplay
+import offlineplaya.shared.generated.resources.playback_bt_autoplay_subtitle
 import offlineplaya.shared.generated.resources.playback_crossfade
 import offlineplaya.shared.generated.resources.playback_crossfade_duration
 import offlineplaya.shared.generated.resources.playback_crossfade_duration_value
@@ -40,6 +42,7 @@ fun PlaybackSettings(
     preferences: PlaybackPreferences,
     onCrossfadeEnabledChange: (Boolean) -> Unit,
     onCrossfadeDurationChange: (Int) -> Unit,
+    onBluetoothAutoplayChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     SettingsSection(
@@ -52,6 +55,13 @@ fun PlaybackSettings(
             checked = preferences.crossfadeEnabled,
             onCheckedChange = onCrossfadeEnabledChange,
             modifier = Modifier.testTag(TestTags.Settings.CROSSFADE_TOGGLE),
+        )
+        SwitchRow(
+            title = stringResource(Res.string.playback_bt_autoplay),
+            subtitle = stringResource(Res.string.playback_bt_autoplay_subtitle),
+            checked = preferences.bluetoothAutoplayEnabled,
+            onCheckedChange = onBluetoothAutoplayChange,
+            modifier = Modifier.testTag(TestTags.Settings.BT_AUTOPLAY_TOGGLE),
         )
         AnimatedVisibility(visible = preferences.crossfadeEnabled) {
             Column(
@@ -100,6 +110,7 @@ private fun PlaybackSettingsEnabledPreview() {
             preferences = PlaybackPreferences(crossfadeEnabled = true, crossfadeDurationSeconds = 6),
             onCrossfadeEnabledChange = {},
             onCrossfadeDurationChange = {},
+            onBluetoothAutoplayChange = {},
         )
     }
 }
@@ -112,6 +123,7 @@ private fun PlaybackSettingsDisabledPreview() {
             preferences = PlaybackPreferences(crossfadeEnabled = false, crossfadeDurationSeconds = 6),
             onCrossfadeEnabledChange = {},
             onCrossfadeDurationChange = {},
+            onBluetoothAutoplayChange = {},
         )
     }
 }

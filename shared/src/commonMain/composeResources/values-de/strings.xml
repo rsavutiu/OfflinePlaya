@@ -252,4 +252,6 @@
     <string name="action_open_now_playing">Aktuelle Wiedergabe öffnen</string>
     <string name="eq_band">Band %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Bei Bluetooth fortsetzen</string>
+    <string name="playback_bt_autoplay_subtitle">Wiedergabe starten, wenn Kopfhörer oder Auto verbunden werden</string>
 </resources>

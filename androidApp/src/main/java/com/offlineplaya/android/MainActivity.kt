@@ -321,6 +321,7 @@ private fun AndroidApp() {
             onSaveLyricsAsSidecarChange = lyricsPreferencesStateHolder::setSaveLyricsAsSidecar,
             onCrossfadeEnabledChange = playbackTuningStateHolder::setCrossfadeEnabled,
             onCrossfadeDurationChange = playbackTuningStateHolder::setCrossfadeDurationSeconds,
+            onBluetoothAutoplayChange = playbackTuningStateHolder::setBluetoothAutoplayEnabled,
             dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
         )
     }

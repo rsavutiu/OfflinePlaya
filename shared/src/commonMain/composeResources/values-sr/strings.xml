@@ -253,4 +253,6 @@
     <string name="action_open_now_playing">Отвори екран Сада свира</string>
     <string name="eq_band">Опсег %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Настави преко Bluetooth-а</string>
+    <string name="playback_bt_autoplay_subtitle">Покрени репродукцију када се повежу слушалице или ауто</string>
 </resources>

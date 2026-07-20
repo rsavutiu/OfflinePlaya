@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
+import com.offlineplaya.android.audio.BluetoothAutoplayController
 import com.offlineplaya.android.di.appPlayerModule
 import com.offlineplaya.android.sync.AutoRescanController
 import com.offlineplaya.shared.data.image.installTrackArtImageLoader
@@ -30,6 +31,7 @@ class OfflinePlayaApp : Application() {
     // scope completion (see AutoRescanController.stop); this reference just makes
     // that ownership explicit instead of relying on implicit reachability.
     private var autoRescanController: AutoRescanController? = null
+    private var bluetoothAutoplayController: BluetoothAutoplayController? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -61,6 +63,15 @@ class OfflinePlayaApp : Application() {
             // Listening-history recorder: one observer for the app's
             // lifetime, appending a PlayHistory row per played track.
             koin.get<PlayHistoryRecorder>().start()
+            // Resume-on-Bluetooth-connect (opt-in). App-lifetime like the
+            // recorders: must outlive any single Activity, and the queue
+            // restore above guarantees a paused queue exists to resume.
+            bluetoothAutoplayController = BluetoothAutoplayController(
+                context = this@OfflinePlayaApp,
+                player = koin.get(),
+                preferences = koin.get<com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder>().preferences,
+                logger = koin.get(),
+            ).also { it.start() }
             installTrackArtImageLoader(
                 context = this@OfflinePlayaApp,
                 settings = koin.get<SettingsRepository>(),

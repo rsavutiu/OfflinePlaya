@@ -59,6 +59,7 @@ class SettingsPageTest {
                     onSaveLyricsAsSidecarChange = {},
                     onCrossfadeEnabledChange = { crossfade = it },
                     onCrossfadeDurationChange = {},
+                    onBluetoothAutoplayChange = {},
                     onBurnMetadataClick = {},
                     onAcknowledgeBurnReport = {},
                     onPickFolder = {},

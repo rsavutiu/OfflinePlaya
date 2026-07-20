@@ -254,4 +254,6 @@
     <string name="action_open_now_playing">Открыть экран воспроизведения</string>
     <string name="eq_band">Полоса %1$s</string>
     <string name="eq_gain_db">%1$s дБ</string>
+    <string name="playback_bt_autoplay">Продолжить по Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Начинать воспроизведение при подключении наушников или машины</string>
 </resources>

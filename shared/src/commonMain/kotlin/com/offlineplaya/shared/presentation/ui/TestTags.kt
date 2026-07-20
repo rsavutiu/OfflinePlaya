@@ -68,6 +68,9 @@ object TestTags {
 
         /** Crossfade on/off switch row (Playback section). */
         const val CROSSFADE_TOGGLE = "settings_crossfade_toggle"
+
+        /** Bluetooth-autoplay on/off switch row (Playback section). */
+        const val BT_AUTOPLAY_TOGGLE = "settings_bt_autoplay_toggle"
     }
 
     object Playlists {

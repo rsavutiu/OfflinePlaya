@@ -289,6 +289,8 @@
     <string name="action_open_now_playing">Open Now Playing</string>
     <string name="eq_band">Band %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Resume on Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Start playing when headphones or car connect</string>
 
     <!-- Artist top tracks + listening stats -->
     <string name="artist_top_tracks">Top tracks</string>

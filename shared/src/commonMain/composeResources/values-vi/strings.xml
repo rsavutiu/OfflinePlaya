@@ -251,4 +251,6 @@
     <string name="action_open_now_playing">Mở Đang phát</string>
     <string name="eq_band">Dải %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Tiếp tục qua Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Bắt đầu phát khi tai nghe hoặc ô tô kết nối</string>
 </resources>

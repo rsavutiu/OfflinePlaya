@@ -254,4 +254,6 @@
     <string name="action_open_now_playing">פתיחת מסך ההשמעה</string>
     <string name="eq_band">תדר %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">המשך דרך Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">התחלת ניגון כשמתחברות אוזניות או רכב</string>
 </resources>

@@ -252,4 +252,6 @@
     <string name="action_open_now_playing">باز کردن صفحه در حال پخش</string>
     <string name="eq_band">باند %1$s</string>
     <string name="eq_gain_db">%1$s دسی‌بل</string>
+    <string name="playback_bt_autoplay">ادامه با بلوتوث</string>
+    <string name="playback_bt_autoplay_subtitle">شروع پخش هنگام اتصال هدفون یا خودرو</string>
 </resources>

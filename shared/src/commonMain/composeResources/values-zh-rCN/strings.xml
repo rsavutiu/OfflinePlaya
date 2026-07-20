@@ -251,4 +251,6 @@
     <string name="action_open_now_playing">打开正在播放</string>
     <string name="eq_band">频段 %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">蓝牙连接时继续播放</string>
+    <string name="playback_bt_autoplay_subtitle">耳机或车载设备连接时开始播放</string>
 </resources>

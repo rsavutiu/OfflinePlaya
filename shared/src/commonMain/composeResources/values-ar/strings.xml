@@ -256,4 +256,6 @@
     <string name="action_open_now_playing">فتح شاشة التشغيل الآن</string>
     <string name="eq_band">النطاق %1$s</string>
     <string name="eq_gain_db">%1$s ديسيبل</string>
+    <string name="playback_bt_autoplay">الاستئناف عبر البلوتوث</string>
+    <string name="playback_bt_autoplay_subtitle">بدء التشغيل عند اتصال سماعات الرأس أو السيارة</string>
 </resources>

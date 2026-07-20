@@ -252,4 +252,6 @@
     <string name="action_open_now_playing">Nu afspelen openen</string>
     <string name="eq_band">Band %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Hervatten via Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Begin met afspelen wanneer koptelefoon of auto verbindt</string>
 </resources>

@@ -251,4 +251,6 @@
     <string name="action_open_now_playing">Buka Sedang Dimainkan</string>
     <string name="eq_band">Jalur %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Sambung melalui Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Mula bermain apabila fon kepala atau kereta bersambung</string>
 </resources>

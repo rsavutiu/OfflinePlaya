@@ -252,4 +252,6 @@
     <string name="action_open_now_playing">Ouvrir la lecture en cours</string>
     <string name="eq_band">Bande %1$s</string>
     <string name="eq_gain_db">%1$s dB</string>
+    <string name="playback_bt_autoplay">Reprendre en Bluetooth</string>
+    <string name="playback_bt_autoplay_subtitle">Lancer la lecture à la connexion du casque ou de la voiture</string>
 </resources>

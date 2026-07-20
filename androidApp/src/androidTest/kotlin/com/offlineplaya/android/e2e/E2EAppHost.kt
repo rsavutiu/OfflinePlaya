@@ -84,6 +84,7 @@ fun E2EAppHost(koin: Koin) {
         onSaveLyricsAsSidecarChange = {},
         onCrossfadeEnabledChange = {},
         onCrossfadeDurationChange = {},
+        onBluetoothAutoplayChange = {},
         dynamicColorSupported = true,
     )
 }
