@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,6 +31,12 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.progressBarRangeInfo
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.setProgress
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.font.FontWeight
@@ -42,6 +49,10 @@ import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.eq_band
+import offlineplaya.shared.generated.resources.eq_gain_db
+import org.jetbrains.compose.resources.stringResource
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -253,6 +264,52 @@ fun EqualizerGraph(
                     )
                 }
             }
+
+            // TalkBack overlay: the canvas gestures above are pointer-only, so
+            // each band column gets an invisible adjustable target with slider
+            // semantics ("Band 62, +3 dB" + volume-key/swipe adjustment via
+            // setProgress). Plain Boxes with no pointer modifiers — they don't
+            // steal touch input from the canvas underneath.
+            if (enabled) {
+                Row(Modifier.fillMaxSize()) {
+                    Spacer(Modifier.width(GUTTER))
+                    for (i in 0 until bandCount) {
+                        val bandLabel = stringResource(
+                            Res.string.eq_band,
+                            bandFrequencyLabel(i, bandCount),
+                        )
+                        val gainLabel = stringResource(
+                            Res.string.eq_gain_db,
+                            formatGainDb(gains[i]),
+                        )
+                        Box(
+                            Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                                .semantics {
+                                    contentDescription = bandLabel
+                                    stateDescription = gainLabel
+                                    progressBarRangeInfo = ProgressBarRangeInfo(
+                                        current = gains[i].toFloat(),
+                                        range = MIN_GAIN_RANGE_MILLIBELS.toFloat()..
+                                            MAX_GAIN_RANGE_MILLIBELS.toFloat(),
+                                    )
+                                    setProgress { target ->
+                                        onBandGainChange(
+                                            i,
+                                            target.roundToInt().coerceIn(
+                                                MIN_GAIN_RANGE_MILLIBELS,
+                                                MAX_GAIN_RANGE_MILLIBELS,
+                                            ),
+                                            latestGains.value,
+                                        )
+                                        true
+                                    }
+                                },
+                        )
+                    }
+                }
+            }
         }
 
         // Frequency labels aligned under each band column.
@@ -299,6 +356,13 @@ private fun buildSmoothPath(points: List<Offset>): Path {
         path.cubicTo(c1x, c1y, c2x, c2y, p2.x, p2.y)
     }
     return path
+}
+
+/** "+3.5" / "-3" / "0" — same rounding as the on-canvas readout. */
+private fun formatGainDb(millibels: Int): String {
+    val rounded = ((millibels / 100.0) * 10).toInt() / 10.0
+    val text = if (rounded == rounded.toInt().toDouble()) "${rounded.toInt()}" else "$rounded"
+    return if (millibels > 0) "+$text" else text
 }
 
 private fun bandFrequencyLabel(index: Int, total: Int): String {

@@ -251,4 +251,9 @@
     <string name="repeat_all">كل المقاطع</string>
     <string name="repeat_one">المقطع الحالي</string>
     <string name="cd_seek_position">موضع التشغيل</string>
+    <string name="action_move_up">انقل لأعلى</string>
+    <string name="action_move_down">انقل لأسفل</string>
+    <string name="action_open_now_playing">فتح شاشة التشغيل الآن</string>
+    <string name="eq_band">النطاق %1$s</string>
+    <string name="eq_gain_db">%1$s ديسيبل</string>
 </resources>

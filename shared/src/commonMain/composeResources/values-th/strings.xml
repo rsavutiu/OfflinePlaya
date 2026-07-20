@@ -246,4 +246,9 @@
     <string name="repeat_all">ทุกเพลง</string>
     <string name="repeat_one">เพลงปัจจุบัน</string>
     <string name="cd_seek_position">ตำแหน่งการเล่น</string>
+    <string name="action_move_up">ย้ายขึ้น</string>
+    <string name="action_move_down">ย้ายลง</string>
+    <string name="action_open_now_playing">เปิดหน้ากำลังเล่น</string>
+    <string name="eq_band">ย่านความถี่ %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

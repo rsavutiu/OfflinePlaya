@@ -249,4 +249,9 @@
     <string name="repeat_all">Visi takeliai</string>
     <string name="repeat_one">Dabartinis takelis</string>
     <string name="cd_seek_position">Atkūrimo padėtis</string>
+    <string name="action_move_up">Perkelti aukštyn</string>
+    <string name="action_move_down">Perkelti žemyn</string>
+    <string name="action_open_now_playing">Atidaryti Dabar grojama</string>
+    <string name="eq_band">Juosta %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

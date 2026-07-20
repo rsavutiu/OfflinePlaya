@@ -247,4 +247,9 @@
     <string name="repeat_all">Kõik lood</string>
     <string name="repeat_one">Praegune lugu</string>
     <string name="cd_seek_position">Esituskoht</string>
+    <string name="action_move_up">Liiguta üles</string>
+    <string name="action_move_down">Liiguta alla</string>
+    <string name="action_open_now_playing">Ava Praegu mängib</string>
+    <string name="eq_band">Riba %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

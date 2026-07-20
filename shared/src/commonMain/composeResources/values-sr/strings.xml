@@ -248,4 +248,9 @@
     <string name="repeat_all">Све нумере</string>
     <string name="repeat_one">Тренутна нумера</string>
     <string name="cd_seek_position">Позиција репродукције</string>
+    <string name="action_move_up">Премести нагоре</string>
+    <string name="action_move_down">Премести надоле</string>
+    <string name="action_open_now_playing">Отвори екран Сада свира</string>
+    <string name="eq_band">Опсег %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

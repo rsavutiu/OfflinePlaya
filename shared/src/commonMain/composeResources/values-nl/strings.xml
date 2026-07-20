@@ -247,4 +247,9 @@
     <string name="repeat_all">Alle nummers</string>
     <string name="repeat_one">Huidig nummer</string>
     <string name="cd_seek_position">Afspeelpositie</string>
+    <string name="action_move_up">Omhoog verplaatsen</string>
+    <string name="action_move_down">Omlaag verplaatsen</string>
+    <string name="action_open_now_playing">Nu afspelen openen</string>
+    <string name="eq_band">Band %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

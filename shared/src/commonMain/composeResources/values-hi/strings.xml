@@ -247,4 +247,9 @@
     <string name="repeat_all">सभी ट्रैक</string>
     <string name="repeat_one">वर्तमान ट्रैक</string>
     <string name="cd_seek_position">प्लेबैक स्थिति</string>
+    <string name="action_move_up">ऊपर ले जाएँ</string>
+    <string name="action_move_down">नीचे ले जाएँ</string>
+    <string name="action_open_now_playing">अभी चल रहा है स्क्रीन खोलें</string>
+    <string name="eq_band">बैंड %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

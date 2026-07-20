@@ -247,4 +247,9 @@
     <string name="repeat_all">Alle spor</string>
     <string name="repeat_one">Gjeldende spor</string>
     <string name="cd_seek_position">Avspillingsposisjon</string>
+    <string name="action_move_up">Flytt opp</string>
+    <string name="action_move_down">Flytt ned</string>
+    <string name="action_open_now_playing">Åpne Spilles nå</string>
+    <string name="eq_band">Bånd %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

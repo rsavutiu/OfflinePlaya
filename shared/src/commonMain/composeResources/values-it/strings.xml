@@ -247,4 +247,9 @@
     <string name="repeat_all">Tutti i brani</string>
     <string name="repeat_one">Brano corrente</string>
     <string name="cd_seek_position">Posizione di riproduzione</string>
+    <string name="action_move_up">Sposta su</string>
+    <string name="action_move_down">Sposta giù</string>
+    <string name="action_open_now_playing">Apri In riproduzione</string>
+    <string name="eq_band">Banda %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

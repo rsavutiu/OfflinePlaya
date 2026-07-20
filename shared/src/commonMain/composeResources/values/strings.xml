@@ -284,6 +284,11 @@
     <string name="repeat_all">All tracks</string>
     <string name="repeat_one">Current track</string>
     <string name="cd_seek_position">Playback position</string>
+    <string name="action_move_up">Move up</string>
+    <string name="action_move_down">Move down</string>
+    <string name="action_open_now_playing">Open Now Playing</string>
+    <string name="eq_band">Band %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 
     <!-- Artist top tracks + listening stats -->
     <string name="artist_top_tracks">Top tracks</string>

@@ -246,4 +246,9 @@
     <string name="repeat_all">すべての曲</string>
     <string name="repeat_one">現在の曲</string>
     <string name="cd_seek_position">再生位置</string>
+    <string name="action_move_up">上に移動</string>
+    <string name="action_move_down">下に移動</string>
+    <string name="action_open_now_playing">再生中画面を開く</string>
+    <string name="eq_band">バンド %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

@@ -249,4 +249,9 @@
     <string name="repeat_all">Wszystkie utwory</string>
     <string name="repeat_one">Bieżący utwór</string>
     <string name="cd_seek_position">Pozycja odtwarzania</string>
+    <string name="action_move_up">Przenieś w górę</string>
+    <string name="action_move_down">Przenieś w dół</string>
+    <string name="action_open_now_playing">Otwórz Teraz odtwarzane</string>
+    <string name="eq_band">Pasmo %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

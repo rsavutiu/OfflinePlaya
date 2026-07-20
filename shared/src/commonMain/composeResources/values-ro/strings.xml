@@ -248,4 +248,9 @@
     <string name="repeat_all">Toate piesele</string>
     <string name="repeat_one">Piesa curentă</string>
     <string name="cd_seek_position">Poziția de redare</string>
+    <string name="action_move_up">Mută în sus</string>
+    <string name="action_move_down">Mută în jos</string>
+    <string name="action_open_now_playing">Deschide În redare</string>
+    <string name="eq_band">Banda %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

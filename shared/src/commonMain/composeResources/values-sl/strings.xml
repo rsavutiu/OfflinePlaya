@@ -249,4 +249,9 @@
     <string name="repeat_all">Vse skladbe</string>
     <string name="repeat_one">Trenutna skladba</string>
     <string name="cd_seek_position">Položaj predvajanja</string>
+    <string name="action_move_up">Premakni navzgor</string>
+    <string name="action_move_down">Premakni navzdol</string>
+    <string name="action_open_now_playing">Odpri Zdaj se predvaja</string>
+    <string name="eq_band">Pas %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

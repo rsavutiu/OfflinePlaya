@@ -249,4 +249,9 @@
     <string name="repeat_all">Všetky skladby</string>
     <string name="repeat_one">Aktuálna skladba</string>
     <string name="cd_seek_position">Pozícia prehrávania</string>
+    <string name="action_move_up">Presunúť nahor</string>
+    <string name="action_move_down">Presunúť nadol</string>
+    <string name="action_open_now_playing">Otvoriť Práve hrá</string>
+    <string name="eq_band">Pásmo %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

@@ -247,4 +247,9 @@
     <string name="repeat_all">Tous les titres</string>
     <string name="repeat_one">Titre actuel</string>
     <string name="cd_seek_position">Position de lecture</string>
+    <string name="action_move_up">Déplacer vers le haut</string>
+    <string name="action_move_down">Déplacer vers le bas</string>
+    <string name="action_open_now_playing">Ouvrir la lecture en cours</string>
+    <string name="eq_band">Bande %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

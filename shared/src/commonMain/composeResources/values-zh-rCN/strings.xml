@@ -246,4 +246,9 @@
     <string name="repeat_all">全部曲目</string>
     <string name="repeat_one">当前曲目</string>
     <string name="cd_seek_position">播放位置</string>
+    <string name="action_move_up">上移</string>
+    <string name="action_move_down">下移</string>
+    <string name="action_open_now_playing">打开正在播放</string>
+    <string name="eq_band">频段 %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

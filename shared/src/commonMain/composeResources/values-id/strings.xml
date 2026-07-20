@@ -246,4 +246,9 @@
     <string name="repeat_all">Semua lagu</string>
     <string name="repeat_one">Lagu saat ini</string>
     <string name="cd_seek_position">Posisi pemutaran</string>
+    <string name="action_move_up">Pindahkan ke atas</string>
+    <string name="action_move_down">Pindahkan ke bawah</string>
+    <string name="action_open_now_playing">Buka Sedang Diputar</string>
+    <string name="eq_band">Band %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

@@ -34,6 +34,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.customActions
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -48,11 +52,12 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
-import offlineplaya.shared.generated.resources.cd_now_playing
+import offlineplaya.shared.generated.resources.action_move_down
+import offlineplaya.shared.generated.resources.action_move_up
 import offlineplaya.shared.generated.resources.cd_remove_from_queue
-import offlineplaya.shared.generated.resources.cd_reorder_queue
 import offlineplaya.shared.generated.resources.empty_queue_subtitle
 import offlineplaya.shared.generated.resources.empty_queue_title
+import offlineplaya.shared.generated.resources.state_playing
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -109,6 +114,14 @@ fun QueueList(
                 isCurrent = idx == currentIndex,
                 onClick = { onJumpTo(idx) },
                 onRemove = { onRemove(idx) },
+                // TalkBack can't drive the pointer-only drag handle; these
+                // surface as custom accessibility actions on the row.
+                onMoveUp = if (onMove != null && idx > 0) {
+                    { onMove(idx, idx - 1) }
+                } else null,
+                onMoveDown = if (onMove != null && idx < localEntries.lastIndex) {
+                    { onMove(idx, idx + 1) }
+                } else null,
                 modifier = Modifier
                     .animateItem()
                     .zIndex(if (isDragging) 1f else 0f)
@@ -117,7 +130,11 @@ fun QueueList(
                     {
                         Icon(
                             imageVector = Icons.Default.DragHandle,
-                            contentDescription = stringResource(Res.string.cd_reorder_queue),
+                            // Deliberately unlabeled: the handle is pointer-only
+                            // (TalkBack can't drag it), so exposing it would be
+                            // a dead-end focus stop. Reordering is offered via
+                            // the row's Move up / Move down custom actions.
+                            contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.pointerInput(entry.uid) {
                                 detectDragGestures(
@@ -188,7 +205,12 @@ private fun QueueRow(
     onRemove: () -> Unit,
     modifier: Modifier = Modifier,
     dragHandle: (@Composable () -> Unit)? = null,
+    onMoveUp: (() -> Unit)? = null,
+    onMoveDown: (() -> Unit)? = null,
 ) {
+    val moveUpLabel = stringResource(Res.string.action_move_up)
+    val moveDownLabel = stringResource(Res.string.action_move_down)
+    val playingState = stringResource(Res.string.state_playing)
     // The "currently playing" highlight uses surfaceVariant (subtle tint)
     // plus a leading equalizer-glyph instead of a full primaryContainer fill.
     // The old fill overpowered the queue — only the playing row was visible
@@ -204,6 +226,17 @@ private fun QueueRow(
             .fillMaxWidth()
             .background(rowBackground)
             .clickable(onClick = onClick)
+            .semantics {
+                if (isCurrent) stateDescription = playingState
+                val actions = mutableListOf<CustomAccessibilityAction>()
+                onMoveUp?.let {
+                    actions += CustomAccessibilityAction(moveUpLabel) { it(); true }
+                }
+                onMoveDown?.let {
+                    actions += CustomAccessibilityAction(moveDownLabel) { it(); true }
+                }
+                if (actions.isNotEmpty()) customActions = actions
+            }
             .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.md),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -221,7 +254,9 @@ private fun QueueRow(
                 ) {
                     Icon(
                         imageVector = Icons.Default.GraphicEq,
-                        contentDescription = stringResource(Res.string.cd_now_playing),
+                        // Decorative: the row already announces "Playing" via
+                        // stateDescription; labeling this too would double up.
+                        contentDescription = null,
                         tint = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier.size(22.dp),
                     )

@@ -247,4 +247,9 @@
     <string name="repeat_all">Összes szám</string>
     <string name="repeat_one">Aktuális szám</string>
     <string name="cd_seek_position">Lejátszási pozíció</string>
+    <string name="action_move_up">Mozgatás felfelé</string>
+    <string name="action_move_down">Mozgatás lefelé</string>
+    <string name="action_open_now_playing">Most szól megnyitása</string>
+    <string name="eq_band">%1$s sáv</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

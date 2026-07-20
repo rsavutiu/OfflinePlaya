@@ -247,4 +247,9 @@
     <string name="repeat_all">Tüm parçalar</string>
     <string name="repeat_one">Geçerli parça</string>
     <string name="cd_seek_position">Oynatma konumu</string>
+    <string name="action_move_up">Yukarı taşı</string>
+    <string name="action_move_down">Aşağı taşı</string>
+    <string name="action_open_now_playing">Şimdi Çalıyor ekranını aç</string>
+    <string name="eq_band">Bant %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

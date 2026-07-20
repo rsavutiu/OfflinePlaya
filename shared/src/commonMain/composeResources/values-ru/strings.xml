@@ -249,4 +249,9 @@
     <string name="repeat_all">Все треки</string>
     <string name="repeat_one">Текущий трек</string>
     <string name="cd_seek_position">Позиция воспроизведения</string>
+    <string name="action_move_up">Переместить вверх</string>
+    <string name="action_move_down">Переместить вниз</string>
+    <string name="action_open_now_playing">Открыть экран воспроизведения</string>
+    <string name="eq_band">Полоса %1$s</string>
+    <string name="eq_gain_db">%1$s дБ</string>
 </resources>

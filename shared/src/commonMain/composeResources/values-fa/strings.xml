@@ -247,4 +247,9 @@
     <string name="repeat_all">همه آهنگ‌ها</string>
     <string name="repeat_one">آهنگ فعلی</string>
     <string name="cd_seek_position">موقعیت پخش</string>
+    <string name="action_move_up">انتقال به بالا</string>
+    <string name="action_move_down">انتقال به پایین</string>
+    <string name="action_open_now_playing">باز کردن صفحه در حال پخش</string>
+    <string name="eq_band">باند %1$s</string>
+    <string name="eq_gain_db">%1$s دسی‌بل</string>
 </resources>

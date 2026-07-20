@@ -248,4 +248,9 @@
     <string name="repeat_all">Visi celiņi</string>
     <string name="repeat_one">Pašreizējais celiņš</string>
     <string name="cd_seek_position">Atskaņošanas pozīcija</string>
+    <string name="action_move_up">Pārvietot uz augšu</string>
+    <string name="action_move_down">Pārvietot uz leju</string>
+    <string name="action_open_now_playing">Atvērt ekrānu Tagad atskaņo</string>
+    <string name="eq_band">Josla %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

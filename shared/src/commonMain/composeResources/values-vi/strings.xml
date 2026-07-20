@@ -246,4 +246,9 @@
     <string name="repeat_all">Tất cả bài hát</string>
     <string name="repeat_one">Bài hát hiện tại</string>
     <string name="cd_seek_position">Vị trí phát</string>
+    <string name="action_move_up">Di chuyển lên</string>
+    <string name="action_move_down">Di chuyển xuống</string>
+    <string name="action_open_now_playing">Mở Đang phát</string>
+    <string name="eq_band">Dải %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

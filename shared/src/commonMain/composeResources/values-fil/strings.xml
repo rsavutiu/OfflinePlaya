@@ -247,4 +247,9 @@
     <string name="repeat_all">Lahat ng track</string>
     <string name="repeat_one">Kasalukuyang track</string>
     <string name="cd_seek_position">Posisyon ng pag-play</string>
+    <string name="action_move_up">Ilipat pataas</string>
+    <string name="action_move_down">Ilipat pababa</string>
+    <string name="action_open_now_playing">Buksan ang Now Playing</string>
+    <string name="eq_band">Band %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

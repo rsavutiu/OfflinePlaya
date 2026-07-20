@@ -249,4 +249,9 @@
     <string name="repeat_all">כל השירים</string>
     <string name="repeat_one">השיר הנוכחי</string>
     <string name="cd_seek_position">מיקום ההשמעה</string>
+    <string name="action_move_up">העבר למעלה</string>
+    <string name="action_move_down">העבר למטה</string>
+    <string name="action_open_now_playing">פתיחת מסך ההשמעה</string>
+    <string name="eq_band">תדר %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

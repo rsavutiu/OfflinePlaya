@@ -248,4 +248,9 @@
     <string name="repeat_all">Sve pjesme</string>
     <string name="repeat_one">Trenutna pjesma</string>
     <string name="cd_seek_position">Položaj reprodukcije</string>
+    <string name="action_move_up">Pomakni gore</string>
+    <string name="action_move_down">Pomakni dolje</string>
+    <string name="action_open_now_playing">Otvori Sada svira</string>
+    <string name="eq_band">Pojas %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

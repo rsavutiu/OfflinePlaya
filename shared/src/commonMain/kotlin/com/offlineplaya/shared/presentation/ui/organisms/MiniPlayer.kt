@@ -37,6 +37,9 @@ import com.offlineplaya.shared.presentation.ui.molecules.PlaybackControls
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.persistentListOf
+import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.action_open_now_playing
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Vertical footprint of the [MiniPlayer]'s content above the navigation-bar
@@ -96,7 +99,12 @@ fun MiniPlayer(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = onExpand)
+                    .clickable(
+                        onClick = onExpand,
+                        // TalkBack: "double-tap to Open Now Playing" — without
+                        // this the merged row is just an unlabeled tap target.
+                        onClickLabel = stringResource(Res.string.action_open_now_playing),
+                    )
                     .windowInsetsPadding(WindowInsets.navigationBars)
                     .padding(horizontal = 16.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,

@@ -247,4 +247,9 @@
     <string name="repeat_all">Todas las canciones</string>
     <string name="repeat_one">Canción actual</string>
     <string name="cd_seek_position">Posición de reproducción</string>
+    <string name="action_move_up">Subir</string>
+    <string name="action_move_down">Bajar</string>
+    <string name="action_open_now_playing">Abrir Reproduciendo ahora</string>
+    <string name="eq_band">Banda %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>

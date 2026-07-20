@@ -1,6 +1,5 @@
 package com.offlineplaya.shared.presentation.ui.molecules
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,12 +7,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
@@ -35,7 +36,15 @@ fun SwitchRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable(enabled = enabled) { onCheckedChange(!checked) }
+            // toggleable (not clickable) so TalkBack reads the whole row as ONE
+            // switch — "title, subtitle, on/off" — instead of an unlabeled tap
+            // target plus a second bare Switch stop.
+            .toggleable(
+                value = checked,
+                enabled = enabled,
+                role = Role.Switch,
+                onValueChange = onCheckedChange,
+            )
             .padding(horizontal = 16.dp, vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -61,7 +70,9 @@ fun SwitchRow(
         val brand = LocalBrandAccent.current
         Switch(
             checked = checked,
-            onCheckedChange = onCheckedChange,
+            // null: the row's toggleable handles input; a non-null callback
+            // here would make the thumb its own (duplicate) a11y target.
+            onCheckedChange = null,
             enabled = enabled,
             // "On" state in the fixed brand accent so toggles read as active
             // regardless of the ambient album-art tint.

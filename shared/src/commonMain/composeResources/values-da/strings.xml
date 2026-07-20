@@ -247,4 +247,9 @@
     <string name="repeat_all">Alle numre</string>
     <string name="repeat_one">Aktuelt nummer</string>
     <string name="cd_seek_position">Afspilningsposition</string>
+    <string name="action_move_up">Flyt op</string>
+    <string name="action_move_down">Flyt ned</string>
+    <string name="action_open_now_playing">Åbn Afspiller nu</string>
+    <string name="eq_band">Bånd %1$s</string>
+    <string name="eq_gain_db">%1$s dB</string>
 </resources>
