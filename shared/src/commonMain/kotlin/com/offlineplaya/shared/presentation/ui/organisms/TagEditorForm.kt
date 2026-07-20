@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -21,6 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.TrackTagEdits
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
+import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.tag_editor_field_album
@@ -98,6 +100,12 @@ fun TagEditorForm(
                 )
             },
             enabled = !saving,
+            // Primary CTA → fixed brand accent, like every other filled
+            // button (see AppButton) — not the dynamic M3 primary.
+            colors = ButtonDefaults.buttonColors(
+                containerColor = LocalBrandAccent.current.accent,
+                contentColor = LocalBrandAccent.current.onAccent,
+            ),
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
         ) {
             Text(
