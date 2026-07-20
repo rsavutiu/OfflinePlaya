@@ -17,13 +17,14 @@ package com.offlineplaya.shared.domain.model
  *   [MIN_DURATION_SECONDS]..[MAX_DURATION_SECONDS].
  * @property bluetoothAutoplayEnabled when `true`, playback resumes
  *   automatically the moment a Bluetooth audio device connects while a queue
- *   is loaded but paused (walk to the car, music starts). Default off —
- *   auto-starting audio on connect surprises anyone who didn't opt in.
+ *   is loaded but paused (walk to the car, music starts). On by default —
+ *   this is a music player; connecting audio hardware IS the intent. The
+ *   toggle in Settings → Playback opts out.
  */
 data class PlaybackPreferences(
     val crossfadeEnabled: Boolean,
     val crossfadeDurationSeconds: Int,
-    val bluetoothAutoplayEnabled: Boolean = false,
+    val bluetoothAutoplayEnabled: Boolean = true,
 ) {
     /** Overlap length in milliseconds, or `0` when crossfade is disabled. */
     val crossfadeDurationMs: Long

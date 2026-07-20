@@ -15,8 +15,9 @@ import kotlinx.coroutines.flow.StateFlow
 
 /**
  * Resumes playback when a Bluetooth audio device connects — the
- * "get in the car and the music just starts" feature. Opt-in via
- * [PlaybackPreferences.bluetoothAutoplayEnabled] (Settings → Playback).
+ * "get in the car and the music just starts" feature. On by default;
+ * [PlaybackPreferences.bluetoothAutoplayEnabled] (Settings → Playback)
+ * opts out.
  *
  * Listens through [AudioManager.registerAudioDeviceCallback] rather than the
  * Bluetooth broadcasts: the audio-routing callback fires only once the device
