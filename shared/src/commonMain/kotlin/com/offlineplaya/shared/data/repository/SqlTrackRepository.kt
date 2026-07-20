@@ -133,6 +133,16 @@ internal class SqlTrackRepository(
         )
     }
 
+    override suspend fun normalizeArtistNameCasing(artistId: Long, canonical: String) =
+        withContext(ioDispatcher) {
+            queries.normalizeArtistNameCasing(canonical = canonical, artistId = artistId)
+        }
+
+    override suspend fun normalizeAlbumArtistNameCasing(canonical: String) =
+        withContext(ioDispatcher) {
+            queries.normalizeAlbumArtistNameCasing(canonical)
+        }
+
     override suspend fun selectMissingCanonicalGenre(limit: Int): List<TrackGenreRow> =
         withContext(ioDispatcher) {
             queries.selectMissingCanonicalGenre(limit.toLong()).executeAsList().map { row ->

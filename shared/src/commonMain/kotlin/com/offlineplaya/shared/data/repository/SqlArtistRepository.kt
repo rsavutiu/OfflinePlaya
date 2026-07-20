@@ -54,6 +54,20 @@ internal class SqlArtistRepository(
         queries.updateCounts(id)
     }
 
+    override suspend fun canonicalizeCasing(id: Long): String? = withContext(ioDispatcher) {
+        queries.transactionWithResult {
+            val row = queries.selectById(id).executeAsOneOrNull()
+                ?: return@transactionWithResult null
+            val canonical = queries.selectCanonicalCasing(id, row.name).executeAsOneOrNull()
+                ?.artist_name ?: return@transactionWithResult null
+            if (canonical != row.name) {
+                logger.i(TAG, "Recasing artist '${row.name}' -> '$canonical'")
+                queries.rename(canonical, id)
+            }
+            canonical
+        }
+    }
+
     override suspend fun updateImageUrl(id: Long, imageUrl: String?) = withContext(ioDispatcher) {
         queries.updateImageUrl(imageUrl, id)
     }

@@ -183,6 +183,24 @@ UPDATE Track SET
     updated_at = strftime('%s', 'now')
 WHERE id = ?;
 
+-- Recase raw artist tags to the artist row's canonical casing. Only rows whose
+-- tag is NOCASE-equal but binary-different are touched; compound "A & B"
+-- featuring tags don't match and are deliberately left alone. Fixes the
+-- "Charli Xcx next to Charli XCX in the same list" inconsistency caused by
+-- files tagged with different casings.
+normalizeArtistNameCasing:
+UPDATE Track SET artist_name = :canonical
+WHERE artist_id = :artistId
+  AND artist_name = :canonical COLLATE NOCASE
+  AND artist_name != :canonical;
+
+-- Same recase for the album-artist tag; keyed by name (album-artist has no
+-- FK of its own on Track).
+normalizeAlbumArtistNameCasing:
+UPDATE Track SET album_artist_name = :canonical
+WHERE album_artist_name = :canonical COLLATE NOCASE
+  AND album_artist_name != :canonical;
+
 -- Lazy backfill: pull every row that's been scanned but never had its
 -- canonical_genre classified. Bounded so a giant pre-EQ library can be
 -- chunked across multiple passes.

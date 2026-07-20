@@ -108,6 +108,16 @@ interface TrackRepository {
     ): Long
 
     suspend fun updateMetadata(track: Track)
+
+    /**
+     * Recase raw artist tags NOCASE-equal to [canonical] onto its exact
+     * casing, for tracks of [artistId]. Compound featuring tags don't match
+     * and stay untouched. See ArtistRepository.canonicalizeCasing.
+     */
+    suspend fun normalizeArtistNameCasing(artistId: Long, canonical: String)
+
+    /** Same recase for album-artist tags, matched by name across the table. */
+    suspend fun normalizeAlbumArtistNameCasing(canonical: String)
     suspend fun updateForeignKeys(id: Long, artistId: Long?, albumId: Long?)
     suspend fun markError(id: Long)
 

@@ -29,6 +29,24 @@ WHERE id = ?;
 updateImageUrl:
 UPDATE Artist SET image_url = ? WHERE id = ?;
 
+-- Majority casing of this artist's name among the raw track tags that
+-- case-insensitively equal the row name. The artist row itself is frozen to
+-- whichever casing was scanned FIRST (INSERT OR IGNORE + UNIQUE NOCASE), which
+-- is arbitrary; the tags hold the real distribution. Binary ORDER BY on the
+-- tie-break prefers the variant with uppercase letters ("Charli XCX" sorts
+-- before "Charli Xcx"), which is the right call for acronym names.
+selectCanonicalCasing:
+SELECT artist_name FROM Track
+WHERE artist_id = :id AND artist_name = :name COLLATE NOCASE
+GROUP BY artist_name
+ORDER BY COUNT(*) DESC, artist_name
+LIMIT 1;
+
+-- Recase only: the new name is NOCASE-equal to the old, so the UNIQUE
+-- constraint can only "conflict" with the row being updated, which is legal.
+rename:
+UPDATE Artist SET name = :name WHERE id = :id;
+
 lastInsertId:
 SELECT last_insert_rowid();
 

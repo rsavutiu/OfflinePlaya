@@ -601,6 +601,17 @@ class LibrarySyncUseCase(
         }
         touchedAlbums.forEach { albums.refreshAggregates(it) }
         touchedArtists.forEach { artists.refreshCounts(it) }
+
+        // Casing pass: the artist row froze whatever casing was scanned first;
+        // recase it to the majority vote of the raw tags, then pull every
+        // NOCASE-equal tag (artist + album-artist) onto that one casing so
+        // "Charli Xcx" never sits next to "Charli XCX" in a list again.
+        // Self-heals on every sync — a rescan after retagging converges.
+        touchedArtists.forEach { id ->
+            val canonical = artists.canonicalizeCasing(id) ?: return@forEach
+            tracks.normalizeArtistNameCasing(id, canonical)
+            tracks.normalizeAlbumArtistNameCasing(canonical)
+        }
     }
 }
 
