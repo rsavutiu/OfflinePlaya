@@ -53,6 +53,20 @@ class OfflinePlayaApp : Application() {
         // resumed Activity. The holder is lightweight (no DB/network), so this
         // doesn't pull the slow singletons onto the main thread.
         registerActivityLifecycleCallbacks(koin.get<CurrentActivityHolder>())
+        // Register the Coil singleton loader synchronously, before any Activity
+        // can compose an AsyncImage. Coil 3.1's setSafe throws if the singleton
+        // was already created by a get(); doing this inside appScope.launch (as
+        // it used to be) raced the first frame and crashed on cold start. The
+        // provider lambdas defer every DB/network Koin lookup until Coil builds
+        // the loader on its first image load, so no SQLite opens on the main
+        // thread here.
+        installTrackArtImageLoader(
+            context = this@OfflinePlayaApp,
+            settings = { koin.get<SettingsRepository>() },
+            artistsRepo = { koin.get<com.offlineplaya.shared.domain.repository.ArtistRepository>() },
+            remoteSource = { koin.get<RemoteArtSource>() },
+            folderSource = { koin.get<com.offlineplaya.shared.domain.image.FolderArtSource>() },
+        )
         val appScope = koin.get<CoroutineScope>()
         appScope.launch {
             // Last session's queue comes back paused before the queue
@@ -72,13 +86,6 @@ class OfflinePlayaApp : Application() {
                 preferences = koin.get<com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder>().preferences,
                 logger = koin.get(),
             ).also { it.start() }
-            installTrackArtImageLoader(
-                context = this@OfflinePlayaApp,
-                settings = koin.get<SettingsRepository>(),
-                artistsRepo = koin.get<com.offlineplaya.shared.domain.repository.ArtistRepository>(),
-                remoteSource = koin.get<RemoteArtSource>(),
-                folderSource = koin.get<com.offlineplaya.shared.domain.image.FolderArtSource>(),
-            )
             // After the cold-start scan, keep watching: MediaStore changes
             // (torrents, downloads, sync clients) and app foreground events
             // each trigger a debounced reconcile. See [AutoRescanController].
