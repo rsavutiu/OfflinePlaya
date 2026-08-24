@@ -30,7 +30,11 @@ class LibrarySyncCoordinatorTest {
     private class Harness(
         val coordinator: LibrarySyncCoordinator,
         val managedRoots: SqlManagedTreeRootRepository,
-    )
+        val tracks: SqlTrackRepository,
+    ) {
+        suspend fun trackTitle(docUri: String): String? =
+            tracks.findByDocumentUri(docUri)?.title
+    }
 
     private fun harness(
         testScope: CoroutineScope,
@@ -64,6 +68,7 @@ class LibrarySyncCoordinatorTest {
                 scope = testScope,
             ),
             managedRoots,
+            tracks,
         )
     }
 
@@ -310,6 +315,46 @@ class LibrarySyncCoordinatorTest {
 
         assertEquals(0, tracks.count())
         assertEquals(null, managedRoots.findByUri(uri))
+    }
+
+    @Test
+    fun `resetLibrary wipes derived rows, keeps the managed root, and re-reads tags`() = runTest {
+        val uri = "content://tree/resettable"
+        val docUri = "$uri/song.mp3"
+        val scanner = FakeFolderScanner.scan(
+            treeUri = uri,
+            folders = listOf(AudioFolder(uri, "", "Resettable", null)),
+            files = listOf(RawAudioFile(docUri, uri, "song.mp3", "song.mp3", 100L, 200L)),
+        )
+        // First scan sees the spammy title; then the "file on disk" is fixed.
+        val reader = FakeMetadataReader(
+            scripted = mapOf(
+                docUri to AudioMetadata.Empty.copy(
+                    title = "Fire Rides vk.com/xclusives_zone", artist = "MØ", album = "No Mythologies",
+                ),
+            ),
+        )
+        val scope = CoroutineScope(coroutineContext + UnconfinedTestDispatcher(testScheduler))
+        val h = harness(scope, scanner, reader)
+
+        h.coordinator.addAndSync(uri, "Resettable").join()
+        assertEquals("Fire Rides vk.com/xclusives_zone", h.trackTitle(docUri))
+
+        // Simulate the corrected tag landing on disk with an unchanged
+        // (size, mtime) fingerprint — the case an incremental rescan misses.
+        reader.scripted = mapOf(
+            docUri to AudioMetadata.Empty.copy(
+                title = "Fire Rides", artist = "MØ", album = "No Mythologies",
+            ),
+        )
+
+        h.coordinator.resetLibrary().join()
+
+        val final = h.coordinator.status.value
+        assertIs<SyncStatus.Completed>(final)
+        // Managed root survives the wipe, and the corrected title is re-read.
+        assertNotNull(h.managedRoots.findByUri(uri))
+        assertEquals("Fire Rides", h.trackTitle(docUri))
     }
 
     @Test

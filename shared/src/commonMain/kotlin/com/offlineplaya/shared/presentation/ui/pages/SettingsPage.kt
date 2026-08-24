@@ -9,7 +9,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -73,6 +79,7 @@ fun SettingsPage(
     onAcknowledgeBurnReport: () -> Unit,
     onPickFolder: () -> Unit,
     onRescanAll: () -> Unit,
+    onResetLibrary: () -> Unit,
     onRemoveManagedRoot: (String) -> Unit,
     onOpenEqualizer: () -> Unit,
     onOpenDesignSystem: () -> Unit,
@@ -83,6 +90,7 @@ fun SettingsPage(
     onRemoveExcludedFolder: (com.offlineplaya.shared.domain.model.ExcludedFolder) -> Unit = {},
 ) {
     var pendingRemoval by remember { mutableStateOf<ManagedTreeRoot?>(null) }
+    var confirmReset by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = modifier.testTag(TestTags.Settings.ROOT),
@@ -186,8 +194,60 @@ fun SettingsPage(
                     audio()
                     developer()
                 }
+
+                // Destructive escape hatch, always at the very bottom and full
+                // width regardless of orientation: wipe the whole library and
+                // rebuild it from a fresh scan. Red to signal it's the nuclear
+                // option, gated by a confirmation dialog.
+                Button(
+                    onClick = { confirmReset = true },
+                    enabled = !isScanning,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.error,
+                        contentColor = MaterialTheme.colorScheme.onError,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 16.dp)
+                        .testTag(TestTags.Settings.RESET),
+                ) {
+                    Text("Reset")
+                }
             }
         }
+    }
+
+    if (confirmReset) {
+        AlertDialog(
+            onDismissRequest = { confirmReset = false },
+            title = { Text("Reset library?") },
+            text = {
+                Text(
+                    "This wipes every scanned track, album, and artist, then " +
+                        "rescans all your folders from scratch. Your folders and " +
+                        "hidden folders are kept. Playlists and play history are " +
+                        "not affected."
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        confirmReset = false
+                        onResetLibrary()
+                    },
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                    ),
+                ) {
+                    Text("Reset")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { confirmReset = false }) {
+                    Text("Cancel")
+                }
+            },
+        )
     }
 
     pendingRemoval?.let { root ->
@@ -224,7 +284,7 @@ private fun SettingsPageLightPreview() {
             onCrossfadeEnabledChange = {}, onCrossfadeDurationChange = {},
             onBluetoothAutoplayChange = {},
             onAcknowledgeBurnReport = {},
-            onPickFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
+            onPickFolder = {}, onRescanAll = {}, onResetLibrary = {}, onRemoveManagedRoot = {},
             onOpenEqualizer = {}, onOpenDesignSystem = {},
             onBack = {},
         )
@@ -250,7 +310,7 @@ private fun SettingsPageDarkPreview() {
             onCrossfadeEnabledChange = {}, onCrossfadeDurationChange = {},
             onBluetoothAutoplayChange = {},
             onAcknowledgeBurnReport = {},
-            onPickFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
+            onPickFolder = {}, onRescanAll = {}, onResetLibrary = {}, onRemoveManagedRoot = {},
             onOpenEqualizer = {}, onOpenDesignSystem = {},
             onBack = {},
         )
@@ -281,7 +341,7 @@ private fun SettingsPageScanningPreview() {
             onCrossfadeEnabledChange = {}, onCrossfadeDurationChange = {},
             onBluetoothAutoplayChange = {},
             onAcknowledgeBurnReport = {},
-            onPickFolder = {}, onRescanAll = {}, onRemoveManagedRoot = {},
+            onPickFolder = {}, onRescanAll = {}, onResetLibrary = {}, onRemoveManagedRoot = {},
             onOpenEqualizer = {}, onOpenDesignSystem = {},
             onBack = {},
             dynamicColorSupported = false,

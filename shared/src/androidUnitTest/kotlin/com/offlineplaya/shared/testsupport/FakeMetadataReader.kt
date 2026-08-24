@@ -9,7 +9,9 @@ import com.offlineplaya.shared.domain.scanner.MetadataReader
  * file). URIs absent from both sets fall back to [AudioMetadata.Empty].
  */
 class FakeMetadataReader(
-    private val scripted: Map<String, AudioMetadata> = emptyMap(),
+    // Reassignable so a test can simulate on-disk tag edits between two scans
+    // (e.g. verifying that a library reset re-reads metadata from scratch).
+    var scripted: Map<String, AudioMetadata> = emptyMap(),
     private val failingUris: Set<String> = emptySet(),
 ) : MetadataReader {
 

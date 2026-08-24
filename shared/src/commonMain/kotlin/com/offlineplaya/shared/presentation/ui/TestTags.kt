@@ -71,6 +71,9 @@ object TestTags {
 
         /** Bluetooth-autoplay on/off switch row (Playback section). */
         const val BT_AUTOPLAY_TOGGLE = "settings_bt_autoplay_toggle"
+
+        /** Destructive "Reset" button at the very bottom of the page. */
+        const val RESET = "settings_reset"
     }
 
     object Playlists {

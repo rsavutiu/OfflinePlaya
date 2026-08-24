@@ -509,6 +509,7 @@ private fun DestinationBody(
                     onAcknowledgeBurnReport = onAcknowledgeBurnReport,
                     onPickFolder = onPickFolder,
                     onRescanAll = { syncCoordinator.forceResyncAll() },
+                    onResetLibrary = { syncCoordinator.resetLibrary() },
                     onRemoveManagedRoot = { uri -> syncCoordinator.removeManagedRoot(uri) },
                     onOpenEqualizer = { navigator.push(AppDestination.Equalizer) },
                     onOpenDesignSystem = { navigator.push(AppDestination.DesignSystemGallery) },

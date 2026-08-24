@@ -122,6 +122,33 @@ class LibrarySyncCoordinator(
     }
 
     /**
+     * Hard reset: wipe every derived library row (tracks, folders, albums,
+     * artists) and rebuild the whole library from a fresh scan. Managed roots
+     * and folder exclusions are intentionally kept — the user's granted folders
+     * and hidden subtrees are configuration, not scan output, and are needed to
+     * rescan at all.
+     *
+     * This is the escape hatch for when an incremental re-scan can't fix
+     * something: the fingerprint-skip logic assumes on-disk edits change a
+     * file's (size, mtime), so a rescan that "should" pick up edited tags
+     * occasionally doesn't. Dropping the rows first guarantees every file is
+     * read from scratch — corrected tags, art, and grouping included.
+     */
+    fun resetLibrary(): Job = scope.launch {
+        try {
+            _status.value = SyncStatus.Scanning(treeUri = "<reset>")
+            tracks.deleteAll()
+            folders.deleteAll()
+            albums.deleteAll()
+            artists.deleteAll()
+            val report = syncUseCase.syncAll(force = true)
+            _status.value = SyncStatus.Completed(report)
+        } catch (t: Throwable) {
+            _status.value = SyncStatus.Failed(t.message ?: "Unknown error")
+        }
+    }
+
+    /**
      * Re-scan only if nothing is in flight. Used by the auto-rescan triggers
      * (MediaStore observer, app foreground) so a burst of filesystem events
      * doesn't stack scans on top of each other — if the user just added 50
