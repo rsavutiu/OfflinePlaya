@@ -42,6 +42,7 @@ fun LyricsPage(
     onSeekToLine: (LyricLine) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
+    canPick: Boolean = true,
     pickerState: LyricsPickerState = LyricsPickerState.Hidden,
     onOpenPicker: () -> Unit = {},
     onChooseCandidate: (LyricsCandidate) -> Unit = {},
@@ -57,17 +58,22 @@ fun LyricsPage(
                 actions = {
                     // "Pick from matches" — re-query LRCLIB and let the user
                     // choose the right lyrics when the auto-match is wrong.
-                    IconButton(
-                        onClick = onOpenPicker,
-                        modifier = Modifier
-                            .size(40.dp)
-                            .testTag(TestTags.Lyrics.PICK_OPEN),
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = stringResource(Res.string.lyrics_pick),
-                            tint = MaterialTheme.colorScheme.onSurface,
-                        )
+                    // Hidden when remote lyrics are off: with no source to
+                    // search, the picker would only ever say "no matches",
+                    // which would misinform rather than help.
+                    if (canPick) {
+                        IconButton(
+                            onClick = onOpenPicker,
+                            modifier = Modifier
+                                .size(40.dp)
+                                .testTag(TestTags.Lyrics.PICK_OPEN),
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = stringResource(Res.string.lyrics_pick),
+                                tint = MaterialTheme.colorScheme.onSurface,
+                            )
+                        }
                     }
                 },
             )

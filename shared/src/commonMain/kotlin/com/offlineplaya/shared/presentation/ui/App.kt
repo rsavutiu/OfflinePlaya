@@ -549,6 +549,7 @@ private fun DestinationBody(
                     trackTitle = playback.currentTrack?.title,
                     onSeekToLine = { lyricsStateHolder.seekToLine(it) },
                     onBack = { navigator.pop() },
+                    canPick = lyricsPreferences.downloadRemoteLyrics,
                     pickerState = pickerState,
                     onOpenPicker = { lyricsStateHolder.openPicker() },
                     onChooseCandidate = { lyricsStateHolder.choose(it) },

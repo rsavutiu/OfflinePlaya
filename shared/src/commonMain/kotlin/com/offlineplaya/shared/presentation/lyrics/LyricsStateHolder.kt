@@ -40,8 +40,16 @@ class LyricsStateHolder(
     val picker: StateFlow<LyricsPickerState> = _picker.asStateFlow()
 
     // Latest resolved track, so openPicker/choose have a subject without
-    // re-reading the player flow. Written only from the collector below.
+    // re-reading the player flow. Written from the collector (a background
+    // dispatcher) and read from openPicker/choose (the main thread) — @Volatile
+    // for cross-thread visibility.
+    @Volatile
     private var currentTrack: Track? = null
+
+    // Track id whose lyrics are currently rendered. Used to suppress the
+    // Loading flash on a pick-triggered [refresh] (same track): the old lyrics
+    // stay visible until the pick resolves, instead of blinking through Loading.
+    private var renderedTrackId: Long? = null
 
     // Bumped by [choose] to force the main collector to re-resolve the current
     // track from cache (which now holds the user's pick) without waiting for a
@@ -62,10 +70,16 @@ class LyricsStateHolder(
                 .collectLatest { track ->
                     currentTrack = track
                     if (track == null) {
+                        renderedTrackId = null
                         _state.value = LyricsUiState.None
                         return@collectLatest
                     }
-                    _state.value = LyricsUiState.Loading
+                    // Only flash Loading on a genuine track change; a refresh of
+                    // the same track (a user pick) keeps the current text until
+                    // the new lyrics resolve.
+                    if (track.id != renderedTrackId) {
+                        _state.value = LyricsUiState.Loading
+                    }
                     // A failed lookup (network error, tag read) must not tear
                     // down the whole collector — fall back to "no lyrics" so the
                     // next track still resolves. Cancellation (track changed
@@ -77,6 +91,7 @@ class LyricsStateHolder(
                     } catch (e: Exception) {
                         Lyrics.None
                     }
+                    renderedTrackId = track.id
                     when (lyrics) {
                         Lyrics.None -> _state.value = LyricsUiState.None
                         is Lyrics.Plain -> _state.value = LyricsUiState.Plain(lyrics.text)
