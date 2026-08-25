@@ -293,10 +293,34 @@ class LrclibLyricsSourceTest {
     }
 
     @Test
-    fun `search returns empty on missing artist or title`() = runTest {
+    fun `search returns empty on missing title`() = runTest {
         val src = source { _ -> StubResponse(200, "[]") }
-        assertTrue(src.search(track(title = "", artist = "A")).isEmpty())
+        assertTrue(src.search(track(title = "")).isEmpty())
         assertTrue(urlsCaptured.isEmpty(), "no HTTP for an unusable query")
+    }
+
+    @Test
+    fun `search with unknown artist searches by title only and strips the track number`() = runTest {
+        val hit = """
+            [{"id":5,"trackName":"The Beautiful American","artistName":"Ellington","duration":200,"syncedLyrics":"[00:01.00]x"}]
+        """.trimIndent()
+        val src = source { url ->
+            if (url.contains("/api/search")) StubResponse(200, hit) else StubResponse(404, "")
+        }
+        val result = src.search(
+            track(title = "06 - The Beautiful American", artist = "<unknown>", album = "The Great Reunion", durationMs = 200_000L),
+        )
+        assertEquals(1, result.size)
+        // A query with the "06 - " prefix stripped (track_name starts at the
+        // real title, not the number).
+        assertTrue(
+            urlsCaptured.any { it.contains("track_name=The+Beautiful+American") },
+            "expected a track-number-stripped title query, saw $urlsCaptured",
+        )
+        assertTrue(
+            urlsCaptured.none { it.contains("artist_name") },
+            "unknown artist must not be sent as artist_name, saw $urlsCaptured",
+        )
     }
 
     @Test

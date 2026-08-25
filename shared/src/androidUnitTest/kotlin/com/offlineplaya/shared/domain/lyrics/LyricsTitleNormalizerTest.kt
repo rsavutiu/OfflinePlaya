@@ -106,6 +106,32 @@ class LyricsTitleNormalizerTest {
         assertEquals("Earth, Wind & Fire", LyricsTitleNormalizer.stripCredits("Earth, Wind & Fire"))
     }
 
+    // --- stripLeadingTrackNumber ---
+
+    @Test
+    fun `stripLeadingTrackNumber removes numeric prefixes with a separator`() {
+        assertEquals("The Beautiful American", LyricsTitleNormalizer.stripLeadingTrackNumber("06 - The Beautiful American"))
+        assertEquals("Fire Rides", LyricsTitleNormalizer.stripLeadingTrackNumber("01. Fire Rides"))
+        assertEquals("Maiden", LyricsTitleNormalizer.stripLeadingTrackNumber("3) Maiden"))
+    }
+
+    @Test
+    fun `stripLeadingTrackNumber leaves numeric titles alone`() {
+        assertEquals("99 Luftballons", LyricsTitleNormalizer.stripLeadingTrackNumber("99 Luftballons"))
+        assertEquals("7 rings", LyricsTitleNormalizer.stripLeadingTrackNumber("7 rings"))
+        assertEquals("3.14", LyricsTitleNormalizer.stripLeadingTrackNumber("3.14"))
+    }
+
+    @Test
+    fun `variants strips a leading track number in the cleaned pair`() {
+        val v = LyricsTitleNormalizer.variants("The Great Reunion", "06 - The Beautiful American")
+        assertEquals("The Great Reunion" to "06 - The Beautiful American", v.first())
+        assertTrue(
+            v.any { it.second == "The Beautiful American" },
+            "expected a track-number-stripped title; got $v",
+        )
+    }
+
     // --- core ---
 
     @Test

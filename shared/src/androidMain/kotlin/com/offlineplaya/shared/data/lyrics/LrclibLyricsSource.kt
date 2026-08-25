@@ -55,11 +55,14 @@ internal class LrclibLyricsSource(
     private val missKeys = mutableSetOf<String>()
 
     override suspend fun resolve(track: Track): String? {
-        val artist = (track.albumArtistName ?: track.artistName).trim()
+        val artist = cleanArtist(track)
         val album = track.albumName.trim()
         val title = track.title.trim()
+        // Auto-resolve stays conservative: without a real artist we won't guess
+        // a match (that risks silently attaching the wrong lyrics). The picker
+        // is allowed to fall back to a title-only search — see [search].
         if (artist.isEmpty() || title.isEmpty()) {
-            logger.d(TAG, "Skipping lookup — missing artist/title")
+            logger.d(TAG, "Skipping auto lookup — missing artist/title")
             return null
         }
         val durationSec = track.durationMs?.let { (it / 1000L).toInt() } ?: 0
@@ -120,10 +123,12 @@ internal class LrclibLyricsSource(
     }
 
     override suspend fun search(track: Track): List<LyricsCandidate> {
-        val artist = (track.albumArtistName ?: track.artistName).trim()
+        // The picker tolerates an unknown artist (common for untagged rips like
+        // "<unknown>") and searches by title alone — the user vets the results.
+        val artist = cleanArtist(track)
         val title = track.title.trim()
-        if (artist.isEmpty() || title.isEmpty()) {
-            logger.d(TAG, "search skipped — missing artist/title")
+        if (title.isEmpty()) {
+            logger.d(TAG, "search skipped — missing title")
             return emptyList()
         }
         val durationSec = track.durationMs?.let { (it / 1000L).toInt() } ?: 0
@@ -161,7 +166,7 @@ internal class LrclibLyricsSource(
         artist: String,
         title: String,
     ): List<LrcLibRow> = withContext(Dispatchers.IO) {
-        val params = "track_name=${title.urlEncode()}&artist_name=${artist.urlEncode()}"
+        val params = searchParams(artist, title)
         val url = "$BASE_URL/api/search?$params"
         val body = doRequest(url) ?: return@withContext emptyList()
         runCatching { json.decodeFromString<List<LrcLibRow>>(body) }
@@ -207,7 +212,7 @@ internal class LrclibLyricsSource(
         title: String,
         durationSec: Int,
     ): String? = withContext(Dispatchers.IO) {
-        val params = "track_name=${title.urlEncode()}&artist_name=${artist.urlEncode()}"
+        val params = searchParams(artist, title)
         val url = "$BASE_URL/api/search?$params"
         val body = doRequest(url) ?: return@withContext null
         val rows = runCatching { json.decodeFromString<List<LrcLibRow>>(body) }
@@ -231,6 +236,21 @@ internal class LrclibLyricsSource(
             }
         }
         best.bestText()
+    }
+
+    /**
+     * The track's artist for a lookup, or "" when it's missing or one of the
+     * MediaStore/tag "unknown" placeholders — callers treat "" as "no artist".
+     */
+    private fun cleanArtist(track: Track): String {
+        val raw = (track.albumArtistName ?: track.artistName).trim()
+        return if (raw.isEmpty() || raw.lowercase() in UNKNOWN_ARTISTS) "" else raw
+    }
+
+    /** /search query string; omits `artist_name` entirely when [artist] is blank. */
+    private fun searchParams(artist: String, title: String): String = buildString {
+        append("track_name=").append(title.urlEncode())
+        if (artist.isNotEmpty()) append("&artist_name=").append(artist.urlEncode())
     }
 
     private fun doRequest(url: String): String? {
@@ -324,11 +344,14 @@ internal class LrclibLyricsSource(
         const val MAX_DURATION_DELTA_SEC = 15
         // Upper bound on rows shown in the "pick from matches" list.
         const val MAX_CANDIDATES = 30
+        // Placeholder artist strings that mean "untagged" — MediaStore uses the
+        // literal "<unknown>"; our mapper falls back to "Unknown Artist".
+        val UNKNOWN_ARTISTS = setOf("<unknown>", "unknown", "unknown artist")
         const val MISS_EXPIRY_MS = 30L * 24 * 60 * 60 * 1_000 // 30 days
-        // v3: aggressive fallback chain (spam/URL strip, drop feat., drop
-        // album, bare core) — invalidate old negative-cache misses so tracks
-        // that only missed under the weaker v2 logic get re-tried.
-        const val SOURCE_VERSION = 3
+        // v4: leading track-number stripping ("06 - Title") — invalidate old
+        // misses so number-prefixed titles get re-tried. (v3 added the
+        // spam/URL/feat/album/core fallback chain.)
+        const val SOURCE_VERSION = 4
     }
 }
 

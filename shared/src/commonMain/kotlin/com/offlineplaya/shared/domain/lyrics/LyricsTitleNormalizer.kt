@@ -56,6 +56,11 @@ object LyricsTitleNormalizer {
     // Any trailing bracket group, keyword or not — the desperate last pass only.
     private val ANY_TRAILING_BRACKET = Regex("\\s*[(\\[][^()\\[\\]]*[)\\]]\\s*$")
 
+    // A leading track-number prefix: "01. ", "06 - ", "3) ". Requires a real
+    // separator (. - )) followed by whitespace so we don't clip titles that
+    // genuinely start with a number ("99 Luftballons", "7 rings", "3.14").
+    private val TRACK_NUMBER_PREFIX = Regex("^\\s*\\d{1,3}\\s*[-.)]\\s+")
+
     // A trailing featuring credit, anchored on an explicit feat./ft./featuring
     // marker so band names with "&"/"," survive. Mirrors LibrarySyncUseCase.
     private val FEAT_CREDIT = Regex(
@@ -104,6 +109,17 @@ object LyricsTitleNormalizer {
             .replace(DOMAIN_SPAM, " ")
             .replace(Regex("\\s{2,}"), " ")
             .trim()
+        return s.ifEmpty { raw.trim() }
+    }
+
+    /**
+     * Strip a leading track-number prefix: `06 - The Beautiful American` →
+     * `The Beautiful American`, `01. Fire Rides` → `Fire Rides`. Only fires
+     * with a real separator so numeric titles ("99 Luftballons", "7 rings")
+     * are left alone. Falls back to the trimmed original if it would empty out.
+     */
+    fun stripLeadingTrackNumber(raw: String): String {
+        val s = raw.trim().replaceFirst(TRACK_NUMBER_PREFIX, "").trim()
         return s.ifEmpty { raw.trim() }
     }
 
@@ -163,7 +179,9 @@ object LyricsTitleNormalizer {
         val denA = normalize(rawA)
         val denT = normalize(rawT)
         val spamA = stripSpam(denA)
-        val spamT = stripSpam(denT)
+        // Also drop a leading track number ("06 - Title") — it's never part of
+        // the name a lyrics DB files the song under.
+        val spamT = stripLeadingTrackNumber(stripSpam(denT))
         val featT = stripCredits(spamT)
         val coreT = core(featT)
 
