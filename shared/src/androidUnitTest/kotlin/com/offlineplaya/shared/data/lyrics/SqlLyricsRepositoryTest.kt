@@ -2,6 +2,7 @@ package com.offlineplaya.shared.data.lyrics
 
 import com.offlineplaya.shared.domain.lyrics.EmbeddedLyricsSource
 import com.offlineplaya.shared.domain.lyrics.Lyrics
+import com.offlineplaya.shared.domain.lyrics.LyricsCandidate
 import com.offlineplaya.shared.domain.lyrics.LyricsSidecarWriter
 import com.offlineplaya.shared.domain.lyrics.RemoteLyricsSource
 import com.offlineplaya.shared.domain.lyrics.SidecarLyricsSource
@@ -34,8 +35,17 @@ class SqlLyricsRepositoryTest {
         override suspend fun read(track: Track): String? { calls++; return text }
     }
 
-    private class FakeRemote(var text: String? = null, var calls: Int = 0) : RemoteLyricsSource {
+    private class FakeRemote(
+        var text: String? = null,
+        var calls: Int = 0,
+        var candidates: List<LyricsCandidate> = emptyList(),
+        var searchCalls: Int = 0,
+    ) : RemoteLyricsSource {
         override suspend fun resolve(track: Track): String? { calls++; return text }
+        override suspend fun search(track: Track): List<LyricsCandidate> {
+            searchCalls++
+            return candidates
+        }
     }
 
     private class FakeSidecarWriter(
@@ -176,6 +186,59 @@ class SqlLyricsRepositoryTest {
     fun `null remote source is treated as off`() = runTest {
         val repo = newRepo(remote = null)
         assertEquals(Lyrics.None, repo.lyricsFor(track()))
+    }
+
+    @Test
+    fun `candidatesFor returns remote search results when enabled`() = runTest {
+        val remote = FakeRemote(
+            candidates = listOf(LyricsCandidate(1, "T", "A", "Al", 200, true, "[00:01.00]x")),
+        )
+        val repo = newRepo(remote = remote, settings = FakeSettings(downloadRemoteLyrics = true))
+        val result = repo.candidatesFor(track())
+        assertEquals(1, result.size)
+        assertEquals(1, remote.searchCalls)
+    }
+
+    @Test
+    fun `candidatesFor is empty and skips remote when toggle is off`() = runTest {
+        val remote = FakeRemote(
+            candidates = listOf(LyricsCandidate(1, "T", "A", "Al", 200, true, "[00:01.00]x")),
+        )
+        val repo = newRepo(remote = remote, settings = FakeSettings(downloadRemoteLyrics = false))
+        assertTrue(repo.candidatesFor(track()).isEmpty())
+        assertEquals(0, remote.searchCalls, "remote search must not run when the toggle is off")
+    }
+
+    @Test
+    fun `selectCandidate persists the pick and overrides all later lookups`() = runTest {
+        // Remote auto-resolve would return this — but it must never be reached
+        // once the user has picked, because the pick is cached and wins.
+        val remote = FakeRemote(text = "[00:01.00]auto")
+        val repo = newRepo(remote = remote)
+        val candidate = LyricsCandidate(9, "T", "A", "Al", 200, true, "[00:02.00]chosen")
+
+        val chosen = repo.selectCandidate(track(), candidate)
+        assertTrue(chosen is Lyrics.Synced)
+        assertEquals("chosen", chosen.lines.first().text)
+
+        // Future resolution short-circuits on the cached user pick — remote is
+        // never consulted, and the auto text never appears.
+        val after = repo.lyricsFor(track())
+        assertTrue(after is Lyrics.Synced)
+        assertEquals("chosen", after.lines.first().text)
+        assertEquals(0, remote.calls, "cached user pick must not fall through to remote")
+    }
+
+    @Test
+    fun `selectCandidate writes a sidecar when the save preference is on`() = runTest {
+        val writer = FakeSidecarWriter()
+        val repo = newRepo(
+            sidecarWriter = writer,
+            settings = FakeSettings(saveLyricsAsSidecar = true),
+        )
+        repo.selectCandidate(track(), LyricsCandidate(1, "T", "A", "Al", 200, true, "[00:01.00]x"))
+        assertEquals(1, writer.calls.size)
+        assertTrue(writer.calls.first().isSynced)
     }
 
     @Test

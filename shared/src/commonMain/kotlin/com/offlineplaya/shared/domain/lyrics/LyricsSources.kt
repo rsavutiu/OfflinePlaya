@@ -33,6 +33,15 @@ interface SidecarLyricsSource {
  */
 interface RemoteLyricsSource {
     suspend fun resolve(track: Track): String?
+
+    /**
+     * Return every plausible lyrics match for [track], for the user-facing
+     * "pick from matches" flow — best (closest duration) first. Unlike
+     * [resolve], this does NOT drop far-off-duration matches: the user is
+     * choosing, so surface the options and let them decide. Returns an empty
+     * list on a clean miss or when the lookup fails.
+     */
+    suspend fun search(track: Track): List<LyricsCandidate>
 }
 
 /**

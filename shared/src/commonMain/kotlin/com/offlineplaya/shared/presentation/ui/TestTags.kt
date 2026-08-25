@@ -99,6 +99,12 @@ object TestTags {
 
         /** Synced (timestamped) lyrics list. */
         const val SYNCED = "lyrics_synced"
+
+        /** Top-bar action that opens the "pick from matches" sheet. */
+        const val PICK_OPEN = "lyrics_pick_open"
+
+        /** The "pick from matches" bottom sheet content. */
+        const val PICKER_SHEET = "lyrics_picker_sheet"
     }
 
     object NowPlaying {

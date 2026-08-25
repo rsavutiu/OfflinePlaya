@@ -2,6 +2,7 @@ package com.offlineplaya.shared.presentation.lyrics
 
 import com.offlineplaya.shared.domain.lyrics.LyricLine
 import com.offlineplaya.shared.domain.lyrics.Lyrics
+import com.offlineplaya.shared.domain.lyrics.LyricsCandidate
 import com.offlineplaya.shared.domain.lyrics.LyricsRepository
 import com.offlineplaya.shared.domain.model.PlaybackState
 import com.offlineplaya.shared.domain.model.RepeatMode
@@ -106,12 +107,80 @@ class LyricsStateHolderTest {
         assertEquals(42_000L, player.lastSeekMs)
     }
 
+    // ── picker ──────────────────────────────────────────────────────────
+
+    @Test
+    fun `openPicker loads candidates and choose applies the pick and re-renders`() = runTest {
+        val scope = CoroutineScope(UnconfinedTestDispatcher(testScheduler))
+        try {
+            val player = FakePlayer()
+            val repo = RecordingRepo(
+                lyrics = Lyrics.None,
+                candidates = listOf(LyricsCandidate(1, "T", "A", "Al", 200, false, "chosen")),
+            )
+            val holder = LyricsStateHolder(player, repo, scope)
+            player.emit(track(id = 1), positionMs = 0L)
+            assertEquals(LyricsUiState.None, holder.state.value)
+
+            holder.openPicker()
+            val picker = holder.picker.value
+            assertTrue(picker is LyricsPickerState.Loaded)
+            assertEquals(1, picker.candidates.size)
+
+            holder.choose(picker.candidates.first())
+            // Picker closes, the pick is persisted, and the main lyrics view
+            // re-resolves from the (now updated) repository without a track change.
+            assertEquals(LyricsPickerState.Hidden, holder.picker.value)
+            assertEquals(1L, repo.selected?.id)
+            assertTrue(holder.state.value is LyricsUiState.Plain)
+            assertEquals("chosen", (holder.state.value as LyricsUiState.Plain).text)
+        } finally {
+            scope.cancel()
+        }
+    }
+
+    @Test
+    fun `openPicker with no matches shows Empty`() = runTest {
+        val scope = CoroutineScope(UnconfinedTestDispatcher(testScheduler))
+        try {
+            val player = FakePlayer()
+            val holder = LyricsStateHolder(player, RecordingRepo(candidates = emptyList()), scope)
+            player.emit(track(id = 1), positionMs = 0L)
+            holder.openPicker()
+            assertEquals(LyricsPickerState.Empty, holder.picker.value)
+        } finally {
+            scope.cancel()
+        }
+    }
+
     // ── fakes ─────────────────────────────────────────────────────────
 
     private fun LyricsRepository(block: suspend (Track) -> Lyrics): LyricsRepository =
         object : LyricsRepository {
             override suspend fun lyricsFor(track: Track): Lyrics = block(track)
+            override suspend fun candidatesFor(track: Track) = emptyList<LyricsCandidate>()
+            override suspend fun selectCandidate(track: Track, candidate: LyricsCandidate): Lyrics =
+                Lyrics.None
         }
+
+    /**
+     * Fake repository that records the chosen candidate and, on select, flips
+     * its [lyrics] to the pick — mirroring the real cache override so the state
+     * holder's re-resolve picks it up.
+     */
+    private class RecordingRepo(
+        var lyrics: Lyrics = Lyrics.None,
+        var candidates: List<LyricsCandidate> = emptyList(),
+    ) : LyricsRepository {
+        var selected: LyricsCandidate? = null
+        override suspend fun lyricsFor(track: Track): Lyrics = lyrics
+        override suspend fun candidatesFor(track: Track): List<LyricsCandidate> = candidates
+        override suspend fun selectCandidate(track: Track, candidate: LyricsCandidate): Lyrics {
+            selected = candidate
+            lyrics = Lyrics.Plain(candidate.rawText)
+            return lyrics
+        }
+    }
 
     private fun track(id: Long = 1) = Track(
         id = id, documentUri = "content://t/$id", treeUri = "content://tree", relativePath = "b.mp3",

@@ -269,6 +269,37 @@ class LrclibLyricsSourceTest {
     }
 
     @Test
+    fun `search surfaces candidates deduped, instrumental-filtered, closest duration first`() = runTest {
+        // id 2 is closest (Δ1s), id 1 is far off (Δ105s) but must still appear
+        // — the picker shows options the auto-matcher would reject. id 3 is
+        // instrumental (dropped), and id 2 is duplicated across the response.
+        val rows = """
+            [
+              {"id":1,"trackName":"Fire Rides","artistName":"MØ","albumName":"NMTF","duration":400,"syncedLyrics":"[00:01.00]a"},
+              {"id":2,"trackName":"Fire Rides","artistName":"MØ","albumName":"NMTF","duration":294,"syncedLyrics":"[00:01.00]b"},
+              {"id":3,"trackName":"Fire Rides","artistName":"MØ","duration":295,"instrumental":true,"syncedLyrics":null,"plainLyrics":null},
+              {"id":2,"trackName":"Fire Rides","artistName":"MØ","duration":294,"syncedLyrics":"[00:01.00]b"}
+            ]
+        """.trimIndent()
+        val src = source { url ->
+            if (url.contains("/api/search")) StubResponse(200, rows) else StubResponse(404, "")
+        }
+        val result = src.search(
+            track(title = "Fire Rides", artist = "MØ", album = "NMTF", durationMs = 295_000L),
+        )
+        assertEquals(listOf(2L, 1L), result.map { it.id }, "closest duration first, deduped, no instrumental")
+        assertTrue(result.first().synced)
+        assertEquals("Fire Rides", result.first().trackName)
+    }
+
+    @Test
+    fun `search returns empty on missing artist or title`() = runTest {
+        val src = source { _ -> StubResponse(200, "[]") }
+        assertTrue(src.search(track(title = "", artist = "A")).isEmpty())
+        assertTrue(urlsCaptured.isEmpty(), "no HTTP for an unusable query")
+    }
+
+    @Test
     fun `transient error does not poison the negative cache`() = runTest {
         // During the first resolve every variant misses, and the very first
         // /get throws a transient 500 — that non-clean pass must NOT record a

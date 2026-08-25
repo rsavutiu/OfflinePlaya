@@ -543,11 +543,16 @@ private fun DestinationBody(
 
             AppDestination.Lyrics -> {
                 val lyricsState by lyricsStateHolder.state.collectAsState()
+                val pickerState by lyricsStateHolder.picker.collectAsState()
                 LyricsPage(
                     state = lyricsState,
                     trackTitle = playback.currentTrack?.title,
                     onSeekToLine = { lyricsStateHolder.seekToLine(it) },
                     onBack = { navigator.pop() },
+                    pickerState = pickerState,
+                    onOpenPicker = { lyricsStateHolder.openPicker() },
+                    onChooseCandidate = { lyricsStateHolder.choose(it) },
+                    onDismissPicker = { lyricsStateHolder.dismissPicker() },
                 )
             }
 

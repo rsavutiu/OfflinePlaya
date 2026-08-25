@@ -4,6 +4,7 @@ import com.offlineplaya.shared.database.OfflinePlayaDatabase
 import com.offlineplaya.shared.domain.lyrics.EmbeddedLyricsSource
 import com.offlineplaya.shared.domain.lyrics.LrcParser
 import com.offlineplaya.shared.domain.lyrics.Lyrics
+import com.offlineplaya.shared.domain.lyrics.LyricsCandidate
 import com.offlineplaya.shared.domain.lyrics.LyricsRepository
 import com.offlineplaya.shared.domain.lyrics.LyricsSidecarWriter
 import com.offlineplaya.shared.domain.lyrics.RemoteLyricsSource
@@ -84,6 +85,46 @@ internal class SqlLyricsRepository(
         Lyrics.None
     }
 
+    override suspend fun candidatesFor(track: Track): List<LyricsCandidate> =
+        withContext(ioDispatcher) {
+            val prefs = lyricsPreferences()
+            if (remote == null || !prefs.downloadRemoteLyrics) return@withContext emptyList()
+            runCatching { remote.search(track) }
+                .getOrElse {
+                    logger.w(TAG, "Candidate search failed for ${track.documentUri}: ${it.message}")
+                    emptyList()
+                }
+        }
+
+    override suspend fun selectCandidate(track: Track, candidate: LyricsCandidate): Lyrics =
+        withContext(ioDispatcher) {
+            val parsed = LrcParser.parse(candidate.rawText)
+            if (parsed is Lyrics.None) {
+                // A candidate with unparseable text shouldn't clobber the cache.
+                logger.w(TAG, "Chosen candidate ${candidate.id} parsed to None — ignoring")
+                return@withContext Lyrics.None
+            }
+            // INSERT OR REPLACE keyed on document_uri — a user pick overrides
+            // any earlier auto-resolved row, and cached() returns it first on
+            // every future lookup, so the choice sticks.
+            queries.insertOrReplace(
+                track_document_uri = track.documentUri,
+                raw_text = candidate.rawText,
+                is_synced = if (parsed is Lyrics.Synced) 1L else 0L,
+                source = SOURCE_USER,
+                fetched_at = now(),
+            )
+            logger.d(TAG, "User selected lyrics candidate ${candidate.id} for ${track.documentUri}")
+            // Best-effort durability: mirror to a sidecar when enabled (writer
+            // skips silently if one already exists or there's no SAF write
+            // access — the cache row remains the source of truth regardless).
+            val prefs = lyricsPreferences()
+            if (sidecarWriter != null && prefs.saveLyricsAsSidecar) {
+                sidecarWriter.write(track, candidate.rawText, isSynced = parsed is Lyrics.Synced)
+            }
+            parsed
+        }
+
     private fun cached(track: Track): Lyrics? {
         val row = queries.selectByUri(track.documentUri).executeAsOneOrNull() ?: return null
         // Re-parse the stored source text — authoritative and keeps a single
@@ -121,5 +162,6 @@ internal class SqlLyricsRepository(
         const val SOURCE_EMBEDDED = "embedded"
         const val SOURCE_SIDECAR = "sidecar"
         const val SOURCE_LRCLIB = "lrclib"
+        const val SOURCE_USER = "user"
     }
 }

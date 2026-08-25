@@ -1,6 +1,7 @@
 package com.offlineplaya.shared.data.lyrics
 
 import com.offlineplaya.shared.database.OfflinePlayaDatabase
+import com.offlineplaya.shared.domain.lyrics.LyricsCandidate
 import com.offlineplaya.shared.domain.lyrics.LyricsTitleNormalizer
 import com.offlineplaya.shared.domain.lyrics.RemoteLyricsSource
 import com.offlineplaya.shared.domain.model.Track
@@ -116,6 +117,58 @@ internal class LrclibLyricsSource(
             }
             null
         }
+    }
+
+    override suspend fun search(track: Track): List<LyricsCandidate> {
+        val artist = (track.albumArtistName ?: track.artistName).trim()
+        val title = track.title.trim()
+        if (artist.isEmpty() || title.isEmpty()) {
+            logger.d(TAG, "search skipped — missing artist/title")
+            return emptyList()
+        }
+        val durationSec = track.durationMs?.let { (it / 1000L).toInt() } ?: 0
+
+        return concurrencyLimit.withPermit {
+            // Run the same aggressive title escalation, but as a picker: no
+            // duration gate, aggregate every /search across variants, dedup by
+            // LRCLIB id, and surface the lot ordered by duration proximity.
+            val variants = buildVariants(track.albumName.trim(), title)
+            val searchedTitles = mutableSetOf<String>()
+            val rowsById = linkedMapOf<Long, LrcLibRow>()
+            for ((_, vTitle) in variants) {
+                if (!searchedTitles.add(vTitle.lowercase())) continue
+                val rows = runCatching { fetchRowsViaSearch(artist, vTitle) }
+                    .onFailure {
+                        logger.w(TAG, "LRCLIB picker /search failed for '$artist' / '$vTitle': ${it.message}")
+                    }
+                    .getOrDefault(emptyList())
+                for (row in rows) {
+                    val id = row.id ?: continue
+                    rowsById.putIfAbsent(id, row)
+                }
+                if (rowsById.size >= MAX_CANDIDATES) break
+            }
+            val candidates = rowsById.values
+                .mapNotNull { it.toCandidate() }
+                .sortedBy { if (durationSec > 0) abs(it.durationSec - durationSec) else 0 }
+                .take(MAX_CANDIDATES)
+            logger.d(TAG, "search('$artist' / '$title') → ${candidates.size} candidate(s)")
+            candidates
+        }
+    }
+
+    private suspend fun fetchRowsViaSearch(
+        artist: String,
+        title: String,
+    ): List<LrcLibRow> = withContext(Dispatchers.IO) {
+        val params = "track_name=${title.urlEncode()}&artist_name=${artist.urlEncode()}"
+        val url = "$BASE_URL/api/search?$params"
+        val body = doRequest(url) ?: return@withContext emptyList()
+        runCatching { json.decodeFromString<List<LrcLibRow>>(body) }
+            .getOrElse {
+                logger.d(TAG, "picker /search parse failed: ${it.message}")
+                emptyList()
+            }
     }
 
     /**
@@ -237,6 +290,25 @@ internal class LrclibLyricsSource(
             if (synced != null) return synced
             return plainLyrics?.takeIf { it.isNotBlank() }
         }
+
+        /**
+         * Map to a domain [LyricsCandidate], or null when the row carries no
+         * usable text (instrumental / blank) or no id — those must never reach
+         * the picker list.
+         */
+        fun toCandidate(): LyricsCandidate? {
+            val text = bestText() ?: return null
+            val cid = id ?: return null
+            return LyricsCandidate(
+                id = cid,
+                trackName = trackName.orEmpty(),
+                artistName = artistName.orEmpty(),
+                albumName = albumName?.takeIf { it.isNotBlank() },
+                durationSec = durationSec(),
+                synced = !syncedLyrics.isNullOrBlank(),
+                rawText = text,
+            )
+        }
     }
 
     private class LyricsLookupException(message: String) : Exception(message)
@@ -250,6 +322,8 @@ internal class LrclibLyricsSource(
             "OfflinePlaya/0.1.0 ( https://github.com/rsavutiu/offlineplaya )"
         const val MAX_CONCURRENT_LOOKUPS = 4
         const val MAX_DURATION_DELTA_SEC = 15
+        // Upper bound on rows shown in the "pick from matches" list.
+        const val MAX_CANDIDATES = 30
         const val MISS_EXPIRY_MS = 30L * 24 * 60 * 60 * 1_000 // 30 days
         // v3: aggressive fallback chain (spam/URL strip, drop feat., drop
         // album, bare core) — invalidate old negative-cache misses so tracks

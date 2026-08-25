@@ -3,19 +3,30 @@ package com.offlineplaya.shared.presentation.ui.pages
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.lyrics.LyricLine
+import com.offlineplaya.shared.domain.lyrics.LyricsCandidate
+import com.offlineplaya.shared.presentation.lyrics.LyricsPickerState
 import com.offlineplaya.shared.presentation.lyrics.LyricsUiState
 import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
+import com.offlineplaya.shared.presentation.ui.organisms.LyricsPickerSheet
 import com.offlineplaya.shared.presentation.ui.organisms.SyncedLyricsView
 
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.lyrics_pick
 import offlineplaya.shared.generated.resources.lyrics_title
 import org.jetbrains.compose.resources.stringResource
 
@@ -31,6 +42,10 @@ fun LyricsPage(
     onSeekToLine: (LyricLine) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
+    pickerState: LyricsPickerState = LyricsPickerState.Hidden,
+    onOpenPicker: () -> Unit = {},
+    onChooseCandidate: (LyricsCandidate) -> Unit = {},
+    onDismissPicker: () -> Unit = {},
 ) {
     Scaffold(
         modifier = modifier.testTag(TestTags.Lyrics.ROOT),
@@ -39,6 +54,22 @@ fun LyricsPage(
             AppTopBar(
                 title = trackTitle ?: stringResource(Res.string.lyrics_title),
                 onBack = onBack,
+                actions = {
+                    // "Pick from matches" — re-query LRCLIB and let the user
+                    // choose the right lyrics when the auto-match is wrong.
+                    IconButton(
+                        onClick = onOpenPicker,
+                        modifier = Modifier
+                            .size(40.dp)
+                            .testTag(TestTags.Lyrics.PICK_OPEN),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = stringResource(Res.string.lyrics_pick),
+                            tint = MaterialTheme.colorScheme.onSurface,
+                        )
+                    }
+                },
             )
         },
     ) { padding ->
@@ -50,6 +81,12 @@ fun LyricsPage(
                 .fillMaxSize(),
         )
     }
+
+    LyricsPickerSheet(
+        state = pickerState,
+        onChoose = onChooseCandidate,
+        onDismiss = onDismissPicker,
+    )
 }
 
 @PreviewScreenSizes

@@ -129,6 +129,11 @@
     <string name="lyrics_empty_title">No lyrics</string>
     <string name="lyrics_empty_subtitle">No lyrics were found for this track.</string>
     <string name="cd_lyrics">Lyrics</string>
+    <string name="lyrics_pick">Pick lyrics</string>
+    <string name="lyrics_pick_title">Choose lyrics</string>
+    <string name="lyrics_pick_loading">Searching for matches…</string>
+    <string name="lyrics_pick_empty">No matching lyrics found</string>
+    <string name="lyrics_pick_synced">Synced</string>
 
     <!-- Tag editor -->
     <string name="tag_editor_title">Edit tags</string>
