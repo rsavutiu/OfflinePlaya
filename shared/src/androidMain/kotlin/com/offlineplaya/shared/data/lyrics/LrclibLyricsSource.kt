@@ -1,6 +1,7 @@
 package com.offlineplaya.shared.data.lyrics
 
 import com.offlineplaya.shared.database.OfflinePlayaDatabase
+import com.offlineplaya.shared.domain.lyrics.LyricsTitleNormalizer
 import com.offlineplaya.shared.domain.lyrics.RemoteLyricsSource
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.util.AppLogger
@@ -71,31 +72,60 @@ internal class LrclibLyricsSource(
         return concurrencyLimit.withPermit {
             if (isKnownMiss(key)) return@withPermit null
 
-            val viaGet = runCatching { fetchViaGet(artist, album, title, durationSec) }
-                .onFailure { logger.w(TAG, "LRCLIB /get failed for '$artist' / '$title': ${it.message}") }
-            val gotResult = viaGet.getOrNull()
-            if (gotResult != null) {
-                logger.d(TAG, "resolve('$artist' / '$title') via /get (${gotResult.length} chars)")
-                return@withPermit gotResult
+            // Escalate from the raw tags through progressively more aggressive
+            // cleanups (reissue de-noise → spam/URL strip → drop feat. → drop
+            // album → bare core). The chain only costs calls on a miss: we
+            // return on the first hit, and a clean title collapses to one pair.
+            val variants = buildVariants(album, title)
+            var allClean = true
+            // /search ignores the album, so two variants that differ only by
+            // album produce the same search — skip the repeats.
+            val searchedTitles = mutableSetOf<String>()
+
+            for ((vAlbum, vTitle) in variants) {
+                val viaGet = runCatching { fetchViaGet(artist, vAlbum, vTitle, durationSec) }
+                    .onFailure {
+                        allClean = false
+                        logger.w(TAG, "LRCLIB /get failed for '$artist' / '$vTitle': ${it.message}")
+                    }
+                val gotResult = viaGet.getOrNull()
+                if (gotResult != null) {
+                    logger.d(TAG, "resolve('$artist' / '$vTitle') via /get (${gotResult.length} chars)")
+                    return@withPermit gotResult
+                }
+
+                if (!searchedTitles.add(vTitle.lowercase())) continue
+
+                val viaSearch = runCatching { fetchViaSearch(artist, vTitle, durationSec) }
+                    .onFailure {
+                        allClean = false
+                        logger.w(TAG, "LRCLIB /search failed for '$artist' / '$vTitle': ${it.message}")
+                    }
+                val searchResult = viaSearch.getOrNull()
+                if (searchResult != null) {
+                    logger.d(TAG, "resolve('$artist' / '$vTitle') via /search (${searchResult.length} chars)")
+                    return@withPermit searchResult
+                }
             }
 
-            val viaSearch = runCatching { fetchViaSearch(artist, title, durationSec) }
-                .onFailure { logger.w(TAG, "LRCLIB /search failed for '$artist' / '$title': ${it.message}") }
-            val searchResult = viaSearch.getOrNull()
-            if (searchResult != null) {
-                logger.d(TAG, "resolve('$artist' / '$title') via /search (${searchResult.length} chars)")
-                return@withPermit searchResult
-            }
-
-            // Only persist a miss when neither call threw — a transient network
-            // error shouldn't blacklist the track for 30 days.
-            if (viaGet.isSuccess && viaSearch.isSuccess) {
+            // Only persist a miss when no call threw — a transient network error
+            // shouldn't blacklist the track for 30 days.
+            if (allClean) {
                 recordMiss(key)
                 logger.d(TAG, "resolve('$artist' / '$title') clean miss across LRCLIB")
             }
             null
         }
     }
+
+    /**
+     * The (album, title) pairs to try, in escalation order. Delegates to
+     * [LyricsTitleNormalizer.variants], which leads with the raw tags and only
+     * expands into aggressive cleanups (spam/URL strip, drop feat., drop album,
+     * bare core) when they actually differ — so a clean title stays one call.
+     */
+    private fun buildVariants(album: String, title: String): List<Pair<String, String>> =
+        LyricsTitleNormalizer.variants(album, title)
 
     private suspend fun fetchViaGet(
         artist: String,
@@ -221,7 +251,10 @@ internal class LrclibLyricsSource(
         const val MAX_CONCURRENT_LOOKUPS = 4
         const val MAX_DURATION_DELTA_SEC = 15
         const val MISS_EXPIRY_MS = 30L * 24 * 60 * 60 * 1_000 // 30 days
-        const val SOURCE_VERSION = 1
+        // v3: aggressive fallback chain (spam/URL strip, drop feat., drop
+        // album, bare core) — invalidate old negative-cache misses so tracks
+        // that only missed under the weaker v2 logic get re-tried.
+        const val SOURCE_VERSION = 3
     }
 }
 

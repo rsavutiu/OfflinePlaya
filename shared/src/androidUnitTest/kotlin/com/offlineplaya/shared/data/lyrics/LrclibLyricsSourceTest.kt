@@ -183,6 +183,79 @@ class LrclibLyricsSourceTest {
     }
 
     @Test
+    fun `falls back to de-noised title when raw tags miss`() = runTest {
+        // Raw "Hey Jude (2014 Remaster)" misses everywhere; the cleaned
+        // "Hey Jude" variant hits via /get on the second pass.
+        val hit = """
+            {"id":7,"trackName":"Hey Jude","artistName":"The Beatles","duration":425,
+             "instrumental":false,"syncedLyrics":"[00:01.00]Hey Jude"}
+        """.trimIndent()
+        val src = source { url ->
+            when {
+                url.contains("Remaster") -> StubResponse(404, "")
+                url.contains("/api/get") -> StubResponse(200, hit)
+                else -> StubResponse(200, "[]")
+            }
+        }
+        val result = src.resolve(
+            track(title = "Hey Jude (2014 Remaster)", artist = "The Beatles", album = "1", durationMs = 425_000L),
+        )
+        assertEquals("[00:01.00]Hey Jude", result)
+        assertTrue(
+            urlsCaptured.any { it.contains("Hey+Jude") && !it.contains("Remaster") },
+            "expected a cleaned-title lookup, saw $urlsCaptured",
+        )
+    }
+
+    @Test
+    fun `clean-title miss still escalates by dropping the album`() = runTest {
+        val src = source { url ->
+            if (url.contains("/api/get")) StubResponse(404, "")
+            else StubResponse(200, "[]")
+        }
+        assertNull(src.resolve(track()))
+        // (album, title) → /get + /search, then the album-dropped variant →
+        // /get only (the /search is deduped by title). Three calls total: an
+        // album-tag mismatch is a common miss cause, so we retry without it.
+        assertEquals(3, urlsCaptured.size, "expected album-drop escalation, saw $urlsCaptured")
+        assertTrue(
+            urlsCaptured.any { it.contains("/api/get?") && !it.contains("album_name") },
+            "expected an album-dropped /get with no album_name param, saw $urlsCaptured",
+        )
+    }
+
+    @Test
+    fun `strips a spam url suffix and finds lyrics on the cleaned title`() = runTest {
+        // The vk.com case: raw title with a scene-rip suffix misses; the
+        // spam-stripped "Fire Rides" variant hits via /get.
+        val hit = """
+            {"id":9,"trackName":"Fire Rides","artistName":"MØ","duration":218,
+             "instrumental":false,"syncedLyrics":"[00:01.00]Fire Rides"}
+        """.trimIndent()
+        val src = source { url ->
+            when {
+                url.contains("xclusives") || url.contains("vk.com") || url.contains("vk%2Ecom") ->
+                    StubResponse(404, "")
+                url.contains("Fire+Rides") && url.contains("/api/get") -> StubResponse(200, hit)
+                else -> StubResponse(200, "[]")
+            }
+        }
+        val result = src.resolve(
+            track(
+                title = "Fire Rides vk.com/xclusives_zone",
+                artist = "MØ",
+                album = "No Mythologies To Follow (Deluxe Edition)",
+                durationMs = 218_000L,
+            ),
+        )
+        assertEquals("[00:01.00]Fire Rides", result)
+        assertTrue(
+            urlsCaptured.any { it.contains("Fire+Rides") && !it.contains("xclusives") },
+            "expected a spam-stripped lookup, saw $urlsCaptured",
+        )
+    }
+
+    @Test
     fun `float duration in LRCLIB response decodes`() = runTest {
         // Real LRCLIB ships duration as a JSON number with decimals (295.0).
         // A regression to `duration: Int` in the data class makes the whole
@@ -197,18 +270,29 @@ class LrclibLyricsSourceTest {
 
     @Test
     fun `transient error does not poison the negative cache`() = runTest {
-        var attempt = 0
+        // During the first resolve every variant misses, and the very first
+        // /get throws a transient 500 — that non-clean pass must NOT record a
+        // negative-cache entry, so the retry can still succeed.
+        var firstResolveDone = false
+        var thrown = false
         val src = source { url ->
-            attempt++
-            if (attempt == 1) StubResponse(500, "")
-            else if (url.contains("/api/get")) StubResponse(200, syncedHit)
-            else StubResponse(200, "[]")
+            if (!firstResolveDone) {
+                when {
+                    url.contains("/api/get") && !thrown -> {
+                        thrown = true
+                        StubResponse(500, "")
+                    }
+                    url.contains("/api/get") -> StubResponse(404, "")
+                    else -> StubResponse(200, "[]")
+                }
+            } else {
+                if (url.contains("/api/get")) StubResponse(200, syncedHit) else StubResponse(200, "[]")
+            }
         }
-        // First attempt hits a 500 from /get → search returns []. Both
-        // "successful" parses required for the miss to be recorded.
-        // attempt 1: /get -> 500 (transient throw). Source records nothing.
         assertNull(src.resolve(track()))
-        // attempt 2: /get -> 200 with hit. No cache poisoning blocks it.
+        // Flip to the "service recovered" world; the transient 500 above must
+        // not have blacklisted the track.
+        firstResolveDone = true
         assertEquals("[00:01.00]Lights", src.resolve(track()))
     }
 }
