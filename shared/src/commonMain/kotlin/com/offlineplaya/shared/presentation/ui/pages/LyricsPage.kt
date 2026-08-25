@@ -4,16 +4,21 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.offlineplaya.shared.presentation.ui.theme.LocalBrandAccent
 import com.offlineplaya.shared.domain.lyrics.LyricLine
 import com.offlineplaya.shared.domain.lyrics.LyricsCandidate
 import com.offlineplaya.shared.presentation.lyrics.LyricsPickerState
@@ -58,20 +63,27 @@ fun LyricsPage(
                 actions = {
                     // "Pick from matches" — re-query LRCLIB and let the user
                     // choose the right lyrics when the auto-match is wrong.
-                    // Hidden when remote lyrics are off: with no source to
-                    // search, the picker would only ever say "no matches",
-                    // which would misinform rather than help.
+                    // A labelled text+icon button (not a bare icon) so the
+                    // affordance is obvious. Hidden when remote lyrics are off:
+                    // with no source to search, the picker would only ever say
+                    // "no matches", which would misinform rather than help.
                     if (canPick) {
-                        IconButton(
+                        TextButton(
                             onClick = onOpenPicker,
-                            modifier = Modifier
-                                .size(40.dp)
-                                .testTag(TestTags.Lyrics.PICK_OPEN),
+                            colors = ButtonDefaults.textButtonColors(
+                                contentColor = LocalBrandAccent.current.accent,
+                            ),
+                            modifier = Modifier.testTag(TestTags.Lyrics.PICK_OPEN),
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = stringResource(Res.string.lyrics_pick),
-                                tint = MaterialTheme.colorScheme.onSurface,
+                                imageVector = Icons.AutoMirrored.Filled.List,
+                                contentDescription = null,
+                                modifier = Modifier.size(18.dp),
+                            )
+                            Spacer(Modifier.width(6.dp))
+                            Text(
+                                text = stringResource(Res.string.lyrics_pick),
+                                style = MaterialTheme.typography.labelLarge,
                             )
                         }
                     }
