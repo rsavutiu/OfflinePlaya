@@ -18,6 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,6 +29,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -105,23 +107,33 @@ class LibraryStateHolder(
     }
 
     /**
-     * Total track count derived from [TrackRepository.observeAll]. Re-emits
-     * whenever the underlying table changes, so the home page Library button
-     * appears as soon as the first scan completes.
+     * Single hot count of the Track table, shared by [totalTrackCount] and
+     * [isLibraryEmpty] so we run **one** `SELECT COUNT(*)` observer instead
+     * of two. Emits only real values — no synthetic seed — which is what lets
+     * [isLibraryEmpty] hold its `false` start until a genuine `count == 0`
+     * arrives (see its doc).
      */
-    val totalTrackCount: StateFlow<Long> = tracks.observeCount()
+    private val trackCount: SharedFlow<Long> = tracks.observeCount()
+        .distinctUntilChanged()
+        .shareIn(scope, SharingStarted.Eagerly, replay = 1)
+
+    /**
+     * Total track count. Re-emits whenever the underlying table changes, so
+     * the home page Library button appears as soon as the first scan completes.
+     */
+    val totalTrackCount: StateFlow<Long> = trackCount
         .stateIn(scope, SharingStarted.Eagerly, 0L)
 
     /**
      * "The library is loaded and has no tracks" — drives the Home onboarding
      * guide. Crucially starts at `false`, NOT by reading [totalTrackCount]
-     * directly: that flow seeds at `0L` while `observeCount()` is still
-     * resolving, so a returning user with a full library would briefly look
-     * empty. By seeding this at `false` and only flipping `true` once a real
-     * `count == 0` emission arrives, we never flash the guide at someone who
-     * actually has music.
+     * directly: that flow seeds at `0L` while the count is still resolving, so
+     * a returning user with a full library would briefly look empty. By seeding
+     * this at `false` and only flipping `true` once a real `count == 0` emission
+     * arrives (the shared [trackCount] never injects a synthetic zero), we never
+     * flash the guide at someone who actually has music.
      */
-    val isLibraryEmpty: StateFlow<Boolean> = tracks.observeCount()
+    val isLibraryEmpty: StateFlow<Boolean> = trackCount
         .map { it == 0L }
         .stateIn(scope, SharingStarted.Eagerly, false)
 

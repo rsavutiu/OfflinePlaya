@@ -308,7 +308,17 @@ private fun DestinationContent(
             AnimatedContent(
                 targetState = current,
                 transitionSpec = {
-                    val fade = SHARED_ART_MORPH_MS + 100
+                    // The 400ms window exists ONLY so the shared album-art
+                    // element can finish morphing into / out of Now Playing.
+                    // Every other destination change — and every tab swap —
+                    // uses a snappier duration so navigation doesn't feel
+                    // sluggish. initialState/targetState are available here in
+                    // AnimatedContentTransitionScope; use them rather than
+                    // navigator.direction, since only NowPlaying carries the
+                    // shared element (direction tells push/pop, not morph).
+                    val involvesNowPlaying = initialState == AppDestination.NowPlaying ||
+                            targetState == AppDestination.NowPlaying
+                    val fade = if (involvesNowPlaying) SHARED_ART_MORPH_MS + 100 else AppMotion.medium
                     val slideOffset = { size: Int -> size / 12 }
                     when (navigator.direction) {
                         AppNavigator.Direction.FORWARD ->
@@ -318,7 +328,7 @@ private fun DestinationContent(
                             slideInVertically(tween(fade)) { -it / 12 } + fadeIn(tween(fade)) togetherWith
                                     slideOutVertically(tween(fade), slideOffset) + fadeOut(tween(fade))
                         AppNavigator.Direction.SWAP ->
-                            fadeIn(tween(fade)) togetherWith fadeOut(tween(fade))
+                            fadeIn(tween(AppMotion.short)) togetherWith fadeOut(tween(AppMotion.short))
                     }
                 },
                 label = "destination",
