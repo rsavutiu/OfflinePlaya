@@ -280,4 +280,12 @@
     <string name="onboarding_done_body">Jūsu bibliotēka ir gatava. Vēlāk iestatījumos varat pievienot vairāk mapju vai mainīt jebko.</string>
     <string name="onboarding_done_summary">%1$d dziesmas · %2$d mapes</string>
     <string name="onboarding_done_cta">Sākt klausīties</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Nepieciešama piekļuve mūzikai</string>
+    <string name="permission_required_body">OfflinePlaya ir bezsaistes atskaņotājs — tas atskaņo šajā ierīcē saglabātos audio failus un bez atļaujas tos lasīt neko nevar. Lai turpinātu, piešķiriet piekļuvi mūzikai.</string>
+    <string name="permission_required_grant">Piešķirt piekļuvi mūzikai</string>
+    <string name="permission_required_open_settings">Atvērt lietotnes iestatījumus</string>
+    <string name="permission_required_denied_note">Ja, pieskaroties pogai, nekas nenotiek, atļauja tika bloķēta agrāk — iespējojiet to lietotnes iestatījumos.</string>
+    <string name="empty_library_scan_device">Skenēt mūziku šajā ierīcē</string>
+    <string name="onboarding_add_music_use_device">Izmantot mūziku, kas jau ir ierīcē</string>
 </resources>

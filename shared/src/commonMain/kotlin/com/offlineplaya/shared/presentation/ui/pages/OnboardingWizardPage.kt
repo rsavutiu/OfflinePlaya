@@ -26,7 +26,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.outlined.LibraryMusic
-import androidx.compose.material.icons.outlined.MusicNote
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -63,15 +62,10 @@ import offlineplaya.shared.generated.resources.onboarding_done_cta
 import offlineplaya.shared.generated.resources.onboarding_done_summary
 import offlineplaya.shared.generated.resources.onboarding_done_title
 import offlineplaya.shared.generated.resources.onboarding_next
-import offlineplaya.shared.generated.resources.onboarding_permission_audio_body
-import offlineplaya.shared.generated.resources.onboarding_permission_audio_cta
-import offlineplaya.shared.generated.resources.onboarding_permission_audio_title
 import offlineplaya.shared.generated.resources.onboarding_permission_granted
 import offlineplaya.shared.generated.resources.onboarding_permission_notifications_body
 import offlineplaya.shared.generated.resources.onboarding_permission_notifications_cta
 import offlineplaya.shared.generated.resources.onboarding_permission_notifications_title
-import offlineplaya.shared.generated.resources.onboarding_permissions_body
-import offlineplaya.shared.generated.resources.onboarding_permissions_title
 import offlineplaya.shared.generated.resources.onboarding_skip
 import offlineplaya.shared.generated.resources.onboarding_welcome_body
 import offlineplaya.shared.generated.resources.onboarding_welcome_cta
@@ -97,12 +91,10 @@ enum class OnboardingStep { WELCOME, PERMISSIONS, ADD_MUSIC, DONE }
 
 @Composable
 fun OnboardingWizardPage(
-    audioGranted: Boolean,
     notificationGranted: Boolean,
     notificationApplicable: Boolean,
     trackCount: Long,
     folderCount: Int,
-    onRequestAudioPermission: () -> Unit,
     onRequestNotificationPermission: () -> Unit,
     onPickFolder: () -> Unit,
     onUseDeviceAudio: () -> Unit,
@@ -158,16 +150,23 @@ fun OnboardingWizardPage(
                         .padding(horizontal = AppSpacing.xl, vertical = AppSpacing.lg),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
+                    // Audio access is a hard prerequisite handled by the gate
+                    // before this wizard ever shows, so the only permission left
+                    // to ask about is notifications — and only on API 33+. Below
+                    // that, skip the step entirely (welcome → add music).
                     when (current) {
                         OnboardingStep.WELCOME -> WelcomeStep(
-                            onNext = { step = OnboardingStep.PERMISSIONS },
+                            onNext = {
+                                step = if (notificationApplicable) {
+                                    OnboardingStep.PERMISSIONS
+                                } else {
+                                    OnboardingStep.ADD_MUSIC
+                                }
+                            },
                         )
 
-                        OnboardingStep.PERMISSIONS -> PermissionsStep(
-                            audioGranted = audioGranted,
+                        OnboardingStep.PERMISSIONS -> NotificationsStep(
                             notificationGranted = notificationGranted,
-                            notificationApplicable = notificationApplicable,
-                            onRequestAudioPermission = onRequestAudioPermission,
                             onRequestNotificationPermission = onRequestNotificationPermission,
                             onBack = { step = OnboardingStep.WELCOME },
                             onNext = { step = OnboardingStep.ADD_MUSIC },
@@ -177,7 +176,13 @@ fun OnboardingWizardPage(
                             trackCount = trackCount,
                             onPickFolder = onPickFolder,
                             onUseDeviceAudio = onUseDeviceAudio,
-                            onBack = { step = OnboardingStep.PERMISSIONS },
+                            onBack = {
+                                step = if (notificationApplicable) {
+                                    OnboardingStep.PERMISSIONS
+                                } else {
+                                    OnboardingStep.WELCOME
+                                }
+                            },
                             onNext = { step = OnboardingStep.DONE },
                         )
 
@@ -210,42 +215,41 @@ private fun WelcomeStep(onNext: () -> Unit) {
 }
 
 @Composable
-private fun PermissionsStep(
-    audioGranted: Boolean,
+private fun NotificationsStep(
     notificationGranted: Boolean,
-    notificationApplicable: Boolean,
-    onRequestAudioPermission: () -> Unit,
     onRequestNotificationPermission: () -> Unit,
     onBack: () -> Unit,
     onNext: () -> Unit,
 ) {
     Spacer(Modifier.height(AppSpacing.sm))
-    AppHeadline(text = stringResource(Res.string.onboarding_permissions_title))
+    HeroDisc(Icons.Outlined.Notifications)
+    Spacer(Modifier.height(AppSpacing.lg))
+    AppHeadline(text = stringResource(Res.string.onboarding_permission_notifications_title))
     Spacer(Modifier.height(AppSpacing.sm))
-    AppCaption(text = stringResource(Res.string.onboarding_permissions_body))
+    AppCaption(text = stringResource(Res.string.onboarding_permission_notifications_body))
     Spacer(Modifier.height(AppSpacing.xl))
-
-    PermissionCard(
-        icon = Icons.Outlined.MusicNote,
-        title = stringResource(Res.string.onboarding_permission_audio_title),
-        body = stringResource(Res.string.onboarding_permission_audio_body),
-        cta = stringResource(Res.string.onboarding_permission_audio_cta),
-        granted = audioGranted,
-        onRequest = onRequestAudioPermission,
-    )
-
-    if (notificationApplicable) {
-        Spacer(Modifier.height(AppSpacing.md))
-        PermissionCard(
-            icon = Icons.Outlined.Notifications,
-            title = stringResource(Res.string.onboarding_permission_notifications_title),
-            body = stringResource(Res.string.onboarding_permission_notifications_body),
-            cta = stringResource(Res.string.onboarding_permission_notifications_cta),
-            granted = notificationGranted,
-            onRequest = onRequestNotificationPermission,
+    if (notificationGranted) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                imageVector = Icons.Filled.CheckCircle,
+                contentDescription = null,
+                tint = LocalBrandAccent.current.accent,
+                modifier = Modifier.size(20.dp),
+            )
+            Spacer(Modifier.size(AppSpacing.xs))
+            Text(
+                text = stringResource(Res.string.onboarding_permission_granted),
+                style = MaterialTheme.typography.labelLarge,
+                color = LocalBrandAccent.current.accent,
+            )
+        }
+    } else {
+        AppButton(
+            text = stringResource(Res.string.onboarding_permission_notifications_cta),
+            onClick = onRequestNotificationPermission,
+            modifier = Modifier.fillMaxWidth(),
         )
     }
-
     Spacer(Modifier.height(AppSpacing.xl))
     StepNav(onBack = onBack, onNext = onNext)
 }
@@ -338,69 +342,6 @@ private fun HeroDisc(icon: ImageVector) {
     }
 }
 
-/**
- * One permission ask: icon + title + why, and either a request button or a
- * "Granted" confirmation once the user has allowed it.
- */
-@Composable
-private fun PermissionCard(
-    icon: ImageVector,
-    title: String,
-    body: String,
-    cta: String,
-    granted: Boolean,
-    onRequest: () -> Unit,
-) {
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-        shape = MaterialTheme.shapes.medium,
-    ) {
-        Column(modifier = Modifier.padding(AppSpacing.lg)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.size(24.dp),
-                )
-                Spacer(Modifier.size(AppSpacing.sm))
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            }
-            Spacer(Modifier.height(AppSpacing.xs))
-            Text(
-                text = body,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Spacer(Modifier.height(AppSpacing.md))
-            if (granted) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        imageVector = Icons.Filled.CheckCircle,
-                        contentDescription = null,
-                        tint = LocalBrandAccent.current.accent,
-                        modifier = Modifier.size(20.dp),
-                    )
-                    Spacer(Modifier.size(AppSpacing.xs))
-                    Text(
-                        text = stringResource(Res.string.onboarding_permission_granted),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = LocalBrandAccent.current.accent,
-                    )
-                }
-            } else {
-                AppButton(text = cta, onClick = onRequest)
-            }
-        }
-    }
-}
-
 /** Back / Next pair used by the middle steps. */
 @Composable
 private fun StepNav(onBack: () -> Unit, onNext: () -> Unit) {
@@ -420,12 +361,10 @@ private fun StepNav(onBack: () -> Unit, onNext: () -> Unit) {
 private fun OnboardingWelcomePreview() {
     PreviewTheme(darkTheme = true) {
         OnboardingWizardPage(
-            audioGranted = false,
             notificationGranted = false,
             notificationApplicable = true,
             trackCount = 0,
             folderCount = 0,
-            onRequestAudioPermission = {},
             onRequestNotificationPermission = {},
             onPickFolder = {},
             onUseDeviceAudio = {},
@@ -440,12 +379,10 @@ private fun OnboardingWelcomePreview() {
 private fun OnboardingPermissionsPreview() {
     PreviewTheme(darkTheme = true) {
         OnboardingWizardPage(
-            audioGranted = true,
             notificationGranted = false,
             notificationApplicable = true,
             trackCount = 0,
             folderCount = 0,
-            onRequestAudioPermission = {},
             onRequestNotificationPermission = {},
             onPickFolder = {},
             onUseDeviceAudio = {},
@@ -460,12 +397,10 @@ private fun OnboardingPermissionsPreview() {
 private fun OnboardingDonePreview() {
     PreviewTheme(darkTheme = true) {
         OnboardingWizardPage(
-            audioGranted = true,
             notificationGranted = true,
             notificationApplicable = true,
             trackCount = 428,
             folderCount = 3,
-            onRequestAudioPermission = {},
             onRequestNotificationPermission = {},
             onPickFolder = {},
             onUseDeviceAudio = {},

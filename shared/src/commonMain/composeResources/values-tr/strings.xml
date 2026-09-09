@@ -279,4 +279,12 @@
     <string name="onboarding_done_body">Kitaplığınız hazır. Daha sonra Ayarlar\'dan başka klasörler ekleyebilir veya her şeyi değiştirebilirsiniz.</string>
     <string name="onboarding_done_summary">%1$d parça · %2$d klasör</string>
     <string name="onboarding_done_cta">Dinlemeye başla</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Müzik erişimi gerekli</string>
+    <string name="permission_required_body">OfflinePlaya çevrimdışı bir oynatıcıdır — bu cihazdaki ses dosyalarını çalar ve onları okuma izni olmadan hiçbir şey yapamaz. Devam etmek için müzik erişimi verin.</string>
+    <string name="permission_required_grant">Müzik erişimi ver</string>
+    <string name="permission_required_open_settings">Uygulama ayarlarını aç</string>
+    <string name="permission_required_denied_note">Düğmeye dokunduğunuzda bir şey olmuyorsa izin daha önce engellenmiştir — bunun yerine uygulama ayarlarından etkinleştirin.</string>
+    <string name="empty_library_scan_device">Bu cihazdaki müziği tara</string>
+    <string name="onboarding_add_music_use_device">Cihazda zaten bulunan müziği kullan</string>
 </resources>

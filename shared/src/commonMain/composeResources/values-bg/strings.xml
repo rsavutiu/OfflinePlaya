@@ -279,4 +279,12 @@
     <string name="onboarding_done_body">Библиотеката ви е готова. Можете да добавите още папки или да промените всичко по-късно в „Настройки“.</string>
     <string name="onboarding_done_summary">%1$d песни · %2$d папки</string>
     <string name="onboarding_done_cta">Слушай</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Нужен достъп до музика</string>
+    <string name="permission_required_body">OfflinePlaya е офлайн плейър — възпроизвежда аудиофайлове, съхранени на това устройство, и не може да прави нищо без разрешение да ги чете. Дайте достъп до музиката, за да продължите.</string>
+    <string name="permission_required_grant">Дай достъп до музика</string>
+    <string name="permission_required_open_settings">Отвори настройките на приложението</string>
+    <string name="permission_required_denied_note">Ако нищо не се случва при натискане на бутона, разрешението е било блокирано по-рано — активирайте го от настройките на приложението.</string>
+    <string name="empty_library_scan_device">Сканирай музиката на това устройство</string>
+    <string name="onboarding_add_music_use_device">Използвай музиката, вече на това устройство</string>
 </resources>

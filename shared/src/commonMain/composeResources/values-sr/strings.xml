@@ -280,4 +280,12 @@
     <string name="onboarding_done_body">Ваша библиотека је спремна. Касније у Подешавањима можете додати још фасцикли или променити било шта.</string>
     <string name="onboarding_done_summary">%1$d песама · %2$d фасцикли</string>
     <string name="onboarding_done_cta">Почни са слушањем</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Потребан приступ музици</string>
+    <string name="permission_required_body">OfflinePlaya је плејер ван мреже — репродукује аудио-датотеке на овом уређају и не може ништа без дозволе да их чита. Дозволите приступ музици да наставите.</string>
+    <string name="permission_required_grant">Дозволи приступ музици</string>
+    <string name="permission_required_open_settings">Отвори подешавања апликације</string>
+    <string name="permission_required_denied_note">Ако се ништа не деси када додирнете дугме, дозвола је раније блокирана — омогућите је у подешавањима апликације.</string>
+    <string name="empty_library_scan_device">Скенирај музику на овом уређају</string>
+    <string name="onboarding_add_music_use_device">Користи музику која је већ на уређају</string>
 </resources>

@@ -279,4 +279,12 @@
     <string name="onboarding_done_body">Biblioteket ditt er klart. Du kan legge til flere mapper eller endre hva som helst senere i Innstillinger.</string>
     <string name="onboarding_done_summary">%1$d spor · %2$d mapper</string>
     <string name="onboarding_done_cta">Begynn å lytte</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Tilgang til musikk kreves</string>
+    <string name="permission_required_body">OfflinePlaya er en frakoblet spiller — den spiller lydfiler på denne enheten og kan ikke gjøre noe uten tillatelse til å lese dem. Gi tilgang til musikk for å fortsette.</string>
+    <string name="permission_required_grant">Gi tilgang til musikk</string>
+    <string name="permission_required_open_settings">Åpne appinnstillinger</string>
+    <string name="permission_required_denied_note">Hvis ingenting skjer når du trykker på knappen, ble tillatelsen blokkert tidligere — aktiver den i appinnstillingene i stedet.</string>
+    <string name="empty_library_scan_device">Skann musikk på denne enheten</string>
+    <string name="onboarding_add_music_use_device">Bruk musikk som allerede er på enheten</string>
 </resources>

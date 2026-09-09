@@ -279,4 +279,12 @@
     <string name="onboarding_done_body">La tua libreria è pronta. Puoi aggiungere altre cartelle o modificare qualsiasi cosa in seguito nelle Impostazioni.</string>
     <string name="onboarding_done_summary">%1$d brani · %2$d cartelle</string>
     <string name="onboarding_done_cta">Inizia ad ascoltare</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Serve l\'accesso alla musica</string>
+    <string name="permission_required_body">OfflinePlaya è un lettore offline: riproduce i file audio su questo dispositivo e non può fare nulla senza il permesso di leggerli. Concedi l\'accesso alla musica per continuare.</string>
+    <string name="permission_required_grant">Concedi l\'accesso alla musica</string>
+    <string name="permission_required_open_settings">Apri le impostazioni dell\'app</string>
+    <string name="permission_required_denied_note">Se non succede nulla quando tocchi il pulsante, il permesso è stato bloccato in precedenza: attivalo dalle impostazioni dell\'app.</string>
+    <string name="empty_library_scan_device">Cerca musica su questo dispositivo</string>
+    <string name="onboarding_add_music_use_device">Usa la musica già sul dispositivo</string>
 </resources>

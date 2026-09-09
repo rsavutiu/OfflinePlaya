@@ -278,4 +278,12 @@
     <string name="onboarding_done_body">คลังเพลงของคุณพร้อมแล้ว คุณสามารถเพิ่มโฟลเดอร์หรือปรับอะไรก็ได้ภายหลังในการตั้งค่า</string>
     <string name="onboarding_done_summary">%1$d เพลง · %2$d โฟลเดอร์</string>
     <string name="onboarding_done_cta">เริ่มฟัง</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">ต้องมีสิทธิ์เข้าถึงเพลง</string>
+    <string name="permission_required_body">OfflinePlaya เป็นเครื่องเล่นแบบออฟไลน์ — เล่นไฟล์เสียงที่จัดเก็บในอุปกรณ์นี้และทำอะไรไม่ได้เลยหากไม่มีสิทธิ์อ่านไฟล์ ให้สิทธิ์เข้าถึงเพลงเพื่อดำเนินการต่อ</string>
+    <string name="permission_required_grant">ให้สิทธิ์เข้าถึงเพลง</string>
+    <string name="permission_required_open_settings">เปิดการตั้งค่าแอป</string>
+    <string name="permission_required_denied_note">หากไม่มีอะไรเกิดขึ้นเมื่อแตะปุ่ม แสดงว่าสิทธิ์ถูกบล็อกไว้ก่อนหน้านี้ — เปิดใช้จากการตั้งค่าแอปแทน</string>
+    <string name="empty_library_scan_device">สแกนเพลงในอุปกรณ์นี้</string>
+    <string name="onboarding_add_music_use_device">ใช้เพลงที่มีอยู่แล้วในอุปกรณ์</string>
 </resources>

@@ -281,4 +281,12 @@
     <string name="onboarding_done_body">הספרייה שלך מוכנה. אפשר להוסיף עוד תיקיות או לשנות כל דבר מאוחר יותר בהגדרות.</string>
     <string name="onboarding_done_summary">%1$d רצועות · %2$d תיקיות</string>
     <string name="onboarding_done_cta">התחל להאזין</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">נדרשת גישה למוזיקה</string>
+    <string name="permission_required_body">‏OfflinePlaya הוא נגן לא־מקוון — הוא מנגן קובצי שמע השמורים במכשיר הזה ואינו יכול לעשות דבר ללא הרשאה לקרוא אותם. הענק גישה למוזיקה כדי להמשיך.</string>
+    <string name="permission_required_grant">הענק גישה למוזיקה</string>
+    <string name="permission_required_open_settings">פתח את הגדרות האפליקציה</string>
+    <string name="permission_required_denied_note">אם דבר לא קורה בלחיצה על הכפתור, ההרשאה נחסמה קודם — הפעל אותה מהגדרות האפליקציה.</string>
+    <string name="empty_library_scan_device">סרוק מוזיקה במכשיר הזה</string>
+    <string name="onboarding_add_music_use_device">השתמש במוזיקה שכבר במכשיר</string>
 </resources>

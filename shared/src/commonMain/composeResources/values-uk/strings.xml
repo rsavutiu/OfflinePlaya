@@ -281,4 +281,12 @@
     <string name="onboarding_done_body">Ваша медіатека готова. Пізніше в налаштуваннях ви можете додати папки або змінити будь-що.</string>
     <string name="onboarding_done_summary">%1$d треків · %2$d папок</string>
     <string name="onboarding_done_cta">Почати слухати</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Потрібен доступ до музики</string>
+    <string name="permission_required_body">OfflinePlaya — офлайн-плеєр: він відтворює аудіофайли на цьому пристрої й нічого не може без дозволу на їх читання. Щоб продовжити, надайте доступ до музики.</string>
+    <string name="permission_required_grant">Надати доступ до музики</string>
+    <string name="permission_required_open_settings">Відкрити налаштування застосунку</string>
+    <string name="permission_required_denied_note">Якщо після натискання кнопки нічого не відбувається, дозвіл було заблоковано раніше — увімкніть його в налаштуваннях застосунку.</string>
+    <string name="empty_library_scan_device">Сканувати музику на цьому пристрої</string>
+    <string name="onboarding_add_music_use_device">Використати музику, яка вже є на пристрої</string>
 </resources>

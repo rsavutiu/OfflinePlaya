@@ -279,4 +279,12 @@
     <string name="onboarding_done_body">La teva biblioteca està preparada. Pots afegir més carpetes o ajustar qualsevol cosa més tard a la configuració.</string>
     <string name="onboarding_done_summary">%1$d cançons · %2$d carpetes</string>
     <string name="onboarding_done_cta">Comença a escoltar</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Cal accés a la música</string>
+    <string name="permission_required_body">OfflinePlaya és un reproductor fora de línia: reprodueix els fitxers d\'àudio d\'aquest dispositiu i no pot fer res sense permís per llegir-los. Concedeix l\'accés a la música per continuar.</string>
+    <string name="permission_required_grant">Concedeix accés a la música</string>
+    <string name="permission_required_open_settings">Obre la configuració de l\'aplicació</string>
+    <string name="permission_required_denied_note">Si no passa res en tocar el botó, el permís es va blocar abans; activa\'l des de la configuració de l\'aplicació.</string>
+    <string name="empty_library_scan_device">Escaneja la música d\'aquest dispositiu</string>
+    <string name="onboarding_add_music_use_device">Usa la música que ja hi ha al dispositiu</string>
 </resources>

@@ -281,4 +281,12 @@
     <string name="onboarding_done_body">Jūsų fonoteka paruošta. Vėliau nustatymuose galite pridėti daugiau aplankų arba bet ką pakeisti.</string>
     <string name="onboarding_done_summary">%1$d kūrinių · %2$d aplankų</string>
     <string name="onboarding_done_cta">Pradėti klausytis</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Reikia prieigos prie muzikos</string>
+    <string name="permission_required_body">„OfflinePlaya“ yra grotuvas be interneto — jis groja šiame įrenginyje saugomus garso failus ir be leidimo juos skaityti nieko negali. Norėdami tęsti, suteikite prieigą prie muzikos.</string>
+    <string name="permission_required_grant">Suteikti prieigą prie muzikos</string>
+    <string name="permission_required_open_settings">Atverti programos nustatymus</string>
+    <string name="permission_required_denied_note">Jei paspaudus mygtuką nieko neįvyksta, leidimas anksčiau buvo užblokuotas — įjunkite jį programos nustatymuose.</string>
+    <string name="empty_library_scan_device">Nuskaityti muziką šiame įrenginyje</string>
+    <string name="onboarding_add_music_use_device">Naudoti įrenginyje jau esančią muziką</string>
 </resources>

@@ -279,4 +279,12 @@
     <string name="onboarding_done_body">आपकी लाइब्रेरी तैयार है. आप बाद में सेटिंग में और फ़ोल्डर जोड़ सकते हैं या कुछ भी बदल सकते हैं.</string>
     <string name="onboarding_done_summary">%1$d ट्रैक · %2$d फ़ोल्डर</string>
     <string name="onboarding_done_cta">सुनना शुरू करें</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">संगीत तक पहुँच आवश्यक</string>
+    <string name="permission_required_body">OfflinePlaya एक ऑफ़लाइन प्लेयर है — यह इस डिवाइस पर मौजूद ऑडियो फ़ाइलें चलाता है और उन्हें पढ़ने की अनुमति के बिना कुछ नहीं कर सकता. जारी रखने के लिए संगीत तक पहुँच दें.</string>
+    <string name="permission_required_grant">संगीत तक पहुँच दें</string>
+    <string name="permission_required_open_settings">ऐप सेटिंग खोलें</string>
+    <string name="permission_required_denied_note">अगर बटन टैप करने पर कुछ न हो, तो अनुमति पहले ब्लॉक की गई थी — इसके बजाय ऐप सेटिंग से इसे चालू करें.</string>
+    <string name="empty_library_scan_device">इस डिवाइस पर संगीत स्कैन करें</string>
+    <string name="onboarding_add_music_use_device">डिवाइस पर पहले से मौजूद संगीत का उपयोग करें</string>
 </resources>

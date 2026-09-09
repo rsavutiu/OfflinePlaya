@@ -279,4 +279,12 @@
     <string name="onboarding_done_body">Ditt bibliotek är klart. Du kan lägga till fler mappar eller ändra vad som helst senare i Inställningar.</string>
     <string name="onboarding_done_summary">%1$d låtar · %2$d mappar</string>
     <string name="onboarding_done_cta">Börja lyssna</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Åtkomst till musik krävs</string>
+    <string name="permission_required_body">OfflinePlaya är en offlinespelare — den spelar upp ljudfiler på den här enheten och kan inte göra något utan behörighet att läsa dem. Ge åtkomst till musik för att fortsätta.</string>
+    <string name="permission_required_grant">Ge åtkomst till musik</string>
+    <string name="permission_required_open_settings">Öppna appinställningar</string>
+    <string name="permission_required_denied_note">Om inget händer när du trycker på knappen blockerades behörigheten tidigare — aktivera den i appinställningarna i stället.</string>
+    <string name="empty_library_scan_device">Sök musik på den här enheten</string>
+    <string name="onboarding_add_music_use_device">Använd musik som redan finns på enheten</string>
 </resources>

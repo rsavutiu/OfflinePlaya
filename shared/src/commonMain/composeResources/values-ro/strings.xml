@@ -255,4 +255,12 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Reia prin Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Pornește redarea când se conectează căștile sau mașina</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Este necesar accesul la muzică</string>
+    <string name="permission_required_body">OfflinePlaya este un player offline — redă fișierele audio de pe acest dispozitiv și nu poate face nimic fără permisiunea de a le citi. Acordă accesul la muzică pentru a continua.</string>
+    <string name="permission_required_grant">Acordă acces la muzică</string>
+    <string name="permission_required_open_settings">Deschide setările aplicației</string>
+    <string name="permission_required_denied_note">Dacă nu se întâmplă nimic când apeși butonul, permisiunea a fost blocată anterior — activeaz-o din setările aplicației.</string>
+    <string name="empty_library_scan_device">Scanează muzica de pe acest dispozitiv</string>
+    <string name="onboarding_add_music_use_device">Folosește muzica deja de pe dispozitiv</string>
 </resources>

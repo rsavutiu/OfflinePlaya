@@ -281,4 +281,12 @@
     <string name="onboarding_done_body">Vaša knižnica je pripravená. Ďalšie priečinky môžete pridať alebo čokoľvek upraviť neskôr v Nastaveniach.</string>
     <string name="onboarding_done_summary">%1$d skladieb · %2$d priečinkov</string>
     <string name="onboarding_done_cta">Začať počúvať</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Potrebný prístup k hudbe</string>
+    <string name="permission_required_body">OfflinePlaya je prehrávač offline — prehráva zvukové súbory v tomto zariadení a bez povolenia na ich čítanie nedokáže nič. Ak chcete pokračovať, udeľte prístup k hudbe.</string>
+    <string name="permission_required_grant">Udeliť prístup k hudbe</string>
+    <string name="permission_required_open_settings">Otvoriť nastavenia aplikácie</string>
+    <string name="permission_required_denied_note">Ak sa po klepnutí na tlačidlo nič nestane, povolenie bolo predtým zablokované — povoľte ho v nastaveniach aplikácie.</string>
+    <string name="empty_library_scan_device">Prehľadať hudbu v tomto zariadení</string>
+    <string name="onboarding_add_music_use_device">Použiť hudbu, ktorá už je v zariadení</string>
 </resources>

@@ -278,4 +278,12 @@
     <string name="onboarding_done_body">你的音樂庫已就緒。你可以稍後在「設定」中新增更多資料夾或調整任何內容。</string>
     <string name="onboarding_done_summary">%1$d 首曲目 · %2$d 個資料夾</string>
     <string name="onboarding_done_cta">開始聆聽</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">需要音樂存取權</string>
+    <string name="permission_required_body">OfflinePlaya 是一款離線播放器——它播放此裝置上儲存的音訊檔案，沒有讀取權限就無法運作。請授予音樂存取權以繼續。</string>
+    <string name="permission_required_grant">授予音樂存取權</string>
+    <string name="permission_required_open_settings">開啟應用程式設定</string>
+    <string name="permission_required_denied_note">如果點按按鈕後沒有反應，表示權限先前被拒絕了——請改從應用程式設定中啟用。</string>
+    <string name="empty_library_scan_device">掃描此裝置上的音樂</string>
+    <string name="onboarding_add_music_use_device">使用裝置上已有的音樂</string>
 </resources>

@@ -351,12 +351,10 @@ private fun AndroidApp() {
             null -> Unit
 
             false -> OnboardingWizardPage(
-                audioGranted = audioGranted,
                 notificationGranted = notificationGranted,
                 notificationApplicable = NOTIFICATION_PERMISSION_APPLICABLE,
                 trackCount = trackCount,
                 folderCount = rootFolders.size,
-                onRequestAudioPermission = { permissionLauncher.launch(AUDIO_READ_PERMISSION) },
                 onRequestNotificationPermission = {
                     if (NOTIFICATION_PERMISSION_APPLICABLE) {
                         notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)

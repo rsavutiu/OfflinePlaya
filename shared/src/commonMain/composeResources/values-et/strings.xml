@@ -279,4 +279,12 @@
     <string name="onboarding_done_body">Su teek on valmis. Saad hiljem Seadetes lisada kaustu või muuta ükskõik mida.</string>
     <string name="onboarding_done_summary">%1$d lugu · %2$d kausta</string>
     <string name="onboarding_done_cta">Alusta kuulamist</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Vajalik on juurdepääs muusikale</string>
+    <string name="permission_required_body">OfflinePlaya on võrguühenduseta mängija — see esitab selle seadme helifaile ega saa ilma nende lugemise loata midagi teha. Jätkamiseks anna juurdepääs muusikale.</string>
+    <string name="permission_required_grant">Anna juurdepääs muusikale</string>
+    <string name="permission_required_open_settings">Ava rakenduse seaded</string>
+    <string name="permission_required_denied_note">Kui nupule vajutades midagi ei juhtu, siis luba blokeeriti varem — luba see rakenduse seadetes.</string>
+    <string name="empty_library_scan_device">Otsi muusikat sellest seadmest</string>
+    <string name="onboarding_add_music_use_device">Kasuta seadmes juba olevat muusikat</string>
 </resources>

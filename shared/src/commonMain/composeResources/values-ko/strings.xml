@@ -278,4 +278,12 @@
     <string name="onboarding_done_body">라이브러리가 준비되었습니다. 나중에 설정에서 폴더를 더 추가하거나 무엇이든 조정할 수 있습니다.</string>
     <string name="onboarding_done_summary">%1$d곡 · %2$d개 폴더</string>
     <string name="onboarding_done_cta">감상 시작</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">음악 접근 권한이 필요합니다</string>
+    <string name="permission_required_body">OfflinePlaya는 오프라인 플레이어로, 이 기기에 저장된 오디오 파일을 재생하며 읽기 권한 없이는 아무것도 할 수 없습니다. 계속하려면 음악 접근을 허용하세요.</string>
+    <string name="permission_required_grant">음악 접근 허용</string>
+    <string name="permission_required_open_settings">앱 설정 열기</string>
+    <string name="permission_required_denied_note">버튼을 눌러도 아무 일이 없으면 이전에 권한이 차단된 것입니다. 앱 설정에서 사용 설정하세요.</string>
+    <string name="empty_library_scan_device">이 기기의 음악 검색</string>
+    <string name="onboarding_add_music_use_device">기기에 이미 있는 음악 사용</string>
 </resources>

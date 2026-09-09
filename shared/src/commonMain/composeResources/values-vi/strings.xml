@@ -278,4 +278,12 @@
     <string name="onboarding_done_body">Thư viện của bạn đã sẵn sàng. Bạn có thể thêm thư mục khác hoặc chỉnh sửa bất cứ điều gì sau này trong Cài đặt.</string>
     <string name="onboarding_done_summary">%1$d bài hát · %2$d thư mục</string>
     <string name="onboarding_done_cta">Bắt đầu nghe</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Cần quyền truy cập nhạc</string>
+    <string name="permission_required_body">OfflinePlaya là trình phát ngoại tuyến — nó phát các tệp âm thanh trên thiết bị này và không thể làm gì nếu không có quyền đọc chúng. Cấp quyền truy cập nhạc để tiếp tục.</string>
+    <string name="permission_required_grant">Cấp quyền truy cập nhạc</string>
+    <string name="permission_required_open_settings">Mở cài đặt ứng dụng</string>
+    <string name="permission_required_denied_note">Nếu không có gì xảy ra khi bạn nhấn nút, quyền đã bị chặn trước đó — hãy bật quyền trong cài đặt ứng dụng.</string>
+    <string name="empty_library_scan_device">Quét nhạc trên thiết bị này</string>
+    <string name="onboarding_add_music_use_device">Dùng nhạc đã có trên thiết bị</string>
 </resources>

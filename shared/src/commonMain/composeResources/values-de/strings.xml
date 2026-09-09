@@ -279,4 +279,12 @@
     <string name="onboarding_done_body">Deine Bibliothek ist fertig. Du kannst später in den Einstellungen weitere Ordner hinzufügen oder alles anpassen.</string>
     <string name="onboarding_done_summary">%1$d Titel · %2$d Ordner</string>
     <string name="onboarding_done_cta">Musik hören</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Musikzugriff erforderlich</string>
+    <string name="permission_required_body">OfflinePlaya ist ein Offline-Player — er spielt Audiodateien auf diesem Gerät ab und kann ohne Leseberechtigung nichts tun. Erteile den Musikzugriff, um fortzufahren.</string>
+    <string name="permission_required_grant">Musikzugriff erteilen</string>
+    <string name="permission_required_open_settings">App-Einstellungen öffnen</string>
+    <string name="permission_required_denied_note">Wenn beim Tippen nichts passiert, wurde die Berechtigung zuvor blockiert — aktiviere sie stattdessen in den App-Einstellungen.</string>
+    <string name="empty_library_scan_device">Musik auf diesem Gerät scannen</string>
+    <string name="onboarding_add_music_use_device">Musik verwenden, die bereits auf dem Gerät ist</string>
 </resources>

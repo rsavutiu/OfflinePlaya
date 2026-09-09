@@ -279,4 +279,12 @@
     <string name="onboarding_done_body">A könyvtárad készen áll. Később a Beállításokban további mappákat adhatsz hozzá, vagy bármit módosíthatsz.</string>
     <string name="onboarding_done_summary">%1$d szám · %2$d mappa</string>
     <string name="onboarding_done_cta">Hallgatás megkezdése</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Zenehozzáférés szükséges</string>
+    <string name="permission_required_body">Az OfflinePlaya offline lejátszó — az ezen az eszközön tárolt hangfájlokat játssza le, és olvasási engedély nélkül semmit sem tud. A folytatáshoz engedélyezd a zenehozzáférést.</string>
+    <string name="permission_required_grant">Zenehozzáférés engedélyezése</string>
+    <string name="permission_required_open_settings">Alkalmazás beállításainak megnyitása</string>
+    <string name="permission_required_denied_note">Ha semmi sem történik a gombra koppintva, az engedélyt korábban letiltottad — engedélyezd az alkalmazás beállításaiban.</string>
+    <string name="empty_library_scan_device">Zene keresése ezen az eszközön</string>
+    <string name="onboarding_add_music_use_device">Az eszközön már meglévő zene használata</string>
 </resources>

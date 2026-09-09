@@ -279,4 +279,12 @@
     <string name="onboarding_done_body">کتابخانهٔ شما آماده است. بعداً می‌توانید در تنظیمات پوشه‌های بیشتری اضافه کنید یا هر چیزی را تغییر دهید.</string>
     <string name="onboarding_done_summary">%1$d آهنگ · %2$d پوشه</string>
     <string name="onboarding_done_cta">شروع به شنیدن</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">دسترسی به موسیقی لازم است</string>
+    <string name="permission_required_body">‏OfflinePlaya یک پخش‌کنندهٔ آفلاین است — فایل‌های صوتی ذخیره‌شده روی این دستگاه را پخش می‌کند و بدون اجازهٔ خواندن آن‌ها کاری نمی‌تواند بکند. برای ادامه دسترسی به موسیقی را بدهید.</string>
+    <string name="permission_required_grant">دادن دسترسی به موسیقی</string>
+    <string name="permission_required_open_settings">باز کردن تنظیمات برنامه</string>
+    <string name="permission_required_denied_note">اگر با زدن دکمه اتفاقی نیفتاد، اجازه قبلاً مسدود شده است — به‌جای آن از تنظیمات برنامه فعالش کنید.</string>
+    <string name="empty_library_scan_device">پویش موسیقی روی این دستگاه</string>
+    <string name="onboarding_add_music_use_device">استفاده از موسیقی موجود روی این دستگاه</string>
 </resources>

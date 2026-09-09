@@ -281,4 +281,12 @@
     <string name="onboarding_done_body">Twoja biblioteka jest gotowa. Więcej folderów możesz dodać lub cokolwiek zmienić później w Ustawieniach.</string>
     <string name="onboarding_done_summary">%1$d utworów · %2$d folderów</string>
     <string name="onboarding_done_cta">Zacznij słuchać</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Wymagany dostęp do muzyki</string>
+    <string name="permission_required_body">OfflinePlaya to odtwarzacz offline — odtwarza pliki audio na tym urządzeniu i nic nie może bez zgody na ich odczyt. Aby kontynuować, przyznaj dostęp do muzyki.</string>
+    <string name="permission_required_grant">Przyznaj dostęp do muzyki</string>
+    <string name="permission_required_open_settings">Otwórz ustawienia aplikacji</string>
+    <string name="permission_required_denied_note">Jeśli po dotknięciu przycisku nic się nie dzieje, uprawnienie zostało wcześniej zablokowane — włącz je w ustawieniach aplikacji.</string>
+    <string name="empty_library_scan_device">Skanuj muzykę na tym urządzeniu</string>
+    <string name="onboarding_add_music_use_device">Użyj muzyki już na urządzeniu</string>
 </resources>

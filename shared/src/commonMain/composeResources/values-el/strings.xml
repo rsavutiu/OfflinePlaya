@@ -279,4 +279,12 @@
     <string name="onboarding_done_body">Η βιβλιοθήκη σας είναι έτοιμη. Μπορείτε να προσθέσετε κι άλλους φακέλους ή να αλλάξετε οτιδήποτε αργότερα στις Ρυθμίσεις.</string>
     <string name="onboarding_done_summary">%1$d κομμάτια · %2$d φάκελοι</string>
     <string name="onboarding_done_cta">Ξεκινήστε την ακρόαση</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Απαιτείται πρόσβαση στη μουσική</string>
+    <string name="permission_required_body">Το OfflinePlaya είναι πρόγραμμα αναπαραγωγής εκτός σύνδεσης — αναπαράγει αρχεία ήχου σε αυτή τη συσκευή και δεν μπορεί να κάνει τίποτα χωρίς άδεια ανάγνωσής τους. Παραχωρήστε πρόσβαση στη μουσική για να συνεχίσετε.</string>
+    <string name="permission_required_grant">Παραχώρηση πρόσβασης στη μουσική</string>
+    <string name="permission_required_open_settings">Άνοιγμα ρυθμίσεων εφαρμογής</string>
+    <string name="permission_required_denied_note">Αν δεν συμβεί τίποτα όταν πατήσετε το κουμπί, η άδεια είχε αποκλειστεί νωρίτερα — ενεργοποιήστε την από τις ρυθμίσεις εφαρμογής.</string>
+    <string name="empty_library_scan_device">Σάρωση μουσικής σε αυτή τη συσκευή</string>
+    <string name="onboarding_add_music_use_device">Χρήση μουσικής που υπάρχει ήδη στη συσκευή</string>
 </resources>

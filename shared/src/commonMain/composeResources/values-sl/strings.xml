@@ -281,4 +281,12 @@
     <string name="onboarding_done_body">Vaša knjižnica je pripravljena. Pozneje lahko v Nastavitvah dodate več map ali spremenite kar koli.</string>
     <string name="onboarding_done_summary">%1$d skladb · %2$d map</string>
     <string name="onboarding_done_cta">Začni poslušati</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Potreben dostop do glasbe</string>
+    <string name="permission_required_body">OfflinePlaya je predvajalnik brez povezave — predvaja zvočne datoteke v tej napravi in brez dovoljenja za njihovo branje ne more storiti ničesar. Za nadaljevanje dovolite dostop do glasbe.</string>
+    <string name="permission_required_grant">Dovoli dostop do glasbe</string>
+    <string name="permission_required_open_settings">Odpri nastavitve aplikacije</string>
+    <string name="permission_required_denied_note">Če se ob pritisku na gumb nič ne zgodi, je bilo dovoljenje prej blokirano — omogočite ga v nastavitvah aplikacije.</string>
+    <string name="empty_library_scan_device">Preišči glasbo v tej napravi</string>
+    <string name="onboarding_add_music_use_device">Uporabi glasbo, ki je že v napravi</string>
 </resources>

@@ -278,4 +278,12 @@
     <string name="onboarding_done_body">Pustaka Anda siap. Anda bisa menambahkan folder lain atau mengubah apa pun nanti di Pengaturan.</string>
     <string name="onboarding_done_summary">%1$d lagu · %2$d folder</string>
     <string name="onboarding_done_cta">Mulai mendengarkan</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Perlu akses musik</string>
+    <string name="permission_required_body">OfflinePlaya adalah pemutar offline — memutar file audio di perangkat ini dan tidak bisa berbuat apa-apa tanpa izin membacanya. Berikan akses musik untuk melanjutkan.</string>
+    <string name="permission_required_grant">Berikan akses musik</string>
+    <string name="permission_required_open_settings">Buka setelan aplikasi</string>
+    <string name="permission_required_denied_note">Jika tidak terjadi apa-apa saat menekan tombol, izin telah diblokir sebelumnya — aktifkan dari setelan aplikasi.</string>
+    <string name="empty_library_scan_device">Pindai musik di perangkat ini</string>
+    <string name="onboarding_add_music_use_device">Gunakan musik yang sudah ada di perangkat</string>
 </resources>

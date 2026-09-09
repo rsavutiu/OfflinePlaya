@@ -279,4 +279,12 @@
     <string name="onboarding_done_body">Je bibliotheek is klaar. Je kunt later in Instellingen meer mappen toevoegen of van alles aanpassen.</string>
     <string name="onboarding_done_summary">%1$d nummers · %2$d mappen</string>
     <string name="onboarding_done_cta">Begin met luisteren</string>
+    <!-- Mandatory music-access gate + device-audio scan -->
+    <string name="permission_required_title">Toegang tot muziek vereist</string>
+    <string name="permission_required_body">OfflinePlaya is een offline speler — hij speelt audiobestanden op dit apparaat af en kan niets zonder toestemming om ze te lezen. Verleen toegang tot muziek om door te gaan.</string>
+    <string name="permission_required_grant">Toegang tot muziek verlenen</string>
+    <string name="permission_required_open_settings">App-instellingen openen</string>
+    <string name="permission_required_denied_note">Als er niets gebeurt als je op de knop tikt, is de toestemming eerder geblokkeerd — schakel deze in via de app-instellingen.</string>
+    <string name="empty_library_scan_device">Muziek op dit apparaat scannen</string>
+    <string name="onboarding_add_music_use_device">Muziek gebruiken die al op het apparaat staat</string>
 </resources>
