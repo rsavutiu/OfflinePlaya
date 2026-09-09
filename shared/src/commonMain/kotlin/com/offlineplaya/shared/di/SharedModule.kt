@@ -188,6 +188,7 @@ val sharedModule: Module = module {
     single {
         OnboardingStateHolder(
             settings = get(),
+            tracks = get(),
             scope = get(),
         )
     }
