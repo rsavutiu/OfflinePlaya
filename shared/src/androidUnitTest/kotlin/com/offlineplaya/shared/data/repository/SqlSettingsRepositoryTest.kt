@@ -26,6 +26,25 @@ class SqlSettingsRepositoryTest {
     }
 
     @Test
+    fun `onboarding completed defaults to false on a fresh store`() = runTest {
+        val repo = newRepository()
+        assertEquals(false, repo.isOnboardingCompleted())
+        assertEquals(false, repo.observeOnboardingCompleted().first())
+    }
+
+    @Test
+    fun `setOnboardingCompleted round-trips`() = runTest {
+        val repo = newRepository()
+        repo.setOnboardingCompleted(true)
+        assertEquals(true, repo.isOnboardingCompleted())
+        assertEquals(true, repo.observeOnboardingCompleted().first())
+
+        // And it can be flipped back (used by the Reset-library path indirectly).
+        repo.setOnboardingCompleted(false)
+        assertEquals(false, repo.isOnboardingCompleted())
+    }
+
+    @Test
     fun `setThemePreferences round-trips all fields`() = runTest {
         val repo = newRepository()
         // All three flipped away from their defaults so the round-trip proves

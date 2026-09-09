@@ -253,4 +253,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">เล่นต่อผ่านบลูทูธ</string>
     <string name="playback_bt_autoplay_subtitle">เริ่มเล่นเมื่อหูฟังหรือรถยนต์เชื่อมต่อ</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">เลือกโฟลเดอร์เพลง</string>
+    <string name="onboarding_skip">ข้าม</string>
+    <string name="onboarding_back">ย้อนกลับ</string>
+    <string name="onboarding_next">ถัดไป</string>
+    <string name="onboarding_welcome_title">ยินดีต้อนรับสู่ OfflinePlaya</string>
+    <string name="onboarding_welcome_body">เครื่องเล่นสำหรับเพลงที่คุณมีอยู่แล้ว ทุกอย่างอยู่ในอุปกรณ์ของคุณ — ไม่มีบัญชี ไม่มีสตรีมมิง ไม่มีโฆษณา มาตั้งค่าคลังเพลงของคุณกันเถอะ</string>
+    <string name="onboarding_welcome_cta">เริ่มต้น</string>
+    <string name="onboarding_permissions_title">ให้สิทธิ์สองสามอย่าง</string>
+    <string name="onboarding_permissions_body">สิทธิ์เหล่านี้ช่วยให้แอปค้นหาเพลงของคุณและแสดงตัวควบคุมการเล่นได้ คุณเปลี่ยนได้ทุกเมื่อในการตั้งค่าระบบ</string>
+    <string name="onboarding_permission_audio_title">การเข้าถึงเพลงและเสียง</string>
+    <string name="onboarding_permission_audio_body">เพื่อให้ OfflinePlaya ค้นหาไฟล์เสียงในอุปกรณ์ของคุณได้ รวมถึงไฟล์ในโฟลเดอร์ดาวน์โหลดและเพลง</string>
+    <string name="onboarding_permission_audio_cta">อนุญาตการเข้าถึงเพลง</string>
+    <string name="onboarding_permission_notifications_title">การแจ้งเตือน</string>
+    <string name="onboarding_permission_notifications_body">เพื่อให้ตัวควบคุมการเล่นปรากฏในแถบการแจ้งเตือนและบนหน้าจอล็อกขณะเล่นเพลง</string>
+    <string name="onboarding_permission_notifications_cta">อนุญาตการแจ้งเตือน</string>
+    <string name="onboarding_permission_granted">อนุญาตแล้ว</string>
+    <string name="onboarding_add_music_title">เพิ่มเพลงของคุณ</string>
+    <string name="onboarding_add_music_body">เลือกโฟลเดอร์ไฟล์เสียงเพื่อทำดัชนี เพลงในโฟลเดอร์ดาวน์โหลดและเพลงจะถูกดึงมาโดยอัตโนมัติเมื่ออนุญาตการเข้าถึงเพลงแล้ว</string>
+    <string name="onboarding_add_music_pick_folder">เลือกโฟลเดอร์เพลง</string>
+    <string name="onboarding_add_music_found">พบ %1$d เพลงแล้วจนถึงตอนนี้</string>
+    <string name="onboarding_done_title">เรียบร้อยแล้ว</string>
+    <string name="onboarding_done_body">คลังเพลงของคุณพร้อมแล้ว คุณสามารถเพิ่มโฟลเดอร์หรือปรับอะไรก็ได้ภายหลังในการตั้งค่า</string>
+    <string name="onboarding_done_summary">%1$d เพลง · %2$d โฟลเดอร์</string>
+    <string name="onboarding_done_cta">เริ่มฟัง</string>
 </resources>

@@ -258,4 +258,29 @@
     <string name="eq_gain_db">%1$s ديسيبل</string>
     <string name="playback_bt_autoplay">الاستئناف عبر البلوتوث</string>
     <string name="playback_bt_autoplay_subtitle">بدء التشغيل عند اتصال سماعات الرأس أو السيارة</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">اختر مجلد موسيقى</string>
+    <string name="onboarding_skip">تخطٍّ</string>
+    <string name="onboarding_back">رجوع</string>
+    <string name="onboarding_next">التالي</string>
+    <string name="onboarding_welcome_title">مرحبًا بك في OfflinePlaya</string>
+    <string name="onboarding_welcome_body">مشغّل للموسيقى التي تملكها بالفعل. كل شيء يبقى على جهازك — بلا حسابات، بلا بث، بلا إعلانات. لنجهّز مكتبتك.</string>
+    <string name="onboarding_welcome_cta">لنبدأ</string>
+    <string name="onboarding_permissions_title">امنح بعض الأذونات</string>
+    <string name="onboarding_permissions_body">تتيح هذه الأذونات للتطبيق العثور على موسيقاك وعرض عناصر التحكم في التشغيل. يمكنك تغييرها في أي وقت من إعدادات النظام.</string>
+    <string name="onboarding_permission_audio_title">الوصول إلى الموسيقى والصوت</string>
+    <string name="onboarding_permission_audio_body">كي يتمكّن OfflinePlaya من العثور على ملفات الصوت على جهازك، بما في ذلك ما في مجلدَي التنزيلات والموسيقى.</string>
+    <string name="onboarding_permission_audio_cta">السماح بالوصول إلى الموسيقى</string>
+    <string name="onboarding_permission_notifications_title">الإشعارات</string>
+    <string name="onboarding_permission_notifications_body">كي تظهر عناصر التحكم في التشغيل في لوحة الإشعارات وعلى شاشة القفل أثناء تشغيل الموسيقى.</string>
+    <string name="onboarding_permission_notifications_cta">السماح بالإشعارات</string>
+    <string name="onboarding_permission_granted">تم المنح</string>
+    <string name="onboarding_add_music_title">أضف موسيقاك</string>
+    <string name="onboarding_add_music_body">اختر مجلدًا يحتوي على ملفات صوتية لفهرستها. تُلتقط الموسيقى في مجلدَي التنزيلات والموسيقى تلقائيًا بمجرد منح إذن الوصول إلى الموسيقى.</string>
+    <string name="onboarding_add_music_pick_folder">اختر مجلد موسيقى</string>
+    <string name="onboarding_add_music_found">تم العثور على %1$d مقطعًا حتى الآن</string>
+    <string name="onboarding_done_title">كل شيء جاهز</string>
+    <string name="onboarding_done_body">مكتبتك جاهزة. يمكنك إضافة مزيد من المجلدات أو تعديل أي شيء لاحقًا من الإعدادات.</string>
+    <string name="onboarding_done_summary">%1$d مقطع · %2$d مجلد</string>
+    <string name="onboarding_done_cta">ابدأ الاستماع</string>
 </resources>

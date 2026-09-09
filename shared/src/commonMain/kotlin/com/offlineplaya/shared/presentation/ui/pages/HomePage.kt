@@ -73,6 +73,7 @@ fun HomePage(
     onOpenAlbum: (Long) -> Unit = {},
     onOpenSearch: () -> Unit,
     onOpenSettings: () -> Unit,
+    onPickFolder: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -84,6 +85,7 @@ fun HomePage(
             EmptyLibraryGuide(
                 onOpenSearch = onOpenSearch,
                 onOpenSettings = onOpenSettings,
+                onPickFolder = onPickFolder,
                 modifier = Modifier.padding(padding),
             )
             return@Scaffold

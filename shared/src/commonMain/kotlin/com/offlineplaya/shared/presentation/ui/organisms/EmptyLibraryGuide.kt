@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.presentation.ui.TestTags
+import com.offlineplaya.shared.presentation.ui.atoms.AppButton
 import com.offlineplaya.shared.presentation.ui.atoms.AppCaption
 import com.offlineplaya.shared.presentation.ui.atoms.AppHeadline
 import com.offlineplaya.shared.presentation.ui.molecules.HomeHeader
@@ -37,6 +38,7 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.empty_library_open_settings
 import offlineplaya.shared.generated.resources.empty_library_permission_note
+import offlineplaya.shared.generated.resources.empty_library_pick_folder
 import offlineplaya.shared.generated.resources.empty_library_step1_body
 import offlineplaya.shared.generated.resources.empty_library_step1_title
 import offlineplaya.shared.generated.resources.empty_library_step2_body
@@ -66,6 +68,7 @@ import org.jetbrains.compose.resources.stringResource
 fun EmptyLibraryGuide(
     onOpenSearch: () -> Unit,
     onOpenSettings: () -> Unit,
+    onPickFolder: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -115,6 +118,13 @@ fun EmptyLibraryGuide(
             )
 
             Spacer(Modifier.height(AppSpacing.lg))
+
+            AppButton(
+                text = stringResource(Res.string.empty_library_pick_folder),
+                onClick = onPickFolder,
+            )
+
+            Spacer(Modifier.height(AppSpacing.sm))
 
             OutlinedButton(onClick = onOpenSettings) {
                 Text(stringResource(Res.string.empty_library_open_settings))
@@ -185,7 +195,7 @@ private fun GuideStep(title: String, body: String) {
 private fun EmptyLibraryGuidePreview() {
     PreviewTheme(darkTheme = true) {
         Surface {
-            EmptyLibraryGuide(onOpenSearch = {}, onOpenSettings = {})
+            EmptyLibraryGuide(onOpenSearch = {}, onOpenSettings = {}, onPickFolder = {})
         }
     }
 }

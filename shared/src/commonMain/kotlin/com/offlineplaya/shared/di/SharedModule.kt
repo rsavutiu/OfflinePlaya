@@ -32,6 +32,7 @@ import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
 import com.offlineplaya.shared.presentation.history.PlayHistoryRecorder
 import com.offlineplaya.shared.presentation.history.SmartPlaylistsStateHolder
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
+import com.offlineplaya.shared.presentation.onboarding.OnboardingStateHolder
 import com.offlineplaya.shared.presentation.lyrics.LyricsStateHolder
 import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
@@ -177,6 +178,15 @@ val sharedModule: Module = module {
     // Artwork preferences (download from MusicBrainz / embed back into files).
     single {
         ArtworkStateHolder(
+            settings = get(),
+            scope = get(),
+        )
+    }
+
+    // First-run onboarding completion flag. Gates the wizard vs. the main app
+    // at the Android host (MainActivity).
+    single {
+        OnboardingStateHolder(
             settings = get(),
             scope = get(),
         )

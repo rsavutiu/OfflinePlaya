@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Bei Bluetooth fortsetzen</string>
     <string name="playback_bt_autoplay_subtitle">Wiedergabe starten, wenn Kopfhörer oder Auto verbunden werden</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Musikordner auswählen</string>
+    <string name="onboarding_skip">Überspringen</string>
+    <string name="onboarding_back">Zurück</string>
+    <string name="onboarding_next">Weiter</string>
+    <string name="onboarding_welcome_title">Willkommen bei OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Ein Player für die Musik, die dir bereits gehört. Alles bleibt auf deinem Gerät — keine Konten, kein Streaming, keine Werbung. Richten wir deine Bibliothek ein.</string>
+    <string name="onboarding_welcome_cta">Los geht\'s</string>
+    <string name="onboarding_permissions_title">Erteile ein paar Berechtigungen</string>
+    <string name="onboarding_permissions_body">Damit findet die App deine Musik und zeigt die Wiedergabesteuerung an. Du kannst sie jederzeit in den Systemeinstellungen ändern.</string>
+    <string name="onboarding_permission_audio_title">Zugriff auf Musik und Audio</string>
+    <string name="onboarding_permission_audio_body">Damit OfflinePlaya die Audiodateien auf deinem Gerät findet — auch die in den Ordnern Downloads und Musik.</string>
+    <string name="onboarding_permission_audio_cta">Musikzugriff erlauben</string>
+    <string name="onboarding_permission_notifications_title">Benachrichtigungen</string>
+    <string name="onboarding_permission_notifications_body">Damit die Wiedergabesteuerung im Benachrichtigungsbereich und auf dem Sperrbildschirm erscheint, während Musik läuft.</string>
+    <string name="onboarding_permission_notifications_cta">Benachrichtigungen erlauben</string>
+    <string name="onboarding_permission_granted">Erteilt</string>
+    <string name="onboarding_add_music_title">Füge deine Musik hinzu</string>
+    <string name="onboarding_add_music_body">Wähle einen Ordner mit Audiodateien zum Indexieren. Musik in den Ordnern Downloads und Musik wird automatisch erkannt, sobald der Musikzugriff erlaubt ist.</string>
+    <string name="onboarding_add_music_pick_folder">Musikordner auswählen</string>
+    <string name="onboarding_add_music_found">Bisher %1$d Titel gefunden</string>
+    <string name="onboarding_done_title">Alles bereit</string>
+    <string name="onboarding_done_body">Deine Bibliothek ist fertig. Du kannst später in den Einstellungen weitere Ordner hinzufügen oder alles anpassen.</string>
+    <string name="onboarding_done_summary">%1$d Titel · %2$d Ordner</string>
+    <string name="onboarding_done_cta">Musik hören</string>
 </resources>

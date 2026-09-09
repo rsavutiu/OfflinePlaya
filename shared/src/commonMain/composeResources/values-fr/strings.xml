@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Reprendre en Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Lancer la lecture à la connexion du casque ou de la voiture</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Choisir un dossier de musique</string>
+    <string name="onboarding_skip">Passer</string>
+    <string name="onboarding_back">Retour</string>
+    <string name="onboarding_next">Suivant</string>
+    <string name="onboarding_welcome_title">Bienvenue dans OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Un lecteur pour la musique que vous possédez déjà. Tout reste sur votre appareil — sans compte, sans streaming, sans publicité. Configurons votre bibliothèque.</string>
+    <string name="onboarding_welcome_cta">Commencer</string>
+    <string name="onboarding_permissions_title">Accordez quelques autorisations</string>
+    <string name="onboarding_permissions_body">Elles permettent à l\'application de trouver votre musique et d\'afficher les commandes de lecture. Vous pouvez les modifier à tout moment dans les paramètres du système.</string>
+    <string name="onboarding_permission_audio_title">Accès à la musique et à l\'audio</string>
+    <string name="onboarding_permission_audio_body">Pour qu\'OfflinePlaya puisse trouver les fichiers audio de votre appareil, y compris ceux des dossiers Téléchargements et Musique.</string>
+    <string name="onboarding_permission_audio_cta">Autoriser l\'accès à la musique</string>
+    <string name="onboarding_permission_notifications_title">Notifications</string>
+    <string name="onboarding_permission_notifications_body">Pour que les commandes de lecture apparaissent dans le volet des notifications et sur votre écran de verrouillage pendant la lecture.</string>
+    <string name="onboarding_permission_notifications_cta">Autoriser les notifications</string>
+    <string name="onboarding_permission_granted">Accordé</string>
+    <string name="onboarding_add_music_title">Ajoutez votre musique</string>
+    <string name="onboarding_add_music_body">Choisissez un dossier de fichiers audio à indexer. La musique des dossiers Téléchargements et Musique est détectée automatiquement une fois l\'accès à la musique accordé.</string>
+    <string name="onboarding_add_music_pick_folder">Choisir un dossier de musique</string>
+    <string name="onboarding_add_music_found">%1$d morceaux trouvés jusqu\'ici</string>
+    <string name="onboarding_done_title">Tout est prêt</string>
+    <string name="onboarding_done_body">Votre bibliothèque est prête. Vous pourrez ajouter d\'autres dossiers ou tout ajuster plus tard dans les Paramètres.</string>
+    <string name="onboarding_done_summary">%1$d morceaux · %2$d dossiers</string>
+    <string name="onboarding_done_cta">Commencer l\'écoute</string>
 </resources>

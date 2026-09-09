@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Jatka Bluetoothilla</string>
     <string name="playback_bt_autoplay_subtitle">Aloita toisto, kun kuulokkeet tai auto yhdistyvät</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Valitse musiikkikansio</string>
+    <string name="onboarding_skip">Ohita</string>
+    <string name="onboarding_back">Takaisin</string>
+    <string name="onboarding_next">Seuraava</string>
+    <string name="onboarding_welcome_title">Tervetuloa OfflinePlayaan</string>
+    <string name="onboarding_welcome_body">Soitin musiikille, joka sinulla jo on. Kaikki pysyy laitteessasi — ei tilejä, ei suoratoistoa, ei mainoksia. Otetaan kirjastosi käyttöön.</string>
+    <string name="onboarding_welcome_cta">Aloita</string>
+    <string name="onboarding_permissions_title">Myönnä pari lupaa</string>
+    <string name="onboarding_permissions_body">Niiden avulla sovellus löytää musiikkisi ja näyttää toistosäätimet. Voit muuttaa niitä milloin tahansa järjestelmän asetuksista.</string>
+    <string name="onboarding_permission_audio_title">Musiikin ja äänen käyttöoikeus</string>
+    <string name="onboarding_permission_audio_body">Jotta OfflinePlaya löytää laitteesi äänitiedostot — myös Lataukset- ja Musiikki-kansioissa olevat.</string>
+    <string name="onboarding_permission_audio_cta">Salli musiikin käyttö</string>
+    <string name="onboarding_permission_notifications_title">Ilmoitukset</string>
+    <string name="onboarding_permission_notifications_body">Jotta toistosäätimet näkyvät ilmoituspaneelissa ja lukitusnäytöllä musiikin soidessa.</string>
+    <string name="onboarding_permission_notifications_cta">Salli ilmoitukset</string>
+    <string name="onboarding_permission_granted">Myönnetty</string>
+    <string name="onboarding_add_music_title">Lisää musiikkisi</string>
+    <string name="onboarding_add_music_body">Valitse indeksoitava äänitiedostojen kansio. Lataukset- ja Musiikki-kansioiden musiikki löytyy automaattisesti, kun musiikin käyttöoikeus on myönnetty.</string>
+    <string name="onboarding_add_music_pick_folder">Valitse musiikkikansio</string>
+    <string name="onboarding_add_music_found">Löytyi tähän mennessä %1$d kappaletta</string>
+    <string name="onboarding_done_title">Kaikki valmista</string>
+    <string name="onboarding_done_body">Kirjastosi on valmis. Voit lisätä lisää kansioita tai muuttaa mitä tahansa myöhemmin asetuksista.</string>
+    <string name="onboarding_done_summary">%1$d kappaletta · %2$d kansiota</string>
+    <string name="onboarding_done_cta">Aloita kuuntelu</string>
 </resources>

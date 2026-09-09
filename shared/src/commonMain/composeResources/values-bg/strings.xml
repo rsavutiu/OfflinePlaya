@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Възобновяване при Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Стартиране на музиката при свързване на слушалки или кола</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Избери папка с музика</string>
+    <string name="onboarding_skip">Пропусни</string>
+    <string name="onboarding_back">Назад</string>
+    <string name="onboarding_next">Напред</string>
+    <string name="onboarding_welcome_title">Добре дошли в OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Плейър за музиката, която вече притежавате. Всичко остава на устройството ви — без акаунти, без стрийминг, без реклами. Нека настроим библиотеката ви.</string>
+    <string name="onboarding_welcome_cta">Начало</string>
+    <string name="onboarding_permissions_title">Дайте няколко разрешения</string>
+    <string name="onboarding_permissions_body">Те позволяват на приложението да намери музиката ви и да показва контроли за възпроизвеждане. Можете да ги промените по всяко време в системните настройки.</string>
+    <string name="onboarding_permission_audio_title">Достъп до музика и звук</string>
+    <string name="onboarding_permission_audio_body">За да може OfflinePlaya да намери аудиофайловете на устройството ви, включително тези в папките „Изтегляния“ и „Музика“.</string>
+    <string name="onboarding_permission_audio_cta">Разреши достъп до музика</string>
+    <string name="onboarding_permission_notifications_title">Известия</string>
+    <string name="onboarding_permission_notifications_body">За да се показват контролите за възпроизвеждане в лентата с известия и на заключения екран, докато свири музика.</string>
+    <string name="onboarding_permission_notifications_cta">Разреши известия</string>
+    <string name="onboarding_permission_granted">Разрешено</string>
+    <string name="onboarding_add_music_title">Добавете музиката си</string>
+    <string name="onboarding_add_music_body">Изберете папка с аудиофайлове за индексиране. Музиката в папките „Изтегляния“ и „Музика“ се открива автоматично, след като дадете достъп до музиката.</string>
+    <string name="onboarding_add_music_pick_folder">Избери папка с музика</string>
+    <string name="onboarding_add_music_found">Досега са намерени %1$d песни</string>
+    <string name="onboarding_done_title">Готово е</string>
+    <string name="onboarding_done_body">Библиотеката ви е готова. Можете да добавите още папки или да промените всичко по-късно в „Настройки“.</string>
+    <string name="onboarding_done_summary">%1$d песни · %2$d папки</string>
+    <string name="onboarding_done_cta">Слушай</string>
 </resources>

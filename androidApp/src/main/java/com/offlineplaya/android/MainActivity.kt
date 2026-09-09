@@ -20,7 +20,6 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -45,6 +44,7 @@ import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
+import com.offlineplaya.shared.presentation.onboarding.OnboardingStateHolder
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.review.ReviewPromptCoordinator
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
@@ -53,6 +53,7 @@ import com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import com.offlineplaya.shared.presentation.ui.App
+import com.offlineplaya.shared.presentation.ui.pages.OnboardingWizardPage
 import kotlinx.coroutines.launch
 import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
@@ -150,6 +151,23 @@ private fun hasAudioReadPermission(context: Context): Boolean =
     ContextCompat.checkSelfPermission(context, AUDIO_READ_PERMISSION) ==
             PackageManager.PERMISSION_GRANTED
 
+/** Whether the runtime notification permission is applicable (Android 13+). */
+private val NOTIFICATION_PERMISSION_APPLICABLE: Boolean =
+    Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+
+/**
+ * `POST_NOTIFICATIONS` is a runtime permission only on Android 13+. Below that
+ * it's granted at install time, so we report `true` — the onboarding step is
+ * skipped and the playback notification just works.
+ */
+private fun hasNotificationPermission(context: Context): Boolean =
+    if (NOTIFICATION_PERMISSION_APPLICABLE) {
+        ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED
+    } else {
+        true
+    }
+
 /**
  * Android host for the shared [App]. Wires the SAF folder picker, hardware
  * back into the [AppNavigator], and observes every state holder.
@@ -172,6 +190,8 @@ private fun AndroidApp() {
     val albumColorStateHolder: com.offlineplaya.shared.presentation.theme.AlbumColorStateHolder = koinInject()
     val tagEditorCoordinator: com.offlineplaya.shared.presentation.tag.TagEditorCoordinator = koinInject()
     val smartPlaylists: com.offlineplaya.shared.presentation.history.SmartPlaylistsStateHolder = koinInject()
+    val onboarding: OnboardingStateHolder = koinInject()
+    val onboardingCompleted by onboarding.completed.collectAsState()
     val themePreferences by themeStateHolder.preferences.collectAsState()
     val seedColor by albumColorStateHolder.seedColor.collectAsState()
     val artworkPreferences by artworkStateHolder.preferences.collectAsState()
@@ -179,10 +199,17 @@ private fun AndroidApp() {
     val playbackPreferences by playbackTuningStateHolder.preferences.collectAsState()
     val syncStatus by coordinator.status.collectAsState()
     val trackCount by library.totalTrackCount.collectAsState()
+    val rootFolders by library.rootFolders.collectAsState()
     val stack by navigator.stack.collectAsState()
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val reviewScope = rememberCoroutineScope()
+
+    // Permission state, refreshed on ON_RESUME so the onboarding wizard's
+    // checkmarks and the empty-guide actions reflect changes the user made in
+    // the system dialog or Settings while we were away.
+    var audioGranted by remember { mutableStateOf(hasAudioReadPermission(context)) }
+    var notificationGranted by remember { mutableStateOf(hasNotificationPermission(context)) }
 
     // Drive the system-bar icon appearance from the *app's* resolved theme,
     // not the OS theme. enableEdgeToEdge()'s auto-detection keys off the system
@@ -221,6 +248,10 @@ private fun AndroidApp() {
     // settings, ON_RESUME notices that and the next sync turns into a no-op.
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                audioGranted = hasAudioReadPermission(context)
+                notificationGranted = hasNotificationPermission(context)
+            }
             if (event == Lifecycle.Event.ON_RESUME && hasAudioReadPermission(context)) {
                 // resyncIfIdle, not resyncAll: returning from the SAF picker or
                 // a quick app-switch fires ON_RESUME, and we don't want those to
@@ -249,21 +280,20 @@ private fun AndroidApp() {
         // requiring a manual re-sync. Denied is fine — the app still works
         // with SAF-picked folders; the library just won't auto-discover
         // MediaStore-indexed audio (Downloads, root storage, etc.).
+        audioGranted = granted
         if (granted) coordinator.resyncAll()
     }
 
-    // Fire the system runtime-permission dialog at most once per process
-    // start. No in-app rationale screen — the system dialog itself
-    // ("Allow OfflinePlaya to access music and audio?") is self-explanatory
-    // for a music player, and a custom pre-prompt screen would just be an
-    // extra tap with no information value.
-    var permissionPromptFired by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) {
-        if (!permissionPromptFired && !hasAudioReadPermission(context)) {
-            permissionPromptFired = true
-            permissionLauncher.launch(AUDIO_READ_PERMISSION)
-        }
+    val notificationPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        notificationGranted = granted
     }
+
+    // The audio-permission dialog is no longer auto-fired at launch — the
+    // first-run onboarding wizard primes and requests it (and notifications)
+    // with context. Returning users who revoke access are nudged by the
+    // empty-library guide's "Pick music folder" / Settings actions.
 
     BackHandler(enabled = stack.size > 1) {
         navigator.pop()
@@ -294,8 +324,36 @@ private fun AndroidApp() {
     }
 
     Box {
-        App(
-            navigator = navigator,
+        // Gate: null = onboarding flag still resolving (render nothing, the
+        // splash covers it); false = first run, show the wizard; true = the
+        // normal app. Seeding null (see OnboardingStateHolder) is what stops
+        // the wizard flashing for an existing user on every cold start.
+        when (onboardingCompleted) {
+            null -> Unit
+
+            false -> OnboardingWizardPage(
+                audioGranted = audioGranted,
+                notificationGranted = notificationGranted,
+                notificationApplicable = NOTIFICATION_PERMISSION_APPLICABLE,
+                trackCount = trackCount,
+                folderCount = rootFolders.size,
+                onRequestAudioPermission = { permissionLauncher.launch(AUDIO_READ_PERMISSION) },
+                onRequestNotificationPermission = {
+                    if (NOTIFICATION_PERMISSION_APPLICABLE) {
+                        notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    }
+                },
+                onPickFolder = { readPickerLauncher.launch(Unit) },
+                onFinish = {
+                    onboarding.complete()
+                    // A folder pick already kicks its own scan; this covers the
+                    // case where the user only granted MediaStore audio access.
+                    if (audioGranted) coordinator.resyncAll()
+                },
+            )
+
+            true -> App(
+                navigator = navigator,
             library = library,
             playlists = playlists,
             syncCoordinator = coordinator,
@@ -323,6 +381,7 @@ private fun AndroidApp() {
             onCrossfadeDurationChange = playbackTuningStateHolder::setCrossfadeDurationSeconds,
             onBluetoothAutoplayChange = playbackTuningStateHolder::setBluetoothAutoplayEnabled,
             dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
-        )
+            )
+        }
     }
 }

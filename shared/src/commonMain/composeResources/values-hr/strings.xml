@@ -255,4 +255,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Nastavi putem Bluetootha</string>
     <string name="playback_bt_autoplay_subtitle">Pokreni reprodukciju kad se povežu slušalice ili auto</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Odaberi mapu s glazbom</string>
+    <string name="onboarding_skip">Preskoči</string>
+    <string name="onboarding_back">Natrag</string>
+    <string name="onboarding_next">Dalje</string>
+    <string name="onboarding_welcome_title">Dobro došli u OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Reproduktor za glazbu koju već imate. Sve ostaje na vašem uređaju — bez računa, bez streaminga, bez oglasa. Postavimo vašu biblioteku.</string>
+    <string name="onboarding_welcome_cta">Započni</string>
+    <string name="onboarding_permissions_title">Dodijelite nekoliko dopuštenja</string>
+    <string name="onboarding_permissions_body">Omogućuju aplikaciji da pronađe vašu glazbu i prikaže kontrole reprodukcije. Možete ih promijeniti u bilo kojem trenutku u postavkama sustava.</string>
+    <string name="onboarding_permission_audio_title">Pristup glazbi i zvuku</string>
+    <string name="onboarding_permission_audio_body">Da bi OfflinePlaya mogla pronaći audiodatoteke na vašem uređaju, uključujući one u mapama Preuzimanja i Glazba.</string>
+    <string name="onboarding_permission_audio_cta">Dopusti pristup glazbi</string>
+    <string name="onboarding_permission_notifications_title">Obavijesti</string>
+    <string name="onboarding_permission_notifications_body">Da bi se kontrole reprodukcije prikazivale na traci obavijesti i na zaključanom zaslonu dok svira glazba.</string>
+    <string name="onboarding_permission_notifications_cta">Dopusti obavijesti</string>
+    <string name="onboarding_permission_granted">Dodijeljeno</string>
+    <string name="onboarding_add_music_title">Dodajte svoju glazbu</string>
+    <string name="onboarding_add_music_body">Odaberite mapu s audiodatotekama za indeksiranje. Glazba u mapama Preuzimanja i Glazba pronalazi se automatski nakon što dopustite pristup glazbi.</string>
+    <string name="onboarding_add_music_pick_folder">Odaberi mapu s glazbom</string>
+    <string name="onboarding_add_music_found">Dosad pronađeno %1$d pjesama</string>
+    <string name="onboarding_done_title">Sve je spremno</string>
+    <string name="onboarding_done_body">Vaša je biblioteka spremna. Kasnije u postavkama možete dodati još mapa ili promijeniti bilo što.</string>
+    <string name="onboarding_done_summary">%1$d pjesama · %2$d mapa</string>
+    <string name="onboarding_done_cta">Počni slušati</string>
 </resources>

@@ -253,4 +253,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Lanjutkan lewat Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Mulai memutar saat headphone atau mobil terhubung</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Pilih folder musik</string>
+    <string name="onboarding_skip">Lewati</string>
+    <string name="onboarding_back">Kembali</string>
+    <string name="onboarding_next">Berikutnya</string>
+    <string name="onboarding_welcome_title">Selamat datang di OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Pemutar untuk musik yang sudah Anda miliki. Semuanya tetap di perangkat Anda — tanpa akun, tanpa streaming, tanpa iklan. Mari siapkan pustaka Anda.</string>
+    <string name="onboarding_welcome_cta">Mulai</string>
+    <string name="onboarding_permissions_title">Berikan beberapa izin</string>
+    <string name="onboarding_permissions_body">Izin ini memungkinkan aplikasi menemukan musik Anda dan menampilkan kontrol pemutaran. Anda dapat mengubahnya kapan saja di pengaturan sistem.</string>
+    <string name="onboarding_permission_audio_title">Akses musik dan audio</string>
+    <string name="onboarding_permission_audio_body">Agar OfflinePlaya dapat menemukan file audio di perangkat Anda — termasuk yang ada di folder Download dan Music.</string>
+    <string name="onboarding_permission_audio_cta">Izinkan akses musik</string>
+    <string name="onboarding_permission_notifications_title">Notifikasi</string>
+    <string name="onboarding_permission_notifications_body">Agar kontrol pemutaran muncul di panel notifikasi dan di layar kunci saat musik diputar.</string>
+    <string name="onboarding_permission_notifications_cta">Izinkan notifikasi</string>
+    <string name="onboarding_permission_granted">Diberikan</string>
+    <string name="onboarding_add_music_title">Tambahkan musik Anda</string>
+    <string name="onboarding_add_music_body">Pilih folder berisi file audio untuk diindeks. Musik di folder Download dan Music terdeteksi otomatis setelah akses musik diberikan.</string>
+    <string name="onboarding_add_music_pick_folder">Pilih folder musik</string>
+    <string name="onboarding_add_music_found">Sejauh ini ditemukan %1$d lagu</string>
+    <string name="onboarding_done_title">Semua siap</string>
+    <string name="onboarding_done_body">Pustaka Anda siap. Anda bisa menambahkan folder lain atau mengubah apa pun nanti di Pengaturan.</string>
+    <string name="onboarding_done_summary">%1$d lagu · %2$d folder</string>
+    <string name="onboarding_done_cta">Mulai mendengarkan</string>
 </resources>

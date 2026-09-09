@@ -255,4 +255,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Настави преко Bluetooth-а</string>
     <string name="playback_bt_autoplay_subtitle">Покрени репродукцију када се повежу слушалице или ауто</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Изаберите фасциклу са музиком</string>
+    <string name="onboarding_skip">Прескочи</string>
+    <string name="onboarding_back">Назад</string>
+    <string name="onboarding_next">Даље</string>
+    <string name="onboarding_welcome_title">Добро дошли у OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Плејер за музику коју већ имате. Све остаје на вашем уређају — без налога, без стриминга, без реклама. Хајде да подесимо вашу библиотеку.</string>
+    <string name="onboarding_welcome_cta">Започни</string>
+    <string name="onboarding_permissions_title">Дајте неколико дозвола</string>
+    <string name="onboarding_permissions_body">Оне омогућавају апликацији да пронађе вашу музику и прикаже контроле репродукције. Можете их променити било кад у системским подешавањима.</string>
+    <string name="onboarding_permission_audio_title">Приступ музици и звуку</string>
+    <string name="onboarding_permission_audio_body">Да би OfflinePlaya могла да пронађе аудио-датотеке на вашем уређају, укључујући оне у фасциклама Преузимања и Музика.</string>
+    <string name="onboarding_permission_audio_cta">Дозволи приступ музици</string>
+    <string name="onboarding_permission_notifications_title">Обавештења</string>
+    <string name="onboarding_permission_notifications_body">Да би се контроле репродукције приказивале у траци обавештења и на закључаном екрану док свира музика.</string>
+    <string name="onboarding_permission_notifications_cta">Дозволи обавештења</string>
+    <string name="onboarding_permission_granted">Додељено</string>
+    <string name="onboarding_add_music_title">Додајте своју музику</string>
+    <string name="onboarding_add_music_body">Изаберите фасциклу са аудио-датотекама за индексирање. Музика у фасциклама Преузимања и Музика проналази се аутоматски када дозволите приступ музици.</string>
+    <string name="onboarding_add_music_pick_folder">Изаберите фасциклу са музиком</string>
+    <string name="onboarding_add_music_found">До сада пронађено %1$d песама</string>
+    <string name="onboarding_done_title">Све је спремно</string>
+    <string name="onboarding_done_body">Ваша библиотека је спремна. Касније у Подешавањима можете додати још фасцикли или променити било шта.</string>
+    <string name="onboarding_done_summary">%1$d песама · %2$d фасцикли</string>
+    <string name="onboarding_done_cta">Почни са слушањем</string>
 </resources>

@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Fortsett via Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Start avspilling når hodetelefoner eller bil kobles til</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Velg en musikkmappe</string>
+    <string name="onboarding_skip">Hopp over</string>
+    <string name="onboarding_back">Tilbake</string>
+    <string name="onboarding_next">Neste</string>
+    <string name="onboarding_welcome_title">Velkommen til OfflinePlaya</string>
+    <string name="onboarding_welcome_body">En spiller for musikken du allerede eier. Alt blir på enheten din — ingen kontoer, ingen strømming, ingen annonser. La oss sette opp biblioteket ditt.</string>
+    <string name="onboarding_welcome_cta">Kom i gang</string>
+    <string name="onboarding_permissions_title">Gi noen tillatelser</string>
+    <string name="onboarding_permissions_body">De lar appen finne musikken din og vise avspillingskontroller. Du kan endre dem når som helst i systeminnstillingene.</string>
+    <string name="onboarding_permission_audio_title">Tilgang til musikk og lyd</string>
+    <string name="onboarding_permission_audio_body">Slik at OfflinePlaya kan finne lydfilene på enheten din — også de i mappene Nedlastinger og Musikk.</string>
+    <string name="onboarding_permission_audio_cta">Tillat tilgang til musikk</string>
+    <string name="onboarding_permission_notifications_title">Varsler</string>
+    <string name="onboarding_permission_notifications_body">Slik at avspillingskontrollene vises i varselpanelet og på låseskjermen mens musikken spilles.</string>
+    <string name="onboarding_permission_notifications_cta">Tillat varsler</string>
+    <string name="onboarding_permission_granted">Gitt</string>
+    <string name="onboarding_add_music_title">Legg til musikken din</string>
+    <string name="onboarding_add_music_body">Velg en mappe med lydfiler som skal indekseres. Musikk i mappene Nedlastinger og Musikk oppdages automatisk når tilgang til musikk er gitt.</string>
+    <string name="onboarding_add_music_pick_folder">Velg en musikkmappe</string>
+    <string name="onboarding_add_music_found">Funnet %1$d spor så langt</string>
+    <string name="onboarding_done_title">Alt er klart</string>
+    <string name="onboarding_done_body">Biblioteket ditt er klart. Du kan legge til flere mapper eller endre hva som helst senere i Innstillinger.</string>
+    <string name="onboarding_done_summary">%1$d spor · %2$d mapper</string>
+    <string name="onboarding_done_cta">Begynn å lytte</string>
 </resources>

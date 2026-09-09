@@ -75,4 +75,17 @@ interface SettingsRepository {
 
     /** Replace the stored in-app review nudge bookkeeping atomically. */
     suspend fun setReviewPromptState(state: ReviewPromptState)
+
+    /**
+     * Live "has the user finished (or skipped) first-run onboarding" flag.
+     * Defaults to `false` when the key was never written — i.e. a fresh
+     * install has not yet seen the onboarding wizard.
+     */
+    fun observeOnboardingCompleted(): Flow<Boolean>
+
+    /** One-shot read of the onboarding-completed flag (defaults `false`). */
+    suspend fun isOnboardingCompleted(): Boolean
+
+    /** Persist whether first-run onboarding has been completed or skipped. */
+    suspend fun setOnboardingCompleted(done: Boolean)
 }

@@ -255,4 +255,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Atsākt ar Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Sākt atskaņošanu, kad pievienojas austiņas vai auto</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Izvēlieties mūzikas mapi</string>
+    <string name="onboarding_skip">Izlaist</string>
+    <string name="onboarding_back">Atpakaļ</string>
+    <string name="onboarding_next">Tālāk</string>
+    <string name="onboarding_welcome_title">Laipni lūdzam OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Atskaņotājs mūzikai, kas jau pieder jums. Viss paliek jūsu ierīcē — bez kontiem, bez straumēšanas, bez reklāmām. Iestatīsim jūsu bibliotēku.</string>
+    <string name="onboarding_welcome_cta">Sākt</string>
+    <string name="onboarding_permissions_title">Piešķiriet dažas atļaujas</string>
+    <string name="onboarding_permissions_body">Tās ļauj lietotnei atrast jūsu mūziku un rādīt atskaņošanas vadīklas. Tās jebkurā laikā varat mainīt sistēmas iestatījumos.</string>
+    <string name="onboarding_permission_audio_title">Piekļuve mūzikai un audio</string>
+    <string name="onboarding_permission_audio_body">Lai OfflinePlaya varētu atrast audio failus jūsu ierīcē, tostarp mapēs Lejupielādes un Mūzika.</string>
+    <string name="onboarding_permission_audio_cta">Atļaut piekļuvi mūzikai</string>
+    <string name="onboarding_permission_notifications_title">Paziņojumi</string>
+    <string name="onboarding_permission_notifications_body">Lai atskaņošanas vadīklas parādītos paziņojumu panelī un bloķēšanas ekrānā, kamēr skan mūzika.</string>
+    <string name="onboarding_permission_notifications_cta">Atļaut paziņojumus</string>
+    <string name="onboarding_permission_granted">Piešķirts</string>
+    <string name="onboarding_add_music_title">Pievienojiet savu mūziku</string>
+    <string name="onboarding_add_music_body">Izvēlieties audio failu mapi indeksēšanai. Mūzika mapēs Lejupielādes un Mūzika tiek atrasta automātiski, tiklīdz ir piešķirta piekļuve mūzikai.</string>
+    <string name="onboarding_add_music_pick_folder">Izvēlieties mūzikas mapi</string>
+    <string name="onboarding_add_music_found">Līdz šim atrastas %1$d dziesmas</string>
+    <string name="onboarding_done_title">Viss ir gatavs</string>
+    <string name="onboarding_done_body">Jūsu bibliotēka ir gatava. Vēlāk iestatījumos varat pievienot vairāk mapju vai mainīt jebko.</string>
+    <string name="onboarding_done_summary">%1$d dziesmas · %2$d mapes</string>
+    <string name="onboarding_done_cta">Sākt klausīties</string>
 </resources>

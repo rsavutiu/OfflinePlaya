@@ -94,6 +94,9 @@ class SqlLyricsRepositoryTest {
         override suspend fun setLastSeedColor(argb: Int?) = Unit
         override suspend fun getReviewPromptState(): ReviewPromptState = ReviewPromptState.Default
         override suspend fun setReviewPromptState(state: ReviewPromptState) = Unit
+        override fun observeOnboardingCompleted(): Flow<Boolean> = error("unused")
+        override suspend fun isOnboardingCompleted(): Boolean = true
+        override suspend fun setOnboardingCompleted(done: Boolean) = Unit
     }
 
     private fun newRepo(

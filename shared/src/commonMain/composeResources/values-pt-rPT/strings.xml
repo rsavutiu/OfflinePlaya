@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Retomar via Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Começar a reproduzir quando os fones ou o carro ligarem</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Escolher uma pasta de música</string>
+    <string name="onboarding_skip">Ignorar</string>
+    <string name="onboarding_back">Anterior</string>
+    <string name="onboarding_next">Seguinte</string>
+    <string name="onboarding_welcome_title">Bem-vindo ao OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Um leitor para a música que já tem. Tudo fica no seu dispositivo — sem contas, sem streaming, sem anúncios. Vamos configurar a sua biblioteca.</string>
+    <string name="onboarding_welcome_cta">Começar</string>
+    <string name="onboarding_permissions_title">Conceda algumas autorizações</string>
+    <string name="onboarding_permissions_body">Permitem que a aplicação encontre a sua música e mostre os controlos de reprodução. Pode alterá-las a qualquer momento nas definições do sistema.</string>
+    <string name="onboarding_permission_audio_title">Acesso a música e áudio</string>
+    <string name="onboarding_permission_audio_body">Para o OfflinePlaya encontrar os ficheiros de áudio no seu dispositivo, incluindo os das pastas Transferências e Música.</string>
+    <string name="onboarding_permission_audio_cta">Permitir acesso à música</string>
+    <string name="onboarding_permission_notifications_title">Notificações</string>
+    <string name="onboarding_permission_notifications_body">Para os controlos de reprodução aparecerem no painel de notificações e no ecrã de bloqueio enquanto a música toca.</string>
+    <string name="onboarding_permission_notifications_cta">Permitir notificações</string>
+    <string name="onboarding_permission_granted">Concedido</string>
+    <string name="onboarding_add_music_title">Adicione a sua música</string>
+    <string name="onboarding_add_music_body">Escolha uma pasta de ficheiros de áudio para indexar. A música nas pastas Transferências e Música é detetada automaticamente depois de conceder o acesso à música.</string>
+    <string name="onboarding_add_music_pick_folder">Escolher uma pasta de música</string>
+    <string name="onboarding_add_music_found">%1$d faixas encontradas até agora</string>
+    <string name="onboarding_done_title">Tudo pronto</string>
+    <string name="onboarding_done_body">A sua biblioteca está pronta. Pode adicionar mais pastas ou ajustar o que quiser mais tarde nas Definições.</string>
+    <string name="onboarding_done_summary">%1$d faixas · %2$d pastas</string>
+    <string name="onboarding_done_cta">Começar a ouvir</string>
 </resources>

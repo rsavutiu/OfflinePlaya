@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Reprèn amb Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Comença a reproduir quan es connectin els auriculars o el cotxe</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Tria una carpeta de música</string>
+    <string name="onboarding_skip">Omet</string>
+    <string name="onboarding_back">Enrere</string>
+    <string name="onboarding_next">Següent</string>
+    <string name="onboarding_welcome_title">Us donem la benvinguda a OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Un reproductor per a la música que ja tens. Tot es queda al teu dispositiu: sense comptes, sense reproducció en línia, sense anuncis. Configurem la teva biblioteca.</string>
+    <string name="onboarding_welcome_cta">Comença</string>
+    <string name="onboarding_permissions_title">Concedeix un parell de permisos</string>
+    <string name="onboarding_permissions_body">Permeten que l\'aplicació trobi la teva música i mostri els controls de reproducció. Els pots canviar en qualsevol moment a la configuració del sistema.</string>
+    <string name="onboarding_permission_audio_title">Accés a música i àudio</string>
+    <string name="onboarding_permission_audio_body">Perquè OfflinePlaya pugui trobar els fitxers d\'àudio del dispositiu, inclosos els de les carpetes Baixades i Música.</string>
+    <string name="onboarding_permission_audio_cta">Permet l\'accés a la música</string>
+    <string name="onboarding_permission_notifications_title">Notificacions</string>
+    <string name="onboarding_permission_notifications_body">Perquè els controls de reproducció apareguin al plafó de notificacions i a la pantalla de bloqueig mentre sona la música.</string>
+    <string name="onboarding_permission_notifications_cta">Permet les notificacions</string>
+    <string name="onboarding_permission_granted">Concedit</string>
+    <string name="onboarding_add_music_title">Afegeix la teva música</string>
+    <string name="onboarding_add_music_body">Tria una carpeta amb fitxers d\'àudio per indexar. La música de les carpetes Baixades i Música es detecta automàticament un cop concedit l\'accés a la música.</string>
+    <string name="onboarding_add_music_pick_folder">Tria una carpeta de música</string>
+    <string name="onboarding_add_music_found">S\'han trobat %1$d cançons fins ara</string>
+    <string name="onboarding_done_title">Tot a punt</string>
+    <string name="onboarding_done_body">La teva biblioteca està preparada. Pots afegir més carpetes o ajustar qualsevol cosa més tard a la configuració.</string>
+    <string name="onboarding_done_summary">%1$d cançons · %2$d carpetes</string>
+    <string name="onboarding_done_cta">Comença a escoltar</string>
 </resources>

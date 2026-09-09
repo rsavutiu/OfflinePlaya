@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Folytatás Bluetooth-on</string>
     <string name="playback_bt_autoplay_subtitle">Lejátszás indítása fülhallgató vagy autó csatlakozásakor</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Zenemappa kiválasztása</string>
+    <string name="onboarding_skip">Kihagyás</string>
+    <string name="onboarding_back">Vissza</string>
+    <string name="onboarding_next">Tovább</string>
+    <string name="onboarding_welcome_title">Üdvözlünk az OfflinePlayában</string>
+    <string name="onboarding_welcome_body">Lejátszó a már meglévő zenédhez. Minden a készülékeden marad — nincs fiók, nincs streamelés, nincs reklám. Állítsuk be a könyvtáradat.</string>
+    <string name="onboarding_welcome_cta">Kezdés</string>
+    <string name="onboarding_permissions_title">Adj meg néhány engedélyt</string>
+    <string name="onboarding_permissions_body">Ezek lehetővé teszik, hogy az alkalmazás megtalálja a zenédet és megjelenítse a lejátszásvezérlőket. Bármikor módosíthatod őket a rendszerbeállításokban.</string>
+    <string name="onboarding_permission_audio_title">Hozzáférés a zenéhez és a hanghoz</string>
+    <string name="onboarding_permission_audio_body">Hogy az OfflinePlaya megtalálja a készülékeden lévő hangfájlokat — a Letöltések és a Zene mappában lévőket is.</string>
+    <string name="onboarding_permission_audio_cta">Zenehozzáférés engedélyezése</string>
+    <string name="onboarding_permission_notifications_title">Értesítések</string>
+    <string name="onboarding_permission_notifications_body">Hogy a lejátszásvezérlők megjelenjenek az értesítési sávban és a zárolási képernyőn, amíg zene szól.</string>
+    <string name="onboarding_permission_notifications_cta">Értesítések engedélyezése</string>
+    <string name="onboarding_permission_granted">Megadva</string>
+    <string name="onboarding_add_music_title">Add hozzá a zenédet</string>
+    <string name="onboarding_add_music_body">Válassz egy hangfájlokat tartalmazó mappát az indexeléshez. A Letöltések és a Zene mappában lévő zene automatikusan bekerül, amint engedélyezed a zenehozzáférést.</string>
+    <string name="onboarding_add_music_pick_folder">Zenemappa kiválasztása</string>
+    <string name="onboarding_add_music_found">Eddig %1$d szám található</string>
+    <string name="onboarding_done_title">Minden kész</string>
+    <string name="onboarding_done_body">A könyvtárad készen áll. Később a Beállításokban további mappákat adhatsz hozzá, vagy bármit módosíthatsz.</string>
+    <string name="onboarding_done_summary">%1$d szám · %2$d mappa</string>
+    <string name="onboarding_done_cta">Hallgatás megkezdése</string>
 </resources>

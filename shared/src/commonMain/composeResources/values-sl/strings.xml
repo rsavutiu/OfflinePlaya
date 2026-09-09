@@ -256,4 +256,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Nadaljuj prek Bluetootha</string>
     <string name="playback_bt_autoplay_subtitle">Začni predvajanje, ko se povežejo slušalke ali avto</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Izberite mapo z glasbo</string>
+    <string name="onboarding_skip">Preskoči</string>
+    <string name="onboarding_back">Nazaj</string>
+    <string name="onboarding_next">Naprej</string>
+    <string name="onboarding_welcome_title">Dobrodošli v OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Predvajalnik za glasbo, ki jo že imate. Vse ostane v vaši napravi — brez računov, brez pretakanja, brez oglasov. Nastavimo vašo knjižnico.</string>
+    <string name="onboarding_welcome_cta">Začni</string>
+    <string name="onboarding_permissions_title">Dodelite nekaj dovoljenj</string>
+    <string name="onboarding_permissions_body">Aplikaciji omogočajo, da najde vašo glasbo in prikaže kontrolnike predvajanja. Kadar koli jih lahko spremenite v sistemskih nastavitvah.</string>
+    <string name="onboarding_permission_audio_title">Dostop do glasbe in zvoka</string>
+    <string name="onboarding_permission_audio_body">Da OfflinePlaya najde zvočne datoteke v vaši napravi, tudi tiste v mapah Prenosi in Glasba.</string>
+    <string name="onboarding_permission_audio_cta">Dovoli dostop do glasbe</string>
+    <string name="onboarding_permission_notifications_title">Obvestila</string>
+    <string name="onboarding_permission_notifications_body">Da se kontrolniki predvajanja prikažejo v predalu z obvestili in na zaklenjenem zaslonu med predvajanjem glasbe.</string>
+    <string name="onboarding_permission_notifications_cta">Dovoli obvestila</string>
+    <string name="onboarding_permission_granted">Dodeljeno</string>
+    <string name="onboarding_add_music_title">Dodajte svojo glasbo</string>
+    <string name="onboarding_add_music_body">Izberite mapo z zvočnimi datotekami za indeksiranje. Glasba v mapah Prenosi in Glasba se zazna samodejno, ko je dostop do glasbe dodeljen.</string>
+    <string name="onboarding_add_music_pick_folder">Izberite mapo z glasbo</string>
+    <string name="onboarding_add_music_found">Doslej najdenih %1$d skladb</string>
+    <string name="onboarding_done_title">Vse je pripravljeno</string>
+    <string name="onboarding_done_body">Vaša knjižnica je pripravljena. Pozneje lahko v Nastavitvah dodate več map ali spremenite kar koli.</string>
+    <string name="onboarding_done_summary">%1$d skladb · %2$d map</string>
+    <string name="onboarding_done_cta">Začni poslušati</string>
 </resources>

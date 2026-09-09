@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Bluetooth ile devam et</string>
     <string name="playback_bt_autoplay_subtitle">Kulaklık veya araba bağlanınca çalmaya başla</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Bir müzik klasörü seç</string>
+    <string name="onboarding_skip">Atla</string>
+    <string name="onboarding_back">Geri</string>
+    <string name="onboarding_next">İleri</string>
+    <string name="onboarding_welcome_title">OfflinePlaya\'ya hoş geldiniz</string>
+    <string name="onboarding_welcome_body">Zaten sahip olduğunuz müzik için bir oynatıcı. Her şey cihazınızda kalır — hesap yok, akış yok, reklam yok. Hadi kitaplığınızı kuralım.</string>
+    <string name="onboarding_welcome_cta">Başla</string>
+    <string name="onboarding_permissions_title">Birkaç izin verin</string>
+    <string name="onboarding_permissions_body">Bunlar uygulamanın müziğinizi bulmasını ve oynatma denetimlerini göstermesini sağlar. İstediğiniz zaman sistem ayarlarından değiştirebilirsiniz.</string>
+    <string name="onboarding_permission_audio_title">Müzik ve ses erişimi</string>
+    <string name="onboarding_permission_audio_body">OfflinePlaya\'nın cihazınızdaki ses dosyalarını (İndirilenler ve Müzik klasörlerindekiler dahil) bulabilmesi için.</string>
+    <string name="onboarding_permission_audio_cta">Müzik erişimine izin ver</string>
+    <string name="onboarding_permission_notifications_title">Bildirimler</string>
+    <string name="onboarding_permission_notifications_body">Müzik çalarken oynatma denetimlerinin bildirim panelinde ve kilit ekranında görünmesi için.</string>
+    <string name="onboarding_permission_notifications_cta">Bildirimlere izin ver</string>
+    <string name="onboarding_permission_granted">Verildi</string>
+    <string name="onboarding_add_music_title">Müziğinizi ekleyin</string>
+    <string name="onboarding_add_music_body">Dizine eklenecek ses dosyalarının bulunduğu bir klasör seçin. Müzik erişimi verildiğinde İndirilenler ve Müzik klasörlerindeki müzik otomatik olarak alınır.</string>
+    <string name="onboarding_add_music_pick_folder">Bir müzik klasörü seç</string>
+    <string name="onboarding_add_music_found">Şu ana kadar %1$d parça bulundu</string>
+    <string name="onboarding_done_title">Her şey hazır</string>
+    <string name="onboarding_done_body">Kitaplığınız hazır. Daha sonra Ayarlar\'dan başka klasörler ekleyebilir veya her şeyi değiştirebilirsiniz.</string>
+    <string name="onboarding_done_summary">%1$d parça · %2$d klasör</string>
+    <string name="onboarding_done_cta">Dinlemeye başla</string>
 </resources>

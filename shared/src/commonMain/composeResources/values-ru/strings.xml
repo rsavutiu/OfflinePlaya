@@ -256,4 +256,29 @@
     <string name="eq_gain_db">%1$s дБ</string>
     <string name="playback_bt_autoplay">Продолжить по Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Начинать воспроизведение при подключении наушников или машины</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Выберите папку с музыкой</string>
+    <string name="onboarding_skip">Пропустить</string>
+    <string name="onboarding_back">Назад</string>
+    <string name="onboarding_next">Далее</string>
+    <string name="onboarding_welcome_title">Добро пожаловать в OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Плеер для музыки, которая у вас уже есть. Всё остаётся на вашем устройстве — без аккаунтов, без стриминга, без рекламы. Давайте настроим вашу медиатеку.</string>
+    <string name="onboarding_welcome_cta">Начать</string>
+    <string name="onboarding_permissions_title">Предоставьте несколько разрешений</string>
+    <string name="onboarding_permissions_body">Они позволяют приложению находить вашу музыку и показывать элементы управления воспроизведением. Их можно изменить в любое время в настройках системы.</string>
+    <string name="onboarding_permission_audio_title">Доступ к музыке и аудио</string>
+    <string name="onboarding_permission_audio_body">Чтобы OfflinePlaya могла находить аудиофайлы на вашем устройстве, в том числе в папках «Загрузки» и «Музыка».</string>
+    <string name="onboarding_permission_audio_cta">Разрешить доступ к музыке</string>
+    <string name="onboarding_permission_notifications_title">Уведомления</string>
+    <string name="onboarding_permission_notifications_body">Чтобы элементы управления воспроизведением отображались на панели уведомлений и на экране блокировки во время проигрывания музыки.</string>
+    <string name="onboarding_permission_notifications_cta">Разрешить уведомления</string>
+    <string name="onboarding_permission_granted">Предоставлено</string>
+    <string name="onboarding_add_music_title">Добавьте свою музыку</string>
+    <string name="onboarding_add_music_body">Выберите папку с аудиофайлами для индексирования. Музыка в папках «Загрузки» и «Музыка» находится автоматически после предоставления доступа к музыке.</string>
+    <string name="onboarding_add_music_pick_folder">Выберите папку с музыкой</string>
+    <string name="onboarding_add_music_found">Пока найдено треков: %1$d</string>
+    <string name="onboarding_done_title">Всё готово</string>
+    <string name="onboarding_done_body">Ваша медиатека готова. Позже вы можете добавить папки или изменить что угодно в настройках.</string>
+    <string name="onboarding_done_summary">%1$d треков · %2$d папок</string>
+    <string name="onboarding_done_cta">Начать слушать</string>
 </resources>

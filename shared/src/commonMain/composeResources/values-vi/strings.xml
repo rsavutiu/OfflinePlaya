@@ -253,4 +253,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Tiếp tục qua Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Bắt đầu phát khi tai nghe hoặc ô tô kết nối</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Chọn thư mục nhạc</string>
+    <string name="onboarding_skip">Bỏ qua</string>
+    <string name="onboarding_back">Quay lại</string>
+    <string name="onboarding_next">Tiếp theo</string>
+    <string name="onboarding_welcome_title">Chào mừng đến với OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Trình phát cho nhạc bạn đã có sẵn. Mọi thứ đều nằm trên thiết bị của bạn — không tài khoản, không phát trực tuyến, không quảng cáo. Hãy thiết lập thư viện của bạn.</string>
+    <string name="onboarding_welcome_cta">Bắt đầu</string>
+    <string name="onboarding_permissions_title">Cấp một vài quyền</string>
+    <string name="onboarding_permissions_body">Chúng cho phép ứng dụng tìm nhạc của bạn và hiển thị các nút điều khiển phát. Bạn có thể thay đổi bất cứ lúc nào trong cài đặt hệ thống.</string>
+    <string name="onboarding_permission_audio_title">Quyền truy cập nhạc và âm thanh</string>
+    <string name="onboarding_permission_audio_body">Để OfflinePlaya có thể tìm các tệp âm thanh trên thiết bị của bạn, kể cả những tệp trong thư mục Tải xuống và Nhạc.</string>
+    <string name="onboarding_permission_audio_cta">Cho phép truy cập nhạc</string>
+    <string name="onboarding_permission_notifications_title">Thông báo</string>
+    <string name="onboarding_permission_notifications_body">Để các nút điều khiển phát xuất hiện trong khay thông báo và trên màn hình khóa khi đang phát nhạc.</string>
+    <string name="onboarding_permission_notifications_cta">Cho phép thông báo</string>
+    <string name="onboarding_permission_granted">Đã cấp</string>
+    <string name="onboarding_add_music_title">Thêm nhạc của bạn</string>
+    <string name="onboarding_add_music_body">Chọn một thư mục tệp âm thanh để lập chỉ mục. Nhạc trong thư mục Tải xuống và Nhạc được tự động nhận sau khi cấp quyền truy cập nhạc.</string>
+    <string name="onboarding_add_music_pick_folder">Chọn thư mục nhạc</string>
+    <string name="onboarding_add_music_found">Đã tìm thấy %1$d bài hát cho đến nay</string>
+    <string name="onboarding_done_title">Đã xong</string>
+    <string name="onboarding_done_body">Thư viện của bạn đã sẵn sàng. Bạn có thể thêm thư mục khác hoặc chỉnh sửa bất cứ điều gì sau này trong Cài đặt.</string>
+    <string name="onboarding_done_summary">%1$d bài hát · %2$d thư mục</string>
+    <string name="onboarding_done_cta">Bắt đầu nghe</string>
 </resources>

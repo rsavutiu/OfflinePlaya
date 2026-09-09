@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">ब्लूटूथ पर फिर से चलाएँ</string>
     <string name="playback_bt_autoplay_subtitle">हेडफ़ोन या कार कनेक्ट होने पर चलाना शुरू करें</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">संगीत फ़ोल्डर चुनें</string>
+    <string name="onboarding_skip">छोड़ें</string>
+    <string name="onboarding_back">वापस</string>
+    <string name="onboarding_next">आगे</string>
+    <string name="onboarding_welcome_title">OfflinePlaya में आपका स्वागत है</string>
+    <string name="onboarding_welcome_body">उस संगीत के लिए एक प्लेयर जो पहले से आपका है. सब कुछ आपके डिवाइस पर ही रहता है — कोई खाता नहीं, कोई स्ट्रीमिंग नहीं, कोई विज्ञापन नहीं. चलिए आपकी लाइब्रेरी सेट करते हैं.</string>
+    <string name="onboarding_welcome_cta">शुरू करें</string>
+    <string name="onboarding_permissions_title">कुछ अनुमतियाँ दें</string>
+    <string name="onboarding_permissions_body">ये ऐप को आपका संगीत ढूँढने और प्लेबैक नियंत्रण दिखाने देती हैं. आप इन्हें कभी भी सिस्टम सेटिंग में बदल सकते हैं.</string>
+    <string name="onboarding_permission_audio_title">संगीत और ऑडियो तक पहुँच</string>
+    <string name="onboarding_permission_audio_body">ताकि OfflinePlaya आपके डिवाइस की ऑडियो फ़ाइलें ढूँढ सके — Downloads और Music फ़ोल्डर की फ़ाइलों सहित.</string>
+    <string name="onboarding_permission_audio_cta">संगीत तक पहुँच दें</string>
+    <string name="onboarding_permission_notifications_title">सूचनाएँ</string>
+    <string name="onboarding_permission_notifications_body">ताकि संगीत चलते समय प्लेबैक नियंत्रण सूचना पैनल और आपकी लॉक स्क्रीन पर दिखें.</string>
+    <string name="onboarding_permission_notifications_cta">सूचनाएँ दें</string>
+    <string name="onboarding_permission_granted">दे दी गई</string>
+    <string name="onboarding_add_music_title">अपना संगीत जोड़ें</string>
+    <string name="onboarding_add_music_body">इंडेक्स करने के लिए ऑडियो फ़ाइलों वाला एक फ़ोल्डर चुनें. संगीत तक पहुँच देने के बाद Downloads और Music फ़ोल्डर का संगीत अपने-आप शामिल हो जाता है.</string>
+    <string name="onboarding_add_music_pick_folder">संगीत फ़ोल्डर चुनें</string>
+    <string name="onboarding_add_music_found">अब तक %1$d ट्रैक मिले</string>
+    <string name="onboarding_done_title">सब तैयार है</string>
+    <string name="onboarding_done_body">आपकी लाइब्रेरी तैयार है. आप बाद में सेटिंग में और फ़ोल्डर जोड़ सकते हैं या कुछ भी बदल सकते हैं.</string>
+    <string name="onboarding_done_summary">%1$d ट्रैक · %2$d फ़ोल्डर</string>
+    <string name="onboarding_done_cta">सुनना शुरू करें</string>
 </resources>

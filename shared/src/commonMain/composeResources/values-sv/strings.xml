@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Återuppta via Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Börja spela när hörlurar eller bil ansluts</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Välj en musikmapp</string>
+    <string name="onboarding_skip">Hoppa över</string>
+    <string name="onboarding_back">Tillbaka</string>
+    <string name="onboarding_next">Nästa</string>
+    <string name="onboarding_welcome_title">Välkommen till OfflinePlaya</string>
+    <string name="onboarding_welcome_body">En spelare för musiken du redan äger. Allt stannar på din enhet — inga konton, ingen streaming, inga annonser. Nu sätter vi upp ditt bibliotek.</string>
+    <string name="onboarding_welcome_cta">Kom igång</string>
+    <string name="onboarding_permissions_title">Ge några behörigheter</string>
+    <string name="onboarding_permissions_body">De låter appen hitta din musik och visa uppspelningskontroller. Du kan ändra dem när som helst i systeminställningarna.</string>
+    <string name="onboarding_permission_audio_title">Åtkomst till musik och ljud</string>
+    <string name="onboarding_permission_audio_body">Så att OfflinePlaya kan hitta ljudfilerna på din enhet — även de i mapparna Nedladdningar och Musik.</string>
+    <string name="onboarding_permission_audio_cta">Tillåt åtkomst till musik</string>
+    <string name="onboarding_permission_notifications_title">Aviseringar</string>
+    <string name="onboarding_permission_notifications_body">Så att uppspelningskontrollerna visas i aviseringspanelen och på låsskärmen medan musik spelas.</string>
+    <string name="onboarding_permission_notifications_cta">Tillåt aviseringar</string>
+    <string name="onboarding_permission_granted">Beviljad</string>
+    <string name="onboarding_add_music_title">Lägg till din musik</string>
+    <string name="onboarding_add_music_body">Välj en mapp med ljudfiler att indexera. Musik i mapparna Nedladdningar och Musik hittas automatiskt när åtkomst till musik har beviljats.</string>
+    <string name="onboarding_add_music_pick_folder">Välj en musikmapp</string>
+    <string name="onboarding_add_music_found">Hittat %1$d låtar hittills</string>
+    <string name="onboarding_done_title">Allt är klart</string>
+    <string name="onboarding_done_body">Ditt bibliotek är klart. Du kan lägga till fler mappar eller ändra vad som helst senare i Inställningar.</string>
+    <string name="onboarding_done_summary">%1$d låtar · %2$d mappar</string>
+    <string name="onboarding_done_cta">Börja lyssna</string>
 </resources>

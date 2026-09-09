@@ -256,4 +256,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Pokračovat přes Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Spustit přehrávání po připojení sluchátek nebo auta</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Vyberte složku s hudbou</string>
+    <string name="onboarding_skip">Přeskočit</string>
+    <string name="onboarding_back">Zpět</string>
+    <string name="onboarding_next">Další</string>
+    <string name="onboarding_welcome_title">Vítejte v OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Přehrávač hudby, kterou už vlastníte. Vše zůstává ve vašem zařízení — žádné účty, žádné streamování, žádné reklamy. Pojďme nastavit vaši knihovnu.</string>
+    <string name="onboarding_welcome_cta">Začít</string>
+    <string name="onboarding_permissions_title">Udělte pár oprávnění</string>
+    <string name="onboarding_permissions_body">Umožní aplikaci najít vaši hudbu a zobrazit ovládání přehrávání. Kdykoli je můžete změnit v nastavení systému.</string>
+    <string name="onboarding_permission_audio_title">Přístup k hudbě a zvuku</string>
+    <string name="onboarding_permission_audio_body">Aby OfflinePlaya našla zvukové soubory ve vašem zařízení, včetně těch ve složkách Stažené a Hudba.</string>
+    <string name="onboarding_permission_audio_cta">Povolit přístup k hudbě</string>
+    <string name="onboarding_permission_notifications_title">Oznámení</string>
+    <string name="onboarding_permission_notifications_body">Aby se ovládání přehrávání zobrazovalo v oznamovací liště a na uzamčené obrazovce, když hraje hudba.</string>
+    <string name="onboarding_permission_notifications_cta">Povolit oznámení</string>
+    <string name="onboarding_permission_granted">Uděleno</string>
+    <string name="onboarding_add_music_title">Přidejte svou hudbu</string>
+    <string name="onboarding_add_music_body">Vyberte složku se zvukovými soubory k indexaci. Hudba ve složkách Stažené a Hudba se najde automaticky, jakmile udělíte přístup k hudbě.</string>
+    <string name="onboarding_add_music_pick_folder">Vyberte složku s hudbou</string>
+    <string name="onboarding_add_music_found">Zatím nalezeno %1$d skladeb</string>
+    <string name="onboarding_done_title">Hotovo</string>
+    <string name="onboarding_done_body">Vaše knihovna je připravená. Další složky můžete přidat nebo cokoli upravit později v Nastavení.</string>
+    <string name="onboarding_done_summary">%1$d skladeb · %2$d složek</string>
+    <string name="onboarding_done_cta">Začít poslouchat</string>
 </resources>

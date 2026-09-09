@@ -47,6 +47,32 @@
     <string name="empty_library_step3_body">Fully close the app (swipe it away from Recents) and open it again. It rescans on every launch, so your new tracks show up automatically.</string>
     <string name="empty_library_permission_note">Music in Downloads and Music is picked up automatically once you grant the music-access permission. To index a different folder, open Settings → Library and add it there.</string>
     <string name="empty_library_open_settings">Open Settings</string>
+    <string name="empty_library_pick_folder">Pick music folder</string>
+
+    <!-- First-run onboarding wizard -->
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_back">Back</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_welcome_title">Welcome to OfflinePlaya</string>
+    <string name="onboarding_welcome_body">A player for the music you already own. Everything stays on your device — no accounts, no streaming, no ads. Let\'s get your library set up.</string>
+    <string name="onboarding_welcome_cta">Get started</string>
+    <string name="onboarding_permissions_title">Grant a couple of permissions</string>
+    <string name="onboarding_permissions_body">These let the app find your music and show playback controls. You can change them anytime in system settings.</string>
+    <string name="onboarding_permission_audio_title">Music &amp; audio access</string>
+    <string name="onboarding_permission_audio_body">So OfflinePlaya can find the audio files on your device — including anything in Downloads and Music.</string>
+    <string name="onboarding_permission_audio_cta">Allow music access</string>
+    <string name="onboarding_permission_notifications_title">Notifications</string>
+    <string name="onboarding_permission_notifications_body">So playback controls appear in the notification shade and on your lock screen while music is playing.</string>
+    <string name="onboarding_permission_notifications_cta">Allow notifications</string>
+    <string name="onboarding_permission_granted">Granted</string>
+    <string name="onboarding_add_music_title">Add your music</string>
+    <string name="onboarding_add_music_body">Pick a folder of audio files to index. Music in your Downloads and Music folders is picked up automatically once music access is granted.</string>
+    <string name="onboarding_add_music_pick_folder">Pick a music folder</string>
+    <string name="onboarding_add_music_found">Found %1$d tracks so far</string>
+    <string name="onboarding_done_title">You\'re all set</string>
+    <string name="onboarding_done_body">Your library is ready. You can add more folders or tweak anything later in Settings.</string>
+    <string name="onboarding_done_summary">%1$d tracks · %2$d folders</string>
+    <string name="onboarding_done_cta">Start listening</string>
 
     <!-- Now Playing Page Strings -->
     <!-- Player UI elements -->

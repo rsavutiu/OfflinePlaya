@@ -256,4 +256,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Wznów przez Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Rozpocznij odtwarzanie po połączeniu słuchawek lub samochodu</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Wybierz folder z muzyką</string>
+    <string name="onboarding_skip">Pomiń</string>
+    <string name="onboarding_back">Wstecz</string>
+    <string name="onboarding_next">Dalej</string>
+    <string name="onboarding_welcome_title">Witamy w OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Odtwarzacz muzyki, którą już masz. Wszystko zostaje na Twoim urządzeniu — bez kont, bez streamingu, bez reklam. Skonfigurujmy Twoją bibliotekę.</string>
+    <string name="onboarding_welcome_cta">Zaczynajmy</string>
+    <string name="onboarding_permissions_title">Przyznaj kilka uprawnień</string>
+    <string name="onboarding_permissions_body">Pozwalają aplikacji znaleźć Twoją muzykę i wyświetlać elementy sterujące odtwarzaniem. Możesz je zmienić w dowolnej chwili w ustawieniach systemu.</string>
+    <string name="onboarding_permission_audio_title">Dostęp do muzyki i dźwięku</string>
+    <string name="onboarding_permission_audio_body">Aby OfflinePlaya mogła znaleźć pliki audio na Twoim urządzeniu, w tym te w folderach Pobrane i Muzyka.</string>
+    <string name="onboarding_permission_audio_cta">Zezwól na dostęp do muzyki</string>
+    <string name="onboarding_permission_notifications_title">Powiadomienia</string>
+    <string name="onboarding_permission_notifications_body">Aby elementy sterujące odtwarzaniem pojawiały się w panelu powiadomień i na ekranie blokady podczas odtwarzania muzyki.</string>
+    <string name="onboarding_permission_notifications_cta">Zezwól na powiadomienia</string>
+    <string name="onboarding_permission_granted">Przyznano</string>
+    <string name="onboarding_add_music_title">Dodaj swoją muzykę</string>
+    <string name="onboarding_add_music_body">Wybierz folder z plikami audio do zindeksowania. Muzyka w folderach Pobrane i Muzyka jest wykrywana automatycznie po przyznaniu dostępu do muzyki.</string>
+    <string name="onboarding_add_music_pick_folder">Wybierz folder z muzyką</string>
+    <string name="onboarding_add_music_found">Dotychczas znaleziono %1$d utworów</string>
+    <string name="onboarding_done_title">Wszystko gotowe</string>
+    <string name="onboarding_done_body">Twoja biblioteka jest gotowa. Więcej folderów możesz dodać lub cokolwiek zmienić później w Ustawieniach.</string>
+    <string name="onboarding_done_summary">%1$d utworów · %2$d folderów</string>
+    <string name="onboarding_done_cta">Zacznij słuchać</string>
 </resources>

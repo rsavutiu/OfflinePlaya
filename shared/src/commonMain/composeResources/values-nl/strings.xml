@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Hervatten via Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Begin met afspelen wanneer koptelefoon of auto verbindt</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Kies een muziekmap</string>
+    <string name="onboarding_skip">Overslaan</string>
+    <string name="onboarding_back">Terug</string>
+    <string name="onboarding_next">Volgende</string>
+    <string name="onboarding_welcome_title">Welkom bij OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Een speler voor de muziek die je al hebt. Alles blijft op je apparaat — geen accounts, geen streaming, geen advertenties. Laten we je bibliotheek instellen.</string>
+    <string name="onboarding_welcome_cta">Aan de slag</string>
+    <string name="onboarding_permissions_title">Verleen een paar rechten</string>
+    <string name="onboarding_permissions_body">Hiermee kan de app je muziek vinden en de afspeelknoppen tonen. Je kunt ze altijd wijzigen in de systeeminstellingen.</string>
+    <string name="onboarding_permission_audio_title">Toegang tot muziek en audio</string>
+    <string name="onboarding_permission_audio_body">Zodat OfflinePlaya de audiobestanden op je apparaat kan vinden — ook die in de mappen Downloads en Muziek.</string>
+    <string name="onboarding_permission_audio_cta">Toegang tot muziek toestaan</string>
+    <string name="onboarding_permission_notifications_title">Meldingen</string>
+    <string name="onboarding_permission_notifications_body">Zodat de afspeelknoppen in het meldingenpaneel en op je vergrendelscherm verschijnen terwijl er muziek speelt.</string>
+    <string name="onboarding_permission_notifications_cta">Meldingen toestaan</string>
+    <string name="onboarding_permission_granted">Verleend</string>
+    <string name="onboarding_add_music_title">Voeg je muziek toe</string>
+    <string name="onboarding_add_music_body">Kies een map met audiobestanden om te indexeren. Muziek in de mappen Downloads en Muziek wordt automatisch opgepikt zodra toegang tot muziek is verleend.</string>
+    <string name="onboarding_add_music_pick_folder">Kies een muziekmap</string>
+    <string name="onboarding_add_music_found">Tot nu toe %1$d nummers gevonden</string>
+    <string name="onboarding_done_title">Alles is klaar</string>
+    <string name="onboarding_done_body">Je bibliotheek is klaar. Je kunt later in Instellingen meer mappen toevoegen of van alles aanpassen.</string>
+    <string name="onboarding_done_summary">%1$d nummers · %2$d mappen</string>
+    <string name="onboarding_done_cta">Begin met luisteren</string>
 </resources>

@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Jätka Bluetoothiga</string>
     <string name="playback_bt_autoplay_subtitle">Alusta esitust, kui kõrvaklapid või auto ühenduvad</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Vali muusikakaust</string>
+    <string name="onboarding_skip">Jäta vahele</string>
+    <string name="onboarding_back">Tagasi</string>
+    <string name="onboarding_next">Edasi</string>
+    <string name="onboarding_welcome_title">Tere tulemast OfflinePlayasse</string>
+    <string name="onboarding_welcome_body">Mängija muusika jaoks, mis sul juba on. Kõik jääb sinu seadmesse — ei mingeid kontosid, voogesitust ega reklaame. Seadistame su teegi.</string>
+    <string name="onboarding_welcome_cta">Alusta</string>
+    <string name="onboarding_permissions_title">Anna paar luba</string>
+    <string name="onboarding_permissions_body">Need lubavad rakendusel leida su muusika ja näidata taasesituse juhtnuppe. Saad neid süsteemi seadetes igal ajal muuta.</string>
+    <string name="onboarding_permission_audio_title">Juurdepääs muusikale ja helile</string>
+    <string name="onboarding_permission_audio_body">Et OfflinePlaya leiaks su seadmes olevad helifailid, sealhulgas need kaustades Allalaadimised ja Muusika.</string>
+    <string name="onboarding_permission_audio_cta">Luba juurdepääs muusikale</string>
+    <string name="onboarding_permission_notifications_title">Teavitused</string>
+    <string name="onboarding_permission_notifications_body">Et taasesituse juhtnupud ilmuksid teavitusribale ja lukustuskuvale, kui muusika mängib.</string>
+    <string name="onboarding_permission_notifications_cta">Luba teavitused</string>
+    <string name="onboarding_permission_granted">Antud</string>
+    <string name="onboarding_add_music_title">Lisa oma muusika</string>
+    <string name="onboarding_add_music_body">Vali indekseerimiseks helifailide kaust. Kaustades Allalaadimised ja Muusika olev muusika leitakse automaatselt, kui muusikale on juurdepääs antud.</string>
+    <string name="onboarding_add_music_pick_folder">Vali muusikakaust</string>
+    <string name="onboarding_add_music_found">Seni leitud %1$d lugu</string>
+    <string name="onboarding_done_title">Kõik on valmis</string>
+    <string name="onboarding_done_body">Su teek on valmis. Saad hiljem Seadetes lisada kaustu või muuta ükskõik mida.</string>
+    <string name="onboarding_done_summary">%1$d lugu · %2$d kausta</string>
+    <string name="onboarding_done_cta">Alusta kuulamist</string>
 </resources>

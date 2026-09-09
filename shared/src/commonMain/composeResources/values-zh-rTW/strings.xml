@@ -253,4 +253,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">藍牙連線時繼續播放</string>
     <string name="playback_bt_autoplay_subtitle">耳機或車用裝置連線時開始播放</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">選擇音樂資料夾</string>
+    <string name="onboarding_skip">略過</string>
+    <string name="onboarding_back">返回</string>
+    <string name="onboarding_next">下一步</string>
+    <string name="onboarding_welcome_title">歡迎使用 OfflinePlaya</string>
+    <string name="onboarding_welcome_body">一款播放你已擁有音樂的播放器。一切都保留在你的裝置上——沒有帳號、沒有串流、沒有廣告。來設定你的音樂庫吧。</string>
+    <string name="onboarding_welcome_cta">開始</string>
+    <string name="onboarding_permissions_title">授予幾項權限</string>
+    <string name="onboarding_permissions_body">它們讓應用程式能找到你的音樂並顯示播放控制項。你可以隨時在系統設定中變更。</string>
+    <string name="onboarding_permission_audio_title">音樂與音訊存取權</string>
+    <string name="onboarding_permission_audio_body">讓 OfflinePlaya 能找到你裝置上的音訊檔案——包括「下載」和「音樂」資料夾中的檔案。</string>
+    <string name="onboarding_permission_audio_cta">允許存取音樂</string>
+    <string name="onboarding_permission_notifications_title">通知</string>
+    <string name="onboarding_permission_notifications_body">讓播放控制項在播放音樂時顯示在通知欄和鎖定畫面上。</string>
+    <string name="onboarding_permission_notifications_cta">允許通知</string>
+    <string name="onboarding_permission_granted">已授予</string>
+    <string name="onboarding_add_music_title">新增你的音樂</string>
+    <string name="onboarding_add_music_body">選擇一個包含音訊檔案的資料夾進行索引。授予音樂存取權後，「下載」和「音樂」資料夾中的音樂會自動收錄。</string>
+    <string name="onboarding_add_music_pick_folder">選擇音樂資料夾</string>
+    <string name="onboarding_add_music_found">目前已找到 %1$d 首曲目</string>
+    <string name="onboarding_done_title">一切就緒</string>
+    <string name="onboarding_done_body">你的音樂庫已就緒。你可以稍後在「設定」中新增更多資料夾或調整任何內容。</string>
+    <string name="onboarding_done_summary">%1$d 首曲目 · %2$d 個資料夾</string>
+    <string name="onboarding_done_cta">開始聆聽</string>
 </resources>

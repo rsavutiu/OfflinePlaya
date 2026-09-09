@@ -253,4 +253,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Bluetooth接続で再開</string>
     <string name="playback_bt_autoplay_subtitle">ヘッドホンや車が接続されたら再生を開始</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">音楽フォルダを選択</string>
+    <string name="onboarding_skip">スキップ</string>
+    <string name="onboarding_back">戻る</string>
+    <string name="onboarding_next">次へ</string>
+    <string name="onboarding_welcome_title">OfflinePlaya へようこそ</string>
+    <string name="onboarding_welcome_body">すでにお持ちの音楽のためのプレーヤーです。すべては端末内にとどまります — アカウントも、ストリーミングも、広告もありません。ライブラリを設定しましょう。</string>
+    <string name="onboarding_welcome_cta">はじめる</string>
+    <string name="onboarding_permissions_title">いくつかの権限を許可してください</string>
+    <string name="onboarding_permissions_body">アプリが音楽を見つけ、再生コントロールを表示するために必要です。システム設定でいつでも変更できます。</string>
+    <string name="onboarding_permission_audio_title">音楽とオーディオへのアクセス</string>
+    <string name="onboarding_permission_audio_body">OfflinePlaya が端末内の音声ファイル（ダウンロードや音楽フォルダ内のものを含む）を見つけられるようにします。</string>
+    <string name="onboarding_permission_audio_cta">音楽へのアクセスを許可</string>
+    <string name="onboarding_permission_notifications_title">通知</string>
+    <string name="onboarding_permission_notifications_body">音楽の再生中に、通知シェードやロック画面に再生コントロールを表示するために必要です。</string>
+    <string name="onboarding_permission_notifications_cta">通知を許可</string>
+    <string name="onboarding_permission_granted">許可済み</string>
+    <string name="onboarding_add_music_title">音楽を追加</string>
+    <string name="onboarding_add_music_body">インデックスする音声ファイルのフォルダを選びます。音楽へのアクセスを許可すると、ダウンロードや音楽フォルダ内の音楽は自動的に取り込まれます。</string>
+    <string name="onboarding_add_music_pick_folder">音楽フォルダを選択</string>
+    <string name="onboarding_add_music_found">これまでに %1$d 曲見つかりました</string>
+    <string name="onboarding_done_title">準備完了</string>
+    <string name="onboarding_done_body">ライブラリの準備ができました。後で設定からフォルダを追加したり、何でも変更できます。</string>
+    <string name="onboarding_done_summary">%1$d 曲 · %2$d フォルダ</string>
+    <string name="onboarding_done_cta">再生をはじめる</string>
 </resources>

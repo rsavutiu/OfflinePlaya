@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s دسی‌بل</string>
     <string name="playback_bt_autoplay">ادامه با بلوتوث</string>
     <string name="playback_bt_autoplay_subtitle">شروع پخش هنگام اتصال هدفون یا خودرو</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">یک پوشهٔ موسیقی انتخاب کنید</string>
+    <string name="onboarding_skip">رد کردن</string>
+    <string name="onboarding_back">بازگشت</string>
+    <string name="onboarding_next">بعدی</string>
+    <string name="onboarding_welcome_title">به OfflinePlaya خوش آمدید</string>
+    <string name="onboarding_welcome_body">پخش‌کننده‌ای برای موسیقی‌ای که همین حالا دارید. همه‌چیز روی دستگاه شما می‌ماند — بدون حساب، بدون پخش آنلاین، بدون تبلیغات. بیایید کتابخانه‌تان را راه‌اندازی کنیم.</string>
+    <string name="onboarding_welcome_cta">شروع</string>
+    <string name="onboarding_permissions_title">چند مجوز بدهید</string>
+    <string name="onboarding_permissions_body">این‌ها به برنامه اجازه می‌دهند موسیقی شما را پیدا کند و کنترل‌های پخش را نشان دهد. هر زمان می‌توانید آن‌ها را در تنظیمات سیستم تغییر دهید.</string>
+    <string name="onboarding_permission_audio_title">دسترسی به موسیقی و صدا</string>
+    <string name="onboarding_permission_audio_body">تا OfflinePlaya بتواند فایل‌های صوتی دستگاه شما را پیدا کند، از جمله آنچه در پوشه‌های Downloads و Music است.</string>
+    <string name="onboarding_permission_audio_cta">اجازهٔ دسترسی به موسیقی</string>
+    <string name="onboarding_permission_notifications_title">اعلان‌ها</string>
+    <string name="onboarding_permission_notifications_body">تا کنترل‌های پخش هنگام پخش موسیقی در کشوی اعلان‌ها و روی صفحهٔ قفل نمایش داده شوند.</string>
+    <string name="onboarding_permission_notifications_cta">اجازهٔ اعلان‌ها</string>
+    <string name="onboarding_permission_granted">داده شد</string>
+    <string name="onboarding_add_music_title">موسیقی خود را اضافه کنید</string>
+    <string name="onboarding_add_music_body">پوشه‌ای از فایل‌های صوتی را برای فهرست‌بندی انتخاب کنید. موسیقی داخل پوشه‌های Downloads و Music پس از دادن دسترسی به موسیقی به‌طور خودکار شناسایی می‌شود.</string>
+    <string name="onboarding_add_music_pick_folder">یک پوشهٔ موسیقی انتخاب کنید</string>
+    <string name="onboarding_add_music_found">تاکنون %1$d آهنگ پیدا شد</string>
+    <string name="onboarding_done_title">همه‌چیز آماده است</string>
+    <string name="onboarding_done_body">کتابخانهٔ شما آماده است. بعداً می‌توانید در تنظیمات پوشه‌های بیشتری اضافه کنید یا هر چیزی را تغییر دهید.</string>
+    <string name="onboarding_done_summary">%1$d آهنگ · %2$d پوشه</string>
+    <string name="onboarding_done_cta">شروع به شنیدن</string>
 </resources>

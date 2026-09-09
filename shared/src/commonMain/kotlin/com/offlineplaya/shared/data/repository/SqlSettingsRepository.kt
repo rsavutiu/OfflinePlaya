@@ -2,6 +2,7 @@ package com.offlineplaya.shared.data.repository
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.offlineplaya.shared.database.OfflinePlayaDatabase
 import com.offlineplaya.shared.database.Setting
 import com.offlineplaya.shared.domain.model.ArtworkPreferences
@@ -74,6 +75,19 @@ internal class SqlSettingsRepository(
             queries.insertOrReplace(KEY_REVIEW_MILESTONE, state.highestMilestoneFired.toString())
             queries.insertOrReplace(KEY_REVIEW_LAST_PROMPT, state.lastPromptAtMillis.toString())
         }
+    }
+
+    override fun observeOnboardingCompleted(): Flow<Boolean> =
+        queries.selectByKey(KEY_ONBOARDING_COMPLETED).asFlow().mapToOneOrNull(ioDispatcher).map {
+            it?.toBoolean() ?: false
+        }
+
+    override suspend fun isOnboardingCompleted(): Boolean = withContext(ioDispatcher) {
+        queries.selectByKey(KEY_ONBOARDING_COMPLETED).executeAsOneOrNull()?.toBoolean() ?: false
+    }
+
+    override suspend fun setOnboardingCompleted(done: Boolean) = withContext(ioDispatcher) {
+        queries.insertOrReplace(KEY_ONBOARDING_COMPLETED, done.toString())
     }
 
     override fun observeArtworkPreferences(): Flow<ArtworkPreferences> =
@@ -249,5 +263,6 @@ internal class SqlSettingsRepository(
         const val KEY_REVIEW_PLAYS = "review.plays_counted"
         const val KEY_REVIEW_MILESTONE = "review.highest_milestone"
         const val KEY_REVIEW_LAST_PROMPT = "review.last_prompt_at"
+        const val KEY_ONBOARDING_COMPLETED = "onboarding.completed"
     }
 }

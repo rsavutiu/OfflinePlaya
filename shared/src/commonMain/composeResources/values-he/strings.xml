@@ -256,4 +256,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">המשך דרך Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">התחלת ניגון כשמתחברות אוזניות או רכב</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">בחר תיקיית מוזיקה</string>
+    <string name="onboarding_skip">דלג</string>
+    <string name="onboarding_back">חזרה</string>
+    <string name="onboarding_next">הבא</string>
+    <string name="onboarding_welcome_title">ברוכים הבאים ל-OfflinePlaya</string>
+    <string name="onboarding_welcome_body">נגן למוזיקה שכבר יש לך. הכול נשאר במכשיר שלך — בלי חשבונות, בלי סטרימינג, בלי פרסומות. בואו נגדיר את הספרייה שלך.</string>
+    <string name="onboarding_welcome_cta">התחלה</string>
+    <string name="onboarding_permissions_title">הענק כמה הרשאות</string>
+    <string name="onboarding_permissions_body">הן מאפשרות לאפליקציה למצוא את המוזיקה שלך ולהציג את פקדי ההשמעה. אפשר לשנות אותן בכל עת בהגדרות המערכת.</string>
+    <string name="onboarding_permission_audio_title">גישה למוזיקה ולשמע</string>
+    <string name="onboarding_permission_audio_body">כדי ש-OfflinePlaya תוכל למצוא את קובצי השמע במכשיר שלך — כולל אלה שבתיקיות ההורדות והמוזיקה.</string>
+    <string name="onboarding_permission_audio_cta">אפשר גישה למוזיקה</string>
+    <string name="onboarding_permission_notifications_title">התראות</string>
+    <string name="onboarding_permission_notifications_body">כדי שפקדי ההשמעה יופיעו במגירת ההתראות ובמסך הנעילה בזמן שמוזיקה מתנגנת.</string>
+    <string name="onboarding_permission_notifications_cta">אפשר התראות</string>
+    <string name="onboarding_permission_granted">הוענק</string>
+    <string name="onboarding_add_music_title">הוסף את המוזיקה שלך</string>
+    <string name="onboarding_add_music_body">בחר תיקייה עם קובצי שמע להוספה לאינדקס. מוזיקה בתיקיות ההורדות והמוזיקה מזוהה אוטומטית לאחר מתן גישה למוזיקה.</string>
+    <string name="onboarding_add_music_pick_folder">בחר תיקיית מוזיקה</string>
+    <string name="onboarding_add_music_found">נמצאו %1$d רצועות עד כה</string>
+    <string name="onboarding_done_title">הכול מוכן</string>
+    <string name="onboarding_done_body">הספרייה שלך מוכנה. אפשר להוסיף עוד תיקיות או לשנות כל דבר מאוחר יותר בהגדרות.</string>
+    <string name="onboarding_done_summary">%1$d רצועות · %2$d תיקיות</string>
+    <string name="onboarding_done_cta">התחל להאזין</string>
 </resources>

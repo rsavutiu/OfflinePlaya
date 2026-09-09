@@ -256,4 +256,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Tęsti per Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Pradėti groti prijungus ausines ar automobilį</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Pasirinkite muzikos aplanką</string>
+    <string name="onboarding_skip">Praleisti</string>
+    <string name="onboarding_back">Atgal</string>
+    <string name="onboarding_next">Toliau</string>
+    <string name="onboarding_welcome_title">Sveiki atvykę į OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Grotuvas muzikai, kurią jau turite. Viskas lieka jūsų įrenginyje — jokių paskyrų, jokio srautinio siuntimo, jokių reklamų. Nustatykime jūsų fonoteką.</string>
+    <string name="onboarding_welcome_cta">Pradėti</string>
+    <string name="onboarding_permissions_title">Suteikite kelis leidimus</string>
+    <string name="onboarding_permissions_body">Jie leidžia programai rasti jūsų muziką ir rodyti atkūrimo valdiklius. Bet kada galite juos pakeisti sistemos nustatymuose.</string>
+    <string name="onboarding_permission_audio_title">Prieiga prie muzikos ir garso</string>
+    <string name="onboarding_permission_audio_body">Kad OfflinePlaya galėtų rasti jūsų įrenginio garso failus, įskaitant esančius aplankuose „Atsisiuntimai“ ir „Muzika“.</string>
+    <string name="onboarding_permission_audio_cta">Leisti prieigą prie muzikos</string>
+    <string name="onboarding_permission_notifications_title">Pranešimai</string>
+    <string name="onboarding_permission_notifications_body">Kad atkūrimo valdikliai būtų rodomi pranešimų skydelyje ir užrakinimo ekrane, kol groja muzika.</string>
+    <string name="onboarding_permission_notifications_cta">Leisti pranešimus</string>
+    <string name="onboarding_permission_granted">Suteikta</string>
+    <string name="onboarding_add_music_title">Pridėkite savo muziką</string>
+    <string name="onboarding_add_music_body">Pasirinkite garso failų aplanką indeksuoti. Muzika aplankuose „Atsisiuntimai“ ir „Muzika“ aptinkama automatiškai, kai suteikiama prieiga prie muzikos.</string>
+    <string name="onboarding_add_music_pick_folder">Pasirinkite muzikos aplanką</string>
+    <string name="onboarding_add_music_found">Kol kas rasta %1$d kūrinių</string>
+    <string name="onboarding_done_title">Viskas paruošta</string>
+    <string name="onboarding_done_body">Jūsų fonoteka paruošta. Vėliau nustatymuose galite pridėti daugiau aplankų arba bet ką pakeisti.</string>
+    <string name="onboarding_done_summary">%1$d kūrinių · %2$d aplankų</string>
+    <string name="onboarding_done_cta">Pradėti klausytis</string>
 </resources>

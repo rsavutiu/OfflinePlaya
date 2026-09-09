@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Συνέχεια μέσω Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Έναρξη αναπαραγωγής όταν συνδεθούν ακουστικά ή αυτοκίνητο</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Επιλογή φακέλου μουσικής</string>
+    <string name="onboarding_skip">Παράλειψη</string>
+    <string name="onboarding_back">Πίσω</string>
+    <string name="onboarding_next">Επόμενο</string>
+    <string name="onboarding_welcome_title">Καλώς ορίσατε στο OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Ένα πρόγραμμα αναπαραγωγής για τη μουσική που ήδη έχετε. Όλα μένουν στη συσκευή σας — χωρίς λογαριασμούς, χωρίς streaming, χωρίς διαφημίσεις. Ας ρυθμίσουμε τη βιβλιοθήκη σας.</string>
+    <string name="onboarding_welcome_cta">Ξεκινήστε</string>
+    <string name="onboarding_permissions_title">Παραχωρήστε μερικές άδειες</string>
+    <string name="onboarding_permissions_body">Επιτρέπουν στην εφαρμογή να βρει τη μουσική σας και να εμφανίζει τα χειριστήρια αναπαραγωγής. Μπορείτε να τις αλλάξετε ανά πάσα στιγμή στις ρυθμίσεις συστήματος.</string>
+    <string name="onboarding_permission_audio_title">Πρόσβαση σε μουσική και ήχο</string>
+    <string name="onboarding_permission_audio_body">Ώστε το OfflinePlaya να βρίσκει τα αρχεία ήχου στη συσκευή σας — μαζί με αυτά στους φακέλους Λήψεις και Μουσική.</string>
+    <string name="onboarding_permission_audio_cta">Να επιτρέπεται η πρόσβαση στη μουσική</string>
+    <string name="onboarding_permission_notifications_title">Ειδοποιήσεις</string>
+    <string name="onboarding_permission_notifications_body">Ώστε τα χειριστήρια αναπαραγωγής να εμφανίζονται στον πίνακα ειδοποιήσεων και στην οθόνη κλειδώματος όσο παίζει μουσική.</string>
+    <string name="onboarding_permission_notifications_cta">Να επιτρέπονται οι ειδοποιήσεις</string>
+    <string name="onboarding_permission_granted">Παραχωρήθηκε</string>
+    <string name="onboarding_add_music_title">Προσθέστε τη μουσική σας</string>
+    <string name="onboarding_add_music_body">Επιλέξτε έναν φάκελο με αρχεία ήχου για ευρετηρίαση. Η μουσική στους φακέλους Λήψεις και Μουσική εντοπίζεται αυτόματα μόλις παραχωρηθεί η πρόσβαση στη μουσική.</string>
+    <string name="onboarding_add_music_pick_folder">Επιλογή φακέλου μουσικής</string>
+    <string name="onboarding_add_music_found">Βρέθηκαν %1$d κομμάτια μέχρι τώρα</string>
+    <string name="onboarding_done_title">Όλα έτοιμα</string>
+    <string name="onboarding_done_body">Η βιβλιοθήκη σας είναι έτοιμη. Μπορείτε να προσθέσετε κι άλλους φακέλους ή να αλλάξετε οτιδήποτε αργότερα στις Ρυθμίσεις.</string>
+    <string name="onboarding_done_summary">%1$d κομμάτια · %2$d φάκελοι</string>
+    <string name="onboarding_done_cta">Ξεκινήστε την ακρόαση</string>
 </resources>

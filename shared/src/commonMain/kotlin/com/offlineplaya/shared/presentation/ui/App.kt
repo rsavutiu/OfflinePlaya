@@ -458,6 +458,7 @@ private fun DestinationBody(
                     onOpenAlbum = { id -> navigator.push(AppDestination.LibraryAlbumDetail(id)) },
                     onOpenSearch = { navigator.push(AppDestination.Search) },
                     onOpenSettings = { navigator.push(AppDestination.Settings) },
+                    onPickFolder = onPickFolder,
                 )
             }
 

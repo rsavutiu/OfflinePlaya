@@ -254,4 +254,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Ituloy sa Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Magsimulang mag-play kapag kumonekta ang headphones o kotse</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Pumili ng folder ng musika</string>
+    <string name="onboarding_skip">Laktawan</string>
+    <string name="onboarding_back">Bumalik</string>
+    <string name="onboarding_next">Susunod</string>
+    <string name="onboarding_welcome_title">Maligayang pagdating sa OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Isang player para sa musikang pag-aari mo na. Nananatili ang lahat sa iyong device — walang account, walang streaming, walang ad. Isaayos natin ang iyong library.</string>
+    <string name="onboarding_welcome_cta">Magsimula</string>
+    <string name="onboarding_permissions_title">Magbigay ng ilang pahintulot</string>
+    <string name="onboarding_permissions_body">Pinapayagan ng mga ito ang app na mahanap ang iyong musika at ipakita ang mga kontrol sa pag-playback. Mababago mo ang mga ito anumang oras sa mga setting ng system.</string>
+    <string name="onboarding_permission_audio_title">Access sa musika at audio</string>
+    <string name="onboarding_permission_audio_body">Para mahanap ng OfflinePlaya ang mga audio file sa iyong device — pati na ang nasa mga folder na Downloads at Music.</string>
+    <string name="onboarding_permission_audio_cta">Payagan ang access sa musika</string>
+    <string name="onboarding_permission_notifications_title">Mga notification</string>
+    <string name="onboarding_permission_notifications_body">Para lumabas ang mga kontrol sa pag-playback sa notification shade at sa iyong lock screen habang tumutugtog ang musika.</string>
+    <string name="onboarding_permission_notifications_cta">Payagan ang mga notification</string>
+    <string name="onboarding_permission_granted">Naibigay na</string>
+    <string name="onboarding_add_music_title">Idagdag ang iyong musika</string>
+    <string name="onboarding_add_music_body">Pumili ng folder ng mga audio file para i-index. Awtomatikong nakukuha ang musika sa mga folder na Downloads at Music kapag naibigay na ang access sa musika.</string>
+    <string name="onboarding_add_music_pick_folder">Pumili ng folder ng musika</string>
+    <string name="onboarding_add_music_found">May nahanap na %1$d na track sa ngayon</string>
+    <string name="onboarding_done_title">Handa na ang lahat</string>
+    <string name="onboarding_done_body">Handa na ang iyong library. Maaari kang magdagdag ng mga folder o mag-ayos ng kahit ano mamaya sa Mga Setting.</string>
+    <string name="onboarding_done_summary">%1$d track · %2$d folder</string>
+    <string name="onboarding_done_cta">Simulang makinig</string>
 </resources>

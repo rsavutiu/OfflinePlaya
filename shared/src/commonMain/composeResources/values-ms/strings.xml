@@ -253,4 +253,29 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Sambung melalui Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Mula bermain apabila fon kepala atau kereta bersambung</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Pilih folder muzik</string>
+    <string name="onboarding_skip">Langkau</string>
+    <string name="onboarding_back">Kembali</string>
+    <string name="onboarding_next">Seterusnya</string>
+    <string name="onboarding_welcome_title">Selamat datang ke OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Pemain untuk muzik yang sudah anda miliki. Semuanya kekal pada peranti anda — tiada akaun, tiada penstriman, tiada iklan. Mari sediakan pustaka anda.</string>
+    <string name="onboarding_welcome_cta">Mula</string>
+    <string name="onboarding_permissions_title">Berikan beberapa kebenaran</string>
+    <string name="onboarding_permissions_body">Kebenaran ini membolehkan apl mencari muzik anda dan memaparkan kawalan main balik. Anda boleh mengubahnya bila-bila masa dalam tetapan sistem.</string>
+    <string name="onboarding_permission_audio_title">Akses muzik dan audio</string>
+    <string name="onboarding_permission_audio_body">Supaya OfflinePlaya dapat mencari fail audio pada peranti anda — termasuk yang ada dalam folder Muat Turun dan Muzik.</string>
+    <string name="onboarding_permission_audio_cta">Benarkan akses muzik</string>
+    <string name="onboarding_permission_notifications_title">Pemberitahuan</string>
+    <string name="onboarding_permission_notifications_body">Supaya kawalan main balik muncul dalam bidai pemberitahuan dan pada skrin kunci semasa muzik dimainkan.</string>
+    <string name="onboarding_permission_notifications_cta">Benarkan pemberitahuan</string>
+    <string name="onboarding_permission_granted">Diberikan</string>
+    <string name="onboarding_add_music_title">Tambah muzik anda</string>
+    <string name="onboarding_add_music_body">Pilih folder fail audio untuk diindeks. Muzik dalam folder Muat Turun dan Muzik dikesan secara automatik sebaik sahaja akses muzik diberikan.</string>
+    <string name="onboarding_add_music_pick_folder">Pilih folder muzik</string>
+    <string name="onboarding_add_music_found">Setakat ini %1$d lagu ditemui</string>
+    <string name="onboarding_done_title">Semua sedia</string>
+    <string name="onboarding_done_body">Pustaka anda sudah sedia. Anda boleh menambah lebih banyak folder atau mengubah apa-apa kemudian dalam Tetapan.</string>
+    <string name="onboarding_done_summary">%1$d lagu · %2$d folder</string>
+    <string name="onboarding_done_cta">Mula mendengar</string>
 </resources>
