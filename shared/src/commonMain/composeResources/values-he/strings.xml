@@ -17,7 +17,7 @@
     <string name="home_status_picking_music_folder">בחירת תיקיית מוזיקה</string>
     <string name="home_status_scanning">סורק...</string>
     <string name="home_label_pick_music_folder">בחר תיקיית מוזיקה</string>
-    <string name="home_label_tracks">מסלולים</string>
+    <string name="home_label_tracks">רצועות</string>
     <string name="home_label_folders">תיקיות</string>
     <string name="home_label_total">סך הכל</string>
     <string name="home_greeting_morning">בוקר טוב</string>
@@ -58,8 +58,8 @@
     <string name="track_details_status">סטטוס</string>
     <string name="track_details_play_now">▶ שחק עכשיו</string>
     <string name="track_details_kbps">kbps</string>
-    <string name="library_album_detail_track">מסלול</string>
-    <string name="library_album_detail_tracks">מסלולים</string>
+    <string name="library_album_detail_track">רצועה</string>
+    <string name="library_album_detail_tracks">רצועות</string>
     <string name="library_album_detail_play">שחק</string>
     <string name="library_album_detail_shuffle">ערבב</string>
     <string name="track_row_playing_indicator">▶</string>
@@ -127,7 +127,7 @@
     <string name="empty_folder_title">תיקיה ריקה</string>
     <string name="empty_folder_subtitle">שום דבר לא נסרק מתחת לתיקיה הזו.</string>
     <string name="folder_section_folders">תיקיות</string>
-    <string name="folder_section_tracks">מסלולים</string>
+    <string name="folder_section_tracks">רצועות</string>
     <string name="empty_library_no_folders">עדיין לא נוספו תיקיות. הקש על "הוסף תיקיית מוזיקה" למעלה כדי להתחיל.</string>
     <string name="library_add_music_folder">הוסף תיקיית מוזיקה</string>
     <string name="library_rescan_all">סרוק מחדש את כל התיקיות</string>
@@ -136,7 +136,7 @@
     <string name="empty_playlist_subtitle">הקש על הלחצן + כדי ליצור אחד.</string>
     <string name="empty_queue_title">התור ריק</string>
     <string name="empty_queue_subtitle">התחל הפעלה מהספרייה כדי לאכלס את התור.</string>
-    <string name="empty_tracks_title">אין מסלולים</string>
+    <string name="empty_tracks_title">אין רצועות</string>
     <string name="empty_tracks_subtitle">שום דבר מתחת לאלבום הזה לא נסרק.</string>
     <string name="empty_playlist_tracks_title">עדיין אין רצועות</string>
     <string name="empty_playlist_tracks_subtitle">הוסף רצועות מהספרייה באמצעות התפריט בכל רצועה.</string>

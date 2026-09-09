@@ -17,7 +17,7 @@
     <string name="home_status_picking_music_folder">Избиране на музикална папка</string>
     <string name="home_status_scanning">Сканиране...</string>
     <string name="home_label_pick_music_folder">Изберете музикална папка</string>
-    <string name="home_label_tracks">Писти</string>
+    <string name="home_label_tracks">Песни</string>
     <string name="home_label_folders">Папки</string>
     <string name="home_label_total">Общо</string>
     <string name="home_greeting_morning">добро утро</string>
@@ -59,7 +59,7 @@
     <string name="track_details_play_now">▶ Играйте сега</string>
     <string name="track_details_kbps">kbps</string>
     <string name="library_album_detail_track">песен</string>
-    <string name="library_album_detail_tracks">писти</string>
+    <string name="library_album_detail_tracks">песни</string>
     <string name="library_album_detail_play">Играйте</string>
     <string name="library_album_detail_shuffle">Разбъркайте</string>
     <string name="track_row_playing_indicator">▶</string>
@@ -127,7 +127,7 @@
     <string name="empty_folder_title">Празна папка</string>
     <string name="empty_folder_subtitle">Нищо не е сканирано в тази папка.</string>
     <string name="folder_section_folders">Папки</string>
-    <string name="folder_section_tracks">Писти</string>
+    <string name="folder_section_tracks">Песни</string>
     <string name="empty_library_no_folders">Все още няма добавени папки. Докоснете „Добавяне на музикална папка“ по-горе, за да започнете.</string>
     <string name="library_add_music_folder">Добавете музикална папка</string>
     <string name="library_rescan_all">Повторно сканиране на всички папки</string>
@@ -136,7 +136,7 @@
     <string name="empty_playlist_subtitle">Докоснете бутона +, за да създадете такъв.</string>
     <string name="empty_queue_title">Опашката е празна</string>
     <string name="empty_queue_subtitle">Стартирайте възпроизвеждане от библиотеката, за да попълните опашката.</string>
-    <string name="empty_tracks_title">Няма следи</string>
+    <string name="empty_tracks_title">Няма песни</string>
     <string name="empty_tracks_subtitle">Нищо под този албум не е сканирано.</string>
     <string name="empty_playlist_tracks_title">Все още няма песни</string>
     <string name="empty_playlist_tracks_subtitle">Добавете песни от библиотеката, като използвате менюто на всяка песен.</string>

@@ -136,7 +136,7 @@
     <string name="empty_playlist_subtitle">Торкніться кнопки +, щоб створити його.</string>
     <string name="empty_queue_title">Черга порожня</string>
     <string name="empty_queue_subtitle">Почніть відтворення з бібліотеки, щоб заповнити чергу.</string>
-    <string name="empty_tracks_title">Немає слідів</string>
+    <string name="empty_tracks_title">Немає треків</string>
     <string name="empty_tracks_subtitle">Нічого в цьому альбомі не було відскановано.</string>
     <string name="empty_playlist_tracks_title">Доріжок ще немає</string>
     <string name="empty_playlist_tracks_subtitle">Додайте треки з бібліотеки за допомогою меню будь-якого треку.</string>

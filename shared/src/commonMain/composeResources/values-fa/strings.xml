@@ -58,7 +58,7 @@
     <string name="track_details_status">وضعیت</string>
     <string name="track_details_play_now">▶ اکنون بازی کنید</string>
     <string name="track_details_kbps">کیلوبیت بر ثانیه</string>
-    <string name="library_album_detail_track">مسیر</string>
+    <string name="library_album_detail_track">آهنگ</string>
     <string name="library_album_detail_tracks">آهنگ ها</string>
     <string name="library_album_detail_play">بازی کنید</string>
     <string name="library_album_detail_shuffle">مخلوط کردن</string>

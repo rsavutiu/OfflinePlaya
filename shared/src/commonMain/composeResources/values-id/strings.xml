@@ -58,7 +58,7 @@
     <string name="track_details_status">Status</string>
     <string name="track_details_play_now">▶ Mainkan sekarang</string>
     <string name="track_details_kbps">kbps</string>
-    <string name="library_album_detail_track">jalur</string>
+    <string name="library_album_detail_track">lagu</string>
     <string name="library_album_detail_tracks">trek</string>
     <string name="library_album_detail_play">Mainkan</string>
     <string name="library_album_detail_shuffle">Acak</string>

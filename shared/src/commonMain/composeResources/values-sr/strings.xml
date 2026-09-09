@@ -4,7 +4,7 @@
     <string name="home_title_your_music_offline">Ваша музика, ван мреже</string>
     <string name="home_label_library">Библиотека</string>
     <string name="home_button_browse">ПРЕГЛЕДАЈТЕ</string>
-    <string name="home_title_all_tracks">Алл Трацкс</string>
+    <string name="home_title_all_tracks">Све песме</string>
     <string name="home_label_albums">Албумс</string>
     <string name="home_label_browse">Прегледај</string>
     <string name="home_label_artists">Уметници</string>
@@ -17,7 +17,7 @@
     <string name="home_status_picking_music_folder">Бирање музичког фолдера</string>
     <string name="home_status_scanning">Скенирање…</string>
     <string name="home_label_pick_music_folder">Изаберите музички фолдер</string>
-    <string name="home_label_tracks">Стазе</string>
+    <string name="home_label_tracks">Песме</string>
     <string name="home_label_folders">Фасцикле</string>
     <string name="home_label_total">Укупно</string>
     <string name="home_greeting_morning">Добро јутро</string>
@@ -58,8 +58,8 @@
     <string name="track_details_status">Статус</string>
     <string name="track_details_play_now">▶ Играј сада</string>
     <string name="track_details_kbps">кбпс</string>
-    <string name="library_album_detail_track">трацк</string>
-    <string name="library_album_detail_tracks">стазе</string>
+    <string name="library_album_detail_track">песма</string>
+    <string name="library_album_detail_tracks">песме</string>
     <string name="library_album_detail_play">Играј</string>
     <string name="library_album_detail_shuffle">Схуффле</string>
     <string name="track_row_playing_indicator">▶</string>
@@ -127,7 +127,7 @@
     <string name="empty_folder_title">Празна фасцикла</string>
     <string name="empty_folder_subtitle">Ништа није скенирано у овој фасцикли.</string>
     <string name="folder_section_folders">Фасцикле</string>
-    <string name="folder_section_tracks">Стазе</string>
+    <string name="folder_section_tracks">Песме</string>
     <string name="empty_library_no_folders">Још увек нема додатих фасцикли. Додирните „Додај музички фолдер“ изнад да бисте започели.</string>
     <string name="library_add_music_folder">Додајте музички фолдер</string>
     <string name="library_rescan_all">Поново скенирајте све фасцикле</string>
@@ -136,7 +136,7 @@
     <string name="empty_playlist_subtitle">Додирните дугме + да бисте га креирали.</string>
     <string name="empty_queue_title">Ред је празан</string>
     <string name="empty_queue_subtitle">Започните репродукцију из библиотеке да бисте попунили ред.</string>
-    <string name="empty_tracks_title">Нема трагова</string>
+    <string name="empty_tracks_title">Нема песама</string>
     <string name="empty_tracks_subtitle">Ништа у овом албуму није скенирано.</string>
     <string name="empty_playlist_tracks_title">Још нема нумера</string>
     <string name="empty_playlist_tracks_subtitle">Додајте нумере из библиотеке помоћу менија на било коју нумеру.</string>

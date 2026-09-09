@@ -136,7 +136,7 @@
     <string name="empty_playlist_subtitle">Tapnite gumb +, da ga ustvarite.</string>
     <string name="empty_queue_title">Čakalna vrsta je prazna</string>
     <string name="empty_queue_subtitle">Začnite predvajanje iz knjižnice, da zapolnite čakalno vrsto.</string>
-    <string name="empty_tracks_title">Brez sledi</string>
+    <string name="empty_tracks_title">Ni skladb</string>
     <string name="empty_tracks_subtitle">Nič v tem albumu ni bilo skenirano.</string>
     <string name="empty_playlist_tracks_title">Ni še skladb</string>
     <string name="empty_playlist_tracks_subtitle">Dodajte skladbe iz knjižnice z uporabo menija na kateri koli skladbi.</string>

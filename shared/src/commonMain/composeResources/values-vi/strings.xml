@@ -58,7 +58,7 @@
     <string name="track_details_status">Trạng thái</string>
     <string name="track_details_play_now">► Chơi ngay</string>
     <string name="track_details_kbps">kbps</string>
-    <string name="library_album_detail_track">theo dõi</string>
+    <string name="library_album_detail_track">bài hát</string>
     <string name="library_album_detail_tracks">bài hát</string>
     <string name="library_album_detail_play">Chơi</string>
     <string name="library_album_detail_shuffle">Trộn bài</string>

@@ -58,7 +58,7 @@
     <string name="track_details_status">Estado</string>
     <string name="track_details_play_now">▶ Jogue agora</string>
     <string name="track_details_kbps">kbps</string>
-    <string name="library_album_detail_track">rastrear</string>
+    <string name="library_album_detail_track">faixa</string>
     <string name="library_album_detail_tracks">faixas</string>
     <string name="library_album_detail_play">Jogar</string>
     <string name="library_album_detail_shuffle">Embaralhar</string>

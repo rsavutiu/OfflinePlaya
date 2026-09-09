@@ -58,7 +58,7 @@
     <string name="track_details_status">狀態</string>
     <string name="track_details_play_now">▶ 立即開始遊戲</string>
     <string name="track_details_kbps">千比特/秒</string>
-    <string name="library_album_detail_track">軌道</string>
+    <string name="library_album_detail_track">曲目</string>
     <string name="library_album_detail_tracks">曲目</string>
     <string name="library_album_detail_play">玩</string>
     <string name="library_album_detail_shuffle">隨機播放</string>

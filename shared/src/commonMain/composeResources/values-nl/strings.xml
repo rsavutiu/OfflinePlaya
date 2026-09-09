@@ -58,7 +58,7 @@
     <string name="track_details_status">Status</string>
     <string name="track_details_play_now">▶ Speel nu</string>
     <string name="track_details_kbps">kbps</string>
-    <string name="library_album_detail_track">volgen</string>
+    <string name="library_album_detail_track">nummer</string>
     <string name="library_album_detail_tracks">sporen</string>
     <string name="library_album_detail_play">Spelen</string>
     <string name="library_album_detail_shuffle">Schudden</string>

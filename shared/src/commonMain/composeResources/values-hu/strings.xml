@@ -17,7 +17,7 @@
     <string name="home_status_picking_music_folder">Zene mappa kiválasztása</string>
     <string name="home_status_scanning">Szkennelés…</string>
     <string name="home_label_pick_music_folder">Válassza ki a zenei mappát</string>
-    <string name="home_label_tracks">Pályák</string>
+    <string name="home_label_tracks">Számok</string>
     <string name="home_label_folders">Mappák</string>
     <string name="home_label_total">Összesen</string>
     <string name="home_greeting_morning">Jó reggelt</string>
@@ -58,8 +58,8 @@
     <string name="track_details_status">Állapot</string>
     <string name="track_details_play_now">▶ Játssz most</string>
     <string name="track_details_kbps">kbps</string>
-    <string name="library_album_detail_track">pálya</string>
-    <string name="library_album_detail_tracks">pályák</string>
+    <string name="library_album_detail_track">szám</string>
+    <string name="library_album_detail_tracks">számok</string>
     <string name="library_album_detail_play">Játssz</string>
     <string name="library_album_detail_shuffle">Keverés</string>
     <string name="track_row_playing_indicator">▶</string>
@@ -127,7 +127,7 @@
     <string name="empty_folder_title">Üres mappa</string>
     <string name="empty_folder_subtitle">Ebben a mappában semmit nem vizsgáltak meg.</string>
     <string name="folder_section_folders">Mappák</string>
-    <string name="folder_section_tracks">Pályák</string>
+    <string name="folder_section_tracks">Számok</string>
     <string name="empty_library_no_folders">Még nincsenek hozzáadott mappák. A kezdéshez koppintson a fenti „Zenemappa hozzáadása” elemre.</string>
     <string name="library_add_music_folder">Zene mappa hozzáadása</string>
     <string name="library_rescan_all">Olvassa újra az összes mappát</string>
@@ -136,7 +136,7 @@
     <string name="empty_playlist_subtitle">Érintse meg a + gombot, hogy létrehozzon egyet.</string>
     <string name="empty_queue_title">A sor üres</string>
     <string name="empty_queue_subtitle">A lejátszási sor feltöltéséhez indítsa el a lejátszást a könyvtárból.</string>
-    <string name="empty_tracks_title">Nincsenek nyomok</string>
+    <string name="empty_tracks_title">Nincsenek számok</string>
     <string name="empty_tracks_subtitle">Ebben az albumban semmit nem vizsgáltak meg.</string>
     <string name="empty_playlist_tracks_title">Még nincsenek számok</string>
     <string name="empty_playlist_tracks_subtitle">Adjon hozzá számokat a könyvtárból bármelyik szám menüjének használatával.</string>

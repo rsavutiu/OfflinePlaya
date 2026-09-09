@@ -58,7 +58,7 @@
     <string name="track_details_status">Stan</string>
     <string name="track_details_play_now">▶ Zagraj teraz</string>
     <string name="track_details_kbps">kbps</string>
-    <string name="library_album_detail_track">śledzić</string>
+    <string name="library_album_detail_track">utwór</string>
     <string name="library_album_detail_tracks">utwory</string>
     <string name="library_album_detail_play">Zagraj</string>
     <string name="library_album_detail_shuffle">Przetasuj</string>
@@ -136,7 +136,7 @@
     <string name="empty_playlist_subtitle">Naciśnij przycisk +, aby go utworzyć.</string>
     <string name="empty_queue_title">Kolejka jest pusta</string>
     <string name="empty_queue_subtitle">Rozpocznij odtwarzanie z biblioteki, aby zapełnić kolejkę.</string>
-    <string name="empty_tracks_title">Brak śladów</string>
+    <string name="empty_tracks_title">Brak utworów</string>
     <string name="empty_tracks_subtitle">Nic pod tym albumem nie zostało zeskanowane.</string>
     <string name="empty_playlist_tracks_title">Nie ma jeszcze żadnych utworów</string>
     <string name="empty_playlist_tracks_subtitle">Dodaj utwory z biblioteki, korzystając z menu dowolnej ścieżki.</string>

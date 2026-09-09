@@ -127,7 +127,7 @@
     <string name="empty_folder_title">空文件夹</string>
     <string name="empty_folder_subtitle">此文件夹下未扫描到任何内容。</string>
     <string name="folder_section_folders">文件夹</string>
-    <string name="folder_section_tracks">轨道</string>
+    <string name="folder_section_tracks">曲目</string>
     <string name="empty_library_no_folders">尚未添加文件夹。轻点 "添加音乐文件夹" 以开始。</string>
     <string name="library_add_music_folder">添加音乐文件夹</string>
     <string name="library_rescan_all">重新扫描所有文件夹</string>

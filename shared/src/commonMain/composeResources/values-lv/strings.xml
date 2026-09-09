@@ -58,7 +58,7 @@
     <string name="track_details_status">Statuss</string>
     <string name="track_details_play_now">▶ Spēlējiet tagad</string>
     <string name="track_details_kbps">kbps</string>
-    <string name="library_album_detail_track">trase</string>
+    <string name="library_album_detail_track">dziesma</string>
     <string name="library_album_detail_tracks">dziesmas</string>
     <string name="library_album_detail_play">Spēlēt</string>
     <string name="library_album_detail_shuffle">Jauktā secībā</string>

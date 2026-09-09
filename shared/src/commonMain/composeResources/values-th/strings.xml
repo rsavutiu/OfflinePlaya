@@ -58,7 +58,7 @@
     <string name="track_details_status">สถานะ</string>
     <string name="track_details_play_now">▶ เล่นเลย</string>
     <string name="track_details_kbps">กิโลบิตต่อวินาที</string>
-    <string name="library_album_detail_track">ติดตาม</string>
+    <string name="library_album_detail_track">เพลง</string>
     <string name="library_album_detail_tracks">แทร็ค</string>
     <string name="library_album_detail_play">เล่น</string>
     <string name="library_album_detail_shuffle">สับเปลี่ยน</string>

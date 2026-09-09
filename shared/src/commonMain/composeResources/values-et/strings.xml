@@ -4,7 +4,7 @@
     <string name="home_title_your_music_offline">Teie muusika, võrguühenduseta</string>
     <string name="home_label_library">Raamatukogu</string>
     <string name="home_button_browse">SIRVI</string>
-    <string name="home_title_all_tracks">Kõik rajad</string>
+    <string name="home_title_all_tracks">Kõik lood</string>
     <string name="home_label_albums">Albumid</string>
     <string name="home_label_browse">Sirvige</string>
     <string name="home_label_artists">Kunstnikud</string>
@@ -58,8 +58,8 @@
     <string name="track_details_status">Olek</string>
     <string name="track_details_play_now">▶ Mängige kohe</string>
     <string name="track_details_kbps">kbps</string>
-    <string name="library_album_detail_track">rada</string>
-    <string name="library_album_detail_tracks">rajad</string>
+    <string name="library_album_detail_track">lugu</string>
+    <string name="library_album_detail_tracks">lood</string>
     <string name="library_album_detail_play">Mängi</string>
     <string name="library_album_detail_shuffle">Segamine</string>
     <string name="track_row_playing_indicator">▶</string>
@@ -136,7 +136,7 @@
     <string name="empty_playlist_subtitle">Selle loomiseks puudutage nuppu +.</string>
     <string name="empty_queue_title">Järjekord on tühi</string>
     <string name="empty_queue_subtitle">Järjekorra täitmiseks alustage taasesitust teegist.</string>
-    <string name="empty_tracks_title">Ei mingeid jälgi</string>
+    <string name="empty_tracks_title">Ühtegi lugu pole</string>
     <string name="empty_tracks_subtitle">Selle albumi all pole midagi skannitud.</string>
     <string name="empty_playlist_tracks_title">Veel pole lugusid</string>
     <string name="empty_playlist_tracks_subtitle">Lisage teegist lugusid, kasutades mis tahes raja menüüd.</string>

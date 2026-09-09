@@ -58,7 +58,7 @@
     <string name="track_details_status">Katayuan</string>
     <string name="track_details_play_now">▶ Maglaro ngayon</string>
     <string name="track_details_kbps">kbps</string>
-    <string name="library_album_detail_track">subaybayan</string>
+    <string name="library_album_detail_track">track</string>
     <string name="library_album_detail_tracks">mga track</string>
     <string name="library_album_detail_play">Maglaro</string>
     <string name="library_album_detail_shuffle">Balasahin</string>

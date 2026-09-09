@@ -58,8 +58,8 @@
     <string name="track_details_status">Stav</string>
     <string name="track_details_play_now">▶ Hrajte teraz</string>
     <string name="track_details_kbps">kbps</string>
-    <string name="library_album_detail_track">trať</string>
-    <string name="library_album_detail_tracks">stopy</string>
+    <string name="library_album_detail_track">skladba</string>
+    <string name="library_album_detail_tracks">skladby</string>
     <string name="library_album_detail_play">Hrať</string>
     <string name="library_album_detail_shuffle">Zamiešať</string>
     <string name="track_row_playing_indicator">▶</string>
@@ -136,7 +136,7 @@
     <string name="empty_playlist_subtitle">Klepnutím na tlačidlo + ho vytvoríte.</string>
     <string name="empty_queue_title">Poradie je prázdne</string>
     <string name="empty_queue_subtitle">Spustite prehrávanie z knižnice, aby sa zaplnil front.</string>
-    <string name="empty_tracks_title">Žiadne stopy</string>
+    <string name="empty_tracks_title">Žiadne skladby</string>
     <string name="empty_tracks_subtitle">Nič pod týmto albumom nebolo naskenované.</string>
     <string name="empty_playlist_tracks_title">Zatiaľ žiadne stopy</string>
     <string name="empty_playlist_tracks_subtitle">Pridajte skladby z knižnice pomocou ponuky na ľubovoľnej skladbe.</string>

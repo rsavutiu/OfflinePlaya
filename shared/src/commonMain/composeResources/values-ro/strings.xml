@@ -17,7 +17,7 @@
     <string name="home_status_picking_music_folder">Alegerea folderului de muzică</string>
     <string name="home_status_scanning">Se scanează…</string>
     <string name="home_label_pick_music_folder">Alegeți folderul cu muzică</string>
-    <string name="home_label_tracks">Urme</string>
+    <string name="home_label_tracks">Piese</string>
     <string name="home_label_folders">Foldere</string>
     <string name="home_label_total">Total</string>
     <string name="home_greeting_morning">Bună dimineața</string>
@@ -58,8 +58,8 @@
     <string name="track_details_status">Stare</string>
     <string name="track_details_play_now">▶ Joacă acum</string>
     <string name="track_details_kbps">kbps</string>
-    <string name="library_album_detail_track">pistă</string>
-    <string name="library_album_detail_tracks">urme</string>
+    <string name="library_album_detail_track">piesă</string>
+    <string name="library_album_detail_tracks">piese</string>
     <string name="library_album_detail_play">Joacă</string>
     <string name="library_album_detail_shuffle">Amestecă</string>
     <string name="track_row_playing_indicator">▶</string>
@@ -127,7 +127,7 @@
     <string name="empty_folder_title">Dosar gol</string>
     <string name="empty_folder_subtitle">Nu a fost scanat nimic sub acest folder.</string>
     <string name="folder_section_folders">Foldere</string>
-    <string name="folder_section_tracks">Urme</string>
+    <string name="folder_section_tracks">Piese</string>
     <string name="empty_library_no_folders">Niciun folder încă adăugat. Atingeți „Adăugați folderul de muzică” de mai sus pentru a începe.</string>
     <string name="library_add_music_folder">Adăugați folderul cu muzică</string>
     <string name="library_rescan_all">Scanează din nou toate folderele</string>
@@ -136,7 +136,7 @@
     <string name="empty_playlist_subtitle">Atingeți butonul + pentru a crea unul.</string>
     <string name="empty_queue_title">Coada este goală</string>
     <string name="empty_queue_subtitle">Începeți redarea din bibliotecă pentru a popula coada.</string>
-    <string name="empty_tracks_title">Fără urme</string>
+    <string name="empty_tracks_title">Fără piese</string>
     <string name="empty_tracks_subtitle">Nimic din acest album nu a fost scanat.</string>
     <string name="empty_playlist_tracks_title">Încă nu există piese</string>
     <string name="empty_playlist_tracks_subtitle">Adăugați piese din bibliotecă folosind meniul de pe orice piesă.</string>

@@ -58,7 +58,7 @@
     <string name="track_details_status">Tila</string>
     <string name="track_details_play_now">▶ Pelaa nyt</string>
     <string name="track_details_kbps">kbps</string>
-    <string name="library_album_detail_track">seurata</string>
+    <string name="library_album_detail_track">kappale</string>
     <string name="library_album_detail_tracks">kappaleita</string>
     <string name="library_album_detail_play">Pelaa</string>
     <string name="library_album_detail_shuffle">Sekoita</string>
@@ -136,7 +136,7 @@
     <string name="empty_playlist_subtitle">Luo sellainen napauttamalla +-painiketta.</string>
     <string name="empty_queue_title">Jono on tyhjä</string>
     <string name="empty_queue_subtitle">Aloita toisto kirjastosta täyttääksesi jonon.</string>
-    <string name="empty_tracks_title">Ei jälkiä</string>
+    <string name="empty_tracks_title">Ei kappaleita</string>
     <string name="empty_tracks_subtitle">Mitään tämän albumin alta ei skannattu.</string>
     <string name="empty_playlist_tracks_title">Ei vielä jälkiä</string>
     <string name="empty_playlist_tracks_subtitle">Lisää kappaleita kirjastosta minkä tahansa kappaleen valikon avulla.</string>

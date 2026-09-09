@@ -4,7 +4,7 @@
     <string name="home_title_your_music_offline">Vaša glazba, offline</string>
     <string name="home_label_library">Knjižnica</string>
     <string name="home_button_browse">PREGLEDAJTE</string>
-    <string name="home_title_all_tracks">Sve staze</string>
+    <string name="home_title_all_tracks">Sve pjesme</string>
     <string name="home_label_albums">Albumi</string>
     <string name="home_label_browse">Pregledaj</string>
     <string name="home_label_artists">Umjetnici</string>
@@ -58,8 +58,8 @@
     <string name="track_details_status">Status</string>
     <string name="track_details_play_now">▶ Igrajte sada</string>
     <string name="track_details_kbps">kbps</string>
-    <string name="library_album_detail_track">pratiti</string>
-    <string name="library_album_detail_tracks">staze</string>
+    <string name="library_album_detail_track">pjesma</string>
+    <string name="library_album_detail_tracks">pjesme</string>
     <string name="library_album_detail_play">igrati</string>
     <string name="library_album_detail_shuffle">Promiješaj</string>
     <string name="track_row_playing_indicator">▶</string>
@@ -136,7 +136,7 @@
     <string name="empty_playlist_subtitle">Dodirnite gumb + da biste ga izradili.</string>
     <string name="empty_queue_title">Red čekanja je prazan</string>
     <string name="empty_queue_subtitle">Pokrenite reprodukciju iz biblioteke da popunite red čekanja.</string>
-    <string name="empty_tracks_title">Nema tragova</string>
+    <string name="empty_tracks_title">Nema pjesama</string>
     <string name="empty_tracks_subtitle">Ništa ispod ovog albuma nije skenirano.</string>
     <string name="empty_playlist_tracks_title">Još nema zapisa</string>
     <string name="empty_playlist_tracks_subtitle">Dodajte pjesme iz biblioteke pomoću izbornika na bilo kojoj stazi.</string>
