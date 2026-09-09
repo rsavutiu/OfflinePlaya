@@ -56,6 +56,7 @@ import offlineplaya.shared.generated.resources.onboarding_add_music_body
 import offlineplaya.shared.generated.resources.onboarding_add_music_found
 import offlineplaya.shared.generated.resources.onboarding_add_music_pick_folder
 import offlineplaya.shared.generated.resources.onboarding_add_music_title
+import offlineplaya.shared.generated.resources.onboarding_add_music_use_device
 import offlineplaya.shared.generated.resources.onboarding_back
 import offlineplaya.shared.generated.resources.onboarding_done_body
 import offlineplaya.shared.generated.resources.onboarding_done_cta
@@ -104,6 +105,7 @@ fun OnboardingWizardPage(
     onRequestAudioPermission: () -> Unit,
     onRequestNotificationPermission: () -> Unit,
     onPickFolder: () -> Unit,
+    onUseDeviceAudio: () -> Unit,
     onFinish: () -> Unit,
     modifier: Modifier = Modifier,
     initialStep: OnboardingStep = OnboardingStep.WELCOME,
@@ -174,6 +176,7 @@ fun OnboardingWizardPage(
                         OnboardingStep.ADD_MUSIC -> AddMusicStep(
                             trackCount = trackCount,
                             onPickFolder = onPickFolder,
+                            onUseDeviceAudio = onUseDeviceAudio,
                             onBack = { step = OnboardingStep.PERMISSIONS },
                             onNext = { step = OnboardingStep.DONE },
                         )
@@ -251,6 +254,7 @@ private fun PermissionsStep(
 private fun AddMusicStep(
     trackCount: Long,
     onPickFolder: () -> Unit,
+    onUseDeviceAudio: () -> Unit,
     onBack: () -> Unit,
     onNext: () -> Unit,
 ) {
@@ -261,11 +265,20 @@ private fun AddMusicStep(
     Spacer(Modifier.height(AppSpacing.sm))
     AppCaption(text = stringResource(Res.string.onboarding_add_music_body))
     Spacer(Modifier.height(AppSpacing.xl))
+    // Primary: index everything MediaStore already knows about (Downloads,
+    // Music, …) with no folder pick. Audio access is guaranteed by the gate.
     AppButton(
-        text = stringResource(Res.string.onboarding_add_music_pick_folder),
-        onClick = onPickFolder,
+        text = stringResource(Res.string.onboarding_add_music_use_device),
+        onClick = onUseDeviceAudio,
         modifier = Modifier.fillMaxWidth(),
     )
+    Spacer(Modifier.height(AppSpacing.sm))
+    OutlinedButton(
+        onClick = onPickFolder,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Text(stringResource(Res.string.onboarding_add_music_pick_folder))
+    }
     if (trackCount > 0) {
         Spacer(Modifier.height(AppSpacing.md))
         Text(
@@ -415,6 +428,7 @@ private fun OnboardingWelcomePreview() {
             onRequestAudioPermission = {},
             onRequestNotificationPermission = {},
             onPickFolder = {},
+            onUseDeviceAudio = {},
             onFinish = {},
             initialStep = OnboardingStep.WELCOME,
         )
@@ -434,6 +448,7 @@ private fun OnboardingPermissionsPreview() {
             onRequestAudioPermission = {},
             onRequestNotificationPermission = {},
             onPickFolder = {},
+            onUseDeviceAudio = {},
             onFinish = {},
             initialStep = OnboardingStep.PERMISSIONS,
         )
@@ -453,6 +468,7 @@ private fun OnboardingDonePreview() {
             onRequestAudioPermission = {},
             onRequestNotificationPermission = {},
             onPickFolder = {},
+            onUseDeviceAudio = {},
             onFinish = {},
             initialStep = OnboardingStep.DONE,
         )

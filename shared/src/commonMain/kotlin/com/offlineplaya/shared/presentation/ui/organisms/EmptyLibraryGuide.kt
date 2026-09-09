@@ -39,6 +39,7 @@ import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.empty_library_open_settings
 import offlineplaya.shared.generated.resources.empty_library_permission_note
 import offlineplaya.shared.generated.resources.empty_library_pick_folder
+import offlineplaya.shared.generated.resources.empty_library_scan_device
 import offlineplaya.shared.generated.resources.empty_library_step1_body
 import offlineplaya.shared.generated.resources.empty_library_step1_title
 import offlineplaya.shared.generated.resources.empty_library_step2_body
@@ -69,6 +70,7 @@ fun EmptyLibraryGuide(
     onOpenSearch: () -> Unit,
     onOpenSettings: () -> Unit,
     onPickFolder: () -> Unit,
+    onScanDeviceAudio: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -119,10 +121,18 @@ fun EmptyLibraryGuide(
 
             Spacer(Modifier.height(AppSpacing.lg))
 
+            // Primary: scan MediaStore-indexed audio (Downloads, Music, etc.)
+            // with no folder pick — requests the audio permission if needed.
             AppButton(
-                text = stringResource(Res.string.empty_library_pick_folder),
-                onClick = onPickFolder,
+                text = stringResource(Res.string.empty_library_scan_device),
+                onClick = onScanDeviceAudio,
             )
+
+            Spacer(Modifier.height(AppSpacing.sm))
+
+            OutlinedButton(onClick = onPickFolder) {
+                Text(stringResource(Res.string.empty_library_pick_folder))
+            }
 
             Spacer(Modifier.height(AppSpacing.sm))
 
@@ -195,7 +205,12 @@ private fun GuideStep(title: String, body: String) {
 private fun EmptyLibraryGuidePreview() {
     PreviewTheme(darkTheme = true) {
         Surface {
-            EmptyLibraryGuide(onOpenSearch = {}, onOpenSettings = {}, onPickFolder = {})
+            EmptyLibraryGuide(
+                onOpenSearch = {},
+                onOpenSettings = {},
+                onPickFolder = {},
+                onScanDeviceAudio = {},
+            )
         }
     }
 }

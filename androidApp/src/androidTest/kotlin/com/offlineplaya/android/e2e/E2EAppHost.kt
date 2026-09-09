@@ -76,6 +76,7 @@ fun E2EAppHost(koin: Koin) {
         trackCount = trackCount,
         seedColor = seedColor,
         onPickFolder = {},
+        onScanDeviceAudio = {},
         onColorModeChange = {},
         onDynamicColorChange = {},
         onAlbumArtColorChange = {},

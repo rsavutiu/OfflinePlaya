@@ -109,6 +109,7 @@ fun App(
     trackCount: Long,
     seedColor: Int?,
     onPickFolder: () -> Unit,
+    onScanDeviceAudio: () -> Unit,
     onColorModeChange: (ColorMode) -> Unit,
     onDynamicColorChange: (Boolean) -> Unit,
     onAlbumArtColorChange: (Boolean) -> Unit,
@@ -214,6 +215,7 @@ fun App(
                             syncStatus = syncStatus,
                             trackCount = trackCount,
                             onPickFolder = onPickFolder,
+                            onScanDeviceAudio = onScanDeviceAudio,
                             onColorModeChange = onColorModeChange,
                             onDynamicColorChange = onDynamicColorChange,
                             onAlbumArtColorChange = onAlbumArtColorChange,
@@ -281,6 +283,7 @@ private fun DestinationContent(
     syncStatus: SyncStatus,
     trackCount: Long,
     onPickFolder: () -> Unit,
+    onScanDeviceAudio: () -> Unit,
     onColorModeChange: (ColorMode) -> Unit,
     onDynamicColorChange: (Boolean) -> Unit,
     onAlbumArtColorChange: (Boolean) -> Unit,
@@ -354,6 +357,7 @@ private fun DestinationContent(
                         syncStatus = syncStatus,
                         trackCount = trackCount,
                         onPickFolder = onPickFolder,
+                        onScanDeviceAudio = onScanDeviceAudio,
                         onColorModeChange = onColorModeChange,
                         onDynamicColorChange = onDynamicColorChange,
                         onAlbumArtColorChange = onAlbumArtColorChange,
@@ -404,6 +408,7 @@ private fun DestinationBody(
     syncStatus: SyncStatus,
     trackCount: Long,
     onPickFolder: () -> Unit,
+    onScanDeviceAudio: () -> Unit,
     onColorModeChange: (ColorMode) -> Unit,
     onDynamicColorChange: (Boolean) -> Unit,
     onAlbumArtColorChange: (Boolean) -> Unit,
@@ -459,6 +464,7 @@ private fun DestinationBody(
                     onOpenSearch = { navigator.push(AppDestination.Search) },
                     onOpenSettings = { navigator.push(AppDestination.Settings) },
                     onPickFolder = onPickFolder,
+                    onScanDeviceAudio = onScanDeviceAudio,
                 )
             }
 

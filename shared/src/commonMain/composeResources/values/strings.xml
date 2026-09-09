@@ -48,6 +48,14 @@
     <string name="empty_library_permission_note">Music in Downloads and Music is picked up automatically once you grant the music-access permission. To index a different folder, open Settings → Library and add it there.</string>
     <string name="empty_library_open_settings">Open Settings</string>
     <string name="empty_library_pick_folder">Pick music folder</string>
+    <string name="empty_library_scan_device">Scan music on this device</string>
+
+    <!-- Mandatory music-access gate (shown until READ_MEDIA_AUDIO is granted) -->
+    <string name="permission_required_title">Music access needed</string>
+    <string name="permission_required_body">OfflinePlaya is an offline player — it plays audio files stored on this device and can\'t do anything without permission to read them. Grant music access to continue.</string>
+    <string name="permission_required_grant">Grant music access</string>
+    <string name="permission_required_open_settings">Open app settings</string>
+    <string name="permission_required_denied_note">If nothing happens when you tap the button, the permission was blocked earlier — enable it from app settings instead.</string>
 
     <!-- First-run onboarding wizard -->
     <string name="onboarding_skip">Skip</string>
@@ -68,6 +76,7 @@
     <string name="onboarding_add_music_title">Add your music</string>
     <string name="onboarding_add_music_body">Pick a folder of audio files to index. Music in your Downloads and Music folders is picked up automatically once music access is granted.</string>
     <string name="onboarding_add_music_pick_folder">Pick a music folder</string>
+    <string name="onboarding_add_music_use_device">Use music already on this device</string>
     <string name="onboarding_add_music_found">Found %1$d tracks so far</string>
     <string name="onboarding_done_title">You\'re all set</string>
     <string name="onboarding_done_body">Your library is ready. You can add more folders or tweak anything later in Settings.</string>

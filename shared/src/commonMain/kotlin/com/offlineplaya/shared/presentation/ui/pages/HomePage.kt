@@ -74,6 +74,7 @@ fun HomePage(
     onOpenSearch: () -> Unit,
     onOpenSettings: () -> Unit,
     onPickFolder: () -> Unit = {},
+    onScanDeviceAudio: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -86,6 +87,7 @@ fun HomePage(
                 onOpenSearch = onOpenSearch,
                 onOpenSettings = onOpenSettings,
                 onPickFolder = onPickFolder,
+                onScanDeviceAudio = onScanDeviceAudio,
                 modifier = Modifier.padding(padding),
             )
             return@Scaffold

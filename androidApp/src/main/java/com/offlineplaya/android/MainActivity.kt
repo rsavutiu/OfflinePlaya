@@ -54,6 +54,7 @@ import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import com.offlineplaya.shared.presentation.ui.App
 import com.offlineplaya.shared.presentation.ui.pages.OnboardingWizardPage
+import com.offlineplaya.shared.presentation.ui.pages.PermissionRequiredScreen
 import kotlinx.coroutines.launch
 import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
@@ -277,9 +278,9 @@ private fun AndroidApp() {
         ActivityResultContracts.RequestPermission()
     ) { granted ->
         // Granted now → kick off a scan so the library populates without
-        // requiring a manual re-sync. Denied is fine — the app still works
-        // with SAF-picked folders; the library just won't auto-discover
-        // MediaStore-indexed audio (Downloads, root storage, etc.).
+        // requiring a manual re-sync. Audio access is mandatory (see the
+        // PermissionRequiredScreen gate below), so a denial just keeps the
+        // user on that gate until they allow it.
         audioGranted = granted
         if (granted) coordinator.resyncAll()
     }
@@ -290,10 +291,20 @@ private fun AndroidApp() {
         notificationGranted = granted
     }
 
-    // The audio-permission dialog is no longer auto-fired at launch — the
-    // first-run onboarding wizard primes and requests it (and notifications)
-    // with context. Returning users who revoke access are nudged by the
-    // empty-library guide's "Pick music folder" / Settings actions.
+    // Scan MediaStore-indexed audio (Downloads, Music, …) with no folder pick.
+    // Audio access is guaranteed by the gate, so this always runs a real scan.
+    val onScanDeviceAudio = { coordinator.resyncAll(); Unit }
+
+    // Escape hatch for the mandatory permission gate when the user previously
+    // chose "Don't allow" and the system no longer shows the dialog.
+    val onOpenAppSettings = {
+        context.startActivity(
+            Intent(
+                android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                android.net.Uri.fromParts("package", context.packageName, null),
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+        )
+    }
 
     BackHandler(enabled = stack.size > 1) {
         navigator.pop()
@@ -324,11 +335,19 @@ private fun AndroidApp() {
     }
 
     Box {
-        // Gate: null = onboarding flag still resolving (render nothing, the
-        // splash covers it); false = first run, show the wizard; true = the
-        // normal app. Seeding null (see OnboardingStateHolder) is what stops
-        // the wizard flashing for an existing user on every cold start.
-        when (onboardingCompleted) {
+        // Mandatory gate first: the app is an offline player over the user's
+        // own audio files and does nothing without READ_MEDIA_AUDIO, so block
+        // EVERYTHING — onboarding and the main app — until it's granted. This
+        // applies on every launch, so a user who later revokes access is
+        // returned here rather than dropped into an unusable library.
+        if (!audioGranted) {
+            PermissionRequiredScreen(
+                onGrant = { permissionLauncher.launch(AUDIO_READ_PERMISSION) },
+                onOpenAppSettings = onOpenAppSettings,
+            )
+        } else when (onboardingCompleted) {
+            // null = onboarding flag still resolving (render nothing, the splash
+            // covers it); false = first run, show the wizard; true = normal app.
             null -> Unit
 
             false -> OnboardingWizardPage(
@@ -344,11 +363,12 @@ private fun AndroidApp() {
                     }
                 },
                 onPickFolder = { readPickerLauncher.launch(Unit) },
+                onUseDeviceAudio = onScanDeviceAudio,
                 onFinish = {
                     onboarding.complete()
-                    // A folder pick already kicks its own scan; this covers the
-                    // case where the user only granted MediaStore audio access.
-                    if (audioGranted) coordinator.resyncAll()
+                    // Audio is guaranteed here; make sure a scan has run so the
+                    // library isn't empty if the user didn't pick a folder.
+                    coordinator.resyncAll()
                 },
             )
 
@@ -371,6 +391,7 @@ private fun AndroidApp() {
             trackCount = trackCount,
             seedColor = seedColor,
             onPickFolder = { readPickerLauncher.launch(Unit) },
+            onScanDeviceAudio = onScanDeviceAudio,
             onColorModeChange = themeStateHolder::setColorMode,
             onDynamicColorChange = themeStateHolder::setUseDynamicColor,
             onAlbumArtColorChange = themeStateHolder::setUseAlbumArtColor,
