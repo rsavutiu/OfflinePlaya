@@ -289,4 +289,9 @@
     <string name="permission_required_denied_note">Если при нажатии кнопки ничего не происходит, разрешение было заблокировано ранее — включите его в настройках приложения.</string>
     <string name="empty_library_scan_device">Сканировать музыку на этом устройстве</string>
     <string name="onboarding_add_music_use_device">Использовать музыку, уже имеющуюся на устройстве</string>
+    <string name="lyrics_pick">Выбрать текст</string>
+    <string name="lyrics_pick_title">Выберите текст</string>
+    <string name="lyrics_pick_loading">Поиск совпадений…</string>
+    <string name="lyrics_pick_empty">Совпадающий текст не найден</string>
+    <string name="lyrics_pick_synced">Синхронизирован</string>
 </resources>

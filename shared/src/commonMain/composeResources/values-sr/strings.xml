@@ -288,4 +288,9 @@
     <string name="permission_required_denied_note">Ако се ништа не деси када додирнете дугме, дозвола је раније блокирана — омогућите је у подешавањима апликације.</string>
     <string name="empty_library_scan_device">Скенирај музику на овом уређају</string>
     <string name="onboarding_add_music_use_device">Користи музику која је већ на уређају</string>
+    <string name="lyrics_pick">Изабери текст</string>
+    <string name="lyrics_pick_title">Изаберите текст</string>
+    <string name="lyrics_pick_loading">Тражење подударања…</string>
+    <string name="lyrics_pick_empty">Није пронађен одговарајући текст</string>
+    <string name="lyrics_pick_synced">Синхронизовано</string>
 </resources>

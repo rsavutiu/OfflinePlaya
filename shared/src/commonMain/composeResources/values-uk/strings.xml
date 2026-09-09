@@ -289,4 +289,9 @@
     <string name="permission_required_denied_note">Якщо після натискання кнопки нічого не відбувається, дозвіл було заблоковано раніше — увімкніть його в налаштуваннях застосунку.</string>
     <string name="empty_library_scan_device">Сканувати музику на цьому пристрої</string>
     <string name="onboarding_add_music_use_device">Використати музику, яка вже є на пристрої</string>
+    <string name="lyrics_pick">Вибрати текст</string>
+    <string name="lyrics_pick_title">Виберіть текст</string>
+    <string name="lyrics_pick_loading">Пошук збігів…</string>
+    <string name="lyrics_pick_empty">Відповідного тексту не знайдено</string>
+    <string name="lyrics_pick_synced">Синхронізовано</string>
 </resources>

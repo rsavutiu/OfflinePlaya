@@ -287,4 +287,9 @@
     <string name="permission_required_denied_note">अगर बटन टैप करने पर कुछ न हो, तो अनुमति पहले ब्लॉक की गई थी — इसके बजाय ऐप सेटिंग से इसे चालू करें.</string>
     <string name="empty_library_scan_device">इस डिवाइस पर संगीत स्कैन करें</string>
     <string name="onboarding_add_music_use_device">डिवाइस पर पहले से मौजूद संगीत का उपयोग करें</string>
+    <string name="lyrics_pick">बोल चुनें</string>
+    <string name="lyrics_pick_title">बोल चुनें</string>
+    <string name="lyrics_pick_loading">मिलान खोजे जा रहे हैं…</string>
+    <string name="lyrics_pick_empty">कोई मिलान वाले बोल नहीं मिले</string>
+    <string name="lyrics_pick_synced">सिंक किया गया</string>
 </resources>

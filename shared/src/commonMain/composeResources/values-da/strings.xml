@@ -287,4 +287,9 @@
     <string name="permission_required_denied_note">Hvis der ikke sker noget, når du trykker på knappen, blev tilladelsen blokeret tidligere — aktivér den i appindstillinger i stedet.</string>
     <string name="empty_library_scan_device">Scan musik på denne enhed</string>
     <string name="onboarding_add_music_use_device">Brug musik, der allerede er på enheden</string>
+    <string name="lyrics_pick">Vælg sangtekst</string>
+    <string name="lyrics_pick_title">Vælg sangtekst</string>
+    <string name="lyrics_pick_loading">Søger efter match…</string>
+    <string name="lyrics_pick_empty">Ingen matchende sangtekst fundet</string>
+    <string name="lyrics_pick_synced">Synkroniseret</string>
 </resources>

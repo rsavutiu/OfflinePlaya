@@ -263,4 +263,34 @@
     <string name="permission_required_denied_note">Dacă nu se întâmplă nimic când apeși butonul, permisiunea a fost blocată anterior — activeaz-o din setările aplicației.</string>
     <string name="empty_library_scan_device">Scanează muzica de pe acest dispozitiv</string>
     <string name="onboarding_add_music_use_device">Folosește muzica deja de pe dispozitiv</string>
+    <string name="lyrics_pick">Alege versurile</string>
+    <string name="lyrics_pick_title">Alege versurile</string>
+    <string name="lyrics_pick_loading">Se caută potriviri…</string>
+    <string name="lyrics_pick_empty">Nu s-au găsit versuri potrivite</string>
+    <string name="lyrics_pick_synced">Sincronizate</string>
+    <!-- First-run onboarding wizard -->
+    <string name="empty_library_pick_folder">Alege folderul cu muzică</string>
+    <string name="onboarding_skip">Omite</string>
+    <string name="onboarding_back">Înapoi</string>
+    <string name="onboarding_next">Înainte</string>
+    <string name="onboarding_welcome_title">Bun venit în OfflinePlaya</string>
+    <string name="onboarding_welcome_body">Un player pentru muzica pe care o ai deja. Totul rămâne pe dispozitivul tău — fără conturi, fără streaming, fără reclame. Hai să-ți configurăm biblioteca.</string>
+    <string name="onboarding_welcome_cta">Începe</string>
+    <string name="onboarding_permissions_title">Acordă câteva permisiuni</string>
+    <string name="onboarding_permissions_body">Acestea permit aplicației să-ți găsească muzica și să afișeze comenzile de redare. Le poți schimba oricând în setările sistemului.</string>
+    <string name="onboarding_permission_audio_title">Acces la muzică și audio</string>
+    <string name="onboarding_permission_audio_body">Ca OfflinePlaya să găsească fișierele audio de pe dispozitivul tău — inclusiv cele din folderele Descărcări și Muzică.</string>
+    <string name="onboarding_permission_audio_cta">Permite accesul la muzică</string>
+    <string name="onboarding_permission_notifications_title">Notificări</string>
+    <string name="onboarding_permission_notifications_body">Ca să apară comenzile de redare în bara de notificări și pe ecranul de blocare cât timp se redă muzică.</string>
+    <string name="onboarding_permission_notifications_cta">Permite notificările</string>
+    <string name="onboarding_permission_granted">Acordată</string>
+    <string name="onboarding_add_music_title">Adaugă-ți muzica</string>
+    <string name="onboarding_add_music_body">Alege un folder cu fișiere audio pentru indexare. Muzica din folderele Descărcări și Muzică este detectată automat după ce acorzi accesul la muzică.</string>
+    <string name="onboarding_add_music_pick_folder">Alege un folder cu muzică</string>
+    <string name="onboarding_add_music_found">Găsite %1$d piese până acum</string>
+    <string name="onboarding_done_title">Gata, totul e pregătit</string>
+    <string name="onboarding_done_body">Biblioteca ta este pregătită. Poți adăuga mai multe foldere sau modifica orice mai târziu în Setări.</string>
+    <string name="onboarding_done_summary">%1$d piese · %2$d foldere</string>
+    <string name="onboarding_done_cta">Începe să asculți</string>
 </resources>

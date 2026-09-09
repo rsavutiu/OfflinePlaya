@@ -287,4 +287,9 @@
     <string name="permission_required_denied_note">Si no ocurre nada al tocar el botón, el permiso se bloqueó antes; actívalo desde los ajustes de la app.</string>
     <string name="empty_library_scan_device">Buscar música en este dispositivo</string>
     <string name="onboarding_add_music_use_device">Usar la música que ya está en el dispositivo</string>
+    <string name="lyrics_pick">Elegir letra</string>
+    <string name="lyrics_pick_title">Elige la letra</string>
+    <string name="lyrics_pick_loading">Buscando coincidencias…</string>
+    <string name="lyrics_pick_empty">No se encontró ninguna letra que coincida</string>
+    <string name="lyrics_pick_synced">Sincronizada</string>
 </resources>

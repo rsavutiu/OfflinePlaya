@@ -287,4 +287,9 @@
     <string name="permission_required_denied_note">Si rien ne se passe quand vous appuyez sur le bouton, l\'autorisation a été bloquée auparavant — activez-la dans les paramètres de l\'application.</string>
     <string name="empty_library_scan_device">Analyser la musique de cet appareil</string>
     <string name="onboarding_add_music_use_device">Utiliser la musique déjà sur l\'appareil</string>
+    <string name="lyrics_pick">Choisir les paroles</string>
+    <string name="lyrics_pick_title">Choisir les paroles</string>
+    <string name="lyrics_pick_loading">Recherche de correspondances…</string>
+    <string name="lyrics_pick_empty">Aucune parole correspondante trouvée</string>
+    <string name="lyrics_pick_synced">Synchronisées</string>
 </resources>

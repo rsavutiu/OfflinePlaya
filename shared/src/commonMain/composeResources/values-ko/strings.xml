@@ -286,4 +286,9 @@
     <string name="permission_required_denied_note">버튼을 눌러도 아무 일이 없으면 이전에 권한이 차단된 것입니다. 앱 설정에서 사용 설정하세요.</string>
     <string name="empty_library_scan_device">이 기기의 음악 검색</string>
     <string name="onboarding_add_music_use_device">기기에 이미 있는 음악 사용</string>
+    <string name="lyrics_pick">가사 선택</string>
+    <string name="lyrics_pick_title">가사 선택</string>
+    <string name="lyrics_pick_loading">일치 항목 검색 중…</string>
+    <string name="lyrics_pick_empty">일치하는 가사가 없습니다</string>
+    <string name="lyrics_pick_synced">동기화됨</string>
 </resources>

@@ -287,4 +287,9 @@
     <string name="permission_required_denied_note">Kung walang mangyari kapag tinapik mo ang button, na-block ang pahintulot dati — i-enable ito sa mga setting ng app.</string>
     <string name="empty_library_scan_device">I-scan ang musika sa device na ito</string>
     <string name="onboarding_add_music_use_device">Gamitin ang musikang nasa device na</string>
+    <string name="lyrics_pick">Pumili ng lyrics</string>
+    <string name="lyrics_pick_title">Pumili ng lyrics</string>
+    <string name="lyrics_pick_loading">Naghahanap ng mga tugma…</string>
+    <string name="lyrics_pick_empty">Walang nahanap na tugmang lyrics</string>
+    <string name="lyrics_pick_synced">Naka-sync</string>
 </resources>

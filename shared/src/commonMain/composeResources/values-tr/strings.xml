@@ -287,4 +287,9 @@
     <string name="permission_required_denied_note">Düğmeye dokunduğunuzda bir şey olmuyorsa izin daha önce engellenmiştir — bunun yerine uygulama ayarlarından etkinleştirin.</string>
     <string name="empty_library_scan_device">Bu cihazdaki müziği tara</string>
     <string name="onboarding_add_music_use_device">Cihazda zaten bulunan müziği kullan</string>
+    <string name="lyrics_pick">Şarkı sözü seç</string>
+    <string name="lyrics_pick_title">Şarkı sözünü seç</string>
+    <string name="lyrics_pick_loading">Eşleşmeler aranıyor…</string>
+    <string name="lyrics_pick_empty">Eşleşen şarkı sözü bulunamadı</string>
+    <string name="lyrics_pick_synced">Eşitlendi</string>
 </resources>

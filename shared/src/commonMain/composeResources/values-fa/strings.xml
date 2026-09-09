@@ -287,4 +287,9 @@
     <string name="permission_required_denied_note">اگر با زدن دکمه اتفاقی نیفتاد، اجازه قبلاً مسدود شده است — به‌جای آن از تنظیمات برنامه فعالش کنید.</string>
     <string name="empty_library_scan_device">پویش موسیقی روی این دستگاه</string>
     <string name="onboarding_add_music_use_device">استفاده از موسیقی موجود روی این دستگاه</string>
+    <string name="lyrics_pick">انتخاب متن ترانه</string>
+    <string name="lyrics_pick_title">متن ترانه را انتخاب کنید</string>
+    <string name="lyrics_pick_loading">در حال جستجوی موارد منطبق…</string>
+    <string name="lyrics_pick_empty">هیچ متن منطبقی یافت نشد</string>
+    <string name="lyrics_pick_synced">همگام‌شده</string>
 </resources>

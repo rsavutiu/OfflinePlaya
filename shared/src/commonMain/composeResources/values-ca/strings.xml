@@ -287,4 +287,9 @@
     <string name="permission_required_denied_note">Si no passa res en tocar el botó, el permís es va blocar abans; activa\'l des de la configuració de l\'aplicació.</string>
     <string name="empty_library_scan_device">Escaneja la música d\'aquest dispositiu</string>
     <string name="onboarding_add_music_use_device">Usa la música que ja hi ha al dispositiu</string>
+    <string name="lyrics_pick">Tria la lletra</string>
+    <string name="lyrics_pick_title">Tria la lletra</string>
+    <string name="lyrics_pick_loading">S\'estan cercant coincidències…</string>
+    <string name="lyrics_pick_empty">No s\'ha trobat cap lletra coincident</string>
+    <string name="lyrics_pick_synced">Sincronitzada</string>
 </resources>

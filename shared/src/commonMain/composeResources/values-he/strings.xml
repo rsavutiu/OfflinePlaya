@@ -289,4 +289,9 @@
     <string name="permission_required_denied_note">אם דבר לא קורה בלחיצה על הכפתור, ההרשאה נחסמה קודם — הפעל אותה מהגדרות האפליקציה.</string>
     <string name="empty_library_scan_device">סרוק מוזיקה במכשיר הזה</string>
     <string name="onboarding_add_music_use_device">השתמש במוזיקה שכבר במכשיר</string>
+    <string name="lyrics_pick">בחר מילים</string>
+    <string name="lyrics_pick_title">בחר את מילות השיר</string>
+    <string name="lyrics_pick_loading">מחפש התאמות…</string>
+    <string name="lyrics_pick_empty">לא נמצאו מילים תואמות</string>
+    <string name="lyrics_pick_synced">מסונכרן</string>
 </resources>

@@ -287,4 +287,9 @@
     <string name="permission_required_denied_note">Als er niets gebeurt als je op de knop tikt, is de toestemming eerder geblokkeerd — schakel deze in via de app-instellingen.</string>
     <string name="empty_library_scan_device">Muziek op dit apparaat scannen</string>
     <string name="onboarding_add_music_use_device">Muziek gebruiken die al op het apparaat staat</string>
+    <string name="lyrics_pick">Songtekst kiezen</string>
+    <string name="lyrics_pick_title">Kies songtekst</string>
+    <string name="lyrics_pick_loading">Zoeken naar overeenkomsten…</string>
+    <string name="lyrics_pick_empty">Geen overeenkomende songtekst gevonden</string>
+    <string name="lyrics_pick_synced">Gesynchroniseerd</string>
 </resources>

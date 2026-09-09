@@ -287,4 +287,9 @@
     <string name="permission_required_denied_note">Om inget händer när du trycker på knappen blockerades behörigheten tidigare — aktivera den i appinställningarna i stället.</string>
     <string name="empty_library_scan_device">Sök musik på den här enheten</string>
     <string name="onboarding_add_music_use_device">Använd musik som redan finns på enheten</string>
+    <string name="lyrics_pick">Välj låttext</string>
+    <string name="lyrics_pick_title">Välj låttext</string>
+    <string name="lyrics_pick_loading">Söker efter träffar…</string>
+    <string name="lyrics_pick_empty">Ingen matchande låttext hittades</string>
+    <string name="lyrics_pick_synced">Synkroniserad</string>
 </resources>

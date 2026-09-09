@@ -1,3 +1,5 @@
-• Fixed: song transitions no longer spike in volume — crossfade now fades smoothly
-• Better TalkBack support: labeled playback controls, seek bar, and discoverable track options
-• Stability fixes and under-the-hood improvements
+• New: a first-run setup guide walks you from install to playing music
+• New: "Scan music on this device" builds your library in one tap — no folder picking needed
+• Faster, smoother transitions between screens
+• Fixed mistranslated labels across many languages (including Romanian "Tracks")
+• Clearer, up-front music-access step so the app can find your files

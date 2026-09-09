@@ -286,4 +286,9 @@
     <string name="permission_required_denied_note">Nếu không có gì xảy ra khi bạn nhấn nút, quyền đã bị chặn trước đó — hãy bật quyền trong cài đặt ứng dụng.</string>
     <string name="empty_library_scan_device">Quét nhạc trên thiết bị này</string>
     <string name="onboarding_add_music_use_device">Dùng nhạc đã có trên thiết bị</string>
+    <string name="lyrics_pick">Chọn lời bài hát</string>
+    <string name="lyrics_pick_title">Chọn lời bài hát</string>
+    <string name="lyrics_pick_loading">Đang tìm kết quả khớp…</string>
+    <string name="lyrics_pick_empty">Không tìm thấy lời bài hát khớp</string>
+    <string name="lyrics_pick_synced">Đã đồng bộ</string>
 </resources>

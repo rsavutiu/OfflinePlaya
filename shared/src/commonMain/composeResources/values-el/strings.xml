@@ -287,4 +287,9 @@
     <string name="permission_required_denied_note">Αν δεν συμβεί τίποτα όταν πατήσετε το κουμπί, η άδεια είχε αποκλειστεί νωρίτερα — ενεργοποιήστε την από τις ρυθμίσεις εφαρμογής.</string>
     <string name="empty_library_scan_device">Σάρωση μουσικής σε αυτή τη συσκευή</string>
     <string name="onboarding_add_music_use_device">Χρήση μουσικής που υπάρχει ήδη στη συσκευή</string>
+    <string name="lyrics_pick">Επιλογή στίχων</string>
+    <string name="lyrics_pick_title">Επιλέξτε στίχους</string>
+    <string name="lyrics_pick_loading">Αναζήτηση αντιστοιχιών…</string>
+    <string name="lyrics_pick_empty">Δεν βρέθηκαν αντίστοιχοι στίχοι</string>
+    <string name="lyrics_pick_synced">Συγχρονισμένοι</string>
 </resources>

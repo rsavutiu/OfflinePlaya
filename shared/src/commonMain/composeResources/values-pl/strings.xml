@@ -289,4 +289,9 @@
     <string name="permission_required_denied_note">Jeśli po dotknięciu przycisku nic się nie dzieje, uprawnienie zostało wcześniej zablokowane — włącz je w ustawieniach aplikacji.</string>
     <string name="empty_library_scan_device">Skanuj muzykę na tym urządzeniu</string>
     <string name="onboarding_add_music_use_device">Użyj muzyki już na urządzeniu</string>
+    <string name="lyrics_pick">Wybierz tekst</string>
+    <string name="lyrics_pick_title">Wybierz tekst</string>
+    <string name="lyrics_pick_loading">Wyszukiwanie dopasowań…</string>
+    <string name="lyrics_pick_empty">Nie znaleziono pasującego tekstu</string>
+    <string name="lyrics_pick_synced">Zsynchronizowany</string>
 </resources>

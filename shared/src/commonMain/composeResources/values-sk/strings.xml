@@ -289,4 +289,9 @@
     <string name="permission_required_denied_note">Ak sa po klepnutí na tlačidlo nič nestane, povolenie bolo predtým zablokované — povoľte ho v nastaveniach aplikácie.</string>
     <string name="empty_library_scan_device">Prehľadať hudbu v tomto zariadení</string>
     <string name="onboarding_add_music_use_device">Použiť hudbu, ktorá už je v zariadení</string>
+    <string name="lyrics_pick">Vybrať text</string>
+    <string name="lyrics_pick_title">Vyberte text</string>
+    <string name="lyrics_pick_loading">Hľadanie zhôd…</string>
+    <string name="lyrics_pick_empty">Nenašiel sa žiadny zodpovedajúci text</string>
+    <string name="lyrics_pick_synced">Synchronizované</string>
 </resources>

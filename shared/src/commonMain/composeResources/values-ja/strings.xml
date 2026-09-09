@@ -286,4 +286,9 @@
     <string name="permission_required_denied_note">ボタンを押しても何も起きない場合は、以前に許可がブロックされています。アプリ設定から有効にしてください。</string>
     <string name="empty_library_scan_device">この端末の音楽をスキャン</string>
     <string name="onboarding_add_music_use_device">この端末にある音楽を使う</string>
+    <string name="lyrics_pick">歌詞を選ぶ</string>
+    <string name="lyrics_pick_title">歌詞を選択</string>
+    <string name="lyrics_pick_loading">一致を検索中…</string>
+    <string name="lyrics_pick_empty">一致する歌詞が見つかりません</string>
+    <string name="lyrics_pick_synced">同期済み</string>
 </resources>
