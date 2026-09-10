@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Supprimer la playlist</string>
     <string name="cd_new_playlist">Nouvelle playlist</string>
     <string name="cd_repeat_mode">Répéter: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Lecture dans %1$d seconde…</item>
-        <item quantity="other">Lecture dans %1$d secondes…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d résultat</item>
-        <item quantity="other">%1$d résultats</item>
-    </plurals>
     <string name="artist_top_tracks">Titres les plus écoutés</string>
     <string name="cd_reorder_queue">Glisser pour réorganiser</string>
     <string name="eq_preamp_hint">Amplification au-delà du volume maximal. Vol+ au volume maximal l’augmente ; Vol− la réduit avant de baisser le volume. Une amplification élevée peut saturer.</string>
@@ -234,10 +226,6 @@
     <string name="tag_editor_title">Modifier les tags</string>
     <string name="tag_editor_write_hint">Écrit les tags dans le fichier. Les fichiers que l’app ne peut pas modifier (certains titres indexés par l’appareil) échoueront.</string>
     <string name="track_details_edit_tags">Modifier les tags</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d écoute</item>
-        <item quantity="other">%1$d écoutes</item>
-    </plurals>
     <string name="cd_shuffle">Lecture aléatoire</string>
     <string name="state_on">Activé</string>
     <string name="state_off">Désactivé</string>
@@ -254,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Reprendre en Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Lancer la lecture à la connexion du casque ou de la voiture</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Choisir un dossier de musique</string>
     <string name="onboarding_skip">Passer</string>
     <string name="onboarding_back">Retour</string>
@@ -279,7 +266,6 @@
     <string name="onboarding_done_body">Votre bibliothèque est prête. Vous pourrez ajouter d\'autres dossiers ou tout ajuster plus tard dans les Paramètres.</string>
     <string name="onboarding_done_summary">%1$d morceaux · %2$d dossiers</string>
     <string name="onboarding_done_cta">Commencer l\'écoute</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Accès à la musique requis</string>
     <string name="permission_required_body">OfflinePlaya est un lecteur hors ligne : il lit les fichiers audio de cet appareil et ne peut rien faire sans l\'autorisation de les lire. Accordez l\'accès à la musique pour continuer.</string>
     <string name="permission_required_grant">Accorder l\'accès à la musique</string>
@@ -292,4 +278,23 @@
     <string name="lyrics_pick_loading">Recherche de correspondances…</string>
     <string name="lyrics_pick_empty">Aucune parole correspondante trouvée</string>
     <string name="lyrics_pick_synced">Synchronisées</string>
+
+    <!-- Auto-translated to French via local LLM; review and refine. -->
+    <string name="share_nudge_title">Vous profitez de la musique ?</string>
+    <string name="share_nudge_body">Ce lecteur est totalement gratuit, sans publicités, sans suivi — et sans budget marketing non plus. La seule façon qu'il parvienne à d'autres personnes est lorsque quelqu'un comme vous le partage. Si il a trouvé sa place sur votre téléphone, veuillez le faire connaître.</string>
+    <string name="share_nudge_share">Partager l'application</string>
+    <string name="share_nudge_dismiss">Peut-être plus tard</string>
+    <string name="share_nudge_message">J'utilise OfflinePlaya — un lecteur de musique gratuit et hors ligne, sans publicités ni suivi. Essayez-le : %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Lecture dans %1$d seconde…</item>
+        <item quantity="other">Lecture dans %1$d secondes…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d résultat</item>
+        <item quantity="other">%1$d résultats</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d écoute</item>
+        <item quantity="other">%1$d écoutes</item>
+    </plurals>
 </resources>

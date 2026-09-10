@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Șterge lista de redare</string>
     <string name="cd_new_playlist">Playlist nou</string>
     <string name="cd_repeat_mode">Repetați: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Se joacă în %1$d secundă...</item>
-        <item quantity="other">Se joacă în %1$d secunde...</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d rezultat</item>
-        <item quantity="other">%1$d rezultate</item>
-    </plurals>
     <string name="artist_top_tracks">Cele mai ascultate piese</string>
     <string name="cd_reorder_queue">Trage pentru a reordona</string>
     <string name="eq_preamp_hint">Amplificare peste volumul maxim. Vol+ la volum maxim îl crește; Vol− îl scade înainte de a reduce volumul. O amplificare mare poate distorsiona.</string>
@@ -234,11 +226,6 @@
     <string name="tag_editor_title">Editează etichetele</string>
     <string name="tag_editor_write_hint">Scrie etichetele în fișier. Fișierele în care aplicația nu poate scrie (unele piese indexate de dispozitiv) vor eșua.</string>
     <string name="track_details_edit_tags">Editează etichetele</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d redare</item>
-        <item quantity="few">%1$d redări</item>
-        <item quantity="other">%1$d de redări</item>
-    </plurals>
     <string name="cd_shuffle">Redare aleatorie</string>
     <string name="state_on">Activat</string>
     <string name="state_off">Dezactivat</string>
@@ -255,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Reia prin Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Pornește redarea când se conectează căștile sau mașina</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Este necesar accesul la muzică</string>
     <string name="permission_required_body">OfflinePlaya este un player offline — redă fișierele audio de pe acest dispozitiv și nu poate face nimic fără permisiunea de a le citi. Acordă accesul la muzică pentru a continua.</string>
     <string name="permission_required_grant">Acordă acces la muzică</string>
@@ -268,7 +254,6 @@
     <string name="lyrics_pick_loading">Se caută potriviri…</string>
     <string name="lyrics_pick_empty">Nu s-au găsit versuri potrivite</string>
     <string name="lyrics_pick_synced">Sincronizate</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Alege folderul cu muzică</string>
     <string name="onboarding_skip">Omite</string>
     <string name="onboarding_back">Înapoi</string>
@@ -293,4 +278,24 @@
     <string name="onboarding_done_body">Biblioteca ta este pregătită. Poți adăuga mai multe foldere sau modifica orice mai târziu în Setări.</string>
     <string name="onboarding_done_summary">%1$d piese · %2$d foldere</string>
     <string name="onboarding_done_cta">Începe să asculți</string>
+
+    <!-- Auto-translated to Romanian via local LLM; review and refine. -->
+    <string name="share_nudge_title">Plăceați muzica?</string>
+    <string name="share_nudge_body">Acest player este complet gratuit, fără reclame și fără urmărire — și fără buget de marketing nici. Singura modalitate în care ajunge la alții este când cineva ca tu îl împarte. Dacă a reușit să se afle pe telefonul tău, te rugăm să îl împărtășești.</string>
+    <string name="share_nudge_share">Împărtășește aplicația</string>
+    <string name="share_nudge_dismiss">Poate mai târziu</string>
+    <string name="share_nudge_message">Am folosit OfflinePlaya — un player de muzică gratuit, offline, fără reclame sau urmărire. Încearcă-l: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Se joacă în %1$d secundă...</item>
+        <item quantity="other">Se joacă în %1$d secunde...</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d rezultat</item>
+        <item quantity="other">%1$d rezultate</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d redare</item>
+        <item quantity="few">%1$d redări</item>
+        <item quantity="other">%1$d de redări</item>
+    </plurals>
 </resources>

@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Suprimeix la llista de reproducció</string>
     <string name="cd_new_playlist">Nova llista de reproducció</string>
     <string name="cd_repeat_mode">Repetiu: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">S'està jugant en %1$d segons...</item>
-        <item quantity="other">S'està jugant en %1$d segons...</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d resultat</item>
-        <item quantity="other">%1$d resultats</item>
-    </plurals>
     <string name="artist_top_tracks">Cançons destacades</string>
     <string name="cd_reorder_queue">Arrossega per reordenar</string>
     <string name="eq_preamp_hint">Amplifica més enllà del volum màxim. Vol+ al volum màxim l’augmenta; Vol− el redueix abans de baixar el volum. Una amplificació alta pot distorsionar.</string>
@@ -234,10 +226,6 @@
     <string name="tag_editor_title">Edita les etiquetes</string>
     <string name="tag_editor_write_hint">Escriu les etiquetes al fitxer. Els fitxers on l’app no pot escriure (algunes pistes indexades pel dispositiu) fallaran.</string>
     <string name="track_details_edit_tags">Edita les etiquetes</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d reproducció</item>
-        <item quantity="other">%1$d reproduccions</item>
-    </plurals>
     <string name="cd_shuffle">Reproducció aleatòria</string>
     <string name="state_on">Activat</string>
     <string name="state_off">Desactivat</string>
@@ -254,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Reprèn amb Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Comença a reproduir quan es connectin els auriculars o el cotxe</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Tria una carpeta de música</string>
     <string name="onboarding_skip">Omet</string>
     <string name="onboarding_back">Enrere</string>
@@ -279,7 +266,6 @@
     <string name="onboarding_done_body">La teva biblioteca està preparada. Pots afegir més carpetes o ajustar qualsevol cosa més tard a la configuració.</string>
     <string name="onboarding_done_summary">%1$d cançons · %2$d carpetes</string>
     <string name="onboarding_done_cta">Comença a escoltar</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Cal accés a la música</string>
     <string name="permission_required_body">OfflinePlaya és un reproductor fora de línia: reprodueix els fitxers d\'àudio d\'aquest dispositiu i no pot fer res sense permís per llegir-los. Concedeix l\'accés a la música per continuar.</string>
     <string name="permission_required_grant">Concedeix accés a la música</string>
@@ -292,4 +278,23 @@
     <string name="lyrics_pick_loading">S\'estan cercant coincidències…</string>
     <string name="lyrics_pick_empty">No s\'ha trobat cap lletra coincident</string>
     <string name="lyrics_pick_synced">Sincronitzada</string>
+
+    <!-- Auto-translated to Catalan via local LLM; review and refine. -->
+    <string name="share_nudge_title">Disfrutant la música?</string>
+    <string name="share_nudge_body">Aquest reproductor és completament gratuït, sense publicitat i sense rastrejament — i sense pressupost de marketing tampoc. L'única manera que arriba a altres persones és quan algú com tu el comparteix. Si ha aconseguit un lloc al teu telèfon, passa'l a algú.</string>
+    <string name="share_nudge_share">Comparteix l'aplicació</string>
+    <string name="share_nudge_dismiss">Potser més endavant</string>
+    <string name="share_nudge_message">He estat utilitzant OfflinePlaya — un reproductor de música offline gratuït sense publicitat ni rastrejament. Prova'l: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">S'està jugant en %1$d segons...</item>
+        <item quantity="other">S'està jugant en %1$d segons...</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d resultat</item>
+        <item quantity="other">%1$d resultats</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d reproducció</item>
+        <item quantity="other">%1$d reproduccions</item>
+    </plurals>
 </resources>

@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Ištrinti grojaraštį</string>
     <string name="cd_new_playlist">Naujas grojaraštis</string>
     <string name="cd_repeat_mode">Pakartokite: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Leidžiama po %1$d sekundės…</item>
-        <item quantity="other">Playing in %1$d seconds…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d rezultatas</item>
-        <item quantity="other">%1$d rezultatai</item>
-    </plurals>
     <string name="artist_top_tracks">Populiariausi kūriniai</string>
     <string name="cd_reorder_queue">Vilkite, kad pertvarkytumėte</string>
     <string name="eq_preamp_hint">Stiprinimas virš didžiausio garsumo. Gars.+ esant didžiausiam garsumui jį padidina; Gars.− jį sumažina prieš mažindamas garsumą. Didelis stiprinimas gali iškraipyti garsą.</string>
@@ -234,12 +226,6 @@
     <string name="tag_editor_title">Redaguoti žymas</string>
     <string name="tag_editor_write_hint">Įrašo žymas į failą. Failai, į kuriuos programa negali rašyti (kai kurie įrenginio indeksuoti kūriniai), nepavyks.</string>
     <string name="track_details_edit_tags">Redaguoti žymas</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d grojimas</item>
-        <item quantity="few">%1$d grojimai</item>
-        <item quantity="many">%1$d grojimo</item>
-        <item quantity="other">%1$d grojimų</item>
-    </plurals>
     <string name="cd_shuffle">Maišymas</string>
     <string name="state_on">Įjungta</string>
     <string name="state_off">Išjungta</string>
@@ -256,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Tęsti per Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Pradėti groti prijungus ausines ar automobilį</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Pasirinkite muzikos aplanką</string>
     <string name="onboarding_skip">Praleisti</string>
     <string name="onboarding_back">Atgal</string>
@@ -281,7 +266,6 @@
     <string name="onboarding_done_body">Jūsų fonoteka paruošta. Vėliau nustatymuose galite pridėti daugiau aplankų arba bet ką pakeisti.</string>
     <string name="onboarding_done_summary">%1$d kūrinių · %2$d aplankų</string>
     <string name="onboarding_done_cta">Pradėti klausytis</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Reikia prieigos prie muzikos</string>
     <string name="permission_required_body">„OfflinePlaya“ yra grotuvas be interneto — jis groja šiame įrenginyje saugomus garso failus ir be leidimo juos skaityti nieko negali. Norėdami tęsti, suteikite prieigą prie muzikos.</string>
     <string name="permission_required_grant">Suteikti prieigą prie muzikos</string>
@@ -294,4 +278,25 @@
     <string name="lyrics_pick_loading">Ieškoma atitikmenų…</string>
     <string name="lyrics_pick_empty">Atitinkančių žodžių nerasta</string>
     <string name="lyrics_pick_synced">Sinchronizuota</string>
+
+    <!-- Auto-translated to Lithuanian via local LLM; review and refine. -->
+    <string name="share_nudge_title">Mėgaujasi muzika?</string>
+    <string name="share_nudge_body">Šis plaikstytuvas visiškai nemoka, be skelbimų ir stebėjimo — ir net nemoka reklamos. Šis plaikstytuvas pasiekia kitus žmones tik tada, kai kažkas kaip jūs dalijasi juo. Jei jis užėmė vietą jūsų telefone, prašykite pasidalinti.</string>
+    <string name="share_nudge_share">Dalinkitės programine</string>
+    <string name="share_nudge_dismiss">Galiausiai</string>
+    <string name="share_nudge_message">Aš naudoju OfflinePlaya — nemokamą, offline muzikos plaikstytuvą be skelbimų ir stebėjimo. Pabandykite: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Leidžiama po %1$d sekundės…</item>
+        <item quantity="other">Playing in %1$d seconds…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d rezultatas</item>
+        <item quantity="other">%1$d rezultatai</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d grojimas</item>
+        <item quantity="few">%1$d grojimai</item>
+        <item quantity="many">%1$d grojimo</item>
+        <item quantity="other">%1$d grojimų</item>
+    </plurals>
 </resources>

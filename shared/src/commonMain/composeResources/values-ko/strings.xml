@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">플레이리스트 삭제</string>
     <string name="cd_new_playlist">새 플레이리스트</string>
     <string name="cd_repeat_mode">반복: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">%1$d초 후에 재생 중…</item>
-        <item quantity="other">%1$d초 후에 재생됩니다…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d 결과</item>
-        <item quantity="other">%1$d 결과</item>
-    </plurals>
     <string name="artist_top_tracks">인기 트랙</string>
     <string name="cd_reorder_queue">드래그하여 순서 변경</string>
     <string name="eq_preamp_hint">최대 볼륨을 넘는 부스트. 최대 볼륨에서 볼륨+를 누르면 올라가고, 볼륨−를 누르면 볼륨을 낮추기 전에 내려갑니다. 높은 부스트는 음이 깨질 수 있습니다.</string>
@@ -234,9 +226,6 @@
     <string name="tag_editor_title">태그 편집</string>
     <string name="tag_editor_write_hint">태그를 파일에 기록합니다. 앱이 쓸 수 없는 파일(기기에서 색인된 일부 트랙)은 실패합니다.</string>
     <string name="track_details_edit_tags">태그 편집</string>
-    <plurals name="stats_plays">
-        <item quantity="other">%1$d회 재생</item>
-    </plurals>
     <string name="cd_shuffle">셔플</string>
     <string name="state_on">켜짐</string>
     <string name="state_off">꺼짐</string>
@@ -253,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">블루투스 연결 시 재개</string>
     <string name="playback_bt_autoplay_subtitle">헤드폰이나 차량 연결 시 재생 시작</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">음악 폴더 선택</string>
     <string name="onboarding_skip">건너뛰기</string>
     <string name="onboarding_back">뒤로</string>
@@ -278,7 +266,6 @@
     <string name="onboarding_done_body">라이브러리가 준비되었습니다. 나중에 설정에서 폴더를 더 추가하거나 무엇이든 조정할 수 있습니다.</string>
     <string name="onboarding_done_summary">%1$d곡 · %2$d개 폴더</string>
     <string name="onboarding_done_cta">감상 시작</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">음악 접근 권한이 필요합니다</string>
     <string name="permission_required_body">OfflinePlaya는 오프라인 플레이어로, 이 기기에 저장된 오디오 파일을 재생하며 읽기 권한 없이는 아무것도 할 수 없습니다. 계속하려면 음악 접근을 허용하세요.</string>
     <string name="permission_required_grant">음악 접근 허용</string>
@@ -291,4 +278,22 @@
     <string name="lyrics_pick_loading">일치 항목 검색 중…</string>
     <string name="lyrics_pick_empty">일치하는 가사가 없습니다</string>
     <string name="lyrics_pick_synced">동기화됨</string>
+
+    <!-- Auto-translated to Korean via local LLM; review and refine. -->
+    <string name="share_nudge_title">음악을 즐기고 계신가요?</string>
+    <string name="share_nudge_body">이 플레이어는 완전히 무료로 제공되며, 광고도 추적도 없고 마케팅 예산도 없습니다. 다른 사람에게 전달되는 유일한 방법은 누군가 같은 당신이 공유해 주는 것입니다. 만약 이 앱이 당신의 스마트폰에 자리 잡았다면, 다른 사람들에게도 공유해 주세요.</string>
+    <string name="share_nudge_share">앱 공유</string>
+    <string name="share_nudge_dismiss">나중에 할게요</string>
+    <string name="share_nudge_message">저는 OfflinePlaya — 광고나 추적 없이 오프라인으로 작동하는 무료 음악 플레이어 —를 사용하고 있습니다. 시도해 보세요: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">%1$d초 후에 재생 중…</item>
+        <item quantity="other">%1$d초 후에 재생됩니다…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d 결과</item>
+        <item quantity="other">%1$d 결과</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="other">%1$d회 재생</item>
+    </plurals>
 </resources>

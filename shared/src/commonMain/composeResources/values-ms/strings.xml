@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Padamkan senarai main</string>
     <string name="cd_new_playlist">Senarai main baharu</string>
     <string name="cd_repeat_mode">Ulang: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Memainkan dalam %1$d saat…</item>
-        <item quantity="other">Dimainkan dalam %1$d saat…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d hasil</item>
-        <item quantity="other">%1$d hasil</item>
-    </plurals>
     <string name="artist_top_tracks">Lagu teratas</string>
     <string name="cd_reorder_queue">Seret untuk menyusun semula</string>
     <string name="eq_preamp_hint">Penguatan melebihi kelantangan maksimum. Kelantangan+ pada kelantangan penuh menaikkannya; Kelantangan− menurunkannya sebelum mengurangkan kelantangan. Penguatan tinggi boleh menyebabkan herotan.</string>
@@ -234,9 +226,6 @@
     <string name="tag_editor_title">Edit tag</string>
     <string name="tag_editor_write_hint">Menulis tag ke dalam fail. Fail yang apl tidak boleh tulis (sesetengah lagu terindeks peranti) akan gagal.</string>
     <string name="track_details_edit_tags">Edit tag</string>
-    <plurals name="stats_plays">
-        <item quantity="other">%1$d mainan</item>
-    </plurals>
     <string name="cd_shuffle">Kocok</string>
     <string name="state_on">Hidup</string>
     <string name="state_off">Mati</string>
@@ -253,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Sambung melalui Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Mula bermain apabila fon kepala atau kereta bersambung</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Pilih folder muzik</string>
     <string name="onboarding_skip">Langkau</string>
     <string name="onboarding_back">Kembali</string>
@@ -278,7 +266,6 @@
     <string name="onboarding_done_body">Pustaka anda sudah sedia. Anda boleh menambah lebih banyak folder atau mengubah apa-apa kemudian dalam Tetapan.</string>
     <string name="onboarding_done_summary">%1$d lagu · %2$d folder</string>
     <string name="onboarding_done_cta">Mula mendengar</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Perlukan akses muzik</string>
     <string name="permission_required_body">OfflinePlaya ialah pemain luar talian — ia memainkan fail audio pada peranti ini dan tidak boleh berbuat apa-apa tanpa kebenaran membacanya. Berikan akses muzik untuk meneruskan.</string>
     <string name="permission_required_grant">Berikan akses muzik</string>
@@ -291,4 +278,22 @@
     <string name="lyrics_pick_loading">Mencari padanan…</string>
     <string name="lyrics_pick_empty">Tiada lirik sepadan dijumpai</string>
     <string name="lyrics_pick_synced">Disegerakkan</string>
+
+    <!-- Auto-translated to Malay via local LLM; review and refine. -->
+    <string name="share_nudge_title">Menikmati muzik?</string>
+    <string name="share_nudge_body">Pemain ini sepenuhnya percuma, tanpa iklan dan tanpa pemantauan — dan juga tanpa belanja pemasaran. Satu-satunya cara ia sampai kepada orang lain ialah apabila seseorang seperti anda berkongsi ia. Jika ia telah mendapat tempat di telefon anda, sila kongsikan ia.</string>
+    <string name="share_nudge_share">Kongsi aplikasi</string>
+    <string name="share_nudge_dismiss">Mungkin nanti</string>
+    <string name="share_nudge_message">Saya menggunakan OfflinePlaya — pemain muzik percuma tanpa iklan atau pemantauan. Cuba ia: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Memainkan dalam %1$d saat…</item>
+        <item quantity="other">Dimainkan dalam %1$d saat…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d hasil</item>
+        <item quantity="other">%1$d hasil</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="other">%1$d mainan</item>
+    </plurals>
 </resources>

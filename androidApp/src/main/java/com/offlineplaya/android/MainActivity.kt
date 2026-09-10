@@ -47,12 +47,14 @@ import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.onboarding.OnboardingStateHolder
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.review.ReviewPromptCoordinator
+import com.offlineplaya.shared.presentation.review.ShareNudgeCoordinator
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
 import com.offlineplaya.shared.presentation.settings.LyricsPreferencesStateHolder
 import com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import com.offlineplaya.shared.presentation.ui.App
+import com.offlineplaya.shared.presentation.ui.molecules.ShareAppDialog
 import com.offlineplaya.shared.presentation.ui.pages.OnboardingWizardPage
 import com.offlineplaya.shared.presentation.ui.pages.PermissionRequiredScreen
 import kotlinx.coroutines.launch
@@ -182,6 +184,7 @@ private fun AndroidApp() {
     val playbackTuningStateHolder: PlaybackTuningStateHolder = koinInject()
     val coordinator: LibrarySyncCoordinator = koinInject()
     val reviewPromptCoordinator: ReviewPromptCoordinator = koinInject()
+    val shareNudgeCoordinator: ShareNudgeCoordinator = koinInject()
     val burnMetadataCoordinator: BurnMetadataCoordinator = koinInject()
     val library: LibraryStateHolder = koinInject()
     val playlists: PlaylistStateHolder = koinInject()
@@ -262,12 +265,16 @@ private fun AndroidApp() {
                 coordinator.resyncIfIdle()
             }
             if (event == Lifecycle.Event.ON_RESUME) {
-                // Foreground checkpoint for the in-app review nudge: a prompt can
+                // Foreground checkpoint for both nudge systems: a prompt can
                 // only be shown from a resumed Activity, so the milestone /
-                // post-resync decision happens here (not at play time). The
-                // coordinator gates spam internally; this is cheap when nothing
-                // is due.
-                reviewScope.launch { reviewPromptCoordinator.maybePromptForReview() }
+                // post-resync / share decision happens here (not at play time).
+                // Native review runs first; the custom share dialog is only
+                // considered if the review flow didn't fire — one nudge per
+                // resume. Both gate spam internally; cheap when nothing is due.
+                reviewScope.launch {
+                    val reviewShown = reviewPromptCoordinator.maybePromptForReview()
+                    if (!reviewShown) shareNudgeCoordinator.maybePromptForShare()
+                }
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
@@ -370,7 +377,8 @@ private fun AndroidApp() {
                 },
             )
 
-            true -> App(
+            true -> Box {
+                App(
                 navigator = navigator,
             library = library,
             playlists = playlists,
@@ -400,7 +408,17 @@ private fun AndroidApp() {
             onCrossfadeDurationChange = playbackTuningStateHolder::setCrossfadeDurationSeconds,
             onBluetoothAutoplayChange = playbackTuningStateHolder::setBluetoothAutoplayEnabled,
             dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
-            )
+                )
+                val shareNudgeVisible by shareNudgeCoordinator.visible.collectAsState()
+                if (shareNudgeVisible) {
+                    ShareAppDialog(
+                        onShare = { text ->
+                            reviewScope.launch { shareNudgeCoordinator.onShareClicked(text) }
+                        },
+                        onDismiss = shareNudgeCoordinator::onDismiss,
+                    )
+                }
+            }
         }
     }
 }

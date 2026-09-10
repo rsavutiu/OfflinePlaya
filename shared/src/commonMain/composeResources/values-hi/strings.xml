@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">प्लेलिस्ट हटाएँ</string>
     <string name="cd_new_playlist">नई प्लेलिस्ट</string>
     <string name="cd_repeat_mode">दोहराएँ: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">%1$d सेकंड में चल रहा है...</item>
-        <item quantity="other">%1$d सेकंड में चल रहा है...</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d परिणाम</item>
-        <item quantity="other">%1$d परिणाम</item>
-    </plurals>
     <string name="artist_top_tracks">शीर्ष ट्रैक</string>
     <string name="cd_reorder_queue">क्रम बदलने के लिए खींचें</string>
     <string name="eq_preamp_hint">अधिकतम वॉल्यूम से आगे बूस्ट। पूर्ण वॉल्यूम पर वॉल्यूम+ इसे बढ़ाता है; वॉल्यूम− वॉल्यूम घटाने से पहले इसे कम करता है। ज़्यादा बूस्ट से आवाज़ टूट सकती है।</string>
@@ -234,10 +226,6 @@
     <string name="tag_editor_title">टैग संपादित करें</string>
     <string name="tag_editor_write_hint">टैग को फ़ाइल में लिखता है। जिन फ़ाइलों में ऐप नहीं लिख सकता (डिवाइस-इंडेक्स किए गए कुछ ट्रैक) वे विफल होंगी।</string>
     <string name="track_details_edit_tags">टैग संपादित करें</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d प्ले</item>
-        <item quantity="other">%1$d प्ले</item>
-    </plurals>
     <string name="cd_shuffle">शफ़ल</string>
     <string name="state_on">चालू</string>
     <string name="state_off">बंद</string>
@@ -254,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">ब्लूटूथ पर फिर से चलाएँ</string>
     <string name="playback_bt_autoplay_subtitle">हेडफ़ोन या कार कनेक्ट होने पर चलाना शुरू करें</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">संगीत फ़ोल्डर चुनें</string>
     <string name="onboarding_skip">छोड़ें</string>
     <string name="onboarding_back">वापस</string>
@@ -279,7 +266,6 @@
     <string name="onboarding_done_body">आपकी लाइब्रेरी तैयार है. आप बाद में सेटिंग में और फ़ोल्डर जोड़ सकते हैं या कुछ भी बदल सकते हैं.</string>
     <string name="onboarding_done_summary">%1$d ट्रैक · %2$d फ़ोल्डर</string>
     <string name="onboarding_done_cta">सुनना शुरू करें</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">संगीत तक पहुँच आवश्यक</string>
     <string name="permission_required_body">OfflinePlaya एक ऑफ़लाइन प्लेयर है — यह इस डिवाइस पर मौजूद ऑडियो फ़ाइलें चलाता है और उन्हें पढ़ने की अनुमति के बिना कुछ नहीं कर सकता. जारी रखने के लिए संगीत तक पहुँच दें.</string>
     <string name="permission_required_grant">संगीत तक पहुँच दें</string>
@@ -292,4 +278,23 @@
     <string name="lyrics_pick_loading">मिलान खोजे जा रहे हैं…</string>
     <string name="lyrics_pick_empty">कोई मिलान वाले बोल नहीं मिले</string>
     <string name="lyrics_pick_synced">सिंक किया गया</string>
+
+    <!-- Auto-translated to Hindi via local LLM; review and refine. -->
+    <string name="share_nudge_title">म्यूजिक का आनंद ले रहें हो?</string>
+    <string name="share_nudge_body">इस प्लाईर सम्पुर्णतः मुफ्त है, कोई विज्ञापन नहीं और कोई ट्रैकिंग भी नहीं — बल्कि पब्लिसिटी से अपवाद हमेशा मुफ़्त हो। इसे जनरल कई व्यक्तियों तक पहुचाने का एकमात्र रूप सभी लोगों में आप ऐसा ही करते है। अगर इसने आपके फ़ोन पर जगह बुलाया, तो सभी लोगों में उचित रूप से हम करते है।</string>
+    <string name="share_nudge_share">ऐप शेअर करें</string>
+    <string name="share_nudge_dismiss">पहले बाद में</string>
+    <string name="share_nudge_message">मुझे OfflinePlaya — एक मुफ्त,ऑनलाइन संगीत प्लॉयर हो। आज़ाद करें: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">%1$d सेकंड में चल रहा है...</item>
+        <item quantity="other">%1$d सेकंड में चल रहा है...</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d परिणाम</item>
+        <item quantity="other">%1$d परिणाम</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d प्ले</item>
+        <item quantity="other">%1$d प्ले</item>
+    </plurals>
 </resources>

@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Xóa danh sách phát</string>
     <string name="cd_new_playlist">Danh sách phát mới</string>
     <string name="cd_repeat_mode">Lặp lại: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Phát sau %1$d giây…</item>
-        <item quantity="other">Phát sau %1$d giây…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d kết quả</item>
-        <item quantity="other">%1$d kết quả</item>
-    </plurals>
     <string name="artist_top_tracks">Bản nhạc hàng đầu</string>
     <string name="cd_reorder_queue">Kéo để sắp xếp lại</string>
     <string name="eq_preamp_hint">Tăng cường vượt quá âm lượng tối đa. Tăng âm khi âm lượng tối đa sẽ nâng nó lên; Giảm âm sẽ hạ nó xuống trước khi giảm âm lượng. Tăng cường cao có thể gây méo tiếng.</string>
@@ -234,9 +226,6 @@
     <string name="tag_editor_title">Sửa thẻ</string>
     <string name="tag_editor_write_hint">Ghi thẻ vào tệp. Các tệp mà ứng dụng không thể ghi (một số bản nhạc do thiết bị lập chỉ mục) sẽ thất bại.</string>
     <string name="track_details_edit_tags">Sửa thẻ</string>
-    <plurals name="stats_plays">
-        <item quantity="other">%1$d lượt phát</item>
-    </plurals>
     <string name="cd_shuffle">Phát ngẫu nhiên</string>
     <string name="state_on">Bật</string>
     <string name="state_off">Tắt</string>
@@ -253,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Tiếp tục qua Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Bắt đầu phát khi tai nghe hoặc ô tô kết nối</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Chọn thư mục nhạc</string>
     <string name="onboarding_skip">Bỏ qua</string>
     <string name="onboarding_back">Quay lại</string>
@@ -278,7 +266,6 @@
     <string name="onboarding_done_body">Thư viện của bạn đã sẵn sàng. Bạn có thể thêm thư mục khác hoặc chỉnh sửa bất cứ điều gì sau này trong Cài đặt.</string>
     <string name="onboarding_done_summary">%1$d bài hát · %2$d thư mục</string>
     <string name="onboarding_done_cta">Bắt đầu nghe</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Cần quyền truy cập nhạc</string>
     <string name="permission_required_body">OfflinePlaya là trình phát ngoại tuyến — nó phát các tệp âm thanh trên thiết bị này và không thể làm gì nếu không có quyền đọc chúng. Cấp quyền truy cập nhạc để tiếp tục.</string>
     <string name="permission_required_grant">Cấp quyền truy cập nhạc</string>
@@ -291,4 +278,22 @@
     <string name="lyrics_pick_loading">Đang tìm kết quả khớp…</string>
     <string name="lyrics_pick_empty">Không tìm thấy lời bài hát khớp</string>
     <string name="lyrics_pick_synced">Đã đồng bộ</string>
+
+    <!-- Auto-translated to Vietnamese via local LLM; review and refine. -->
+    <string name="share_nudge_title">Bạn đang tận hưởng âm nhạc?</string>
+    <string name="share_nudge_body">Người chơi này hoàn toàn miễn phí, không có quảng cáo và không theo dõi — cũng không có ngân sách marketing nào cả. Cách duy nhất để nó đến được với người khác là khi có ai đó như bạn chia sẻ nó. Nếu nó đã có một vị trí trên điện thoại của bạn, vui lòng chia sẻ nó lại.</string>
+    <string name="share_nudge_share">Chia sẻ ứng dụng</string>
+    <string name="share_nudge_dismiss">Có lẽ sau</string>
+    <string name="share_nudge_message">Tôi đã sử dụng OfflinePlaya — một trình phát nhạc miễn phí, có thể sử dụng ngoại tuyến mà không có quảng cáo hay theo dõi. Hãy thử nghiệm: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Phát sau %1$d giây…</item>
+        <item quantity="other">Phát sau %1$d giây…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d kết quả</item>
+        <item quantity="other">%1$d kết quả</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="other">%1$d lượt phát</item>
+    </plurals>
 </resources>

@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">حذف قائمة التشغيل</string>
     <string name="cd_new_playlist">قائمة تشغيل جديدة</string>
     <string name="cd_repeat_mode">تكرار: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">جارٍ التشغيل خلال %1$d ثانية...</item>
-        <item quantity="other">يتم التشغيل خلال %1$d ثانية...</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d نتيجة</item>
-        <item quantity="other">%1$d نتيجة</item>
-    </plurals>
     <string name="artist_top_tracks">أبرز المقاطع</string>
     <string name="cd_reorder_queue">اسحب لإعادة الترتيب</string>
     <string name="eq_preamp_hint">تعزيز يتجاوز الحد الأقصى لمستوى الصوت. رفع الصوت عند المستوى الكامل يزيده؛ وخفض الصوت يقلّله قبل خفض مستوى الصوت. التعزيز العالي قد يسبب تشويهًا.</string>
@@ -234,14 +226,6 @@
     <string name="tag_editor_title">تعديل الوسوم</string>
     <string name="tag_editor_write_hint">يكتب الوسوم داخل الملف. الملفات التي لا يستطيع التطبيق الكتابة إليها (بعض المقاطع المفهرسة من الجهاز) ستفشل.</string>
     <string name="track_details_edit_tags">تعديل الوسوم</string>
-    <plurals name="stats_plays">
-        <item quantity="zero">%1$d تشغيل</item>
-        <item quantity="one">%1$d تشغيل</item>
-        <item quantity="two">%1$d تشغيل</item>
-        <item quantity="few">%1$d تشغيلات</item>
-        <item quantity="many">%1$d تشغيلًا</item>
-        <item quantity="other">%1$d تشغيل</item>
-    </plurals>
     <string name="cd_shuffle">تشغيل عشوائي</string>
     <string name="state_on">مفعّل</string>
     <string name="state_off">متوقف</string>
@@ -258,7 +242,6 @@
     <string name="eq_gain_db">%1$s ديسيبل</string>
     <string name="playback_bt_autoplay">الاستئناف عبر البلوتوث</string>
     <string name="playback_bt_autoplay_subtitle">بدء التشغيل عند اتصال سماعات الرأس أو السيارة</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">اختر مجلد موسيقى</string>
     <string name="onboarding_skip">تخطٍّ</string>
     <string name="onboarding_back">رجوع</string>
@@ -283,7 +266,6 @@
     <string name="onboarding_done_body">مكتبتك جاهزة. يمكنك إضافة مزيد من المجلدات أو تعديل أي شيء لاحقًا من الإعدادات.</string>
     <string name="onboarding_done_summary">%1$d مقطع · %2$d مجلد</string>
     <string name="onboarding_done_cta">ابدأ الاستماع</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">الوصول إلى الموسيقى مطلوب</string>
     <string name="permission_required_body">‏OfflinePlaya مشغّل يعمل دون اتصال — يشغّل ملفات الصوت المخزّنة على هذا الجهاز ولا يمكنه فعل شيء دون إذن قراءتها. امنح الوصول إلى الموسيقى للمتابعة.</string>
     <string name="permission_required_grant">منح الوصول إلى الموسيقى</string>
@@ -296,4 +278,27 @@
     <string name="lyrics_pick_loading">جارٍ البحث عن تطابقات…</string>
     <string name="lyrics_pick_empty">لم يتم العثور على كلمات مطابقة</string>
     <string name="lyrics_pick_synced">متزامنة</string>
+
+    <!-- Auto-translated to Arabic via local LLM; review and refine. -->
+    <string name="share_nudge_title">هل تستمتع بالموسيقى؟</string>
+    <string name="share_nudge_body">هذا اللاعب مجاني تمامًا، ولا يحتوي على إعلانات ولا تتبع ولا ميزانية تسويقية أيضًا. الطريقة الوحيدة التي تصل بها إلى الآخرين هي عندما يشارك بها شخص مثلك. إذا وجدت مكانه على هاتفك، من فضلك اشاركه.</string>
+    <string name="share_nudge_share">مشاركة التطبيق</string>
+    <string name="share_nudge_dismiss">ربما لاحقًا</string>
+    <string name="share_nudge_message">لقد كنت أستخدم OfflinePlaya — لاعب موسيقى مجاني بدون إعلانات أو تتبع. جرّبها: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">جارٍ التشغيل خلال %1$d ثانية...</item>
+        <item quantity="other">يتم التشغيل خلال %1$d ثانية...</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d نتيجة</item>
+        <item quantity="other">%1$d نتيجة</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="zero">%1$d تشغيل</item>
+        <item quantity="one">%1$d تشغيل</item>
+        <item quantity="two">%1$d تشغيل</item>
+        <item quantity="few">%1$d تشغيلات</item>
+        <item quantity="many">%1$d تشغيلًا</item>
+        <item quantity="other">%1$d تشغيل</item>
+    </plurals>
 </resources>

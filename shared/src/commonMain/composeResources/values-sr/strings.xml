@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Избриши плејлисту</string>
     <string name="cd_new_playlist">Нова листа за репродукцију</string>
     <string name="cd_repeat_mode">Поновите: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Репродукује се за %1$d секунду…</item>
-        <item quantity="other">Репродукује се за %1$d секунди…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d резултат</item>
-        <item quantity="other">%1$d резултата</item>
-    </plurals>
     <string name="artist_top_tracks">Најслушаније песме</string>
     <string name="cd_reorder_queue">Превуците да промените редослед</string>
     <string name="eq_preamp_hint">Појачање изнад максималне јачине звука. Зв.+ при пуној јачини га повећава; Зв.− га смањује пре него што смањи јачину. Велико појачање може да изобличи звук.</string>
@@ -234,11 +226,6 @@
     <string name="tag_editor_title">Уреди ознаке</string>
     <string name="tag_editor_write_hint">Уписује ознаке у датотеку. Датотеке у које апликација не може да пише (неке песме индексиране уређајем) неће успети.</string>
     <string name="track_details_edit_tags">Уреди ознаке</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d репродукција</item>
-        <item quantity="few">%1$d репродукције</item>
-        <item quantity="other">%1$d репродукција</item>
-    </plurals>
     <string name="cd_shuffle">Насумична репродукција</string>
     <string name="state_on">Укључено</string>
     <string name="state_off">Искључено</string>
@@ -255,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Настави преко Bluetooth-а</string>
     <string name="playback_bt_autoplay_subtitle">Покрени репродукцију када се повежу слушалице или ауто</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Изаберите фасциклу са музиком</string>
     <string name="onboarding_skip">Прескочи</string>
     <string name="onboarding_back">Назад</string>
@@ -280,7 +266,6 @@
     <string name="onboarding_done_body">Ваша библиотека је спремна. Касније у Подешавањима можете додати још фасцикли или променити било шта.</string>
     <string name="onboarding_done_summary">%1$d песама · %2$d фасцикли</string>
     <string name="onboarding_done_cta">Почни са слушањем</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Потребан приступ музици</string>
     <string name="permission_required_body">OfflinePlaya је плејер ван мреже — репродукује аудио-датотеке на овом уређају и не може ништа без дозволе да их чита. Дозволите приступ музици да наставите.</string>
     <string name="permission_required_grant">Дозволи приступ музици</string>
@@ -293,4 +278,24 @@
     <string name="lyrics_pick_loading">Тражење подударања…</string>
     <string name="lyrics_pick_empty">Није пронађен одговарајући текст</string>
     <string name="lyrics_pick_synced">Синхронизовано</string>
+
+    <!-- Auto-translated to Serbian via local LLM; review and refine. -->
+    <string name="share_nudge_title">Уживај у музике?</string>
+    <string name="share_nudge_body">Овај плејер је потпуно бесплатно, без реклама и без пратења — и без буџета за маркетинг. Једина начин да стигне до других је када неко као што сте делите јега. Ако је освојио место на вашем мобилном телефону, молим вас да га поделите.</string>
+    <string name="share_nudge_share">Делите апликацију</string>
+    <string name="share_nudge_dismiss">Можда касније</string>
+    <string name="share_nudge_message">Имам коришћен OfflinePlaya — бесплатно, офлайн музички плејер без реклама или пратења. Пробајте га: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Репродукује се за %1$d секунду…</item>
+        <item quantity="other">Репродукује се за %1$d секунди…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d резултат</item>
+        <item quantity="other">%1$d резултата</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d репродукција</item>
+        <item quantity="few">%1$d репродукције</item>
+        <item quantity="other">%1$d репродукција</item>
+    </plurals>
 </resources>

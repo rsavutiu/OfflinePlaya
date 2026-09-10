@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Изтриване на плейлист</string>
     <string name="cd_new_playlist">Нов плейлист</string>
     <string name="cd_repeat_mode">Повторение: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Пуска се след %1$d секунда...</item>
-        <item quantity="other">Възпроизвежда се след %1$d секунди...</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d резултат</item>
-        <item quantity="other">%1$d резултата</item>
-    </plurals>
     <string name="artist_top_tracks">Топ песни</string>
     <string name="cd_reorder_queue">Плъзнете за пренареждане</string>
     <string name="eq_preamp_hint">Усилване над максималната сила на звука. Зв.+ при пълна сила я увеличава; Зв.− я намалява, преди да намали звука. Силното усилване може да изкриви звука.</string>
@@ -234,10 +226,6 @@
     <string name="tag_editor_title">Редактиране на етикети</string>
     <string name="tag_editor_write_hint">Записва етикетите във файла. Файловете, в които приложението не може да пише (някои песни, индексирани от устройството), ще се провалят.</string>
     <string name="track_details_edit_tags">Редактиране на етикети</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d изпълнение</item>
-        <item quantity="other">%1$d изпълнения</item>
-    </plurals>
     <string name="cd_shuffle">Разбъркване</string>
     <string name="state_on">Включено</string>
     <string name="state_off">Изключено</string>
@@ -254,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Възобновяване при Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Стартиране на музиката при свързване на слушалки или кола</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Избери папка с музика</string>
     <string name="onboarding_skip">Пропусни</string>
     <string name="onboarding_back">Назад</string>
@@ -279,7 +266,6 @@
     <string name="onboarding_done_body">Библиотеката ви е готова. Можете да добавите още папки или да промените всичко по-късно в „Настройки“.</string>
     <string name="onboarding_done_summary">%1$d песни · %2$d папки</string>
     <string name="onboarding_done_cta">Слушай</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Нужен достъп до музика</string>
     <string name="permission_required_body">OfflinePlaya е офлайн плейър — възпроизвежда аудиофайлове, съхранени на това устройство, и не може да прави нищо без разрешение да ги чете. Дайте достъп до музиката, за да продължите.</string>
     <string name="permission_required_grant">Дай достъп до музика</string>
@@ -292,4 +278,23 @@
     <string name="lyrics_pick_loading">Търсене на съвпадения…</string>
     <string name="lyrics_pick_empty">Няма намерен съвпадащ текст</string>
     <string name="lyrics_pick_synced">Синхронизиран</string>
+
+    <!-- Auto-translated to Bulgarian via local LLM; review and refine. -->
+    <string name="share_nudge_title">Услаждавате се с музиката?</string>
+    <string name="share_nudge_body">Този плеер е напълно свободен, без реклами и без отслежване — и без бюджет за маркетинг. Единственият начин той да достигне до други хора е когато някой като вас го сподели. Ако е зает място на вашия телефон, моля, го споделете.</string>
+    <string name="share_nudge_share">Споделете приложението</string>
+    <string name="share_nudge_dismiss">Може би по-късно</string>
+    <string name="share_nudge_message">Използвам OfflinePlaya — свободен, офлайн музикален плеер без реклами или отслежване. Опитайте го: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Пуска се след %1$d секунда...</item>
+        <item quantity="other">Възпроизвежда се след %1$d секунди...</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d резултат</item>
+        <item quantity="other">%1$d резултата</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d изпълнение</item>
+        <item quantity="other">%1$d изпълнения</item>
+    </plurals>
 </resources>

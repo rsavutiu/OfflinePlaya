@@ -16,6 +16,7 @@ import com.offlineplaya.shared.data.lyrics.createLrclibLyricsSource
 import com.offlineplaya.shared.data.metadata.AndroidMetadataReader
 import com.offlineplaya.shared.data.review.CurrentActivityHolder
 import com.offlineplaya.shared.data.review.PlayReviewPrompter
+import com.offlineplaya.shared.data.share.AndroidSharer
 import com.offlineplaya.shared.data.tag.JaudiotaggerTrackTagWriter
 import com.offlineplaya.shared.data.scanner.MediaStoreDeviceAudioScanner
 import com.offlineplaya.shared.data.scanner.SafFolderScanner
@@ -36,6 +37,7 @@ import com.offlineplaya.shared.domain.tag.TrackTagWriter
 import com.offlineplaya.shared.domain.scanner.FolderScanner
 import com.offlineplaya.shared.domain.scanner.MetadataReader
 import com.offlineplaya.shared.domain.review.ReviewPrompter
+import com.offlineplaya.shared.domain.share.Sharer
 import com.offlineplaya.shared.domain.scheduling.BackgroundTaskRunner
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
@@ -122,6 +124,16 @@ val androidModule: Module = module {
     single { CurrentActivityHolder() }
     single<ReviewPrompter> {
         PlayReviewPrompter(
+            activityProvider = { get<CurrentActivityHolder>().current },
+            logger = get(),
+        )
+    }
+    // Share sheet seam for the custom "share this free app" nudge. Reuses the
+    // same current-Activity holder so the chooser animates from the foreground
+    // Activity when there is one.
+    single<Sharer> {
+        AndroidSharer(
+            appContext = androidContext(),
             activityProvider = { get<CurrentActivityHolder>().current },
             logger = get(),
         )

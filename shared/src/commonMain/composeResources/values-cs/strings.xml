@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Smazat seznam skladeb</string>
     <string name="cd_new_playlist">Nový seznam skladeb</string>
     <string name="cd_repeat_mode">Opakovat: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Přehrává se za %1$d sekundu…</item>
-        <item quantity="other">Přehrává se za %1$d sekund…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d výsledek</item>
-        <item quantity="other">Počet výsledků: %1$d</item>
-    </plurals>
     <string name="artist_top_tracks">Nejlepší skladby</string>
     <string name="cd_reorder_queue">Přetažením změníte pořadí</string>
     <string name="eq_preamp_hint">Zesílení nad maximální hlasitost. Hl.+ při plné hlasitosti ho zvyšuje; Hl.− ho snižuje, než sníží hlasitost. Vysoké zesílení může zkreslovat.</string>
@@ -234,12 +226,6 @@
     <string name="tag_editor_title">Upravit značky</string>
     <string name="tag_editor_write_hint">Zapisuje značky do souboru. Soubory, do kterých aplikace nemůže zapisovat (některé skladby indexované zařízením), selžou.</string>
     <string name="track_details_edit_tags">Upravit značky</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d přehrání</item>
-        <item quantity="few">%1$d přehrání</item>
-        <item quantity="many">%1$d přehrání</item>
-        <item quantity="other">%1$d přehrání</item>
-    </plurals>
     <string name="cd_shuffle">Náhodné přehrávání</string>
     <string name="state_on">Zapnuto</string>
     <string name="state_off">Vypnuto</string>
@@ -256,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Pokračovat přes Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Spustit přehrávání po připojení sluchátek nebo auta</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Vyberte složku s hudbou</string>
     <string name="onboarding_skip">Přeskočit</string>
     <string name="onboarding_back">Zpět</string>
@@ -281,7 +266,6 @@
     <string name="onboarding_done_body">Vaše knihovna je připravená. Další složky můžete přidat nebo cokoli upravit později v Nastavení.</string>
     <string name="onboarding_done_summary">%1$d skladeb · %2$d složek</string>
     <string name="onboarding_done_cta">Začít poslouchat</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Potřebný přístup k hudbě</string>
     <string name="permission_required_body">OfflinePlaya je offline přehrávač — přehrává zvukové soubory uložené v tomto zařízení a bez oprávnění k jejich čtení nedokáže nic. Pokračujte udělením přístupu k hudbě.</string>
     <string name="permission_required_grant">Udělit přístup k hudbě</string>
@@ -294,4 +278,25 @@
     <string name="lyrics_pick_loading">Hledání shod…</string>
     <string name="lyrics_pick_empty">Nenalezen žádný odpovídající text</string>
     <string name="lyrics_pick_synced">Synchronizováno</string>
+
+    <!-- Auto-translated to Czech via local LLM; review and refine. -->
+    <string name="share_nudge_title">Užíváte hudbu?</string>
+    <string name="share_nudge_body">Tento přehrávač je úplně zdarma, bez reklam a sledování — a ani bez marketingového rozpočtu. Jediný způsob, jak se dostane k jiným lidem, je, když někdo jako vy sdílí. Pokud mu získal místo na vašem telefonu, prosím, sdílejte ho.</string>
+    <string name="share_nudge_share">Sdílej aplikaci</string>
+    <string name="share_nudge_dismiss">Možná později</string>
+    <string name="share_nudge_message">Užívám OfflinePlaya — bezplatný offline přehrávač hudby bez reklam a sledování. Vyzkoušejte ho: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Přehrává se za %1$d sekundu…</item>
+        <item quantity="other">Přehrává se za %1$d sekund…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d výsledek</item>
+        <item quantity="other">Počet výsledků: %1$d</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d přehrání</item>
+        <item quantity="few">%1$d přehrání</item>
+        <item quantity="many">%1$d přehrání</item>
+        <item quantity="other">%1$d přehrání</item>
+    </plurals>
 </resources>

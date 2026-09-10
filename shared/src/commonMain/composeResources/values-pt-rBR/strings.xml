@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Excluir playlist</string>
     <string name="cd_new_playlist">Nova playlist</string>
     <string name="cd_repeat_mode">Repetir: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Jogando em %1$d segundo…</item>
-        <item quantity="other">Jogando em %1$d segundos…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d resultado</item>
-        <item quantity="other">%1$d resultados</item>
-    </plurals>
     <string name="artist_top_tracks">Faixas principais</string>
     <string name="cd_reorder_queue">Arraste para reordenar</string>
     <string name="eq_preamp_hint">Reforço além do volume máximo. Vol+ no volume máximo aumenta; Vol− diminui antes de reduzir o volume. Reforço alto pode distorcer.</string>
@@ -234,10 +226,6 @@
     <string name="tag_editor_title">Editar tags</string>
     <string name="tag_editor_write_hint">Grava as tags no arquivo. Arquivos em que o app não pode gravar (algumas faixas indexadas pelo dispositivo) falharão.</string>
     <string name="track_details_edit_tags">Editar tags</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d reprodução</item>
-        <item quantity="other">%1$d reproduções</item>
-    </plurals>
     <string name="cd_shuffle">Aleatório</string>
     <string name="state_on">Ativado</string>
     <string name="state_off">Desativado</string>
@@ -254,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Retomar via Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Começar a tocar quando fones ou carro conectarem</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Escolher uma pasta de música</string>
     <string name="onboarding_skip">Pular</string>
     <string name="onboarding_back">Voltar</string>
@@ -279,7 +266,6 @@
     <string name="onboarding_done_body">Sua biblioteca está pronta. Você pode adicionar mais pastas ou ajustar qualquer coisa depois nas Configurações.</string>
     <string name="onboarding_done_summary">%1$d faixas · %2$d pastas</string>
     <string name="onboarding_done_cta">Começar a ouvir</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Acesso à música necessário</string>
     <string name="permission_required_body">O OfflinePlaya é um player offline — ele reproduz os arquivos de áudio deste dispositivo e não faz nada sem permissão para lê-los. Conceda o acesso à música para continuar.</string>
     <string name="permission_required_grant">Conceder acesso à música</string>
@@ -292,4 +278,23 @@
     <string name="lyrics_pick_loading">Procurando correspondências…</string>
     <string name="lyrics_pick_empty">Nenhuma letra correspondente encontrada</string>
     <string name="lyrics_pick_synced">Sincronizada</string>
+
+    <!-- Auto-translated to Brazilian Portuguese via local LLM; review and refine. -->
+    <string name="share_nudge_title">Aproveitando a música?</string>
+    <string name="share_nudge_body">Esse player é completamente gratuito, sem anúncios e sem rastreamento — e nem tem orçamento para marketing. A única forma dele chegar a outras pessoas é quando alguém como você o compartilha. Se conseguiu ganhar um espaço no seu celular, por favor, compartilhe.</string>
+    <string name="share_nudge_share">Compartilhar o app</string>
+    <string name="share_nudge_dismiss">Talvez depois</string>
+    <string name="share_nudge_message">Tenho usado o OfflinePlaya — um player de música offline gratuito, sem anúncios ou rastreamento. Experimente: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Jogando em %1$d segundo…</item>
+        <item quantity="other">Jogando em %1$d segundos…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d resultado</item>
+        <item quantity="other">%1$d resultados</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d reprodução</item>
+        <item quantity="other">%1$d reproduções</item>
+    </plurals>
 </resources>

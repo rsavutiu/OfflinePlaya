@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Hapus daftar putar</string>
     <string name="cd_new_playlist">Daftar putar baru</string>
     <string name="cd_repeat_mode">Ulangi: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Memutar dalam %1$d detik…</item>
-        <item quantity="other">Memutar dalam %1$d detik…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d hasil</item>
-        <item quantity="other">%1$d hasil</item>
-    </plurals>
     <string name="artist_top_tracks">Lagu teratas</string>
     <string name="cd_reorder_queue">Seret untuk menyusun ulang</string>
     <string name="eq_preamp_hint">Penguatan melampaui volume maksimum. Vol+ pada volume penuh menaikkannya; Vol− menurunkannya sebelum mengurangi volume. Penguatan tinggi dapat menyebabkan distorsi.</string>
@@ -234,9 +226,6 @@
     <string name="tag_editor_title">Edit tag</string>
     <string name="tag_editor_write_hint">Menulis tag ke dalam berkas. Berkas yang tidak dapat ditulis aplikasi (beberapa lagu terindeks perangkat) akan gagal.</string>
     <string name="track_details_edit_tags">Edit tag</string>
-    <plurals name="stats_plays">
-        <item quantity="other">%1$d pemutaran</item>
-    </plurals>
     <string name="cd_shuffle">Acak</string>
     <string name="state_on">Aktif</string>
     <string name="state_off">Nonaktif</string>
@@ -253,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Lanjutkan lewat Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Mulai memutar saat headphone atau mobil terhubung</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Pilih folder musik</string>
     <string name="onboarding_skip">Lewati</string>
     <string name="onboarding_back">Kembali</string>
@@ -278,7 +266,6 @@
     <string name="onboarding_done_body">Pustaka Anda siap. Anda bisa menambahkan folder lain atau mengubah apa pun nanti di Pengaturan.</string>
     <string name="onboarding_done_summary">%1$d lagu · %2$d folder</string>
     <string name="onboarding_done_cta">Mulai mendengarkan</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Perlu akses musik</string>
     <string name="permission_required_body">OfflinePlaya adalah pemutar offline — memutar file audio di perangkat ini dan tidak bisa berbuat apa-apa tanpa izin membacanya. Berikan akses musik untuk melanjutkan.</string>
     <string name="permission_required_grant">Berikan akses musik</string>
@@ -291,4 +278,22 @@
     <string name="lyrics_pick_loading">Mencari kecocokan…</string>
     <string name="lyrics_pick_empty">Tidak ada lirik yang cocok</string>
     <string name="lyrics_pick_synced">Tersinkron</string>
+
+    <!-- Auto-translated to Indonesian via local LLM; review and refine. -->
+    <string name="share_nudge_title">Menikmati musik?</string>
+    <string name="share_nudge_body">Player ini sepenuhnya gratis, tanpa iklan dan tanpa pelacakan — serta tidak memiliki anggaran pemasaran. Satu-satunya cara untuk mencapai orang lain adalah ketika seseorang seperti Anda berbagi aplikasi ini. Jika sudah mendapat tempat di ponsel Anda, silakan bagikan.</string>
+    <string name="share_nudge_share">Bagikan aplikasi</string>
+    <string name="share_nudge_dismiss">Mungkin nanti</string>
+    <string name="share_nudge_message">Saya sudah menggunakan OfflinePlaya — pemutar musik offline yang gratis tanpa iklan atau pelacakan. Coba saja: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Memutar dalam %1$d detik…</item>
+        <item quantity="other">Memutar dalam %1$d detik…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d hasil</item>
+        <item quantity="other">%1$d hasil</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="other">%1$d pemutaran</item>
+    </plurals>
 </resources>

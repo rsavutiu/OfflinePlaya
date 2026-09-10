@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Usuń playlistę</string>
     <string name="cd_new_playlist">Nowa playlista</string>
     <string name="cd_repeat_mode">Powtórz: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Odtwarzam za %1$d sekundę…</item>
-        <item quantity="other">Odtwarzam za %1$d sekund…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">Wynik %1$d</item>
-        <item quantity="other">Wyniki: %1$d</item>
-    </plurals>
     <string name="artist_top_tracks">Najczęściej odtwarzane utwory</string>
     <string name="cd_reorder_queue">Przeciągnij, aby zmienić kolejność</string>
     <string name="eq_preamp_hint">Wzmocnienie powyżej maksymalnej głośności. Gł.+ przy pełnej głośności ją zwiększa; Gł.− zmniejsza je przed obniżeniem głośności. Wysokie wzmocnienie może powodować przesterowanie.</string>
@@ -234,12 +226,6 @@
     <string name="tag_editor_title">Edytuj tagi</string>
     <string name="tag_editor_write_hint">Zapisuje tagi w pliku. Pliki, do których aplikacja nie może zapisywać (niektóre utwory indeksowane przez urządzenie), nie powiodą się.</string>
     <string name="track_details_edit_tags">Edytuj tagi</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d odtworzenie</item>
-        <item quantity="few">%1$d odtworzenia</item>
-        <item quantity="many">%1$d odtworzeń</item>
-        <item quantity="other">%1$d odtworzenia</item>
-    </plurals>
     <string name="cd_shuffle">Odtwarzanie losowe</string>
     <string name="state_on">Włączone</string>
     <string name="state_off">Wyłączone</string>
@@ -256,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Wznów przez Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Rozpocznij odtwarzanie po połączeniu słuchawek lub samochodu</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Wybierz folder z muzyką</string>
     <string name="onboarding_skip">Pomiń</string>
     <string name="onboarding_back">Wstecz</string>
@@ -281,7 +266,6 @@
     <string name="onboarding_done_body">Twoja biblioteka jest gotowa. Więcej folderów możesz dodać lub cokolwiek zmienić później w Ustawieniach.</string>
     <string name="onboarding_done_summary">%1$d utworów · %2$d folderów</string>
     <string name="onboarding_done_cta">Zacznij słuchać</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Wymagany dostęp do muzyki</string>
     <string name="permission_required_body">OfflinePlaya to odtwarzacz offline — odtwarza pliki audio na tym urządzeniu i nic nie może bez zgody na ich odczyt. Aby kontynuować, przyznaj dostęp do muzyki.</string>
     <string name="permission_required_grant">Przyznaj dostęp do muzyki</string>
@@ -294,4 +278,25 @@
     <string name="lyrics_pick_loading">Wyszukiwanie dopasowań…</string>
     <string name="lyrics_pick_empty">Nie znaleziono pasującego tekstu</string>
     <string name="lyrics_pick_synced">Zsynchronizowany</string>
+
+    <!-- Auto-translated to Polish via local LLM; review and refine. -->
+    <string name="share_nudge_title">Czy cieszysz się muzyką?</string>
+    <string name="share_nudge_body">Ten odtwarzacz jest całkowicie darmowy, bez reklam i śledzenia — oraz bez budżetu marketingowego. Jedyne sposoby, w jaki osiąga innych ludzi, to kiedy ktoś jak Ty go udostępnia. Jeśli zdobył miejsce na Twoim telefonie, proszę go przekazać.</string>
+    <string name="share_nudge_share">Udostępnij aplikację</string>
+    <string name="share_nudge_dismiss">Może później</string>
+    <string name="share_nudge_message">Używam OfflinePlaya — darmowego odtwarzacza muzyki offline bez reklam i śledzenia. Spróbuj: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Odtwarzam za %1$d sekundę…</item>
+        <item quantity="other">Odtwarzam za %1$d sekund…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">Wynik %1$d</item>
+        <item quantity="other">Wyniki: %1$d</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d odtworzenie</item>
+        <item quantity="few">%1$d odtworzenia</item>
+        <item quantity="many">%1$d odtworzeń</item>
+        <item quantity="other">%1$d odtworzenia</item>
+    </plurals>
 </resources>

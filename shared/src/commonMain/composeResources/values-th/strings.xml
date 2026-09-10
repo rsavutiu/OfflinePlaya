@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">ลบเพลย์ลิสต์</string>
     <string name="cd_new_playlist">เพลย์ลิสต์ใหม่</string>
     <string name="cd_repeat_mode">ทำซ้ำ: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">กำลังเล่นใน %1$d วินาที...</item>
-        <item quantity="other">กำลังเล่นใน %1$d วินาที...</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d ผลลัพธ์</item>
-        <item quantity="other">%1$d ผลลัพธ์</item>
-    </plurals>
     <string name="artist_top_tracks">เพลงยอดนิยม</string>
     <string name="cd_reorder_queue">ลากเพื่อจัดเรียงใหม่</string>
     <string name="eq_preamp_hint">เพิ่มความดังเกินระดับสูงสุด เพิ่มเสียงเมื่อดังสุดจะเพิ่มค่านี้ ลดเสียงจะลดค่านี้ก่อนที่จะลดระดับเสียง การเพิ่มมากอาจทำให้เสียงแตก</string>
@@ -234,9 +226,6 @@
     <string name="tag_editor_title">แก้ไขแท็ก</string>
     <string name="tag_editor_write_hint">เขียนแท็กลงในไฟล์ ไฟล์ที่แอปเขียนไม่ได้ (บางเพลงที่จัดทำดัชนีโดยอุปกรณ์) จะล้มเหลว</string>
     <string name="track_details_edit_tags">แก้ไขแท็ก</string>
-    <plurals name="stats_plays">
-        <item quantity="other">%1$d ครั้ง</item>
-    </plurals>
     <string name="cd_shuffle">สุ่มเพลง</string>
     <string name="state_on">เปิด</string>
     <string name="state_off">ปิด</string>
@@ -253,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">เล่นต่อผ่านบลูทูธ</string>
     <string name="playback_bt_autoplay_subtitle">เริ่มเล่นเมื่อหูฟังหรือรถยนต์เชื่อมต่อ</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">เลือกโฟลเดอร์เพลง</string>
     <string name="onboarding_skip">ข้าม</string>
     <string name="onboarding_back">ย้อนกลับ</string>
@@ -278,7 +266,6 @@
     <string name="onboarding_done_body">คลังเพลงของคุณพร้อมแล้ว คุณสามารถเพิ่มโฟลเดอร์หรือปรับอะไรก็ได้ภายหลังในการตั้งค่า</string>
     <string name="onboarding_done_summary">%1$d เพลง · %2$d โฟลเดอร์</string>
     <string name="onboarding_done_cta">เริ่มฟัง</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">ต้องมีสิทธิ์เข้าถึงเพลง</string>
     <string name="permission_required_body">OfflinePlaya เป็นเครื่องเล่นแบบออฟไลน์ — เล่นไฟล์เสียงที่จัดเก็บในอุปกรณ์นี้และทำอะไรไม่ได้เลยหากไม่มีสิทธิ์อ่านไฟล์ ให้สิทธิ์เข้าถึงเพลงเพื่อดำเนินการต่อ</string>
     <string name="permission_required_grant">ให้สิทธิ์เข้าถึงเพลง</string>
@@ -291,4 +278,22 @@
     <string name="lyrics_pick_loading">กำลังค้นหารายการที่ตรงกัน…</string>
     <string name="lyrics_pick_empty">ไม่พบเนื้อเพลงที่ตรงกัน</string>
     <string name="lyrics_pick_synced">ซิงค์แล้ว</string>
+
+    <!-- Auto-translated to Thai via local LLM; review and refine. -->
+    <string name="share_nudge_title">สนุกกับเสียงเพลงไหม?</string>
+    <string name="share_nudge_body">แอปนี้เป็นผู้เล่นเพลงแบบฟรีเต็มตัว ไม่มีโฆษณา ไม่มีการติดตาม และไม่มีงบประมาณการตลาดด้วย วิธีเดียวที่มันจะไปถึงคนอื่นคือเมื่อมีคนอย่างคุณแชร์มัน ถ้ามันได้รับการติดตั้งบนโทรศัพท์ของคุณแล้ว โปรดแชร์มันต่อ</string>
+    <string name="share_nudge_share">แชร์แอป</string>
+    <string name="share_nudge_dismiss">อาจเป็นอีกที</string>
+    <string name="share_nudge_message">ฉันใช้ OfflinePlaya แอปผู้เล่นเพลงแบบออฟไลน์ที่ฟรี ไม่มีโฆษณา ไม่มีการติดตาม ลองใช้ดู: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">กำลังเล่นใน %1$d วินาที...</item>
+        <item quantity="other">กำลังเล่นใน %1$d วินาที...</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d ผลลัพธ์</item>
+        <item quantity="other">%1$d ผลลัพธ์</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="other">%1$d ครั้ง</item>
+    </plurals>
 </resources>

@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">מחק רשימת השמעה</string>
     <string name="cd_new_playlist">רשימת השמעה חדשה</string>
     <string name="cd_repeat_mode">חזור: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">משחק בעוד %1$d שניות...</item>
-        <item quantity="other">פועל בעוד %1$d שניות...</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">תוצאה של %1$d</item>
-        <item quantity="other">%1$d תוצאות</item>
-    </plurals>
     <string name="artist_top_tracks">הרצועות המובילות</string>
     <string name="cd_reorder_queue">גרור כדי לסדר מחדש</string>
     <string name="eq_preamp_hint">הגברה מעבר לעוצמת השמע המרבית. הגברת עוצמה בעוצמה מלאה מעלה אותה; הנמכת עוצמה מורידה אותה לפני הקטנת העוצמה. הגברה גבוהה עלולה לעוות.</string>
@@ -234,12 +226,6 @@
     <string name="tag_editor_title">עריכת תגיות</string>
     <string name="tag_editor_write_hint">כותב תגיות לתוך הקובץ. קבצים שהאפליקציה אינה יכולה לכתוב אליהם (חלק מהרצועות שנוספו ממפתח המכשיר) ייכשלו.</string>
     <string name="track_details_edit_tags">עריכת תגיות</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d השמעה</item>
-        <item quantity="two">%1$d השמעות</item>
-        <item quantity="many">%1$d השמעות</item>
-        <item quantity="other">%1$d השמעות</item>
-    </plurals>
     <string name="cd_shuffle">ערבוב</string>
     <string name="state_on">פועל</string>
     <string name="state_off">כבוי</string>
@@ -256,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">המשך דרך Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">התחלת ניגון כשמתחברות אוזניות או רכב</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">בחר תיקיית מוזיקה</string>
     <string name="onboarding_skip">דלג</string>
     <string name="onboarding_back">חזרה</string>
@@ -281,7 +266,6 @@
     <string name="onboarding_done_body">הספרייה שלך מוכנה. אפשר להוסיף עוד תיקיות או לשנות כל דבר מאוחר יותר בהגדרות.</string>
     <string name="onboarding_done_summary">%1$d רצועות · %2$d תיקיות</string>
     <string name="onboarding_done_cta">התחל להאזין</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">נדרשת גישה למוזיקה</string>
     <string name="permission_required_body">‏OfflinePlaya הוא נגן לא־מקוון — הוא מנגן קובצי שמע השמורים במכשיר הזה ואינו יכול לעשות דבר ללא הרשאה לקרוא אותם. הענק גישה למוזיקה כדי להמשיך.</string>
     <string name="permission_required_grant">הענק גישה למוזיקה</string>
@@ -294,4 +278,25 @@
     <string name="lyrics_pick_loading">מחפש התאמות…</string>
     <string name="lyrics_pick_empty">לא נמצאו מילים תואמות</string>
     <string name="lyrics_pick_synced">מסונכרן</string>
+
+    <!-- Auto-translated to Hebrew via local LLM; review and refine. -->
+    <string name="share_nudge_title">מتعנים במוזיקה?</string>
+    <string name="share_nudge_body">השחקן הזה הוא לגמרי חופשי, ללא פרסומות, ללא מעקב — וגם ללא התקציב לפרסום. הדרך היחידה שבה הוא מגיע לאחרים היא כשאיש כמו await делится בו. אם הוא זכה的地位 בטלפון שלך, אנא ת делитесь בו.</string>
+    <string name="share_nudge_share">שיתוף האפליקציה</string>
+    <string name="share_nudge_dismiss">אולי מאוחר יותר</string>
+    <string name="share_nudge_message">אני משתמש בOfflinePlaya — שחקן מוזיקה ללא אינטרנט, ללא פרסומות, ללא מעקב. נסה אותו: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">משחק בעוד %1$d שניות...</item>
+        <item quantity="other">פועל בעוד %1$d שניות...</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">תוצאה של %1$d</item>
+        <item quantity="other">%1$d תוצאות</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d השמעה</item>
+        <item quantity="two">%1$d השמעות</item>
+        <item quantity="many">%1$d השמעות</item>
+        <item quantity="other">%1$d השמעות</item>
+    </plurals>
 </resources>

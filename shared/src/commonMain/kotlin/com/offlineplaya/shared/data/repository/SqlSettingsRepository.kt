@@ -66,6 +66,12 @@ internal class SqlSettingsRepository(
                 ?: defaults.highestMilestoneFired,
             lastPromptAtMillis = rows[KEY_REVIEW_LAST_PROMPT]?.toLongOrNull()
                 ?: defaults.lastPromptAtMillis,
+            firstLaunchAtMillis = rows[KEY_REVIEW_FIRST_LAUNCH]?.toLongOrNull()
+                ?: defaults.firstLaunchAtMillis,
+            shareNudgeLastShownAtMillis = rows[KEY_SHARE_LAST_SHOWN]?.toLongOrNull()
+                ?: defaults.shareNudgeLastShownAtMillis,
+            shareNudgeActioned = rows[KEY_SHARE_ACTIONED]?.toBoolean()
+                ?: defaults.shareNudgeActioned,
         )
     }
 
@@ -74,6 +80,9 @@ internal class SqlSettingsRepository(
             queries.insertOrReplace(KEY_REVIEW_PLAYS, state.playsCounted.toString())
             queries.insertOrReplace(KEY_REVIEW_MILESTONE, state.highestMilestoneFired.toString())
             queries.insertOrReplace(KEY_REVIEW_LAST_PROMPT, state.lastPromptAtMillis.toString())
+            queries.insertOrReplace(KEY_REVIEW_FIRST_LAUNCH, state.firstLaunchAtMillis.toString())
+            queries.insertOrReplace(KEY_SHARE_LAST_SHOWN, state.shareNudgeLastShownAtMillis.toString())
+            queries.insertOrReplace(KEY_SHARE_ACTIONED, state.shareNudgeActioned.toString())
         }
     }
 
@@ -263,6 +272,9 @@ internal class SqlSettingsRepository(
         const val KEY_REVIEW_PLAYS = "review.plays_counted"
         const val KEY_REVIEW_MILESTONE = "review.highest_milestone"
         const val KEY_REVIEW_LAST_PROMPT = "review.last_prompt_at"
+        const val KEY_REVIEW_FIRST_LAUNCH = "review.first_launch_at"
+        const val KEY_SHARE_LAST_SHOWN = "share.last_shown_at"
+        const val KEY_SHARE_ACTIONED = "share.actioned"
         const val KEY_ONBOARDING_COMPLETED = "onboarding.completed"
     }
 }

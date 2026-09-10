@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Speellijst verwijderen</string>
     <string name="cd_new_playlist">Nieuwe afspeellijst</string>
     <string name="cd_repeat_mode">Herhaal: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Afspelen over %1$d seconde…</item>
-        <item quantity="other">Afspelen over %1$d seconden…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d resultaat</item>
-        <item quantity="other">%1$d resultaten</item>
-    </plurals>
     <string name="artist_top_tracks">Topnummers</string>
     <string name="cd_reorder_queue">Sleep om te herschikken</string>
     <string name="eq_preamp_hint">Versterking boven het maximale volume. Vol+ bij vol volume verhoogt het; Vol− verlaagt het voordat het volume daalt. Hoge versterking kan vervormen.</string>
@@ -234,10 +226,6 @@
     <string name="tag_editor_title">Tags bewerken</string>
     <string name="tag_editor_write_hint">Schrijft tags in het bestand. Bestanden waar de app niet naar kan schrijven (sommige door het apparaat geïndexeerde nummers) mislukken.</string>
     <string name="track_details_edit_tags">Tags bewerken</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d keer afgespeeld</item>
-        <item quantity="other">%1$d keer afgespeeld</item>
-    </plurals>
     <string name="cd_shuffle">Shuffle</string>
     <string name="state_on">Aan</string>
     <string name="state_off">Uit</string>
@@ -254,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Hervatten via Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Begin met afspelen wanneer koptelefoon of auto verbindt</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Kies een muziekmap</string>
     <string name="onboarding_skip">Overslaan</string>
     <string name="onboarding_back">Terug</string>
@@ -279,7 +266,6 @@
     <string name="onboarding_done_body">Je bibliotheek is klaar. Je kunt later in Instellingen meer mappen toevoegen of van alles aanpassen.</string>
     <string name="onboarding_done_summary">%1$d nummers · %2$d mappen</string>
     <string name="onboarding_done_cta">Begin met luisteren</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Toegang tot muziek vereist</string>
     <string name="permission_required_body">OfflinePlaya is een offline speler — hij speelt audiobestanden op dit apparaat af en kan niets zonder toestemming om ze te lezen. Verleen toegang tot muziek om door te gaan.</string>
     <string name="permission_required_grant">Toegang tot muziek verlenen</string>
@@ -292,4 +278,23 @@
     <string name="lyrics_pick_loading">Zoeken naar overeenkomsten…</string>
     <string name="lyrics_pick_empty">Geen overeenkomende songtekst gevonden</string>
     <string name="lyrics_pick_synced">Gesynchroniseerd</string>
+
+    <!-- Auto-translated to Dutch via local LLM; review and refine. -->
+    <string name="share_nudge_title">Geniet van de muziek?</string>
+    <string name="share_nudge_body">Deze speler is volledig gratis, zonder reclame en zonder tracking — en ook zonder marketingbudget. De enige manier waarop hij bij anderen kan komen, is wanneer iemand zoals jij het deelt. Als hij een plek op je telefoon heeft verdiend, geef het dan door.</string>
+    <string name="share_nudge_share">Deel de app</string>
+    <string name="share_nudge_dismiss">Misschien later</string>
+    <string name="share_nudge_message">Ik gebruik OfflinePlaya — een gratis, offline muziekspeler zonder reclame of tracking. Probeer het eens: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Afspelen over %1$d seconde…</item>
+        <item quantity="other">Afspelen over %1$d seconden…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d resultaat</item>
+        <item quantity="other">%1$d resultaten</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d keer afgespeeld</item>
+        <item quantity="other">%1$d keer afgespeeld</item>
+    </plurals>
 </resources>

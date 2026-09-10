@@ -39,6 +39,7 @@ import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.queue.QueueStateRecorder
 import com.offlineplaya.shared.presentation.review.ReviewPromptCoordinator
+import com.offlineplaya.shared.presentation.review.ShareNudgeCoordinator
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
 import com.offlineplaya.shared.presentation.settings.LyricsPreferencesStateHolder
 import com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder
@@ -276,6 +277,17 @@ val sharedModule: Module = module {
         ReviewPromptCoordinator(
             settings = get(),
             prompter = get(),
+            logger = get(),
+        )
+    }
+
+    // Custom "share this free app" nudge: shown after a week of use + some
+    // listening, deconflicted against the native review flow via the shared
+    // lastPromptAt clock. `Sharer` is platform-provided (androidModule).
+    single {
+        ShareNudgeCoordinator(
+            settings = get(),
+            sharer = get(),
             logger = get(),
         )
     }

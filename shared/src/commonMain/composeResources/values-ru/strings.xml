@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Удалить плейлист</string>
     <string name="cd_new_playlist">Новый плейлист</string>
     <string name="cd_repeat_mode">Повтор: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Воспроизведение через %1$d секунду…</item>
-        <item quantity="other">Воспроизведение через %1$d секунд…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d результат</item>
-        <item quantity="other">%1$d результатов</item>
-    </plurals>
     <string name="artist_top_tracks">Популярные треки</string>
     <string name="cd_reorder_queue">Перетащите для изменения порядка</string>
     <string name="eq_preamp_hint">Усиление выше максимальной громкости. Гр.+ при полной громкости повышает его; Гр.− понижает перед уменьшением громкости. Сильное усиление может вызывать искажения.</string>
@@ -234,12 +226,6 @@
     <string name="tag_editor_title">Редактировать теги</string>
     <string name="tag_editor_write_hint">Записывает теги в файл. Файлы, в которые приложение не может писать (некоторые треки, проиндексированные устройством), завершатся ошибкой.</string>
     <string name="track_details_edit_tags">Редактировать теги</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d прослушивание</item>
-        <item quantity="few">%1$d прослушивания</item>
-        <item quantity="many">%1$d прослушиваний</item>
-        <item quantity="other">%1$d прослушивания</item>
-    </plurals>
     <string name="cd_shuffle">Перемешивание</string>
     <string name="state_on">Включено</string>
     <string name="state_off">Выключено</string>
@@ -256,7 +242,6 @@
     <string name="eq_gain_db">%1$s дБ</string>
     <string name="playback_bt_autoplay">Продолжить по Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Начинать воспроизведение при подключении наушников или машины</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Выберите папку с музыкой</string>
     <string name="onboarding_skip">Пропустить</string>
     <string name="onboarding_back">Назад</string>
@@ -281,7 +266,6 @@
     <string name="onboarding_done_body">Ваша медиатека готова. Позже вы можете добавить папки или изменить что угодно в настройках.</string>
     <string name="onboarding_done_summary">%1$d треков · %2$d папок</string>
     <string name="onboarding_done_cta">Начать слушать</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Требуется доступ к музыке</string>
     <string name="permission_required_body">OfflinePlaya — офлайн-плеер: он воспроизводит аудиофайлы на этом устройстве и не может ничего без разрешения на их чтение. Чтобы продолжить, предоставьте доступ к музыке.</string>
     <string name="permission_required_grant">Предоставить доступ к музыке</string>
@@ -294,4 +278,25 @@
     <string name="lyrics_pick_loading">Поиск совпадений…</string>
     <string name="lyrics_pick_empty">Совпадающий текст не найден</string>
     <string name="lyrics_pick_synced">Синхронизирован</string>
+
+    <!-- Auto-translated to Russian via local LLM; review and refine. -->
+    <string name="share_nudge_title">Наслаждаетесь музыкой?</string>
+    <string name="share_nudge_body">Этот проигрыватель полностью бесплатный, без рекламы и отслеживания — и без бюджета на маркетинг тоже. Единственный способ, как он достигает других людей, — это когда кто-то, как вы, делится им. Если он нашел себе место на вашем телефоне, пожалуйста, передавайте его дальше.</string>
+    <string name="share_nudge_share">Поделиться приложением</string>
+    <string name="share_nudge_dismiss">Может быть, позже</string>
+    <string name="share_nudge_message">Я использую OfflinePlaya — бесплатный, офлайн-проигрыватель музыки без рекламы и отслеживания. Попробуйте его: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Воспроизведение через %1$d секунду…</item>
+        <item quantity="other">Воспроизведение через %1$d секунд…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d результат</item>
+        <item quantity="other">%1$d результатов</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d прослушивание</item>
+        <item quantity="few">%1$d прослушивания</item>
+        <item quantity="many">%1$d прослушиваний</item>
+        <item quantity="other">%1$d прослушивания</item>
+    </plurals>
 </resources>

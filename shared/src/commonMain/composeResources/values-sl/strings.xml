@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Izbriši seznam predvajanja</string>
     <string name="cd_new_playlist">Nov seznam predvajanja</string>
     <string name="cd_repeat_mode">Ponovi: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Predvajanje čez %1$d sekundo …</item>
-        <item quantity="other">Predvajanje čez %1$d sekund …</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d rezultat</item>
-        <item quantity="other">%1$d rezultatov</item>
-    </plurals>
     <string name="artist_top_tracks">Najbolj predvajane skladbe</string>
     <string name="cd_reorder_queue">Povlecite za prerazporeditev</string>
     <string name="eq_preamp_hint">Ojačanje nad najvišjo glasnostjo. Gl.+ pri polni glasnosti ga poveča; Gl.− ga zmanjša, preden zmanjša glasnost. Visoko ojačanje lahko popači zvok.</string>
@@ -234,12 +226,6 @@
     <string name="tag_editor_title">Uredi oznake</string>
     <string name="tag_editor_write_hint">Zapiše oznake v datoteko. Datoteke, v katere aplikacija ne more pisati (nekatere skladbe, indeksirane v napravi), bodo spodletele.</string>
     <string name="track_details_edit_tags">Uredi oznake</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d predvajanje</item>
-        <item quantity="two">%1$d predvajanji</item>
-        <item quantity="few">%1$d predvajanja</item>
-        <item quantity="other">%1$d predvajanj</item>
-    </plurals>
     <string name="cd_shuffle">Naključno predvajanje</string>
     <string name="state_on">Vklopljeno</string>
     <string name="state_off">Izklopljeno</string>
@@ -256,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Nadaljuj prek Bluetootha</string>
     <string name="playback_bt_autoplay_subtitle">Začni predvajanje, ko se povežejo slušalke ali avto</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Izberite mapo z glasbo</string>
     <string name="onboarding_skip">Preskoči</string>
     <string name="onboarding_back">Nazaj</string>
@@ -281,7 +266,6 @@
     <string name="onboarding_done_body">Vaša knjižnica je pripravljena. Pozneje lahko v Nastavitvah dodate več map ali spremenite kar koli.</string>
     <string name="onboarding_done_summary">%1$d skladb · %2$d map</string>
     <string name="onboarding_done_cta">Začni poslušati</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Potreben dostop do glasbe</string>
     <string name="permission_required_body">OfflinePlaya je predvajalnik brez povezave — predvaja zvočne datoteke v tej napravi in brez dovoljenja za njihovo branje ne more storiti ničesar. Za nadaljevanje dovolite dostop do glasbe.</string>
     <string name="permission_required_grant">Dovoli dostop do glasbe</string>
@@ -294,4 +278,25 @@
     <string name="lyrics_pick_loading">Iskanje ujemanj…</string>
     <string name="lyrics_pick_empty">Ni najdenega ujemajočega besedila</string>
     <string name="lyrics_pick_synced">Sinhronizirano</string>
+
+    <!-- Auto-translated to Slovenian via local LLM; review and refine. -->
+    <string name="share_nudge_title">Uživajte v glasbi?</string>
+    <string name="share_nudge_body">Ta predvajalnik je popolnoma brezplačen, brez oglaševanj in sledenja — ter tudi brez marketinga. Edina način, kako se dostavi drugim ljudem, je, ko ga nekdo kot vi deli. Če je zasedel mesto na vašem telefonu, prosim, ga preporočite.</string>
+    <string name="share_nudge_share">Deli aplikacijo</string>
+    <string name="share_nudge_dismiss">Možno kasneje</string>
+    <string name="share_nudge_message">Uporabljam OfflinePlaya — brezplačni predvajalnik glasbe brez oglaševanj in sledenja. Poskusite ga: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Predvajanje čez %1$d sekundo …</item>
+        <item quantity="other">Predvajanje čez %1$d sekund …</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d rezultat</item>
+        <item quantity="other">%1$d rezultatov</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d predvajanje</item>
+        <item quantity="two">%1$d predvajanji</item>
+        <item quantity="few">%1$d predvajanja</item>
+        <item quantity="other">%1$d predvajanj</item>
+    </plurals>
 </resources>

@@ -56,9 +56,15 @@ class ReviewPromptCoordinator(
      * review flow if a play-count milestone is due, otherwise nudges an
      * established user once per cooldown. No-op when nothing is due or the
      * store declines to show the dialog.
+     *
+     * Returns `true` when it actually launched the review flow. The host uses
+     * that to keep to one nudge per resume: only if this returns `false` does
+     * it then consider the [ShareNudgeCoordinator]. [lastPromptAtMillis] is the
+     * shared clock both systems write, so a launched review also holds off the
+     * next share dialog (and vice-versa).
      */
-    suspend fun maybePromptForReview() {
-        try {
+    suspend fun maybePromptForReview(): Boolean {
+        return try {
             val state = settings.getReviewPromptState()
             val dueMilestone = milestones.firstOrNull {
                 it > state.highestMilestoneFired && state.playsCounted >= it
@@ -72,6 +78,9 @@ class ReviewPromptCoordinator(
                                 lastPromptAtMillis = now(),
                             ),
                         )
+                        true
+                    } else {
+                        false
                     }
                 }
                 // Post-resync nudge: established users only, cooldown-gated.
@@ -79,11 +88,16 @@ class ReviewPromptCoordinator(
                     now() - state.lastPromptAtMillis >= resyncCooldownMillis -> {
                     if (prompter.requestReview()) {
                         settings.setReviewPromptState(state.copy(lastPromptAtMillis = now()))
+                        true
+                    } else {
+                        false
                     }
                 }
+                else -> false
             }
         } catch (t: Throwable) {
             logger.w(TAG, "Review prompt checkpoint failed: ${t.message}")
+            false
         }
     }
 

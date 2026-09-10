@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Lejátszási lista törlése</string>
     <string name="cd_new_playlist">Új lejátszási lista</string>
     <string name="cd_repeat_mode">Ismétlés: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Lejátszás %1$d másodperc múlva…</item>
-        <item quantity="other">Lejátszás %1$d másodperc múlva…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d eredmény</item>
-        <item quantity="other">%1$d találat</item>
-    </plurals>
     <string name="artist_top_tracks">Legjátszottabb számok</string>
     <string name="cd_reorder_queue">Húzd az átrendezéshez</string>
     <string name="eq_preamp_hint">Erősítés a maximális hangerő felett. A Hang+ teljes hangerőn növeli; a Hang− csökkenti, mielőtt a hangerőt csökkentené. A nagy erősítés torzíthat.</string>
@@ -234,10 +226,6 @@
     <string name="tag_editor_title">Címkék szerkesztése</string>
     <string name="tag_editor_write_hint">A címkéket a fájlba írja. Azok a fájlok, amelyekbe az alkalmazás nem tud írni (egyes eszköz által indexelt számok), sikertelenek lesznek.</string>
     <string name="track_details_edit_tags">Címkék szerkesztése</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d lejátszás</item>
-        <item quantity="other">%1$d lejátszás</item>
-    </plurals>
     <string name="cd_shuffle">Keverés</string>
     <string name="state_on">Be</string>
     <string name="state_off">Ki</string>
@@ -254,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Folytatás Bluetooth-on</string>
     <string name="playback_bt_autoplay_subtitle">Lejátszás indítása fülhallgató vagy autó csatlakozásakor</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Zenemappa kiválasztása</string>
     <string name="onboarding_skip">Kihagyás</string>
     <string name="onboarding_back">Vissza</string>
@@ -279,7 +266,6 @@
     <string name="onboarding_done_body">A könyvtárad készen áll. Később a Beállításokban további mappákat adhatsz hozzá, vagy bármit módosíthatsz.</string>
     <string name="onboarding_done_summary">%1$d szám · %2$d mappa</string>
     <string name="onboarding_done_cta">Hallgatás megkezdése</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Zenehozzáférés szükséges</string>
     <string name="permission_required_body">Az OfflinePlaya offline lejátszó — az ezen az eszközön tárolt hangfájlokat játssza le, és olvasási engedély nélkül semmit sem tud. A folytatáshoz engedélyezd a zenehozzáférést.</string>
     <string name="permission_required_grant">Zenehozzáférés engedélyezése</string>
@@ -292,4 +278,23 @@
     <string name="lyrics_pick_loading">Találatok keresése…</string>
     <string name="lyrics_pick_empty">Nincs egyező dalszöveg</string>
     <string name="lyrics_pick_synced">Szinkronizálva</string>
+
+    <!-- Auto-translated to Hungarian via local LLM; review and refine. -->
+    <string name="share_nudge_title">Meg tudod élvezni a zenét?</string>
+    <string name="share_nudge_body">Ez a lejátszó teljesen ingyenes, nincs hirdetés, ny一下 tracking — és nincs hirdetési költség sem. A megosztás kivételével nincs más módja, hogy elérje másokat. Ha sikerült helyet szereznie a telefonodon, kérlek ossza meg.</string>
+    <string name="share_nudge_share">Alkalmazás megosztása</string>
+    <string name="share_nudge_dismiss">Talán később</string>
+    <string name="share_nudge_message">Használom az OfflinePlaya-t — egy ingyenes, offline zenelejátszót, amely nincs hirdetés, ny一下 tracking. Próbáld ki: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Lejátszás %1$d másodperc múlva…</item>
+        <item quantity="other">Lejátszás %1$d másodperc múlva…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d eredmény</item>
+        <item quantity="other">%1$d találat</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d lejátszás</item>
+        <item quantity="other">%1$d lejátszás</item>
+    </plurals>
 </resources>

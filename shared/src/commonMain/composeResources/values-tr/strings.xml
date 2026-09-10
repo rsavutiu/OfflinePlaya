@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Çalma listesini sil</string>
     <string name="cd_new_playlist">Yeni oynatma listesi</string>
     <string name="cd_repeat_mode">Tekrarla: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">%1$d saniye içinde oynatılıyor…</item>
-        <item quantity="other">%1$d saniye içinde oynatılıyor…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d sonuç</item>
-        <item quantity="other">%1$d sonuç</item>
-    </plurals>
     <string name="artist_top_tracks">En çok çalınan parçalar</string>
     <string name="cd_reorder_queue">Yeniden sıralamak için sürükleyin</string>
     <string name="eq_preamp_hint">Maksimum ses seviyesinin ötesinde yükseltme. Tam seviyede Ses+ bunu artırır; Ses− ise sesi azaltmadan önce bunu düşürür. Yüksek yükseltme bozulmaya yol açabilir.</string>
@@ -234,10 +226,6 @@
     <string name="tag_editor_title">Etiketleri düzenle</string>
     <string name="tag_editor_write_hint">Etiketleri dosyaya yazar. Uygulamanın yazamadığı dosyalar (cihaz tarafından dizinlenen bazı parçalar) başarısız olur.</string>
     <string name="track_details_edit_tags">Etiketleri düzenle</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d çalınma</item>
-        <item quantity="other">%1$d çalınma</item>
-    </plurals>
     <string name="cd_shuffle">Karıştır</string>
     <string name="state_on">Açık</string>
     <string name="state_off">Kapalı</string>
@@ -254,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Bluetooth ile devam et</string>
     <string name="playback_bt_autoplay_subtitle">Kulaklık veya araba bağlanınca çalmaya başla</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Bir müzik klasörü seç</string>
     <string name="onboarding_skip">Atla</string>
     <string name="onboarding_back">Geri</string>
@@ -279,7 +266,6 @@
     <string name="onboarding_done_body">Kitaplığınız hazır. Daha sonra Ayarlar\'dan başka klasörler ekleyebilir veya her şeyi değiştirebilirsiniz.</string>
     <string name="onboarding_done_summary">%1$d parça · %2$d klasör</string>
     <string name="onboarding_done_cta">Dinlemeye başla</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Müzik erişimi gerekli</string>
     <string name="permission_required_body">OfflinePlaya çevrimdışı bir oynatıcıdır — bu cihazdaki ses dosyalarını çalar ve onları okuma izni olmadan hiçbir şey yapamaz. Devam etmek için müzik erişimi verin.</string>
     <string name="permission_required_grant">Müzik erişimi ver</string>
@@ -292,4 +278,23 @@
     <string name="lyrics_pick_loading">Eşleşmeler aranıyor…</string>
     <string name="lyrics_pick_empty">Eşleşen şarkı sözü bulunamadı</string>
     <string name="lyrics_pick_synced">Eşitlendi</string>
+
+    <!-- Auto-translated to Turkish via local LLM; review and refine. -->
+    <string name="share_nudge_title">Müziği seviyor musunuz?</string>
+    <string name="share_nudge_body">Bu oynatıcı tamamen ücretsizdir, reklamsız, izleme izi bırakmaz ve ayrıca pazarlama bütçesi de yoktur. Başka insanlara ulaşabilmesi için sadece birisi gibi sizin gibi birisi onu paylaşması gerekir. Telefonunuza yer edinmişse lütfen paylaşın.</string>
+    <string name="share_nudge_share">Uygulamayı paylaş</string>
+    <string name="share_nudge_dismiss">Belki daha sonra</string>
+    <string name="share_nudge_message">OfflinePlaya kullanmaya devam ediyorum — reklamsız, çevrimdışı bir müzik oynatıcısı. Deneyin: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">%1$d saniye içinde oynatılıyor…</item>
+        <item quantity="other">%1$d saniye içinde oynatılıyor…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d sonuç</item>
+        <item quantity="other">%1$d sonuç</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d çalınma</item>
+        <item quantity="other">%1$d çalınma</item>
+    </plurals>
 </resources>

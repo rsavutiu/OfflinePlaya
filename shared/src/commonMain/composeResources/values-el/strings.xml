@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Διαγραφή λίστας αναπαραγωγής</string>
     <string name="cd_new_playlist">Νέα λίστα αναπαραγωγής</string>
     <string name="cd_repeat_mode">Επανάληψη: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Αναπαραγωγή σε %1$d δευτερόλεπτο…</item>
-        <item quantity="other">Αναπαραγωγή σε %1$d δευτερόλεπτα…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d αποτέλεσμα</item>
-        <item quantity="other">%1$d αποτελέσματα</item>
-    </plurals>
     <string name="artist_top_tracks">Κορυφαία κομμάτια</string>
     <string name="cd_reorder_queue">Σύρετε για αναδιάταξη</string>
     <string name="eq_preamp_hint">Ενίσχυση πέρα από τη μέγιστη ένταση. Το Έντ.+ στη μέγιστη ένταση την αυξάνει· το Έντ.− τη μειώνει πριν χαμηλώσει η ένταση. Η υψηλή ενίσχυση μπορεί να προκαλέσει παραμόρφωση.</string>
@@ -234,10 +226,6 @@
     <string name="tag_editor_title">Επεξεργασία ετικετών</string>
     <string name="tag_editor_write_hint">Γράφει τις ετικέτες μέσα στο αρχείο. Τα αρχεία στα οποία η εφαρμογή δεν μπορεί να γράψει (ορισμένα κομμάτια από το ευρετήριο της συσκευής) θα αποτύχουν.</string>
     <string name="track_details_edit_tags">Επεξεργασία ετικετών</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d αναπαραγωγή</item>
-        <item quantity="other">%1$d αναπαραγωγές</item>
-    </plurals>
     <string name="cd_shuffle">Τυχαία αναπαραγωγή</string>
     <string name="state_on">Ενεργό</string>
     <string name="state_off">Ανενεργό</string>
@@ -254,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Συνέχεια μέσω Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Έναρξη αναπαραγωγής όταν συνδεθούν ακουστικά ή αυτοκίνητο</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Επιλογή φακέλου μουσικής</string>
     <string name="onboarding_skip">Παράλειψη</string>
     <string name="onboarding_back">Πίσω</string>
@@ -279,7 +266,6 @@
     <string name="onboarding_done_body">Η βιβλιοθήκη σας είναι έτοιμη. Μπορείτε να προσθέσετε κι άλλους φακέλους ή να αλλάξετε οτιδήποτε αργότερα στις Ρυθμίσεις.</string>
     <string name="onboarding_done_summary">%1$d κομμάτια · %2$d φάκελοι</string>
     <string name="onboarding_done_cta">Ξεκινήστε την ακρόαση</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Απαιτείται πρόσβαση στη μουσική</string>
     <string name="permission_required_body">Το OfflinePlaya είναι πρόγραμμα αναπαραγωγής εκτός σύνδεσης — αναπαράγει αρχεία ήχου σε αυτή τη συσκευή και δεν μπορεί να κάνει τίποτα χωρίς άδεια ανάγνωσής τους. Παραχωρήστε πρόσβαση στη μουσική για να συνεχίσετε.</string>
     <string name="permission_required_grant">Παραχώρηση πρόσβασης στη μουσική</string>
@@ -292,4 +278,23 @@
     <string name="lyrics_pick_loading">Αναζήτηση αντιστοιχιών…</string>
     <string name="lyrics_pick_empty">Δεν βρέθηκαν αντίστοιχοι στίχοι</string>
     <string name="lyrics_pick_synced">Συγχρονισμένοι</string>
+
+    <!-- Auto-translated to Greek via local LLM; review and refine. -->
+    <string name="share_nudge_title">Απολαμβάνετε τη μουσική;</string>
+    <string name="share_nudge_body">Αυτός ο παραγωγός είναι πλήρως δωρεάν, χωρίς διαφημιστικά και χωρίς παρακολούθηση — και χωρίς και προσωρινό προϋπολογισμό διαφημίσεων. Το μόνο τρόπο που φτάνει σε άλλους άνθρωπους είναι όταν κάποιος όπως εσύ το κοινοποιεί. Αν έχει καταλάβει ένα σημείο στο κινητό σας, παρακαλώ το κοινοποιήστε.</string>
+    <string name="share_nudge_share">Κοινοποίηση της εφαρμογής</string>
+    <string name="share_nudge_dismiss">Πιθανότατα αργότερα</string>
+    <string name="share_nudge_message">Έχω χρησιμοποιήσει την OfflinePlaya — μια δωρεάν, αφόρτιστη μουσική παραγωγό με καμία διαφήμιση ή παρακολούθηση. Δοκιμάστε την: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Αναπαραγωγή σε %1$d δευτερόλεπτο…</item>
+        <item quantity="other">Αναπαραγωγή σε %1$d δευτερόλεπτα…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d αποτέλεσμα</item>
+        <item quantity="other">%1$d αποτελέσματα</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d αναπαραγωγή</item>
+        <item quantity="other">%1$d αναπαραγωγές</item>
+    </plurals>
 </resources>

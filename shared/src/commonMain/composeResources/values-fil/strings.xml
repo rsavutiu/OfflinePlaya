@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Tanggalin ang playlist</string>
     <string name="cd_new_playlist">Bagong playlist</string>
     <string name="cd_repeat_mode">Ulitin: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Nagpe-play sa loob ng %1$d segundo…</item>
-        <item quantity="other">Nagpe-play sa loob ng %1$d segundo…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d resulta</item>
-        <item quantity="other">%1$d mga resulta</item>
-    </plurals>
     <string name="artist_top_tracks">Mga nangungunang track</string>
     <string name="cd_reorder_queue">I-drag para iayos muli</string>
     <string name="eq_preamp_hint">Pagpapalakas lampas sa maximum na volume. Ang Vol+ sa buong volume ay nagtataas nito; binababa ito ng Vol− bago bawasan ang volume. Ang mataas na boost ay maaaring mag-clip.</string>
@@ -234,10 +226,6 @@
     <string name="tag_editor_title">I-edit ang mga tag</string>
     <string name="tag_editor_write_hint">Isinusulat ang mga tag sa file. Mabibigo ang mga file na hindi kayang sulatan ng app (ilang track na na-index ng device).</string>
     <string name="track_details_edit_tags">I-edit ang mga tag</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d play</item>
-        <item quantity="other">%1$d (na) play</item>
-    </plurals>
     <string name="cd_shuffle">Shuffle</string>
     <string name="state_on">Naka-on</string>
     <string name="state_off">Naka-off</string>
@@ -254,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Ituloy sa Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Magsimulang mag-play kapag kumonekta ang headphones o kotse</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Pumili ng folder ng musika</string>
     <string name="onboarding_skip">Laktawan</string>
     <string name="onboarding_back">Bumalik</string>
@@ -279,7 +266,6 @@
     <string name="onboarding_done_body">Handa na ang iyong library. Maaari kang magdagdag ng mga folder o mag-ayos ng kahit ano mamaya sa Mga Setting.</string>
     <string name="onboarding_done_summary">%1$d track · %2$d folder</string>
     <string name="onboarding_done_cta">Simulang makinig</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Kailangan ng access sa musika</string>
     <string name="permission_required_body">Ang OfflinePlaya ay isang offline player — nagpe-play ito ng mga audio file sa device na ito at wala itong magagawa nang walang pahintulot na basahin ang mga ito. Magbigay ng access sa musika para magpatuloy.</string>
     <string name="permission_required_grant">Magbigay ng access sa musika</string>
@@ -292,4 +278,23 @@
     <string name="lyrics_pick_loading">Naghahanap ng mga tugma…</string>
     <string name="lyrics_pick_empty">Walang nahanap na tugmang lyrics</string>
     <string name="lyrics_pick_synced">Naka-sync</string>
+
+    <!-- Auto-translated to Filipino via local LLM; review and refine. -->
+    <string name="share_nudge_title">Nangangasiwa ka ba sa musika?</string>
+    <string name="share_nudge_body">Ang player na ito ay kompletong libre, walang mga ad, walang pagtakda, at walang budget para sa marketing. Ang angkop na paraan para makarating ito sa iba ay kapag may taong tulad mo na nagbabahagi nito. Kung ito ay naging bahagi ng iyong telepono, mangyaring ihatid ito.</string>
+    <string name="share_nudge_share">I-share ang app</string>
+    <string name="share_nudge_dismiss">Sige mamaya</string>
+    <string name="share_nudge_message">Nagsusulat ako ng OfflinePlaya — isang libre, offline music player na walang mga ad o pagtakda. Subukan ito: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Nagpe-play sa loob ng %1$d segundo…</item>
+        <item quantity="other">Nagpe-play sa loob ng %1$d segundo…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d resulta</item>
+        <item quantity="other">%1$d mga resulta</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d play</item>
+        <item quantity="other">%1$d (na) play</item>
+    </plurals>
 </resources>

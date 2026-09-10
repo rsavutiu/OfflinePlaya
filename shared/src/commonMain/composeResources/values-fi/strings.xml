@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Poista soittolista</string>
     <string name="cd_new_playlist">Uusi soittolista</string>
     <string name="cd_repeat_mode">Toista: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Toistetaan %1$d sekunnin kuluttua…</item>
-        <item quantity="other">Toistetaan %1$d sekunnin kuluttua…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d tulos</item>
-        <item quantity="other">%1$d tulosta</item>
-    </plurals>
     <string name="artist_top_tracks">Suosituimmat kappaleet</string>
     <string name="cd_reorder_queue">Järjestä vetämällä</string>
     <string name="eq_preamp_hint">Vahvistus enimmäisäänenvoimakkuuden yli. Ään+ täydellä voimakkuudella nostaa sitä; Ään− laskee sitä ennen äänenvoimakkuuden pienentämistä. Suuri vahvistus voi säröyttää.</string>
@@ -234,10 +226,6 @@
     <string name="tag_editor_title">Muokkaa tunnisteita</string>
     <string name="tag_editor_write_hint">Kirjoittaa tunnisteet tiedostoon. Tiedostot, joihin sovellus ei voi kirjoittaa (jotkin laitteen indeksoimat kappaleet), epäonnistuvat.</string>
     <string name="track_details_edit_tags">Muokkaa tunnisteita</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d soittokerta</item>
-        <item quantity="other">%1$d soittokertaa</item>
-    </plurals>
     <string name="cd_shuffle">Satunnaistoisto</string>
     <string name="state_on">Päällä</string>
     <string name="state_off">Pois</string>
@@ -254,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Jatka Bluetoothilla</string>
     <string name="playback_bt_autoplay_subtitle">Aloita toisto, kun kuulokkeet tai auto yhdistyvät</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Valitse musiikkikansio</string>
     <string name="onboarding_skip">Ohita</string>
     <string name="onboarding_back">Takaisin</string>
@@ -279,7 +266,6 @@
     <string name="onboarding_done_body">Kirjastosi on valmis. Voit lisätä lisää kansioita tai muuttaa mitä tahansa myöhemmin asetuksista.</string>
     <string name="onboarding_done_summary">%1$d kappaletta · %2$d kansiota</string>
     <string name="onboarding_done_cta">Aloita kuuntelu</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Tarvitaan pääsy musiikkiin</string>
     <string name="permission_required_body">OfflinePlaya on offline-soitin — se toistaa tämän laitteen äänitiedostoja eikä voi tehdä mitään ilman lupaa lukea niitä. Jatka myöntämällä pääsy musiikkiin.</string>
     <string name="permission_required_grant">Myönnä pääsy musiikkiin</string>
@@ -292,4 +278,23 @@
     <string name="lyrics_pick_loading">Etsitään osumia…</string>
     <string name="lyrics_pick_empty">Vastaavaa sanoitusta ei löytynyt</string>
     <string name="lyrics_pick_synced">Synkronoitu</string>
+
+    <!-- Auto-translated to Finnish via local LLM; review and refine. -->
+    <string name="share_nudge_title">Käytätkö musiikkia?</string>
+    <string name="share_nudge_body">Tämä soittimella on täysin ilmaista, ilman mainoksia ja seuranta-aikakirjaa – ja ilman myyntibudjetinkaan. Se saavuttaa muut ihmiset vain kun joku kuten sinä jakaa sitä. Jos se on saanut tilan puhelimellesi, ole hyvä ja jakaisi se.</string>
+    <string name="share_nudge_share">Jaa sovellusta</string>
+    <string name="share_nudge_dismiss">Ehkä myöhemmin</string>
+    <string name="share_nudge_message">Olen käyttänyt OfflinePlayaa – ilmaista, offline-musiikkisovellusta ilman mainoksia tai seuranta-aikakirjaa. Kokeile se: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Toistetaan %1$d sekunnin kuluttua…</item>
+        <item quantity="other">Toistetaan %1$d sekunnin kuluttua…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d tulos</item>
+        <item quantity="other">%1$d tulosta</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d soittokerta</item>
+        <item quantity="other">%1$d soittokertaa</item>
+    </plurals>
 </resources>

@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Slett spilleliste</string>
     <string name="cd_new_playlist">Ny spilleliste</string>
     <string name="cd_repeat_mode">Gjenta: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Spiller om %1$d sekund …</item>
-        <item quantity="other">Playing in %1$d seconds…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d resultat</item>
-        <item quantity="other">%1$d resultater</item>
-    </plurals>
     <string name="artist_top_tracks">Mest spilte spor</string>
     <string name="cd_reorder_queue">Dra for å endre rekkefølge</string>
     <string name="eq_preamp_hint">Forsterkning utover maks volum. Vol+ ved fullt volum øker den; Vol− senker den før volumet reduseres. Høy forsterkning kan gi forvrengning.</string>
@@ -234,10 +226,6 @@
     <string name="tag_editor_title">Rediger tagger</string>
     <string name="tag_editor_write_hint">Skriver tagger inn i filen. Filer appen ikke kan skrive til (enkelte enhetsindekserte spor) vil mislykkes.</string>
     <string name="track_details_edit_tags">Rediger tagger</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d avspilling</item>
-        <item quantity="other">%1$d avspillinger</item>
-    </plurals>
     <string name="cd_shuffle">Tilfeldig rekkefølge</string>
     <string name="state_on">På</string>
     <string name="state_off">Av</string>
@@ -254,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Fortsett via Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Start avspilling når hodetelefoner eller bil kobles til</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Velg en musikkmappe</string>
     <string name="onboarding_skip">Hopp over</string>
     <string name="onboarding_back">Tilbake</string>
@@ -279,7 +266,6 @@
     <string name="onboarding_done_body">Biblioteket ditt er klart. Du kan legge til flere mapper eller endre hva som helst senere i Innstillinger.</string>
     <string name="onboarding_done_summary">%1$d spor · %2$d mapper</string>
     <string name="onboarding_done_cta">Begynn å lytte</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Tilgang til musikk kreves</string>
     <string name="permission_required_body">OfflinePlaya er en frakoblet spiller — den spiller lydfiler på denne enheten og kan ikke gjøre noe uten tillatelse til å lese dem. Gi tilgang til musikk for å fortsette.</string>
     <string name="permission_required_grant">Gi tilgang til musikk</string>
@@ -292,4 +278,23 @@
     <string name="lyrics_pick_loading">Søker etter treff…</string>
     <string name="lyrics_pick_empty">Fant ingen samsvarende sangtekst</string>
     <string name="lyrics_pick_synced">Synkronisert</string>
+
+    <!-- Auto-translated to Norwegian Bokmål via local LLM; review and refine. -->
+    <string name="share_nudge_title">Nøkkel til musikken?</string>
+    <string name="share_nudge_body">Denne spilleren er helt gratis, med ingen annonser og ingen sporing — og heller ingen markedsføringsbudsjett. Den eneste måten den når andre mennesker på, er når noen som deg deler den. Hvis den har fått plass på telefonen din, vennligst del den videre.</string>
+    <string name="share_nudge_share">Del appen</string>
+    <string name="share_nudge_dismiss">Kanskje seinere</string>
+    <string name="share_nudge_message">Jeg har brukt OfflinePlaya — en gratis, offline musikkspiller med ingen annonser eller sporing. Prøv den: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Spiller om %1$d sekund …</item>
+        <item quantity="other">Playing in %1$d seconds…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d resultat</item>
+        <item quantity="other">%1$d resultater</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d avspilling</item>
+        <item quantity="other">%1$d avspillinger</item>
+    </plurals>
 </resources>

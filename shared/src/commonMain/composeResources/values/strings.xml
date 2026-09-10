@@ -351,4 +351,11 @@
     <string name="stats_empty_title">No listening history yet</string>
     <string name="stats_empty_subtitle">Play some music and check back here.</string>
 
+    <!-- Share-the-app nudge dialog -->
+    <string name="share_nudge_title">Enjoying the music?</string>
+    <string name="share_nudge_body">This player is completely free, with no ads and no tracking — and no marketing budget either. The only way it reaches other people is when someone like you shares it. If it has earned a spot on your phone, please pass it on.</string>
+    <string name="share_nudge_share">Share the app</string>
+    <string name="share_nudge_dismiss">Maybe later</string>
+    <string name="share_nudge_message">I\'ve been using OfflinePlaya — a free, offline music player with no ads or tracking. Give it a try: %1$s</string>
+
 </resources>

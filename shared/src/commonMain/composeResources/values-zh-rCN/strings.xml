@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">删除播放列表</string>
     <string name="cd_new_playlist">新建播放列表</string>
     <string name="cd_repeat_mode">循环: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">%1$d 秒后播放...</item>
-        <item quantity="other">%1$d 秒后播放...</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d 结果</item>
-        <item quantity="other">%1$d 个结果</item>
-    </plurals>
     <string name="artist_top_tracks">热门曲目</string>
     <string name="cd_reorder_queue">拖动以重新排序</string>
     <string name="eq_preamp_hint">在最大音量之外增益。满音量时按音量+会提高它；音量−会在降低音量前先降低它。过高的增益可能导致破音。</string>
@@ -234,9 +226,6 @@
     <string name="tag_editor_title">编辑标签</string>
     <string name="tag_editor_write_hint">将标签写入文件。应用无法写入的文件（部分由设备索引的曲目）将失败。</string>
     <string name="track_details_edit_tags">编辑标签</string>
-    <plurals name="stats_plays">
-        <item quantity="other">%1$d 次播放</item>
-    </plurals>
     <string name="cd_shuffle">随机播放</string>
     <string name="state_on">开</string>
     <string name="state_off">关</string>
@@ -253,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">蓝牙连接时继续播放</string>
     <string name="playback_bt_autoplay_subtitle">耳机或车载设备连接时开始播放</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">选择音乐文件夹</string>
     <string name="onboarding_skip">跳过</string>
     <string name="onboarding_back">返回</string>
@@ -278,7 +266,6 @@
     <string name="onboarding_done_body">你的音乐库已就绪。你可以稍后在“设置”中添加更多文件夹或调整任何内容。</string>
     <string name="onboarding_done_summary">%1$d 首曲目 · %2$d 个文件夹</string>
     <string name="onboarding_done_cta">开始收听</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">需要音乐访问权限</string>
     <string name="permission_required_body">OfflinePlaya 是一款离线播放器——它播放此设备上存储的音频文件，没有读取权限就无法工作。请授予音乐访问权限以继续。</string>
     <string name="permission_required_grant">授予音乐访问权限</string>
@@ -291,4 +278,22 @@
     <string name="lyrics_pick_loading">正在搜索匹配项…</string>
     <string name="lyrics_pick_empty">未找到匹配的歌词</string>
     <string name="lyrics_pick_synced">已同步</string>
+
+    <!-- Auto-translated to Simplified Chinese via local LLM; review and refine. -->
+    <string name="share_nudge_title">享受音乐？</string>
+    <string name="share_nudge_body">这个播放器完全免费，没有广告，没有跟踪——也没有营销预算。它能传播到其他人手中的唯一方式就是像你这样的人分享它。如果它已经占据了你的手机，请把它传递下去。</string>
+    <string name="share_nudge_share">分享这个应用</string>
+    <string name="share_nudge_dismiss">可能以后</string>
+    <string name="share_nudge_message">我一直在使用OfflinePlaya——一个免费的离线音乐播放器，没有广告也没有跟踪。试试看：%1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">%1$d 秒后播放...</item>
+        <item quantity="other">%1$d 秒后播放...</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d 结果</item>
+        <item quantity="other">%1$d 个结果</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="other">%1$d 次播放</item>
+    </plurals>
 </resources>

@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Dzēst atskaņošanas sarakstu</string>
     <string name="cd_new_playlist">Jauns atskaņošanas saraksts</string>
     <string name="cd_repeat_mode">Atkārtot: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Tiek atskaņots pēc %1$d sekundes…</item>
-        <item quantity="other">Tiek atskaņots pēc %1$d sekundēm…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d rezultāts</item>
-        <item quantity="other">%1$d rezultāti</item>
-    </plurals>
     <string name="artist_top_tracks">Populārākie ieraksti</string>
     <string name="cd_reorder_queue">Velciet, lai pārkārtotu</string>
     <string name="eq_preamp_hint">Pastiprinājums virs maksimālā skaļuma. Sk.+ pie pilna skaļuma to palielina; Sk.− to samazina, pirms samazina skaļumu. Liels pastiprinājums var radīt kropļojumus.</string>
@@ -234,11 +226,6 @@
     <string name="tag_editor_title">Rediģēt tagus</string>
     <string name="tag_editor_write_hint">Ieraksta tagus failā. Faili, kuros lietotne nevar rakstīt (daži ierīces indeksētie ieraksti), neizdosies.</string>
     <string name="track_details_edit_tags">Rediģēt tagus</string>
-    <plurals name="stats_plays">
-        <item quantity="zero">%1$d atskaņojumu</item>
-        <item quantity="one">%1$d atskaņojums</item>
-        <item quantity="other">%1$d atskaņojumi</item>
-    </plurals>
     <string name="cd_shuffle">Jaukšana</string>
     <string name="state_on">Ieslēgts</string>
     <string name="state_off">Izslēgts</string>
@@ -255,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Atsākt ar Bluetooth</string>
     <string name="playback_bt_autoplay_subtitle">Sākt atskaņošanu, kad pievienojas austiņas vai auto</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Izvēlieties mūzikas mapi</string>
     <string name="onboarding_skip">Izlaist</string>
     <string name="onboarding_back">Atpakaļ</string>
@@ -280,7 +266,6 @@
     <string name="onboarding_done_body">Jūsu bibliotēka ir gatava. Vēlāk iestatījumos varat pievienot vairāk mapju vai mainīt jebko.</string>
     <string name="onboarding_done_summary">%1$d dziesmas · %2$d mapes</string>
     <string name="onboarding_done_cta">Sākt klausīties</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Nepieciešama piekļuve mūzikai</string>
     <string name="permission_required_body">OfflinePlaya ir bezsaistes atskaņotājs — tas atskaņo šajā ierīcē saglabātos audio failus un bez atļaujas tos lasīt neko nevar. Lai turpinātu, piešķiriet piekļuvi mūzikai.</string>
     <string name="permission_required_grant">Piešķirt piekļuvi mūzikai</string>
@@ -293,4 +278,24 @@
     <string name="lyrics_pick_loading">Meklē atbilstības…</string>
     <string name="lyrics_pick_empty">Nav atrasti atbilstoši vārdi</string>
     <string name="lyrics_pick_synced">Sinhronizēts</string>
+
+    <!-- Auto-translated to Latvian via local LLM; review and refine. -->
+    <string name="share_nudge_title">Vai patīk mūzika?</string>
+    <string name="share_nudge_body">Šis spēlētājs ir pilnībā bezmaksas, bez reklāmas un bez uzraudzības — un pat bez reklāmas budžeta. Vienu vienīgu veidu, kā to var sasniegt citiem, ir, ja kāds kā jūs to izdala. Ja tas ir ieguvis vietu jūsu tālruņa, lūdzu, izdala to citiem.</string>
+    <string name="share_nudge_share">Izkāpt aplikāciju</string>
+    <string name="share_nudge_dismiss">Varbūt vēlāk</string>
+    <string name="share_nudge_message">Es esmu izmantojis OfflinePlaya — bezmaksas, offline mūzikas spēlētāju bez reklāmas vai uzraudzības. Iepazīstieties ar to: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Tiek atskaņots pēc %1$d sekundes…</item>
+        <item quantity="other">Tiek atskaņots pēc %1$d sekundēm…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d rezultāts</item>
+        <item quantity="other">%1$d rezultāti</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="zero">%1$d atskaņojumu</item>
+        <item quantity="one">%1$d atskaņojums</item>
+        <item quantity="other">%1$d atskaņojumi</item>
+    </plurals>
 </resources>

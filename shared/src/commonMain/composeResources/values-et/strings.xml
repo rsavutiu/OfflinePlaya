@@ -181,14 +181,6 @@
     <string name="cd_delete_playlist">Kustuta esitusloend</string>
     <string name="cd_new_playlist">Uus esitusloend</string>
     <string name="cd_repeat_mode">Korda: %1$s</string>
-    <plurals name="track_details_playing_in_plurals">
-        <item quantity="one">Esitatakse %1$d sekundi pärast…</item>
-        <item quantity="other">Esitatakse %1$d sekundi pärast…</item>
-    </plurals>
-    <plurals name="search_results_count">
-        <item quantity="one">%1$d tulemus</item>
-        <item quantity="other">%1$d tulemust</item>
-    </plurals>
     <string name="artist_top_tracks">Enim kuulatud lood</string>
     <string name="cd_reorder_queue">Lohista ümberjärjestamiseks</string>
     <string name="eq_preamp_hint">Võimendus üle maksimaalse helitugevuse. Heli+ täisheli juures suurendab seda; Heli− vähendab seda enne helitugevuse alandamist. Suur võimendus võib heli moonutada.</string>
@@ -234,10 +226,6 @@
     <string name="tag_editor_title">Muuda silte</string>
     <string name="tag_editor_write_hint">Kirjutab sildid faili. Failid, kuhu rakendus kirjutada ei saa (mõned seadme indekseeritud lood), ebaõnnestuvad.</string>
     <string name="track_details_edit_tags">Muuda silte</string>
-    <plurals name="stats_plays">
-        <item quantity="one">%1$d esitus</item>
-        <item quantity="other">%1$d esitust</item>
-    </plurals>
     <string name="cd_shuffle">Juhuesitus</string>
     <string name="state_on">Sees</string>
     <string name="state_off">Väljas</string>
@@ -254,7 +242,6 @@
     <string name="eq_gain_db">%1$s dB</string>
     <string name="playback_bt_autoplay">Jätka Bluetoothiga</string>
     <string name="playback_bt_autoplay_subtitle">Alusta esitust, kui kõrvaklapid või auto ühenduvad</string>
-    <!-- First-run onboarding wizard -->
     <string name="empty_library_pick_folder">Vali muusikakaust</string>
     <string name="onboarding_skip">Jäta vahele</string>
     <string name="onboarding_back">Tagasi</string>
@@ -279,7 +266,6 @@
     <string name="onboarding_done_body">Su teek on valmis. Saad hiljem Seadetes lisada kaustu või muuta ükskõik mida.</string>
     <string name="onboarding_done_summary">%1$d lugu · %2$d kausta</string>
     <string name="onboarding_done_cta">Alusta kuulamist</string>
-    <!-- Mandatory music-access gate + device-audio scan -->
     <string name="permission_required_title">Vajalik on juurdepääs muusikale</string>
     <string name="permission_required_body">OfflinePlaya on võrguühenduseta mängija — see esitab selle seadme helifaile ega saa ilma nende lugemise loata midagi teha. Jätkamiseks anna juurdepääs muusikale.</string>
     <string name="permission_required_grant">Anna juurdepääs muusikale</string>
@@ -292,4 +278,23 @@
     <string name="lyrics_pick_loading">Vastete otsimine…</string>
     <string name="lyrics_pick_empty">Sobivaid sõnu ei leitud</string>
     <string name="lyrics_pick_synced">Sünkroonitud</string>
+
+    <!-- Auto-translated to Estonian via local LLM; review and refine. -->
+    <string name="share_nudge_title">Muusikat nautimine?</string>
+    <string name="share_nudge_body">See tootlus on täielikult tasuta, ilma reklaamita ja jälgimiseta – ja ka ilma turundusseadmeteta. Üheks viisiks, kuidas see jõuab teistele, on kui keegi nagu sina jagab seda. Kui see on juba sinu telefoni kohal, siis jagage seda edasi.</string>
+    <string name="share_nudge_share">Jagage rakendust</string>
+    <string name="share_nudge_dismiss">Võib olla hiljem</string>
+    <string name="share_nudge_message">Olen kasutanud OfflinePlaya – tasuta, ühendatud muusikatootlust, ilma reklaamita ja jälgimiseta. Proovige seda: %1$s</string>
+    <plurals name="track_details_playing_in_plurals">
+        <item quantity="one">Esitatakse %1$d sekundi pärast…</item>
+        <item quantity="other">Esitatakse %1$d sekundi pärast…</item>
+    </plurals>
+    <plurals name="search_results_count">
+        <item quantity="one">%1$d tulemus</item>
+        <item quantity="other">%1$d tulemust</item>
+    </plurals>
+    <plurals name="stats_plays">
+        <item quantity="one">%1$d esitus</item>
+        <item quantity="other">%1$d esitust</item>
+    </plurals>
 </resources>

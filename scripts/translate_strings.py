@@ -34,15 +34,47 @@ RESOURCES_DIR = REPO_ROOT / "shared" / "src" / "commonMain" / "composeResources"
 MASTER_FILE = RESOURCES_DIR / "values" / "strings.xml"
 
 LOCALES = {
+    "ar": "Arabic",
+    "bg": "Bulgarian",
+    "ca": "Catalan",
+    "cs": "Czech",
+    "da": "Danish",
     "de": "German",
+    "el": "Greek",
     "es": "Spanish",
+    "et": "Estonian",
+    "fa": "Persian",
+    "fi": "Finnish",
+    "fil": "Filipino",
     "fr": "French",
+    "he": "Hebrew",
+    "hi": "Hindi",
+    "hr": "Croatian",
+    "hu": "Hungarian",
+    "id": "Indonesian",
     "it": "Italian",
     "ja": "Japanese",
     "ko": "Korean",
+    "lt": "Lithuanian",
+    "lv": "Latvian",
+    "ms": "Malay",
+    "nb": "Norwegian Bokmål",
+    "nl": "Dutch",
+    "pl": "Polish",
     "pt-rBR": "Brazilian Portuguese",
+    "pt-rPT": "European Portuguese",
+    "ro": "Romanian",
     "ru": "Russian",
+    "sk": "Slovak",
+    "sl": "Slovenian",
+    "sr": "Serbian",
+    "sv": "Swedish",
+    "th": "Thai",
+    "tr": "Turkish",
+    "uk": "Ukrainian",
+    "vi": "Vietnamese",
     "zh-rCN": "Simplified Chinese",
+    "zh-rTW": "Traditional Chinese",
 }
 
 OLLAMA_URL = "http://localhost:11434/api/chat"
@@ -84,6 +116,19 @@ def parse_strings_xml(path: Path) -> "dict[str, str]":
     return out
 
 
+def extract_raw_plurals(path: Path) -> "list[str]":
+    """Raw <plurals>…</plurals> blocks, verbatim from the file text.
+
+    This script only ever adds <string> keys, but it rewrites the whole locale
+    file — so it must carry each locale's existing (already-translated) plural
+    blocks through unchanged, or they'd be silently dropped (which breaks the
+    translation validator's plural-key check)."""
+    if not path.exists():
+        return []
+    text = path.read_text(encoding="utf-8")
+    return re.findall(r"<plurals\b.*?</plurals>", text, re.DOTALL)
+
+
 def count_format_specs(s: str) -> int:
     return len(re.findall(r"%\d+\$[ds]|%[ds]", s))
 
@@ -93,7 +138,10 @@ def call_ollama(messages: list) -> str:
         "model": MODEL,
         "messages": messages,
         "stream": False,
-        "options": {"temperature": 0.2},
+        # repeat_penalty guards against the degenerate loops qwen3 sometimes
+        # falls into on longer sentences (e.g. Hindi repeating a token 90×),
+        # which would otherwise drop the %-placeholder and fail validation.
+        "options": {"temperature": 0.2, "repeat_penalty": 1.3},
         "think": False,
     }
     req = urllib.request.Request(
@@ -110,10 +158,21 @@ def translate_batch(values: list, language: str) -> "list[str] | None":
     """Translate a list of English values. Returns translated list, or None on failure."""
     numbered_input = "\n".join(f"{i + 1}. {v}" for i, v in enumerate(values))
     user_msg = f"Translate these UI strings to {language}. Output the numbered list, nothing else:\n\n{numbered_input}"
-    raw = call_ollama([
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": user_msg},
-    ])
+    # The local model occasionally 500s or times out on a single request
+    # (transient GPU/backend hiccup). Retry a few times; only give up — and
+    # skip this locale — after that, so one bad request can't abort the run.
+    raw = None
+    for attempt in range(1, 4):
+        try:
+            raw = call_ollama([
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_msg},
+            ])
+            break
+        except Exception as e:  # noqa: BLE001 — network/backend errors vary
+            print(f"  ! request failed (attempt {attempt}/3): {e}", file=sys.stderr)
+    if raw is None:
+        return None
 
     # Strip any <think> block that qwen3 sometimes emits even when told not to.
     raw = re.sub(r"<think>.*?</think>", "", raw, flags=re.DOTALL).strip()
@@ -156,14 +215,20 @@ def xml_escape_value(s: str) -> str:
     return s
 
 
-def write_merged_locale(locale_path: Path, existing: dict, new_translations: dict, language: str):
+def write_merged_locale(locale_path: Path, existing: dict, new_translations: dict,
+                        language: str, plurals: "list[str]"):
     """Append new translations to the existing locale file, preserving everything that's already there."""
-    if not existing and not new_translations:
+    if not existing and not new_translations and not plurals:
         return
 
     lines = ['<?xml version="1.0" encoding="utf-8"?>', "<resources>"]
     for key, value in existing.items():
         lines.append(f'    <string name="{key}">{xml_escape_value(value)}</string>')
+
+    # Carry existing plural blocks through verbatim — this script never
+    # touches plurals, but must not drop them on rewrite.
+    for block in plurals:
+        lines.append(f"    {block}")
 
     if new_translations:
         lines.append("")
@@ -186,6 +251,7 @@ def main():
     for locale_code, language in LOCALES.items():
         locale_path = RESOURCES_DIR / f"values-{locale_code}" / "strings.xml"
         existing = parse_strings_xml(locale_path)
+        plurals = extract_raw_plurals(locale_path)
         missing_keys = [k for k in master if k not in existing]
         print(
             f"\n[{locale_code}] {language}: {len(existing)} existing, {len(missing_keys)} missing")
@@ -209,7 +275,7 @@ def main():
 
         if new_translations:
             locale_path.parent.mkdir(parents=True, exist_ok=True)
-            write_merged_locale(locale_path, existing, new_translations, language)
+            write_merged_locale(locale_path, existing, new_translations, language, plurals)
             print(
                 f"  wrote {len(new_translations)} new translations to {locale_path.relative_to(REPO_ROOT)}")
         else:
