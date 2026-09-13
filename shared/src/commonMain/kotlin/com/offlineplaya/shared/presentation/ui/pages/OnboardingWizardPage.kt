@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -143,12 +144,25 @@ fun OnboardingWizardPage(
                 modifier = Modifier.weight(1f),
             ) { current ->
                 val scroll = rememberScrollState()
+                // Cap the step content to a readable column and centre it.
+                // Without this, a landscape tablet stretches the hero disc,
+                // text and full-width buttons across the entire window — sparse
+                // and broken-looking. Below 480dp (every phone) the cap never
+                // bites, so the portrait layout is unchanged. The scrolling
+                // content is vertically centred when it fits, so it no longer
+                // strands at the top of a tall/wide canvas.
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
                 Column(
                     modifier = Modifier
+                        .widthIn(max = 480.dp)
                         .fillMaxSize()
                         .verticalScroll(scroll)
                         .padding(horizontal = AppSpacing.xl, vertical = AppSpacing.lg),
                     horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
                 ) {
                     // Audio access is a hard prerequisite handled by the gate
                     // before this wizard ever shows, so the only permission left
@@ -193,6 +207,7 @@ fun OnboardingWizardPage(
                         )
                     }
                 }
+                }
             }
         }
     }
@@ -200,17 +215,22 @@ fun OnboardingWizardPage(
 
 @Composable
 private fun WelcomeStep(onNext: () -> Unit) {
-    Spacer(Modifier.height(AppSpacing.xl))
     HeroDisc(Icons.Outlined.LibraryMusic)
     Spacer(Modifier.height(AppSpacing.lg))
-    AppHeadline(text = stringResource(Res.string.onboarding_welcome_title))
+    AppHeadline(
+        text = stringResource(Res.string.onboarding_welcome_title),
+        modifier = Modifier.fillMaxWidth(),
+    )
     Spacer(Modifier.height(AppSpacing.sm))
-    AppCaption(text = stringResource(Res.string.onboarding_welcome_body))
+    AppCaption(
+        text = stringResource(Res.string.onboarding_welcome_body),
+        modifier = Modifier.fillMaxWidth(),
+    )
     Spacer(Modifier.height(AppSpacing.xl))
     AppButton(
         text = stringResource(Res.string.onboarding_welcome_cta),
         onClick = onNext,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.onboardingButton(),
     )
 }
 
@@ -221,15 +241,24 @@ private fun NotificationsStep(
     onBack: () -> Unit,
     onNext: () -> Unit,
 ) {
-    Spacer(Modifier.height(AppSpacing.sm))
     HeroDisc(Icons.Outlined.Notifications)
     Spacer(Modifier.height(AppSpacing.lg))
-    AppHeadline(text = stringResource(Res.string.onboarding_permission_notifications_title))
+    AppHeadline(
+        text = stringResource(Res.string.onboarding_permission_notifications_title),
+        modifier = Modifier.fillMaxWidth(),
+    )
     Spacer(Modifier.height(AppSpacing.sm))
-    AppCaption(text = stringResource(Res.string.onboarding_permission_notifications_body))
+    AppCaption(
+        text = stringResource(Res.string.onboarding_permission_notifications_body),
+        modifier = Modifier.fillMaxWidth(),
+    )
     Spacer(Modifier.height(AppSpacing.xl))
     if (notificationGranted) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.height(OnboardingButtonHeight),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
             Icon(
                 imageVector = Icons.Filled.CheckCircle,
                 contentDescription = null,
@@ -247,10 +276,10 @@ private fun NotificationsStep(
         AppButton(
             text = stringResource(Res.string.onboarding_permission_notifications_cta),
             onClick = onRequestNotificationPermission,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.onboardingButton(),
         )
     }
-    Spacer(Modifier.height(AppSpacing.xl))
+    Spacer(Modifier.height(AppSpacing.lg))
     StepNav(onBack = onBack, onNext = onNext)
 }
 
@@ -262,24 +291,29 @@ private fun AddMusicStep(
     onBack: () -> Unit,
     onNext: () -> Unit,
 ) {
-    Spacer(Modifier.height(AppSpacing.sm))
     HeroDisc(Icons.Outlined.LibraryMusic)
     Spacer(Modifier.height(AppSpacing.lg))
-    AppHeadline(text = stringResource(Res.string.onboarding_add_music_title))
+    AppHeadline(
+        text = stringResource(Res.string.onboarding_add_music_title),
+        modifier = Modifier.fillMaxWidth(),
+    )
     Spacer(Modifier.height(AppSpacing.sm))
-    AppCaption(text = stringResource(Res.string.onboarding_add_music_body))
+    AppCaption(
+        text = stringResource(Res.string.onboarding_add_music_body),
+        modifier = Modifier.fillMaxWidth(),
+    )
     Spacer(Modifier.height(AppSpacing.xl))
     // Primary: index everything MediaStore already knows about (Downloads,
     // Music, …) with no folder pick. Audio access is guaranteed by the gate.
     AppButton(
         text = stringResource(Res.string.onboarding_add_music_use_device),
         onClick = onUseDeviceAudio,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.onboardingButton(),
     )
     Spacer(Modifier.height(AppSpacing.sm))
     OutlinedButton(
         onClick = onPickFolder,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.onboardingButton(),
     ) {
         Text(stringResource(Res.string.onboarding_add_music_pick_folder))
     }
@@ -289,9 +323,11 @@ private fun AddMusicStep(
             text = stringResource(Res.string.onboarding_add_music_found, trackCount.toInt()),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
         )
     }
-    Spacer(Modifier.height(AppSpacing.xl))
+    Spacer(Modifier.height(AppSpacing.lg))
     StepNav(onBack = onBack, onNext = onNext)
 }
 
@@ -301,24 +337,31 @@ private fun DoneStep(
     folderCount: Int,
     onFinish: () -> Unit,
 ) {
-    Spacer(Modifier.height(AppSpacing.xl))
     HeroDisc(Icons.Filled.CheckCircle)
     Spacer(Modifier.height(AppSpacing.lg))
-    AppHeadline(text = stringResource(Res.string.onboarding_done_title))
+    AppHeadline(
+        text = stringResource(Res.string.onboarding_done_title),
+        modifier = Modifier.fillMaxWidth(),
+    )
     Spacer(Modifier.height(AppSpacing.sm))
-    AppCaption(text = stringResource(Res.string.onboarding_done_body))
+    AppCaption(
+        text = stringResource(Res.string.onboarding_done_body),
+        modifier = Modifier.fillMaxWidth(),
+    )
     Spacer(Modifier.height(AppSpacing.md))
     Text(
         text = stringResource(Res.string.onboarding_done_summary, trackCount.toInt(), folderCount),
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Bold,
         color = LocalBrandAccent.current.accent,
+        modifier = Modifier.fillMaxWidth(),
+        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
     )
     Spacer(Modifier.height(AppSpacing.xl))
     AppButton(
         text = stringResource(Res.string.onboarding_done_cta),
         onClick = onFinish,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.onboardingButton(),
     )
 }
 
@@ -342,17 +385,38 @@ private fun HeroDisc(icon: ImageVector) {
     }
 }
 
-/** Back / Next pair used by the middle steps. */
+/**
+ * Uniform action-button height shared by every onboarding CTA, primary or
+ * outlined, so the stacked buttons read as one consistent control column
+ * instead of a ragged pile of differently-sized chips.
+ */
+private val OnboardingButtonHeight = 52.dp
+
+/** Modifier every onboarding button uses: full column width, uniform height. */
+private fun Modifier.onboardingButton(): Modifier = fillMaxWidth().height(OnboardingButtonHeight)
+
+/**
+ * Back / Next pair used by the middle steps. Two equal-width buttons filling
+ * the column (not edge-shoved wrap-content chips), so they line up with the
+ * full-width CTAs above them.
+ */
 @Composable
 private fun StepNav(onBack: () -> Unit, onNext: () -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
     ) {
-        OutlinedButton(onClick = onBack) {
+        OutlinedButton(
+            onClick = onBack,
+            modifier = Modifier.weight(1f).height(OnboardingButtonHeight),
+        ) {
             Text(stringResource(Res.string.onboarding_back))
         }
-        AppButton(text = stringResource(Res.string.onboarding_next), onClick = onNext)
+        AppButton(
+            text = stringResource(Res.string.onboarding_next),
+            onClick = onNext,
+            modifier = Modifier.weight(1f).height(OnboardingButtonHeight),
+        )
     }
 }
 

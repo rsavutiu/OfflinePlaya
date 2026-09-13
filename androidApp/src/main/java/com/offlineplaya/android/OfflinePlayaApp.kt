@@ -1,12 +1,16 @@
 package com.offlineplaya.android
 
+import android.Manifest
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.pm.PackageManager
 import android.os.Build
+import androidx.core.content.ContextCompat
 import com.offlineplaya.android.audio.BluetoothAutoplayController
 import com.offlineplaya.android.di.appPlayerModule
 import com.offlineplaya.android.sync.AutoRescanController
+import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import com.offlineplaya.shared.data.image.installTrackArtImageLoader
 import com.offlineplaya.shared.data.review.CurrentActivityHolder
 import com.offlineplaya.shared.data.scheduling.WorkManagerTaskRunner
@@ -86,6 +90,29 @@ class OfflinePlayaApp : Application() {
                 preferences = koin.get<com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder>().preferences,
                 logger = koin.get(),
             ).also { it.start() }
+            // Cold-start device-audio scan. If the audio-read permission is
+            // already held from a previous session, read MediaStore
+            // (Music/, Downloads/, the internal-storage root, …) at process
+            // start so files added while the app was closed show up without
+            // waiting for the first Activity resume — and, crucially, without
+            // the user ever having to SAF-pick a folder. This is the
+            // "read Music on launch" path; SAF tree grants are only needed for
+            // tag-writing, never for plain playback. No-op when the permission
+            // isn't held yet: the MainActivity gate requests it and scans on
+            // grant. resyncIfIdle() dedups against the Activity's resume scan.
+            val audioPermission =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    Manifest.permission.READ_MEDIA_AUDIO
+                } else {
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                }
+            val hasAudio = ContextCompat.checkSelfPermission(
+                this@OfflinePlayaApp, audioPermission,
+            ) == PackageManager.PERMISSION_GRANTED
+            if (hasAudio) {
+                koin.get<LibrarySyncCoordinator>().resyncIfIdle()
+            }
+
             // After the cold-start scan, keep watching: MediaStore changes
             // (torrents, downloads, sync clients) and app foreground events
             // each trigger a debounced reconcile. See [AutoRescanController].

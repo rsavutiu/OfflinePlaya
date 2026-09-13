@@ -42,6 +42,7 @@ import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
@@ -74,6 +75,7 @@ fun EqualizerGraph(
     enabled: Boolean,
     onBandGainChange: (bandIndex: Int, millibels: Int, fullGains: PersistentList<Int>) -> Unit,
     modifier: Modifier = Modifier,
+    graphHeight: Dp = GRAPH_HEIGHT,
 ) {
     val bandCount = gains.size
     if (bandCount == 0) return
@@ -103,7 +105,7 @@ fun EqualizerGraph(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(GRAPH_HEIGHT)
+                .height(graphHeight)
                 .clip(RoundedCornerShape(AppSpacing.md))
                 .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.25f)),
         ) {

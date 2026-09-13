@@ -300,6 +300,8 @@ private fun LandscapeHome(
                 status = status,
                 onTracksClick = onOpenAllTracks,
                 onFoldersClick = onOpenFolders,
+                onTotalClick = onOpenStats,
+                vertical = true,
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
             if (recentAlbums.isNotEmpty()) {

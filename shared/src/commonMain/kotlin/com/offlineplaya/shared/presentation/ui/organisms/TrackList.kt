@@ -3,6 +3,9 @@ package com.offlineplaya.shared.presentation.ui.organisms
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items as gridItems
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -10,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.presentation.ui.LocalWindowWidthClass
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.molecules.TrackRow
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
@@ -35,6 +39,30 @@ fun TrackList(
             subtitle = stringResource(Res.string.empty_tracks_subtitle),
             modifier = modifier,
         )
+        return
+    }
+    // Expanded width (tablet / foldable / desktop): flow the rows into two
+    // columns so a wide "all tracks" / search / smart-playlist list uses the
+    // horizontal room instead of stranding a single narrow column of full-bleed
+    // rows. COMPACT and MEDIUM keep the exact single-column LazyColumn — the
+    // phone path is unchanged.
+    if (LocalWindowWidthClass.current.isExpanded) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            modifier = modifier.fillMaxSize(),
+            contentPadding = contentPadding,
+        ) {
+            gridItems(items = tracks, key = { it.id }) { track ->
+                TrackRow(
+                    track = track,
+                    onClick = { onTrackClick(track) },
+                    onLongClick = onTrackLongPress?.let { { it(track) } },
+                    sharedArtEnabled = true,
+                    showTrackNumber = false,
+                    modifier = Modifier.animateItem(),
+                )
+            }
+        }
         return
     }
     LazyColumn(

@@ -1,5 +1,6 @@
 package com.offlineplaya.shared.presentation.ui.pages
 
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -15,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlin.math.log10
 import kotlin.math.roundToInt
@@ -132,12 +134,13 @@ fun EqualizerPage(
         }
 
         @Composable
-        fun bandsSection() {
+        fun bandsSection(graphHeight: Dp = 300.dp) {
             SettingsSection(title = stringResource(Res.string.settings_section_bands)) {
                 EqualizerGraph(
                     gains = activePreset.gainsMillibels.toPersistentList(),
                     enabled = preferences.mode != EqMode.OFF,
                     onBandGainChange = onBandGainChange,
+                    graphHeight = graphHeight,
                     modifier = Modifier.padding(horizontal = AppSpacing.lg, vertical = AppSpacing.sm),
                 )
                 if (preferences.mode == EqMode.MANUAL && preferences.manualGains.isNotEmpty()) {
@@ -152,37 +155,48 @@ fun EqualizerPage(
         }
 
         ResponsiveContent(modifier = Modifier.padding(padding)) {
-            if (LocalOrientation.current == Orientation.LANDSCAPE) {
-                Row(modifier = Modifier.fillMaxSize()) {
+            BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+                // Grow the band graph to soak up the available height instead of
+                // leaving the bottom half of a tall screen empty. Coerced so a
+                // phone stays close to the original 300dp and a big tablet caps
+                // out rather than ballooning. The columns still scroll, so an
+                // oversize graph never clips the controls.
+                val tallHeight = (maxHeight * 0.5f).coerceIn(300.dp, 620.dp)
+                if (LocalOrientation.current == Orientation.LANDSCAPE) {
+                    // Landscape panes are shorter; let the graph fill most of the
+                    // right column's height.
+                    val paneHeight = (maxHeight * 0.72f).coerceIn(280.dp, 560.dp)
+                    Row(modifier = Modifier.fillMaxSize()) {
+                        Column(
+                            modifier = Modifier
+                                .weight(0.42f)
+                                .fillMaxHeight()
+                                .verticalScroll(rememberScrollState()),
+                        ) {
+                            modeSection()
+                            presetSection()
+                            preampSection()
+                        }
+                        Column(
+                            modifier = Modifier
+                                .weight(0.58f)
+                                .fillMaxHeight()
+                                .verticalScroll(rememberScrollState()),
+                        ) {
+                            bandsSection(graphHeight = paneHeight)
+                        }
+                    }
+                } else {
                     Column(
                         modifier = Modifier
-                            .weight(0.42f)
-                            .fillMaxHeight()
+                            .fillMaxSize()
                             .verticalScroll(rememberScrollState()),
                     ) {
                         modeSection()
                         presetSection()
                         preampSection()
+                        bandsSection(graphHeight = tallHeight)
                     }
-                    Column(
-                        modifier = Modifier
-                            .weight(0.58f)
-                            .fillMaxHeight()
-                            .verticalScroll(rememberScrollState()),
-                    ) {
-                        bandsSection()
-                    }
-                }
-            } else {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState()),
-                ) {
-                    modeSection()
-                    presetSection()
-                    preampSection()
-                    bandsSection()
                 }
             }
         }

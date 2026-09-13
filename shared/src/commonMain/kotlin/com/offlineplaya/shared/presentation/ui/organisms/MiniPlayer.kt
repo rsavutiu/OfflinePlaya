@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.offlineplaya.shared.domain.model.PlaybackState
 import com.offlineplaya.shared.domain.model.ScanStatus
 import com.offlineplaya.shared.domain.model.Track
+import com.offlineplaya.shared.presentation.ui.LocalWindowWidthClass
 import com.offlineplaya.shared.presentation.ui.atoms.AlbumArtThumb
 import com.offlineplaya.shared.presentation.ui.molecules.PlaybackControls
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
@@ -96,9 +98,19 @@ fun MiniPlayer(
     ) {
         Column {
             ProgressLine(state = state)
+            // On expanded width the surface still spans edge-to-edge (colour
+            // continuity behind the nav bar), but the tappable content row is
+            // capped and centred so the art/title/controls don't strand
+            // themselves across a full tablet width.
+            val rowWidth = if (LocalWindowWidthClass.current.isExpanded) {
+                Modifier.widthIn(max = 720.dp)
+            } else {
+                Modifier.fillMaxWidth()
+            }
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
+                    .then(rowWidth)
                     .clickable(
                         onClick = onExpand,
                         // TalkBack: "double-tap to Open Now Playing" — without

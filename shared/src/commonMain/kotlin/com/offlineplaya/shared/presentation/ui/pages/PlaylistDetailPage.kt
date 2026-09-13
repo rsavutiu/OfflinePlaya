@@ -1,10 +1,14 @@
 package com.offlineplaya.shared.presentation.ui.pages
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
@@ -29,6 +33,7 @@ import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.EmptyState
 import com.offlineplaya.shared.presentation.ui.molecules.PlaylistNameDialog
 import com.offlineplaya.shared.presentation.ui.molecules.TrackRow
+import com.offlineplaya.shared.presentation.ui.LocalWindowWidthClass
 import com.offlineplaya.shared.presentation.ui.organisms.PlaylistDetailHeader
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.templates.ResponsiveContent
@@ -101,6 +106,32 @@ fun PlaylistDetailPage(
                 subtitle = stringResource(Res.string.empty_playlist_tracks_subtitle),
                 modifier = Modifier.padding(padding),
             )
+        } else if (LocalWindowWidthClass.current.isExpanded) {
+            // Expanded width (tablet / foldable / desktop): the header no longer
+            // scrolls away above the tracks — it sits in a fixed left column with
+            // the track list scrolling independently on the right. Single
+            // destination, single scroll target for the tracks — no nav Scene.
+            Row(
+                modifier = Modifier.padding(padding).fillMaxSize(),
+                horizontalArrangement = Arrangement.spacedBy(24.dp),
+            ) {
+                PlaylistDetailHeader(
+                    name = playlistName,
+                    trackCount = tracks.size,
+                    totalDurationMs = tracks.sumOf { it.durationMs ?: 0L },
+                    modifier = Modifier.width(360.dp),
+                )
+                LazyColumn(modifier = Modifier.weight(1f).fillMaxHeight()) {
+                    itemsIndexed(items = tracks, key = { _, t -> t.id }) { index, track ->
+                        TrackRow(
+                            track = track,
+                            onClick = { onPlayTracks(tracks, index) },
+                            onLongClick = { onTrackLongPress(track) },
+                        )
+                    }
+                    item { Spacer(Modifier.height(80.dp)) }
+                }
+            }
         } else {
             ResponsiveContent(modifier = Modifier.padding(padding)) {
             LazyColumn(

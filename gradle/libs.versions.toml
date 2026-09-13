@@ -5,9 +5,9 @@ kotlin = "2.3.21"
 compose = "1.7.3"
 
 # Android SDK
-compileSdk = "36"
+compileSdk = "37"
 minSdk = "24"
-targetSdk = "36"
+targetSdk = "37"
 
 # Libraries
 sqldelight = "2.0.1"

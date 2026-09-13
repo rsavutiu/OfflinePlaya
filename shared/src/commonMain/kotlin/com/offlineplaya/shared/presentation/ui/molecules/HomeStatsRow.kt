@@ -62,6 +62,7 @@ fun HomeStatsRow(
     onTracksClick: (() -> Unit)? = null,
     onFoldersClick: (() -> Unit)? = null,
     onTotalClick: (() -> Unit)? = null,
+    vertical: Boolean = false,
 ) {
     var entered by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { entered = true }
@@ -69,6 +70,50 @@ fun HomeStatsRow(
     val alpha1 by animateFloatAsState(if (entered) 1f else 0f, tween(400, delayMillis = 80), label = "stat1")
     val alpha2 by animateFloatAsState(if (entered) 1f else 0f, tween(400, delayMillis = 160), label = "stat2")
     val borderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f)
+
+    // Wide-screen variant: the three stats stack into a full-width column of
+    // roomy cells, so the left pane of the landscape home layout is filled
+    // instead of stranding a squished pill in a tall empty column. The compact
+    // Row below is the unchanged phone-portrait path.
+    if (vertical) {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(16.dp))
+                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .padding(vertical = 6.dp),
+        ) {
+            StatCellLarge(
+                icon = Icons.Outlined.MusicNote,
+                value = trackCount.toString(),
+                label = stringResource(
+                    if (trackCount == 1L) Res.string.home_label_track else Res.string.home_label_tracks
+                ),
+                onClick = onTracksClick,
+                modifier = Modifier.alpha(alpha0),
+            )
+            HorizontalStatDivider(borderColor)
+            StatCellLarge(
+                icon = Icons.Outlined.Folder,
+                value = folderCount.toString(),
+                label = stringResource(
+                    if (folderCount == 1) Res.string.home_label_folder else Res.string.home_label_folders
+                ),
+                onClick = onFoldersClick,
+                modifier = Modifier.alpha(alpha1),
+            )
+            HorizontalStatDivider(borderColor)
+            StatCellLarge(
+                icon = Icons.Outlined.Schedule,
+                value = formatTotalDuration(trackCount),
+                label = stringResource(Res.string.home_label_total),
+                onClick = onTotalClick,
+                modifier = Modifier.alpha(alpha2).testTag(TestTags.Home.STAT_TOTAL),
+            )
+        }
+        return
+    }
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -143,6 +188,57 @@ private fun StatCell(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
+}
+
+/**
+ * Roomy full-width stat cell for the vertical (wide-screen) stats column: a
+ * large accent icon beside a big value + label, left-aligned so a row of them
+ * reads like a stacked list rather than three cramped pills.
+ */
+@Composable
+private fun StatCellLarge(
+    icon: ImageVector,
+    value: String,
+    label: String,
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
+            .padding(horizontal = 20.dp, vertical = 18.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.size(30.dp),
+        )
+        Box(modifier = Modifier.width(18.dp))
+        Column {
+            Text(
+                text = value,
+                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
+                color = MaterialTheme.colorScheme.primary,
+            )
+            Text(
+                text = label,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+@Composable
+private fun HorizontalStatDivider(color: androidx.compose.ui.graphics.Color) {
+    Box(modifier = Modifier
+        .padding(horizontal = 20.dp)
+        .fillMaxWidth()
+        .height(1.dp)
+        .background(color))
 }
 
 @Composable
