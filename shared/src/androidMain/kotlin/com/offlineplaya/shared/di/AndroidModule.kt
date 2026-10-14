@@ -1,5 +1,7 @@
 package com.offlineplaya.shared.di
 
+import com.offlineplaya.shared.data.audio.AndroidDacOutputManager
+import com.offlineplaya.shared.data.audio.SharedPrefsDacPreferences
 import com.offlineplaya.shared.data.database.DatabaseDriverFactory
 import com.offlineplaya.shared.data.genre.JaudiotaggerGenreWriter
 import com.offlineplaya.shared.data.image.CoilPaletteColorExtractor
@@ -21,6 +23,8 @@ import com.offlineplaya.shared.data.tag.JaudiotaggerTrackTagWriter
 import com.offlineplaya.shared.data.scanner.MediaStoreDeviceAudioScanner
 import com.offlineplaya.shared.data.scanner.SafFolderScanner
 import com.offlineplaya.shared.data.scheduling.WorkManagerTaskRunner
+import com.offlineplaya.shared.domain.audio.DacOutputManager
+import com.offlineplaya.shared.domain.audio.DacPreferences
 import com.offlineplaya.shared.domain.genre.GenreTagWriter
 import com.offlineplaya.shared.domain.genre.RemoteGenreSource
 import com.offlineplaya.shared.domain.image.AlbumArtColorExtractor
@@ -143,4 +147,9 @@ val androidModule: Module = module {
     // (BackgroundTaskKind). Other targets will bind their own implementation —
     // a plain coroutine on Desktop, BGTaskScheduler on iOS.
     single<BackgroundTaskRunner> { WorkManagerTaskRunner(androidContext()) }
+
+    // USB DAC routing + bit-perfect output (Android 14+ AudioMixerAttributes).
+    // Not started here — the playback service owns its lifecycle (start/stop).
+    single<DacPreferences> { SharedPrefsDacPreferences(androidContext()) }
+    single<DacOutputManager> { AndroidDacOutputManager(androidContext(), get()) }
 }
