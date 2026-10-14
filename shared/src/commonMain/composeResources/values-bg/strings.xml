@@ -297,4 +297,15 @@
         <item quantity="one">%1$d изпълнение</item>
         <item quantity="other">%1$d изпълнения</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Bit-perfect USB изход</string>
+    <string name="dac_bit_perfect_subtitle">Изпраща звука към USB DAC без промени. Еквалайзерът, предусилването и кросфейдът се изключват, докато е активен.</string>
+    <string name="dac_no_device">Свържете USB DAC, за да използвате това</string>
+    <string name="dac_reason_os">Изисква Android 14 или по-нова версия</string>
+    <string name="dac_reason_unsupported">Този телефон или DAC не го поддържа</string>
+    <string name="dac_reason_format">Форматът на текущата песен не се поддържа, затова тя се възпроизвежда през системния миксер</string>
+    <string name="dac_reason_hires">Песните над 16 бита се възпроизвеждат през системния миксер</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d бита · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Системен миксер</string>
 </resources>

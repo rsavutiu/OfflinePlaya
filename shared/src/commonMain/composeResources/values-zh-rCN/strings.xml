@@ -296,4 +296,15 @@
     <plurals name="stats_plays">
         <item quantity="other">%1$d 次播放</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">比特完美 USB 输出</string>
+    <string name="dac_bit_perfect_subtitle">将音频原样发送到 USB DAC。启用期间将绕过均衡器、前级增益和淡入淡出。</string>
+    <string name="dac_no_device">连接 USB DAC 后即可使用</string>
+    <string name="dac_reason_os">需要 Android 14 或更高版本</string>
+    <string name="dac_reason_unsupported">此手机或 DAC 不支持该功能</string>
+    <string name="dac_reason_format">不支持当前曲目的格式，因此通过系统混音器播放</string>
+    <string name="dac_reason_hires">高于 16 位的曲目通过系统混音器播放</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d 位 · 比特完美</string>
+    <string name="dac_badge_system_mixer">%1$s · 系统混音器</string>
 </resources>

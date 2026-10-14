@@ -297,4 +297,15 @@
         <item quantity="one">%1$d écoute</item>
         <item quantity="other">%1$d écoutes</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Sortie USB bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">Envoie le son à votre DAC USB sans le modifier. L\'égaliseur, le préampli et le fondu enchaîné sont contournés tant qu\'elle est active.</string>
+    <string name="dac_no_device">Branchez un DAC USB pour utiliser cette option</string>
+    <string name="dac_reason_os">Nécessite Android 14 ou version ultérieure</string>
+    <string name="dac_reason_unsupported">Ce téléphone ou ce DAC ne le prend pas en charge</string>
+    <string name="dac_reason_format">Le format du morceau en cours n\'est pas pris en charge, il passe donc par le mixeur système</string>
+    <string name="dac_reason_hires">Les morceaux de plus de 16 bits passent par le mixeur système</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bits · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Mixeur système</string>
 </resources>

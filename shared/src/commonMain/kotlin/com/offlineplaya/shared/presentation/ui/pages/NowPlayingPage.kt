@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.offlineplaya.shared.domain.audio.DacOutputState
 import com.offlineplaya.shared.domain.lyrics.LyricLine
 import com.offlineplaya.shared.domain.model.PlaybackState
 import com.offlineplaya.shared.domain.model.RepeatMode
@@ -62,6 +63,7 @@ fun NowPlayingPage(
     onSeekToLine: (LyricLine) -> Unit = {},
     onSkipToIndex: (Int) -> Unit = {},
     sharedArtTrack: Track? = null,
+    dacOutput: DacOutputState = DacOutputState(),
 ) {
     Scaffold(
         modifier = modifier.testTag(TestTags.NowPlaying.ROOT),
@@ -128,6 +130,7 @@ fun NowPlayingPage(
                 onSeekToLine = onSeekToLine,
                 onSkipToIndex = onSkipToIndex,
                 sharedArtTrack = sharedArtTrack,
+                dacOutput = dacOutput,
             )
         }
     }
@@ -222,3 +225,39 @@ private fun previewTrack(title: String, artist: String, album: String) = Track(
     folderId = 1L,
     scanStatus = ScanStatus.SCANNED,
 )
+
+@PreviewScreenSizes
+@Composable
+private fun NowPlayingPageUsbDacPreview() {
+    PreviewTheme {
+        NowPlayingPage(
+            state = PlaybackState(
+                currentTrack = previewTrack("Once", "Pearl Jam", "Ten"),
+                isPlaying = true,
+                positionMs = 74_000L,
+                durationMs = 224_000L,
+                shuffleEnabled = false,
+                repeatMode = RepeatMode.OFF,
+                queue = persistentListOf(),
+                queueIndex = 0,
+                volume = 1f,
+            ),
+            onPlayPause = {}, onPrevious = {}, onNext = {}, onSeek = {},
+            onShuffleToggle = {}, onRepeatChange = {}, onOpenQueue = {}, onOpenEqualizer = {}, onOpenLyrics = {}, onBack = {},
+            dacOutput = DacOutputState(
+                device = com.offlineplaya.shared.domain.audio.OutputDevice(
+                    id = 7,
+                    name = "FiiO K11",
+                    key = "usb:FiiO K11",
+                ),
+                mode = com.offlineplaya.shared.domain.audio.OutputMode.BitPerfect(
+                    com.offlineplaya.shared.domain.audio.PcmFormat(
+                        sampleRate = 44_100,
+                        encoding = com.offlineplaya.shared.domain.audio.PcmEncoding.PCM_16,
+                    ),
+                ),
+                bitPerfectCapable = true,
+            ),
+        )
+    }
+}

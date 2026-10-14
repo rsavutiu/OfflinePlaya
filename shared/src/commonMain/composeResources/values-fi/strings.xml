@@ -297,4 +297,15 @@
         <item quantity="one">%1$d soittokerta</item>
         <item quantity="other">%1$d soittokertaa</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Bittitarkka USB-lähtö</string>
+    <string name="dac_bit_perfect_subtitle">Lähettää äänen USB-DAC:lle muuttamattomana. Taajuuskorjain, esivahvistus ja ristihäivytys ohitetaan, kun se on käytössä.</string>
+    <string name="dac_no_device">Liitä USB-DAC käyttääksesi tätä</string>
+    <string name="dac_reason_os">Vaatii Android 14:n tai uudemman</string>
+    <string name="dac_reason_unsupported">Tämä puhelin tai DAC ei tue sitä</string>
+    <string name="dac_reason_format">Nykyisen kappaleen muotoa ei tueta, joten se soi järjestelmän mikserin kautta</string>
+    <string name="dac_reason_hires">Yli 16-bittiset kappaleet soivat järjestelmän mikserin kautta</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bittinen · Bittitarkka</string>
+    <string name="dac_badge_system_mixer">%1$s · Järjestelmän mikseri</string>
 </resources>

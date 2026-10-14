@@ -296,4 +296,15 @@
     <plurals name="stats_plays">
         <item quantity="other">%1$d pemutaran</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Output USB bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">Mengirim audio ke DAC USB Anda tanpa diubah. EQ, preamp, dan crossfade dilewati selama aktif.</string>
+    <string name="dac_no_device">Hubungkan DAC USB untuk menggunakan ini</string>
+    <string name="dac_reason_os">Memerlukan Android 14 atau yang lebih baru</string>
+    <string name="dac_reason_unsupported">Ponsel atau DAC ini tidak mendukungnya</string>
+    <string name="dac_reason_format">Format lagu saat ini tidak didukung, jadi diputar melalui mixer sistem</string>
+    <string name="dac_reason_hires">Lagu di atas 16-bit diputar melalui mixer sistem</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Mixer sistem</string>
 </resources>

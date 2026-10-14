@@ -299,4 +299,15 @@
         <item quantity="few">%1$d predvajanja</item>
         <item quantity="other">%1$d predvajanj</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Bitno natančen izhod USB</string>
+    <string name="dac_bit_perfect_subtitle">Pošilja zvok v USB DAC brez sprememb. Izenačevalnik, predojačitev in navzkrižno pojemanje so med delovanjem izklopljeni.</string>
+    <string name="dac_no_device">Za uporabo priključite USB DAC</string>
+    <string name="dac_reason_os">Zahteva Android 14 ali novejši</string>
+    <string name="dac_reason_unsupported">Ta telefon ali DAC tega ne podpira</string>
+    <string name="dac_reason_format">Oblika trenutne skladbe ni podprta, zato se predvaja prek sistemskega mešalnika</string>
+    <string name="dac_reason_hires">Skladbe nad 16 biti se predvajajo prek sistemskega mešalnika</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bitno · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Sistemski mešalnik</string>
 </resources>

@@ -299,4 +299,15 @@
         <item quantity="many">%1$d прослуховувань</item>
         <item quantity="other">%1$d прослуховування</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Bit-perfect вивід через USB</string>
+    <string name="dac_bit_perfect_subtitle">Передає звук на USB-ЦАП без змін. Поки режим активний, еквалайзер, попереднє підсилення та кросфейд вимикаються.</string>
+    <string name="dac_no_device">Під\'єднайте USB-ЦАП, щоб скористатися цим</string>
+    <string name="dac_reason_os">Потрібен Android 14 або новіший</string>
+    <string name="dac_reason_unsupported">Цей телефон або ЦАП не підтримує цю функцію</string>
+    <string name="dac_reason_format">Формат поточного треку не підтримується, тому він відтворюється через системний мікшер</string>
+    <string name="dac_reason_hires">Треки понад 16 біт відтворюються через системний мікшер</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d біт · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Системний мікшер</string>
 </resources>

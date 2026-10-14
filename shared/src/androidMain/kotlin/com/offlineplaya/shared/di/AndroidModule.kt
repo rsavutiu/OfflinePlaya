@@ -149,7 +149,10 @@ val androidModule: Module = module {
     single<BackgroundTaskRunner> { WorkManagerTaskRunner(androidContext()) }
 
     // USB DAC routing + bit-perfect output (Android 14+ AudioMixerAttributes).
-    // Not started here — the playback service owns its lifecycle (start/stop).
+    // Detection is reference-counted: PlaybackService and DacOutputStateHolder
+    // (Settings / Now Playing) each start it.
     single<DacPreferences> { SharedPrefsDacPreferences(androidContext()) }
-    single<DacOutputManager> { AndroidDacOutputManager(androidContext(), get()) }
+    single<DacOutputManager> {
+        AndroidDacOutputManager(context = androidContext(), prefs = get(), logger = get())
+    }
 }

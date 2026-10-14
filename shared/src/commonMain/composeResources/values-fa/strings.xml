@@ -297,4 +297,15 @@
         <item quantity="one">%1$d پخش</item>
         <item quantity="other">%1$d پخش</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">خروجی USB بیت‌به‌بیت (Bit-perfect)</string>
+    <string name="dac_bit_perfect_subtitle">صدا را بدون هیچ تغییری به DAC یواس‌بی می‌فرستد. اکولایزر، پیش‌تقویت و کراس‌فید هنگام فعال بودن نادیده گرفته می‌شوند.</string>
+    <string name="dac_no_device">برای استفاده، یک DAC یواس‌بی وصل کنید</string>
+    <string name="dac_reason_os">به Android 14 یا جدیدتر نیاز دارد</string>
+    <string name="dac_reason_unsupported">این گوشی یا DAC از آن پشتیبانی نمی‌کند</string>
+    <string name="dac_reason_format">قالب آهنگ فعلی پشتیبانی نمی‌شود، بنابراین از طریق میکسر سیستم پخش می‌شود</string>
+    <string name="dac_reason_hires">آهنگ‌های بالاتر از ۱۶ بیت از طریق میکسر سیستم پخش می‌شوند</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d بیت · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · میکسر سیستم</string>
 </resources>

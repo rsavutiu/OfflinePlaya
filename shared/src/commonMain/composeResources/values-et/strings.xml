@@ -297,4 +297,15 @@
         <item quantity="one">%1$d esitus</item>
         <item quantity="other">%1$d esitust</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Bititäpne USB-väljund</string>
+    <string name="dac_bit_perfect_subtitle">Saadab heli USB DAC-ile muutmata kujul. Ekvalaiser, eelvõimendus ja ristsumbumine on aktiivsena välja lülitatud.</string>
+    <string name="dac_no_device">Selle kasutamiseks ühenda USB DAC</string>
+    <string name="dac_reason_os">Vajab Android 14 või uuemat</string>
+    <string name="dac_reason_unsupported">See telefon või DAC ei toeta seda</string>
+    <string name="dac_reason_format">Praeguse loo vormingut ei toetata, seega mängib see süsteemi mikseri kaudu</string>
+    <string name="dac_reason_hires">Üle 16-bitised lood mängivad süsteemi mikseri kaudu</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bitine · Bititäpne</string>
+    <string name="dac_badge_system_mixer">%1$s · Süsteemi mikser</string>
 </resources>

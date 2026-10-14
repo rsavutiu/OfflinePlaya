@@ -297,4 +297,15 @@
         <item quantity="one">%1$d play</item>
         <item quantity="other">%1$d (na) play</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Bit-perfect na USB output</string>
+    <string name="dac_bit_perfect_subtitle">Ipinapadala ang audio sa iyong USB DAC nang walang binabago. Nilalaktawan ang EQ, preamp at crossfade habang aktibo ito.</string>
+    <string name="dac_no_device">Magkonekta ng USB DAC para magamit ito</string>
+    <string name="dac_reason_os">Kailangan ng Android 14 o mas bago</string>
+    <string name="dac_reason_unsupported">Hindi ito sinusuportahan ng phone o DAC na ito</string>
+    <string name="dac_reason_format">Hindi suportado ang format ng kasalukuyang track, kaya tumutugtog ito sa system mixer</string>
+    <string name="dac_reason_hires">Ang mga track na higit sa 16-bit ay tumutugtog sa system mixer</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · System mixer</string>
 </resources>

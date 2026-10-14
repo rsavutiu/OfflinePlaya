@@ -3,12 +3,16 @@ package com.offlineplaya.shared.domain.audio
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
-import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class DacOutputTest {
 
-    private val dac = OutputDevice(id = 7, name = "FiiO K11", key = "usb:FiiO K11")
+    private val cdDac = listOf(
+        PcmFormat(44_100, PcmEncoding.PCM_16),
+        PcmFormat(48_000, PcmEncoding.PCM_16),
+        PcmFormat(96_000, PcmEncoding.PCM_16),
+        PcmFormat(44_100, PcmEncoding.PCM_24),
+    )
 
     // --- PcmEncoding.canCarryLosslessly -----------------------------------
 
@@ -26,78 +30,77 @@ class DacOutputTest {
         assertFalse(PcmEncoding.PCM_32.canCarryLosslessly(PcmEncoding.PCM_FLOAT))
     }
 
-    // --- BitPerfectFormatSelector -----------------------------------------
+    // --- BitPerfectPlanner ------------------------------------------------
 
     @Test
-    fun `exact format wins over a wider container`() {
-        val offered = listOf(
-            PcmFormat(44_100, PcmEncoding.PCM_32),
-            PcmFormat(44_100, PcmEncoding.PCM_16),
-            PcmFormat(44_100, PcmEncoding.PCM_24),
+    fun `16-bit track at an offered rate is bit-perfect in the sink encoding`() {
+        val plan = BitPerfectPlanner.plan(
+            offered = cdDac,
+            source = PcmFormat(44_100, PcmEncoding.PCM_16),
+            sinkEncoding = PcmEncoding.PCM_16,
         )
-        val picked = BitPerfectFormatSelector.pick(offered, PcmFormat(44_100, PcmEncoding.PCM_16))
-        assertEquals(PcmFormat(44_100, PcmEncoding.PCM_16), picked)
+        assertEquals(BitPerfectPlan.Use(PcmFormat(44_100, PcmEncoding.PCM_16)), plan)
     }
 
     @Test
-    fun `16-bit source goes into the smallest lossless container when exact is missing`() {
-        val offered = listOf(
-            PcmFormat(44_100, PcmEncoding.PCM_32),
-            PcmFormat(44_100, PcmEncoding.PCM_24),
+    fun `track deeper than the sink can never be bit-perfect`() {
+        val plan = BitPerfectPlanner.plan(
+            offered = cdDac,
+            source = PcmFormat(44_100, PcmEncoding.PCM_24),
+            sinkEncoding = PcmEncoding.PCM_16,
         )
-        val picked = BitPerfectFormatSelector.pick(offered, PcmFormat(44_100, PcmEncoding.PCM_16))
-        assertEquals(PcmFormat(44_100, PcmEncoding.PCM_24), picked)
+        assertEquals(BitPerfectPlan.Fallback(FallbackReason.HI_RES_SOURCE), plan)
     }
 
     @Test
-    fun `no resampling - a different sample rate is never picked`() {
-        val offered = listOf(PcmFormat(48_000, PcmEncoding.PCM_24))
-        assertNull(BitPerfectFormatSelector.pick(offered, PcmFormat(44_100, PcmEncoding.PCM_24)))
+    fun `no resampling - a rate the DAC does not offer falls back`() {
+        val plan = BitPerfectPlanner.plan(
+            offered = cdDac,
+            source = PcmFormat(88_200, PcmEncoding.PCM_16),
+            sinkEncoding = PcmEncoding.PCM_16,
+        )
+        assertEquals(BitPerfectPlan.Fallback(FallbackReason.FORMAT_NOT_SUPPORTED), plan)
+    }
+
+    @Test
+    fun `sink encoding must be offered exactly - a wider mixer is not used`() {
+        val plan = BitPerfectPlanner.plan(
+            offered = listOf(PcmFormat(44_100, PcmEncoding.PCM_24)),
+            source = PcmFormat(44_100, PcmEncoding.PCM_16),
+            sinkEncoding = PcmEncoding.PCM_16,
+        )
+        assertEquals(BitPerfectPlan.Fallback(FallbackReason.FORMAT_NOT_SUPPORTED), plan)
     }
 
     @Test
     fun `channel count must match`() {
-        val offered = listOf(PcmFormat(96_000, PcmEncoding.PCM_24, channelCount = 1))
-        assertNull(BitPerfectFormatSelector.pick(offered, PcmFormat(96_000, PcmEncoding.PCM_24)))
-    }
-
-    @Test
-    fun `24-bit source is not truncated into a 16-bit container`() {
-        val offered = listOf(PcmFormat(96_000, PcmEncoding.PCM_16))
-        assertNull(BitPerfectFormatSelector.pick(offered, PcmFormat(96_000, PcmEncoding.PCM_24)))
-    }
-
-    // --- signal-path label ------------------------------------------------
-
-    @Test
-    fun `no device means no badge`() {
-        assertNull(DacOutputState().signalPathLabel())
-    }
-
-    @Test
-    fun `bit-perfect badge shows rate and depth`() {
-        val state = DacOutputState(
-            device = dac,
-            mode = OutputMode.BitPerfect(PcmFormat(96_000, PcmEncoding.PCM_24)),
+        val plan = BitPerfectPlanner.plan(
+            offered = cdDac,
+            source = PcmFormat(44_100, PcmEncoding.PCM_16, channelCount = 1),
+            sinkEncoding = PcmEncoding.PCM_16,
         )
-        assertEquals("FiiO K11 · 96 kHz / 24-bit · Bit-perfect", state.signalPathLabel())
-        assertFalse(state.softwareDspAllowed)
+        assertEquals(BitPerfectPlan.Fallback(FallbackReason.FORMAT_NOT_SUPPORTED), plan)
     }
 
     @Test
-    fun `fractional rates and float depth are formatted`() {
-        val state = DacOutputState(
-            device = dac,
-            mode = OutputMode.BitPerfect(PcmFormat(44_100, PcmEncoding.PCM_FLOAT)),
+    fun `nothing offered means the device does not support it`() {
+        val plan = BitPerfectPlanner.plan(
+            offered = emptyList(),
+            source = PcmFormat(44_100, PcmEncoding.PCM_16),
+            sinkEncoding = PcmEncoding.PCM_16,
         )
-        assertEquals("FiiO K11 · 44.1 kHz / 32-bit float · Bit-perfect", state.signalPathLabel())
+        assertEquals(BitPerfectPlan.Fallback(FallbackReason.DEVICE_NOT_SUPPORTED), plan)
     }
 
+    // --- state + formatting -----------------------------------------------
+
     @Test
-    fun `standard mode badge and dsp allowed`() {
-        val state = DacOutputState(device = dac)
-        assertEquals("FiiO K11 · System mixer", state.signalPathLabel())
-        assertTrue(state.softwareDspAllowed)
+    fun `software dsp is only blocked while bit-perfect`() {
+        assertTrue(DacOutputState().softwareDspAllowed)
+        assertFalse(
+            DacOutputState(mode = OutputMode.BitPerfect(PcmFormat(44_100, PcmEncoding.PCM_16)))
+                .softwareDspAllowed,
+        )
     }
 
     @Test

@@ -297,4 +297,15 @@
         <item quantity="one">%1$d reproducció</item>
         <item quantity="other">%1$d reproduccions</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Sortida USB bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">Envia l\'àudio al DAC USB sense cap canvi. L\'equalitzador, el preamplificador i la transició s\'ometen mentre està actiu.</string>
+    <string name="dac_no_device">Connecta un DAC USB per fer-ho servir</string>
+    <string name="dac_reason_os">Cal Android 14 o posterior</string>
+    <string name="dac_reason_unsupported">Aquest telèfon o DAC no ho admet</string>
+    <string name="dac_reason_format">El format de la pista actual no és compatible, així que es reprodueix pel mesclador del sistema</string>
+    <string name="dac_reason_hires">Les pistes de més de 16 bits es reprodueixen pel mesclador del sistema</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bits · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Mesclador del sistema</string>
 </resources>

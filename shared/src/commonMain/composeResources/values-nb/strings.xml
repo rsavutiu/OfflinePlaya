@@ -297,4 +297,15 @@
         <item quantity="one">%1$d avspilling</item>
         <item quantity="other">%1$d avspillinger</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Bit-perfekt USB-utgang</string>
+    <string name="dac_bit_perfect_subtitle">Sender lyden uendret til USB-DAC-en din. Equalizer, forforsterkning og krysstoning hoppes over mens den er aktiv.</string>
+    <string name="dac_no_device">Koble til en USB-DAC for å bruke dette</string>
+    <string name="dac_reason_os">Krever Android 14 eller nyere</string>
+    <string name="dac_reason_unsupported">Denne telefonen eller DAC-en støtter det ikke</string>
+    <string name="dac_reason_format">Formatet på gjeldende spor støttes ikke, så det spilles gjennom systemmikseren</string>
+    <string name="dac_reason_hires">Spor over 16 bit spilles gjennom systemmikseren</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfekt</string>
+    <string name="dac_badge_system_mixer">%1$s · Systemmikser</string>
 </resources>

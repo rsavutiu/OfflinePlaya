@@ -12,6 +12,7 @@ import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
 import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -38,6 +39,11 @@ import kotlin.math.roundToInt
  *     stacks compounding gains — same band shifted twice — and audio sounds
  *     wrong on a per-device basis.
  *
+ * While [bypass] is `true` (bit-perfect USB DAC output) the whole pipeline is
+ * stood down: no Equalizer, no LoudnessEnhancer and no OEM effect session, so
+ * the stream reaches the DAC untouched. The user's settings are left as they
+ * are and re-applied the moment bypass ends.
+ *
  * The controller is constructed by [PlaybackService] after the ExoPlayer
  * exists and is released with the service. Lifecycle is strictly bounded:
  * the [Equalizer] AIDL handle is released in [release], and the observer
@@ -47,6 +53,7 @@ class AppEqualizerController(
     private val context: Context,
     private val audioSessionId: Int,
     private val stateHolder: EqualizerStateHolder,
+    private val bypass: StateFlow<Boolean>,
     private val scope: CoroutineScope,
     private val logger: AppLogger,
 ) {
@@ -78,10 +85,14 @@ class AppEqualizerController(
             // changes (toggle system EQ broadcast) and preset changes (push
             // new band gains). `distinctUntilChanged` prevents redundant
             // AIDL calls when the upstream emits the same pair twice.
-            combine(stateHolder.preferences, stateHolder.activePreset) { prefs, preset ->
-                prefs.mode to preset
-            }.distinctUntilChanged().collect { (mode, preset) ->
-                apply(mode, preset)
+            combine(
+                stateHolder.preferences,
+                stateHolder.activePreset,
+                bypass,
+            ) { prefs, preset, bypassed ->
+                Triple(prefs.mode, preset, bypassed)
+            }.distinctUntilChanged().collect { (mode, preset, bypassed) ->
+                if (bypassed) standDown() else apply(mode, preset)
             }
         }
 
@@ -89,7 +100,9 @@ class AppEqualizerController(
         // session, so the boost works whether the user runs our EQ or the
         // OEM pipeline.
         preampJob = scope.launch {
-            stateHolder.preferences.map { it.preampPercent }
+            combine(stateHolder.preferences.map { it.preampPercent }, bypass) { percent, bypassed ->
+                if (bypassed) 0 else percent
+            }
                 .distinctUntilChanged()
                 .collect { percent -> applyPreamp(percent) }
         }
@@ -152,6 +165,12 @@ class AppEqualizerController(
                 applyPresetToEqualizer(preset)
             }
         }
+    }
+
+    /** Bit-perfect output: no app EQ and no OEM effect session on the stream. */
+    private fun standDown() {
+        releaseEqualizer()
+        closeSystemEffects()
     }
 
     private fun applyPresetToEqualizer(preset: EqPreset) {

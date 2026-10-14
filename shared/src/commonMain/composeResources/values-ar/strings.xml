@@ -301,4 +301,15 @@
         <item quantity="many">%1$d تشغيلًا</item>
         <item quantity="other">%1$d تشغيل</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">إخراج USB مطابق تمامًا (Bit-perfect)</string>
+    <string name="dac_bit_perfect_subtitle">يرسل الصوت إلى محوّل DAC عبر USB دون أي تعديل. يتم تجاوز المعادل والتضخيم المسبق والتلاشي المتقاطع أثناء التفعيل.</string>
+    <string name="dac_no_device">وصّل محوّل DAC عبر USB لاستخدام هذه الميزة</string>
+    <string name="dac_reason_os">يتطلب Android 14 أو أحدث</string>
+    <string name="dac_reason_unsupported">هذا الهاتف أو محوّل DAC لا يدعم ذلك</string>
+    <string name="dac_reason_format">تنسيق المقطع الحالي غير مدعوم، لذا يُشغَّل عبر خلاط النظام</string>
+    <string name="dac_reason_hires">المقاطع الأعلى من 16 بت تُشغَّل عبر خلاط النظام</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d بت · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · خلاط النظام</string>
 </resources>

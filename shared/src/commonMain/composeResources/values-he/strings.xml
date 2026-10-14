@@ -299,4 +299,15 @@
         <item quantity="many">%1$d השמעות</item>
         <item quantity="other">%1$d השמעות</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">פלט USB מדויק לביט (Bit-perfect)</string>
+    <string name="dac_bit_perfect_subtitle">שולח את השמע ל-DAC ב-USB ללא שינוי. האקולייזר, ההגברה המקדימה והמעבר ההדרגתי מושבתים כל עוד הוא פעיל.</string>
+    <string name="dac_no_device">חבר DAC ב-USB כדי להשתמש בזה</string>
+    <string name="dac_reason_os">נדרש Android 14 ומעלה</string>
+    <string name="dac_reason_unsupported">הטלפון או ה-DAC הזה אינו תומך בכך</string>
+    <string name="dac_reason_format">הפורמט של הרצועה הנוכחית אינו נתמך, ולכן היא מתנגנת דרך מערבל המערכת</string>
+    <string name="dac_reason_hires">רצועות מעל 16 ביט מתנגנות דרך מערבל המערכת</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d ביט · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · מערבל המערכת</string>
 </resources>

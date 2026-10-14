@@ -48,6 +48,11 @@ import kotlinx.coroutines.withContext
  * An un-EQ'd tail for a few seconds is the far smaller evil. The secondary
  * also does **not** request audio focus — the main player already holds it.
  *
+ * Suppressed entirely while [bypass] is `true` (bit-perfect USB DAC output):
+ * the fade is a software volume ramp and the secondary engine is a second
+ * stream, and neither may touch a bit-perfect path. An overlap already in
+ * flight is aborted when bypass starts.
+ *
  * Lifecycle mirrors [AppEqualizerController]: built by `PlaybackService` after
  * the ExoPlayer exists, released with the service. Every player touch happens
  * on the main looper (the player's application thread).
@@ -56,6 +61,7 @@ class CrossfadeController(
     private val context: Context,
     private val mainPlayer: ExoPlayer,
     private val preferences: StateFlow<PlaybackPreferences>,
+    private val bypass: StateFlow<Boolean>,
     private val scope: CoroutineScope,
     private val logger: AppLogger,
 ) {
@@ -84,6 +90,7 @@ class CrossfadeController(
     private var tickJob: Job? = null
     private var fadeJob: Job? = null
     private var prefsJob: Job? = null
+    private var bypassJob: Job? = null
 
     private val listener = object : Player.Listener {
         override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
@@ -114,6 +121,9 @@ class CrossfadeController(
                 if (!updated.crossfadeEnabled) withContext(mainDispatcher) { abort() }
             }
         }
+        bypassJob = scope.launch(mainDispatcher) {
+            bypass.collect { bypassed -> if (bypassed) abort() }
+        }
         tickJob = scope.launch(mainDispatcher) {
             while (true) {
                 tick()
@@ -126,6 +136,7 @@ class CrossfadeController(
     private fun tick() {
         val current = prefs
         if (!current.crossfadeEnabled) return
+        if (bypass.value) return
         if (phase == Phase.FADING) return
         // Repeat-one must keep replaying the same track; seekToNext() would jump
         // away from it, so crossfade is suppressed (correctness, not just perf).
@@ -249,6 +260,7 @@ class CrossfadeController(
     fun release() {
         tickJob?.cancel()
         prefsJob?.cancel()
+        bypassJob?.cancel()
         fadeJob?.cancel()
         mainPlayer.removeListener(listener)
         secondaryPlayer?.release()

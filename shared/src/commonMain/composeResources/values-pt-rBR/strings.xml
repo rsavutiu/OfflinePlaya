@@ -297,4 +297,15 @@
         <item quantity="one">%1$d reprodução</item>
         <item quantity="other">%1$d reproduções</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Saída USB bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">Envia o áudio ao seu DAC USB sem alterações. Equalizador, pré-amplificador e crossfade são ignorados enquanto estiver ativo.</string>
+    <string name="dac_no_device">Conecte um DAC USB para usar isto</string>
+    <string name="dac_reason_os">Requer Android 14 ou mais recente</string>
+    <string name="dac_reason_unsupported">Este celular ou DAC não oferece suporte</string>
+    <string name="dac_reason_format">O formato da faixa atual não é compatível, então ela toca pelo mixer do sistema</string>
+    <string name="dac_reason_hires">Faixas acima de 16 bits tocam pelo mixer do sistema</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bits · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Mixer do sistema</string>
 </resources>

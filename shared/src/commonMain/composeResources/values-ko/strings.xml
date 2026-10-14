@@ -296,4 +296,15 @@
     <plurals name="stats_plays">
         <item quantity="other">%1$d회 재생</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">비트 퍼펙트 USB 출력</string>
+    <string name="dac_bit_perfect_subtitle">오디오를 변경 없이 USB DAC로 보냅니다. 켜져 있는 동안 EQ, 프리앰프, 크로스페이드는 우회됩니다.</string>
+    <string name="dac_no_device">사용하려면 USB DAC를 연결하세요</string>
+    <string name="dac_reason_os">Android 14 이상이 필요합니다</string>
+    <string name="dac_reason_unsupported">이 휴대전화 또는 DAC에서 지원하지 않습니다</string>
+    <string name="dac_reason_format">현재 트랙의 형식이 지원되지 않아 시스템 믹서를 통해 재생됩니다</string>
+    <string name="dac_reason_hires">16비트를 초과하는 트랙은 시스템 믹서를 통해 재생됩니다</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d비트 · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · 시스템 믹서</string>
 </resources>

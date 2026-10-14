@@ -43,6 +43,7 @@ import com.offlineplaya.shared.presentation.review.ShareNudgeCoordinator
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
 import com.offlineplaya.shared.presentation.settings.LyricsPreferencesStateHolder
 import com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder
+import com.offlineplaya.shared.presentation.audio.DacOutputStateHolder
 import com.offlineplaya.shared.presentation.settings.ThemeStateHolder
 import com.offlineplaya.shared.presentation.sync.LibrarySyncCoordinator
 import com.offlineplaya.shared.presentation.tag.TagEditorCoordinator
@@ -212,6 +213,10 @@ val sharedModule: Module = module {
             scope = get(),
         )
     }
+
+    // USB DAC badge + bit-perfect switch. The DacOutputManager it wraps is
+    // platform-provided (androidModule binds the AudioMixerAttributes impl).
+    single { DacOutputStateHolder(manager = get()) }
 
     // Album-art reactive theme: watches the player, extracts a seed color from
     // the current cover, and persists it so the app opens tinted to the last
