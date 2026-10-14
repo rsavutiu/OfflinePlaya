@@ -296,4 +296,15 @@
     <plurals name="stats_plays">
         <item quantity="other">%1$d lượt phát</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Đầu ra USB bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">Gửi âm thanh đến DAC USB mà không thay đổi. EQ, tiền khuếch đại và chuyển tiếp mờ dần được bỏ qua khi đang bật.</string>
+    <string name="dac_no_device">Kết nối DAC USB để sử dụng tính năng này</string>
+    <string name="dac_reason_os">Cần Android 14 trở lên</string>
+    <string name="dac_reason_unsupported">Điện thoại hoặc DAC này không hỗ trợ</string>
+    <string name="dac_reason_format">Định dạng của bản nhạc hiện tại không được hỗ trợ, nên phát qua bộ trộn hệ thống</string>
+    <string name="dac_reason_hires">Bản nhạc trên 16-bit phát qua bộ trộn hệ thống</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Bộ trộn hệ thống</string>
 </resources>

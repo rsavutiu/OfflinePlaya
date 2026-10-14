@@ -14,9 +14,8 @@ enum class PcmEncoding(val bitDepth: Int, val isFloat: Boolean = false) {
 
     /**
      * `true` if samples in [source] fit in this container with no loss — integer
-     * into a wider-or-equal integer container (zero-padded LSBs), float into float.
-     * Integer → float is deliberately rejected: the DAC must receive the integer
-     * words untouched for the path to stay bit-perfect.
+     * into a wider-or-equal integer container, float into float. Integer ↔ float
+     * is rejected: the DAC must receive the original integer words untouched.
      */
     fun canCarryLosslessly(source: PcmEncoding): Boolean =
         isFloat == source.isFloat && bitDepth >= source.bitDepth
@@ -45,8 +44,8 @@ sealed interface OutputMode {
     data object Standard : OutputMode
 
     /**
-     * Bit-perfect path to the DAC. The player MUST write exactly [format] and
-     * MUST NOT apply software volume, EQ, preamp, crossfade or any other DSP.
+     * Bit-perfect path to the DAC. The player writes exactly [format] and MUST
+     * NOT apply software volume, EQ, preamp, crossfade or any other DSP.
      */
     data class BitPerfect(val format: PcmFormat) : OutputMode
 }
@@ -58,8 +57,15 @@ enum class FallbackReason {
     /** The audio HAL exposes no bit-perfect mixer for this DAC. */
     DEVICE_NOT_SUPPORTED,
 
-    /** The DAC can't take this sample rate / depth bit-perfectly. */
+    /** The DAC offers no bit-perfect mixer at this track's rate / channels. */
     FORMAT_NOT_SUPPORTED,
+
+    /**
+     * The track is deeper than what the player can write to the output
+     * (e.g. 24-bit FLAC while the player outputs 16-bit), so the bits reaching
+     * the DAC would not be the file's bits.
+     */
+    HI_RES_SOURCE,
 
     DISABLED_BY_USER,
 
@@ -79,40 +85,45 @@ data class DacOutputState(
     val softwareDspAllowed: Boolean get() = mode !is OutputMode.BitPerfect
 }
 
-/** Badge text for the signal path, e.g. "FiiO K11 · 96 kHz / 24-bit · Bit-perfect". */
-fun DacOutputState.signalPathLabel(): String? {
-    val dev = device ?: return null
-    return when (val m = mode) {
-        is OutputMode.BitPerfect -> {
-            val depth = if (m.format.encoding.isFloat) {
-                "32-bit float"
-            } else {
-                "${m.format.encoding.bitDepth}-bit"
-            }
-            "${dev.name} · ${formatKhz(m.format.sampleRate)} kHz / $depth · Bit-perfect"
-        }
-        OutputMode.Standard -> "${dev.name} · System mixer"
-    }
-}
-
 /** 44100 → "44.1", 96000 → "96" (KMP-safe; no String.format in commonMain). */
-internal fun formatKhz(sampleRate: Int): String {
+fun formatKhz(sampleRate: Int): String {
     val whole = sampleRate / 1000
     val tenths = (sampleRate % 1000) / 100
     return if (tenths == 0) "$whole" else "$whole.$tenths"
 }
 
+/** Outcome of [BitPerfectPlanner.plan]. */
+sealed interface BitPerfectPlan {
+    data class Use(val format: PcmFormat) : BitPerfectPlan
+    data class Fallback(val reason: FallbackReason) : BitPerfectPlan
+}
+
 /**
- * Picks the bit-perfect output format for [source] out of what the DAC offers.
+ * Decides whether a track can go to the DAC bit-perfectly.
  *
- * Exact sample rate and channel count are required — no resampling is the whole
- * point. Prefers the exact encoding; otherwise the smallest container that holds
- * the source losslessly (e.g. a 16-bit track into a 24-bit-only DAC).
+ * The platform only keeps a stream bit-perfect when the AudioTrack's format
+ * equals the mixer's format, so the request must be for exactly what the player
+ * writes: the track's own sample rate and channel count, in [sinkEncoding].
+ * A track deeper than [sinkEncoding] can't be bit-perfect at all, because the
+ * player has already reduced it before the DAC sees it.
  */
-object BitPerfectFormatSelector {
-    fun pick(offered: List<PcmFormat>, source: PcmFormat): PcmFormat? =
-        offered
-            .filter { it.sampleRate == source.sampleRate && it.channelCount == source.channelCount }
-            .filter { it.encoding.canCarryLosslessly(source.encoding) }
-            .minByOrNull { if (it.encoding == source.encoding) 0 else it.encoding.bitDepth }
+object BitPerfectPlanner {
+    fun plan(
+        offered: Collection<PcmFormat>,
+        source: PcmFormat,
+        sinkEncoding: PcmEncoding,
+    ): BitPerfectPlan {
+        if (offered.isEmpty()) {
+            return BitPerfectPlan.Fallback(FallbackReason.DEVICE_NOT_SUPPORTED)
+        }
+        if (!sinkEncoding.canCarryLosslessly(source.encoding)) {
+            return BitPerfectPlan.Fallback(FallbackReason.HI_RES_SOURCE)
+        }
+        val output = PcmFormat(source.sampleRate, sinkEncoding, source.channelCount)
+        return if (output in offered) {
+            BitPerfectPlan.Use(output)
+        } else {
+            BitPerfectPlan.Fallback(FallbackReason.FORMAT_NOT_SUPPORTED)
+        }
+    }
 }

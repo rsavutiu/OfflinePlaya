@@ -297,4 +297,15 @@
         <item quantity="one">%1$d प्ले</item>
         <item quantity="other">%1$d प्ले</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">बिट-परफ़ेक्ट USB आउटपुट</string>
+    <string name="dac_bit_perfect_subtitle">ऑडियो को बिना किसी बदलाव के आपके USB DAC पर भेजता है। चालू रहने तक EQ, प्रीएम्प और क्रॉसफ़ेड बायपास रहते हैं।</string>
+    <string name="dac_no_device">इसका उपयोग करने के लिए USB DAC कनेक्ट करें</string>
+    <string name="dac_reason_os">Android 14 या उसके बाद का वर्शन ज़रूरी है</string>
+    <string name="dac_reason_unsupported">यह फ़ोन या DAC इसे सपोर्ट नहीं करता</string>
+    <string name="dac_reason_format">मौजूदा ट्रैक का फ़ॉर्मैट सपोर्ट नहीं है, इसलिए यह सिस्टम मिक्सर से चलता है</string>
+    <string name="dac_reason_hires">16-बिट से ऊपर के ट्रैक सिस्टम मिक्सर से चलते हैं</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-बिट · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · सिस्टम मिक्सर</string>
 </resources>

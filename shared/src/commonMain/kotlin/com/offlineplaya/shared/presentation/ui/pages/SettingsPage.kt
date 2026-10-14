@@ -88,6 +88,9 @@ fun SettingsPage(
     excludedFolders: PersistentList<com.offlineplaya.shared.domain.model.ExcludedFolder> =
         kotlinx.collections.immutable.persistentListOf(),
     onRemoveExcludedFolder: (com.offlineplaya.shared.domain.model.ExcludedFolder) -> Unit = {},
+    dacOutput: com.offlineplaya.shared.domain.audio.DacOutputState =
+        com.offlineplaya.shared.domain.audio.DacOutputState(),
+    onBitPerfectChange: (Boolean) -> Unit = {},
 ) {
     var pendingRemoval by remember { mutableStateOf<ManagedTreeRoot?>(null) }
     var confirmReset by remember { mutableStateOf(false) }
@@ -145,6 +148,8 @@ fun SettingsPage(
                     onCrossfadeEnabledChange = onCrossfadeEnabledChange,
                     onCrossfadeDurationChange = onCrossfadeDurationChange,
                     onBluetoothAutoplayChange = onBluetoothAutoplayChange,
+                    dacOutput = dacOutput,
+                    onBitPerfectChange = onBitPerfectChange,
                 )
             }
             val audio: @Composable () -> Unit = {

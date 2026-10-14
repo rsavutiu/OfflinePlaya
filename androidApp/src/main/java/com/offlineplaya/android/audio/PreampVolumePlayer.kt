@@ -20,6 +20,7 @@ import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -52,11 +53,16 @@ import kotlinx.coroutines.launch
  * host is connected ([setCarConnected]) we drop the override entirely — the
  * car owns its own volume, so the preamp-on-volume-keys ramp is meaningless
  * there anyway.
+ *
+ * The override is also dropped while [bypass] is `true` (bit-perfect USB DAC
+ * output): the preamp is off in that mode, and plain local volume lets the
+ * volume keys drive the DAC's own hardware volume.
  */
 class PreampVolumePlayer(
     player: Player,
     private val context: Context,
     private val stateHolder: EqualizerStateHolder,
+    private val bypass: StateFlow<Boolean>,
     scope: CoroutineScope,
     private val logger: AppLogger,
 ) : ForwardingSimpleBasePlayer(player) {
@@ -81,6 +87,7 @@ class PreampVolumePlayer(
     private var receiverRegistered = false
     private var carConnected = false
     private val preampJob: Job
+    private val bypassJob: Job
 
     init {
         runCatching {
@@ -100,6 +107,9 @@ class PreampVolumePlayer(
             stateHolder.preferences.map { it.preampPercent }
                 .distinctUntilChanged()
                 .collect { invalidateState() }
+        }
+        bypassJob = scope.launch(Dispatchers.Main) {
+            bypass.collect { invalidateState() }
         }
     }
 
@@ -121,7 +131,7 @@ class PreampVolumePlayer(
         // In the car, report the wrapped player's state untouched: claiming
         // PLAYBACK_TYPE_REMOTE makes Auto print a "playing on another
         // device" warning under the metadata.
-        if (carConnected) return state
+        if (carConnected || bypass.value) return state
         @Suppress("DEPRECATION") // legacy controllers still probe the non-flag commands
         val commands = state.availableCommands.buildUpon()
             .addAll(
@@ -188,6 +198,7 @@ class PreampVolumePlayer(
 
     override fun handleRelease(): ListenableFuture<*> {
         preampJob.cancel()
+        bypassJob.cancel()
         if (receiverRegistered) {
             runCatching { context.unregisterReceiver(volumeReceiver) }
             receiverRegistered = false

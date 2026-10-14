@@ -358,4 +358,14 @@
     <string name="share_nudge_dismiss">Maybe later</string>
     <string name="share_nudge_message">I\'ve been using OfflinePlaya — a free, offline music player with no ads or tracking. Give it a try: %1$s</string>
 
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Bit-perfect USB output</string>
+    <string name="dac_bit_perfect_subtitle">Sends audio to your USB DAC untouched. EQ, preamp and crossfade are bypassed while it\'s active.</string>
+    <string name="dac_no_device">Connect a USB DAC to use this</string>
+    <string name="dac_reason_os">Needs Android 14 or newer</string>
+    <string name="dac_reason_unsupported">This phone or DAC doesn\'t support it</string>
+    <string name="dac_reason_format">The current track\'s format isn\'t supported, so it plays through the system mixer</string>
+    <string name="dac_reason_hires">Tracks above 16-bit play through the system mixer</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · System mixer</string>
 </resources>

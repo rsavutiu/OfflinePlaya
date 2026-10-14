@@ -137,6 +137,14 @@ OkHttp client used by `ArtistArtFetcher` and `MusicBrainzArtSource` has a 50 MB 
   active session.
 - **`CrossfadeController`** drives a second engine for track-to-track overlap; no-op while the
   user has crossfade disabled (default-off path is native gapless).
+- **USB DAC / bit-perfect** — `DacPlaybackController` (androidApp/audio) feeds each track's format
+  to `DacOutputManager` (domain/audio; Android impl `AndroidDacOutputManager`), which on Android 14+
+  requests a bit-perfect `AudioMixerAttributes` mixer and pins the player to the DAC. Media3's
+  `DefaultAudioSink` (float output off) writes 16-bit PCM for every source, so only tracks ≤16-bit
+  can be bit-perfect; deeper tracks fall back to the system mixer (`HI_RES_SOURCE`). While
+  bit-perfect is active, `bitPerfectActive` makes `AppEqualizerController`, `PreampVolumePlayer`,
+  `CrossfadeController` and `MainActivity.onKeyDown` step out of the signal path. Detection is
+  ref-counted (`start`/`stop`) between the service and the UI (`DacOutputStateHolder`).
 - `AudioAttributes(CONTENT_TYPE_MUSIC, USAGE_MEDIA)` + `setHandleAudioBecomingNoisy(true)` + auto
   audio-focus.
 - `stopSelf()` on task-removed when nothing is playing — otherwise the foreground notification can

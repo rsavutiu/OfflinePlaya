@@ -12,8 +12,10 @@ import androidx.media3.session.MediaSession
 import com.offlineplaya.android.MainActivity
 import com.offlineplaya.android.audio.AppEqualizerController
 import com.offlineplaya.android.audio.CrossfadeController
+import com.offlineplaya.android.audio.DacPlaybackController
 import com.offlineplaya.android.audio.PreampVolumePlayer
 import com.offlineplaya.android.auto.AutoLibraryCallback
+import com.offlineplaya.shared.domain.audio.DacOutputManager
 import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
 import com.offlineplaya.shared.presentation.settings.PlaybackTuningStateHolder
@@ -41,6 +43,7 @@ class PlaybackService : MediaLibraryService() {
     private var audioSessionId: Int = AudioEffect.ERROR_BAD_VALUE
     private var equalizerController: AppEqualizerController? = null
     private var crossfadeController: CrossfadeController? = null
+    private var dacController: DacPlaybackController? = null
     private var logger: AppLogger? = null
 
     /**
@@ -74,10 +77,27 @@ class PlaybackService : MediaLibraryService() {
         val koin = GlobalContext.get()
         val stateHolder = koin.get<EqualizerStateHolder>()
         val logger = koin.get<AppLogger>().also { this.logger = it }
+
+        // USB DAC routing. Built first because its bitPerfectActive flag tells
+        // the EQ, preamp, volume ramp and crossfade below to step out of the
+        // signal path while the DAC is fed bit-perfect.
+        val dac = DacPlaybackController(
+            context = this,
+            player = player,
+            manager = koin.get<DacOutputManager>(),
+            scope = serviceScope,
+            logger = logger,
+        ).also {
+            dacController = it
+            it.start()
+        }
+        val bitPerfectActive = dac.bitPerfectActive
+
         equalizerController = AppEqualizerController(
             context = this,
             audioSessionId = audioSessionId,
             stateHolder = stateHolder,
+            bypass = bitPerfectActive,
             scope = serviceScope,
             logger = logger,
         ).also { it.start() }
@@ -92,6 +112,7 @@ class PlaybackService : MediaLibraryService() {
             context = this,
             mainPlayer = player,
             preferences = koin.get<PlaybackTuningStateHolder>().preferences,
+            bypass = bitPerfectActive,
             scope = serviceScope,
             logger = logger,
         ).also { it.start() }
@@ -113,6 +134,7 @@ class PlaybackService : MediaLibraryService() {
             player = player,
             context = this,
             stateHolder = stateHolder,
+            bypass = bitPerfectActive,
             scope = serviceScope,
             logger = logger,
         )
@@ -157,6 +179,8 @@ class PlaybackService : MediaLibraryService() {
         crossfadeController = null
         safeRelease("equalizer") { equalizerController?.release() }
         equalizerController = null
+        safeRelease("dac") { dacController?.release() }
+        dacController = null
         safeRelease("serviceScope") { serviceScope.cancel() }
         mediaSession?.let { session ->
             safeRelease("player") { session.player.release() }

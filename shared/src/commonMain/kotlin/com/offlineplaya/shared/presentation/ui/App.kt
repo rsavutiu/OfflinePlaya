@@ -24,6 +24,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -82,7 +83,11 @@ import com.offlineplaya.shared.presentation.ui.pages.SmartPlaylistPage
 import com.offlineplaya.shared.presentation.ui.pages.TagEditorPage
 import com.offlineplaya.shared.presentation.ui.theme.AppMotion
 import com.offlineplaya.shared.presentation.ui.theme.OfflinePlayaTheme
+import com.offlineplaya.shared.domain.audio.DacOutputState
+import com.offlineplaya.shared.presentation.audio.DacOutputStateHolder
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import offlineplaya.shared.generated.resources.Res
@@ -120,7 +125,21 @@ fun App(
     onCrossfadeDurationChange: (Int) -> Unit,
     onBluetoothAutoplayChange: (Boolean) -> Unit,
     dynamicColorSupported: Boolean,
+    dacOutputStateHolder: DacOutputStateHolder? = null,
 ) {
+    // USB DAC detection runs while the UI is up, so a DAC plugged in before
+    // anything plays still shows in Settings (the manager is ref-counted).
+    DisposableEffect(dacOutputStateHolder) {
+        dacOutputStateHolder?.start()
+        onDispose { dacOutputStateHolder?.stop() }
+    }
+    val dacOutputFlow: StateFlow<DacOutputState> = remember(dacOutputStateHolder) {
+        dacOutputStateHolder?.state ?: MutableStateFlow(DacOutputState())
+    }
+    val dacOutput by dacOutputFlow.collectAsState()
+    val onBitPerfectChange: (Boolean) -> Unit = { enabled ->
+        dacOutputStateHolder?.setBitPerfectEnabled(enabled)
+    }
     OfflinePlayaTheme(preferences = themePreferences, seedColor = seedColor) {
         val stack by navigator.stack.collectAsState()
         val current = stack.last()
@@ -225,6 +244,8 @@ fun App(
                             onCrossfadeEnabledChange = onCrossfadeEnabledChange,
                             onCrossfadeDurationChange = onCrossfadeDurationChange,
                             onBluetoothAutoplayChange = onBluetoothAutoplayChange,
+                            dacOutput = dacOutput,
+                            onBitPerfectChange = onBitPerfectChange,
                             onBurnMetadataClick = { burnMetadataCoordinator.start() },
                             onAcknowledgeBurnReport = { burnMetadataCoordinator.acknowledge() },
                             dynamicColorSupported = dynamicColorSupported,
@@ -293,6 +314,8 @@ private fun DestinationContent(
     onCrossfadeEnabledChange: (Boolean) -> Unit,
     onCrossfadeDurationChange: (Int) -> Unit,
     onBluetoothAutoplayChange: (Boolean) -> Unit,
+    dacOutput: DacOutputState,
+    onBitPerfectChange: (Boolean) -> Unit,
     onBurnMetadataClick: () -> Unit,
     onAcknowledgeBurnReport: () -> Unit,
     dynamicColorSupported: Boolean,
@@ -367,6 +390,8 @@ private fun DestinationContent(
                         onCrossfadeEnabledChange = onCrossfadeEnabledChange,
                         onCrossfadeDurationChange = onCrossfadeDurationChange,
                         onBluetoothAutoplayChange = onBluetoothAutoplayChange,
+                        dacOutput = dacOutput,
+                        onBitPerfectChange = onBitPerfectChange,
                         onBurnMetadataClick = onBurnMetadataClick,
                         onAcknowledgeBurnReport = onAcknowledgeBurnReport,
                         dynamicColorSupported = dynamicColorSupported,
@@ -418,6 +443,8 @@ private fun DestinationBody(
     onCrossfadeEnabledChange: (Boolean) -> Unit,
     onCrossfadeDurationChange: (Int) -> Unit,
     onBluetoothAutoplayChange: (Boolean) -> Unit,
+    dacOutput: DacOutputState,
+    onBitPerfectChange: (Boolean) -> Unit,
     onBurnMetadataClick: () -> Unit,
     onAcknowledgeBurnReport: () -> Unit,
     dynamicColorSupported: Boolean,
@@ -534,6 +561,8 @@ private fun DestinationBody(
                     dynamicColorSupported = dynamicColorSupported,
                     excludedFolders = excludedFolders.toPersistentList(),
                     onRemoveExcludedFolder = { syncCoordinator.includeFolder(it.id) },
+                    dacOutput = dacOutput,
+                    onBitPerfectChange = onBitPerfectChange,
                 )
             }
 
@@ -555,6 +584,7 @@ private fun DestinationBody(
                     onSkipToIndex = { musicPlayer.seekToIndex(it) },
                     sharedArtTrack = sharedArtTrack,
                     onBack = { navigator.pop() },
+                    dacOutput = dacOutput,
                 )
             }
 

@@ -299,4 +299,15 @@
         <item quantity="many">%1$d přehrání</item>
         <item quantity="other">%1$d přehrání</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Bit-perfect výstup USB</string>
+    <string name="dac_bit_perfect_subtitle">Posílá zvuk do USB DAC beze změn. Ekvalizér, předzesílení a prolínání jsou po dobu aktivace vypnuty.</string>
+    <string name="dac_no_device">Pro použití připojte USB DAC</string>
+    <string name="dac_reason_os">Vyžaduje Android 14 nebo novější</string>
+    <string name="dac_reason_unsupported">Tento telefon nebo DAC to nepodporuje</string>
+    <string name="dac_reason_format">Formát aktuální skladby není podporován, proto hraje přes systémový mixer</string>
+    <string name="dac_reason_hires">Skladby nad 16 bitů hrají přes systémový mixer</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bitů · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Systémový mixer</string>
 </resources>

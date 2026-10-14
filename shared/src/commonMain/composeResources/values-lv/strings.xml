@@ -298,4 +298,15 @@
         <item quantity="one">%1$d atskaņojums</item>
         <item quantity="other">%1$d atskaņojumi</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Bitu precīza USB izvade</string>
+    <string name="dac_bit_perfect_subtitle">Sūta audio uz USB DAC bez izmaiņām. Kamēr tā ir aktīva, ekvalaizers, priekšpastiprinājums un pārejas efekts tiek apieti.</string>
+    <string name="dac_no_device">Lai to izmantotu, pievienojiet USB DAC</string>
+    <string name="dac_reason_os">Nepieciešama Android 14 vai jaunāka versija</string>
+    <string name="dac_reason_unsupported">Šis tālrunis vai DAC to neatbalsta</string>
+    <string name="dac_reason_format">Pašreizējā ieraksta formāts netiek atbalstīts, tāpēc tas tiek atskaņots caur sistēmas mikseri</string>
+    <string name="dac_reason_hires">Ieraksti virs 16 bitiem tiek atskaņoti caur sistēmas mikseri</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bitu · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Sistēmas mikseris</string>
 </resources>

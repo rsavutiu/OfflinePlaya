@@ -296,4 +296,15 @@
     <plurals name="stats_plays">
         <item quantity="other">%1$d 回再生</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">ビットパーフェクト USB 出力</string>
+    <string name="dac_bit_perfect_subtitle">オーディオを加工せずに USB DAC へ送ります。有効な間はイコライザー、プリアンプ、クロスフェードがバイパスされます。</string>
+    <string name="dac_no_device">使用するには USB DAC を接続してください</string>
+    <string name="dac_reason_os">Android 14 以降が必要です</string>
+    <string name="dac_reason_unsupported">このスマートフォンまたは DAC は対応していません</string>
+    <string name="dac_reason_format">現在の曲の形式は非対応のため、システムミキサー経由で再生されます</string>
+    <string name="dac_reason_hires">16 ビットを超える曲はシステムミキサー経由で再生されます</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d ビット · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · システムミキサー</string>
 </resources>

@@ -10,8 +10,10 @@ import android.media.AudioMixerAttributes
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import androidx.annotation.MainThread
 import androidx.annotation.RequiresApi
-import com.offlineplaya.shared.domain.audio.BitPerfectFormatSelector
+import com.offlineplaya.shared.domain.audio.BitPerfectPlan
+import com.offlineplaya.shared.domain.audio.BitPerfectPlanner
 import com.offlineplaya.shared.domain.audio.DacOutputManager
 import com.offlineplaya.shared.domain.audio.DacOutputState
 import com.offlineplaya.shared.domain.audio.DacPreferences
@@ -20,6 +22,7 @@ import com.offlineplaya.shared.domain.audio.OutputDevice
 import com.offlineplaya.shared.domain.audio.OutputMode
 import com.offlineplaya.shared.domain.audio.PcmEncoding
 import com.offlineplaya.shared.domain.audio.PcmFormat
+import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,15 +33,23 @@ import kotlinx.coroutines.flow.update
  *
  * - Detects USB DACs via [AudioDeviceCallback].
  * - On Android 14+ requests a bit-perfect mixer with
- *   [AudioManager.setPreferredMixerAttributes] at the track's native rate.
+ *   [AudioManager.setPreferredMixerAttributes] in exactly the format the player
+ *   writes ([sinkEncoding] at the track's rate and channel count).
  * - Watches for the platform revoking it and falls back to [OutputMode.Standard].
  *
  * Everything API-34-specific lives in [Api34] so older devices never load
- * `AudioMixerAttributes`.
+ * `AudioMixerAttributes`. All methods are main-thread only: the device callback
+ * is delivered on the main looper and the player calls in from its application
+ * thread, which is the main looper in PlaybackService.
+ *
+ * @param sinkEncoding what the player writes to its AudioTrack. Media3's
+ *   DefaultAudioSink without float output writes 16-bit PCM for every source.
  */
 class AndroidDacOutputManager(
     private val context: Context,
     private val prefs: DacPreferences,
+    private val logger: AppLogger,
+    private val sinkEncoding: PcmEncoding = PcmEncoding.PCM_16,
 ) : DacOutputManager {
 
     private val audioManager = context.getSystemService(AudioManager::class.java)
@@ -58,39 +69,60 @@ class AndroidDacOutputManager(
 
     private var dac: AudioDeviceInfo? = null
     private var lastSource: PcmFormat? = null
-    private var started = false
+    private var startCount = 0
 
     private val deviceCallback = object : AudioDeviceCallback() {
         override fun onAudioDevicesAdded(addedDevices: Array<out AudioDeviceInfo>) = refreshDac()
         override fun onAudioDevicesRemoved(removedDevices: Array<out AudioDeviceInfo>) = refreshDac()
     }
 
+    @MainThread
     override fun start() {
-        if (started) return
-        started = true
+        startCount++
+        if (startCount > 1) return
         audioManager.registerAudioDeviceCallback(deviceCallback, mainHandler)
         api34?.register()
         refreshDac()
     }
 
+    @MainThread
     override fun stop() {
-        if (!started) return
-        started = false
+        if (startCount == 0) return
+        startCount--
+        if (startCount > 0) return
         audioManager.unregisterAudioDeviceCallback(deviceCallback)
-        dac?.let { api34?.clear(it) }
+        releasePlayback()
         api34?.unregister()
         dac = null
-        lastSource = null
         _state.value = DacOutputState()
     }
 
+    @MainThread
+    override fun releasePlayback() {
+        lastSource = null
+        dac?.let { api34?.clear(it) }
+        _state.update {
+            it.copy(
+                mode = OutputMode.Standard,
+                fallbackReason = it.idleFallbackReason(),
+            )
+        }
+    }
+
+    @MainThread
     override fun setBitPerfectEnabled(enabled: Boolean) {
         val device = _state.value.device ?: return
         prefs.setBitPerfectEnabled(device.key, enabled)
         _state.update { it.copy(bitPerfectEnabled = enabled) }
-        lastSource?.let { prepareFor(it) } // engine observes state and re-prepares the sink
+        val source = lastSource
+        if (source != null) {
+            prepareFor(source) // the player observes state and re-routes
+        } else if (!enabled) {
+            dac?.let { api34?.clear(it) }
+        }
     }
 
+    @MainThread
     override fun prepareFor(source: PcmFormat): OutputMode {
         lastSource = source
         val decision = decide(source)
@@ -112,6 +144,14 @@ class AndroidDacOutputManager(
         return api.apply(device, source)
     }
 
+    /** Fallback reason to show while nothing is playing. */
+    private fun DacOutputState.idleFallbackReason(): FallbackReason? = when {
+        device == null -> null
+        api34 == null -> FallbackReason.API_TOO_OLD
+        !bitPerfectCapable -> FallbackReason.DEVICE_NOT_SUPPORTED
+        else -> null
+    }
+
     private fun refreshDac() {
         val usb = audioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS)
             .firstOrNull { it.type in USB_OUTPUT_TYPES }
@@ -121,22 +161,19 @@ class AndroidDacOutputManager(
         dac = usb
 
         if (usb == null) {
+            logger.i(TAG, "USB DAC disconnected")
             _state.value = DacOutputState()
             return
         }
 
         val key = usb.key()
         val capable = api34?.isCapable(usb) ?: false
+        logger.i(TAG, "USB DAC connected: ${usb.productName} (bit-perfect capable: $capable)")
         _state.value = DacOutputState(
             device = OutputDevice(id = usb.id, name = usb.productName.toString(), key = key),
             bitPerfectCapable = capable,
             bitPerfectEnabled = prefs.isBitPerfectEnabled(key),
-            fallbackReason = when {
-                api34 == null -> FallbackReason.API_TOO_OLD
-                !capable -> FallbackReason.DEVICE_NOT_SUPPORTED
-                else -> null
-            },
-        )
+        ).let { it.copy(fallbackReason = it.idleFallbackReason()) }
         lastSource?.let { prepareFor(it) } // re-apply for the track already playing
     }
 
@@ -155,6 +192,7 @@ class AndroidDacOutputManager(
                 val stillBitPerfect =
                     mixer?.mixerBehavior == AudioMixerAttributes.MIXER_BEHAVIOR_BIT_PERFECT
                 if (!stillBitPerfect && _state.value.mode is OutputMode.BitPerfect) {
+                    logger.w(TAG, "Bit-perfect mixer was revoked by the system")
                     _state.update {
                         it.copy(
                             mode = OutputMode.Standard,
@@ -178,25 +216,24 @@ class AndroidDacOutputManager(
 
         fun apply(device: AudioDeviceInfo, source: PcmFormat): Decision {
             val offers = bitPerfectOffers(device)
-            if (offers.isEmpty()) {
-                return Decision(OutputMode.Standard, FallbackReason.DEVICE_NOT_SUPPORTED)
-            }
-
-            val chosen = BitPerfectFormatSelector.pick(offers.keys.toList(), source)
-            val mixer = chosen?.let { offers[it] }
-            if (chosen == null || mixer == null) {
-                clear(device)
-                return Decision(OutputMode.Standard, FallbackReason.FORMAT_NOT_SUPPORTED)
-            }
-
-            val ok = runCatching {
-                audioManager.setPreferredMixerAttributes(mediaAttributes, device, mixer)
-            }.getOrDefault(false)
-
-            return if (ok) {
-                Decision(OutputMode.BitPerfect(chosen), null)
-            } else {
-                Decision(OutputMode.Standard, FallbackReason.SYSTEM_REJECTED)
+            return when (val plan = BitPerfectPlanner.plan(offers.keys, source, sinkEncoding)) {
+                is BitPerfectPlan.Fallback -> {
+                    clear(device)
+                    Decision(OutputMode.Standard, plan.reason)
+                }
+                is BitPerfectPlan.Use -> {
+                    val mixer = offers.getValue(plan.format)
+                    val ok = runCatching {
+                        audioManager.setPreferredMixerAttributes(mediaAttributes, device, mixer)
+                    }.onFailure {
+                        logger.w(TAG, "setPreferredMixerAttributes threw: ${it.message}")
+                    }.getOrDefault(false)
+                    if (ok) {
+                        Decision(OutputMode.BitPerfect(plan.format), null)
+                    } else {
+                        Decision(OutputMode.Standard, FallbackReason.SYSTEM_REJECTED)
+                    }
+                }
             }
         }
 
@@ -217,6 +254,8 @@ class AndroidDacOutputManager(
     }
 
     private companion object {
+        const val TAG = "DacOutput"
+
         val USB_OUTPUT_TYPES = setOf(
             AudioDeviceInfo.TYPE_USB_DEVICE,
             AudioDeviceInfo.TYPE_USB_HEADSET,

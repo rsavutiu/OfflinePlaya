@@ -297,4 +297,15 @@
         <item quantity="one">%1$d lejátszás</item>
         <item quantity="other">%1$d lejátszás</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Bitpontos USB-kimenet</string>
+    <string name="dac_bit_perfect_subtitle">Változtatás nélkül küldi a hangot az USB DAC-ra. Az EQ, az előerősítés és az áttűnés bekapcsolt állapotban ki van kerülve.</string>
+    <string name="dac_no_device">A használathoz csatlakoztass egy USB DAC-ot</string>
+    <string name="dac_reason_os">Android 14 vagy újabb szükséges</string>
+    <string name="dac_reason_unsupported">Ez a telefon vagy DAC nem támogatja</string>
+    <string name="dac_reason_format">Az aktuális szám formátuma nem támogatott, ezért a rendszerkeverőn keresztül szól</string>
+    <string name="dac_reason_hires">A 16 bitnél nagyobb felbontású számok a rendszerkeverőn keresztül szólnak</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bit · Bitpontos</string>
+    <string name="dac_badge_system_mixer">%1$s · Rendszerkeverő</string>
 </resources>

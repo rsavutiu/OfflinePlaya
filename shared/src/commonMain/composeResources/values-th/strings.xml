@@ -296,4 +296,15 @@
     <plurals name="stats_plays">
         <item quantity="other">%1$d ครั้ง</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">เอาต์พุต USB แบบ Bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">ส่งเสียงไปยัง USB DAC โดยไม่ดัดแปลง อีควอไลเซอร์ ปรีแอมป์ และครอสเฟดจะถูกข้ามขณะเปิดใช้งาน</string>
+    <string name="dac_no_device">เชื่อมต่อ USB DAC เพื่อใช้งานฟีเจอร์นี้</string>
+    <string name="dac_reason_os">ต้องใช้ Android 14 ขึ้นไป</string>
+    <string name="dac_reason_unsupported">โทรศัพท์หรือ DAC นี้ไม่รองรับ</string>
+    <string name="dac_reason_format">ไม่รองรับรูปแบบของเพลงปัจจุบัน จึงเล่นผ่านมิกเซอร์ของระบบ</string>
+    <string name="dac_reason_hires">เพลงที่สูงกว่า 16 บิตจะเล่นผ่านมิกเซอร์ของระบบ</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d บิต · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · มิกเซอร์ของระบบ</string>
 </resources>

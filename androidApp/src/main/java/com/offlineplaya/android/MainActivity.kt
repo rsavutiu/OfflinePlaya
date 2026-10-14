@@ -67,6 +67,9 @@ class MainActivity : ComponentActivity() {
     private val equalizerStateHolder: EqualizerStateHolder by lazy {
         GlobalContext.get().get<EqualizerStateHolder>()
     }
+    private val dacOutputManager: com.offlineplaya.shared.domain.audio.DacOutputManager by lazy {
+        GlobalContext.get().get<com.offlineplaya.shared.domain.audio.DacOutputManager>()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // installSplashScreen() must run before super.onCreate so it can swap
@@ -103,8 +106,14 @@ class MainActivity : ComponentActivity() {
      *    only then do further presses lower the stream volume as usual.
      *
      * Key autorepeat means holding the button steps repeatedly.
+     *
+     * Skipped entirely during bit-perfect USB DAC output: the preamp is
+     * bypassed there, so the keys must go straight to the system / DAC volume.
      */
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (!dacOutputManager.state.value.softwareDspAllowed) {
+            return super.onKeyDown(keyCode, event)
+        }
         when (keyCode) {
             KeyEvent.KEYCODE_VOLUME_UP -> {
                 val audio = getSystemService(AUDIO_SERVICE) as AudioManager
@@ -182,6 +191,7 @@ private fun AndroidApp() {
     val artworkStateHolder: ArtworkStateHolder = koinInject()
     val lyricsPreferencesStateHolder: LyricsPreferencesStateHolder = koinInject()
     val playbackTuningStateHolder: PlaybackTuningStateHolder = koinInject()
+    val dacOutputStateHolder: com.offlineplaya.shared.presentation.audio.DacOutputStateHolder = koinInject()
     val coordinator: LibrarySyncCoordinator = koinInject()
     val reviewPromptCoordinator: ReviewPromptCoordinator = koinInject()
     val shareNudgeCoordinator: ShareNudgeCoordinator = koinInject()
@@ -408,6 +418,7 @@ private fun AndroidApp() {
             onCrossfadeDurationChange = playbackTuningStateHolder::setCrossfadeDurationSeconds,
             onBluetoothAutoplayChange = playbackTuningStateHolder::setBluetoothAutoplayEnabled,
             dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
+            dacOutputStateHolder = dacOutputStateHolder,
                 )
                 val shareNudgeVisible by shareNudgeCoordinator.visible.collectAsState()
                 if (shareNudgeVisible) {

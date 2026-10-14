@@ -298,4 +298,15 @@
         <item quantity="few">%1$d репродукције</item>
         <item quantity="other">%1$d репродукција</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Bit-perfect USB излаз</string>
+    <string name="dac_bit_perfect_subtitle">Шаље звук на USB DAC без измена. Еквилајзер, претпојачање и претапање се заобилазе док је укључено.</string>
+    <string name="dac_no_device">Повежите USB DAC да бисте ово користили</string>
+    <string name="dac_reason_os">Захтева Android 14 или новији</string>
+    <string name="dac_reason_unsupported">Овај телефон или DAC то не подржава</string>
+    <string name="dac_reason_format">Формат тренутне песме није подржан, па се пушта преко системског миксера</string>
+    <string name="dac_reason_hires">Песме изнад 16 бита се пуштају преко системског миксера</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-битни · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Системски миксер</string>
 </resources>

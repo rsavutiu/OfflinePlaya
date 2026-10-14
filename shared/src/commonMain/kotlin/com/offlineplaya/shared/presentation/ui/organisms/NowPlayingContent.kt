@@ -28,6 +28,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.offlineplaya.shared.domain.audio.DacOutputState
 import com.offlineplaya.shared.domain.lyrics.LyricLine
 import com.offlineplaya.shared.domain.model.PlaybackState
 import com.offlineplaya.shared.domain.model.RepeatMode
@@ -37,6 +38,7 @@ import com.offlineplaya.shared.presentation.ui.LocalSharedTransitionScope
 import com.offlineplaya.shared.presentation.ui.molecules.NowPlayingArtPanel
 import com.offlineplaya.shared.presentation.ui.molecules.NowPlayingHeadline
 import com.offlineplaya.shared.presentation.ui.molecules.SeekRow
+import com.offlineplaya.shared.presentation.ui.molecules.SignalPathBadge
 import com.offlineplaya.shared.presentation.ui.molecules.TransportRow
 
 /**
@@ -54,6 +56,9 @@ import com.offlineplaya.shared.presentation.ui.molecules.TransportRow
  * [PlaybackState.currentTrack] but is threaded separately so the morph still
  * fires during the brief window where the player hasn't caught up to the
  * tapped track yet.
+ *
+ * [dacOutput] drives the USB DAC signal-path pill under the headline; it
+ * renders nothing when no DAC is connected.
  */
 @Composable
 fun NowPlayingContent(
@@ -69,6 +74,7 @@ fun NowPlayingContent(
     onSeekToLine: (LyricLine) -> Unit = {},
     onSkipToIndex: (Int) -> Unit = {},
     sharedArtTrack: Track? = null,
+    dacOutput: DacOutputState = DacOutputState(),
 ) {
     val track = state.currentTrack ?: return
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
@@ -96,6 +102,7 @@ fun NowPlayingContent(
                     verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.CenterVertically),
                 ) {
                     NowPlayingHeadline(track = track)
+                    SignalPathBadge(state = dacOutput)
                     SeekRow(state = state, onSeek = onSeek)
                     TransportRow(
                         state = state,
@@ -126,6 +133,7 @@ fun NowPlayingContent(
                     modifier = Modifier.weight(1f, fill = false),
                 )
                 NowPlayingHeadline(track = track)
+                SignalPathBadge(state = dacOutput)
                 SeekRow(state = state, onSeek = onSeek)
                 TransportRow(
                     state = state,

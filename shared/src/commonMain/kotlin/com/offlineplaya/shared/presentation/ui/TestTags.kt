@@ -72,6 +72,9 @@ object TestTags {
         /** Bluetooth-autoplay on/off switch row (Playback section). */
         const val BT_AUTOPLAY_TOGGLE = "settings_bt_autoplay_toggle"
 
+        /** Bit-perfect USB DAC output switch row (Playback section). */
+        const val BIT_PERFECT_TOGGLE = "settings_bit_perfect_toggle"
+
         /** Destructive "Reset" button at the very bottom of the page. */
         const val RESET = "settings_reset"
     }
@@ -113,6 +116,9 @@ object TestTags {
 
         /** Empty-state body — nothing loaded into the player. */
         const val EMPTY = "now_playing_empty"
+
+        /** USB DAC signal-path pill under the headline. */
+        const val SIGNAL_PATH = "now_playing_signal_path"
 
         /** The large play / pause toggle in the transport row. */
         const val PLAY_PAUSE = "now_playing_play_pause"

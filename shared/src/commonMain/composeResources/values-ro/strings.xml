@@ -298,4 +298,15 @@
         <item quantity="few">%1$d redări</item>
         <item quantity="other">%1$d de redări</item>
     </plurals>
+
+    <!-- USB DAC / bit-perfect output -->
+    <string name="dac_bit_perfect">Ieșire USB bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">Trimite sunetul către DAC-ul USB fără nicio modificare. Egalizatorul, preamplificarea și crossfade-ul sunt ocolite cât timp este activă.</string>
+    <string name="dac_no_device">Conectează un DAC USB pentru a folosi această opțiune</string>
+    <string name="dac_reason_os">Necesită Android 14 sau o versiune mai nouă</string>
+    <string name="dac_reason_unsupported">Acest telefon sau DAC nu acceptă această funcție</string>
+    <string name="dac_reason_format">Formatul piesei curente nu este acceptat, așa că este redată prin mixerul sistemului</string>
+    <string name="dac_reason_hires">Piesele de peste 16 biți sunt redate prin mixerul sistemului</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d biți · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Mixerul sistemului</string>
 </resources>
