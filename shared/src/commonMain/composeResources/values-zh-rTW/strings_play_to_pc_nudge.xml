@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">在電腦上播放</string>
+    <string name="play_to_pc_nudge_body">您知道嗎？您可以將手機上的音樂串流到您的電腦，並透過其音訊系統進行播放（無需使用Wi-Fi）。請下載免費的OfflinePlaya接收器應用程式於PC或Mac，然後從設定中的「玩給電腦」功能連線。</string>
+    <string name="play_to_pc_nudge_get_app">取得PC端App</string>
+    <string name="play_to_pc_nudge_dismiss">稍後再說</string>
+</resources>

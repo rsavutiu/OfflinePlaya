@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Mainkan ke komputer anda</string>
+    <string name="play_to_pc_nudge_body">Anda tahu tidak, anda boleh memalam lagu dari telefon kepada komputer dan mainkannya melalui sistem audio komputer tersebut secara tanpa wayar? Dapatkan aplikasi penerima OfflinePlaya percuma untuk PC atau Mac anda, kemudian hubungkan daripada Play to PC dalam Tetapan.</string>
+    <string name="play_to_pc_nudge_get_app">Dapatkan app PC</string>
+    <string name="play_to_pc_nudge_dismiss">Tidak kini</string>
+</resources>

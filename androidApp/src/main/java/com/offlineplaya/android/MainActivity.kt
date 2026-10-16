@@ -199,6 +199,8 @@ private fun AndroidApp() {
     val coordinator: LibrarySyncCoordinator = koinInject()
     val reviewPromptCoordinator: ReviewPromptCoordinator = koinInject()
     val shareNudgeCoordinator: ShareNudgeCoordinator = koinInject()
+    val playToPcNudgeCoordinator: com.offlineplaya.shared.presentation.review.PlayToPcNudgeCoordinator =
+        koinInject()
     val burnMetadataCoordinator: BurnMetadataCoordinator = koinInject()
     val library: LibraryStateHolder = koinInject()
     val playlists: PlaylistStateHolder = koinInject()
@@ -287,7 +289,9 @@ private fun AndroidApp() {
                 // resume. Both gate spam internally; cheap when nothing is due.
                 reviewScope.launch {
                     val reviewShown = reviewPromptCoordinator.maybePromptForReview()
-                    if (!reviewShown) shareNudgeCoordinator.maybePromptForShare()
+                    val shareShown = !reviewShown && shareNudgeCoordinator.maybePromptForShare()
+                    // Feature-discovery nudge last, only if nothing else fired.
+                    if (!reviewShown && !shareShown) playToPcNudgeCoordinator.maybePrompt()
                 }
             }
         }
@@ -431,6 +435,13 @@ private fun AndroidApp() {
                             reviewScope.launch { shareNudgeCoordinator.onShareClicked(text) }
                         },
                         onDismiss = shareNudgeCoordinator::onDismiss,
+                    )
+                }
+                val playToPcNudgeVisible by playToPcNudgeCoordinator.visible.collectAsState()
+                if (playToPcNudgeVisible) {
+                    com.offlineplaya.shared.presentation.ui.molecules.PlayToPcNudgeDialog(
+                        onActioned = { reviewScope.launch { playToPcNudgeCoordinator.markActioned() } },
+                        onDismiss = playToPcNudgeCoordinator::onDismiss,
                     )
                 }
             }

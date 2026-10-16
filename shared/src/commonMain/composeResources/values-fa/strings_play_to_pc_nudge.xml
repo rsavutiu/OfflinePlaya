@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. English fallback: the local model could not
+     keep the brand name intact in Persian. Replace with a reviewed fa translation. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Play to your PC</string>
+    <string name="play_to_pc_nudge_body">Did you know you can stream the music on your phone to your computer and play it through its sound system, over Wi-Fi? Grab the free OfflinePlaya receiver for your PC or Mac, then connect from Play to PC in Settings.</string>
+    <string name="play_to_pc_nudge_get_app">Get the PC app</string>
+    <string name="play_to_pc_nudge_dismiss">Not now</string>
+</resources>

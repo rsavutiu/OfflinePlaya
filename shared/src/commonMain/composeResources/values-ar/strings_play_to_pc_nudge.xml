@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">اللعب على جهاز الكمبيوتر الخاص بك</string>
+    <string name="play_to_pc_nudge_body">هل علمت أنك يمكنك بث الموسيقى من هاتفك إلى كمبيوترك وتشغيله عبر نظام الصوت الخاص به، عن طريق الواي فاي؟ قم بالحصول على تطبيق OfflinePlaya المجاني لجهاز الكمبيوتر أو ماكنتوش، ثم اتصل من خيار اللعب على جهاز الكمبيوتر في الإعدادات.</string>
+    <string name="play_to_pc_nudge_get_app">الحصول على التطبيق</string>
+    <string name="play_to_pc_nudge_dismiss">ليس الآن</string>
+</resources>

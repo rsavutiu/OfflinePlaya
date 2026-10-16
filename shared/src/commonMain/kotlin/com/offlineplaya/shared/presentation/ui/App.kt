@@ -542,6 +542,11 @@ private fun DestinationBody(
             AppDestination.PlayToPc -> {
                 val controller: PlayToPcController = koinInject()
                 val playToPcState by controller.state.collectAsState()
+                // Opening this screen means they found the feature — stop the
+                // discovery nudge from ever asking "did you know…?" again.
+                val playToPcNudge: com.offlineplaya.shared.presentation.review.PlayToPcNudgeCoordinator =
+                    koinInject()
+                LaunchedEffect(Unit) { playToPcNudge.markActioned() }
                 // Browse the LAN only while the picker is open — an offline app
                 // must not hold the network open in the background.
                 DisposableEffect(Unit) {

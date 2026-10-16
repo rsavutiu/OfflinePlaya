@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Layunin ang iyong PC</string>
+    <string name="play_to_pc_nudge_body">Alam mo ba na maaari mong i-stream ang musika sa telepono nimo patungo sa kompyuter at maglarawan ito gamit ang sound system ng computer, over Wi-Fi? Mag-download ng libreng OfflinePlaya receiver para sa iyong PC o Mac, pagkatapos konektahin mula Play to PC sa mga Setting.</string>
+    <string name="play_to_pc_nudge_get_app">Mag-download ng app para sa PC</string>
+    <string name="play_to_pc_nudge_dismiss">Hindi nangayon</string>
+</resources>

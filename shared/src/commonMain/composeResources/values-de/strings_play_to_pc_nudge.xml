@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Auf Ihren Computer spielen</string>
+    <string name="play_to_pc_nudge_body">Wussten Sie, dass Sie Musik von Ihrem Smartphone über Wi-Fi auf Ihr Computersystem streamen und abspielen können? Holen Sie sich die kostenlose OfflinePlaya-Empfänger-App für Windows oder Mac, dann verbinden Sie sich im Einstellungen-Menü unter „Spielen zu PC“.</string>
+    <string name="play_to_pc_nudge_get_app">PC-Anwendung herunterladen</string>
+    <string name="play_to_pc_nudge_dismiss">Nicht jetzt</string>
+</resources>

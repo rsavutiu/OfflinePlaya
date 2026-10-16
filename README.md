@@ -76,9 +76,11 @@ The result lands in `desktopApp/build/compose/binaries/main/app/OfflinePlayaRece
 Run the `OfflinePlayaReceiver` launcher inside it. (Or just `./gradlew :desktopApp:run`
 to launch it directly while testing.)
 
-Pre-built downloads for every platform are produced by the
-**Desktop Receiver distributables** GitHub Actions workflow (run it from the
-Actions tab, or push a `desktop-v*` tag) — grab the artifact for your OS.
+Pre-built downloads for every platform live on the
+[**Releases page**](https://github.com/rsavutiu/OfflinePlaya/releases/latest)
+(portable app-images + native installers, published by the **Desktop Receiver
+distributables** workflow on each `desktop-v*` tag). Grab the one for your OS —
+no GitHub login needed.
 
 **First launch — the app is unsigned, so clear the one-time warning:**
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Spēlēt uz savu datorsku</string>
+    <string name="play_to_pc_nudge_body">Vai zināji, ka vari izvadiet mūziku no tava mobilajā telefona uz datora un spēlat to caur tam skaļruņiem pāri Wi-Fi? Ielādi bezmaksas OfflinePlaya saņemšanas programmatūras sadaļu savam datori vai Mac, tad pieslēdzies no „Spēlēt uz PC“ iestatījumu secības.</string>
+    <string name="play_to_pc_nudge_get_app">Ielādēt datora aplikāciju</string>
+    <string name="play_to_pc_nudge_dismiss">Nav tagad</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">在电脑上播放</string>
+    <string name="play_to_pc_nudge_body">你知道吗？你可以通过Wi-Fi将手机上的音乐流媒体传输到你的计算机，并通过其音响系统进行播放。下载免费的OfflinePlaya接收器应用用于你的PC或Mac，然后从设置中的“玩转电脑”功能连接。</string>
+    <string name="play_to_pc_nudge_get_app">获取 PC 应用</string>
+    <string name="play_to_pc_nudge_dismiss">稍后再说</string>
+</resources>

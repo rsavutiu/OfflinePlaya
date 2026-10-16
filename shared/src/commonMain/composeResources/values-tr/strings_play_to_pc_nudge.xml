@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Oynat Bilgisayara</string>
+    <string name="play_to_pc_nudge_body">Bilinen mi? Telefonundaki müzikleri Wi-Fi üzerinden bilginiçerine aktararak ses sistemiyle oynamanı sağlayabilirsin. PC veya Mac için ücretsiz OfflinePlaya alıcısını indir, ardından Ayarlardan 'Oynat Bilgisayara' bağlantisini kur.</string>
+    <string name="play_to_pc_nudge_get_app">PC uygulamasını alın</string>
+    <string name="play_to_pc_nudge_dismiss">Şimdi değil</string>
+</resources>

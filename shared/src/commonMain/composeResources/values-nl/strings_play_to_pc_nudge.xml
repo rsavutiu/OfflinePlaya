@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Speel naar je computer</string>
+    <string name="play_to_pc_nudge_body">Weet u dat u de muziek van uw telefoon kunt streamen naar uw计算机 en deze via het geluidsysteem daarvan afspelen, over Wi-Fi? Download gratis de OfflinePlaya-ontvanger voor Windows of Mac, dan verbinding maken in Instellingen onder Play to PC.</string>
+    <string name="play_to_pc_nudge_get_app">Download de pc-app</string>
+    <string name="play_to_pc_nudge_dismiss">Niet nu</string>
+</resources>

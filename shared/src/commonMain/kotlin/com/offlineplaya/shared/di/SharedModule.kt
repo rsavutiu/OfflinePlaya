@@ -38,6 +38,7 @@ import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.queue.QueueStateRecorder
+import com.offlineplaya.shared.presentation.review.PlayToPcNudgeCoordinator
 import com.offlineplaya.shared.presentation.review.ReviewPromptCoordinator
 import com.offlineplaya.shared.presentation.review.ShareNudgeCoordinator
 import com.offlineplaya.shared.presentation.settings.ArtworkStateHolder
@@ -293,6 +294,17 @@ val sharedModule: Module = module {
         ShareNudgeCoordinator(
             settings = get(),
             sharer = get(),
+            logger = get(),
+        )
+    }
+
+    // Feature-discovery nudge for Stream-to-PC. Shares the review/share
+    // bookkeeping + deconfliction clock; needs the PlayToPcController (bound in
+    // the Android app module) so it never nudges while the user is streaming.
+    single {
+        PlayToPcNudgeCoordinator(
+            settings = get(),
+            playToPc = get(),
             logger = get(),
         )
     }

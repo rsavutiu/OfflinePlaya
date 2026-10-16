@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Spil til din computer</string>
+    <string name="play_to_pc_nudge_body">Ved du, at du kan strømme musikken fra telefonen til din computer og spille den via dens lydssystem over Wi-Fi? Hent gratis OfflinePlaya-modtager for din PC eller Mac, derefter opret en forbindelse ved "Spil til pc" i Indstillinger.</string>
+    <string name="play_to_pc_nudge_get_app">Hent appen på computer</string>
+    <string name="play_to_pc_nudge_dismiss">Ikke nu</string>
+</resources>

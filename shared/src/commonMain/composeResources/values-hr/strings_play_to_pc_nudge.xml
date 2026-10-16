@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Igraj na svoj računala</string>
+    <string name="play_to_pc_nudge_body">Zna li ste da možete pretraćivati glazbu s mobilnog uređaja na vaše računalo i slušati je kroz njegov zvučnik putem Wi-Fi veze? Preuzmite besplatnu aplikaciju OfflinePlaya za PC ili Mac, a onda se povežite preko opcije Play to PC u postavkama.</string>
+    <string name="play_to_pc_nudge_get_app">Preuzmi aplikaciju za računalo</string>
+    <string name="play_to_pc_nudge_dismiss">Nemam sada</string>
+</resources>

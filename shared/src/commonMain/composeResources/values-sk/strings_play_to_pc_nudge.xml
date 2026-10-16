@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Hraj na svoj počítač</string>
+    <string name="play_to_pc_nudge_body">Viete, že môžete prehrávať hudbu z telefónu cez Wi-Fi do vášho počítača a použiť jeho audio systém? Stiahnite si zadarmo OfflinePlaya prijímač na vaše PC alebo Mac, potom sa pripojte k možnosti Play to PC v nastaveniach.</string>
+    <string name="play_to_pc_nudge_get_app">Stiahnite aplikáciu pre počítač</string>
+    <string name="play_to_pc_nudge_dismiss">Teraz nie</string>
+</resources>

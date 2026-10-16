@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">휴대폰 음악을 컴퓨터로 스트리밍하기</string>
+    <string name="play_to_pc_nudge_body">모바일에서 재생 중인 음악을 Wi-Fi를 통해 컴퓨터의 사운드 시스템으로 전송할 수 있어요. 무료 OfflinePlaya 리시버 앱을 PC 또는 맥에 설치한 후, 설정 &gt; Play to PC로 연결해 보세요.</string>
+    <string name="play_to_pc_nudge_get_app">PC용 앱 다운로드</string>
+    <string name="play_to_pc_nudge_dismiss">지금은 안 함</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Відтворити на ПК</string>
+    <string name="play_to_pc_nudge_body">Чи знали ви, що можете потокове відтворення музики з телефону на комп’ютер і грати його через системний звук, за допомоги Wi-Fi? Завантажте безкоштовну додаток OfflinePlaya для ПК або Mac, потім підключитися встановлення Play to PC.</string>
+    <string name="play_to_pc_nudge_get_app">Завантажити додаток</string>
+    <string name="play_to_pc_nudge_dismiss">Не зараз</string>
+</resources>

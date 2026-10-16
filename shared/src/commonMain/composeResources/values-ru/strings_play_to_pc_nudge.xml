@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Играйте на компьютере</string>
+    <string name="play_to_pc_nudge_body">Вы знали, что можете стримить музыку с телефона на компьютер и воспроизводить её через его звуковую систему по Wi-Fi? Скачайте бесплатное приложение OfflinePlaya для ПК или Mac, затем подключитесь к Play to PC в Настройках.</string>
+    <string name="play_to_pc_nudge_get_app">Скачать приложение для компьютера</string>
+    <string name="play_to_pc_nudge_dismiss">Позже</string>
+</resources>

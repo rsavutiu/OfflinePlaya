@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Játssz a számítógépeddel</string>
+    <string name="play_to_pc_nudge_body">Tudtad, hogy azonosan streamingezheted a telefonodról a zenei tartalmat a számítógépeden és hallgathatsd végig annak hangszóróin keresztül Wi-Fi segítségével? Szerezd be ingyenes OfflinePlaya fogadót PC-del vagy Mac-eddel, majd csatlakozz a Játssz a számítógépeddel opcióban az Beállítások menüből.</string>
+    <string name="play_to_pc_nudge_get_app">Letöltés a PC alkalmazásért</string>
+    <string name="play_to_pc_nudge_dismiss">Nem most</string>
+</resources>

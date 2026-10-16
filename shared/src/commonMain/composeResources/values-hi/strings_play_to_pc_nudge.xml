@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">आपके कंप्यूटर पर खेलो</string>
+    <string name="play_to_pc_nudge_body">यह सुनिश्चित करता है कि आप अपनी मोबाइल से गाने Wi-Fi के माध्यम से अपने कंप्यूटर पर स्ट्रीमिंग करके उसके सेलुड़ो सिस्टम के माध्यम से खेल सकते हैं। OfflinePlaya के PC / Mac प्राप्त करने के लिए मुफ्त रीसवर को डाउनलोड करें, फिर Settings में Play to PC से जुड़िए।</string>
+    <string name="play_to_pc_nudge_get_app">PC प्रगणक प्राप्त करें</string>
+    <string name="play_to_pc_nudge_dismiss">Not now</string>
+</resources>

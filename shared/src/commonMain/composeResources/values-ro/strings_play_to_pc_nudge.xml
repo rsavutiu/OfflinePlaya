@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Jucă pe calculatorul tău</string>
+    <string name="play_to_pc_nudge_body">Știați că puteți transmite muzica de pe telefonul vostru la computer și să o jocați prin sistemul audio acestuia, în mod wireless? Descărcați aplicația gratuită OfflinePlaya pentru calculator sau Mac, apoi conectați-vă din setările Play to PC.</string>
+    <string name="play_to_pc_nudge_get_app">Descarcă aplicatia de pe computer</string>
+    <string name="play_to_pc_nudge_dismiss">Nu acum</string>
+</resources>

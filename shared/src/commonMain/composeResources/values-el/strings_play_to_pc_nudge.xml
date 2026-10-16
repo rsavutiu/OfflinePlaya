@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Παίξτε στον υπολογιστή σας</string>
+    <string name="play_to_pc_nudge_body">Εάν δεν ήξερε, μπορεῖ νὰ ακουμπᾷ τη μουσικὴ πάνω στὸ κινητό ὑπολογιστὲ σας γιὰ νὰ εἶχε διαθέσιμη χρήση απὸ τὸ ηχείδιο που βρίσκεται μέσω Wi-Fi. Δυνάμει ἡ κατ᾽ ὑλὴ εφαρμογῆ OfflinePlaya γιὰ Windows / Mac, σύνδεση απὸ τὸ Play to PC στὶς Προτίμησές σας.</string>
+    <string name="play_to_pc_nudge_get_app">Λήψη εφαρμογῆ</string>
+    <string name="play_to_pc_nudge_dismiss">Όχι νῦν</string>
+</resources>

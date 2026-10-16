@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">Chơi vào máy tính của bạn</string>
+    <string name="play_to_pc_nudge_body">Bạn có biết rằng bạn có thể phát nhạc từ điện thoại sang máy vi tính và chơi qua hệ thống âm thanh của nó, thông qua Wi-Fi không? Tải ứng dụng OfflinePlaya miễn phí cho PC hoặc Mac của bạn, sau đó kết nối từ Play to PC trong Cài đặt.</string>
+    <string name="play_to_pc_nudge_get_app">Tải ứng dụng dành cho máy tính</string>
+    <string name="play_to_pc_nudge_dismiss">Không bây giờ</string>
+</resources>

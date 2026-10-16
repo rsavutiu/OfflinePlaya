@@ -72,6 +72,12 @@ internal class SqlSettingsRepository(
                 ?: defaults.shareNudgeLastShownAtMillis,
             shareNudgeActioned = rows[KEY_SHARE_ACTIONED]?.toBoolean()
                 ?: defaults.shareNudgeActioned,
+            playToPcNudgeLastShownAtMillis = rows[KEY_PLAYTOPC_LAST_SHOWN]?.toLongOrNull()
+                ?: defaults.playToPcNudgeLastShownAtMillis,
+            playToPcNudgeActioned = rows[KEY_PLAYTOPC_ACTIONED]?.toBoolean()
+                ?: defaults.playToPcNudgeActioned,
+            playToPcNudgeShowCount = rows[KEY_PLAYTOPC_SHOW_COUNT]?.toIntOrNull()
+                ?: defaults.playToPcNudgeShowCount,
         )
     }
 
@@ -83,6 +89,9 @@ internal class SqlSettingsRepository(
             queries.insertOrReplace(KEY_REVIEW_FIRST_LAUNCH, state.firstLaunchAtMillis.toString())
             queries.insertOrReplace(KEY_SHARE_LAST_SHOWN, state.shareNudgeLastShownAtMillis.toString())
             queries.insertOrReplace(KEY_SHARE_ACTIONED, state.shareNudgeActioned.toString())
+            queries.insertOrReplace(KEY_PLAYTOPC_LAST_SHOWN, state.playToPcNudgeLastShownAtMillis.toString())
+            queries.insertOrReplace(KEY_PLAYTOPC_ACTIONED, state.playToPcNudgeActioned.toString())
+            queries.insertOrReplace(KEY_PLAYTOPC_SHOW_COUNT, state.playToPcNudgeShowCount.toString())
         }
     }
 
@@ -275,6 +284,9 @@ internal class SqlSettingsRepository(
         const val KEY_REVIEW_FIRST_LAUNCH = "review.first_launch_at"
         const val KEY_SHARE_LAST_SHOWN = "share.last_shown_at"
         const val KEY_SHARE_ACTIONED = "share.actioned"
+        const val KEY_PLAYTOPC_LAST_SHOWN = "playtopc.nudge.last_shown_at"
+        const val KEY_PLAYTOPC_ACTIONED = "playtopc.nudge.actioned"
+        const val KEY_PLAYTOPC_SHOW_COUNT = "playtopc.nudge.show_count"
         const val KEY_ONBOARDING_COMPLETED = "onboarding.completed"
     }
 }

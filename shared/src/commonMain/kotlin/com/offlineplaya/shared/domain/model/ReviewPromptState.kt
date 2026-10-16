@@ -30,6 +30,13 @@ package com.offlineplaya.shared.domain.model
  * @param shareNudgeActioned the user tapped Share at least once. The share
  *   dialog then never shows again. NOTE: this is the *tap*, not proof they
  *   completed a share — that signal isn't observable, same as ratings.
+ * @param playToPcNudgeLastShownAtMillis epoch millis the "did you know you can
+ *   stream to your PC?" feature-discovery dialog was last shown. `0L` = never.
+ * @param playToPcNudgeActioned the user engaged with the Play-to-PC feature
+ *   (opened the screen, connected, or tapped "Get the PC app"); the discovery
+ *   dialog then never shows again.
+ * @param playToPcNudgeShowCount how many times the discovery dialog has been
+ *   shown. Capped so a user who never uses the feature isn't nagged forever.
  */
 data class ReviewPromptState(
     val playsCounted: Int = 0,
@@ -38,6 +45,9 @@ data class ReviewPromptState(
     val firstLaunchAtMillis: Long = 0L,
     val shareNudgeLastShownAtMillis: Long = 0L,
     val shareNudgeActioned: Boolean = false,
+    val playToPcNudgeLastShownAtMillis: Long = 0L,
+    val playToPcNudgeActioned: Boolean = false,
+    val playToPcNudgeShowCount: Int = 0,
 ) {
     companion object {
         val Default = ReviewPromptState()
