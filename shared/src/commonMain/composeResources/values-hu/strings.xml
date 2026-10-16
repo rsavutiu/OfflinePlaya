@@ -308,4 +308,5 @@
     <string name="dac_reason_hires">A 16 bitnél nagyobb felbontású számok a rendszerkeverőn keresztül szólnak</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bit · Bitpontos</string>
     <string name="dac_badge_system_mixer">%1$s · Rendszerkeverő</string>
+    <string name="dac_dsp_no_effect_note">Egyes USB DAC-eknél a hangszínszabályzó és az előerősítő nem fejt ki hatást.</string>
 </resources>

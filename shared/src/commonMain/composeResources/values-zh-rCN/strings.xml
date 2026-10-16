@@ -307,4 +307,5 @@
     <string name="dac_reason_hires">高于 16 位的曲目通过系统混音器播放</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d 位 · 比特完美</string>
     <string name="dac_badge_system_mixer">%1$s · 系统混音器</string>
+    <string name="dac_dsp_no_effect_note">在某些 USB DAC 上，均衡器和前置放大器不起作用。</string>
 </resources>

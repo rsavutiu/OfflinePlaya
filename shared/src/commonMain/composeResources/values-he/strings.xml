@@ -310,4 +310,5 @@
     <string name="dac_reason_hires">רצועות מעל 16 ביט מתנגנות דרך מערבל המערכת</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d ביט · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · מערבל המערכת</string>
+    <string name="dac_dsp_no_effect_note">בחלק מממירי USB, לאקולייזר ולמגבר המקדים אין כל השפעה.</string>
 </resources>

@@ -72,6 +72,46 @@ object BuiltInPresets {
         gainsMillibels = listOf(500, 500, 400, 200, 100, -100, 0, 150, 250, 350),
     )
 
+    // --- Extra manual-only presets for commercial / electronic listening.
+    // Not wired into [byGenre]: Auto mode keeps mapping EDM→Electronic and
+    // synth-pop→Pop, these are just more choices in the Manual chooser.
+
+    /** Deeper V than Electronic: harder sub/bass, scooped mids, bright top. */
+    val EDM = EqPreset(
+        name = "EDM",
+        gainsMillibels = listOf(500, 450, 350, 50, -150, -200, -100, 200, 450, 500),
+    )
+
+    /** Warm low-mids with an airy top for synth pads and vocals; gentle. */
+    val SYNTH_POP = EqPreset(
+        name = "Synth-Pop",
+        gainsMillibels = listOf(150, 200, 250, 200, 50, 0, 100, 200, 300, 350),
+    )
+
+    /** Low end only; everything from the mids up stays flat. */
+    val BASS_BOOST = EqPreset(
+        name = "Bass Boost",
+        gainsMillibels = listOf(500, 500, 400, 200, 50, 0, 0, 0, 0, 0),
+    )
+
+    /** Midrange presence (500 Hz–2 kHz) for vocals, slight bass/treble trim. */
+    val VOCAL_BOOST = EqPreset(
+        name = "Vocal Boost",
+        gainsMillibels = listOf(-150, -100, -50, 100, 300, 400, 350, 150, 0, -50),
+    )
+
+    /** Upper highs for clarity; low end left flat. */
+    val TREBLE_BOOST = EqPreset(
+        name = "Treble Boost",
+        gainsMillibels = listOf(0, 0, 0, 0, 0, 50, 150, 300, 450, 500),
+    )
+
+    /** Broad, lively smiley — a bit of everything at both extremes. */
+    val PARTY = EqPreset(
+        name = "Party",
+        gainsMillibels = listOf(400, 350, 250, 100, 0, 0, 100, 250, 350, 400),
+    )
+
     /** Lookup used by [com.offlineplaya.shared.domain.usecase.PickPresetForTrack]. */
     val byGenre: Map<CanonicalGenre, EqPreset> = mapOf(
         CanonicalGenre.ROCK to ROCK,
@@ -84,5 +124,8 @@ object BuiltInPresets {
     )
 
     /** Stable iteration order for the UI preset chooser. */
-    val all: List<EqPreset> = listOf(FLAT, ROCK, POP, ELECTRONIC, JAZZ, CLASSICAL, HIPHOP)
+    val all: List<EqPreset> = listOf(
+        FLAT, ROCK, POP, ELECTRONIC, SYNTH_POP, EDM, HIPHOP, JAZZ, CLASSICAL,
+        BASS_BOOST, VOCAL_BOOST, TREBLE_BOOST, PARTY,
+    )
 }

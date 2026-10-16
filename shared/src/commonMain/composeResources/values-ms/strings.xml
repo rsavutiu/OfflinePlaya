@@ -307,4 +307,5 @@
     <string name="dac_reason_hires">Lagu melebihi 16-bit dimainkan melalui pengadun sistem</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Pengadun sistem</string>
+    <string name="dac_dsp_no_effect_note">Pada sesetengah DAC USB, penyama dan praamp tidak memberi kesan.</string>
 </resources>

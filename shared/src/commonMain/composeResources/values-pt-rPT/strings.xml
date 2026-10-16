@@ -308,4 +308,5 @@
     <string name="dac_reason_hires">As faixas acima de 16 bits são reproduzidas através do misturador do sistema</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bits · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Misturador do sistema</string>
+    <string name="dac_dsp_no_effect_note">Em alguns DAC USB, o equalizador e o pré-amplificador não têm efeito.</string>
 </resources>

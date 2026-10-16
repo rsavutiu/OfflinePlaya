@@ -308,4 +308,5 @@
     <string name="dac_reason_hires">Las pistas de más de 16 bits se reproducen por el mezclador del sistema</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bits · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Mezclador del sistema</string>
+    <string name="dac_dsp_no_effect_note">En algunos DAC USB, el ecualizador y el preamplificador no tienen efecto.</string>
 </resources>

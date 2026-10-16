@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
@@ -39,6 +41,7 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.dac_dsp_no_effect_note
 import offlineplaya.shared.generated.resources.eq_preamp_hint
 import offlineplaya.shared.generated.resources.eq_reset_to_preset
 import offlineplaya.shared.generated.resources.settings_section_bands
@@ -68,6 +71,7 @@ fun EqualizerPage(
     onPreampChange: (Int) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
+    dacActive: Boolean = false,
 ) {
     Scaffold(
         modifier = modifier,
@@ -84,6 +88,28 @@ fun EqualizerPage(
         // graph (right) so the graph gets the wider pane and the bands are
         // easier to drag — a single page in two content columns, not a
         // navigation two-pane (see CLAUDE.md).
+        // Shown when a USB DAC is the active output: our EQ/preamp are session
+        // output effects, which some USB DACs (e.g. ones without a bit-perfect
+        // mixer) don't apply, so the controls below may do nothing audible.
+        @Composable
+        fun dacNote() {
+            if (!dacActive) return
+            Surface(
+                color = MaterialTheme.colorScheme.surfaceVariant,
+                shape = RoundedCornerShape(AppSpacing.md),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = AppSpacing.lg, vertical = AppSpacing.sm),
+            ) {
+                Text(
+                    text = stringResource(Res.string.dac_dsp_no_effect_note),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(AppSpacing.md),
+                )
+            }
+        }
+
         @Composable
         fun modeSection() {
             SettingsSection(title = stringResource(Res.string.settings_section_mode)) {
@@ -161,11 +187,11 @@ fun EqualizerPage(
                 // phone stays close to the original 300dp and a big tablet caps
                 // out rather than ballooning. The columns still scroll, so an
                 // oversize graph never clips the controls.
-                val tallHeight = (maxHeight * 0.5f).coerceIn(300.dp, 620.dp)
+                val tallHeight = (maxHeight * 0.6f).coerceIn(340.dp, 680.dp)
                 if (LocalOrientation.current == Orientation.LANDSCAPE) {
                     // Landscape panes are shorter; let the graph fill most of the
                     // right column's height.
-                    val paneHeight = (maxHeight * 0.72f).coerceIn(280.dp, 560.dp)
+                    val paneHeight = (maxHeight * 0.82f).coerceIn(300.dp, 620.dp)
                     Row(modifier = Modifier.fillMaxSize()) {
                         Column(
                             modifier = Modifier
@@ -173,6 +199,7 @@ fun EqualizerPage(
                                 .fillMaxHeight()
                                 .verticalScroll(rememberScrollState()),
                         ) {
+                            dacNote()
                             modeSection()
                             presetSection()
                             preampSection()
@@ -192,6 +219,7 @@ fun EqualizerPage(
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState()),
                     ) {
+                        dacNote()
                         modeSection()
                         presetSection()
                         preampSection()
@@ -276,6 +304,29 @@ private fun EqualizerPageManualPreview() {
                 onResetOverrides = {},
                 onPreampChange = {},
                 onBack = {},
+            )
+        }
+    }
+}
+
+@PreviewScreenSizes
+@Composable
+private fun EqualizerPageDacActivePreview() {
+    PreviewTheme(darkTheme = true) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            EqualizerPage(
+                preferences = EqPreferences(EqMode.MANUAL, "Rock", emptyList(), preampPercent = 30),
+                activePreset = BuiltInPresets.ROCK,
+                nowPlayingTitle = null,
+                rawGenreTag = null,
+                autoGenreLabel = null,
+                onModeChange = {},
+                onPresetChange = {},
+                onBandGainChange = { _, _, _ -> },
+                onResetOverrides = {},
+                onPreampChange = {},
+                onBack = {},
+                dacActive = true,
             )
         }
     }

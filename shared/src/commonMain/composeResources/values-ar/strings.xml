@@ -312,4 +312,5 @@
     <string name="dac_reason_hires">المقاطع الأعلى من 16 بت تُشغَّل عبر خلاط النظام</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d بت · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · خلاط النظام</string>
+    <string name="dac_dsp_no_effect_note">مع بعض محولات USB الرقمية، لا يكون للمعادل ومضخم الصوت أي تأثير.</string>
 </resources>

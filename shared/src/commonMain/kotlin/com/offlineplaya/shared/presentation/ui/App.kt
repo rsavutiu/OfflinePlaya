@@ -871,6 +871,9 @@ private fun DestinationBody(
                     onResetOverrides = { equalizerStateHolder.resetManualOverrides() },
                     onPreampChange = { equalizerStateHolder.setPreampPercent(it) },
                     onBack = { navigator.pop() },
+                    // A connected USB DAC is a session output that may not run
+                    // our EQ/preamp effects; the page shows a note when so.
+                    dacActive = dacOutput.device != null,
                 )
             }
 

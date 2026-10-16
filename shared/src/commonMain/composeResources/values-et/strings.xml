@@ -308,4 +308,5 @@
     <string name="dac_reason_hires">Üle 16-bitised lood mängivad süsteemi mikseri kaudu</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bitine · Bititäpne</string>
     <string name="dac_badge_system_mixer">%1$s · Süsteemi mikser</string>
+    <string name="dac_dsp_no_effect_note">Mõne USB DAC-i puhul ei mõju ekvalaiser ega eelvõimendi.</string>
 </resources>

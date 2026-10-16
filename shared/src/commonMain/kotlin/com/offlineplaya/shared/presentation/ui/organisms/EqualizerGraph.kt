@@ -2,8 +2,7 @@ package com.offlineplaya.shared.presentation.ui.organisms
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,18 +18,25 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.progressBarRangeInfo
@@ -65,9 +71,12 @@ import kotlin.math.roundToInt
  *  - a smooth Catmull-Rom → cubic-bézier curve through every band point,
  *  - a draggable thumb (with its dB readout) at each band.
  *
- * Interaction: drag locks to whichever band the gesture started over; tapping
- * sets that band directly. Pointer-Y maps linearly to gain. Disabled mode
- * dims everything and ignores input.
+ * Interaction: deliberately sticky. A light touch or tap does nothing — you
+ * must **long-press** a band first. The long-press locks the band under your
+ * finger, its handle turns green (with a haptic tick), and only then does
+ * dragging move it (pointer-Y maps linearly to gain). Releasing drops the
+ * grab. This stops accidental edits from a stray tap. Disabled mode dims
+ * everything and ignores input; TalkBack still adjusts via the overlay below.
  */
 @Composable
 fun EqualizerGraph(
@@ -101,6 +110,12 @@ fun EqualizerGraph(
     // clobbered by a stale capture.
     val latestGains = rememberUpdatedState(gains)
 
+    // Which band is currently grabbed (long-pressed), or null. Drives the green
+    // handle and gates dragging. Read inside the Canvas draw so grabbing redraws.
+    var grabbedBand by remember { mutableStateOf<Int?>(null) }
+    val haptics = LocalHapticFeedback.current
+    val grabbedColor = Color(0xFF34C759)
+
     Column(modifier = modifier.fillMaxWidth()) {
         Box(
             modifier = Modifier
@@ -114,43 +129,41 @@ fun EqualizerGraph(
                     .fillMaxSize()
                     .then(
                         if (!enabled) Modifier else Modifier.pointerInput(bandCount) {
-                            fun emit(pos: Offset) {
-                                val w = size.width.toFloat()
-                                val h = size.height.toFloat()
-                                val colW = (w - gutterPx) / bandCount
-                                if (colW <= 0f) return
-                                val band = (((pos.x - gutterPx) / colW)).toInt()
+                            // Band locked at long-press start; stays put even if
+                            // the finger drifts sideways, so you edit one slider.
+                            var active = -1
+                            fun bandAt(x: Float): Int {
+                                val colW = (size.width.toFloat() - gutterPx) / bandCount
+                                if (colW <= 0f) return -1
+                                return (((x - gutterPx) / colW)).toInt()
                                     .coerceIn(0, bandCount - 1)
+                            }
+                            fun emit(band: Int, y: Float) {
+                                val h = size.height.toFloat()
                                 val span = h / 2f - vPadPx
-                                val gain = (((h / 2f - pos.y) / span) * MAX_GAIN_RANGE_MILLIBELS)
+                                if (span <= 0f) return
+                                val gain = (((h / 2f - y) / span) * MAX_GAIN_RANGE_MILLIBELS)
                                     .roundToInt()
                                     .coerceIn(MIN_GAIN_RANGE_MILLIBELS, MAX_GAIN_RANGE_MILLIBELS)
                                 onBandGainChange(band, gain, latestGains.value)
                             }
-                            detectDragGestures(
-                                onDragStart = { emit(it) },
+                            detectDragGesturesAfterLongPress(
+                                onDragStart = { pos ->
+                                    active = bandAt(pos.x)
+                                    if (active >= 0) {
+                                        grabbedBand = active
+                                        haptics.performHapticFeedback(
+                                            HapticFeedbackType.LongPress,
+                                        )
+                                    }
+                                },
                                 onDrag = { change, _ ->
                                     change.consume()
-                                    emit(change.position)
+                                    if (active >= 0) emit(active, change.position.y)
                                 },
+                                onDragEnd = { active = -1; grabbedBand = null },
+                                onDragCancel = { active = -1; grabbedBand = null },
                             )
-                        },
-                    )
-                    .then(
-                        if (!enabled) Modifier else Modifier.pointerInput(bandCount) {
-                            detectTapGestures { pos ->
-                                val w = size.width.toFloat()
-                                val h = size.height.toFloat()
-                                val colW = (w - gutterPx) / bandCount
-                                if (colW <= 0f) return@detectTapGestures
-                                val band = (((pos.x - gutterPx) / colW)).toInt()
-                                    .coerceIn(0, bandCount - 1)
-                                val span = h / 2f - vPadPx
-                                val gain = (((h / 2f - pos.y) / span) * MAX_GAIN_RANGE_MILLIBELS)
-                                    .roundToInt()
-                                    .coerceIn(MIN_GAIN_RANGE_MILLIBELS, MAX_GAIN_RANGE_MILLIBELS)
-                                onBandGainChange(band, gain, latestGains.value)
-                            }
                         },
                     ),
             ) {
@@ -239,8 +252,17 @@ fun EqualizerGraph(
                 // thumbs + per-band dB readout
                 for (i in 0 until bandCount) {
                     val p = points[i]
-                    drawCircle(color = accent, radius = 11f, center = p)
-                    drawCircle(color = thumbCore, radius = 5f, center = p)
+                    val grabbed = enabled && i == grabbedBand
+                    if (grabbed) {
+                        // Soft halo so the grabbed handle reads as "live".
+                        drawCircle(color = grabbedColor.copy(alpha = 0.25f), radius = 24f, center = p)
+                    }
+                    drawCircle(
+                        color = if (grabbed) grabbedColor else accent,
+                        radius = if (grabbed) 16f else 12f,
+                        center = p,
+                    )
+                    drawCircle(color = thumbCore, radius = if (grabbed) 6f else 5f, center = p)
 
                     val db = gains[i] / 100.0
                     val rounded = (db * 10).toInt() / 10.0

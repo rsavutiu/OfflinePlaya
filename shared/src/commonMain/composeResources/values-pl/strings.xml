@@ -310,4 +310,5 @@
     <string name="dac_reason_hires">Utwory powyżej 16 bitów grają przez mikser systemowy</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bitów · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Mikser systemowy</string>
+    <string name="dac_dsp_no_effect_note">W niektórych przetwornikach USB DAC korektor i przedwzmacniacz nie działają.</string>
 </resources>

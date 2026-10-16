@@ -308,4 +308,5 @@
     <string name="dac_reason_hires">Песните над 16 бита се възпроизвеждат през системния миксер</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d бита · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Системен миксер</string>
+    <string name="dac_dsp_no_effect_note">При някои USB ЦАП устройства еквалайзерът и предусилвателят нямат ефект.</string>
 </resources>

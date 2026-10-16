@@ -309,4 +309,5 @@
     <string name="dac_reason_hires">Песме изнад 16 бита се пуштају преко системског миксера</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-битни · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Системски миксер</string>
+    <string name="dac_dsp_no_effect_note">На неким USB DAC уређајима еквилајзер и претпојачало немају ефекта.</string>
 </resources>

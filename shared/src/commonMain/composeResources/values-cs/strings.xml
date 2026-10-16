@@ -310,4 +310,5 @@
     <string name="dac_reason_hires">Skladby nad 16 bitů hrají přes systémový mixer</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bitů · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Systémový mixer</string>
+    <string name="dac_dsp_no_effect_note">U některých USB DAC nemá ekvalizér a předzesilovač žádný účinek.</string>
 </resources>

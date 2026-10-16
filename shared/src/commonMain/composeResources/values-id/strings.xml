@@ -307,4 +307,5 @@
     <string name="dac_reason_hires">Lagu di atas 16-bit diputar melalui mixer sistem</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Mixer sistem</string>
+    <string name="dac_dsp_no_effect_note">Pada beberapa DAC USB, ekualiser dan preamp tidak berpengaruh.</string>
 </resources>

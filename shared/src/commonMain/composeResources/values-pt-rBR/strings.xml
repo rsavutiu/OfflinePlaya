@@ -308,4 +308,5 @@
     <string name="dac_reason_hires">Faixas acima de 16 bits tocam pelo mixer do sistema</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bits · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Mixer do sistema</string>
+    <string name="dac_dsp_no_effect_note">Em alguns DACs USB, o equalizador e o pré-amplificador não têm efeito.</string>
 </resources>

@@ -309,4 +309,5 @@
     <string name="dac_reason_hires">Ieraksti virs 16 bitiem tiek atskaņoti caur sistēmas mikseri</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bitu · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Sistēmas mikseris</string>
+    <string name="dac_dsp_no_effect_note">Dažiem USB DAC ekvalaizeram un priekšpastiprinātājam nav nekādas ietekmes.</string>
 </resources>
