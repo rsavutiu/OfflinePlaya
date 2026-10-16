@@ -11,9 +11,17 @@ name: Desktop Receiver distributables
 #   git tag desktop-v1.0.0 && git push origin desktop-v1.0.0
 # The in-app "Get the PC app" nudge links to that release page.
 #
+# Release flow: a DRAFT release is created first, every platform uploads its
+# assets to the draft (a published release is immutable — assets can't be added
+# after), then a final job flips it to published.
+#
 # NOTE: artifacts are UNSIGNED. macOS users right-click → Open the first time
 # (Gatekeeper); Windows shows a SmartScreen warning. Signing/notarization is a
 # later step that needs certs (see docs/plans/03-stream-to-pc.md).
+#
+# Intel macOS (macos-13) is intentionally omitted: GitHub's free Intel runners
+# queue indefinitely, which would stall the publish step. Apple-Silicon covers
+# modern Macs; an Intel build can be produced locally if ever needed.
 
 on:
   workflow_dispatch:
@@ -22,9 +30,6 @@ on:
       - "desktop-v*"
 
 jobs:
-  # Create the GitHub Release once (only on a desktop-v* tag); the matrix legs
-  # then upload their assets to it. Nothing `needs:` the whole matrix, because
-  # the Intel-mac leg may never get a runner.
   create-release:
     if: startsWith(github.ref, 'refs/tags/desktop-v')
     runs-on: ubuntu-latest
@@ -32,14 +37,13 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Create release (idempotent)
+      - name: Create draft release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || \
-          gh release create "$GITHUB_REF_NAME" \
+          gh release create "$GITHUB_REF_NAME" --draft --verify-tag \
             --title "OfflinePlaya Receiver ${GITHUB_REF_NAME#desktop-}" \
-            --verify-tag \
             --notes "Portable app-images (unzip and run, no install, no Java needed) and native installers for Windows, macOS and Linux. Unsigned — see the README for first-launch steps (macOS: right-click → Open; Windows: More info → Run anyway)."
 
   package:
@@ -53,8 +57,6 @@ jobs:
             name: windows-x64
           - os: macos-14      # Apple Silicon runner → arm64
             name: macos-arm64
-          - os: macos-13      # Intel runner → x64
-            name: macos-x64
           - os: ubuntu-latest
             name: linux-x64
     runs-on: ${{ matrix.os }}
@@ -91,20 +93,19 @@ jobs:
         shell: bash
         run: ./gradlew :desktopApp:packageDistributionForCurrentOS --no-daemon
 
-      # Archive the app-image preserving the launcher's executable bit (a plain
-      # upload-artifact zip is login-only and expiring; these archives go on the
-      # public Release). macOS uses ditto for the .app bundle; Linux tar; Windows
-      # Compress-Archive (perms are irrelevant there).
+      # Archive the app-image preserving the launcher's executable bit. macOS
+      # uses ditto for the .app bundle; Linux tar; Windows Compress-Archive.
       - name: Archive app-image (macOS)
         if: runner.os == 'macOS'
+        shell: bash
         run: |
           cd desktopApp/build/compose/binaries/main/app
-          ditto -c -k --keepParent "OfflinePlayaReceiver.app" \
-            "$GITHUB_WORKSPACE/offlineplaya-receiver-${{ matrix.name }}.zip"
+          ditto -c -k --keepParent "OfflinePlayaReceiver.app" "$GITHUB_WORKSPACE/offlineplaya-receiver-${{ matrix.name }}.zip"
       - name: Archive app-image (Linux)
         if: runner.os == 'Linux'
-        run: tar -czf "offlineplaya-receiver-${{ matrix.name }}.tar.gz" \
-          -C desktopApp/build/compose/binaries/main/app OfflinePlayaReceiver
+        shell: bash
+        run: |
+          tar -czf "offlineplaya-receiver-${{ matrix.name }}.tar.gz" -C desktopApp/build/compose/binaries/main/app OfflinePlayaReceiver
       - name: Archive app-image (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
@@ -122,10 +123,8 @@ jobs:
             desktopApp/build/compose/binaries/main/deb/**
           if-no-files-found: warn
 
-      # Publish to the public GitHub Release (tag builds only). Each leg uploads
-      # its own distinctly-named files, so the legs never collide; --clobber
-      # makes re-runs idempotent.
-      - name: Upload to GitHub Release
+      # Upload this platform's assets to the DRAFT release (tag builds only).
+      - name: Upload to draft release
         if: startsWith(github.ref, 'refs/tags/desktop-v')
         shell: bash
         env:
@@ -137,4 +136,23 @@ jobs:
                   desktopApp/build/compose/binaries/main/msi/* \
                   desktopApp/build/compose/binaries/main/deb/* )
           echo "Uploading: ${files[*]}"
-          gh release upload "$GITHUB_REF_NAME" "${files[@]}" --clobber
+          if [ ${#files[@]} -gt 0 ]; then
+            gh release upload "$GITHUB_REF_NAME" "${files[@]}" --clobber
+          else
+            echo "No files to upload for ${{ matrix.name }}" >&2
+          fi
+
+  # Flip the draft to a published (then immutable) release once the platforms
+  # have uploaded. Runs even if a platform failed, as long as the draft exists,
+  # so a single bad leg doesn't block the rest from shipping.
+  publish:
+    needs: [create-release, package]
+    if: ${{ always() && startsWith(github.ref, 'refs/tags/desktop-v') && needs.create-release.result == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release edit "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --draft=false
