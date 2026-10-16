@@ -65,8 +65,12 @@ class PcmPlayer {
             /* signed = */ true,
             /* bigEndian = */ newFormat.bigEndian,
         )
+        // Give the line its own ~200 ms of headroom so it isn't the thing that
+        // starves on a scheduling hiccup (rounded to a whole frame).
+        val lineBuffer = (newFormat.bytesPerSecond / 5 / newFormat.frameBytes).coerceAtLeast(1) *
+            newFormat.frameBytes
         val newLine = AudioSystem.getSourceDataLine(af).apply {
-            open(af)
+            open(af, lineBuffer)
             start()
         }
         // ~1 s of slack, rounded up to a whole sample frame.
@@ -127,33 +131,61 @@ class PcmPlayer {
     }
 
     /**
-     * The sole owner of the [SourceDataLine]. Pulls whole sample frames from the
-     * ring and writes them; pads underruns with a short silence chunk; honours a
-     * pending flush by draining the line's own buffer on this thread.
+     * The sole owner of the [SourceDataLine].
+     *
+     * Pre-buffers ~[PREBUFFER_MS] before playing and again after every flush, so
+     * the line starts from a cushion rather than chasing an empty ring. On a true
+     * underrun (a WiFi dropout, or a pause where no more audio is coming) it
+     * writes a FULL real-time silence chunk — never a sub-real-time sliver, which
+     * starves the line and clicks. Honours a pending flush on this thread so the
+     * line is only ever touched here.
      */
     private fun writeLoop(l: SourceDataLine, r: PcmRingBuffer, fmt: StreamFormat) {
         val frame = fmt.frameBytes
         // ~20 ms per write, rounded to a whole frame.
         val chunkBytes = ((fmt.bytesPerSecond / 50) / frame).coerceAtLeast(1) * frame
+        val prebufferBytes = (fmt.bytesPerSecond * PREBUFFER_MS / 1000 / frame).coerceAtLeast(1) * frame
         val buf = ByteArray(chunkBytes)
         val silence = ByteArray(chunkBytes)
         var leftover = 0 // bytes carried over that didn't complete a frame
 
+        prebuffer(l, r, prebufferBytes, silence, chunkBytes)
         while (running.get() && !r.isClosed) {
             if (flushRequested.getAndSet(false)) {
                 runCatching { l.flush() }
                 leftover = 0
+                // Refill before resuming (seek), feeding silence meanwhile; on a
+                // pause this just keeps clean silence flowing until audio returns.
+                prebuffer(l, r, prebufferBytes, silence, chunkBytes)
             }
             val n = r.read(buf, leftover, chunkBytes - leftover, timeoutMillis = 20) + leftover
-            if (n == 0) {
-                // Underrun: keep the line fed so it never audibly starves.
-                runCatching { l.write(silence, 0, minOf(chunkBytes, frame * 8)) }
+            if (n < frame) {
+                // Underrun: feed a full real-time chunk of silence so the line
+                // stays cleanly fed. Keep any sub-frame bytes for next time.
+                runCatching { l.write(silence, 0, chunkBytes) }
+                leftover = n
                 continue
             }
             val writable = n - (n % frame)
-            if (writable > 0) runCatching { l.write(buf, 0, writable) }
+            runCatching { l.write(buf, 0, writable) }
             leftover = n - writable
             if (leftover > 0) System.arraycopy(buf, writable, buf, 0, leftover)
         }
+    }
+
+    /**
+     * Feed real-time silence to [l] until the ring holds [target] bytes (or the
+     * stream ends / a new flush arrives). Writing silence keeps the line cleanly
+     * fed during the wait — a pause is clean silence, a seek resumes from a full
+     * cushion — instead of starving it into clicks.
+     */
+    private fun prebuffer(l: SourceDataLine, r: PcmRingBuffer, target: Int, silence: ByteArray, chunkBytes: Int) {
+        while (running.get() && !r.isClosed && !flushRequested.get() && r.available < target) {
+            runCatching { l.write(silence, 0, chunkBytes) }
+        }
+    }
+
+    private companion object {
+        const val PREBUFFER_MS = 250
     }
 }
