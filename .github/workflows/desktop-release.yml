@@ -1,0 +1,79 @@
+name: Desktop Receiver distributables
+
+# Builds the Stream-to-PC receiver (:desktopApp) for every desktop platform from
+# the one Compose/JVM codebase. jpackage cannot cross-build, and Compose bundles
+# the build OS's Skia natives, so each platform's native installer
+# (.msi / .dmg / .deb) and its portable app-image (bundled JRE, unzip-and-run,
+# no install, no Java needed) are produced on a matching runner.
+#
+# Run it from the Actions tab (Run workflow), or push a tag like
+#   git tag desktop-v1.0.0 && git push origin desktop-v1.0.0
+#
+# NOTE: artifacts are UNSIGNED. macOS users right-click → Open the first time
+# (Gatekeeper); Windows shows a SmartScreen warning. Signing/notarization is a
+# later step that needs certs (see docs/plans/03-stream-to-pc.md).
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "desktop-v*"
+
+jobs:
+  package:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            name: windows-x64
+          - os: macos-14      # Apple Silicon runner → arm64
+            name: macos-arm64
+          - os: macos-13      # Intel runner → x64
+            name: macos-x64
+          - os: ubuntu-latest
+            name: linux-x64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Temurin 17 ships jpackage, which Compose's nativeDistributions needs.
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # The portable app-image needs no external tooling, so it's the guaranteed
+      # artifact. Non-minified on purpose: the receiver relies on
+      # kotlinx-serialization and jmdns and has no desktop R8/proguard keep
+      # rules, so a minified build could strip reflective bits and break.
+      - name: Build portable app-image
+        shell: bash
+        run: |
+          chmod +x ./gradlew || true
+          ./gradlew :desktopApp:createDistributable --no-daemon
+
+      # Native installer (.msi/.dmg/.deb). Best-effort: jpackage needs host
+      # tooling (WiX for .msi on Windows), which a runner may lack — don't fail
+      # the whole job over it; the portable app-image above still ships.
+      - name: Build native installer (best-effort)
+        continue-on-error: true
+        shell: bash
+        run: ./gradlew :desktopApp:packageDistributionForCurrentOS --no-daemon
+
+      # upload-artifact zips the folder on download, so the app-image ships as a
+      # portable archive and the installer as-is — no per-OS zip step needed.
+      - name: Upload distributables
+        uses: actions/upload-artifact@v4
+        with:
+          name: offlineplaya-receiver-${{ matrix.name }}
+          path: |
+            desktopApp/build/compose/binaries/main/app/**
+            desktopApp/build/compose/binaries/main/dmg/**
+            desktopApp/build/compose/binaries/main/msi/**
+            desktopApp/build/compose/binaries/main/deb/**
+          if-no-files-found: warn
