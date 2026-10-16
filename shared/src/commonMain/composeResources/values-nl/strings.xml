@@ -308,4 +308,5 @@
     <string name="dac_reason_hires">Nummers boven 16 bit spelen via de systeemmixer</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Systeemmixer</string>
+    <string name="dac_dsp_no_effect_note">Bij sommige USB-DAC's hebben de equalizer en voorversterker geen effect.</string>
 </resources>

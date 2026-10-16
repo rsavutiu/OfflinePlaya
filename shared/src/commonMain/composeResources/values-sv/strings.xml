@@ -308,4 +308,5 @@
     <string name="dac_reason_hires">Spår över 16 bitar spelas via systemmixern</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bitars · Bitperfekt</string>
     <string name="dac_badge_system_mixer">%1$s · Systemmixer</string>
+    <string name="dac_dsp_no_effect_note">På vissa USB-DAC:ar har equalizern och förförstärkaren ingen effekt.</string>
 </resources>

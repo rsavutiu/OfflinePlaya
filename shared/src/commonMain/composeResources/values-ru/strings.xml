@@ -310,4 +310,5 @@
     <string name="dac_reason_hires">Треки выше 16 бит воспроизводятся через системный микшер</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d бит · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Системный микшер</string>
+    <string name="dac_dsp_no_effect_note">На некоторых USB-ЦАП эквалайзер и предусилитель не действуют.</string>
 </resources>

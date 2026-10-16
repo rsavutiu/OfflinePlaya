@@ -307,4 +307,5 @@
     <string name="dac_reason_hires">เพลงที่สูงกว่า 16 บิตจะเล่นผ่านมิกเซอร์ของระบบ</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d บิต · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · มิกเซอร์ของระบบ</string>
+    <string name="dac_dsp_no_effect_note">บน USB DAC บางรุ่น อีควอไลเซอร์และปรีแอมป์จะไม่มีผล</string>
 </resources>

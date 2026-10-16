@@ -308,4 +308,5 @@
     <string name="dac_reason_hires">Les morceaux de plus de 16 bits passent par le mixeur système</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bits · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Mixeur système</string>
+    <string name="dac_dsp_no_effect_note">Sur certains DAC USB, l'égaliseur et le préampli n'ont aucun effet.</string>
 </resources>

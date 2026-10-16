@@ -1,4 +1,4 @@
-• New: tablet, foldable & split-screen support — big screens finally use the space, with two-column track lists, a side-by-side playlist view and a roomier Now Playing
-• New: your Music folder is scanned automatically on launch — no folder picking needed
-• Cleaner first-run setup and a taller, easier-to-use equalizer on large screens
-• Smoother, better-balanced layouts in landscape throughout
+• New: USB DAC support — bit-perfect output on Android 14+ (when your phone and DAC support it, for 16-bit tracks), and clean playback through any other USB DAC via the system mixer
+• New: more equalizer presets — EDM, Synth-Pop, Bass Boost, Vocal Boost, Treble Boost and Party
+• Equalizer: long-press a band to grab it (it turns green) so you can't nudge it by accident, with more room to adjust
+• Polish and fixes

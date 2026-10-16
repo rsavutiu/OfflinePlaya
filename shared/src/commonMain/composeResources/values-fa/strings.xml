@@ -308,4 +308,5 @@
     <string name="dac_reason_hires">آهنگ‌های بالاتر از ۱۶ بیت از طریق میکسر سیستم پخش می‌شوند</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d بیت · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · میکسر سیستم</string>
+    <string name="dac_dsp_no_effect_note">در برخی مبدل‌های دیجیتال به آنالوگ USB، اکولایزر و پیش‌تقویت‌کننده هیچ تأثیری ندارند.</string>
 </resources>

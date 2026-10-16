@@ -308,4 +308,5 @@
     <string name="dac_reason_hires">Spor over 16 bit spilles gjennom systemmikseren</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfekt</string>
     <string name="dac_badge_system_mixer">%1$s · Systemmikser</string>
+    <string name="dac_dsp_no_effect_note">På enkelte USB-DAC-er har equalizeren og forforsterkeren ingen effekt.</string>
 </resources>

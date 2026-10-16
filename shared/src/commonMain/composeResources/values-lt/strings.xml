@@ -310,4 +310,5 @@
     <string name="dac_reason_hires">Didesni nei 16 bitų takeliai grojami per sistemos maišiklį</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bitų · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Sistemos maišiklis</string>
+    <string name="dac_dsp_no_effect_note">Su kai kuriais USB DAC ekvalaizeris ir pirminis stiprintuvas neveikia.</string>
 </resources>

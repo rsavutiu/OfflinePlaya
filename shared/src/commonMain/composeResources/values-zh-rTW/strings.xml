@@ -307,4 +307,5 @@
     <string name="dac_reason_hires">高於 16 位元的曲目會透過系統混音器播放</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d 位元 · 位元完美</string>
     <string name="dac_badge_system_mixer">%1$s · 系統混音器</string>
+    <string name="dac_dsp_no_effect_note">在某些 USB DAC 上，等化器與前級擴大機不會有作用。</string>
 </resources>

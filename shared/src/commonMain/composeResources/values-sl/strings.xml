@@ -310,4 +310,5 @@
     <string name="dac_reason_hires">Skladbe nad 16 biti se predvajajo prek sistemskega mešalnika</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bitno · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Sistemski mešalnik</string>
+    <string name="dac_dsp_no_effect_note">Pri nekaterih USB DAC izenačevalnik in predojačevalnik nimata učinka.</string>
 </resources>

@@ -307,4 +307,5 @@
     <string name="dac_reason_hires">16 ビットを超える曲はシステムミキサー経由で再生されます</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d ビット · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · システムミキサー</string>
+    <string name="dac_dsp_no_effect_note">一部の USB DAC では、イコライザーとプリアンプは効果がありません。</string>
 </resources>

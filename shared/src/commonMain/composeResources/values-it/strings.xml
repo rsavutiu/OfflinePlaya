@@ -308,4 +308,5 @@
     <string name="dac_reason_hires">I brani oltre i 16 bit vengono riprodotti tramite il mixer di sistema</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bit · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · Mixer di sistema</string>
+    <string name="dac_dsp_no_effect_note">Su alcuni DAC USB, l'equalizzatore e il preamplificatore non hanno effetto.</string>
 </resources>

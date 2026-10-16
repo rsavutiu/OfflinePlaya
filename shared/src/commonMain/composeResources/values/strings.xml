@@ -368,4 +368,5 @@
     <string name="dac_reason_hires">Tracks above 16-bit play through the system mixer</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · System mixer</string>
+    <string name="dac_dsp_no_effect_note">On some USB DACs, the equalizer and preamp have no effect.</string>
 </resources>

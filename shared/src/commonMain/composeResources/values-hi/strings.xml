@@ -308,4 +308,5 @@
     <string name="dac_reason_hires">16-बिट से ऊपर के ट्रैक सिस्टम मिक्सर से चलते हैं</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-बिट · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · सिस्टम मिक्सर</string>
+    <string name="dac_dsp_no_effect_note">कुछ USB DAC पर इक्वलाइज़र और प्रीऐम्प का कोई प्रभाव नहीं होता।</string>
 </resources>
