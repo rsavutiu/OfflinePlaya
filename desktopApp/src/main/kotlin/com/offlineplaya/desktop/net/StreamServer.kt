@@ -2,6 +2,7 @@ package com.offlineplaya.desktop.net
 
 import com.offlineplaya.desktop.audio.PcmPlayer
 import com.offlineplaya.stream.StreamControl
+import com.offlineplaya.stream.StreamFraming
 import com.offlineplaya.stream.StreamProtocol
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -47,17 +48,18 @@ class StreamServer(private val port: Int = StreamProtocol.DEFAULT_PORT) {
     private suspend fun handle(socket: Socket, onStatus: (String) -> Unit) {
         val player = PcmPlayer()
         try {
+            // Liveness: the sender heartbeats every ~2 s, so a read that stalls
+            // this long means the WiFi (or the phone) is gone — bail instead of
+            // blocking on a dead socket until TCP keepalive notices (minutes).
+            socket.soTimeout = HEARTBEAT_TIMEOUT_MS
             val input = DataInputStream(socket.getInputStream().buffered())
             while (!socket.isClosed) {
                 coroutineContext.ensureActive()
-                val type = input.readByte()
-                val length = input.readInt()
-                val payload = ByteArray(length)
-                input.readFully(payload)
-                when (type) {
+                val frame = StreamFraming.readFrame(input)
+                when (frame.type) {
                     StreamProtocol.TYPE_CONTROL ->
-                        onControl(StreamProtocol.decodeControl(payload), player, onStatus)
-                    StreamProtocol.TYPE_AUDIO -> player.write(payload)
+                        onControl(StreamProtocol.decodeControl(frame.payload), player, onStatus)
+                    StreamProtocol.TYPE_AUDIO -> player.write(frame.payload)
                     else -> { /* unknown frame type — skip */ }
                 }
             }
@@ -87,5 +89,10 @@ class StreamServer(private val port: Int = StreamProtocol.DEFAULT_PORT) {
     fun stop() {
         runCatching { serverSocket?.close() }
         serverSocket = null
+    }
+
+    private companion object {
+        /** A few missed ~2 s heartbeats → treat the socket as dead. */
+        const val HEARTBEAT_TIMEOUT_MS = 8000
     }
 }

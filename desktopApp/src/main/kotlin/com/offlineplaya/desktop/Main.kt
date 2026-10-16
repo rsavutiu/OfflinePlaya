@@ -67,9 +67,9 @@ private fun ReceiverApp() {
                 Text("Pairing PIN: $pin", style = MaterialTheme.typography.titleMedium)
                 Text("Status: $status", style = MaterialTheme.typography.bodyMedium)
                 Text(
-                    "Skeleton build — accepts a connection and plays live PCM. " +
-                        "Discovery (mDNS) and PIN enforcement are not wired yet; " +
-                        "connect by IP:port for now.",
+                    "Discoverable on your Wi-Fi — pick this receiver in OfflinePlaya " +
+                        "on your phone (Settings → Audio → Play to PC), or connect by " +
+                        "IP:port. Audio plays live through this PC and is never saved.",
                     style = MaterialTheme.typography.bodySmall,
                 )
             }

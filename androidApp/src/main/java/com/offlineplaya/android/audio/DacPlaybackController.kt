@@ -18,6 +18,7 @@ import com.offlineplaya.shared.util.AppLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.android.asCoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -47,6 +48,13 @@ class DacPlaybackController(
     private val manager: DacOutputManager,
     private val scope: CoroutineScope,
     private val logger: AppLogger,
+    /**
+     * `true` while streaming to a PC receiver. Bit-perfect must step out then:
+     * the PC path needs clean decoded PCM with the local output muted, and a
+     * bit-perfect AudioTrack ignores software volume — so the mute (and thus
+     * "play to PC instead of the speaker") would not take effect.
+     */
+    private val playToPcActive: StateFlow<Boolean> = MutableStateFlow(false),
 ) {
     private val audioManager = context.getSystemService(AudioManager::class.java)
     private val mainDispatcher =
@@ -64,6 +72,8 @@ class DacPlaybackController(
         override fun onTracksChanged(tracks: Tracks) = prepareFrom(tracks)
     }
 
+    private var playToPcJob: Job? = null
+
     fun start() {
         manager.start()
         player.addListener(listener)
@@ -77,9 +87,21 @@ class DacPlaybackController(
                 .distinctUntilChanged()
                 .collect { deviceId -> route(deviceId) }
         }
+        // When Play-to-PC turns on, drop any bit-perfect route so the local
+        // output can be muted; when it turns off, re-evaluate the current track.
+        playToPcJob = scope.launch {
+            playToPcActive.collect { streaming ->
+                if (streaming) {
+                    manager.releasePlayback()
+                } else {
+                    prepareFrom(player.currentTracks)
+                }
+            }
+        }
     }
 
     private fun prepareFrom(tracks: Tracks) {
+        if (playToPcActive.value) return // bit-perfect stays out while streaming to PC
         val format = tracks.selectedAudioFormat() ?: return
         if (format.sampleRate <= 0 || format.channelCount <= 0) return
         val source = PcmFormat(
@@ -103,6 +125,8 @@ class DacPlaybackController(
     fun release() {
         routingJob?.cancel()
         routingJob = null
+        playToPcJob?.cancel()
+        playToPcJob = null
         player.removeListener(listener)
         manager.releasePlayback()
         manager.stop()

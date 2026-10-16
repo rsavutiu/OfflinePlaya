@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC (docs/plans/03-stream-to-pc.md). Kept in its own file so the
+     42-locale fan-out script and the translation validator (which read
+     strings.xml only) stay untouched; Compose Resources merges all values/*.xml
+     into the one Res.string namespace. -->
+<resources>
+    <string name="play_to_pc_title">Play to PC</string>
+    <string name="play_to_pc_blurb">Stream audio from this phone live to a PC on your Wi-Fi network. The PC plays it through its own speakers and nothing is saved there.</string>
+    <string name="play_to_pc_searching">Searching for receivers…</string>
+    <string name="play_to_pc_none_found">No receivers found. Start the OfflinePlaya receiver on your PC, on the same Wi-Fi network.</string>
+    <string name="play_to_pc_connect">Connect</string>
+    <string name="play_to_pc_disconnect">Disconnect</string>
+    <string name="play_to_pc_streaming_to">Playing to %1$s</string>
+    <string name="play_to_pc_connecting_to">Connecting to %1$s…</string>
+    <string name="play_to_pc_manual_header">Connect by IP address</string>
+    <string name="play_to_pc_manual_host">IP address</string>
+    <string name="play_to_pc_manual_port">Port</string>
+    <string name="play_to_pc_error_connect_failed">Could not reach %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Connection lost</string>
+</resources>

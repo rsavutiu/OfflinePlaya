@@ -10,10 +10,13 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.MediaSession
 import com.offlineplaya.android.MainActivity
+import com.offlineplaya.android.audio.AndroidPlayToPcController
 import com.offlineplaya.android.audio.AppEqualizerController
 import com.offlineplaya.android.audio.CrossfadeController
 import com.offlineplaya.android.audio.DacPlaybackController
+import com.offlineplaya.android.audio.PcmTap
 import com.offlineplaya.android.audio.PreampVolumePlayer
+import com.offlineplaya.android.audio.StreamingRenderersFactory
 import com.offlineplaya.android.auto.AutoLibraryCallback
 import com.offlineplaya.shared.domain.audio.DacOutputManager
 import com.offlineplaya.shared.domain.player.MusicPlayer
@@ -26,6 +29,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import org.koin.core.context.GlobalContext
 
 /**
@@ -44,6 +51,7 @@ class PlaybackService : MediaLibraryService() {
     private var equalizerController: AppEqualizerController? = null
     private var crossfadeController: CrossfadeController? = null
     private var dacController: DacPlaybackController? = null
+    private var playToPcController: AndroidPlayToPcController? = null
     private var logger: AppLogger? = null
 
     /**
@@ -61,7 +69,11 @@ class PlaybackService : MediaLibraryService() {
         // allocate). See CrossfadeController for why the secondary shares it.
         val audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
         val sessionId = audioManager.generateAudioSessionId()
-        val player = ExoPlayer.Builder(this)
+        // The PCM tap lives in the audio sink, which is fixed at player
+        // construction — so a streaming-capable RenderersFactory is wired in
+        // now and stays a harmless pass-through until "Play to PC" connects.
+        val pcmTap = PcmTap()
+        val player = ExoPlayer.Builder(this, StreamingRenderersFactory(this, pcmTap))
             .setHandleAudioBecomingNoisy(true)
             .setAudioAttributes(MUSIC_ATTRIBUTES, /* handleAudioFocus = */ true)
             .build()
@@ -81,23 +93,36 @@ class PlaybackService : MediaLibraryService() {
         // USB DAC routing. Built first because its bitPerfectActive flag tells
         // the EQ, preamp, volume ramp and crossfade below to step out of the
         // signal path while the DAC is fed bit-perfect.
+        // Play-to-PC controller is a shared singleton (the picker UI holds the
+        // same one). Its `active` flag folds into the DSP-bypass gate below.
+        val playToPc = koin.get<AndroidPlayToPcController>()
+
         val dac = DacPlaybackController(
             context = this,
             player = player,
             manager = koin.get<DacOutputManager>(),
             scope = serviceScope,
             logger = logger,
+            playToPcActive = playToPc.active,
         ).also {
             dacController = it
             it.start()
         }
-        val bitPerfectActive = dac.bitPerfectActive
+
+        // Single bypass gate: DSP steps out when the DAC is fed bit-perfect OR
+        // while streaming to a PC. The stream must carry clean, decoded PCM, so
+        // EQ / preamp / crossfade are excluded exactly as for bit-perfect.
+        val dspBypass: StateFlow<Boolean> = combine(
+            dac.bitPerfectActive,
+            playToPc.active,
+        ) { bitPerfect, pc -> bitPerfect || pc }
+            .stateIn(serviceScope, SharingStarted.Eagerly, false)
 
         equalizerController = AppEqualizerController(
             context = this,
             audioSessionId = audioSessionId,
             stateHolder = stateHolder,
-            bypass = bitPerfectActive,
+            bypass = dspBypass,
             scope = serviceScope,
             logger = logger,
         ).also { it.start() }
@@ -112,7 +137,7 @@ class PlaybackService : MediaLibraryService() {
             context = this,
             mainPlayer = player,
             preferences = koin.get<PlaybackTuningStateHolder>().preferences,
-            bypass = bitPerfectActive,
+            bypass = dspBypass,
             scope = serviceScope,
             logger = logger,
         ).also { it.start() }
@@ -134,10 +159,15 @@ class PlaybackService : MediaLibraryService() {
             player = player,
             context = this,
             stateHolder = stateHolder,
-            bypass = bitPerfectActive,
+            bypass = dspBypass,
             scope = serviceScope,
             logger = logger,
         )
+
+        // Hand the live player + PCM tap to the Play-to-PC controller so it can
+        // mute local output and capture decoded PCM while streaming.
+        playToPc.attachPlayer(player, pcmTap)
+        playToPcController = playToPc
         // MediaLibrarySession (not MediaSession) so Android Auto can browse
         // our library. Callback wires the browse tree into shared state
         // holders; on phone (no Auto browser) this is dormant and behaves
@@ -175,6 +205,8 @@ class PlaybackService : MediaLibraryService() {
         // Teardown must be all-or-most: a throw in any single step must not skip
         // the rest — especially the native player/session release — or the
         // mandatory super.onDestroy(). Isolate every step.
+        safeRelease("playToPc") { playToPcController?.detachPlayer() }
+        playToPcController = null
         safeRelease("crossfade") { crossfadeController?.release() }
         crossfadeController = null
         safeRelease("equalizer") { equalizerController?.release() }

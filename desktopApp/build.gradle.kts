@@ -27,6 +27,9 @@ dependencies {
     // Dispatchers.Main on Compose Desktop resolves to the Swing event thread.
     implementation(libs.kotlinx.coroutines.swing)
     implementation(libs.kotlinx.serialization.json)
+    // mDNS advertiser so the phone discovers this receiver on the LAN. Pure
+    // Java → works on Windows, macOS and Linux from the one codebase.
+    implementation(libs.jmdns)
 }
 
 compose.desktop {
@@ -42,6 +45,10 @@ compose.desktop {
         nativeDistributions {
             // App-image / installers per OS. Built per OS+arch on CI later.
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            // JDK modules the bundled runtime needs (from
+            // `:desktopApp:suggestRuntimeModules`) so jmdns / coroutines don't
+            // hit NoClassDefFoundError only in the packaged app.
+            modules("java.instrument", "jdk.unsupported")
             packageName = "OfflinePlayaReceiver"
             // Compose packaging requires MAJOR > 0 (DMG in particular); this is
             // the receiver's own version, independent of the Android app.

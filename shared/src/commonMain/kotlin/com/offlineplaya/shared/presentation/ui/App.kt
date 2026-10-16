@@ -49,6 +49,7 @@ import com.offlineplaya.shared.presentation.eq.EqualizerStateHolder
 import com.offlineplaya.shared.presentation.library.LibraryStateHolder
 import com.offlineplaya.shared.presentation.lyrics.LyricsStateHolder
 import com.offlineplaya.shared.presentation.metadata.BurnMetadataCoordinator
+import com.offlineplaya.shared.domain.stream.PlayToPcController
 import com.offlineplaya.shared.presentation.navigation.AppDestination
 import com.offlineplaya.shared.presentation.navigation.AppNavigator
 import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
@@ -74,6 +75,7 @@ import com.offlineplaya.shared.presentation.ui.pages.LibraryFolderRootsPage
 import com.offlineplaya.shared.presentation.ui.pages.ListeningStatsPage
 import com.offlineplaya.shared.presentation.ui.pages.LyricsPage
 import com.offlineplaya.shared.presentation.ui.pages.NowPlayingPage
+import com.offlineplaya.shared.presentation.ui.pages.PlayToPcPage
 import com.offlineplaya.shared.presentation.ui.pages.PlaylistDetailPage
 import com.offlineplaya.shared.presentation.ui.pages.PlaylistsPage
 import com.offlineplaya.shared.presentation.ui.pages.QueuePage
@@ -93,6 +95,7 @@ import kotlinx.coroutines.launch
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.common_loading
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 
 @Composable
 fun App(
@@ -527,6 +530,24 @@ private fun DestinationBody(
                 )
             }
 
+            AppDestination.PlayToPc -> {
+                val controller: PlayToPcController = koinInject()
+                val playToPcState by controller.state.collectAsState()
+                // Browse the LAN only while the picker is open — an offline app
+                // must not hold the network open in the background.
+                DisposableEffect(Unit) {
+                    controller.startDiscovery()
+                    onDispose { controller.stopDiscovery() }
+                }
+                PlayToPcPage(
+                    state = playToPcState,
+                    onConnect = { controller.connect(it) },
+                    onConnectManual = { host, port -> controller.connectManual(host, port) },
+                    onDisconnect = { controller.disconnect() },
+                    onBack = { navigator.pop() },
+                )
+            }
+
             AppDestination.Settings -> {
                 val managedRoots by syncCoordinator.managedRootsFlow
                     .collectAsState(initial = emptyList<com.offlineplaya.shared.domain.model.ManagedTreeRoot>())
@@ -557,6 +578,7 @@ private fun DestinationBody(
                     onRemoveManagedRoot = { uri -> syncCoordinator.removeManagedRoot(uri) },
                     onOpenEqualizer = { navigator.push(AppDestination.Equalizer) },
                     onOpenDesignSystem = { navigator.push(AppDestination.DesignSystemGallery) },
+                    onOpenPlayToPc = { navigator.push(AppDestination.PlayToPc) },
                     onBack = { navigator.pop() },
                     dynamicColorSupported = dynamicColorSupported,
                     excludedFolders = excludedFolders.toPersistentList(),

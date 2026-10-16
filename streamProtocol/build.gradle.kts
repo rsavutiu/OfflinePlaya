@@ -13,4 +13,8 @@ kotlin {
 
 dependencies {
     implementation(libs.kotlinx.serialization.json)
+
+    // Pure-JVM unit tests for the wire format and the receiver ring buffer.
+    // kotlin("test") auto-selects JUnit4 here (no useJUnitPlatform()).
+    testImplementation(kotlin("test"))
 }

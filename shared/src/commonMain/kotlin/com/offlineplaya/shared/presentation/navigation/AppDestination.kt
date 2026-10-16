@@ -46,4 +46,7 @@ sealed interface AppDestination {
 
     /** Listening stats (play-history aggregates) — reached from the Home stats row. */
     data object ListeningStats : AppDestination
+
+    /** Stream-to-PC receiver picker — reached from Settings → Audio. */
+    data object PlayToPc : AppDestination
 }

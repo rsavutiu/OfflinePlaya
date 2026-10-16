@@ -70,6 +70,9 @@ class MainActivity : ComponentActivity() {
     private val dacOutputManager: com.offlineplaya.shared.domain.audio.DacOutputManager by lazy {
         GlobalContext.get().get<com.offlineplaya.shared.domain.audio.DacOutputManager>()
     }
+    private val playToPcController: com.offlineplaya.shared.domain.stream.PlayToPcController by lazy {
+        GlobalContext.get().get<com.offlineplaya.shared.domain.stream.PlayToPcController>()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // installSplashScreen() must run before super.onCreate so it can swap
@@ -107,11 +110,12 @@ class MainActivity : ComponentActivity() {
      *
      * Key autorepeat means holding the button steps repeatedly.
      *
-     * Skipped entirely during bit-perfect USB DAC output: the preamp is
-     * bypassed there, so the keys must go straight to the system / DAC volume.
+     * Skipped entirely during bit-perfect USB DAC output or while streaming to
+     * a PC: the preamp is bypassed in both, so the keys must go straight to the
+     * system / DAC volume (and the PC owns its own output level).
      */
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (!dacOutputManager.state.value.softwareDspAllowed) {
+        if (!dacOutputManager.state.value.softwareDspAllowed || playToPcController.active.value) {
             return super.onKeyDown(keyCode, event)
         }
         when (keyCode) {

@@ -13,6 +13,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -36,6 +37,7 @@ import com.offlineplaya.shared.presentation.ui.TestTags
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
 import com.offlineplaya.shared.presentation.ui.molecules.RemoveManagedRootDialog
 import com.offlineplaya.shared.presentation.ui.molecules.SettingsLinkSection
+import com.offlineplaya.shared.presentation.ui.molecules.SettingsSection
 import com.offlineplaya.shared.presentation.ui.organisms.AppearanceSettings
 import com.offlineplaya.shared.presentation.ui.organisms.BurnMetadataSettings
 import com.offlineplaya.shared.presentation.ui.organisms.LibrarySettings
@@ -47,6 +49,7 @@ import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import offlineplaya.shared.generated.resources.Res
+import offlineplaya.shared.generated.resources.play_to_pc_title
 import offlineplaya.shared.generated.resources.top_bar_settings
 import org.jetbrains.compose.resources.stringResource
 
@@ -83,6 +86,7 @@ fun SettingsPage(
     onRemoveManagedRoot: (String) -> Unit,
     onOpenEqualizer: () -> Unit,
     onOpenDesignSystem: () -> Unit,
+    onOpenPlayToPc: () -> Unit = {},
     onBack: () -> Unit,
     dynamicColorSupported: Boolean = true,
     excludedFolders: PersistentList<com.offlineplaya.shared.domain.model.ExcludedFolder> =
@@ -153,11 +157,20 @@ fun SettingsPage(
                 )
             }
             val audio: @Composable () -> Unit = {
-                SettingsLinkSection(
-                    sectionTitle = "Audio",
-                    actionLabel = "Equalizer",
-                    onClick = onOpenEqualizer,
-                )
+                SettingsSection(title = "Audio") {
+                    OutlinedButton(
+                        onClick = onOpenEqualizer,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 2.dp),
+                    ) { Text("Equalizer") }
+                    OutlinedButton(
+                        onClick = onOpenPlayToPc,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 2.dp),
+                    ) { Text(stringResource(Res.string.play_to_pc_title)) }
+                }
             }
             val developer: @Composable () -> Unit = {
                 SettingsLinkSection(

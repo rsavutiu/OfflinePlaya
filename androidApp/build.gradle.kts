@@ -147,6 +147,9 @@ dependencies {
     implementation(project(":shared")) {
         exclude(group = "androidx.appcompat")
     }
+    // Stream-to-PC wire format — plain Kotlin/JVM, depended on directly (no jvm
+    // target added to :shared). Shared verbatim with the desktop receiver.
+    implementation(project(":streamProtocol"))
 
     val compose = ComposePlugin.Dependencies(project)
     implementation(compose.runtime)
@@ -187,6 +190,10 @@ dependencies {
     // Compose Preview: annotation (always) + renderer (debug only, for Android Studio)
     implementation(libs.androidx.compose.ui.tooling.preview)
     debugImplementation(libs.androidx.compose.ui.tooling)
+
+    // Local JVM unit tests (testDebugUnitTest) — pure logic that needs no device,
+    // e.g. the PCM-encoding → wire-format mapping for Play-to-PC.
+    testImplementation(libs.junit)
 
     // Instrumented tests — exercise the real Android stack (SAF, MediaStore,
     // Jaudiotagger over real files) against the fixture audio committed under
