@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Joc la PC</string>
+    <string name="play_to_pc_blurb">Transmiteți audio de pe acest telefon în timp real către un calculator din rețeaua Wi-Fi. Calculatorul îl difuzează prin propriile sale vorbitori și nimic nu este salvat acolo.</string>
+    <string name="play_to_pc_searching">Căutare receptori…</string>
+    <string name="play_to_pc_none_found">Nu s-au găsit receptorii. Porniți OfflinePlaya pe calculatorul dvs., în aceeași rețea Wi-Fi.</string>
+    <string name="play_to_pc_connect">Conectează-te</string>
+    <string name="play_to_pc_disconnect">Deconectare</string>
+    <string name="play_to_pc_streaming_to">Se transmite la %1$s</string>
+    <string name="play_to_pc_connecting_to">Connecting to %1$s…</string>
+    <string name="play_to_pc_manual_header">Conectează-te prin adresa IP</string>
+    <string name="play_to_pc_manual_host">Adresă IP</string>
+    <string name="play_to_pc_manual_port">Port</string>
+    <string name="play_to_pc_error_connect_failed">Nu s-a reușit conectarea la %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Conexiunea a fost pierdută</string>
+</resources>

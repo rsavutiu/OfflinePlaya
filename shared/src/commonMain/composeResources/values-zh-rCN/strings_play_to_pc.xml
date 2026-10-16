@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">投屏到电脑</string>
+    <string name="play_to_pc_blurb">将此手机的音频实时流媒体传输至同一Wi-Fi网络中的电脑。该电脑通过自己的扬声器播放，且不会在此保存任何内容。</string>
+    <string name="play_to_pc_searching">正在搜索接收设备…</string>
+    <string name="play_to_pc_none_found">未找到接收设备。请在您的PC上启动OfflinePlaya接收程序，并确保在同一Wi-Fi网络中。</string>
+    <string name="play_to_pc_connect">连接</string>
+    <string name="play_to_pc_disconnect">断开连接</string>
+    <string name="play_to_pc_streaming_to">正在播放至 %1$s</string>
+    <string name="play_to_pc_connecting_to">正尝试连接到 %1$s…</string>
+    <string name="play_to_pc_manual_header">通过IP地址进行连接</string>
+    <string name="play_to_pc_manual_host">IP 地址</string>
+    <string name="play_to_pc_manual_port">端口</string>
+    <string name="play_to_pc_error_connect_failed">无法到达 %1$s</string>
+    <string name="play_to_pc_error_connection_lost">已断开连接</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Παίξτε σε Πορτάτιφ</string>
+    <string name="play_to_pc_blurb">Συνδέστε τη φωνή από αυτό το κινητό για να πλαισιώνεται σε ένα υπολογιστή μέσω Wi-Fi δικτύου. Ο PC εμφανίζει τη φωνή αυτός κάθε προβολής, και σχεδόν όλα τα αποθέτει.</string>
+    <string name="play_to_pc_searching">Αναζήτηση λήψεων…</string>
+    <string name="play_to_pc_none_found">Δε βρέθηκαν κάμερες. Ξεκίνησε το OfflinePlaya ως πιστό δέκτη σου PC, με αυτή τη Wi-Fi δίκτυο.</string>
+    <string name="play_to_pc_connect">Σύνδεσμο</string>
+    <string name="play_to_pc_disconnect">Αποσύνδεσμος</string>
+    <string name="play_to_pc_streaming_to">Playing to %1$s</string>
+    <string name="play_to_pc_connecting_to">Συνδέθηκε με το %1$s…</string>
+    <string name="play_to_pc_manual_header">Σύνδεσμος από IP διαχείριση</string>
+    <string name="play_to_pc_manual_host">Διεύθυνση ΙΡ</string>
+    <string name="play_to_pc_manual_port">Πόρτα</string>
+    <string name="play_to_pc_error_connect_failed">Αδυναμία σύνδεσης με το %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Η σύνδεσή χάθηκε</string>
+</resources>

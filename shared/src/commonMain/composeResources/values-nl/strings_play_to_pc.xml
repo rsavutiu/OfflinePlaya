@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Speel naar PC</string>
+    <string name="play_to_pc_blurb">Stroom audio van deze telefoon live naar een PC op uw Wi-Fi-netwerk. De PC speelt het door zijn eigen luidsprekers en niets wordt daarop gespeeld.</string>
+    <string name="play_to_pc_searching">Zoekt naar ontvangers…</string>
+    <string name="play_to_pc_none_found">Geen ontvangers gevonden. Start de OfflinePlaya-ontvanger op uw PC, op hetzelfde Wi-Fi-netwerk.</string>
+    <string name="play_to_pc_connect">Verbinden</string>
+    <string name="play_to_pc_disconnect">Afbreken</string>
+    <string name="play_to_pc_streaming_to">Afspelen naar %1$s</string>
+    <string name="play_to_pc_connecting_to">Connecting to %1$s…</string>
+    <string name="play_to_pc_manual_header">Verbind via IP-adres</string>
+    <string name="play_to_pc_manual_host">IP adres</string>
+    <string name="play_to_pc_manual_port">Poort</string>
+    <string name="play_to_pc_error_connect_failed">Kon niet bereiken %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Verbinding verloren</string>
+</resources>

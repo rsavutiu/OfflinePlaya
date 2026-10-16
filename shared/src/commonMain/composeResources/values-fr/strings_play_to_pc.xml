@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Jouer sur PC</string>
+    <string name="play_to_pc_blurb">Diffuser en direct l'audio de ce téléphone vers un ordinateur connecté au même réseau Wi-Fi. L’ordinateur diffuse le son via ses propres haut-parleurs et rien n’est sauvegardé là-bas.</string>
+    <string name="play_to_pc_searching">Recherche des récepteurs…</string>
+    <string name="play_to_pc_none_found">Aucun récepteur trouvé. Démarrer OfflinePlaya sur votre ordinateur, connectez-vous au même réseau Wi-Fi.</string>
+    <string name="play_to_pc_connect">Se connecter</string>
+    <string name="play_to_pc_disconnect">Se déconnecter</string>
+    <string name="play_to_pc_streaming_to">Diffusion vers %1$s</string>
+    <string name="play_to_pc_connecting_to">Connexion à %1$s…</string>
+    <string name="play_to_pc_manual_header">Connectez-vous via l'adresse IP</string>
+    <string name="play_to_pc_manual_host">Adresse IP</string>
+    <string name="play_to_pc_manual_port">Port</string>
+    <string name="play_to_pc_error_connect_failed">Impossible d'accéder à %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Perte de connexion</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">اللعب على الحاسوب</string>
+    <string name="play_to_pc_blurb">قم بتحويل الصوت من هذا الهاتف مباشرة إلى حاسوب في شبكة الواي فاي الخاصة بك. يُسمع الصوت عبر مكبرات صوتك الخاصة بالحاسوب ولا يتم تخزين أي شيء هناك.</string>
+    <string name="play_to_pc_searching">جارٍ البحث عن المستقبلات…</string>
+    <string name="play_to_pc_none_found">لم تتم العثور على مستقبلات. ابدأ بتشغيل OfflinePlaya_receiver على حاسобك، في نفس شبكة الواي فاي.</string>
+    <string name="play_to_pc_connect">الربط</string>
+    <string name="play_to_pc_disconnect">Disconnect</string>
+    <string name="play_to_pc_streaming_to">يلعب إلى %1$s</string>
+    <string name="play_to_pc_connecting_to">جارٍ التوصيل مع %1$s…</string>
+    <string name="play_to_pc_manual_header">الربط عبر عنوان IP</string>
+    <string name="play_to_pc_manual_host">عنوان IP</string>
+    <string name="play_to_pc_manual_port">رقم المنفذ</string>
+    <string name="play_to_pc_error_connect_failed">لم يتم الاتصال بـ %1$s</string>
+    <string name="play_to_pc_error_connection_lost">تم فقدان الارتباط</string>
+</resources>

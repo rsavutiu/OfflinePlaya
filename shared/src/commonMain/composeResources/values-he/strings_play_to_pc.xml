@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">הנגן למחשב</string>
+    <string name="play_to_pc_blurb">שדרוג אודיו מהטלפון שלך实时 אל מחשב בเครือ Wi-Fi. המחשב מנגן את האודיו דרך שולחנותו ושום דבר לא נשמר שם.</string>
+    <string name="play_to_pc_searching">מחפש קבוצות…</string>
+    <string name="play_to_pc_none_found">לא נמצאו קבוצות. התחיל OfflinePlaya במחשב שלך, באותוเครือ Wi-Fi.</string>
+    <string name="play_to_pc_connect">התחבר</string>
+    <string name="play_to_pc_disconnect">התנתק</string>
+    <string name="play_to_pc_streaming_to">מונגן ל %1$s</string>
+    <string name="play_to_pc_connecting_to">מתחבר אל %1$s…</string>
+    <string name="play_to_pc_manual_header">התחבר באמצעות IP</string>
+    <string name="play_to_pc_manual_host">כתובת IPv4</string>
+    <string name="play_to_pc_manual_port">פורט</string>
+    <string name="play_to_pc_error_connect_failed">לא ניתן להגיע ל-%1$s</string>
+    <string name="play_to_pc_error_connection_lost">Connection lost</string>
+</resources>

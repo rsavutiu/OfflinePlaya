@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">PC로 플레이하기</string>
+    <string name="play_to_pc_blurb">이 폰의 오디오를 Wi-Fi 네트워크에 있는 PC로 실시간 스트리밍합니다. PC는 자체 스피커를 통해 재생하며, 해당 장치에는 아무것도 저장되지 않습니다.</string>
+    <string name="play_to_pc_searching">수신기 검색 중…</string>
+    <string name="play_to_pc_none_found">수신기가 없습니다. 같은 Wi-Fi 네트워크에서 PC에 OfflinePlaya 수신기를 시작하세요.</string>
+    <string name="play_to_pc_connect">Connect</string>
+    <string name="play_to_pc_disconnect">断开连接</string>
+    <string name="play_to_pc_streaming_to">%1$s으로 재생 중</string>
+    <string name="play_to_pc_connecting_to">%1$s로 연결 중…</string>
+    <string name="play_to_pc_manual_header">IP 주소를 통해 연결하기</string>
+    <string name="play_to_pc_manual_host">IP 주소</string>
+    <string name="play_to_pc_manual_port">포트</string>
+    <string name="play_to_pc_error_connect_failed">%1$s에 도달할 수 없습니다</string>
+    <string name="play_to_pc_error_connection_lost">연결이 끊어졌습니다</string>
+</resources>

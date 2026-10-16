@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Pelaa PC:lle</string>
+    <string name="play_to_pc_blurb">Lähetä äänitiedostot tästä telefonista suoraan PC:n kautta Wi-Fi-verkkoon. Äänitietoja kuunnellaan PC:n omilla puhekorkeudellsa ja ei mitään tallenneta siinä.</string>
+    <string name="play_to_pc_searching">Etsimäässä vastaanottajia…</string>
+    <string name="play_to_pc_none_found">Vastaanottajia ei löytynyt. Käynnistä OfflinePlaya-vastaanotin PC:llasi samaan Wi-Fi-verkkoon.</string>
+    <string name="play_to_pc_connect">Yhdistä</string>
+    <string name="play_to_pc_disconnect">Disconnect</string>
+    <string name="play_to_pc_streaming_to">Lähettää %1$s:n kautta</string>
+    <string name="play_to_pc_connecting_to">Yhdytetään %1$s:aan…</string>
+    <string name="play_to_pc_manual_header">IP-osoitteella yhdistäminen</string>
+    <string name="play_to_pc_manual_host">IP-osoite</string>
+    <string name="play_to_pc_manual_port">Portti</string>
+    <string name="play_to_pc_error_connect_failed">%1$s:n pääsemiseen ei onnistunut</string>
+    <string name="play_to_pc_error_connection_lost">Yhteys katkeaa</string>
+</resources>

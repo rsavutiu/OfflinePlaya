@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Odtwarzaj na komputer</string>
+    <string name="play_to_pc_blurb">Strumień dźwięku z tego telefonu w czasie rzeczywistym do komputera podłączonego do tej samej sieci Wi-Fi. Komputer odtwarza go przez własne głośniki, a nic nie jest tam zapisywane.</string>
+    <string name="play_to_pc_searching">Wyszukiwanie odbiorników…</string>
+    <string name="play_to_pc_none_found">Nie znaleziono odbiorników. Uruchom OfflinePlaya na komputerze w tej samej sieci Wi-Fi.</string>
+    <string name="play_to_pc_connect">Połącz</string>
+    <string name="play_to_pc_disconnect">Disconnect</string>
+    <string name="play_to_pc_streaming_to">Odtwarzanie do %1$s</string>
+    <string name="play_to_pc_connecting_to">Łączenie się z %1$s…</string>
+    <string name="play_to_pc_manual_header">Połącz przez adres IP</string>
+    <string name="play_to_pc_manual_host">Adres IP</string>
+    <string name="play_to_pc_manual_port">Port</string>
+    <string name="play_to_pc_error_connect_failed">Nie można połączyć się ze %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Strata połączenia</string>
+</resources>

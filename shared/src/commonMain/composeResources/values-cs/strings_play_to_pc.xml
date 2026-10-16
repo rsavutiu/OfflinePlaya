@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Hraj na PC</string>
+    <string name="play_to_pc_blurb">Přenos zvuku z tohoto telefonu do počítače ve vašem Wi-Fi sítě. Počítač hraje přes své vlastní reproduktory a nic se tam neuloží.</string>
+    <string name="play_to_pc_searching">Hledám přijmače…</string>
+    <string name="play_to_pc_none_found">Žádné přijmače nenalezeno. Spusťte OfflinePlaya přijemce na vašem počítači, ve stejné Wi-Fi síti.</string>
+    <string name="play_to_pc_connect">Připojit</string>
+    <string name="play_to_pc_disconnect">Odpojit</string>
+    <string name="play_to_pc_streaming_to">Hraji do %1$s</string>
+    <string name="play_to_pc_connecting_to">Připojuji se k %1$s…</string>
+    <string name="play_to_pc_manual_header">Spojte se pomocí IP adresy</string>
+    <string name="play_to_pc_manual_host">IP adresa</string>
+    <string name="play_to_pc_manual_port">Port</string>
+    <string name="play_to_pc_error_connect_failed">Nelze dosáhnout %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Connection lost</string>
+</resources>

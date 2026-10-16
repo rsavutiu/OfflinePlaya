@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">PC'ye Oynat</string>
+    <string name="play_to_pc_blurb">Bu telefonun sesini Wi-Fi ağınızdaki bir bilgisayara canlı olarak aktarın. Bilgisayar kendi hoparlörlerinden çalar ve orada hiçbir şey kaydedilmez.</string>
+    <string name="play_to_pc_searching">Alıcılar aranıyor…</string>
+    <string name="play_to_pc_none_found">Herhangi bir alıcının bulunamadığı. OfflinePlaya alıcısını aynı Wi-Fi ağındaki bilgisayarınızda başlatın.</string>
+    <string name="play_to_pc_connect">Bağlan</string>
+    <string name="play_to_pc_disconnect">Ayrıl</string>
+    <string name="play_to_pc_streaming_to">%1$s'ye Oynatılıyor</string>
+    <string name="play_to_pc_connecting_to">%1$s ile Bağlantı Kuruluyor…</string>
+    <string name="play_to_pc_manual_header">IP adresiyle Bağlanın</string>
+    <string name="play_to_pc_manual_host">IP Adresi</string>
+    <string name="play_to_pc_manual_port">Port</string>
+    <string name="play_to_pc_error_connect_failed">%1$s'ye Ulaşılamadı</string>
+    <string name="play_to_pc_error_connection_lost">Başlatma Kayboldu</string>
+</resources>

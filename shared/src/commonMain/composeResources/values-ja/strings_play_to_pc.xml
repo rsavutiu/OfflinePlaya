@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">PCにプレイする</string>
+    <string name="play_to_pc_blurb">この電話の音声をWi-Fiネットワーク上のPCへリアルタイムでストリームします。PCは自身のスピーカーを通じて再生し、何も保存されません。</string>
+    <string name="play_to_pc_searching">受信機を探しています…</string>
+    <string name="play_to_pc_none_found">受信機が見つかりませんでした。同じWi-Fiネットワーク上のPCでOfflinePlaya受信機を起動してください。</string>
+    <string name="play_to_pc_connect">接続する</string>
+    <string name="play_to_pc_disconnect">Disconnect</string>
+    <string name="play_to_pc_streaming_to">%1$sにプレイ中</string>
+    <string name="play_to_pc_connecting_to">%1$sへ接続しています…</string>
+    <string name="play_to_pc_manual_header">IPアドレスで接続</string>
+    <string name="play_to_pc_manual_host">IP アドレス</string>
+    <string name="play_to_pc_manual_port">ポート</string>
+    <string name="play_to_pc_error_connect_failed">%1$sにアクセスできません</string>
+    <string name="play_to_pc_error_connection_lost">接続が切断されました</string>
+</resources>

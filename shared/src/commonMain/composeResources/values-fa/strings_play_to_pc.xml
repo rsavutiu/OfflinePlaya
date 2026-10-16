@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">به رایانه بازی کنید</string>
+    <string name="play_to_pc_blurb">صوت این تلفон به صورت آنلاین به یک رایانه در شبکه Wi-Fi شما پخش می‌شود. رایانه بصورت خاصی با ساچمه های خود آن را پخش کرده و نمی تابد ذخیره.</string>
+    <string name="play_to_pc_searching">در حال جستجو برای درگاه مجاز…</string>
+    <string name="play_to_pc_none_found">هیچ درگاهی پیدا نشد. برنامه OfflinePlaya را روی رایانه خود اجرا کن و هر دو به شبکه Wi-Fi یکسان متصل باشند.</string>
+    <string name="play_to_pc_connect">اتصال</string>
+    <string name="play_to_pc_disconnect">قطع اتصال</string>
+    <string name="play_to_pc_streaming_to">به %1$s پخش می‌شود</string>
+    <string name="play_to_pc_connecting_to">در حال اتصال به %1$s…</string>
+    <string name="play_to_pc_manual_header">Connect by IP address</string>
+    <string name="play_to_pc_manual_host">آدرس IP</string>
+    <string name="play_to_pc_manual_port">پورت</string>
+    <string name="play_to_pc_error_connect_failed">می تواند به %1$s دسترسی پیدا کند.</string>
+    <string name="play_to_pc_error_connection_lost">اتصال از بین رفت</string>
+</resources>

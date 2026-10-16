@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Spil til PC</string>
+    <string name="play_to_pc_blurb">Strøm audio fra denne telefon direkte til en PC på din Wi-Fi-netværk. Denne PC spiller det gennem sine egne lufthuller og intet bliver gemt der.</string>
+    <string name="play_to_pc_searching">Søger efter modtagere…</string>
+    <string name="play_to_pc_none_found">Ingen modtagere fundet. Start OfflinePlaya-modtageren på din PC, på samme Wi-Fi-netværk.</string>
+    <string name="play_to_pc_connect">Tilslut</string>
+    <string name="play_to_pc_disconnect">Afbryd forbindelse</string>
+    <string name="play_to_pc_streaming_to">Spiller til %1$s</string>
+    <string name="play_to_pc_connecting_to">Connecting to %1$s…</string>
+    <string name="play_to_pc_manual_header">Tilslut ved IP-adresse</string>
+    <string name="play_to_pc_manual_host">IP adresse</string>
+    <string name="play_to_pc_manual_port">Port</string>
+    <string name="play_to_pc_error_connect_failed">Kunne ikke nå %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Forbindelsen blev mistet</string>
+</resources>

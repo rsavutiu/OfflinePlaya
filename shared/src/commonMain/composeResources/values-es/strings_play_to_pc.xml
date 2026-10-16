@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Jugar en PC</string>
+    <string name="play_to_pc_blurb">Transmite audio de este teléfono directamente a una computadora en tu red Wi-Fi. La computadora lo reproduce por sus propios altavoces y nada se guarda allí.</string>
+    <string name="play_to_pc_searching">Buscando receptores…</string>
+    <string name="play_to_pc_none_found">No se encontraron receptores. Inicia el receptor OfflinePlaya en tu PC, en la misma red Wi-Fi.</string>
+    <string name="play_to_pc_connect">Connect</string>
+    <string name="play_to_pc_disconnect">Desconectar</string>
+    <string name="play_to_pc_streaming_to">Reproduciendo para %1$s</string>
+    <string name="play_to_pc_connecting_to">Conectando a %1$s…</string>
+    <string name="play_to_pc_manual_header">Conéctate mediante dirección IP</string>
+    <string name="play_to_pc_manual_host">Dirección IP</string>
+    <string name="play_to_pc_manual_port">Puerto</string>
+    <string name="play_to_pc_error_connect_failed">No se pudo alcanzar %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Se perdió la conexión</string>
+</resources>

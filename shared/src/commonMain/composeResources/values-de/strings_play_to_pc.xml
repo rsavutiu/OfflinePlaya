@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Auf PC spielen</string>
+    <string name="play_to_pc_blurb">Streamen Sie Audio von diesem Telefon in Echtzeit zu einem Computer im lokalen Wi-Fi-Netzwerk. Der Computer spielt es über seine eigenen Lautsprecher und nichts wird dort gespeichert.</string>
+    <string name="play_to_pc_searching">Suche nach Empfängern…</string>
+    <string name="play_to_pc_none_found">Keine Empfäger gefunden. Starten Sie den OfflinePlaya-Empänger auf Ihrem Computer, im gleichen Wi-Fi-Netzwerk.</string>
+    <string name="play_to_pc_connect">Verbinden</string>
+    <string name="play_to_pc_disconnect">Trennen</string>
+    <string name="play_to_pc_streaming_to">Wird gespielt an %1$s</string>
+    <string name="play_to_pc_connecting_to">Verbinde mit %1$s…</string>
+    <string name="play_to_pc_manual_header">Connect by IP address</string>
+    <string name="play_to_pc_manual_host">IP Adresse</string>
+    <string name="play_to_pc_manual_port">Port</string>
+    <string name="play_to_pc_error_connect_failed">%1$s ist nicht erreichbar</string>
+    <string name="play_to_pc_error_connection_lost">Verbindung getrennt</string>
+</resources>

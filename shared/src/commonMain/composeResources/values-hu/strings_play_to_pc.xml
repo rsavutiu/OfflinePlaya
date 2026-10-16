@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Játék PC-re</string>
+    <string name="play_to_pc_blurb">Áramköröket készít ebből a telefonból egy számítógépre az Ön Wi-Fi hálózatán. A számítógép hallgatta meg saját hangszórói, és semmi nem kerül mentésre ott.</string>
+    <string name="play_to_pc_searching">Keresők készült…</string>
+    <string name="play_to_pc_none_found">Nincs fogadó megtalálva. Indítsa el az OfflinePlaya fogadót a számítógépén, ugyanazon Wi-Fi hálózaton.</string>
+    <string name="play_to_pc_connect">Kapcsolódás</string>
+    <string name="play_to_pc_disconnect">Elválasztás</string>
+    <string name="play_to_pc_streaming_to">Playing to %1$s</string>
+    <string name="play_to_pc_connecting_to">Csatlakozás a %1$s-hez…</string>
+    <string name="play_to_pc_manual_header">IP-címen való csatolás</string>
+    <string name="play_to_pc_manual_host">IP cím</string>
+    <string name="play_to_pc_manual_port">Port</string>
+    <string name="play_to_pc_error_connect_failed">%1$s elérhetetlen volt</string>
+    <string name="play_to_pc_error_connection_lost">Kapcsolat veszteség</string>
+</resources>

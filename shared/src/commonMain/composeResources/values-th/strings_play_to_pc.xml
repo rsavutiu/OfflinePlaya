@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">เล่นไปยังคอมพิวเตอร์</string>
+    <string name="play_to_pc_blurb">สตรีมเสียงจากโทรศัพท์นี้แบบสดไปยังเครื่องคอมพิวเตอร์ในเครือข่าย Wi-Fi ของคุณ เครื่องคอมพิวเตอร์จะเล่นผ่านลำโพงตัวเอง และไม่มีอะไรถูกบันทึกไว้</string>
+    <string name="play_to_pc_searching">กำลังหาอุปกรณ์รับ…</string>
+    <string name="play_to_pc_none_found">ไม่พบเครื่องรับใดๆ เริ่ม OfflinePlaya receiver ในคอมพิวเตอร์ของคุณ และตั้งอยู่ในเครือข่าย Wi-Fi ส่วนเดียวกัน</string>
+    <string name="play_to_pc_connect">เชื่อมต่อ</string>
+    <string name="play_to_pc_disconnect">ยกเลิกการเชื่อมต่อ</string>
+    <string name="play_to_pc_streaming_to">กำลังสตรีมไปยัง %1$s</string>
+    <string name="play_to_pc_connecting_to">Connecting to %1$s…</string>
+    <string name="play_to_pc_manual_header">เชื่อมต่อผ่านที่อยู่ IP</string>
+    <string name="play_to_pc_manual_host">ที่อยู่ IP</string>
+    <string name="play_to_pc_manual_port">พอร์ต</string>
+    <string name="play_to_pc_error_connect_failed">ไม่สามารถเข้าถึง %1$s ได้</string>
+    <string name="play_to_pc_error_connection_lost">การเชื่อมต่อสูญเสีย</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Spēlēt uz PC</string>
+    <string name="play_to_pc_blurb">Strādījumus no šīs telefona tiešsaistā izvadot uz datoru savā Wi-Fi tīklā. Dators to atspiež pa saviem balsstiesniem un nekas netiek saglabāts tur.</string>
+    <string name="play_to_pc_searching">Meklējams pieņēmēji…</string>
+    <string name="play_to_pc_none_found">Nav atrasts neviens pieņēmējs. Sāciet OfflinePlaya pieņēmēju savam datoram, vienajā Wi-Fi tīklā.</string>
+    <string name="play_to_pc_connect">Savienot</string>
+    <string name="play_to_pc_disconnect">Atvienot</string>
+    <string name="play_to_pc_streaming_to">Spēlēšana uz %1$s</string>
+    <string name="play_to_pc_connecting_to">Pieslēdzas pie %1$s…</string>
+    <string name="play_to_pc_manual_header">Savienojums ar IP adresi</string>
+    <string name="play_to_pc_manual_host">IP adrese</string>
+    <string name="play_to_pc_manual_port">Ports</string>
+    <string name="play_to_pc_error_connect_failed">Nevar pieslēgties pie %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Savienojums zaudēts</string>
+</resources>

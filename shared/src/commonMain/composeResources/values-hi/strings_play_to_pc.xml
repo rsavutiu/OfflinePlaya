@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">पीसी पर खेलो</string>
+    <string name="play_to_pc_blurb">इस मोबाइल से कम्पूटर पर ऑडियो स्ट्रीम करें, जहा आपका Wi-Fi नेटवर्क है। कंप्युटर अपने स्वयं के स्पीकर माध्यम से प्रसारित करता है, और उहँगें जो कुछ भी बचा नहीं लिखा गया।</string>
+    <string name="play_to_pc_searching">प्राप्तकर्ता में समाधान है…</string>
+    <string name="play_to_pc_none_found">No receivers found. Start the OfflinePlaya receiver on your PC, on the same Wi-Fi network.</string>
+    <string name="play_to_pc_connect">जुड़िए</string>
+    <string name="play_to_pc_disconnect">अलग करो</string>
+    <string name="play_to_pc_streaming_to">प्रसारित %1$s में</string>
+    <string name="play_to_pc_connecting_to">%1$s जुड़ने पर…</string>
+    <string name="play_to_pc_manual_header">आईपी संख्या के मदद से जोड़िए</string>
+    <string name="play_to_pc_manual_host">आईपी संख्या</string>
+    <string name="play_to_pc_manual_port">मुहल्ला</string>
+    <string name="play_to_pc_error_connect_failed">%1$s काम नहीं होते।</string>
+    <string name="play_to_pc_error_connection_lost">कनेक्शन समाप्त</string>
+</resources>

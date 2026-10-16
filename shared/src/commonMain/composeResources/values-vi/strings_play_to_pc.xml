@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Chơi đến máy tính xách tay</string>
+    <string name="play_to_pc_blurb">Phát trực tiếp âm thanh từ điện thoại này sang một chiếc PC trong mạng Wi-Fi của bạn. Máy tính sẽ phát qua loa riêng và không lưu trữ gì ở đó.</string>
+    <string name="play_to_pc_searching">Đang tìm receiver…</string>
+    <string name="play_to_pc_none_found">Không có receiver nào được tìm thấy. Bắt đầu OfflinePlaya receiver trên máy PC của bạn, cùng mạng Wi-Fi.</string>
+    <string name="play_to_pc_connect">Kết nối</string>
+    <string name="play_to_pc_disconnect">Ngắt kết nối</string>
+    <string name="play_to_pc_streaming_to">Đang phát đến %1$s</string>
+    <string name="play_to_pc_connecting_to">Đang kết nối với %1$s…</string>
+    <string name="play_to_pc_manual_header">Nối bằng địa chỉ IP</string>
+    <string name="play_to_pc_manual_host">Địa chỉ IP</string>
+    <string name="play_to_pc_manual_port">Cổng</string>
+    <string name="play_to_pc_error_connect_failed">Không thể tiếp cận được %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Connection lost</string>
+</resources>

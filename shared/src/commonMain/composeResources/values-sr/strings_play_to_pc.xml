@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Igraj na računara</string>
+    <string name="play_to_pc_blurb">Strujni audio sa ovog telefona u realnom vremenu ka PC-u koji je vezen uz vaš Wi-Fi mrežu. Računar ga reprodukuje kroz sopstvene zvučnike i ništa se ne čuvaju tamo.</string>
+    <string name="play_to_pc_searching">Traže se prijemni uređaji…</string>
+    <string name="play_to_pc_none_found">Nijedan prijamnik nije pronađen. Pokrenite OfflinePlaya prijek na vašem računaru, uz isti Wi-Fi mrežu.</string>
+    <string name="play_to_pc_connect">Spoji se</string>
+    <string name="play_to_pc_disconnect">Odbaci vezu</string>
+    <string name="play_to_pc_streaming_to">Igraj u %1$s</string>
+    <string name="play_to_pc_connecting_to">Connecting to %1$s…</string>
+    <string name="play_to_pc_manual_header">Spoji se preko IP adrese</string>
+    <string name="play_to_pc_manual_host">IP adresa</string>
+    <string name="play_to_pc_manual_port">Port</string>
+    <string name="play_to_pc_error_connect_failed">Nije bilo moguće dostići %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Izgubljena veza</string>
+</resources>

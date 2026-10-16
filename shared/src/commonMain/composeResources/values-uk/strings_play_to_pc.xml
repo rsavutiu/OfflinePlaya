@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Відтворити на ПК</string>
+    <string name="play_to_pc_blurb">Потокове відео з цього телефону живим потоком до ПК у вашому Wi-Fi мережі. Він проходить через свої динамаки, і нічого не зберігається там.</string>
+    <string name="play_to_pc_searching">Шукання приймачів…</string>
+    <string name="play_to_pc_none_found">Прийомників знайдено. Запустить OfflinePlaya на ПК, у тій же Wi-Fi мережі.</string>
+    <string name="play_to_pc_connect">Пов’язати</string>
+    <string name="play_to_pc_disconnect">Disconnect</string>
+    <string name="play_to_pc_streaming_to">Відтворення на %1$s</string>
+    <string name="play_to_pc_connecting_to">З'єднування до %1$s…</string>
+    <string name="play_to_pc_manual_header">Пов’язати за IP-адресою</string>
+    <string name="play_to_pc_manual_host">IP-адреса</string>
+    <string name="play_to_pc_manual_port">Порт</string>
+    <string name="play_to_pc_error_connect_failed">Не вдалось досягти %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Втрата з’єднання</string>
+</resources>

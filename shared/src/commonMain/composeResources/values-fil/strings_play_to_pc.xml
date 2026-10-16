@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Layunin sa PC</string>
+    <string name="play_to_pc_blurb">I-stream ang audio mula dito phone live patungo sa isang PC na nasa Wi-Fi network mo. Ang PC ay naglalagap ito gamit ang sariling speakers at walang nakakolekta rito.</string>
+    <string name="play_to_pc_searching">Naghahanap ng mga receiver…</string>
+    <string name="play_to_pc_none_found">Walang natatagpuan na receivers. Mag-start sa OfflinePlaya receiver sa iyong PC, nasa parehong Wi-Fi network.</string>
+    <string name="play_to_pc_connect">Konekta</string>
+    <string name="play_to_pc_disconnect">Bumalik</string>
+    <string name="play_to_pc_streaming_to">Layunin sa %1$s</string>
+    <string name="play_to_pc_connecting_to">Naglilipat ng koneksyon patungo sa %1$s…</string>
+    <string name="play_to_pc_manual_header">Konekta gamit ang IP address</string>
+    <string name="play_to_pc_manual_host">IP Address</string>
+    <string name="play_to_pc_manual_port">Port</string>
+    <string name="play_to_pc_error_connect_failed">Hindi makakalap ng %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Nawala ang koneksyon</string>
+</resources>

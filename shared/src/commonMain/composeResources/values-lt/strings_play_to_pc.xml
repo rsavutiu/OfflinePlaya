@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Spustelėkite, kad žaidžiantų į PC</string>
+    <string name="play_to_pc_blurb">Transliuokite šio telefono audio signalą tiesiogiai į kompiuterį jūsų Wi-Fi tinkle. Kompiuteryje garsas sklandys per jo savo kalba ir ten nieko nesaugoma.</string>
+    <string name="play_to_pc_searching">Paieška priimtojams…</string>
+    <string name="play_to_pc_none_found">No receivers found. Start the OfflinePlaya receiver on your PC, on the same Wi-Fi network.</string>
+    <string name="play_to_pc_connect">Pridirbti</string>
+    <string name="play_to_pc_disconnect">Atsijungti</string>
+    <string name="play_to_pc_streaming_to">Spustelėkite %1$s</string>
+    <string name="play_to_pc_connecting_to">Jungiama prie %1$s…</string>
+    <string name="play_to_pc_manual_header">Prisijunkite pagal IP adresą</string>
+    <string name="play_to_pc_manual_host">IP adresas</string>
+    <string name="play_to_pc_manual_port">Portas</string>
+    <string name="play_to_pc_error_connect_failed">Nepavyko pasiekti %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Jungimas prarastas</string>
+</resources>

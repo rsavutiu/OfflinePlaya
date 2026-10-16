@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Mängu PC-juurde</string>
+    <string name="play_to_pc_blurb">Streameerige auditi selle telefonist reaalajas PC-i, mis asub teie Wi-Fi võrgus. PC kuvab seda oma kuulamisvahendite kaudu ja midagi ei salvestata seal.</string>
+    <string name="play_to_pc_searching">Otsimine vastuvõtjaid…</string>
+    <string name="play_to_pc_none_found">Vastuvõtteid mitte leitud. Alustage OfflinePlaya vastuvõttet oma PC-ga, samas Wi-Fi võrgus.</string>
+    <string name="play_to_pc_connect">Ühendu</string>
+    <string name="play_to_pc_disconnect">Disconnect</string>
+    <string name="play_to_pc_streaming_to">Mängub %1$s juurde</string>
+    <string name="play_to_pc_connecting_to">Ühendumine %1$s... </string>
+    <string name="play_to_pc_manual_header">IP-aadressiga ühendamine</string>
+    <string name="play_to_pc_manual_host">IP aadress</string>
+    <string name="play_to_pc_manual_port">Port</string>
+    <string name="play_to_pc_error_connect_failed">%1$s juurde ei saa suunata</string>
+    <string name="play_to_pc_error_connection_lost">Ühendumine katkestati</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     scratchpad/gen_play_to_pc_translations.py. Kept separate from
+     strings.xml so the validator/fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">Mainkan ke PC</string>
+    <string name="play_to_pc_blurb">Strim audio dari telefon ini secara langsung kepada sebuah komputer dalam rangkaian Wi-Fi anda. Komputer tersebut memainkannya melalui speaker sendiri dan tiada apa-apa yang disimpan di sana.</string>
+    <string name="play_to_pc_searching">Mencari penerima…</string>
+    <string name="play_to_pc_none_found">Tiada penerima ditemukan. Mulakan aplikasi penerima OfflinePlaya pada komputer anda, dalam rangkaian Wi-Fi yang sama.</string>
+    <string name="play_to_pc_connect">Sambungkan</string>
+    <string name="play_to_pc_disconnect">Disconnect</string>
+    <string name="play_to_pc_streaming_to">Memainkan ke %1$s</string>
+    <string name="play_to_pc_connecting_to">Menghubungi %1$s…</string>
+    <string name="play_to_pc_manual_header">Sambung melalui alamat IP</string>
+    <string name="play_to_pc_manual_host">Alamat IP</string>
+    <string name="play_to_pc_manual_port">Port</string>
+    <string name="play_to_pc_error_connect_failed">Tidak dapat mengakses %1$s</string>
+    <string name="play_to_pc_error_connection_lost">Kesalahan sambungan</string>
+</resources>
