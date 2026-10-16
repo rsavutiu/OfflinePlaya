@@ -40,6 +40,7 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.offlineplaya.desktop.net.ReceiverAdvertiser
 import com.offlineplaya.desktop.net.StreamServer
+import com.offlineplaya.stream.StreamFormat
 import com.offlineplaya.stream.StreamProtocol
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -70,16 +71,19 @@ private fun ReceiverApp() {
     val scope = rememberCoroutineScope()
     val receiverName = remember { defaultReceiverName() }
     val localIp = remember { localIpv4() }
-    val pin = remember { generatePin() }
     val server = remember { StreamServer(StreamProtocol.DEFAULT_PORT) }
     val advertiser = remember { ReceiverAdvertiser(receiverName, StreamProtocol.DEFAULT_PORT) }
     var status by remember { mutableStateOf("Starting…") }
+    var format by remember { mutableStateOf<StreamFormat?>(null) }
 
     DisposableEffect(Unit) {
         advertiser.start()
         val job = scope.launch(Dispatchers.IO) {
             runCatching {
-                server.start { line -> scope.launch { withContext(Dispatchers.Main) { status = line } } }
+                server.start(
+                    onStatus = { line -> scope.launch { withContext(Dispatchers.Main) { status = line } } },
+                    onFormat = { f -> scope.launch { withContext(Dispatchers.Main) { format = f } } },
+                )
             }.onFailure { status = "Error: ${it.message}" }
         }
         onDispose {
@@ -103,7 +107,7 @@ private fun ReceiverApp() {
                     horizontalArrangement = Arrangement.spacedBy(14.dp),
                 ) {
                     InfoTile("ADDRESS", "$localIp:${StreamProtocol.DEFAULT_PORT}", Modifier.weight(1f))
-                    InfoTile("PAIRING PIN", pin, Modifier.weight(1f), accent = true)
+                    InfoTile("FORMAT", format?.describe() ?: "—", Modifier.weight(1f), accent = format != null)
                 }
                 Spacer(Modifier.weight(1f))
                 Text(
@@ -202,6 +206,18 @@ private fun InfoTile(label: String, value: String, modifier: Modifier = Modifier
     }
 }
 
+/** e.g. "44.1 kHz · 16-bit · stereo" — what's actually on the wire right now. */
+private fun StreamFormat.describe(): String {
+    val khz = (sampleRate / 1000.0)
+    val khzStr = if (khz == khz.toInt().toDouble()) "${khz.toInt()}" else "%.1f".format(khz)
+    val ch = when (channels) {
+        1 -> "mono"
+        2 -> "stereo"
+        else -> "${channels}ch"
+    }
+    return "$khzStr kHz · $bitsPerSample-bit · $ch"
+}
+
 private fun defaultReceiverName(): String =
     runCatching { InetAddress.getLocalHost().hostName }.getOrDefault("OfflinePlaya PC")
 
@@ -213,5 +229,3 @@ private fun localIpv4(): String =
             .firstOrNull { it is Inet4Address && it.isSiteLocalAddress }
             ?.hostAddress
     }.getOrNull() ?: "127.0.0.1"
-
-private fun generatePin(): String = (100_000..999_999).random().toString()

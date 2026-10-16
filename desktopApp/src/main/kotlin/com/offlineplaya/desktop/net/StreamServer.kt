@@ -2,6 +2,7 @@ package com.offlineplaya.desktop.net
 
 import com.offlineplaya.desktop.audio.PcmPlayer
 import com.offlineplaya.stream.StreamControl
+import com.offlineplaya.stream.StreamFormat
 import com.offlineplaya.stream.StreamFraming
 import com.offlineplaya.stream.StreamProtocol
 import kotlinx.coroutines.CoroutineScope
@@ -29,7 +30,10 @@ class StreamServer(private val port: Int = StreamProtocol.DEFAULT_PORT) {
     @Volatile
     private var serverSocket: ServerSocket? = null
 
-    suspend fun start(onStatus: (String) -> Unit) = withContext(Dispatchers.IO) {
+    suspend fun start(
+        onStatus: (String) -> Unit,
+        onFormat: (StreamFormat?) -> Unit = {},
+    ) = withContext(Dispatchers.IO) {
         val server = ServerSocket(port).also { serverSocket = it }
         onStatus("Listening on port $port")
         val scope = CoroutineScope(coroutineContext)
@@ -41,11 +45,15 @@ class StreamServer(private val port: Int = StreamProtocol.DEFAULT_PORT) {
                 break
             }
             onStatus("Connected: ${socket.inetAddress.hostAddress}")
-            scope.launch(Dispatchers.IO) { handle(socket, onStatus) }
+            scope.launch(Dispatchers.IO) { handle(socket, onStatus, onFormat) }
         }
     }
 
-    private suspend fun handle(socket: Socket, onStatus: (String) -> Unit) {
+    private suspend fun handle(
+        socket: Socket,
+        onStatus: (String) -> Unit,
+        onFormat: (StreamFormat?) -> Unit,
+    ) {
         val player = PcmPlayer()
         try {
             // Liveness: the sender heartbeats every ~2 s, so a read that stalls
@@ -58,7 +66,7 @@ class StreamServer(private val port: Int = StreamProtocol.DEFAULT_PORT) {
                 val frame = StreamFraming.readFrame(input)
                 when (frame.type) {
                     StreamProtocol.TYPE_CONTROL ->
-                        onControl(StreamProtocol.decodeControl(frame.payload), player, onStatus)
+                        onControl(StreamProtocol.decodeControl(frame.payload), player, onStatus, onFormat)
                     StreamProtocol.TYPE_AUDIO -> player.write(frame.payload)
                     else -> { /* unknown frame type — skip */ }
                 }
@@ -67,6 +75,7 @@ class StreamServer(private val port: Int = StreamProtocol.DEFAULT_PORT) {
             onStatus("Disconnected: ${e.message}")
         } finally {
             player.close()
+            onFormat(null)
             runCatching { socket.close() }
             // The accept loop is still running, so we're ready for the next
             // phone — return the UI to "waiting" rather than leaving it stuck
@@ -79,10 +88,14 @@ class StreamServer(private val port: Int = StreamProtocol.DEFAULT_PORT) {
         control: StreamControl,
         player: PcmPlayer,
         onStatus: (String) -> Unit,
+        onFormat: (StreamFormat?) -> Unit,
     ) {
         when (control) {
             is StreamControl.Hello -> onStatus("Playing from ${control.name}")
-            is StreamControl.Format -> player.open(control.format)
+            is StreamControl.Format -> {
+                player.open(control.format)
+                onFormat(control.format)
+            }
             is StreamControl.Volume -> player.setVolume(control.percent)
             StreamControl.Flush -> player.flush()
             StreamControl.Heartbeat -> Unit
