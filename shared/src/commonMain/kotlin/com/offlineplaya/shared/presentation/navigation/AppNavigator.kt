@@ -48,6 +48,19 @@ class AppNavigator(
         return true
     }
 
+    /**
+     * Drop everything above the root, returning to the top screen in one step.
+     * This is the "Up" affordance (the top-bar arrow): from deep in a drill-down
+     * one tap goes home, rather than popping a level at a time. The system Back
+     * gesture still uses [pop] for level-by-level navigation.
+     */
+    fun popToRoot(): Boolean {
+        if (!canGoBack) return false
+        direction = Direction.BACKWARD
+        _stack.update { persistentListOf(it.first()) }
+        return true
+    }
+
     /** Reset the stack to a single destination — used for top-level switches. */
     fun replaceWith(destination: AppDestination) {
         direction = Direction.FORWARD

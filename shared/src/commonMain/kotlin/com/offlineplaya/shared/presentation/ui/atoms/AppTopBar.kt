@@ -41,6 +41,15 @@ import org.jetbrains.compose.resources.stringResource
 val LocalOpenSettings = compositionLocalOf<(() -> Unit)?> { null }
 
 /**
+ * App-wide "Up" handler for the top-bar back arrow. [App] provides it as "return
+ * to the top screen" so one tap of the arrow goes home from anywhere, instead of
+ * popping a single level. When null (e.g. previews) the arrow falls back to the
+ * page's own [AppTopBar.onBack]. The system Back gesture is wired separately and
+ * still pops level by level.
+ */
+val LocalNavigateUp = compositionLocalOf<(() -> Unit)?> { null }
+
+/**
  * Themed top app bar atom. Compact 48dp content height (Material's 64dp wastes
  * vertical space on phones). Pass [onBack] to show a back arrow, omit it for a
  * top-level screen with no back affordance. [actions] are right-aligned
@@ -57,6 +66,9 @@ fun AppTopBar(
     actions: @Composable () -> Unit = {},
 ) {
     val openSettings = LocalOpenSettings.current
+    // The arrow goes to the top screen in one tap (LocalNavigateUp) where the
+    // app provides it; onBack remains the fallback and still gates visibility.
+    val navigateUp = LocalNavigateUp.current ?: onBack
     Column(modifier = modifier.fillMaxWidth()) {
         // Status-bar inset preserved so the bar sits below the system UI on
         // edge-to-edge surfaces; content row is compact 48dp.
@@ -69,7 +81,7 @@ fun AppTopBar(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             if (onBack != null) {
-                IconButton(onClick = onBack, modifier = Modifier.size(40.dp)) {
+                IconButton(onClick = navigateUp ?: onBack, modifier = Modifier.size(40.dp)) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringResource(Res.string.cd_back),

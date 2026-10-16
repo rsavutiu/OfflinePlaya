@@ -56,6 +56,7 @@ import com.offlineplaya.shared.presentation.playlist.PlaylistStateHolder
 import com.offlineplaya.shared.presentation.sync.SyncStatus
 import com.offlineplaya.shared.presentation.tag.TagEditorCoordinator
 import com.offlineplaya.shared.presentation.tag.TagEditorStatus
+import com.offlineplaya.shared.presentation.ui.atoms.LocalNavigateUp
 import com.offlineplaya.shared.presentation.ui.atoms.LocalOpenSettings
 import com.offlineplaya.shared.presentation.ui.molecules.ExcludeFolderDialog
 import com.offlineplaya.shared.presentation.ui.molecules.LibraryTab
@@ -216,7 +217,15 @@ fun App(
                             { navigator.push(AppDestination.Settings) }
                         }
                     
-                    CompositionLocalProvider(LocalOpenSettings provides openSettingsGlobally) {
+                    // The top-bar Up arrow returns to the top screen in one tap
+                    // from anywhere; null at the root where there's no arrow.
+                    val navigateUpGlobally: (() -> Unit)? =
+                        if (navigator.canGoBack) { { navigator.popToRoot() } } else null
+
+                    CompositionLocalProvider(
+                        LocalOpenSettings provides openSettingsGlobally,
+                        LocalNavigateUp provides navigateUpGlobally,
+                    ) {
                         DestinationContent(
                             current = current,
                             navigator = navigator,
