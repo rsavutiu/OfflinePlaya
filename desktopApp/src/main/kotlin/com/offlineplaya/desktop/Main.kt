@@ -1,12 +1,25 @@
 package com.offlineplaya.desktop
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -14,20 +27,40 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
 import com.offlineplaya.desktop.net.ReceiverAdvertiser
 import com.offlineplaya.desktop.net.StreamServer
 import com.offlineplaya.stream.StreamProtocol
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.Inet4Address
 import java.net.InetAddress
+import java.net.NetworkInterface
+import androidx.compose.ui.unit.DpSize
+
+// Walkman-orange brand accent, shared with the phone app.
+private val BrandOrange = Color(0xFFF47B20)
+private val AppBackground = Color(0xFF111114)
+private val CardBackground = Color(0xFF1C1C22)
+private val TextPrimary = Color(0xFFECECEF)
+private val TextMuted = Color(0xFF9A9AA4)
+private val ReadyGreen = Color(0xFF4CAF50)
+private val ErrorRed = Color(0xFFE5534B)
 
 fun main() = application {
-    Window(onCloseRequest = ::exitApplication, title = "OfflinePlaya Receiver") {
+    val state = rememberWindowState(size = DpSize(460.dp, 560.dp))
+    Window(onCloseRequest = ::exitApplication, state = state, title = "OfflinePlaya Receiver") {
         ReceiverApp()
     }
 }
@@ -36,6 +69,7 @@ fun main() = application {
 private fun ReceiverApp() {
     val scope = rememberCoroutineScope()
     val receiverName = remember { defaultReceiverName() }
+    val localIp = remember { localIpv4() }
     val pin = remember { generatePin() }
     val server = remember { StreamServer(StreamProtocol.DEFAULT_PORT) }
     val advertiser = remember { ReceiverAdvertiser(receiverName, StreamProtocol.DEFAULT_PORT) }
@@ -55,29 +89,119 @@ private fun ReceiverApp() {
         }
     }
 
-    MaterialTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
+    MaterialTheme(colorScheme = darkColorScheme(primary = BrandOrange, background = AppBackground)) {
+        Surface(modifier = Modifier.fillMaxSize(), color = AppBackground) {
             Column(
-                modifier = Modifier.fillMaxSize().padding(24.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.fillMaxSize().padding(28.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text("OfflinePlaya Receiver", style = MaterialTheme.typography.headlineSmall)
-                Text("Name: $receiverName")
-                Text("Port: ${StreamProtocol.DEFAULT_PORT}")
-                Text("Pairing PIN: $pin", style = MaterialTheme.typography.titleMedium)
-                Text("Status: $status", style = MaterialTheme.typography.bodyMedium)
+                Header()
+                StatusCard(receiverName = receiverName, status = status)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(14.dp),
+                ) {
+                    InfoTile("ADDRESS", "$localIp:${StreamProtocol.DEFAULT_PORT}", Modifier.weight(1f))
+                    InfoTile("PAIRING PIN", pin, Modifier.weight(1f), accent = true)
+                }
+                Spacer(Modifier.weight(1f))
                 Text(
-                    "Discoverable on your Wi-Fi — pick this receiver in OfflinePlaya " +
-                        "on your phone (Settings → Audio → Play to PC), or connect by " +
-                        "IP:port. Audio plays live through this PC and is never saved.",
+                    "Discoverable on your Wi-Fi — pick this receiver in OfflinePlaya on your " +
+                        "phone (Settings → Audio → Play to PC), or connect by the address above. " +
+                        "Audio plays live through this PC and is never saved.",
                     style = MaterialTheme.typography.bodySmall,
+                    color = TextMuted,
+                    textAlign = TextAlign.Center,
                 )
             }
         }
     }
 }
 
+@Composable
+private fun Header() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Box(
+            modifier = Modifier.size(28.dp).clip(RoundedCornerShape(7.dp)).background(BrandOrange),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text("▶", color = Color.Black, fontSize = 15.sp)
+        }
+        Text(
+            "OfflinePlaya Receiver",
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.SemiBold,
+            color = TextPrimary,
+        )
+    }
+}
+
+@Composable
+private fun StatusCard(receiverName: String, status: String) {
+    val playing = status.startsWith("Playing from") || status.startsWith("Connected")
+    val ready = status.startsWith("Listening")
+    val failed = status.startsWith("Error") || status.startsWith("Disconnected") || status.startsWith("Stopped")
+    val dot = when {
+        playing -> BrandOrange
+        ready -> ReadyGreen
+        failed -> ErrorRed
+        else -> TextMuted
+    }
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = CardBackground),
+    ) {
+        Column(modifier = Modifier.fillMaxWidth().padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Text("THIS RECEIVER", style = MaterialTheme.typography.labelSmall, color = TextMuted)
+            Text(
+                receiverName,
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                color = TextPrimary,
+            )
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(9.dp)) {
+                Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(dot))
+                Text(status, style = MaterialTheme.typography.bodyMedium, color = TextPrimary)
+            }
+        }
+    }
+}
+
+@Composable
+private fun InfoTile(label: String, value: String, modifier: Modifier = Modifier, accent: Boolean = false) {
+    Card(
+        modifier = modifier,
+        shape = RoundedCornerShape(14.dp),
+        colors = CardDefaults.cardColors(containerColor = CardBackground),
+    ) {
+        Column(modifier = Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text(label, style = MaterialTheme.typography.labelSmall, color = TextMuted)
+            Text(
+                value,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+                color = if (accent) BrandOrange else TextPrimary,
+            )
+        }
+    }
+}
+
 private fun defaultReceiverName(): String =
     runCatching { InetAddress.getLocalHost().hostName }.getOrDefault("OfflinePlaya PC")
+
+private fun localIpv4(): String =
+    runCatching {
+        NetworkInterface.getNetworkInterfaces().asSequence()
+            .filter { it.isUp && !it.isLoopback && !it.isVirtual }
+            .flatMap { it.inetAddresses.asSequence() }
+            .firstOrNull { it is Inet4Address && it.isSiteLocalAddress }
+            ?.hostAddress
+    }.getOrNull() ?: "127.0.0.1"
 
 private fun generatePin(): String = (100_000..999_999).random().toString()

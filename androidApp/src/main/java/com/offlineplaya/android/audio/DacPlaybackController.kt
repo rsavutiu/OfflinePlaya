@@ -89,7 +89,9 @@ class DacPlaybackController(
         }
         // When Play-to-PC turns on, drop any bit-perfect route so the local
         // output can be muted; when it turns off, re-evaluate the current track.
-        playToPcJob = scope.launch {
+        // Runs on the main dispatcher because prepareFrom reads player state,
+        // which Media3 requires on the player's application thread.
+        playToPcJob = scope.launch(mainDispatcher) {
             playToPcActive.collect { streaming ->
                 if (streaming) {
                     manager.releasePlayback()
