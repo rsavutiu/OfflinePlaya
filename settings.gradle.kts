@@ -2,6 +2,11 @@ rootProject.name = "OfflinePlaya"
 
 include(":androidApp")
 include(":shared")
+// Stream-to-PC (docs/plans/03-stream-to-pc.md): the wire-format module is plain
+// Kotlin/JVM so the Android app can reuse it later without adding a jvm target
+// to :shared; the receiver is a Compose Desktop (JVM) app for Win/macOS/Linux.
+include(":streamProtocol")
+include(":desktopApp")
 
 pluginManagement {
     resolutionStrategy {
