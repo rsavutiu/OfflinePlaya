@@ -68,6 +68,10 @@ class StreamServer(private val port: Int = StreamProtocol.DEFAULT_PORT) {
         } finally {
             player.close()
             runCatching { socket.close() }
+            // The accept loop is still running, so we're ready for the next
+            // phone — return the UI to "waiting" rather than leaving it stuck
+            // on the disconnect message.
+            if (coroutineContext.isActive) onStatus("Listening on port $port")
         }
     }
 

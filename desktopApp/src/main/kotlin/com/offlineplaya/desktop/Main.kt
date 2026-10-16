@@ -143,32 +143,42 @@ private fun Header() {
 
 @Composable
 private fun StatusCard(receiverName: String, status: String) {
-    val playing = status.startsWith("Playing from") || status.startsWith("Connected")
+    // Map the server's status line to a prominent state label + detail.
+    val connected = status.startsWith("Playing from") || status.startsWith("Connected")
     val ready = status.startsWith("Listening")
-    val failed = status.startsWith("Error") || status.startsWith("Disconnected") || status.startsWith("Stopped")
-    val dot = when {
-        playing -> BrandOrange
-        ready -> ReadyGreen
-        failed -> ErrorRed
-        else -> TextMuted
+    val disconnected = status.startsWith("Sender disconnected") || status.startsWith("Disconnected")
+    val failed = status.startsWith("Error") || status.startsWith("Stopped")
+    val (label, dot) = when {
+        status.startsWith("Playing from") -> "CONNECTED" to BrandOrange
+        connected -> "CONNECTED" to BrandOrange
+        ready -> "WAITING FOR A PHONE" to ReadyGreen
+        disconnected -> "DISCONNECTED" to TextMuted
+        failed -> "ERROR" to ErrorRed
+        else -> "STARTING…" to TextMuted
+    }
+    val detail = when {
+        status.startsWith("Playing from") -> "Playing from ${status.removePrefix("Playing from ").trim()}"
+        status.startsWith("Connected") -> status.removePrefix("Connected: ").trim()
+        ready -> "Ready on port ${StreamProtocol.DEFAULT_PORT}"
+        else -> status
     }
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = CardBackground),
     ) {
-        Column(modifier = Modifier.fillMaxWidth().padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Text("THIS RECEIVER", style = MaterialTheme.typography.labelSmall, color = TextMuted)
-            Text(
-                receiverName,
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
-                color = TextPrimary,
-            )
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(9.dp)) {
-                Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(dot))
-                Text(status, style = MaterialTheme.typography.bodyMedium, color = TextPrimary)
+        Column(modifier = Modifier.fillMaxWidth().padding(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Text(receiverName, style = MaterialTheme.typography.titleMedium, color = TextMuted)
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Box(modifier = Modifier.size(12.dp).clip(CircleShape).background(dot))
+                Text(
+                    label,
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = if (dot == TextMuted) TextPrimary else dot,
+                )
             }
+            Text(detail, style = MaterialTheme.typography.bodyMedium, color = TextPrimary)
         }
     }
 }
