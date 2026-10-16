@@ -53,6 +53,11 @@ compose.desktop {
             // Compose packaging requires MAJOR > 0 (DMG in particular); this is
             // the receiver's own version, independent of the Android app.
             packageVersion = "1.0.0"
+            // Per-OS launcher/installer icons — the OfflinePlaya mark, derived
+            // from the Android adaptive icon (see desktopApp/icons/).
+            windows { iconFile.set(project.file("icons/icon.ico")) }
+            macOS { iconFile.set(project.file("icons/icon.icns")) }
+            linux { iconFile.set(project.file("icons/icon.png")) }
         }
     }
 }
