@@ -1,4 +1,3 @@
-• New: USB DAC support — bit-perfect output on Android 14+ (when your phone and DAC support it, for 16-bit tracks), and clean playback through any other USB DAC via the system mixer
-• New: more equalizer presets — EDM, Synth-Pop, Bass Boost, Vocal Boost, Treble Boost and Party
-• Equalizer: long-press a band to grab it (it turns green) so you can't nudge it by accident, with more room to adjust
-• Polish and fixes
+• New: Play to PC — stream your phone's music live over WiFi to a free Windows, Mac, or Linux app and hear it through your computer's speakers or hi-fi. Your phone stays in control and nothing is ever saved on the PC.
+• Navigation: the back arrow now jumps straight back to the home screen.
+• Bug fixes and polish.

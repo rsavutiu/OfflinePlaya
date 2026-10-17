@@ -1,1 +1,1 @@
-A fully offline music player for your own files — EQ, lyrics, no ads, no cloud.
+Offline player for your own music. Stream to your PC, EQ, no ads, no cloud.

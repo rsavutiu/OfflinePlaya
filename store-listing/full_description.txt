@@ -2,17 +2,23 @@ OfflinePlaya is a music player for the music you actually own. No streaming, no 
 
 Point it at your music and it builds a clean library you can browse by artist, album, folder, or track, and organize into playlists.
 
+PLAY TO YOUR PC (NEW)
+Stream your phone's audio live, over your own WiFi, to a free companion app on your Windows, Mac, or Linux computer — and play it through your real speakers or hi-fi. Your phone stays in control; nothing is ever saved on the PC, and the stream never leaves your home network. Turn your home stereo into a jukebox, no cables and no Bluetooth.
+
 FEATURES
 • 100% offline — plays the audio files already on your phone (MP3, FLAC, OGG, M4A and more)
-• Built-in equalizer — hand-tuned presets, a manual band graph, or Auto mode that picks a preset from each track's genre
+• Built-in equalizer — hand-tuned presets, a manual 10-band graph, or Auto mode that picks a preset from each track's genre, plus a loudness preamp
+• USB DAC support — bit-perfect output on Android 14+ for an untouched signal to your DAC, and clean playback through any other USB DAC
+• Gapless playback, optional crossfade, and hardware-volume control
 • Synced lyrics — reads embedded lyrics and .lrc files, or fetches them when missing
-• Album art that just works — uses embedded covers, folder images, or looks them up online when needed
-• Crossfade between tracks
+• Album art that just works — embedded covers, folder images, or an online lookup when needed
+• Smart playlists & listening history — Recently played, Most played, Forgotten favorites and more, built from how you actually listen
 • Write tags back into your files — embed album art and genre so other apps see them too
+• Android Auto — browse and play your library in the car
 • Material 3 design with a dark theme, optional Material You wallpaper colors, and theming drawn from your album art
 • Available in 41 languages
 
 PRIVACY
-OfflinePlaya has no accounts and no tracking. It only reaches the internet to look up the album art and lyrics you ask for — your library never leaves your device.
+OfflinePlaya has no accounts and no tracking. It only reaches the internet to look up the album art and lyrics you ask for — your library never leaves your device, and Play to PC stays on your local network.
 
 OfflinePlaya is for people who keep their own music collection and want a fast, private, good-looking player — not another streaming subscription.
