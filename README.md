@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.offlineplaya.android">Google Play</a> ·
-  <a href="https://github.com/rsavutiu/OfflinePlaya/releases/latest">Downloads (APK &amp; PC receiver)</a>
+  <a href="https://github.com/rsavutiu/OfflinePlaya/releases">Downloads (APK &amp; PC receiver)</a>
 </p>
 
 ## Features
@@ -87,11 +87,11 @@ The result lands in `desktopApp/build/compose/binaries/main/app/OfflinePlayaRece
 Run the `OfflinePlayaReceiver` launcher inside it. (Or just `./gradlew :desktopApp:run`
 to launch it directly while testing.)
 
-Pre-built downloads for every platform live on the
-[**Releases page**](https://github.com/rsavutiu/OfflinePlaya/releases/latest)
-(portable app-images + native installers, published by the **Desktop Receiver
-distributables** workflow on each `desktop-v*` tag). Grab the one for your OS —
-no GitHub login needed.
+Pre-built downloads for every platform are on the
+[**Releases page**](https://github.com/rsavutiu/OfflinePlaya/releases) — look for
+the latest **OfflinePlaya Receiver** release (portable app-images + native
+installers, published by the **Desktop Receiver distributables** workflow on each
+`desktop-v*` tag). Grab the one for your OS — no GitHub login needed.
 
 **First launch — the app is unsigned, so clear the one-time warning:**
 

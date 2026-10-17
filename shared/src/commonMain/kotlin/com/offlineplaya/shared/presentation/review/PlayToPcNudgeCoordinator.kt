@@ -125,10 +125,12 @@ class PlayToPcNudgeCoordinator(
         const val DEFAULT_CROSS_NUDGE_GAP_MILLIS = 7L * 24 * 60 * 60 * 1000
 
         /**
-         * Where "Get the PC app" sends the user: the latest GitHub release of the
-         * desktop receiver. Public, no login, permanent — unlike CI artifacts.
-         * Created by the `desktop-release.yml` workflow on a `desktop-v*` tag.
+         * Where "Get the PC app" sends the user: the README's Stream-to-PC
+         * section — it explains the receiver and links to the downloads. NOT
+         * `/releases/latest`, because the Android app's own GitHub releases share
+         * that page and would steal "latest" from the desktop-v* receiver release.
          */
-        const val GITHUB_RELEASES_URL = "https://github.com/rsavutiu/OfflinePlaya/releases/latest"
+        const val GITHUB_RELEASES_URL =
+            "https://github.com/rsavutiu/OfflinePlaya#stream-to-pc-play-to-pc"
     }
 }
