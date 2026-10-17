@@ -52,7 +52,9 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      # write: also publish a downloadable APK to a GitHub Release (below), so
+      # people can sideload without the Play Store. read is enough for Play.
+      contents: write
     steps:
       - name: Checkout (full history for versionCode)
         uses: actions/checkout@v4
@@ -128,3 +130,20 @@ jobs:
           name: release-bundle
           path: androidApp/build/outputs/bundle/release/androidApp-release.aab
           if-no-files-found: warn
+
+      # Also build a signed APK and publish it on a GitHub Release, so people can
+      # download/sideload the app from GitHub (the AAB above only goes to Play).
+      # Assets are attached at creation (a published release is immutable).
+      - name: Build signed release APK
+        run: ./gradlew :androidApp:assembleRelease --no-daemon
+
+      - name: Publish GitHub Release with the APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          APK=androidApp/build/outputs/apk/release/androidApp-release.apk
+          gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || \
+          gh release create "$GITHUB_REF_NAME" "$APK" \
+            --title "OfflinePlaya $VERSION_NAME" \
+            --verify-tag \
+            --notes "Android APK for sideloading (also on [Google Play](https://play.google.com/store/apps/details?id=com.offlineplaya.android)). The desktop Stream-to-PC receiver is released separately under \`desktop-v*\` tags."

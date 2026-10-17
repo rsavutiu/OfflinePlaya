@@ -1,7 +1,18 @@
-# OfflinePlaya
+<p align="center">
+  <img src="art/logo.png" width="140" alt="OfflinePlaya logo">
+</p>
 
-A privacy-respecting, **offline** music player for Android. It plays the audio
-files you already own — no accounts, no streaming, no ads, no tracking.
+<h1 align="center">OfflinePlaya</h1>
+
+<p align="center">
+  A privacy-respecting, <b>offline</b> music player for Android.<br>
+  It plays the audio files you already own — no accounts, no streaming, no ads, no tracking.
+</p>
+
+<p align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.offlineplaya.android">Google Play</a> ·
+  <a href="https://github.com/rsavutiu/OfflinePlaya/releases/latest">Downloads (APK &amp; PC receiver)</a>
+</p>
 
 ## Features
 
