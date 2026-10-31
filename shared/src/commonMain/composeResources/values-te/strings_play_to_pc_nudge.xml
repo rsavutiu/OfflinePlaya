@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
-     file so the validator / fan-out script stay untouched. -->
-<resources>
-    <string name="play_to_pc_nudge_title">మీ పి씨కి వాడుకలో ఉన్నది</string>
-    <string name="play_to_pc_nudge_body">మీరెవరైతే తెలుసు, మీ ఫొన్‌లో నుండి వాయిష్టుగా పిచికి బదిలీ కరవచే, Wi-Fi ద్వారా అనుసరణ జరుగుతూ వినడమైన తెలుసు. ఫొన్‌కు PC / Mac కోసం ఉచిత OfflinePlaya రావడానికి పరిగraహణలేదు, అయితే Settings లో Play to PC కు సambandhం.</string>
-    <string name="play_to_pc_nudge_get_app">PC app నొండా</string>
-    <string name="play_to_pc_nudge_dismiss">తక్kరవగా /no_think</string>
-</resources>
