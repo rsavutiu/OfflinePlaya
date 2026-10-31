@@ -17,4 +17,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">Could not reach %1$s</string>
     <string name="play_to_pc_error_connection_lost">Connection lost</string>
+    <string name="play_to_pc_how_title">How it works</string>
+    <string name="play_to_pc_how_step1_title">1. Install the receiver on your computer</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver is a small free app for Windows, macOS and Linux. Download it from the project page on GitHub — no account needed.</string>
+    <string name="play_to_pc_how_step2_title">2. Put both on the same Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Start the receiver and approve your computer's firewall prompt so the phone can reach it. The phone then finds it by itself.</string>
+    <string name="play_to_pc_how_step3_title">3. Play something, then connect</string>
+    <string name="play_to_pc_how_step3_body">Pick your computer in the list and tap Connect. Audio moves to its speakers while play, pause and skip stay on the phone. Tap Disconnect to bring the sound back.</string>
+    <string name="play_to_pc_how_note">The stream is lossless over Wi-Fi, but the computer plays it through its own audio mixer — so the phone's equaliser, preamp and crossfade are bypassed in this mode.</string>
+    <string name="play_to_pc_link_header">Get the receiver for your computer</string>
+    <string name="play_to_pc_link_hint">The download runs on your computer, not your phone, so send this link over there — or just type it into your computer's browser:</string>
+    <string name="play_to_pc_link_copy">Copy link</string>
+    <string name="play_to_pc_link_copied">Link copied</string>
+    <string name="play_to_pc_link_share">Send to computer</string>
+    <string name="play_to_pc_link_open">Open on phone</string>
+    <string name="play_to_pc_link_share_text">Get the free OfflinePlaya Receiver for your PC, Mac or Linux and play your phone's music through your computer's speakers: %1$s</string>
 </resources>

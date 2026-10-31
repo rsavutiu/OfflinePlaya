@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">Nije bilo moguće dostići %1$s</string>
     <string name="play_to_pc_error_connection_lost">Povezivanje izgubljeno</string>
+    <string name="play_to_pc_how_title">Kako radi</string>
+    <string name="play_to_pc_how_step1_title">1. Instaliraj prijemnik na računalo</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver je mali besplatna aplikacija za Windows, macOS i Linux. Preuzmi ga s stranice projekta na GitHubu — nema potrebe za nalazom.</string>
+    <string name="play_to_pc_how_step2_title">2. Stavite obа u isti Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Pokrenite prijemnik i odobrite upozorenje firewalla vašeg računala da bi telefon mogao dostići ga. Telefon tada samostalno pronađe tu opciju.</string>
+    <string name="play_to_pc_how_step3_title">3. Pustite neko, pa povežite</string>
+    <string name="play_to_pc_how_step3_body">Odaberite svoje računalo u listi i dodirnite Spoji se. Zvuk prelazi na njegova zvučnika dok traje reprodukcija, pauza i preskakanje ostaju na telefonu. Dodirnite Odbaci da bi vratili zvuk.</string>
+    <string name="play_to_pc_how_note">Strujanje je bezgubitno kroz Wi-Fi, ali računalo ga odražava preko svojeg audio mixera — tako da su jednolićnik, predpojačivač i preskakanje telefona izbjegnuti u ovom načinu.</string>
+    <string name="play_to_pc_link_header">Preuzmite prijemnik za vaše računalo</string>
+    <string name="play_to_pc_link_hint">Preuzimanje se vrši na vašem računalu a ne na telefonu, pa posaljite ove link prema njemu — ili jednostavno unesite ga u pregledač svog računala:</string>
+    <string name="play_to_pc_link_copy">Kopiraj vezu</string>
+    <string name="play_to_pc_link_copied">Veza je koprirana</string>
+    <string name="play_to_pc_link_share">Pošalji na računalo</string>
+    <string name="play_to_pc_link_open">Otvori na telefonu</string>
+    <string name="play_to_pc_link_share_text">Preuzmite besplatni OfflinePlaya Receiver za vaše PC, Mac ili Linux i reproducirajte glazbu s telefona kroz zvučnike svog računala: %1$s</string>
 </resources>

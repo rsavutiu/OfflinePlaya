@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Portas</string>
     <string name="play_to_pc_error_connect_failed">Nepavyko pasiekti %1$s</string>
     <string name="play_to_pc_error_connection_lost">Jungimas prarastas</string>
+    <string name="play_to_pc_how_title">Kaip tai veikia</string>
+    <string name="play_to_pc_how_step1_title">1. Įdiekite priimėją kompiuterioje</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Priemėjas yra mažas nemokamas programinės apklauso sistema Windows, macOS ir Linux. Atsiųskite jį iš projekto puslapio GitHub – nereikia prisijungti prie sąvaduko.</string>
+    <string name="play_to_pc_how_step2_title">2. Įdėkite abu tą patį Wi-Fi tinklą</string>
+    <string name="play_to_pc_how_step2_body">Prisjunkite priemėją ir pritarkite kompiuterio saugos sienelės pasiūlymui, kad telefonas galėtų jį pasiekti. Telefonas pats randamas šaltiniu.</string>
+    <string name="play_to_pc_how_step3_title">3. Sklandykite ką nors, tada prisijunkite</string>
+    <string name="play_to_pc_how_step3_body">Pasirinkite savo kompiuterio sąraše ir spustelkite „Prisjungti“. Audio perleidžiamas į jo garsų difuzorius, o sklandymas, pauzavimas ir pereinimai išlieka telefono. Spustelekite „Atsijunkite“, kad grįstumėte garso atgal</string>
+    <string name="play_to_pc_how_note">Srautas yra be nuostolio per Wi-Fi, tačiau kompiuteris jį sklandina per savo garsų mišininką – todėl telefono ekvalizatorius, preampas ir pereinimai šiame režime praejima.</string>
+    <string name="play_to_pc_link_header">Gaunite priemėją į savo kompiuterio</string>
+    <string name="play_to_pc_link_hint">Atsisiuntimas vyksta jūsu kompiuteryje ne telefono, todėl perduokite šį nuorodą ten – arba tiesiog užpilkite jį į kompiuterio naršyklę:</string>
+    <string name="play_to_pc_link_copy">Kopijuoti nuorodą</string>
+    <string name="play_to_pc_link_copied">Nuoroda kopiuota</string>
+    <string name="play_to_pc_link_share">Siųsti į kompiuterį</string>
+    <string name="play_to_pc_link_open">Atidaryti telefone</string>
+    <string name="play_to_pc_link_share_text">Gaivinkite nemokamą OfflinePlaya Priemėją jūsų PC, Mac ar Linux ir sklandykite savo telefonos muziką per kompiuterio garsus difuzorius: %1$s</string>
 </resources>

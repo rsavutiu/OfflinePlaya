@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">پورت</string>
     <string name="play_to_pc_error_connect_failed">می تواند به %1$s دسترسی پیدا کند.</string>
     <string name="play_to_pc_error_connection_lost">اتصال از بین رفت</string>
+    <string name="play_to_pc_how_title">چگونه کار می‌کند</string>
+    <string name="play_to_pc_how_step1_title">۱٫ نرم افزار پذیرنده را روی سخت محاسبات خودنصب کنید</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver یک برنامه جزئی و رایگان برای Windows، macOS و Linux است. آنرا از صفحه پروژه در GitHub دانلود کنید — نیاز به حساب کاربری وجود ندارد.</string>
+    <string name="play_to_pc_how_step2_title">۲٫ هردو را روی Wi-Fi یکسان قرار بدهید</string>
+    <string name="play_to_pc_how_step2_body">برنامه پذیرنده را شروع کن و اجازه دسترسی سخت محاسبات خود به آنرا تایید نماید، طوری که هرگونه فعالسازی چند مرحله‌ای در صفحه موبایل باشد. بعداً موبایل این را بصورت خودکار پیدا می‌کن.</string>
+    <string name="play_to_pc_how_step3_title">۳٫ سپس کمربانی روشن و متصل شو</string>
+    <string name="play_to_pc_how_step3_body">کامپیوتر خود را از فهرست انتخاب کنید و روی «اتصال» ضربه بزنید. صدا به بلندگوهای آن منتقل می‌شود و پخش، توقف و رد کردن روی گوشی باقی می‌ماند. برای بازگرداندن صدا روی «قطع اتصال» ضربه بزنید.</string>
+    <string name="play_to_pc_how_note">جریان صوت به طور بدون چند مرحله‌ای بوسیله Wi-Fi می‌باشد، ولی سخت محاسبات آنرا با استفاده از خودش تبدیل نمی‌کند — در حال حاضر فعالسازی همسان و پخش چند مرحله‌ای به طور کامل مسدود شده.</string>
+    <string name="play_to_pc_link_header">دستگاه را برای سخت محاسبات خود ببینید</string>
+    <string name="play_to_pc_link_hint">این نصب روی سخت محاسبات، نه تلفن است، بنابراین لینک را در آنجاست فرستاد — یا فقط به مرورگر کامپیوترتان وارد شو:</string>
+    <string name="play_to_pc_link_copy">کپی پیوند</string>
+    <string name="play_to_pc_link_copied">لينك كوب شد</string>
+    <string name="play_to_pc_link_share">ارسال به رایانه</string>
+    <string name="play_to_pc_link_open">باز کردن در گوشی</string>
+    <string name="play_to_pc_link_share_text">نرم‌افزار رایگان OfflinePlaya Receiver خودتان را به PC، Mac یا Linux ببینید و موسیقی همراه شما از طریق سروصدا کامپیوتر باشد: %1$s</string>
 </resources>

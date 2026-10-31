@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">No s'ha pogut arribar a %1$s</string>
     <string name="play_to_pc_error_connection_lost">Connexió perduda</string>
+    <string name="play_to_pc_how_title">Com funciona</string>
+    <string name="play_to_pc_how_step1_title">1. Instal·la el receptor a la teva computadora</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receptor és una petita aplicació gratuïta per Windows, macOS i Linux. Descarrega'l des de la pàgina del projecte en GitHub — no cal compte.</string>
+    <string name="play_to_pc_how_step2_title">2. Col·loca-ne els dos a la mateixa Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Inicia el receptor i aprova l'alerta del parell de la teva computadora perquè el telèfon pugui arribar-hi. El telèfon després ho troba sol.</string>
+    <string name="play_to_pc_how_step3_title">3. Reproduïx alguna cosa, llavors connecta't</string>
+    <string name="play_to_pc_how_step3_body">Tria el teu ordinador a la llista i fes clic en Connexió. L'àudio es trasllada als altaveus d'aquest mentre reproduïr, pausa i saltar queden al telèfon. Fes clic en Desconnexió per tornar sonar amb els del telefon.</string>
+    <string name="play_to_pc_how_note">El flux és sense pèrdues sobre Wi-Fi, però la computadora l'escucha a través del propi mixador d'àudio — per tant els ecualitzadors, preamp i crossfade del telèfon es saltan en mode de funcionament.</string>
+    <string name="play_to_pc_link_header">Obte el receptor per la teva computadora</string>
+    <string name="play_to_pc_link_hint">La descàrrega funciona sobre la teva computadora no al teu telèfon, així que envia este link allà — o només escriur-lo dins del navegador de la teva computadora:</string>
+    <string name="play_to_pc_link_copy">Copiar enllaç</string>
+    <string name="play_to_pc_link_copied">Enllaç copiat</string>
+    <string name="play_to_pc_link_share">Envia a l'ordinador</string>
+    <string name="play_to_pc_link_open">Obre al telefon</string>
+    <string name="play_to_pc_link_share_text">Obte el gratuït OfflinePlaya Receptor per a PC, Mac o Linux i reproduir la música del teu telèfon mitjançant els altaveus de la teva computadora: %1$s</string>
 </resources>

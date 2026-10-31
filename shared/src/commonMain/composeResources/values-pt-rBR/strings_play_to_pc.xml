@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Porta</string>
     <string name="play_to_pc_error_connect_failed">Não foi possível alcançar %1$s</string>
     <string name="play_to_pc_error_connection_lost">Conexão perdida</string>
+    <string name="play_to_pc_how_title">Como funciona</string>
+    <string name="play_to_pc_how_step1_title">1. Instale o receptor no seu computador</string>
+    <string name="play_to_pc_how_step1_body">OOfflinePlaya Receptor é um pequeno aplicativo gratuito para Windows, macOS e Linux. Baixe-o da página do projeto no GitHub — não é necessário uma conta.</string>
+    <string name="play_to_pc_how_step2_title">2. Coloque ambos na mesma Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Inicie o receptor e aprovem a solicitação do firewall do seu computador para que o telefone possa alcançá-lo. O telefone então encontra ele sozinho.</string>
+    <string name="play_to_pc_how_step3_title">3. Play algo, depois conecte-se</string>
+    <string name="play_to_pc_how_step3_body">Escolha seu computador na lista e toque em Conectar. Áudio move-se para seus alto-falantes enquanto play, pause e skip ficam no celular. Toque Desconectar para trazer o som de volta.</string>
+    <string name="play_to_pc_how_note">O stream é sem perda sobre Wi-Fi, mas o computador reproduz através do seu próprio mixer áudio — então os equalizadores, pré-amplificador e crossfade do telefone são contornados neste modo.</string>
+    <string name="play_to_pc_link_header">Obtenha o receptor para seu computador</string>
+    <string name="play_to_pc_link_hint">A download funciona no seu computador, não no seu celular, por isso envie este link lá — ou apenas digite-o na navegador do seu computador:</string>
+    <string name="play_to_pc_link_copy">Copiar link</string>
+    <string name="play_to_pc_link_copied">Link copiado</string>
+    <string name="play_to_pc_link_share">Enviar ao computador</string>
+    <string name="play_to_pc_link_open">Abrir no telefone</string>
+    <string name="play_to_pc_link_share_text">Obtenha o OfflinePlaya Receptor gratuito para sua PC, Mac ou Linux e reproduza a música do seu celular através dos alto-falantes do seu computador: %1$s</string>
 </resources>

@@ -123,14 +123,5 @@ class PlayToPcNudgeCoordinator(
 
         /** Minimum gap between ANY two nudges (review / share / this). */
         const val DEFAULT_CROSS_NUDGE_GAP_MILLIS = 7L * 24 * 60 * 60 * 1000
-
-        /**
-         * Where "Get the PC app" sends the user: the README's Stream-to-PC
-         * section — it explains the receiver and links to the downloads. NOT
-         * `/releases/latest`, because the Android app's own GitHub releases share
-         * that page and would steal "latest" from the desktop-v* receiver release.
-         */
-        const val GITHUB_RELEASES_URL =
-            "https://github.com/rsavutiu/OfflinePlaya#stream-to-pc-play-to-pc"
     }
 }

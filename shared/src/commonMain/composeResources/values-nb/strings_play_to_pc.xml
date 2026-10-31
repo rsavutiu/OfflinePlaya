@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">Kunne ikke nå %1$s</string>
     <string name="play_to_pc_error_connection_lost">Forbindelse mistet</string>
+    <string name="play_to_pc_how_title">Hvordan det fungerer</string>
+    <string name="play_to_pc_how_step1_title">1. Installér mottakeren på din datamaskin</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver er en liten gratis app for Windows, macOS og Linux. Last den ned fra prosjektet side på GitHub — ingen konto trengs.</string>
+    <string name="play_to_pc_how_step2_title">2. Sett begge sammen på samme Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Start mottakeren og godkjenn din datamaskins firewall-tilbakemelding slik at telefonen kan nå den. Telefonen finner da automatisk ut til det.</string>
+    <string name="play_to_pc_how_step3_title">3. Spill noe, så kobler du deg til</string>
+    <string name="play_to_pc_how_step3_body">Velg din datamaskin i listen og trykk på Koblet. Lyd flytter over til dens taltalarer mens spillegjennomgang, pause og skip forblir på telefonen. Trykk på Avbryt for å få lyden tilbake.</string>
+    <string name="play_to_pc_how_note">Strømmen er ulosst over Wi-Fi, men datamaskinen avspiller den gjennom sin egen audio-miksere — slik at telefons liknern, preamp og crossfade blir omgått i denne modusen.</string>
+    <string name="play_to_pc_link_header">Få mottakeren for din datamaskin</string>
+    <string name="play_to_pc_link_hint">Nedlastningen kjører på din datamaskin ikke telefonen, så send dette link over der — eller skriv bare inn den direkte til din datamaskins nettleser:</string>
+    <string name="play_to_pc_link_copy">Kopier lenke</string>
+    <string name="play_to_pc_link_copied">Lenken kopiert</string>
+    <string name="play_to_pc_link_share">Send til datamaskinen</string>
+    <string name="play_to_pc_link_open">Åpne på mobiltelefon</string>
+    <string name="play_to_pc_link_share_text">Få gratis OfflinePlaya Receiver for PC, Mac eller Linux og spill din telefonmusikk gjennom dine datamaskins taltalarer: %1$s</string>
 </resources>

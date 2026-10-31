@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Порт</string>
     <string name="play_to_pc_error_connect_failed">Не можах да достигна до %1$s</string>
     <string name="play_to_pc_error_connection_lost">Изгубена връзка</string>
+    <string name="play_to_pc_how_title">Как работи</string>
+    <string name="play_to_pc_how_step1_title">1. Инсталирайте приемника на вашето компютърно устройство</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver е малко безплатна приложениe за Windows, macOS и Linux. Изтеглете го от страницата с проекта в GitHub — няма нужда да имате акаунт.</string>
+    <string name="play_to_pc_how_step2_title">2. Постави двете на един Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Стартирайте приемника и одобрете промпта за мрежовото брандъринг в вашето компютърно устройство, така че телефона да може да достигне до него. Телефонът след това го намира сам.</string>
+    <string name="play_to_pc_how_step3_title">3. Пуснете нещо и после свържете се</string>
+    <string name="play_to_pc_how_step3_body">Изберете вашия компютър от списъка и натиснете Свържи се. Звуците преминават към динамиката му, като изпълнение, пауза и скок остават на телефона. Натискайте Отключи за връщането на звуковете обратно.</string>
+    <string name="play_to_pc_how_note">Струмът е без загуби през Wi-Fi, но компютрът го изпраща чрез своя аудитивен миксера — така че равномерността на телефона, предусилвачите и преминаването между песни се обхождат в този режим.</string>
+    <string name="play_to_pc_link_header">Получете приемника за вашата компютърна система</string>
+    <string name="play_to_pc_link_hint">Изтеглянето работи от вашия компютърен апарат, не от телефона, така че изпратете тази линия там — или просто влезте директно в браузера на вашето устройство:</string>
+    <string name="play_to_pc_link_copy">Копирай връзката</string>
+    <string name="play_to_pc_link_copied">Свързан кабел</string>
+    <string name="play_to_pc_link_share">Изпрати към компютъра</string>
+    <string name="play_to_pc_link_open">Отваряне по телефона</string>
+    <string name="play_to_pc_link_share_text">Получете безплатния OfflinePlaya Receiver за вашето ПК, Mac или Linux и слушайте музиката от вашият телефон през динамиките на вашия компютер: %1$s</string>
 </resources>

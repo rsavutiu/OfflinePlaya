@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">%1$s ist nicht erreichbar</string>
     <string name="play_to_pc_error_connection_lost">Verbindung getrennt</string>
+    <string name="play_to_pc_how_title">Wie es funktioniert</string>
+    <string name="play_to_pc_how_step1_title">1. Installiere den Empfänger auf deinem Computer</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver ist eine kleine kostenlose App für Windows, macOS und Linux. Lade sie von der Projektseite auf GitHub herunter — kein Konto erforderlich.</string>
+    <string name="play_to_pc_how_step2_title">2. Schalte beide Geräte denselben Wi-Fi-Netzwerk zu</string>
+    <string name="play_to_pc_how_step2_body">Starte den Empfänger und genehmige die Firewall-Einstellungen deines Computers, damit das Smartphone darauf zugreifen kann. Das Handy findet ihn dann automatisch.</string>
+    <string name="play_to_pc_how_step3_title">3. Spielen Sie etwas ab, dann verbinden</string>
+    <string name="play_to_pc_how_step3_body">Wählen Sie Ihr Computer aus der Liste und tippen Sie auf Verbinden. Der Ton wird zu seinen Lautsprechern weitergeleitet, während Abspielen, Pause und Überspringen am Telefon bleiben. Tippen Sie auf Trennen, um den Sound zurückzubringen.</string>
+    <string name="play_to_pc_how_note">Der Stream ist über Wi-Fi verlustfrei, aber der Computer spielt ihn durch sein eigenes Audiomischer — somit werden die Equalizer, Preamp und Crossfade des Smartphones in diesem Modus übersprungen.</string>
+    <string name="play_to_pc_link_header">Hol dir den Empfänger für deinen Computer</string>
+    <string name="play_to_pc_link_hint">Die Download läuft auf deinem Computer statt auf dem Smartphone ab, also sende diesen Link dorthin – oder gib ihn einfach direkt im Browser deines Computers ein:</string>
+    <string name="play_to_pc_link_copy">Link kopieren</string>
+    <string name="play_to_pc_link_copied">Link wurde gekopiert</string>
+    <string name="play_to_pc_link_share">Zum Computer versenden</string>
+    <string name="play_to_pc_link_open">Auf Handy öffnen</string>
+    <string name="play_to_pc_link_share_text">Hole dir die kostenlose OfflinePlaya Receiver für dein PC, Mac oder Linux und spiele deine Musik über den Lautsprecher deines Computers: %1$s</string>
 </resources>

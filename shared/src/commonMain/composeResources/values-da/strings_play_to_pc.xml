@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">Kunne ikke nå %1$s</string>
     <string name="play_to_pc_error_connection_lost">Forbindelsen blev mistet</string>
+    <string name="play_to_pc_how_title">Hvordan det virker</string>
+    <string name="play_to_pc_how_step1_title">1. Installer modtageren på din computer</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Modtager er en lille gratis app for Windows, macOS og Linux. Downloade den fra projektets side på GitHub — ingen konto nødvendig.</string>
+    <string name="play_to_pc_how_step2_title">2. Sæt begge sammen på samme Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Start modtageren og godkende din computers firewall-vindue så telefonen kan nå det. Telefonen finder derefter selv til det.</string>
+    <string name="play_to_pc_how_step3_title">3. Spil noget, dernæst forbindelse</string>
+    <string name="play_to_pc_how_step3_body">Vælg din computer i listen og tryk på Forbind. Lyd flytter til dens lufthavne mens spil, pausér og hop forbliver på telefonen. Tryk på Afslut for at få lyden tilbage.</string>
+    <string name="play_to_pc_how_note">Strømmingen er uden tab over Wi-Fi, men computeren afspiller den gennem sin egen audio-miksere — så telefons ekvalisering, preamp og crossfade omgår denne funktion.</string>
+    <string name="play_to_pc_link_header">Få modtageren for din computer</string>
+    <string name="play_to_pc_link_hint">Downloadet kører på din computer ikke telefonen, så send dette link over derhen — eller bare skriv det ind i din computers browser:</string>
+    <string name="play_to_pc_link_copy">Kopier link</string>
+    <string name="play_to_pc_link_copied">Link kopiert</string>
+    <string name="play_to_pc_link_share">Send til computer</string>
+    <string name="play_to_pc_link_open">Åbn på telefonen</string>
+    <string name="play_to_pc_link_share_text">Få den gratis OfflinePlaya Modtager for din PC, Mac eller Linux og afspil dine telefoners musik gennem din computers lufthøje: %1$s</string>
 </resources>

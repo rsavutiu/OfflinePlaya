@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">رقم المنفذ</string>
     <string name="play_to_pc_error_connect_failed">لم يتم الاتصال بـ %1$s</string>
     <string name="play_to_pc_error_connection_lost">تم فقدان الارتباط</string>
+    <string name="play_to_pc_how_title">كيف يعمل هذا التطبيق</string>
+    <string name="play_to_pc_how_step1_title">1. تثبيت المستقبل على جهاز الكمبيوتر الخاص بك</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver هو تطبيق صغير مجاني لـ Windows، macOS وLinux. قم بتنزيله من صفحة المشروع على GitHub — لا حاجة للحساب.</string>
+    <string name="play_to_pc_how_step2_title">2. ضع كلاهما في نفس شبكة Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">ابدأ المستقبل وأقر طلب جدار الحماية الخاص بالكمبيوتر حتى يمكن للأجهزة المحمولة الوصول إليه. ثم تجد الأجهزة المحمولته نفسها بشكل آلي.</string>
+    <string name="play_to_pc_how_step3_title">3. استماع لموسيقى، ثم الاتصال</string>
+    <string name="play_to_pc_how_step3_body">اختر جهاز الكمبيوتر من القائمة ثم اضغط اتصال. ينتقل الصوت إلى مكبراته، بينما يبقى التشغيل والإيقاف والتخطي على الهاتف. اضغط قطع الاتصال لإعادة الصوت إلى الهاتف.</string>
+    <string name="play_to_pc_how_note">يتم نقل التيار بدون فقدان جودة عبر شبكة Wi-Fi، ولكن الكمبيوتر يستخدم خلاطه الصوتية الخاص به — لذلك تُتجاهل ميزات المزامنة والتعزيز وتحويل الأغان في الهاتف أثناء هذا الوضع.</string>
+    <string name="play_to_pc_link_header">احصل على المستقبل لجهازك</string>
+    <string name="play_to_pc_link_hint">تعمل عملية التنزيل على جهاز الكمبيوتر وليس هاتفك، إذن أرسل هذه الرابط إليه — أو فقط قم بكتابة الرابط مباشرة داخل متصفح الكمبيوتر:</string>
+    <string name="play_to_pc_link_copy">نسخ رابط</string>
+    <string name="play_to_pc_link_copied">تم نسخ الرابط</string>
+    <string name="play_to_pc_link_share">إرسال إلى الكمبيوتر</string>
+    <string name="play_to_pc_link_open">فتح على الهاتف</string>
+    <string name="play_to_pc_link_share_text">احصل على المستقبل المجاني لـ OfflinePlaya للكمبيوتر الخاص بك، Mac أو Linux وتشغيل موسيقى هاتفك عبر مكبرات صوت جهاز الكمبيوتر: %1$s</string>
 </resources>

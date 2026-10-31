@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">Impossible d'accéder à %1$s</string>
     <string name="play_to_pc_error_connection_lost">Perte de connexion</string>
+    <string name="play_to_pc_how_title">Comment ça marche</string>
+    <string name="play_to_pc_how_step1_title">1. Installez le récepteur sur votre ordinateur</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver est une petite application gratuite pour Windows, macOS et Linux. Téléchargez-la depuis la page du projet sur GitHub — aucun compte n'est nécessaire.</string>
+    <string name="play_to_pc_how_step2_title">2. Mettez-les tous les deux sur le même Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Démarrer le récepteur et acceptez l'avertissement de pare-feu de votre ordinateur pour que le téléphone puisse y accéder. Le téléphone trouve alors automatiquement ce dernier.</string>
+    <string name="play_to_pc_how_step3_title">3. Jouez quelque chose, puis connectez-vous</string>
+    <string name="play_to_pc_how_step3_body">Choisissez votre ordinateur dans la liste et appuyez sur Connecter. L'audio se transfère vers ses haut-parleurs pendant que jouer, pause et sauter restent sur le téléphone. Appuyez sur Déconnecter pour ramener les sons.</string>
+    <string name="play_to_pc_how_note">Le flux est sans perte via Wi-Fi, mais l’ordinateur joue à travers son propre mixeur audio — donc l'égaliseur, préamplificateur et crossfade du téléphone sont bypassés dans ce mode.</string>
+    <string name="play_to_pc_link_header">Obtenez le récepteur pour votre ordinateur</string>
+    <string name="play_to_pc_link_hint">Le téléchargement s'exécute sur votre ordinateur, pas sur votre téléphone, alors envoyez ce lien là — ou tapez simplement l'adresse directement dans le navigateur de votre ordinateur :</string>
+    <string name="play_to_pc_link_copy">Copier le lien</string>
+    <string name="play_to_pc_link_copied">Lien copié</string>
+    <string name="play_to_pc_link_share">Envoyer à l’ordinateur</string>
+    <string name="play_to_pc_link_open">Ouvrir sur le téléphone</string>
+    <string name="play_to_pc_link_share_text">Obtenez la version gratuite d'OfflinePlaya Receiver pour PC, Mac ou Linux et écoutez votre musique via les haut-parleurs de votre ordinateur : %1$s</string>
 </resources>

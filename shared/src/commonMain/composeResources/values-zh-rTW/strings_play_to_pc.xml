@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">端口</string>
     <string name="play_to_pc_error_connect_failed">無法到達 %1$s</string>
     <string name="play_to_pc_error_connection_lost">已失去連線</string>
+    <string name="play_to_pc_how_title">使用方式</string>
+    <string name="play_to_pc_how_step1_title">1. 在電腦上安裝接收器</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya 接收器是一個適用於 Windows、macOS 和 Linux 的小型免費應用程式。從 GitHub 專案頁面下載 — 不需要帳號。</string>
+    <string name="play_to_pc_how_step2_title">2. 設置雙方在同一 Wi-Fi 網路下</string>
+    <string name="play_to_pc_how_step2_body">啟動接收器並批准電腦的防火牆提示，讓手機可以連接到它。然後手機會自動找到它。</string>
+    <string name="play_to_pc_how_step3_title">3. 播放音樂後進行連接</string>
+    <string name="play_to_pc_how_step3_body">在清單中選擇您的電腦並將「連線」按鈕點擊。音訊轉移到其喇叭上，而播放、暫停和跳過則仍保持在手機上。點選「斷開連結」以將聲音重新導回至手機。</string>
+    <string name="play_to_pc_how_note">透過 Wi-Fi 的串流是無損的，但電腦會通過自身的音效混音器進行播放 — 所以在此模式下手機的均衡器、前級放大器和交叉淡入效果都會被繞過。</string>
+    <string name="play_to_pc_link_header">下載接收器給您的電腦</string>
+    <string name="play_to_pc_link_hint">此下載在您電腦上執行，而非手機，因此請將此連結傳送至該處 — 或直接輸入到電腦瀏覽器中：</string>
+    <string name="play_to_pc_link_copy">複製鏈接</string>
+    <string name="play_to_pc_link_copied">鏈接已複製</string>
+    <string name="play_to_pc_link_share">發送到電腦</string>
+    <string name="play_to_pc_link_open">在手機開啟</string>
+    <string name="play_to_pc_link_share_text">下載適用於您 PC、Mac 或 Linux 的免費 OfflinePlaya 接收器，並透過您的電腦喇叭播放手機上的音樂：%1$s</string>
 </resources>

@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">พอร์ต</string>
     <string name="play_to_pc_error_connect_failed">ไม่สามารถเข้าถึง %1$s ได้</string>
     <string name="play_to_pc_error_connection_lost">การเชื่อมต่อสูญเสีย</string>
+    <string name="play_to_pc_how_title">มันทำงานอย่างไร</string>
+    <string name="play_to_pc_how_step1_title">1. เจาะติดตั้งรับข้อมูลบนคอมพิวเตอร์ของคุณ</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver เป็นแอปขนาดเล็กฟรีสำหรับ Windows, macOS และ Linux การดาวน์โหลดมันได้จากหน้าโครงการใน GitHub — ไม่จำเป็นต้องใช้อินสแตงแกรม</string>
+    <string name="play_to_pc_how_step2_title">2. เจาะให้อยู่บน Wi-Fi ส่วนเดียวกัน</string>
+    <string name="play_to_pc_how_step2_body">เปิดรับข้อมูลและอนุญาตการแจ้งเตือนของไฟวอลล์ในคอมพิวเตอร์ของคุณ เพื่อให้โทรศัพท์สามารถเชื่อมต่อได้ แล้วโทรศัพท์จะหาเจาะเอง</string>
+    <string name="play_to_pc_how_step3_title">3. เจาะเล่นเพลง จากนั้นเชื่อมต่อกัน</string>
+    <string name="play_to_pc_how_step3_body">เลือกคอมพิวเตอร์ในรายการและกด Connect เพลงจะถูกส่งไปยังลำโพงของมันขณะที่การเล่น การหยุด และข้ามเพลง จะอยู่บนโทรศัพท์ คลิก Disconnect เมื่อต้องการกลับมาฟังเสียง</string>
+    <string name="play_to_pc_how_note">เส้นทางเป็นแบบไม่มีความสูญหายผ่าน Wi-Fi โดยคอมพิวเตอร์จะเล่นผ่าน Mixer ส่วนของมันเอง — ดังนั้นมือถือนี้จึงหลบการปรับแต่งเสียง, preamp และ crossfade ในโหมดนี้</string>
+    <string name="play_to_pc_link_header">เจาะรับข้อมูลสำหรับคอมพิวเตอร์ของคุณ</string>
+    <string name="play_to_pc_link_hint">การดาวน์โหลดจะทำงานบนคอมพิวเตอร์ ไม่ใช่มือถือ ดังนั้นส่งลิงก์ไปยังเครื่องโน๊ตบุ๊คมหาศาล — หรือแค่อย่างตรงๆ ในเบราวเซอร์ของคุณ:</string>
+    <string name="play_to_pc_link_copy">คัดลอกลิงก์</string>
+    <string name="play_to_pc_link_copied">เจาะสำเนอลิ้งแล้ว</string>
+    <string name="play_to_pc_link_share">ส่งไปยังคอมพิวเตอร์</string>
+    <string name="play_to_pc_link_open">เปิดบนมือถือ</string>
+    <string name="play_to_pc_link_share_text">เพื่อได้รับ OfflinePlaya Receiver ฟรีสำหรับ PC, Mac และ Linux จากนั้นเล่นเพลงจากโทรศัพท์ผ่านลำโพงของคอมพิวเตอร์: %1$s</string>
 </resources>

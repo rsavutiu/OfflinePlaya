@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Πόρτα</string>
     <string name="play_to_pc_error_connect_failed">Αδυναμία σύνδεσης με το %1$s</string>
     <string name="play_to_pc_error_connection_lost">Η σύνδεσή χάθηκε</string>
+    <string name="play_to_pc_how_title">Πώς λειτουργεί</string>
+    <string name="play_to_pc_how_step1_title">1. Εγκατάστησε τον απέλυτό σου υποδοχé με τον υπολογιστή σου</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver είναι ένας μικρός δωρεάν προγραμματιστικός κώδικας για Windows, macOS και Linux. Τη φόρτωσή του είναι στη σελίδα του project στο GitHub — δε χρειάζεται λογαριασμός</string>
+    <string name="play_to_pc_how_step2_title">2. Δώσε και οι δύο να βρίσκονται πάνω από την Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Ξεκινήστε το υποδέχε σου, εγκρίνετε τη φώλια διαφυγής του υπολογιστή σου για να μπορεί ο κινητός να πάψε. Ο κινητός βρίσκει αυτόματα το υποδέχε</string>
+    <string name="play_to_pc_how_step3_title">3. Δώσε εξωγή μου, σύνδεση</string>
+    <string name="play_to_pc_how_step3_body">Επιλέξτε τον υπολογιστή σας από τη λίστα και πράψτε ΔΕΣΜΕΥΣΗ. Το ήχος μεταφέρεται στους δυναμικούς υποδελτίων της, ενώ παύση και αγνόηση παραµένουν έξω από το κινητό. Πάψτε ΔΙΑΚΟΠΗ για να φέρετε εκ νέου τον ήχο.</string>
+    <string name="play_to_pc_how_note">H ρύθμιση είναι πλήρης κάτω από το Wi-Fi, αλλά ο υπολογιστής μαζεύει συχνότητές για δικό του φίλτρο — εμφανίζεται λοιπόν, πάνω από όλα η κινητή μεγαλύτερη συχνότητα για τους φίλτρους εξομάλυνσης</string>
+    <string name="play_to_pc_link_header">Δώσε το απέλυτό υποδέχε πάνω από τον υπολογιστή σας</string>
+    <string name="play_to_pc_link_hint">Η φόρτωση είναι με τους κώδικες, δεν γίνεται μέχρι να πάψε αυτό χούφτα — στείλε από έξω αυτή τη λίστα εμβαδών</string>
+    <string name="play_to_pc_link_copy">Αντιγραφή συνδέσμου</string>
+    <string name="play_to_pc_link_copied">Δέχθηκε το σύνδεσμο</string>
+    <string name="play_to_pc_link_share">Αποστολή στον υπολογιστή</string>
+    <string name="play_to_pc_link_open">Άνοιγμα στο τηλέφωνο</string>
+    <string name="play_to_pc_link_share_text">Δες τη ελεύθερη OfflinePlaya Receiver για PC, Mac ή Linux σου υπολογιστή και ακούσε μέχρι να πάψε φωνή: %1$s</string>
 </resources>

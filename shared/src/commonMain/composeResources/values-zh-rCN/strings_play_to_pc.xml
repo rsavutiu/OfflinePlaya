@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">端口</string>
     <string name="play_to_pc_error_connect_failed">无法到达 %1$s</string>
     <string name="play_to_pc_error_connection_lost">已断开连接</string>
+    <string name="play_to_pc_how_title">使用方法</string>
+    <string name="play_to_pc_how_step1_title">1. 在你的电脑上安装接收器</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya 接收器是一个适用于 Windows、macOS 和 Linux 的小型免费应用。从 GitHub 项目页面下载它 —— 不需要账户。</string>
+    <string name="play_to_pc_how_step2_title">2. 将两者连接到同一个 Wi-Fi 网络</string>
+    <string name="play_to_pc_how_step2_body">启动接收器并批准你的电脑防火墙提示，以便手机可以访问它。然后手机会自动找到它。</string>
+    <string name="play_to_pc_how_step3_title">3. 播放内容后进行连接</string>
+    <string name="play_to_pc_how_step3_body">在列表中选择你的电脑并点击“连接”。音频将传输到其扬声器上，而播放、暂停和跳过功能仍保留在手机端。点击“断开”以恢复声音。</string>
+    <string name="play_to_pc_how_note">Wi-Fi 下的流媒体是无损音质，但计算机通过自己的混响器进行播放 —— 因此在此模式下会绕过手机的均衡器、前置放大器和淡入淡出效果。</string>
+    <string name="play_to_pc_link_header">获取你的电脑接收器</string>
+    <string name="play_to_pc_link_hint">该下载在你电脑上运行，并非电话端，因此将这个链接发送到那里——或者直接将其输入到你的计算机浏览器中：</string>
+    <string name="play_to_pc_link_copy">复制链接</string>
+    <string name="play_to_pc_link_copied">链接已复制</string>
+    <string name="play_to_pc_link_share">发送到电脑</string>
+    <string name="play_to_pc_link_open">在手机上打开</string>
+    <string name="play_to_pc_link_share_text">获取适用于你 PC、Mac 或 Linux 的免费 OfflinePlaya 接收器，并通过你的电脑扬声器播放电话音乐： %1$s</string>
 </resources>

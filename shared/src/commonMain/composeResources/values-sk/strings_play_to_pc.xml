@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">Nepodarilo sa dôjsť k %1$s</string>
     <string name="play_to_pc_error_connection_lost">Spojenie bolo stratené</string>
+    <string name="play_to_pc_how_title">Ako funguje</string>
+    <string name="play_to_pc_how_step1_title">1. Nainštalujte prijímač na svojom počítači</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver je malá zadarmo aplikácia pre Windows, macOS a Linux. Stiahnite si ju z stránky projektu na GitHub — nepotrebuje sa účet.</string>
+    <string name="play_to_pc_how_step2_title">2. Umiestnite obidve na rovnaký Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Spustite prijímač a schválte výstrahu firewalla svojho počítača, aby telefon mohol dôjsť k nemu. Telefon následne najde sám.</string>
+    <string name="play_to_pc_how_step3_title">3. Prehráva niečo, potom sa pripojite</string>
+    <string name="play_to_pc_how_step3_body">Vyberte váš počítač v zozname a stlačte Pripojiť. Zvuk prechádza k jeho reproduktorom pri prehrávaní, pozastavení a preskakaní zostanú na telefóne. Stlačením Odpojiť sa vrátite zvuku späť.</string>
+    <string name="play_to_pc_how_note">Strom je bezstratový cez Wi-Fi, ale počítač ho prehráva cez svoj vlastný audio mixér — takže rovnica telefónu, predzesilovač a preskakanie sú obežné voľbou v tomto režime.</string>
+    <string name="play_to_pc_link_header">Získať prijímač na váš počítač</string>
+    <string name="play_to_pc_link_hint">Stiahnutie sa vykonáva na vašom počítači, nie telefóne, takže odoslite túto linku tam — alebo jednoduchý ju zadajte do prehliadače svojho počítača:</string>
+    <string name="play_to_pc_link_copy">Skopírovať odkaz</string>
+    <string name="play_to_pc_link_copied">Odkaz skopírovany</string>
+    <string name="play_to_pc_link_share">Odoslať do počítača</string>
+    <string name="play_to_pc_link_open">Otvorit v telefóne</string>
+    <string name="play_to_pc_link_share_text">Získaajte zadarmo OfflinePlaya Receiver pre váš PC, Mac alebo Linux a hrájte hudbu z vašeho telefonu cez reproduktory svojho počítača: %1$s</string>
 </resources>

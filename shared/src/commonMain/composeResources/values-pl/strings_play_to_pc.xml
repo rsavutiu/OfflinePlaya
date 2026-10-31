@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">Nie można połączyć się ze %1$s</string>
     <string name="play_to_pc_error_connection_lost">Strata połączenia</string>
+    <string name="play_to_pc_how_title">Jak działa</string>
+    <string name="play_to_pc_how_step1_title">1. Zainstaluj odbiornik na swoim komputerze</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver to mała darmowa aplikacja do systemu Windows, macOS i Linux. Pobierz ją z strony projektu na GitHub — nie potrzeba konta.</string>
+    <string name="play_to_pc_how_step2_title">2. Umieść obydwa urządzenia w tej samej sieci Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Uruchom odbiornik oraz zaakceptuj prompt zapory systemowej swojej komputera, aby telefon mógł dołączyć się do niego. Telefon potem znajdzie go sam.</string>
+    <string name="play_to_pc_how_step3_title">3. Odtwórz coś i połącz się</string>
+    <string name="play_to_pc_how_step3_body">Wybierz swój komputer w liście i kliknij Connect. Dźwięk przenosi się na głośniki jego, podczas gdy odtwarzanie, pauza oraz przewirolenie pozostają na telefonie. Kliknij Disconnect aby wrócić dźwięku.</string>
+    <string name="play_to_pc_how_note">Strumień jest bezstratny przez sieć Wi-Fi, ale komputer gra w swoim własnym mieszaczu audio — więc ustawienia ekwializera, poprzednika i przejścia na telefonie są wyłączane w tym trybie.</string>
+    <string name="play_to_pc_link_header">Pobierz odbiornik dla Twojej maszyny</string>
+    <string name="play_to_pc_link_hint">Pobrańko działa na komputerze a nie na smartfonie więc wyślij ten link tam — albo po prostu wpisz go do przeglądarki swojego komputera:</string>
+    <string name="play_to_pc_link_copy">Skopiuj link</string>
+    <string name="play_to_pc_link_copied">Link skopiony</string>
+    <string name="play_to_pc_link_share">Wyślij do komputera</string>
+    <string name="play_to_pc_link_open">Otwórz na telefonie</string>
+    <string name="play_to_pc_link_share_text">Pobierz darmowy OfflinePlaya Receiver dla Twojej maszyny, Mac lub Linux i odtwarzaj muzykę z telefonu przez głośniki swojego komputer: %1$s</string>
 </resources>

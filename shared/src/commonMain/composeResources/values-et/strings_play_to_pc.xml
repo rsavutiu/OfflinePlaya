@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">%1$s juurde ei saa suunata</string>
     <string name="play_to_pc_error_connection_lost">Ühendumine katkestati</string>
+    <string name="play_to_pc_how_title">Kuidas see töötab</string>
+    <string name="play_to_pc_how_step1_title">1. Installeeri vastuvõtja sinu arvutile</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Vastuvõtj on väike tasuta rakendus Windowsi, macOS ja Linux andmebaasideks. Laadi seda alla projektisaidilt GitHubist — konto ei ole vajalik.</string>
+    <string name="play_to_pc_how_step2_title">2. Kinnita nii märguline Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Alusta vastuvõtjat ning heaksoldata sinu arvutile tuleb pakkuda, et telefon saa selle juurde jõua. Telefon leidab seda ise.</string>
+    <string name="play_to_pc_how_step3_title">3. Mängi midagi ja ühenda</string>
+    <string name="play_to_pc_how_step3_body">Vali oma arvuti loetelu ja vajuta ühendamiseks. Ärvalt liidab helisagedus selle kõrvakäsitseva parandusega, samas jääb toimivaks ära soovitusliku lisa funktsioonide valikud telefoni peal. Vajuta ühendamise katkestamist tagasi helisagedus tagastada.</string>
+    <string name="play_to_pc_how_note">Streem on Wi-Fi üle lossless, kuid arvuti kuulab seda oma audiomiksori kaudu — seetõttu telefoni ekvaalisaator, preamp ja crossfade selle režiimis vältitakse.</string>
+    <string name="play_to_pc_link_header">Laadi vastuvõtja sinule arvutile</string>
+    <string name="play_to_pc_link_hint">Allalaadimus toob teie arvuti ei telefonil, seetõttu saada seda lingist siin — või lihtsalt sisesta selle ligipääsu oma arvutis brauserisse:</string>
+    <string name="play_to_pc_link_copy">Kopeeri link</string>
+    <string name="play_to_pc_link_copied">Link koopiat</string>
+    <string name="play_to_pc_link_share">Saada arvutisse</string>
+    <string name="play_to_pc_link_open">Ava telefonil</string>
+    <string name="play_to_pc_link_share_text">Laadi tasuta OfflinePlaya Vastuvõtj sinule PC, Mac või Linux ja mängi oma telefoni muusikat teie arvutis kinnispingutele: %1$s</string>
 </resources>

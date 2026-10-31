@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">Kunde inte nå %1$s</string>
     <string name="play_to_pc_error_connection_lost">Anslutningen har gått förlorad</string>
+    <string name="play_to_pc_how_title">Hur det fungerar</string>
+    <string name="play_to_pc_how_step1_title">1. Installera mottagaren på din dator</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver är ett litet kostnadsfritt program för Windows, macOS och Linux. Ladda ner det från projektets sida på GitHub — inget konto behövs.</string>
+    <string name="play_to_pc_how_step2_title">2. Placera båda på samma Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Starta mottagaren och godkänn din datorns brandväggsmeddelande så att telefonen kan nå den. Telefonen hittar då automatiskt det.</string>
+    <string name="play_to_pc_how_step3_title">3. Spela upp något, sedan anslut</string>
+    <string name="play_to_pc_how_step3_body">Välj din dator i listan och tryck på Ansluta. Ljudet flyttas till dess höjdare medan spelnings-, paus- och hoppa-funktionerna förblir på telefonen. Tryck på Avbryt anslutning så återgår ljudet.</string>
+    <string name="play_to_pc_how_note">Strömmen är förloringsfri över Wi-Fi, men datorn spelar det genom sin egen audio-mixer — så telefonens ekvalisering, förstärkare och korsförblomstret bypassas i detta läge.</string>
+    <string name="play_to_pc_link_header">Hämta mottagaren till din dator</string>
+    <string name="play_to_pc_link_hint">Nedladdningen körs på din dator inte telefonen, så skicka länken dit — eller bara typa in den i webbläsarens adressfält:</string>
+    <string name="play_to_pc_link_copy">Kopiera länk</string>
+    <string name="play_to_pc_link_copied">Länk kopierad</string>
+    <string name="play_to_pc_link_share">Skicka till datorn</string>
+    <string name="play_to_pc_link_open">Öppna på telefonen</string>
+    <string name="play_to_pc_link_share_text">Hämta det kostnadsfrimma OfflinePlaya Receiver för din PC, Mac eller Linux och spela upp telefonens musik genom dators höjdare: %1$s</string>
 </resources>

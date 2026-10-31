@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">Nu s-a reușit conectarea la %1$s</string>
     <string name="play_to_pc_error_connection_lost">Conexiunea a fost pierdută</string>
+    <string name="play_to_pc_how_title">Cum funcționează</string>
+    <string name="play_to_pc_how_step1_title">1. Instalați receptorul pe calculatorul dvs.</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver este o aplicație mică gratuită pentru Windows, macOS și Linux. Descărcați-o de la pagina proiectului pe GitHub — nu e nevoie de cont.</string>
+    <string name="play_to_pc_how_step2_title">2. Plasați ambele în același Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Porniți receptorul și aprobați prompt-ul firewall-ului calculatorului pentru ca telefonul să poată ajunge la el. Telefonul găsește apoi automat acesta.</string>
+    <string name="play_to_pc_how_step3_title">3. Înțelege ceva, apoi conectare</string>
+    <string name="play_to_pc_how_step3_body">Alegerea computerului din listă și apăsarea butonului Connect. Sunetul se mută către difuzoarele sale în timp ce play, pause și skip rămân pe telefon. Apăsați Disconnect pentru a aduce sunetul înapoi.</string>
+    <string name="play_to_pc_how_note">Fluxul este fără pierderi prin Wi-Fi, dar computerul-l redă printr-un mixer audio propriu — deci egalizatorul, preamplificatorul și crossfade-ul telefonului sunt circumvenite în acest mod.</string>
+    <string name="play_to_pc_link_header">Descărcați receptorul pentru calculatorul dvs.</string>
+    <string name="play_to_pc_link_hint">Descărcarea se face pe computerul tău, nu pe cel al telefonului, așa că trimite aceast link acolo — sau doar introdu-l direct în browser-ul calculatorului:</string>
+    <string name="play_to_pc_link_copy">Copiază legătura</string>
+    <string name="play_to_pc_link_copied">Legatura copiata</string>
+    <string name="play_to_pc_link_share">Trimite la calculator</string>
+    <string name="play_to_pc_link_open">Deschide pe telefon</string>
+    <string name="play_to_pc_link_share_text">Descărcați OfflinePlaya Receiver gratuit pentru PC, Mac sau Linux și jucați muzica de pe telefon prin difuzoarele computerului dvs.: %1$s</string>
 </resources>

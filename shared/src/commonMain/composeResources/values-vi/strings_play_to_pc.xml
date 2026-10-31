@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Cổng</string>
     <string name="play_to_pc_error_connect_failed">Không thể tiếp cận được %1$s</string>
     <string name="play_to_pc_error_connection_lost">Connection lost</string>
+    <string name="play_to_pc_how_title">Cách hoạt động như thế nào</string>
+    <string name="play_to_pc_how_step1_title">1. Cài đặt receiver lên máy tính của bạn</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver là một ứng dụng nhỏ miễn phí cho Windows, macOS và Linux. Tải nó từ trang dự án trên GitHub — không cần tài khoản.</string>
+    <string name="play_to_pc_how_step2_title">2. Đặt cả hai cùng nằm trong mạng Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Bắt đầu(receiver) và xác nhận thông báo tường lửa của máy tính để điện thoại có thể kết nối tới nó. Điện thoại sau đó sẽ tự tìm thấy nó.</string>
+    <string name="play_to_pc_how_step3_title">3. Phát nhạc rồi mới kết nối</string>
+    <string name="play_to_pc_how_step3_body">Chọn máy tính trong danh sách và nhấn Kết nối. Âm thanh chuyển sang loa của máy tính trong lúc phát, tạm dừng và nhảy bài vẫn ở điện thoại. Nhấn Tách khỏi để âm thanh quay lại.</string>
+    <string name="play_to_pc_how_note">Dòng truyền là không mất chất qua Wi-Fi nhưng máy tính sẽ chơi nó thông qua bộ trộn audio riêng — vì vậy các chức năng equalizer, preamp và crossfade của điện thoại bị bỏ qua trong chế độ này.</string>
+    <string name="play_to_pc_link_header">Nhận receiver cho máy tính của bạn</string>
+    <string name="play_to_pc_link_hint">Tải xuống chạy trên máy tính chứ không phải điện thoại nên gửi liên kết này sang đó — hoặc chỉ cần dán vào trình duyệt của máy tính:</string>
+    <string name="play_to_pc_link_copy">Sao chép link</string>
+    <string name="play_to_pc_link_copied">Liên kết đã được sao chép</string>
+    <string name="play_to_pc_link_share">Gửi đến máy tính</string>
+    <string name="play_to_pc_link_open">Mở trên điện thoại</string>
+    <string name="play_to_pc_link_share_text">Nhận OfflinePlaya Receiver miễn phí cho PC, Mac hoặc Linux và phát nhạc từ điện thoại qua loa của máy tính: %1$s</string>
 </resources>

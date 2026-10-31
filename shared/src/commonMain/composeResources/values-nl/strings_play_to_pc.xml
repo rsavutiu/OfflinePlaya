@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Poort</string>
     <string name="play_to_pc_error_connect_failed">Kon niet bereiken %1$s</string>
     <string name="play_to_pc_error_connection_lost">Verbinding verloren</string>
+    <string name="play_to_pc_how_title">Hoe het werkt</string>
+    <string name="play_to_pc_how_step1_title">1. Installeer de ontvanger op je计算机</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Ontvanger is een klein gratis appje voor Windows, macOS en Linux. Download het vanaf de projectpagina op GitHub — geen account nodig.</string>
+    <string name="play_to_pc_how_step2_title">2. Zet beide op dezelfde Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Start de ontvanger en bevestig je computer's firewall prompt zodat telefoon er bereik kan krijgen. De telefoon vindt hem dan zelf.</string>
+    <string name="play_to_pc_how_step3_title">3. Speel iets af, daarna verbinden</string>
+    <string name="play_to_pc_how_step3_body">Kies jouw计算机 in de lijst en tik op Verbinden. Geluid gaat naar zijn luidsprekers terwijl speel, pauzeer en overslaan blijven op telefoon. Tik op Ontkoppelen om het geluid terug te brengen.</string>
+    <string name="play_to_pc_how_note">De stream is verliesvrij over Wi-Fi, maar de computer speelt hem via eigen audio mixer — dus de telefoons equalizer, preamp en crossfade worden in deze modus genegeerd.</string>
+    <string name="play_to_pc_link_header">Download de ontvanger voor je计算机</string>
+    <string name="play_to_pc_link_hint">Het downloadt op jouw计算机 niet op je telefoon, dus stuur dit link naar daar — of typ het gewoon in je computer's browser:</string>
+    <string name="play_to_pc_link_copy">Kopieer link</string>
+    <string name="play_to_pc_link_copied">Link gekopieerd</string>
+    <string name="play_to_pc_link_share">Stuur naar computer</string>
+    <string name="play_to_pc_link_open">Open op telefoon</string>
+    <string name="play_to_pc_link_share_text">Download de gratis OfflinePlaya Ontvanger voor jouw PC, Mac of Linux en speel je telefoons muziek via je computers luidsprekers: %1$s</string>
 </resources>

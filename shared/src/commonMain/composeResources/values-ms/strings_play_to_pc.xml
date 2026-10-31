@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">Tidak dapat mengakses %1$s</string>
     <string name="play_to_pc_error_connection_lost">Kesalahan sambungan</string>
+    <string name="play_to_pc_how_title">Bagaimana ia beroperasi</string>
+    <string name="play_to_pc_how_step1_title">1. Pasang penerima pada komputer anda</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver adalah aplikasi kecil percuma untuk Windows, macOS dan Linux. Muat turun daripada laman projek di GitHub — tiada akaun diperlukan.</string>
+    <string name="play_to_pc_how_step2_title">2. Letakkan kedua-duanya dalam Wi-Fi yang sama</string>
+    <string name="play_to_pc_how_step2_body">Mulakan penerima dan keluarkan notifikasi firewall komputer anda supaya telefon boleh menghosokannya. Telefon kemudian akan mencarinya secara automatik.</string>
+    <string name="play_to_pc_how_step3_title">3. Mainkan sesuatu, lalu sambung</string>
+    <string name="play_to_pc_how_step3_body">Pilih komputer dalam senarai tersebut dan tekan Sambung. Audio berpindah ke pembesar suara komputernya manakala main, pause dan skip tetap pada telefon. Tekan Putus untuk membawa semula bunyi itu.</string>
+    <string name="play_to_pc_how_note">Aliran ini tanpa ketebalan melalui Wi-Fi, namun komputer memainkannya menerusi mixer audio sendiri — jadi pengeset suara, preamp dan crossfade telefon diabaikan dalam mod ini.</string>
+    <string name="play_to_pc_link_header">Dapatkan penerima untuk komputer anda</string>
+    <string name="play_to_pc_link_hint">Muat turun berjalan pada komputer anda bukan telefon anda, oleh itu hantar link ke sana — atau hanya ketik ke browser komputer anda:</string>
+    <string name="play_to_pc_link_copy">Salin pautan</string>
+    <string name="play_to_pc_link_copied">Pautan disalin</string>
+    <string name="play_to_pc_link_share">Hantar ke komputer</string>
+    <string name="play_to_pc_link_open">Buka di telefon</string>
+    <string name="play_to_pc_link_share_text">Dapatkan OfflinePlaya Receiver percuma untuk PC, Mac atau Linux dan mainkan muzik telefon anda melalui pembesar suara komputer: %1$s</string>
 </resources>

@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">मुहल्ला</string>
     <string name="play_to_pc_error_connect_failed">%1$s काम नहीं होते।</string>
     <string name="play_to_pc_error_connection_lost">कनेक्शन समाप्त</string>
+    <string name="play_to_pc_how_title">कैसे चलता है</string>
+    <string name="play_to_pc_how_step1_title">1. अपनी कंप्युटर पर समापक को स्थापित करें</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver Windows, macOS और Linux में छोटे मुफ़त ऐप है। GitHub प्रोजेक्ट पनि से डाउनलोड कीजिए — खाता के बगैर</string>
+    <string name="play_to_pc_how_step2_title">2. दोनों को इसके मुख्य Wi-Fi पर हमेशा रहे</string>
+    <string name="play_to_pc_how_step2_body">समापक को चलाएँ और अपनी कंप्यूटर के फाईअरवॉल प्रतिक्रिया को मंजूरी देन सुनि, ताकि फ़ोन इसके लिए पहुच सके।फ़ोन अपने आप उसे हमेशा मिलता है</string>
+    <string name="play_to_pc_how_step3_title">3. कुछ गाना चलाओ, फिर जुड़िए</string>
+    <string name="play_to_pc_how_step3_body">संदर्भ प्रक्रिया में अपनी कम्पयटर को चुने और "जुड़िए" पर हाँ। आवृत्ति उसके संगणक बोल्ट में जा रही है, लेकिन कम्पयटर के "प्ले", "एस्स पुश" और "अतिवाहन" संग्रहण फ़ोन में रहता है। "डीजलकनेक्ट" करें, ताकि आवृत्ति पुन: ले जाए</string>
+    <string name="play_to_pc_how_note">Wi-Fi संचार बिना खोए हमेशा महसूस कीजिये।लेकिन,कम्पयटर अपने प्रति-आवृत्ति मिक्सर संगणक के माध्यम से होता है —इस रीति में,फ़ोन के "एकुलेटर", प्री-अम्प और क्रॉजिसवेन बाजार अपग्रेड हो सकता है</string>
+    <string name="play_to_pc_link_header">आपकी कंप्यटर के लिए समापक प्राप्त करें</string>
+    <string name="play_to_pc_link_hint">इस फ़ाइल मुख्य रूप से अपनी कंप्यूटर, नहीं आपके फोन पर हमेशा चलती है।अत: इस लिंक को उस तरफ से मुख्य रूप से भेज़िए —या फिर,आपनी कंप्यटर के ब्राउज़र में पहले ही लगाए</string>
+    <string name="play_to_pc_link_copy">लिंक कॉपी करो</string>
+    <string name="play_to_pc_link_copied">लिंक सफलता पुन: कॉपी किया गया</string>
+    <string name="play_to_pc_link_share">कंप्यूटर पर भेजें</string>
+    <string name="play_to_pc_link_open">फ़ोन पर खोलें</string>
+    <string name="play_to_pc_link_share_text">अपने PC, Mac 0r Linux के लिए समापक प्राप्त कीजिये और आपके मुख्य फ़ोन का गाना उसके संगणक बोल्ट में हमेशा चलता है: %1$s</string>
 </resources>

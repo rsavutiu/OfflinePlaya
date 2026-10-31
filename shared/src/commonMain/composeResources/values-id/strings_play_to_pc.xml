@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">Tidak dapat mencapai %1$s</string>
     <string name="play_to_pc_error_connection_lost">Koneksi terputus</string>
+    <string name="play_to_pc_how_title">Bagaimana cara kerjanya</string>
+    <string name="play_to_pc_how_step1_title">1. Pasang penerima pada komputer Anda</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver adalah aplikasi kecil gratis untuk Windows, macOS dan Linux. Unduh dari halaman proyek di GitHub — tidak perlu akun.</string>
+    <string name="play_to_pc_how_step2_title">2. Letakkan keduanya dalam jaringan Wi-Fi yang sama</string>
+    <string name="play_to_pc_how_step2_body">Mulai penerima dan setujui prompt firewall komputer Anda agar telepon dapat menghubunginya. Telepon kemudian menemukannya secara otomatis.</string>
+    <string name="play_to_pc_how_step3_title">3. Putar sesuatu, lalu hubungi</string>
+    <string name="play_to_pc_how_step3_body">Pilih komputer dalam daftar dan tekan Connect. Audio berpindah ke speaker-nya sementara play, pause dan skip tetap di telepon. Tekan Disconnect untuk mengembalikan suara tersebut.</string>
+    <string name="play_to_pc_how_note">Stream ini tanpa kerugian melalui Wi-Fi, tapi komputer memainkannya lewat mixer audio sendiri — jadi equalizer, preamp dan crossfade dari ponsel dilewati dalam mode ini.</string>
+    <string name="play_to_pc_link_header">Dapatkan penerima untuk komputer Anda</string>
+    <string name="play_to_pc_link_hint">Unduhan berjalan di komputer Anda, bukan telepon, sehingga kirim tautan ke sana — atau cukup ketik langsung ke browser komputer Anda:</string>
+    <string name="play_to_pc_link_copy">Salin link</string>
+    <string name="play_to_pc_link_copied">Link disalin</string>
+    <string name="play_to_pc_link_share">Kirim ke komputer</string>
+    <string name="play_to_pc_link_open">Buka pada ponsel</string>
+    <string name="play_to_pc_link_share_text">Dapatkan OfflinePlaya Receiver gratis untuk PC, Mac atau Linux dan putar musik dari telepon melalui speaker komputer Anda: %1$s</string>
 </resources>

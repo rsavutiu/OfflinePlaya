@@ -95,6 +95,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import offlineplaya.shared.generated.resources.Res
 import offlineplaya.shared.generated.resources.common_loading
+import offlineplaya.shared.generated.resources.play_to_pc_link_share_text
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
@@ -553,11 +554,20 @@ private fun DestinationBody(
                     controller.startDiscovery()
                     onDispose { controller.stopDiscovery() }
                 }
+                // The receiver download is only useful once it reaches the
+                // computer, so the guide hands the link to the system share
+                // sheet (mail-to-self, Quick Share, Phone Link…).
+                val sharer: com.offlineplaya.shared.domain.share.Sharer = koinInject()
+                val shareLinkText = stringResource(
+                    Res.string.play_to_pc_link_share_text,
+                    com.offlineplaya.shared.domain.stream.PlayToPcLinks.GUIDE,
+                )
                 PlayToPcPage(
                     state = playToPcState,
                     onConnect = { controller.connect(it) },
                     onConnectManual = { host, port -> controller.connectManual(host, port) },
                     onDisconnect = { controller.disconnect() },
+                    onShareLink = { sharer.share(shareLinkText) },
                     onBack = { navigator.pop() },
                 )
             }

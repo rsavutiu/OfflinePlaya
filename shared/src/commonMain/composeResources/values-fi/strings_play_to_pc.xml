@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Portti</string>
     <string name="play_to_pc_error_connect_failed">%1$s:n pääsemiseen ei onnistunut</string>
     <string name="play_to_pc_error_connection_lost">Yhteys katkeaa</string>
+    <string name="play_to_pc_how_title">Miten se toimii</string>
+    <string name="play_to_pc_how_step1_title">1. Asenna vastaanottimen tietokoneellesi</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver on pieni ilmaiseksi sovellus Windows-, macOS- ja Linux-pohjaisille laitteille. Lataa se GitHubista -projektin sivuilta — käyttäjätunnusta ei tarvita.</string>
+    <string name="play_to_pc_how_step2_title">2. Aseta molemmat samaan Wi-Fiyn</string>
+    <string name="play_to_pc_how_step2_body">Käynnistä vastaanottimen ja hyväksy tietokoneen palomurron ilmoitus, jotta puhelimelle saadaan yhteys. Puhelin löytää sen sitten itsestään.</string>
+    <string name="play_to_pc_how_step3_title">3. Soita jotain, sitten kytketä</string>
+    <string name="play_to_pc_how_step3_body">Valitse tietokonetta listasta ja paina Yhdistä. Äänestä siirtyy sen kuulostimen kautta soittamisen, pausin ja ohituspainikkeiden säilyttämiseksi puhelimella. Paina Irroita saadaksesi äänen takaisin.</string>
+    <string name="play_to_pc_how_note">Virtaa on häviöttömän laatuinen Wi-Fi-yli, mutta tietokone kuuntelee sen omasta audio-miksistään — joten puhelimen ekvalisointi, esivahvistimet ja rippuvuus ohitetaan tässä tilassa.</string>
+    <string name="play_to_pc_link_header">Hae vastaanottinta tietokonellesi</string>
+    <string name="play_to_pc_link_hint">Lataus suorittuu tietokoneella ei puhelimellasi, joten lähetä tämän linkin siitä — tai kirjoita vain sen tietokoneen selaimelle:</string>
+    <string name="play_to_pc_link_copy">Kopioi linkki</string>
+    <string name="play_to_pc_link_copied">Linkki kopiotettu</string>
+    <string name="play_to_pc_link_share">Lähetä tietokoneelle</string>
+    <string name="play_to_pc_link_open">Avaa puhelimella</string>
+    <string name="play_to_pc_link_share_text">Hae ilmaiseksi OfflinePlaya Receiver -vastaanottin sinun PC-, Mac- tai Linux-tietokoneellesi ja kuuntele äänitiedostojasi kautta sen kuulostimet: %1$s</string>
 </resources>

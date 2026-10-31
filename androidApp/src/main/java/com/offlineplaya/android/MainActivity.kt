@@ -440,6 +440,11 @@ private fun AndroidApp() {
                 val playToPcNudgeVisible by playToPcNudgeCoordinator.visible.collectAsState()
                 if (playToPcNudgeVisible) {
                     com.offlineplaya.shared.presentation.ui.molecules.PlayToPcNudgeDialog(
+                        onOpenPlayToPc = {
+                            navigator.push(
+                                com.offlineplaya.shared.presentation.navigation.AppDestination.PlayToPc,
+                            )
+                        },
                         onActioned = { reviewScope.launch { playToPcNudgeCoordinator.markActioned() } },
                         onDismiss = playToPcNudgeCoordinator::onDismiss,
                     )

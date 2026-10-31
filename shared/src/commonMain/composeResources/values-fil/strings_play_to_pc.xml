@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">Hindi makakalap ng %1$s</string>
     <string name="play_to_pc_error_connection_lost">Nawala ang koneksyon</string>
+    <string name="play_to_pc_how_title">Paano ito gumagana</string>
+    <string name="play_to_pc_how_step1_title">1. I-install ang receiver sa iyong kompyuter</string>
+    <string name="play_to_pc_how_step1_body">Ang OfflinePlaya Receiver ay isang maliit na libreng app para sa Windows, macOS at Linux. Mag-download ito mula sa pahina ng proyekto sa GitHub — walang kailangan ng account.</string>
+    <string name="play_to_pc_how_step2_title">2. Ipagkatiwalaan ang parehong Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Simulan ang receiver at iyugtan ang firewall ng kompyuter mo para makarating ang telepono dito. Ang telepono ay magmamarka nang sarili nitong mahanap ito.</string>
+    <string name="play_to_pc_how_step3_title">3. I-play something, pagkatapos konektahin</string>
+    <string name="play_to_pc_how_step3_body">Pumiling sa listahan ng iyong kompyuter at i-click ang Connect. Ang audio ay naglalakbay patungo sa mga speaker nito habang play, pause at skip ay mananatili pa rin sa telepono. I-click ang Disconnect para makuha muli ang tunog.</string>
+    <string name="play_to_pc_how_note">Ang stream ay walang pagkawala sa Wi-Fi, ngunit ang kompyuter ito naglalakbay dito through kanyang sariling audio mixer — kaya ang equaliser, preamp at crossfade ng telepono ay nawiwika nung mode na ito.</string>
+    <string name="play_to_pc_link_header">Magkuha ng receiver para iyong kompyuter</string>
+    <string name="play_to_pc_link_hint">Ang pag-download ay gumagana sa iyong kompyuter, hindi sa telepono, so i-send ang link dito — o kaya lang type mo ito sa browser ng iyong computer:</string>
+    <string name="play_to_pc_link_copy">Kopyahin ang link</string>
+    <string name="play_to_pc_link_copied">Link na kinopya</string>
+    <string name="play_to_pc_link_share">Ipadala sa kompyuter</string>
+    <string name="play_to_pc_link_open">Buksan sa telepono</string>
+    <string name="play_to_pc_link_share_text">Magkuha ng libreng OfflinePlaya Receiver para PC, Mac o Linux at i-play ang musika mula iyong telepono through mga speaker nito: %1$s</string>
 </resources>

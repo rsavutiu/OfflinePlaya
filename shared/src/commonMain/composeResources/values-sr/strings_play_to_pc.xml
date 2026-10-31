@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">Nije bilo moguće dostići %1$s</string>
     <string name="play_to_pc_error_connection_lost">Izgubljena veza</string>
+    <string name="play_to_pc_how_title">Kako radi</string>
+    <string name="play_to_pc_how_step1_title">1. Instaliraj prijemnik na računaru</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver je mali besplatna aplikacija za Windows, macOS i Linux. Preuzmi ga sa stranice projekta na GitHubu — ne treba ti nalog.</string>
+    <string name="play_to_pc_how_step2_title">2. Postavi obа da budу na istom Wi-Fi-ju</string>
+    <string name="play_to_pc_how_step2_body">Pokreni prijemnik i odobri prekidač zaželja računara tako što će telefon moći dostupiti njemu. Telefon tada sam pronađe.</string>
+    <string name="play_to_pc_how_step3_title">3. Pusti nešto, pa povezi se</string>
+    <string name="play_to_pc_how_step3_body">Odaberi svoj računar u listi i dodirni Poveži se. Zvuk prelazi na zvučnike njegova dok reprodukcija, pauza i preskakanje ostaju na telefonu. Dodirnite Odbaci da bi vratili zvuk.</string>
+    <string name="play_to_pc_how_note">Strujanje je bezgubitno kroz Wi-Fi, ali računar ga odigra preko sopstvenog audio mixera — tako da se u ovom režimu obiđe telefonski ekvalizer, predpojačivač i preskakanje.</string>
+    <string name="play_to_pc_link_header">Preuzmi prijemnik za svoj računara</string>
+    <string name="play_to_pc_link_hint">Preuzimanje teče na vašem računalu a ne telefonu pa posalji ovaj link tamo — ili jednostavno unesi ga u pregledač svog računara:</string>
+    <string name="play_to_pc_link_copy">Kopiraj vezu</string>
+    <string name="play_to_pc_link_copied">Veza je koprirana</string>
+    <string name="play_to_pc_link_share">Pošli na računar</string>
+    <string name="play_to_pc_link_open">Otvori na telefonu</string>
+    <string name="play_to_pc_link_share_text">Preuzmi besplatni OfflinePlaya Receiver za svoj PC, Mac ili Linux i igraj glazbu s telefona kroz zvučnike svog računara: %1$s</string>
 </resources>

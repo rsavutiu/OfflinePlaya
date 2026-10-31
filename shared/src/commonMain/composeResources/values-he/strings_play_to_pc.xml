@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">פורט</string>
     <string name="play_to_pc_error_connect_failed">לא ניתן להגיע ל-%1$s</string>
     <string name="play_to_pc_error_connection_lost">Connection lost</string>
+    <string name="play_to_pc_how_title">איך זה עובד</string>
+    <string name="play_to_pc_how_step1_title">1. התקן את המקליט על מחשב שלך</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver הוא אפליקציה קטנה مجانية ל-Windows, macOS ו-Linux. הורד אותו מהصفحة של הפרוייקט ב-GitHub — אין צורך באילון משתמש.</string>
+    <string name="play_to_pc_how_step2_title">2. תстановו שניהם באותו Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">התחל את המקליט וה одור את ההודעה על חומרי החסימה של מחשבך כדי שהטלפון יוכל להגיע אליו. לאחר מכן הטלף ימצא אותו לבדה.</string>
+    <string name="play_to_pc_how_step3_title">3. שחק משהו ואז חבר</string>
+    <string name="play_to_pc_how_step3_body">בחר את המחשב ברשימה ולחץ על "חבר". הקול מועבר למקני השמע שלו במהלך ההשמעה, הפסקת והскаילה נשארים בטелефון. לחץ על "נתקל" כדי להחזיר את הסאונד חזרה.</string>
+    <string name="play_to_pc_how_note">התמונה היא ללא אובדן דרך Wi-Fi, אך המחשב שוחק אותה באמצעות מעבד הקול الخاص בו — אז במוד זה מוגנים מהאקויליזר, הפקעמה והמעבר הרך של הטלפון.</string>
+    <string name="play_to_pc_link_header">קבל את הקלט למחשב שלך</string>
+    <string name="play_to_pc_link_hint">ההורדה עובדת על מחשבך ולא על הטелефון, לכן העביר את הקישור אליו — או פשוט תיכנס לקובץ בדפדפן המחשב:</string>
+    <string name="play_to_pc_link_copy">העתק קישור</string>
+    <string name="play_to_pc_link_copied">קישור מוכפל</string>
+    <string name="play_to_pc_link_share">שלח למחשב</string>
+    <string name="play_to_pc_link_open">פתח בטלפון</string>
+    <string name="play_to_pc_link_share_text">קבל את ה-OfflinePlaya Receiver المجاني עבור מחשבך, Mac או Linux ותשמיע את המוזיקה מהטלפון דרך מקני השמע שלך: %1$s</string>
 </resources>

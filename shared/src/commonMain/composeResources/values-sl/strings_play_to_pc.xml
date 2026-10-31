@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Vrata</string>
     <string name="play_to_pc_error_connect_failed">Ni mogoče doseči %1$s</string>
     <string name="play_to_pc_error_connection_lost">Povezava je izgubljena</string>
+    <string name="play_to_pc_how_title">Kako deluje</string>
+    <string name="play_to_pc_how_step1_title">1. Namestite prejemnik na svoj računalник</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Prejemnik je majhen brezplačni program za Windows, macOS in Linux. Prenesite ga s strani projekta na GitHubu — ni potrebna prijava.</string>
+    <string name="play_to_pc_how_step2_title">2. Postavita ju ob istem Wi-Fi omrežju</string>
+    <string name="play_to_pc_how_step2_body">Zapošljite prejemnik in odobrite vprašajev za varnost računalnika, da bo telefon lahko dostopal do njega. Telefon potem sam najde prejemnike.</string>
+    <string name="play_to_pc_how_step3_title">3. Poslušajte nekaj pred povezavo</string>
+    <string name="play_to_pc_how_step3_body">Izberite svoj računalnik v seznamu in kliknite Poveži. Zvok se premakne na zvočniki, medtem ko poslušanje, zaustavitev in prehod pa ostanejo na telefonu. Kliknite Odstrani povezavo, da bo ponovno vključen zvok.</string>
+    <string name="play_to_pc_how_note">Prenos je breznepostopni skozi Wi-Fi, a računalnik ga igra s svojim lastnim audio mešalniki — tako telefonova ekvalizatorja, predpozorilnika in prehoda med glasbo ne uporablja v tem načinu.</string>
+    <string name="play_to_pc_link_header">Pridobite prejemniški program za vaše računalnik</string>
+    <string name="play_to_pc_link_hint">Prenos teče na vašem računalniku, ne pa telefonu, tako da posredujte ta povezava tam — ali samo vnesite njen naslov v brskalnik svojega računalnika:</string>
+    <string name="play_to_pc_link_copy">Kopiraj povezavo</string>
+    <string name="play_to_pc_link_copied">Povezava kopirana</string>
+    <string name="play_to_pc_link_share">Pošlji na računalnik</string>
+    <string name="play_to_pc_link_open">Odpri na telefonu</string>
+    <string name="play_to_pc_link_share_text">Prejemniški program OfflinePlaya za vaše PC, Mac ali Linux prepoznava in poslušajte glasbo s telefona skozi zvočnike svojega računalnika: %1$s</string>
 </resources>

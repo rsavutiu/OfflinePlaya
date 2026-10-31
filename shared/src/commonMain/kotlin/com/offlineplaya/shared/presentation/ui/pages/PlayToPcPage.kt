@@ -3,6 +3,8 @@ package com.offlineplaya.shared.presentation.ui.pages
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -31,6 +33,7 @@ import com.offlineplaya.shared.domain.stream.PcReceiver
 import com.offlineplaya.shared.domain.stream.PlayToPcError
 import com.offlineplaya.shared.domain.stream.PlayToPcState
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
+import com.offlineplaya.shared.presentation.ui.organisms.PlayToPcGuide
 import com.offlineplaya.shared.presentation.ui.preview.PreviewScreenSizes
 import com.offlineplaya.shared.presentation.ui.theme.AppSpacing
 import com.offlineplaya.shared.presentation.ui.theme.PreviewTheme
@@ -64,6 +67,7 @@ fun PlayToPcPage(
     onConnect: (PcReceiver) -> Unit,
     onConnectManual: (host: String, port: Int) -> Unit,
     onDisconnect: () -> Unit,
+    onShareLink: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -115,6 +119,16 @@ fun PlayToPcPage(
             } else {
                 DiscoverySection(state = state, onConnect = onConnect)
                 ManualConnectSection(onConnectManual = onConnectManual)
+                // Fixed order, deliberately: discovery is live, so reordering
+                // these on `receivers.isEmpty()` would move
+                // ManualConnectSection within the composition and wipe the
+                // rememberSaveable IP the user is mid-way through typing the
+                // moment a PC appears or drops off the network.
+                PlayToPcGuide(
+                    onShare = onShareLink,
+                    modifier = Modifier.padding(top = AppSpacing.md),
+                )
+                Spacer(Modifier.height(AppSpacing.lg))
             }
         }
     }
@@ -220,7 +234,8 @@ private fun PlayToPcPageDiscoveringPreview() {
                     PcReceiver("Studio", "192.168.1.31", 45117),
                 ),
             ),
-            onConnect = {}, onConnectManual = { _, _ -> }, onDisconnect = {}, onBack = {},
+            onConnect = {}, onConnectManual = { _, _ -> }, onDisconnect = {},
+            onShareLink = {}, onBack = {},
         )
     }
 }
@@ -231,7 +246,20 @@ private fun PlayToPcPageConnectedPreview() {
     PreviewTheme {
         PlayToPcPage(
             state = PlayToPcState(connected = PcReceiver("Living Room PC", "192.168.1.20", 45117)),
-            onConnect = {}, onConnectManual = { _, _ -> }, onDisconnect = {}, onBack = {},
+            onConnect = {}, onConnectManual = { _, _ -> }, onDisconnect = {},
+            onShareLink = {}, onBack = {},
+        )
+    }
+}
+
+@PreviewScreenSizes
+@Composable
+private fun PlayToPcPageNoneFoundPreview() {
+    PreviewTheme {
+        PlayToPcPage(
+            state = PlayToPcState(discovering = false),
+            onConnect = {}, onConnectManual = { _, _ -> }, onDisconnect = {},
+            onShareLink = {}, onBack = {},
         )
     }
 }

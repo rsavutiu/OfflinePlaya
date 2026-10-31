@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">%1$s'ye Ulaşılamadı</string>
     <string name="play_to_pc_error_connection_lost">Başlatma Kayboldu</string>
+    <string name="play_to_pc_how_title">Nasıl çalışır</string>
+    <string name="play_to_pc_how_step1_title">1. Alıcıyı bilgisayarınıza kurun</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Alıcısı Windows, macOS ve Linux için küçük ücretsiz bir uygulamadır. GitHub'taki proje sayfasından indirin — hesap gerekmez.</string>
+    <string name="play_to_pc_how_step2_title">2. Aynı Wi-Fi üzerinde olmaları gerekiyor</string>
+    <string name="play_to_pc_how_step2_body">Alıcıyı başlatın ve bilgisayarınızın güvenlik duvarı uyarısını onaylayarak telefonun ulaşabilmesini sağlayın. Telefon ardından kendisi alıcıyı bulur.</string>
+    <string name="play_to_pc_how_step3_title">3. Şeyi çalıp sonra bağlanın</string>
+    <string name="play_to_pc_how_step3_body">Listeden bilgisayarınızı seçin ve Bağla'ya tıklayın. Çalmak, durdurmak ve atlamak telefon üzerinde kalırken ses akışı bilgisayara geçer. Ses geri alıcıya dönmek için Ayrıl'ı tıklatın.</string>
+    <string name="play_to_pc_how_note">Wi-Fi üzerinden kaybetsinmeyen bir aktarım vardır ancak bilgisayar kendi audio mixer aracılığıyla çalar — bu modda telefonun equalizer, preamp ve crossfade devre dışı bırakılır.</string>
+    <string name="play_to_pc_link_header">Bilgisayara alıcıyı alın</string>
+    <string name="play_to_pc_link_hint">İndirme işlemi bilgisayarınızda değil telefonda gerçekleştiğinden dolayı bağlantıyı oraya gönderin—veya doğrudan bilgisayarın tarayıcısına yapıştırın:</string>
+    <string name="play_to_pc_link_copy">Link kopyala</string>
+    <string name="play_to_pc_link_copied">Linke kopyalandı</string>
+    <string name="play_to_pc_link_share">Bilgisayara gönder</string>
+    <string name="play_to_pc_link_open">Telefonda aç</string>
+    <string name="play_to_pc_link_share_text">Ücretsiz OfflinePlaya Alıcıyı PC, Mac veya Linux için alın ve telefonunuzdaki müzikleri bilgisayarınızın hoparlörlerinden çalın: %1$s</string>
 </resources>

@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">%1$s elérhetetlen volt</string>
     <string name="play_to_pc_error_connection_lost">Kapcsolat veszteség</string>
+    <string name="play_to_pc_how_title">Hogyan működik</string>
+    <string name="play_to_pc_how_step1_title">1. Telepítse a fogadóalkalmazást számítógépére</string>
+    <string name="play_to_pc_how_step1_body">Az OfflinePlaya Receiver egy kis ingyenes alkalmazás Windows, macOS és Linux rendszerhez. Töltse le az GitHub projektoldaláról — fiók nélkülem.</string>
+    <string name="play_to_pc_how_step2_title">2. Helyezze egymással ugyanarra a Wi-Fi-re</string>
+    <string name="play_to_pc_how_step2_body">Indítsa el a fogadót, és engedélyezi számítógépének tűzfalszintetikus figyelmeztetését, hogy az telefon érhető legyen. A telefón akkor magát találja meg.</string>
+    <string name="play_to_pc_how_step3_title">3. Jelenleg valamit játszik, majd csatlakozzon</string>
+    <string name="play_to_pc_how_step3_body">Válassza ki számítógépét a listából és nyomja meg az Összekapcsolás gombot. A hang átmenik a monitor kijelzőire míg lejáték, elaltatás és ugrálás marad telefonon. Nyomjon rá Disconnect ahhoz hogy visszaállítsa a zenei hangerőt.</string>
+    <string name="play_to_pc_how_note">Az adatsugárzás Wi-Fi-n veszi át az eredeti minőséget, de számítógépe ezt saját audio keverékén keresztül jeleníti meg — így telefonja egyenlítője, előerősítő és csúszka beállításai átmennek a rendszer felett.</string>
+    <string name="play_to_pc_link_header">Szerezze be fogadóját számítógépére</string>
+    <string name="play_to_pc_link_hint">A letöltés az Ön számítógéjén fut, nem telefonon, így küldje el ezt a linket oda — vagy csak másolja le és illesszen bele böngészőbe:</string>
+    <string name="play_to_pc_link_copy">Hivatkozás másolása</string>
+    <string name="play_to_pc_link_copied">Link megkapták</string>
+    <string name="play_to_pc_link_share">Küldés számítógépre</string>
+    <string name="play_to_pc_link_open">Nyitás telefonon</string>
+    <string name="play_to_pc_link_share_text">Szerezze be az ingyenes OfflinePlaya Fogadót PC, Mac vagy Linux rendszerhez és játsza le telefonszámláját a monitor kijelzőin: %1$s</string>
 </resources>

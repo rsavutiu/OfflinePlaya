@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Ports</string>
     <string name="play_to_pc_error_connect_failed">Nevar pieslēgties pie %1$s</string>
     <string name="play_to_pc_error_connection_lost">Savienojums zaudēts</string>
+    <string name="play_to_pc_how_title">Kā tas darbojas</string>
+    <string name="play_to_pc_how_step1_title">1. Instalējiet saņemšanas ierīci uz savu datoru</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Saņemšana ir maza bezmaksas programmatūra Windows, macOS un Linux sistēmai. Lejupielādēt to var no projektapstrādes lapas GitHub — nepieciešams nekāds konts.</string>
+    <string name="play_to_pc_how_step2_title">2. Ievietojiet abus uz vienu Wi-Fi tīklu</string>
+    <string name="play_to_pc_how_step2_body">Sāciet saņemšanu un atļaujiet savam datora uztverējamajai aizsardzības pieteikumam, lai telefons var piekļūt tam. Telefons tad to pašu atradis bez palīdzības.</string>
+    <string name="play_to_pc_how_step3_title">3. Atspaidējiet kādu dziesmu un izvadiet savienojumu</string>
+    <string name="play_to_pc_how_step3_body">Izvelcieties datora ierakstu sarakstā un nospiediet Savienoties. Audio pāriet uz tās parūkītes, bet atslaucīšana, pauze un skaitļošanas izvēle paliek telefona pusē. Nospiežot Atsegt, skaņas tiek atgrieztas.</string>
+    <string name="play_to_pc_how_note">Straumis ir bezzudīgs pārejas veidā Wi-Fi tīklā, bet dators to spēlē caur savu saviem audio maiņām — tādējādi telefona ekvalizators, preamp un crossfade tiek izvairīti šajā režimes.</string>
+    <string name="play_to_pc_link_header">Iegūstiet saņemšanu datorsim</string>
+    <string name="play_to_pc_link_hint">Lejupielāde notiek uz jums datori, ne telefonam, tāpēc nosendet šo linki tur — vai vienkārši ievadieties savas datora paskatītāja adrese:</string>
+    <string name="play_to_pc_link_copy">Kopēt saiti</string>
+    <string name="play_to_pc_link_copied">Saitne kopija veiksmīga</string>
+    <string name="play_to_pc_link_share">Nosūtīt uz datoru</string>
+    <string name="play_to_pc_link_open">Atvērt telefonā</string>
+    <string name="play_to_pc_link_share_text">Iegūstiet bezmaksas OfflinePlaya Saņemšanu savai PC, Mac vai Linux sistēmai un spēlējiet telefona muzikālu caur jums datora parūkītėm: %1$s</string>
 </resources>

@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">Port</string>
     <string name="play_to_pc_error_connect_failed">Nelze dosáhnout %1$s</string>
     <string name="play_to_pc_error_connection_lost">Connection lost</string>
+    <string name="play_to_pc_how_title">Jak funguje</string>
+    <string name="play_to_pc_how_step1_title">1. Nainstalujte přijímač na svém počítači</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver je malá bezplatná aplikace pro Windows, macOS a Linux. Stahujete ji z stránky projektu na GitHub — nepotřebuje se účet.</string>
+    <string name="play_to_pc_how_step2_title">2. Umístěte oba za stejné Wi-Fi</string>
+    <string name="play_to_pc_how_step2_body">Spusťte přijímač a schválte výstrahu firewallu vašeho počítače, aby telefon mohl dosáhnout na něj. Telefon pak ho najde sám.</string>
+    <string name="play_to_pc_how_step3_title">3. Přehrát něco, poté se spojit</string>
+    <string name="play_to_pc_how_step3_body">Vyberte svůj počítač v seznamu a stiskněte Připojit. Zvuk se přesune na jeho reproduktory během hraní, pauzy a skáče zpět zůstane ve telefonu. Stisknutím Odpojít vrátíme zvuk zpět.</string>
+    <string name="play_to_pc_how_note">Stream je bezstratový po Wi-Fi, ale počítač ho přehrává prostřednictvím vlastního audio mixera — takže rovnice telefonu, predzesilovače a crossfade jsou tímto modelem obejdeny.</string>
+    <string name="play_to_pc_link_header">Získejte přijímač pro svůj počítač</string>
+    <string name="play_to_pc_link_hint">Stahování proběhne na vašem počítači, ne telefonu, takže poslete tento odkaz tam — nebo jednoduchy ho zadejte do webového prohlížeče svého počítače:</string>
+    <string name="play_to_pc_link_copy">Kopírovat odkaz</string>
+    <string name="play_to_pc_link_copied">Odkaz skopirovaný</string>
+    <string name="play_to_pc_link_share">Poslat na počítač</string>
+    <string name="play_to_pc_link_open">Otevřít na telefonu</string>
+    <string name="play_to_pc_link_share_text">Získejte bezplatnou OfflinePlaya Receiver pro svůj PC, Mac nebo Linux a přehrávejte hudbu z vašeho telefona prostřednictvím reproduktorů vámi počítače: %1$s</string>
 </resources>

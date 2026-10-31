@@ -16,4 +16,19 @@
     <string name="play_to_pc_manual_port">ポート</string>
     <string name="play_to_pc_error_connect_failed">%1$sにアクセスできません</string>
     <string name="play_to_pc_error_connection_lost">接続が切断されました</string>
+    <string name="play_to_pc_how_title">どのように動作するか</string>
+    <string name="play_to_pc_how_step1_title">1. 受信機をコンピュータにインストールします</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya ReceiverはWindows、macOSおよびLinux用の小さな無料アプリです。GitHub上のプロジェクトページからダウンロードしてください — アカウントが必要ありません。</string>
+    <string name="play_to_pc_how_step2_title">2. 同じWi-Fiネットワーク上にしてください</string>
+    <string name="play_to_pc_how_step2_body">受信機を起動し、コンピュータのファイアウォールポップアップに承認することで電話が接続できます。その後、自動的に検出されます。</string>
+    <string name="play_to_pc_how_step3_title">3. 音楽を再生してから接続します</string>
+    <string name="play_to_pc_how_step3_body">リストの中にあるコンピューターを選択し、「Connect」タップしてください。音声はそのスピーカーに移動しながら、プレイ・ポーズ・スキップ操作は電話で行えます。「Disconnect」をタップするとサウンドが戻ります。</string>
+    <string name="play_to_pc_how_note">Wi-Fi経由のストリームはロスレスですが、コンピュータでは自身のオーディオミキサーを通じて再生されます — そのためこのモードにおいて電話側のエコーキャンセリングやプリアンプ・クロスフェイドがバイパスされています。</string>
+    <string name="play_to_pc_link_header">コンピューター用の受信機を取得</string>
+    <string name="play_to_pc_link_hint">ダウンロードはコンピュータで行われるため、リンクをその端末に送ってください — または単純にブラウザに入力してください:</string>
+    <string name="play_to_pc_link_copy">リンクをコピー</string>
+    <string name="play_to_pc_link_copied">関連する情報がありません。</string>
+    <string name="play_to_pc_link_share">コンピューターへ送信</string>
+    <string name="play_to_pc_link_open">スマホで開く</string>
+    <string name="play_to_pc_link_share_text">PC、MacまたはLinux用の無料OfflinePlaya Receiverを取得し、あなたのスマートフォンの音楽を通じてコンピュータスピーカーを使用します: %1$s</string>
 </resources>
