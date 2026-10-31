@@ -115,7 +115,7 @@
     <string name="eq_nothing_playing">Nichts läuft</string>
     <string name="eq_auto_explainer">Starten Sie eine Track und Auto wählt ein Voreinstellung aus dessen Genre-Tag.</string>
     <string name="eq_label_applied_preset">Voreinstellung angewendet</string>
-    <string name="eq_label_from_tag">Aus Tag /no_think</string>
+    <string name="eq_label_from_tag">Aus Tag</string>
     <string name="eq_label_now_playing">Jetzt wiedergegeben</string>
     <string name="eq_no_genre_tag">— kein Genre-Tag —</string>
     <string name="eq_fallback_no_tag">Diese Datei hat kein Genre-Tag, daher kann Auto keinen Stil erkennen — der Verlauf bleibt flach. Tag deine Dateien oder wechsle zu Manuell.</string>

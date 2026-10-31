@@ -77,6 +77,13 @@ LOCALES = {
     "zh-rTW": "Traditional Chinese",
     # Indian-subcontinent set + Swahili (added 2026-09-11) — big offline-player
     # markets. Urdu (ur) is RTL, like ar/he/fa.
+    #
+    # WARNING (2026-10-31): bn/ta/te/ur were generated, reviewed and then DROPPED
+    # before release — qwen3:8b produced mixed-script output (Cyrillic, Devanagari
+    # and CJK characters inside Tamil/Telugu/Bengali words) and translated
+    # app_name in te, garbling the launcher label. Running this script will
+    # recreate those dirs; do NOT ship them without a native read or a stronger
+    # model. The dropped files are recoverable from commit 46a534d.
     "bn": "Bengali",
     "ur": "Urdu",
     "ta": "Tamil",
@@ -228,7 +235,21 @@ def translate_batch(values: list, language: str) -> "list[str] | None":
     for line in lines:
         m = re.match(r"\s*(\d+)\.\s*(.*)$", line)
         if m:
-            parsed.append((int(m.group(1)), m.group(2).strip()))
+            # qwen3 echoes its own `/no_think` directive, glued onto the END of
+            # the last line of a batch — so it lands silently in whichever key
+            # came last. Nothing downstream could see it: the line count and the
+            # format specifiers both still validate. It reached production in
+            # five locales (`eq_label_from_tag`) before anyone noticed.
+            value = re.sub(r"\s*/no_?think\s*$", "", m.group(2), flags=re.I).strip()
+            parsed.append((int(m.group(1)), value))
+
+    # Belt and braces: any surviving thinking marker means the response was not
+    # clean, so fail the batch rather than write a visible artefact into the UI.
+    leaked = [v for _, v in parsed if re.search(r"/no_?think|</?think>", v, re.I)]
+    if leaked:
+        print(f"  ! thinking marker survived in {len(leaked)} line(s); skipping batch",
+              file=sys.stderr)
+        return None
 
     if len(parsed) != len(values):
         print(f"  ! expected {len(values)} lines, got {len(parsed)}; skipping batch",

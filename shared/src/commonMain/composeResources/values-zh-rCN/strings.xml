@@ -115,7 +115,7 @@
     <string name="eq_nothing_playing">没有播放内容</string>
     <string name="eq_auto_explainer">开始播放曲目，Auto 会根据其流派标签选择预设。</string>
     <string name="eq_label_applied_preset">应用预设</string>
-    <string name="eq_label_from_tag">从标签 /no_think</string>
+    <string name="eq_label_from_tag">从标签</string>
     <string name="eq_label_now_playing">正在播放</string>
     <string name="eq_no_genre_tag">— 无流派标签 —</string>
     <string name="eq_fallback_no_tag">此文件没有流派标签，因此 Auto 无法推断风格 — 曲线保持平直。请标记文件或切换到手动模式。</string>

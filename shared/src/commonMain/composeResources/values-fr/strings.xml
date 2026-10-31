@@ -115,7 +115,7 @@
     <string name="eq_nothing_playing">Rien ne joue</string>
     <string name="eq_auto_explainer">Démarrer une piste et Auto choisit un préréglage à partir de sa balise de genre.</string>
     <string name="eq_label_applied_preset">Préréglage appliqué</string>
-    <string name="eq_label_from_tag">À partir de la balise /no_think</string>
+    <string name="eq_label_from_tag">À partir de la balise</string>
     <string name="eq_label_now_playing">En cours de lecture</string>
     <string name="eq_no_genre_tag">— aucun tag de genre —</string>
     <string name="eq_fallback_no_tag">Ce fichier n'a pas de tag de genre, donc Auto ne peut pas déduire un style — la courbe reste plate. Taguez vos fichiers ou切换ez vers Manuel.</string>

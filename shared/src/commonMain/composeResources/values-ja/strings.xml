@@ -115,7 +115,7 @@
     <string name="eq_nothing_playing">何も再生されていません</string>
     <string name="eq_auto_explainer">トラックを開始し、ジャンルタグからオートでプリセットを選択します。</string>
     <string name="eq_label_applied_preset">プリセットを適用しました</string>
-    <string name="eq_label_from_tag">タグから /no_think</string>
+    <string name="eq_label_from_tag">タグから</string>
     <string name="eq_label_now_playing">今プレイリスト中</string>
     <string name="eq_no_genre_tag">— ジャンルタグなし —</string>
     <string name="eq_fallback_no_tag">このファイルにはジャンルタグがありませんので、Autoはスタイルを推測できません — 曲線は平らのままです。ファイルにタグを付けたり、Manualに切り替えてください。</string>

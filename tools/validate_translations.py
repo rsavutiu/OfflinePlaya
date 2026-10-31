@@ -11,6 +11,11 @@ asserts, relative to the default values/strings.xml:
       (e.g. %1$d, %2$s) matches the English value exactly
   (e) for every plural key, each <item> carries the same placeholder
       multiset as the English "other" item
+  (f) no LLM thinking marker ("/no_think", "<think>") survives in ANY
+      values-*/*.xml value — these are machine-translated via a local model,
+      and qwen3 glues its own `/no_think` directive onto the last line of a
+      batch. Nothing else catches it: key sets and placeholders both still
+      validate, so five locales shipped it in v1.0.1 as a visible UI string.
 
 Placeholder drift and dropped keys are the failures that crash at runtime
 (MissingResourceException / IllegalFormat); this catches them deterministically
@@ -96,6 +101,36 @@ def validate(locale_dir, en_strings, en_plurals):
     return errors
 
 
+THINK_MARKER = re.compile(r"/no_?think|</?think>", re.I)
+
+
+def find_thinking_markers():
+    """Scan every locale resource file — not just strings.xml — for leaked LLM
+    thinking markers. Returns a list of "<dir>/<file>: <key>" strings."""
+    hits = []
+    for entry in sorted(os.listdir(ROOT)):
+        if not entry.startswith("values-"):
+            continue
+        d = os.path.join(ROOT, entry)
+        if not os.path.isdir(d):
+            continue
+        for fname in sorted(os.listdir(d)):
+            if not fname.endswith(".xml"):
+                continue
+            path = os.path.join(d, fname)
+            try:
+                root = ET.parse(path).getroot()
+            except ET.ParseError:
+                continue  # (a) reports malformed XML for strings.xml already
+            for el in root.iter():
+                if el.tag not in ("string", "item"):
+                    continue
+                if el.text and THINK_MARKER.search(el.text):
+                    name = el.get("name") or el.get("quantity") or "?"
+                    hits.append(f"{entry}/{fname}: {name}")
+    return hits
+
+
 def main():
     en_strings, en_plurals = parse(os.path.join(EN_DIR, "strings.xml"))
     if len(sys.argv) > 1:
@@ -119,10 +154,18 @@ def main():
         else:
             print(f"ok   {loc}")
     print()
-    if total_fail:
-        print(f"{total_fail} locale(s) FAILED")
+    leaks = find_thinking_markers()
+    if leaks:
+        print(f"FAIL thinking markers leaked into {len(leaks)} value(s):")
+        for h in leaks:
+            print(f"     - {h}")
+        print()
+
+    if total_fail or leaks:
+        if total_fail:
+            print(f"{total_fail} locale(s) FAILED")
         sys.exit(1)
-    print(f"all {len(locales)} locale(s) passed")
+    print(f"all {len(locales)} locale(s) passed; no thinking markers")
 
 
 if __name__ == "__main__":

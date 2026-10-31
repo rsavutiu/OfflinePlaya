@@ -115,7 +115,7 @@
     <string name="eq_nothing_playing">재생 중이 아님</string>
     <string name="eq_auto_explainer">트랙을 시작하고 장르 태그에서 자동으로 프리셋을 선택합니다.</string>
     <string name="eq_label_applied_preset">프리셋 적용됨</string>
-    <string name="eq_label_from_tag">태그에서 /no_think</string>
+    <string name="eq_label_from_tag">태그에서</string>
     <string name="eq_label_now_playing">지금 재생 중</string>
     <string name="eq_no_genre_tag">— 장르 태그 없음 —</string>
     <string name="eq_fallback_no_tag">이 파일에는 장르 태그가 없어 Auto가 스타일을 추론할 수 없습니다 — 곡선이 평평하게 유지됩니다. 파일에 태그를 추가하거나 Manual로 전환하세요.</string>
