@@ -38,7 +38,7 @@
 
     <!-- Empty-library onboarding (shown on Home when no audio is indexed yet) -->
     <string name="empty_library_title">No music yet</string>
-    <string name="empty_library_subtitle">OfflinePlaya plays audio files that are already on your device — it never streams. Here\'s how to add your music:</string>
+    <string name="empty_library_subtitle">OfflinePlaya plays audio files that are already on your device — it never streams. Here's how to add your music:</string>
     <string name="empty_library_step1_title">1 · Get the files on a computer</string>
     <string name="empty_library_step1_body">Buy or download your tracks (MP3, FLAC, M4A, OGG…) on your PC or Mac, or copy them from a CD or your existing collection.</string>
     <string name="empty_library_step2_title">2 · Copy them to your phone</string>
@@ -52,7 +52,7 @@
 
     <!-- Mandatory music-access gate (shown until READ_MEDIA_AUDIO is granted) -->
     <string name="permission_required_title">Music access needed</string>
-    <string name="permission_required_body">OfflinePlaya is an offline player — it plays audio files stored on this device and can\'t do anything without permission to read them. Grant music access to continue.</string>
+    <string name="permission_required_body">OfflinePlaya is an offline player — it plays audio files stored on this device and can't do anything without permission to read them. Grant music access to continue.</string>
     <string name="permission_required_grant">Grant music access</string>
     <string name="permission_required_open_settings">Open app settings</string>
     <string name="permission_required_denied_note">If nothing happens when you tap the button, the permission was blocked earlier — enable it from app settings instead.</string>
@@ -62,7 +62,7 @@
     <string name="onboarding_back">Back</string>
     <string name="onboarding_next">Next</string>
     <string name="onboarding_welcome_title">Welcome to OfflinePlaya</string>
-    <string name="onboarding_welcome_body">A player for the music you already own. Everything stays on your device — no accounts, no streaming, no ads. Let\'s get your library set up.</string>
+    <string name="onboarding_welcome_body">A player for the music you already own. Everything stays on your device — no accounts, no streaming, no ads. Let's get your library set up.</string>
     <string name="onboarding_welcome_cta">Get started</string>
     <string name="onboarding_permissions_title">Grant a couple of permissions</string>
     <string name="onboarding_permissions_body">These let the app find your music and show playback controls. You can change them anytime in system settings.</string>
@@ -78,7 +78,7 @@
     <string name="onboarding_add_music_pick_folder">Pick a music folder</string>
     <string name="onboarding_add_music_use_device">Use music already on this device</string>
     <string name="onboarding_add_music_found">Found %1$d tracks so far</string>
-    <string name="onboarding_done_title">You\'re all set</string>
+    <string name="onboarding_done_title">You're all set</string>
     <string name="onboarding_done_body">Your library is ready. You can add more folders or tweak anything later in Settings.</string>
     <string name="onboarding_done_summary">%1$d tracks · %2$d folders</string>
     <string name="onboarding_done_cta">Start listening</string>
@@ -183,8 +183,8 @@
     <string name="tag_editor_field_disc">Disc #</string>
     <string name="tag_editor_save">Save</string>
     <string name="tag_editor_saving">Saving…</string>
-    <string name="tag_editor_error">Couldn\'t save tags: %1$s</string>
-    <string name="tag_editor_write_hint">Writes tags into the file. Files the app can\'t write to (some device-indexed tracks) will fail.</string>
+    <string name="tag_editor_error">Couldn't save tags: %1$s</string>
+    <string name="tag_editor_write_hint">Writes tags into the file. Files the app can't write to (some device-indexed tracks) will fail.</string>
     <string name="tag_editor_not_found">Track not found.</string>
     <string name="settings_section_lyrics">Lyrics</string>
     <string name="lyrics_download_remote">Download lyrics</string>
@@ -237,7 +237,7 @@
     <string name="library_excluded_folders">Excluded folders</string>
     <string name="library_excluded_remove">Include again</string>
     <string name="exclude_folder_title">Exclude from library?</string>
-    <string name="exclude_folder_body">"%1$s" and everything inside it will be hidden from the library and skipped by future scans. The files on disk aren\'t touched. You can undo this from Settings.</string>
+    <string name="exclude_folder_body">"%1$s" and everything inside it will be hidden from the library and skipped by future scans. The files on disk aren't touched. You can undo this from Settings.</string>
     <string name="exclude_button">Exclude</string>
     <string name="smart_playlists_section">Smart playlists</string>
     <string name="smart_recently_played">Recently played</string>
@@ -356,15 +356,15 @@
     <string name="share_nudge_body">This player is completely free, with no ads and no tracking — and no marketing budget either. The only way it reaches other people is when someone like you shares it. If it has earned a spot on your phone, please pass it on.</string>
     <string name="share_nudge_share">Share the app</string>
     <string name="share_nudge_dismiss">Maybe later</string>
-    <string name="share_nudge_message">I\'ve been using OfflinePlaya — a free, offline music player with no ads or tracking. Give it a try: %1$s</string>
+    <string name="share_nudge_message">I've been using OfflinePlaya — a free, offline music player with no ads or tracking. Give it a try: %1$s</string>
 
     <!-- USB DAC / bit-perfect output -->
     <string name="dac_bit_perfect">Bit-perfect USB output</string>
-    <string name="dac_bit_perfect_subtitle">Sends audio to your USB DAC untouched. EQ, preamp and crossfade are bypassed while it\'s active.</string>
+    <string name="dac_bit_perfect_subtitle">Sends audio to your USB DAC untouched. EQ, preamp and crossfade are bypassed while it's active.</string>
     <string name="dac_no_device">Connect a USB DAC to use this</string>
     <string name="dac_reason_os">Needs Android 14 or newer</string>
-    <string name="dac_reason_unsupported">This phone or DAC doesn\'t support it</string>
-    <string name="dac_reason_format">The current track\'s format isn\'t supported, so it plays through the system mixer</string>
+    <string name="dac_reason_unsupported">This phone or DAC doesn't support it</string>
+    <string name="dac_reason_format">The current track's format isn't supported, so it plays through the system mixer</string>
     <string name="dac_reason_hires">Tracks above 16-bit play through the system mixer</string>
     <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
     <string name="dac_badge_system_mixer">%1$s · System mixer</string>
