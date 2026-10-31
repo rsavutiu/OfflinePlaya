@@ -75,6 +75,18 @@ LOCALES = {
     "vi": "Vietnamese",
     "zh-rCN": "Simplified Chinese",
     "zh-rTW": "Traditional Chinese",
+    # Indian-subcontinent set + Swahili (added 2026-09-11) — big offline-player
+    # markets. Urdu (ur) is RTL, like ar/he/fa.
+    "bn": "Bengali",
+    "ur": "Urdu",
+    "ta": "Tamil",
+    "te": "Telugu",
+    "mr": "Marathi",
+    "pa": "Punjabi",
+    "gu": "Gujarati",
+    "kn": "Kannada",
+    "ml": "Malayalam",
+    "sw": "Swahili",
 }
 
 OLLAMA_URL = "http://localhost:11434/api/chat"
@@ -127,6 +139,40 @@ def extract_raw_plurals(path: Path) -> "list[str]":
         return []
     text = path.read_text(encoding="utf-8")
     return re.findall(r"<plurals\b.*?</plurals>", text, re.DOTALL)
+
+
+def parse_plurals_xml(path: Path) -> "dict[str, dict[str, str]]":
+    """Return {name: {quantity: text}} for every <plurals> element."""
+    if not path.exists():
+        return {}
+    tree = ET.parse(path)
+    out = {}
+    for pl in tree.getroot().findall("plurals"):
+        items = {}
+        for it in pl.findall("item"):
+            items[it.get("quantity")] = it.text or ""
+        out[pl.get("name")] = items
+    return out
+
+
+def plural_names(blocks: "list[str]") -> "set[str]":
+    """Names of the raw <plurals> blocks from extract_raw_plurals."""
+    names = set()
+    for b in blocks:
+        m = re.search(r'name="([^"]+)"', b)
+        if m:
+            names.add(m.group(1))
+    return names
+
+
+def render_plural_block(name: str, qty_to_text: "dict[str, str]") -> str:
+    """Build a <plurals> block matching the file's existing 8-space item indent.
+    (write_merged_locale prepends 4 spaces to the first line only.)"""
+    lines = [f'<plurals name="{name}">']
+    for qty, text in qty_to_text.items():
+        lines.append(f'        <item quantity="{qty}">{xml_escape_value(text)}</item>')
+    lines.append("    </plurals>")
+    return "\n".join(lines)
 
 
 def count_format_specs(s: str) -> int:
@@ -246,17 +292,21 @@ BATCH_SIZE = 20
 
 def main():
     master = parse_strings_xml(MASTER_FILE)
-    print(f"Master: {len(master)} string keys at {MASTER_FILE.relative_to(REPO_ROOT)}")
+    master_plurals = parse_plurals_xml(MASTER_FILE)
+    print(f"Master: {len(master)} string keys, {len(master_plurals)} plurals "
+          f"at {MASTER_FILE.relative_to(REPO_ROOT)}")
 
     for locale_code, language in LOCALES.items():
         locale_path = RESOURCES_DIR / f"values-{locale_code}" / "strings.xml"
         existing = parse_strings_xml(locale_path)
         plurals = extract_raw_plurals(locale_path)
         missing_keys = [k for k in master if k not in existing]
+        missing_plurals = [n for n in master_plurals if n not in plural_names(plurals)]
         print(
-            f"\n[{locale_code}] {language}: {len(existing)} existing, {len(missing_keys)} missing")
+            f"\n[{locale_code}] {language}: {len(existing)} existing, "
+            f"{len(missing_keys)} missing strings, {len(missing_plurals)} missing plurals")
 
-        if not missing_keys:
+        if not missing_keys and not missing_plurals:
             print(f"  already complete; nothing to do")
             continue
 
@@ -273,11 +323,33 @@ def main():
             for k, v in zip(batch_keys, translated):
                 new_translations[k] = v
 
-        if new_translations:
+        # Translate missing plurals: flatten all item texts into one batch,
+        # then rebuild blocks mirroring the master's quantity keys (one/other).
+        new_plural_blocks = []
+        if missing_plurals:
+            flat_qty, flat_vals = [], []
+            for n in missing_plurals:
+                for qty, txt in master_plurals[n].items():
+                    flat_qty.append((n, qty))
+                    flat_vals.append(txt)
+            print(f"  translating {len(missing_plurals)} plural(s) ({len(flat_vals)} items)...")
+            tr = translate_batch(flat_vals, language)
+            if tr is None:
+                print(f"  plural batch failed validation; leaving plurals for a re-run")
+            else:
+                built = {}
+                for (n, qty), val in zip(flat_qty, tr):
+                    built.setdefault(n, {})[qty] = val
+                for n in missing_plurals:
+                    new_plural_blocks.append(render_plural_block(n, built[n]))
+
+        if new_translations or new_plural_blocks:
             locale_path.parent.mkdir(parents=True, exist_ok=True)
-            write_merged_locale(locale_path, existing, new_translations, language, plurals)
+            write_merged_locale(locale_path, existing, new_translations, language,
+                                plurals + new_plural_blocks)
             print(
-                f"  wrote {len(new_translations)} new translations to {locale_path.relative_to(REPO_ROOT)}")
+                f"  wrote {len(new_translations)} strings + {len(new_plural_blocks)} plurals "
+                f"to {locale_path.relative_to(REPO_ROOT)}")
         else:
             print(f"  no translations produced; locale file untouched")
 
