@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">আপনার পিসি-তে শোষণ করুন</string>
+    <string name="play_to_pc_nudge_body">জানা ছিল যে আপনি এটি তাদের ম্যাচিনের সאונ্ড পদস্থ বহনকারীতে ওয়্যাই-ফাই কম হওয়া ছাঁটি আপনার ফোনে মিউজিক স্ট্রিং করতে পারবেন, এখন বসে থাকুন অফলাইন প্লয়া গ্রহণকারীটি আপনার সিঙ্ক মেরোতে ফ্রি, তখন এই বসে থাকুন Play to PC-এর পছন্দগুলি নিয়মকরণ।</string>
+    <string name="play_to_pc_nudge_get_app">সিঙ্গা অ্যাপটি আপনার জন্য বেড়ায়</string>
+    <string name="play_to_pc_nudge_dismiss">এখন হবে না /no_think</string>
+</resources>

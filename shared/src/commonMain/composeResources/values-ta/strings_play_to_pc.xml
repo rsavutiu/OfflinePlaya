@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     a driver that imports scripts/translate_strings.py against this filename.
+     Kept separate from strings.xml so the validator/fan-out stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">PC க்கு இசையில் பாடல்</string>
+    <string name="play_to_pc_blurb">உங்கள் Wi-Fi நணி மற்றும் ஒரு செவிட்டனியின் தொடர்புக்கு, இப்போதைய வாசலில் உள்ள PC-ஐ மற்றும் அந்த PC-இன் செவி ட்டனியின் கருவிப்படத்தில் இசையைக் கண்ணால் வழங்கப்படும். PC-இல் எந்த செயற்களும் மனதிற்குரியவை இல்லை.</string>
+    <string name="play_to_pc_searching">ஏற்றி வழக்கபடுத்துகின்றங்க</string>
+    <string name="play_to_pc_none_found">எந்த பயன் சம்மானமும் உள்ளதல்ல. OfflinePlaya receiver-ஐ PC-இல் Wi-Fi network-வைப் பகிர்வதற்கு, offlineplaya.com இணையத்தின் மூலமாக ஏற்றி சரியான நடவடிக்கை எடுப்பது.</string>
+    <string name="play_to_pc_connect">இணை</string>
+    <string name="play_to_pc_disconnect">வழக்கமாக தள்ளு</string>
+    <string name="play_to_pc_streaming_to">%1$s-ஐ ஆடி</string>
+    <string name="play_to_pc_connecting_to">%1$s-இன் மின்சந்தரப்பு…</string>
+    <string name="play_to_pc_manual_header">IP address -ல் இணையத்தில் உள்ளவற்றோடு கழகம்</string>
+    <string name="play_to_pc_manual_host">IP Address</string>
+    <string name="play_to_pc_manual_port">Port (அனுமதி)</string>
+    <string name="play_to_pc_error_connect_failed">%1$s-ஐ அங்கு சரியாகப் பயன்படுத்தவேண்டும்.</string>
+    <string name="play_to_pc_error_connection_lost">உறவு நழு</string>
+    <string name="play_to_pc_how_title">எப்படி வெளியில் காணலாம்?</string>
+    <string name="play_to_pc_how_step1_title">1. PC-இன் receiverஐ ஏற்றத் தயங்கவும்.</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver, Windows, macOS மற்றும் Linux -களில் ஒரு செல்வாக்கடைப்பு நிரலாகுது. GitHub-இன் project page-ஐ இணையத்தின் மூலமாக download -ஆவதற்கு, account-ஐ சரி வசதி படுத்தப்பட்டுள்ளது.</string>
+    <string name="play_to_pc_how_step2_title">2. PC-இன் Wi-Fi network-யிலே உங்கள் phone -ஐவும்</string>
+    <string name="play_to_pc_how_step2_body">receiverஐ start -ஆகவும், firewall prompt-ஐ approve -ஆகவும் சரி வசதி படுத்தப்பட்டுள்ளது. Phone-இன் PC-ஐ self-find -ஆகின்றங்க.</string>
+    <string name="play_to_pc_how_step3_title">மூன்று பாடல் இசையில் வரவோம், அப்பൊ ்ങ്കൾ നിലവിൽ ഉള് തന്മടക്കമുള്ള ചരാചර ഇസയിൽ ഒഴுകപ്പെടുത്തൂ.</string>
+    <string name="play_to_pc_how_step3_body">List-லேரும் உங்கள் computer-ஐ select -ஆவதற்கு, Connect -ஐ tap -ஆவதற்கு. Audio moves to its speakers while play, pause and skip stay on the phone. Tap Disconnect to bring the sound back.</string>
+    <string name="play_to_pc_how_note">இந்த செயலில் Wi-Fi-ஐக் கடப்பது lossless,ஆனால் மசரி அவற்றை வழங்கும் audio mixer -இல் இருந்து ஆடியோ செயலில் பகிரப்படுகின்றது,எனவே அந்த மோடி வழிகளில் phone-இன் equaliser , preamp மற்றும் crossfade -ஐ bypassed செயல்படச் சொல்லப்படவிடாது.</string>
+    <string name="play_to_pc_link_header">உங்கள் computer-க்கான receiver-ஐப் பолуч</string>
+    <string name="play_to_pc_link_hint">தொடர்நிலையாகப் பதிவுசெயலமைவதற்கு, உங்கள் சேனல் மற்றும் அணி தொடர்நிலையாகப் பதிவுசெயலமைவதற்கு, உங்கள் சேனல் மற்றும் அணி தொடர்நிலையாகப் பதிவுசெயலமைவதற்கு, உங்கள் சேனல் மற்றும் அணி</string>
+    <string name="play_to_pc_link_copy">Link copy</string>
+    <string name="play_to_pc_link_copied">இணைப்பு நகல் செய்யப்பட்டது</string>
+    <string name="play_to_pc_link_share">Computer -இல் Send</string>
+    <string name="play_to_pc_link_open">Phone -இல் Open</string>
+    <string name="play_to_pc_link_share_text">உங்கள் பீசியனுக்கும், MAC-க்கும் ឬ Linux-க்கும் ஏற்றபடி OfflinePlaya Receiverஐ இலவசமாக எடுத்துக்கொள்ளுங்கள், மின்சந்தர்ப்பங்களில் உங்கள் டி.எல்.பி.யின் இசைகளை எனது ஆமணி வடிவமைப்பு மற்றும் சரியான தொழில்நுட்பம் கூடவும் இசையின் அதிர்வெண்ணைகளைப் பற்றி முங்கலன். %1$s</string>
+</resources>

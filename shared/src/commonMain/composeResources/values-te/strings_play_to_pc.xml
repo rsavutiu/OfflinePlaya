@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     a driver that imports scripts/translate_strings.py against this filename.
+     Kept separate from strings.xml so the validator/fan-out stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">PC కు వినిపించేది</string>
+    <string name="play_to_pc_blurb">ఈ ఫోన్‌లో ఉన్న ఆడియోకు Wi-Fi నెట్వర్ಕ్‌లో PC కు సైతం వాహనమై, పేదగా ఉండే డబ్బుకు అది తమ ఓవర్‌లో కొనసాగుతుంది.</string>
+    <string name="play_to_pc_searching">రియీవర్‌లను వెతకడం</string>
+    <string name="play_to_pc_none_found">ఏ రియీవర్‌లు కనబడలేదు. OfflinePlaya ను PC లో పొందగలమై, Wi-Fi సాధారణ వెతకడం.</string>
+    <string name="play_to_pc_connect">అన్వేషించు</string>
+    <string name="play_to_pc_disconnect">విడుదల చేయండి</string>
+    <string name="play_to_pc_streaming_to">%1$s కు పలికిస్తున్నది</string>
+    <string name="play_to_pc_connecting_to">%1$s తరఫున అనుbడగా...</string>
+    <string name="play_to_pc_manual_header">IP address ద్వారం కలయించేది</string>
+    <string name="play_to_pc_manual_host">ఐపీ ఆడ্দర్ $$IP Address$$</string>
+    <string name="play_to_pc_manual_port">పోర్టు</string>
+    <string name="play_to_pc_error_connect_failed">%1$sకు వెళ్తున్నట్లుగా అర్థమవడం కష్టం</string>
+    <string name="play_to_pc_error_connection_lost">కనెక్షను నഷ্টమైందు (Connection lost)</string>
+    <string name="play_to_pc_how_title">ఎలా పనుసరించబడతోంది</string>
+    <string name="play_to_pc_how_step1_title">మీరిద్దరికి రావడంతో సెలుచేని కంప్యూటర్‌లో 1. Install the receiver on your computer /no_think</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receivier అనేది Windows, macOS మరియు Linuxకోసం చాలా తక్kెలుగు వాడుతున్నవారికి ఒక ఛట్‌ అనేది. GitHub పైజీ నుండి డౌన్లోడ్ చెయ్యవచ్చు — ఏకా‌కీ ఖాతా అవసరమైనది.</string>
+    <string name="play_to_pc_how_step2_title">ఇద్దరినీ ఒకే వా이-ఫైలో ఉండగా పెట్టండి.</string>
+    <string name="play_to_pc_how_step2_body">రీసెవర్‌ను ప్రारంగకమైతే, ఫోన్ దానికి చేరడానికి కంప్యూటరు సెక్యూరిటీ వాల్‌కు అనुमతి ఇవ్వడమైతే, ఫోన్ తప్పుగా దానిని సొంతంగా కనబరచుకుంది.</string>
+    <string name="play_to_pc_how_step3_title">మీరು ಕನಿಸಲ್ಪಡದ ವರೆಗೂ ಬಹುಶ: "Play Something" (ప్లে చేద్దాయి) అని, తదుpoతరమైన 3. Connect /no_think</string>
+    <string name="play_to_pc_how_step3_body">వినోదంలోకి PC ని జతగడవచ్ఛా అనుbడగా. Audio moves to its speakers while play, pause and skip stay on the phone. Tap Disconnect to bring the sound back.</string>
+    <string name="play_to_pc_how_note">వై-ఫై ద్వారా స్టీమ్ లింకులేనిది, కానీ డిజగో తన వెబ్‌డైన్ పరివర్తన ద్వారా అలసుకొంది — కాబటే,ఈ డయమో వెళ్ళడం పై ఫోన్‌ ఎక్వలీజర్, సుగౌతు అదృశ్‍యాలేనిది.</string>
+    <string name="play_to_pc_link_header">మీ కంప్యూటర్‌కు రివెస్ఫర్ తీసుకోండి</string>
+    <string name="play_to_pc_link_hint">డాన్లోడ్ మీ కంప్యూటర్‌ వద్ద, ఫొన్‌ లేకుండా జరుగుతుంది, అందువలె ఈ కీ-లింకు వచ్చినట్లే లో పండగ మరియు సౌకర్‍యవశాత్, అది కంప్యూటర్‌లోని బ్ర౗జర్‌లో వేసి ఉండవచు.</string>
+    <string name="play_to_pc_link_copy">లింకు ను కాపీ</string>
+    <string name="play_to_pc_link_copied">లింకు అనుగ్రహితమైంది</string>
+    <string name="play_to_pc_link_share">కంప్యూటర్‌లో తెస్తాడు</string>
+    <string name="play_to_pc_link_open">ఫొన్‌ వద్ద ఓపీనే</string>
+    <string name="play_to_pc_link_share_text">PC, Mac లేక Linux కూడా మీ డబ్బెలో ఉచిత OfflinePlaya Receiver తీసుకొవరి, అదనపై ఫొన్‌ వండే మ్యూజిక్ కలా చెబుతో ఉండగా: %1$s</string>
+</resources>

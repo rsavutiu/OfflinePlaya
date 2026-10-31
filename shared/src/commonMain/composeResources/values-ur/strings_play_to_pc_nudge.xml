@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">پکیج میں چھوڑ دے</string>
+    <string name="play_to_pc_nudge_body">آپ کو جاننا ہرگز نہیں تھا کہ آپ اپنے فون سے موسيقی استعمال کرنے والے کمپيوٹر پر اسکلیم میں بھجاؤ سکتے ہو، جبکہ وائی-فای کے ذریعے آواز کا نظام استعمال کرتے ہوئے۔ فری OfflinePlaya ریceiver اپنے پکیج یا میک بھی حاصل کرنے والے، پھر سٹیشنگس میں "پلے تا پکیج" سے جوڑ دے۔</string>
+    <string name="play_to_pc_nudge_get_app">پکیج آڈیو اچھا لائبریری حاصل کرو</string>
+    <string name="play_to_pc_nudge_dismiss">نہ ہن /no_think</string>
+</resources>

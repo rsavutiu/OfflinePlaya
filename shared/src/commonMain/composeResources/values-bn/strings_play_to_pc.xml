@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     a driver that imports scripts/translate_strings.py against this filename.
+     Kept separate from strings.xml so the validator/fan-out stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">পিসি-তে চালু করো</string>
+    <string name="play_to_pc_blurb">আপনার Wi-Fi নেটওয়ার্কে একটি পিসির জন্য বর্তমান ফোনটির অডিও লাইভ স্ট্রিম করতে। পিসি আপনার এলোগা হয়ে যাবে, এবং তখনও কিছু নথিভুক্ত থাকবে না।</string>
+    <string name="play_to_pc_searching">গ্রহণকরদম খোজছি…</string>
+    <string name="play_to_pc_none_found">কোনও গ্রহণকর পাওয়া যাচ্ছিল না। আপনার পিসি-তে OfflinePlaya গ্রহণকরটি শুরু করো, এবং তদৃষ্ট ওয়্যাইফায় নেটওয়ার্ক।</string>
+    <string name="play_to_pc_connect">সংযোগ ঘটিবে</string>
+    <string name="play_to_pc_disconnect">ছড়িয়ে দিতে</string>
+    <string name="play_to_pc_streaming_to">%1$s-তে চলছে</string>
+    <string name="play_to_pc_connecting_to">%1$s-এ যুক্ত হচ্ছে…</string>
+    <string name="play_to_pc_manual_header">IP ঠানা বরণ করে সংযোগ ঘটিও</string>
+    <string name="play_to_pc_manual_host">IP ঠানা</string>
+    <string name="play_to_pc_manual_port">পোর্ট</string>
+    <string name="play_to_pc_error_connect_failed">%1$s-এ যাতায়ত হওয়া বন্ধ</string>
+    <string name="play_to_pc_error_connection_lost">সংযোগ কেটে গিয়েছে</string>
+    <string name="play_to_pc_how_title">এর জন্মকথা</string>
+    <string name="play_to_pc_how_step1_title">1. আপনার ডেস্কটপ-এ প্রবেশদম স্থাপণ করো</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya Receiver, Windows, macOS এবং Linux জন্য ছোট বিনা চাঁদি অ্যাপ। GitHub-এ প্রকল্পের সময় — কোনও আইডি দরকার হবে না।</string>
+    <string name="play_to_pc_how_step2_title">2. উভয়টিই একই Wi-Fi-তে থাকুক</string>
+    <string name="play_to_pc_how_step2_body">গ্রহণকরটি শুরূ করো, আপনার ডেস্কটপের ফায়ায়ল প্রমোতিন অবধারণ করো। তখন বই সহজে খুঁড়িয়ে দেওয়া হচ্ছে।</string>
+    <string name="play_to_pc_how_step3_title">3. এটিও চলার পর, যোগদান করো</string>
+    <string name="play_to_pc_how_step3_body">তালিখতে আপনার ডেসকটপটি বছর দিন। "যুঝ" ট্যাচ করো, এবং অডিও সহজে তার মধ্যম হতে থাকে। প্লে, বন্ধকরণ আপনি ফোনটিতে ছয়াছবি না। "অলস" ট্যাচ দিও এবং শবদ পুনরাবত হওয়া থাকে।</string>
+    <string name="play_to_pc_how_note">স্ট্রিমটি Wi-Fi-তে লসহীন (lossless) হয়, কিন্তু ডকমপিউটার এর আউটলেট বা অডিও মিক্সার দিয়ে প্লে করে — ফলসবগুলি, তথাচ ডয়ন এক্সপ্রেশন (equaliser), প্রিআম্প (preamp) ও ক্রসফেড (crossfade)-এর বাৎসুদ্ধি হবায় তথাচ ডয়ন এক্সপ্রেশনটিই অপচল।</string>
+    <string name="play_to_pc_link_header">আপনার কম্পিউটারের গ্রীভার (receiver) নির্মণ করুন</string>
+    <string name="play_to_pc_link_hint">ডাউনলোডটি আপনার কম্পিটারে, অথবা ফোনে হয় না — তহত এই লিংকটি সেখানে ভেরিয়ে দিবেন—অথবা আপনার কম্পিটারের ব্রাউজারে তুলে ধরতেই হবে:</string>
+    <string name="play_to_pc_link_copy">লিংকটি অনুসরণ</string>
+    <string name="play_to_pc_link_copied">লিঙকটি কপি করা হয়েছে</string>
+    <string name="play_to_pc_link_share">কম্পিটারে স่งত</string>
+    <string name="play_to_pc_link_open">ফোনে খুলুন</string>
+    <string name="play_to_pc_link_share_text">আপনার PC, Mac 0r Linux-এর জন্য বিরক্তহীন (free) OfflinePlaya Receiver পেয়া এবং ফোনটিকে মাইক্রোফোনগত স্ট্রিম আপনার কম্পিউটারের বডি (speakers) দিয়ে শুনবে: %1$s</string>
+</resources>

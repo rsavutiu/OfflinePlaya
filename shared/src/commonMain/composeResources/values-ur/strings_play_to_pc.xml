@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream to PC. Machine-translated (local Ollama); regenerate with
+     a driver that imports scripts/translate_strings.py against this filename.
+     Kept separate from strings.xml so the validator/fan-out stay untouched. -->
+<resources>
+    <string name="play_to_pc_title">پکیج میں چھوڑ دے</string>
+    <string name="play_to_pc_blurb">اس فون سے آڈیو کو لائیف ورآئنگ طور پر Wi-Fi نیٹ ورک پر موجود PC تک استعمال کرنے والے۔ PC خود اپنا سماعر ہے اور جسمانی راستا محفوظ نہیں ہوتا۔</string>
+    <string name="play_to_pc_searching">درج ذیل قبول کنندگوں کی تلاش…</string>
+    <string name="play_to_pc_none_found">کسی بھی قبول کنندگوں پایا نہیں گئے۔ اپنا PC، Wi-Fi نیٹ ورک ساتھ موجود OfflinePlaya قبول کرنے والے آباد کردینا شروع کرو۔</string>
+    <string name="play_to_pc_connect">جڑواں بنائیں</string>
+    <string name="play_to_pc_disconnect">الگ کر دو</string>
+    <string name="play_to_pc_streaming_to">%1$s میں چل رہا ہے</string>
+    <string name="play_to_pc_connecting_to">%1$s ساتھ وصل ہونے والے…</string>
+    <string name="play_to_pc_manual_header">آئ پی اڈрес کے ذریعے جڑواں بنائیں</string>
+    <string name="play_to_pc_manual_host">آئ پی اڈرس</string>
+    <string name="play_to_pc_manual_port">درج</string>
+    <string name="play_to_pc_error_connect_failed">%1$s تک رساؤ نا ممکن ہوگیا</string>
+    <string name="play_to_pc_error_connection_lost">وصلتی بند ہو چکی</string>
+    <string name="play_to_pc_how_title">کس طرح کام کرتے ہیں</string>
+    <string name="play_to_pc_how_step1_title">۱۔ اپنا کمپیوٹر پر قبول کرنے والے آباد کردینا</string>
+    <string name="play_to_pc_how_step1_body">OfflinePlaya قبول کنندگان مفت سافٹ وئیر Windows، macOS اور Linux لائبرراہیں ہے۔ GitHub جیسے منصوبوں پر نصب کرنے والے تھے — حساب ضرورت نہیں ہوتا۔</string>
+    <string name="play_to_pc_how_step2_title">۲۔ دونوں Wi-Fi ساتھ رکھ دینا</string>
+    <string name="play_to_pc_how_step2_body">قبول کنندگان شروع کردین اور آپ کمپیوٹر فائر وول پرامپٹ کے جواب متقاضی تھے، تو فون ہوسکتا۔ فون خود سے اسے نظر انداز کرنے والے۔</string>
+    <string name="play_to_pc_how_step3_title">۳۔ کچھ بات لائیں، پھر وصل بنائیں</string>
+    <string name="play_to_pc_how_step3_body">فہرست میں آپ کا کمپیوٹر منتخب کردین اور جڑواں تک رکھ دے۔ نغمہ گوشاب سبجیت سماعر تک منتقل ہوتا، جبکہ بند و پلائس موبائل پر باقی رہتا۔ Disconnect کرنے والے لے آواز واپس لوٹ اچھال دینا۔</string>
+    <string name="play_to_pc_how_note">سٹریم وائ فائر پر لاسس لنوس ہے، مگر کامپيوتر اُتھاں اپنا آڈئو mixer استعمال کرتا ہے — تب برازورفون کا Equaliser, preamp aur crossfade نظر انداز کردی جاتی ہے۔</string>
+    <string name="play_to_pc_link_header">اپنے کمپيوتر لائبریری کے ریسیوئر حاصل کرنے والے</string>
+    <string name="play_to_pc_link_hint">تھان داؤن لوڈ آپکومپيوٹر پر نہ فون پر چلای جاتا ہے، اِس لئے اُس لنک کو وہاں بھیج دیجئے — یا سب سے زیادہ آپ کمپيوٹر کے براؤزر میں تلاش کردی جاتی ہے:</string>
+    <string name="play_to_pc_link_copy">لینک نقل</string>
+    <string name="play_to_pc_link_copied">لنک نقل کیا گیا</string>
+    <string name="play_to_pc_link_share">کامپیوٹر پر بھیج دیجئے</string>
+    <string name="play_to_pc_link_open">فون پر اُتارنے والے</string>
+    <string name="play_to_pc_link_share_text">آفلاين بلاسائی ریسیوئر حاصل کرنے والا ہے جو PC, Mac یا Linux لائبریری کے لئے ہے، اور فون سے موسک پھر کمپيوٹر کے بلبز استعمال کرتے ہیں: %1$s</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stream-to-PC discovery nudge. Machine-translated (local Ollama); separate
+     file so the validator / fan-out script stay untouched. -->
+<resources>
+    <string name="play_to_pc_nudge_title">உங்கள் பிசி மீது இசையைப் பخشியайте</string>
+    <string name="play_to_pc_nudge_body">நீாக தெரிவில்லை, உங்கள் டல்ஃபனின் சமூகத்துடன் Wi-Fi-ஐ மேற்பணி எடுத்துச் செய்யவும், அந்த கருவிகளின் ஒலிவகைப்பூர்வமான மற்றும் இதழ்களோடு செயல்படச் சொல்லி, உங்கள் PC-ஐக் கணினியில் OfflinePlaya receiver app -ஐப் பற்றி இலவசமாகத் தருக.  "Settings" (அடையாளம்) மூலம் Play to PC-இன் அணிகளோடு செய்யவும்.</string>
+    <string name="play_to_pc_nudge_get_app">PC app -ஐப் பற்றி</string>
+    <string name="play_to_pc_nudge_dismiss">இப்பொழுது தான் /no_think</string>
+</resources>
