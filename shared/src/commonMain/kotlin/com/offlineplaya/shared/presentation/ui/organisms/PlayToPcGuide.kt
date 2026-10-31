@@ -2,8 +2,6 @@ package com.offlineplaya.shared.presentation.ui.organisms
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -69,7 +67,6 @@ import org.jetbrains.compose.resources.stringResource
  * Stateless apart from the "Link copied" acknowledgement, and takes [onShare]
  * as a lambda so the page stays previewable without DI.
  */
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PlayToPcGuide(
     onShare: () -> Unit,
@@ -138,11 +135,14 @@ fun PlayToPcGuide(
         }
 
         Spacer(Modifier.height(AppSpacing.sm))
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(AppSpacing.sm),
-            verticalArrangement = Arrangement.spacedBy(AppSpacing.sm),
-        ) {
+        // Stacked, full-width, NOT a FlowRow: the shared module compiles against
+        // Compose Multiplatform 1.7.3 while androidApp runs
+        // androidx.compose.foundation 1.9.x, whose FlowRow parameter list differs
+        // — it compiles and then dies at first composition with
+        // NoSuchMethodError (same skew EqPresetChooser's comment warns about).
+        // Full-width also keeps these labels intact in the wordier locales
+        // ("Zum Computer versenden" has no chance at half width).
+        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)) {
             LinkAction(
                 icon = Icons.Outlined.ContentCopy,
                 label = stringResource(
@@ -186,7 +186,7 @@ private fun LinkAction(
     label: String,
     onClick: () -> Unit,
 ) {
-    OutlinedButton(onClick = onClick) {
+    OutlinedButton(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
         Icon(icon, contentDescription = null, modifier = Modifier.size(18.dp))
         Text(label, modifier = Modifier.padding(start = AppSpacing.sm))
     }
