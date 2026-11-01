@@ -1,12 +1,11 @@
-# Demo video — upload metadata
+# Demo video — metadata
 
-For the re-upload carrying the voiceover. The current video (`aA88EhbNlVw`) has
-a one-line description, which wastes the single biggest text field YouTube
-gives you for search.
+The demo carrying the voiceover is live at <https://youtu.be/iyMItL6WTzU>
+(uploaded 2026-11-01). It replaces `aA88EhbNlVw`, which had no audio for its
+first 85 seconds.
 
-The file to upload is staged at:
-
-    C:\Users\rsavu\Downloads\OfflinePlaya Demo - voiceover.mp4
+Kept here as the source of truth for the title, description and tags, so a
+future re-upload or a translation doesn't start from scratch.
 
 ## Title
 
@@ -67,16 +66,15 @@ the DAC section findable by people who only care about that.
     player, music player no ads, equalizer android, offline mp3 player,
     android auto music, tag editor android
 
-## After uploading
+## Follow-ups
 
-1. **The video ID changes.** The Play Console listing points at the old one —
-   update it, and batch that with another listing edit rather than spending a
-   review cycle on it alone.
-2. **Decide what to do with the old video.** Making it unlisted rather than
-   deleting keeps the 11 views and any inbound link alive; deleting is cleaner.
-   Don't leave two public copies — they compete with each other in search.
-3. **The three audio claims will reappear**, since the music is unchanged.
-   Effect is the same as now: blocked in Russia and Belarus, no strike. If you
-   want it clean everywhere, swap the tracks for YouTube Audio Library ones and
-   re-render — the voiceover track is independent of the music and would not
-   need redoing.
+1. **Play Console, README and docs/index.html now point at the new video.**
+   The Console change goes through review like any listing edit.
+2. **The old video (`aA88EhbNlVw`) is still public.** Two public copies compete
+   in search — make it unlisted (keeps its views and any inbound link) or
+   delete it. Not done here: it is a public post, so it is yours to decide.
+3. **The audio claims will reappear on the new upload**, since the music is
+   unchanged — blocked in Russia and Belarus, no strike. If you want it clean
+   everywhere, swap the tracks for YouTube Audio Library ones and re-render:
+   the voiceover is a separate track and would not need redoing.
+   `scripts/build_demo_voiceover.py` regenerates it in about ninety seconds.

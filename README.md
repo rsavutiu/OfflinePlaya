@@ -11,7 +11,8 @@
 
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.offlineplaya.android">Google Play</a> ·
-  <a href="https://github.com/rsavutiu/OfflinePlaya/releases">Downloads (APK &amp; PC receiver)</a>
+  <a href="https://github.com/rsavutiu/OfflinePlaya/releases">Downloads (APK &amp; PC receiver)</a> ·
+  <a href="https://youtu.be/iyMItL6WTzU">Demo video</a>
 </p>
 
 ## Features
