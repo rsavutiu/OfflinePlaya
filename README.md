@@ -147,6 +147,21 @@ Approve the OS **firewall prompt** on first launch so the phone can reach it
 See [RELEASING.md](RELEASING.md) — pushing an annotated `v*` tag builds a signed
 AAB and ships it to the Google Play production track.
 
+## Installing
+
+- **Google Play** —
+  <https://play.google.com/store/apps/details?id=com.offlineplaya.android>
+- **Sideload** — grab the `foss` APK from
+  [Releases](https://github.com/rsavutiu/OfflinePlaya/releases). It is the same
+  app, built without any Google Play libraries.
+- **Obtainium** — add `https://github.com/rsavutiu/OfflinePlaya` as a source to
+  get tracked updates straight from those releases. Filter on `foss` so it
+  ignores the `desktop-v*` receiver releases published from the same repo.
+
+The Play build and the GitHub build are signed with different keys (Play
+re-signs under Play App Signing), so you cannot install one over the other —
+uninstall first if you want to switch.
+
 ## License
 
 OfflinePlaya is free software: you can redistribute it and/or modify it under

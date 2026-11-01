@@ -36,8 +36,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      # Stage ONLY the two site files. `path: docs` used to upload the whole
+      # directory, which also published internal working notes (docs/plans/,
+      # the instrumentation test plan, distribution notes) on the public site —
+      # not what the header above says this workflow is for.
+      - name: Stage the site files
+        run: |
+          mkdir -p _site
+          cp docs/index.html docs/privacy.html _site/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: docs
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4

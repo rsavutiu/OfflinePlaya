@@ -143,7 +143,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          APK=androidApp/build/outputs/apk/foss/release/androidApp-foss-release.apk
+          # Rename to a stable, human-readable asset name before attaching.
+          # Update trackers (Obtainium, IzzyOnDroid) match on the asset
+          # filename, and this repo also publishes desktop-v* releases, so a
+          # generic "androidApp-*.apk" is both ugly and ambiguous. Matches the
+          # name used by the manual foss-v1.1.0 release.
+          APK="OfflinePlaya-$VERSION_NAME-foss.apk"
+          cp androidApp/build/outputs/apk/foss/release/androidApp-foss-release.apk "$APK"
           gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || \
           gh release create "$GITHUB_REF_NAME" "$APK" \
             --title "OfflinePlaya $VERSION_NAME" \
