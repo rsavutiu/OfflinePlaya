@@ -66,10 +66,27 @@ the DAC section findable by people who only care about that.
     player, music player no ads, equalizer android, offline mp3 player,
     android auto music, tag editor android
 
+## Where the video is wired in
+
+Play's listing has more than one video slot, and the old demo was only in the
+Android XR one — Console calls that change "non-spatial XR video" — so it never
+appeared on the store page anyone actually sees. Both now point at the new
+video:
+
+- **Video** (the main field, shown on the store listing) — was the Shorts
+  `TZEk8RL2cIc`, now the demo. This is the one that matters.
+- **Android XR assets → video** — was the old demo, now the new one.
+- **Phone assets → video** is deliberately empty: an empty per-form-factor slot
+  inherits the main Video field, and filling it would be a second copy to keep
+  in step.
+
+The video fields are **shared across all 13 listing locales**, not per-locale,
+so one edit covers every language.
+
 ## Follow-ups
 
-1. **Play Console, README and docs/index.html now point at the new video.**
-   The Console change goes through review like any listing edit.
+1. **Submitted for review on 2026-11-01**, together with 1.1.0 and the 13
+   localized listings.
 2. **The old video (`aA88EhbNlVw`) is still public.** Two public copies compete
    in search — make it unlisted (keeps its views and any inbound link) or
    delete it. Not done here: it is a public post, so it is yours to decide.
