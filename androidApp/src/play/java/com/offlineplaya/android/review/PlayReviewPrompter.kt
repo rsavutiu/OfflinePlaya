@@ -1,4 +1,4 @@
-package com.offlineplaya.shared.data.review
+package com.offlineplaya.android.review
 
 import com.google.android.play.core.ktx.launchReview
 import com.google.android.play.core.ktx.requestReview

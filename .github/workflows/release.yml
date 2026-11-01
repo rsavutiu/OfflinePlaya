@@ -102,20 +102,20 @@ jobs:
       - name: Build signed release bundle
         run: |
           chmod +x ./gradlew
-          ./gradlew :androidApp:bundleRelease --no-daemon
+          ./gradlew :androidApp:bundlePlayRelease --no-daemon
 
       - name: Upload to Google Play (production)
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: com.offlineplaya.android
-          releaseFiles: androidApp/build/outputs/bundle/release/androidApp-release.aab
+          releaseFiles: androidApp/build/outputs/bundle/playRelease/androidApp-play-release.aab
           # Per-release notes. Files are named whatsnew-<lang>-<COUNTRY> and must
           # match a language your Play listing actually has. Today that's English
           # only (store-listing/whatsnew/whatsnew-en-US); add more files when you
           # add localized listings in Play Console.
           whatsNewDirectory: store-listing/whatsnew
-          mappingFile: androidApp/build/outputs/mapping/release/mapping.txt
+          mappingFile: androidApp/build/outputs/mapping/playRelease/mapping.txt
           # (no debugSymbols: this app has negligible native code, so AGP
           # doesn't emit native-debug-symbols.zip — including it ENOENTs.)
           track: production
@@ -128,20 +128,22 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: release-bundle
-          path: androidApp/build/outputs/bundle/release/androidApp-release.aab
+          path: androidApp/build/outputs/bundle/playRelease/androidApp-play-release.aab
           if-no-files-found: warn
 
       # Also build a signed APK and publish it on a GitHub Release, so people can
       # download/sideload the app from GitHub (the AAB above only goes to Play).
       # Assets are attached at creation (a published release is immutable).
-      - name: Build signed release APK
-        run: ./gradlew :androidApp:assembleRelease --no-daemon
+      # The FOSS flavour is what goes on GitHub: it links against no Google
+      # Play libraries, which is what F-Droid / IzzyOnDroid require.
+      - name: Build signed release APK (FOSS flavour)
+        run: ./gradlew :androidApp:assembleFossRelease --no-daemon
 
       - name: Publish GitHub Release with the APK
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          APK=androidApp/build/outputs/apk/release/androidApp-release.apk
+          APK=androidApp/build/outputs/apk/foss/release/androidApp-foss-release.apk
           gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || \
           gh release create "$GITHUB_REF_NAME" "$APK" \
             --title "OfflinePlaya $VERSION_NAME" \

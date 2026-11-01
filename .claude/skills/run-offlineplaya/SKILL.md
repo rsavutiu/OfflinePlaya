@@ -18,7 +18,7 @@ powershell -File .claude\skills\run-offlineplaya\driver.ps1 <command> [<arg>] [-
 
 Commands: `devices`, `install`, `launch`, `screenshot [name]`, `logcat`, `stop`, `uninstall`, `run`.
 
-`run` is the one-shot "deploy + look at it" loop — `installDebug` → wake screen → `am start` → wait
+`run` is the one-shot "deploy + look at it" loop — `installPlayDebug` → wake screen → `am start` → wait
 4s → pull a PNG into `.claude/skills/run-offlineplaya/screenshots/`. That's what you want after
 editing UI code.
 
@@ -87,7 +87,7 @@ Unit tests are JVM, no device needed:
 Compile-only sanity check (used by CLAUDE.md as the "full check"):
 
 ```powershell
-.\gradlew.bat :shared:testDebugUnitTest :androidApp:compileDebugKotlin
+.\gradlew.bat :shared:testDebugUnitTest :androidApp:compilePlayDebugKotlin :androidApp:compileFossDebugKotlin
 ```
 
 No instrumented (`connectedAndroidTest`) suite exists in this repo.
@@ -123,4 +123,4 @@ No instrumented (`connectedAndroidTest`) suite exists in this repo.
 | `devices` lists nothing                                        | USB-debugging off, cable in a charge-only port, or RSA prompt unanswered on the phone. Reconnect and unlock. |
 | Screenshot is solid black                                      | Screen was off when capture fired. Re-run `launch` (it now wakes first) or pass `-WaitMs 8000`.              |
 | Screenshot is a system dialog, not the app                     | Permission gate (see Gotchas). Tap through it on the device once.                                            |
-| `installDebug` fails with `INSTALL_FAILED_UPDATE_INCOMPATIBLE` | Signing key mismatch with a previously sideloaded build. `driver.ps1 uninstall` then re-`install`.           |
+| `installPlayDebug` fails with `INSTALL_FAILED_UPDATE_INCOMPATIBLE` | Signing key mismatch with a previously sideloaded build. `driver.ps1 uninstall` then re-`install`.           |

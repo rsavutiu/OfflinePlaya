@@ -41,7 +41,7 @@ jobs:
       - name: Shared unit tests + app compile
         run: |
           chmod +x ./gradlew
-          ./gradlew :shared:testDebugUnitTest :androidApp:compileDebugKotlin --no-daemon
+          ./gradlew :shared:testDebugUnitTest :androidApp:compilePlayDebugKotlin :androidApp:compileFossDebugKotlin --no-daemon
 
       - name: Upload unit-test report
         if: always()
@@ -107,7 +107,7 @@ jobs:
           emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: |
             chmod +x ./gradlew
-            ./gradlew :androidApp:connectedDebugAndroidTest --no-daemon
+            ./gradlew :androidApp:connectedPlayDebugAndroidTest --no-daemon
 
       - name: Upload instrumented-test report
         if: always()

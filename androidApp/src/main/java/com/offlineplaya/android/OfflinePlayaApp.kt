@@ -15,6 +15,7 @@ import com.offlineplaya.shared.data.image.installTrackArtImageLoader
 import com.offlineplaya.shared.data.review.CurrentActivityHolder
 import com.offlineplaya.shared.data.scheduling.WorkManagerTaskRunner
 import com.offlineplaya.shared.di.androidModule
+import com.offlineplaya.android.review.reviewModule
 import com.offlineplaya.shared.di.initKoin
 import com.offlineplaya.shared.domain.image.RemoteArtSource
 import com.offlineplaya.shared.domain.repository.SettingsRepository
@@ -45,7 +46,7 @@ class OfflinePlayaApp : Application() {
                 androidLogger(Level.INFO)
                 androidContext(this@OfflinePlayaApp)
             },
-            platformModules = listOf(androidModule, appPlayerModule),
+            platformModules = listOf(androidModule, appPlayerModule, reviewModule),
         )
         // Everything else touches the database (via Koin singletons) or the
         // network (remote-art source). Push it onto the application-scoped

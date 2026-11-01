@@ -66,10 +66,10 @@ switch ($Command) {
         Invoke-Adb devices -l
     }
     'install' {
-        # `installDebug` builds + installs in one step; faster than
-        # `assembleDebug` + manual `adb install` because Gradle reuses
+        # `installPlayDebug` builds + installs in one step; faster than
+        # `assemblePlayDebug` + manual `adb install` because Gradle reuses
         # the dex cache.
-        Invoke-Gradle ':androidApp:installDebug'
+        Invoke-Gradle ':androidApp:installPlayDebug'
     }
     'launch' {
         # Wake the screen first — on a locked/dozed phone `am start`
@@ -119,7 +119,7 @@ switch ($Command) {
         Invoke-Adb uninstall $Pkg
     }
     'run' {
-        Invoke-Gradle ':androidApp:installDebug'
+        Invoke-Gradle ':androidApp:installPlayDebug'
         Invoke-Adb shell input keyevent KEYCODE_WAKEUP | Out-Null
         Invoke-Adb shell am start -n $Activity | Out-Null
         Start-Sleep -Milliseconds $WaitMs

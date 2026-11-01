@@ -6,9 +6,11 @@ An Android offline music player. Kotlin Multiplatform skeleton today, Android-on
 ## Build & run
 
 - **Compile shared**: `./gradlew :shared:compileDebugKotlinAndroid`
-- **Compile app**: `./gradlew :androidApp:compileDebugKotlin`
+- **Compile app**: `./gradlew :androidApp:compilePlayDebugKotlin` (and
+  `:androidApp:compileFossDebugKotlin` for the Play-free flavour)
 - **Run unit tests**: `./gradlew :shared:testDebugUnitTest` (215 tests as of last edit)
-- **Full check**: `./gradlew :shared:testDebugUnitTest :androidApp:compileDebugKotlin`
+- **Full check**: `./gradlew :shared:testDebugUnitTest :androidApp:compilePlayDebugKotlin
+  :androidApp:compileFossDebugKotlin`
 
 PowerShell is the default shell on this machine — use PowerShell syntax when invoking gradle from
 the harness, not bash chaining (`&&` doesn't work in 5.1).

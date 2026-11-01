@@ -67,6 +67,43 @@ android {
         }
     }
 
+    // Two distribution flavours. They differ by exactly one binding:
+    // ReviewPrompter (see androidApp/src/{play,foss}/.../ReviewModule.kt).
+    //
+    //  - play: ships Google Play's in-app review library. This is what goes to
+    //    the Play Store (`bundlePlayRelease`).
+    //  - foss: links against no Google Play libraries at all. This is what gets
+    //    attached to GitHub releases and ingested by IzzyOnDroid / F-Droid
+    //    (`assembleFossRelease`).
+    //
+    // Same applicationId and no suffix on either, so anyone who SIDELOADED an
+    // earlier GitHub APK upgrades in place rather than ending up with two
+    // copies of the app. Both must be signed with the same upload key.
+    //
+    // This does NOT extend to Play installs: Play App Signing re-signs the AAB
+    // with Google's key, so a Play user cannot install the FOSS APK over the
+    // top — they have to uninstall first. See docs/izzyondroid-submission.md.
+    flavorDimensions += "store"
+
+    productFlavors {
+        create("play") {
+            dimension = "store"
+            isDefault = true
+        }
+        create("foss") {
+            dimension = "store"
+        }
+    }
+
+    // The encrypted "dependency info" block AGP normally stamps into release
+    // APKs is unreadable by third parties, so F-Droid / IzzyOnDroid flag it as
+    // an opaque blob. Play consumes the AAB (which keeps its own copy via
+    // includeInBundle, left untouched), so dropping it from the APK costs
+    // nothing.
+    dependenciesInfo {
+        includeInApk = false
+    }
+
     buildTypes {
         debug {
             isMinifyEnabled = false
@@ -186,6 +223,14 @@ dependencies {
 
     implementation(libs.androidx.work.runtime)
     implementation(libs.lifecycle.process)
+
+    // Google Play in-app review flow — PLAY FLAVOUR ONLY. The foss variant must
+    // stay free of com.google.android.play.*; verify with
+    //   ./gradlew :androidApp:dependencies --configuration fossReleaseRuntimeClasspath
+    // (String notation: the typed `playImplementation` accessor is only
+    // generated on a later configuration pass, so it can't be used in the same
+    // script that declares the flavour.)
+    "playImplementation"(libs.play.review.ktx)
 
     // Compose Preview: annotation (always) + renderer (debug only, for Android Studio)
     implementation(libs.androidx.compose.ui.tooling.preview)

@@ -46,10 +46,26 @@
 ```bash
 # Compile the shared KMP module
 ./gradlew :shared:compileDebugKotlinAndroid
-# Compile the Android app
-./gradlew :androidApp:compileDebugKotlin
+# Compile the Android app (both distribution flavours)
+./gradlew :androidApp:compilePlayDebugKotlin :androidApp:compileFossDebugKotlin
 # Run the unit test suite
 ./gradlew :shared:testDebugUnitTest
+```
+
+### Build flavours
+
+Two flavours, differing by exactly one binding — the in-app review prompt:
+
+| Flavour | Google Play libraries | Built by | Goes to |
+| --- | --- | --- | --- |
+| `play` | `play:review-ktx` | `bundlePlayRelease` | Google Play |
+| `foss` | **none** | `assembleFossRelease` | GitHub Releases, F-Droid / IzzyOnDroid |
+
+Both share the same `applicationId`, so a sideloaded install upgrades in place.
+To confirm the FOSS variant really is free of proprietary libraries:
+
+```bash
+./gradlew :androidApp:dependencies --configuration fossReleaseRuntimeClasspath
 ```
 
 The Android app is the main target; the `shared` module is Kotlin Multiplatform
@@ -130,3 +146,17 @@ Approve the OS **firewall prompt** on first launch so the phone can reach it
 
 See [RELEASING.md](RELEASING.md) — pushing an annotated `v*` tag builds a signed
 AAB and ships it to the Google Play production track.
+
+## License
+
+OfflinePlaya is free software: you can redistribute it and/or modify it under
+the terms of the **GNU General Public License** as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the [GNU General Public License](LICENSE) for more
+details.
+
+`SPDX-License-Identifier: GPL-3.0-or-later`

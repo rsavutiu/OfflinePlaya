@@ -116,7 +116,7 @@ mechanical when taken up.
 ### Phase 1 — isolated-screen tests (the stable bulk) — ✅ DONE
 
 All high-value pages below are covered: **19 UI tests green on device**
-(moto g54, API 35) — `:androidApp:connectedDebugAndroidTest
+(moto g54, API 35) — `:androidApp:connectedPlayDebugAndroidTest
 -Pandroid.testInstrumentationRunnerArguments.package=com.offlineplaya.android.ui`.
 Construct each page with fakes; `testTag`s added per page in `TestTags`.
 
@@ -224,10 +224,10 @@ edits beyond adding the `TestTags` constants.
 
 - **`ci.yml`** runs on every PR and push to `main`. Three jobs:
   - `unit-tests` (**blocking gate**): `:shared:testDebugUnitTest
-    :androidApp:compileDebugKotlin`. Fast, deterministic — the 215+ unit suite
+    :androidApp:compilePlayDebugKotlin`. Fast, deterministic — the 215+ unit suite
     plus the Phase 3 guards.
   - `instrumented-tests` (**non-blocking**, `continue-on-error`): the full
-    `:androidApp:connectedDebugAndroidTest` on an API-35 emulator via
+    `:androidApp:connectedPlayDebugAndroidTest` on an API-35 emulator via
     `reactivecircus/android-emulator-runner`. Kept informational because the
     `runComposeUiTest` host has device-focus/screen sensitivities only ever
     verified on physical hardware; promote to a hard gate once it's proven
@@ -262,8 +262,8 @@ edits beyond adding the `TestTags` constants.
 ./gradlew :shared:connectedDebugAndroidTest               # if instrumented
 
 # Android-host E2E + platform stack (needs a device):
-./gradlew :androidApp:connectedDebugAndroidTest
-./gradlew :androidApp:connectedDebugAndroidTest \
+./gradlew :androidApp:connectedPlayDebugAndroidTest
+./gradlew :androidApp:connectedPlayDebugAndroidTest \
   -Pandroid.testInstrumentationRunnerArguments.class=com.offlineplaya.android.<Class>
 ```
 

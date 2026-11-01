@@ -87,9 +87,6 @@ kotlin {
                 implementation(libs.coil.network.okhttp)
                 implementation(libs.androidx.work.runtime)
 
-                // Google Play in-app review flow (PlayReviewPrompter).
-                implementation(libs.play.review.ktx)
-
                 // Extracts a dominant/vibrant seed color from album-art bitmaps
                 // (Android-only) to feed the reactive theme.
                 implementation(libs.androidx.palette)

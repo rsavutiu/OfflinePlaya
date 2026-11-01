@@ -3,6 +3,7 @@ package com.offlineplaya.android.e2e
 import android.content.Context
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.offlineplaya.android.di.appPlayerModule
+import com.offlineplaya.android.review.reviewModule
 import com.offlineplaya.shared.database.OfflinePlayaDatabase
 import com.offlineplaya.shared.di.androidModule
 import com.offlineplaya.shared.di.sharedModule
@@ -52,7 +53,7 @@ fun startE2EKoin(context: Context): E2EKoinHandle {
         allowOverride(true)
         androidLogger(Level.ERROR)
         androidContext(context)
-        modules(sharedModule, androidModule, appPlayerModule, overrides)
+        modules(sharedModule, androidModule, appPlayerModule, reviewModule, overrides)
     }
     return E2EKoinHandle(app.koin, player)
 }
