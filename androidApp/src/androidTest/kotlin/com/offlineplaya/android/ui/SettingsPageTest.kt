@@ -64,6 +64,7 @@ class SettingsPageTest {
                     onAcknowledgeBurnReport = {},
                     onPickFolder = {},
                     onRescanAll = {},
+                    onResetLibrary = {},
                     onRemoveManagedRoot = {},
                     onOpenEqualizer = {},
                     onOpenDesignSystem = {},
