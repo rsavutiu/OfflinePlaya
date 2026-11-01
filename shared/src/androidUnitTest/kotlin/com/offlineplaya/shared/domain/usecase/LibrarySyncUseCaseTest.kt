@@ -204,7 +204,7 @@ class LibrarySyncUseCaseTest {
     }
 
     @Test
-    fun `metadata read failure marks track ERROR without inserting artist or album`() = runTest {
+    fun `metadata read failure still indexes the track under its file name`() = runTest {
         val f = fixture()
         val uri = "content://tree/root"
         val docOk = "$uri/ok.mp3"
@@ -225,13 +225,23 @@ class LibrarySyncUseCaseTest {
         val report = useCase(f, scanner, reader).syncOne(uri)
 
         assertEquals(2, report.tracksDiscovered)
-        assertEquals(1, report.tracksScanned)
+        assertEquals(2, report.tracksScanned)
         assertEquals(1, report.tracksFailed)
 
-        assertEquals(ScanStatus.ERROR, f.tracks.findByDocumentUri(docBad)?.scanStatus)
+        // Both are visible. Every library query filters scan_status='scanned',
+        // so leaving the unreadable one as ERROR hid the file completely — the
+        // bug that ate a 20-track album after a Settings → Reset.
+        val bad = f.tracks.findByDocumentUri(docBad)
+        assertEquals(ScanStatus.SCANNED, bad?.scanStatus)
         assertEquals(ScanStatus.SCANNED, f.tracks.findByDocumentUri(docOk)?.scanStatus)
 
-        // No phantom artist/album from the failed read
+        // It falls back to the file name and the Unknown buckets rather than
+        // disappearing, which the tag editor can then repair.
+        assertEquals("broken.mp3", bad?.title)
+        assertEquals("Unknown Artist", bad?.artistName)
+        assertEquals("Unknown Album", bad?.albumName)
+
+        // Still no phantom Artist row from a read that produced no artist.
         assertEquals(1, f.artists.observeAll().first().size)
     }
 

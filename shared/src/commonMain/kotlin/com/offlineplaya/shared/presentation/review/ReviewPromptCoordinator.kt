@@ -72,8 +72,16 @@ class ReviewPromptCoordinator(
             when {
                 dueMilestone != null -> {
                     if (prompter.requestReview()) {
+                        // Re-read before writing: requestReview() suspends for
+                        // as long as the store's dialog is on screen, and
+                        // onTrackPlayed keeps incrementing playsCounted the
+                        // whole time. Writing state.copy(...) here would persist
+                        // the count as it was *before* the dialog and silently
+                        // lose every play made during it — which pushes the next
+                        // milestone further away each time we prompt.
+                        val fresh = settings.getReviewPromptState()
                         settings.setReviewPromptState(
-                            state.copy(
+                            fresh.copy(
                                 highestMilestoneFired = dueMilestone,
                                 lastPromptAtMillis = now(),
                             ),
@@ -87,7 +95,8 @@ class ReviewPromptCoordinator(
                 state.highestMilestoneFired > 0 &&
                     now() - state.lastPromptAtMillis >= resyncCooldownMillis -> {
                     if (prompter.requestReview()) {
-                        settings.setReviewPromptState(state.copy(lastPromptAtMillis = now()))
+                        val fresh = settings.getReviewPromptState()
+                        settings.setReviewPromptState(fresh.copy(lastPromptAtMillis = now()))
                         true
                     } else {
                         false

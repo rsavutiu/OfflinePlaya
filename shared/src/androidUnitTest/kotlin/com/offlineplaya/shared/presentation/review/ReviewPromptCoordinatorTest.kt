@@ -120,4 +120,35 @@ class ReviewPromptCoordinatorTest {
         h.coordinator.maybePromptForReview()
         assertEquals(2, h.prompter.launches)
     }
+
+    @Test
+    fun `plays that land while the review dialog is up are not lost`() = runTest {
+        val settings = SqlSettingsRepository(createInMemoryDatabase(), Dispatchers.Unconfined)
+        lateinit var coordinator: ReviewPromptCoordinator
+
+        // The store's dialog is on screen for as long as requestReview()
+        // suspends, and playback keeps counting underneath it. Three tracks
+        // finish while it is up.
+        val prompter = object : ReviewPrompter {
+            override suspend fun requestReview(): Boolean {
+                repeat(3) { coordinator.onTrackPlayed() }
+                return true
+            }
+        }
+        coordinator = ReviewPromptCoordinator(
+            settings = settings,
+            prompter = prompter,
+            logger = TestLogger(),
+            now = { 0L },
+        )
+
+        coordinator.play(10)
+        coordinator.maybePromptForReview()
+
+        // 10 before the prompt + 3 during it. Persisting the pre-dialog copy
+        // would write 10 back and quietly undo those three, pushing the next
+        // milestone further out every time we ask.
+        assertEquals(13, settings.getReviewPromptState().playsCounted)
+        assertEquals(10, settings.getReviewPromptState().highestMilestoneFired)
+    }
 }

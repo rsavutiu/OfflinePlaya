@@ -454,7 +454,25 @@ class LibrarySyncUseCase(
         val entries = mutableListOf<GroupEntry>()
         for ((trackId, file, metadata) in results) {
             if (metadata == null) {
-                tracks.markError(trackId)
+                // An unreadable tag is NOT a reason to hide the file. Every
+                // library query filters on scan_status = 'scanned', so marking
+                // the row 'error' here used to make the track vanish from the
+                // app entirely — present on disk, present in the DB, invisible
+                // everywhere, with nothing told to the user. That is what ate
+                // a whole 20-track album after a Settings → Reset.
+                //
+                // Index it instead with empty metadata: applyMetadata's own
+                // fallbacks give it the file name as a title and park it under
+                // Unknown Artist / Unknown Album, which is what every other
+                // player does and is recoverable with the tag editor. A forced
+                // rescan (Reset, or Rescan all) re-reads it regardless of
+                // status, so nothing is permanently stuck.
+                logger.w(
+                    TAG,
+                    "No readable metadata for ${file.documentUri} — " +
+                        "indexing under its file name",
+                )
+                entries += GroupEntry(trackId, file.parentRelativePath(), AudioMetadata.Empty)
                 failed++
             } else {
                 entries += GroupEntry(trackId, file.parentRelativePath(), metadata)
