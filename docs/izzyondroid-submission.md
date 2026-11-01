@@ -3,6 +3,34 @@
 Draft only — **nothing has been submitted**. Opening the request is a post made
 in your name, so it's left for you to send.
 
+> ## ⚠️ Read this before sending: we probably do not qualify
+>
+> Checked against the live
+> [App Inclusion Policy](https://izzyondroid.org/docs/general/AppInclusionPolicy/)
+> on 2026-11-01. Under *"What criteria would prevent an app to be included?"* it
+> opens:
+>
+> > "We are strongly opposed to apps which are fully or in part created by
+> > generative AI tools."
+>
+> and continues: *"Vibe-coded apps will be rejected."* … *"Readme, Changelogs and
+> similar documentation files are allowed to include LLM-generated texts, but the
+> code itself should be free of it."* … *"Any lack of transparency discovered by
+> us, can lead to the project being degraded to rejected state."*
+>
+> **169 of this repo's 180 commits carry a `Co-Authored-By: Claude` trailer.**
+> That is public, greppable history. So:
+>
+> - Submitting **without** disclosing is a transparency failure they can verify
+>   in one command — and the stated penalty is being marked rejected, which is
+>   worse than never having asked.
+> - Submitting **with** disclosure is honest, and under the policy as written
+>   will almost certainly be declined.
+>
+> This is a policy judgement, not a technical gap: the GPL-3.0 licence, the
+> Play-free `foss` flavour and the signed release attachment all meet their
+> other requirements. See "Where to go instead" at the bottom.
+
 ## Why IzzyOnDroid first (not F-Droid proper)
 
 F-Droid's main repo builds from source on their infrastructure and has a long
@@ -107,3 +135,81 @@ form:
 - the anti-feature declaration above
 
 Keep the description to a couple of sentences — the README does the rest.
+
+---
+
+## Updated process facts (checked 2026-11-01)
+
+- **The GitLab repo is archived and read-only.** Inclusion requests now go to
+  <https://codeberg.org/IzzyOnDroid/repodata/issues>. Do not file on GitLab.
+- **Fastlane metadata is mandatory, and we do not have it yet.** Required at the
+  repo root:
+  ```
+  fastlane/metadata/android/en-US/
+    short_description.txt    (max 80 chars)
+    full_description.txt     (max 4000 chars, basic HTML)
+    title.txt
+    images/icon.png
+    images/phoneScreenshots/
+    changelogs/<versionCode>.txt
+  ```
+  `en-US` is the fallback for every other locale. We currently keep the
+  equivalents in `store-listing/`; they would need mirroring, not moving
+  (`release.yml` points `whatsNewDirectory` at `store-listing/whatsnew`).
+- **Size:** ~30 MB per APK rule of thumb. Ours is 5.9 MB — fine.
+- **Signing:** release-signed by the developer, no `debuggable` / `testOnly`.
+  Ours is signed with the upload key. Fine.
+- **APK source:** GitHub `releases/` attachments are a preferred source. We now
+  have one: `foss-v1.1.0`.
+
+## The request text (only if you decide to send it)
+
+> **App:** OfflinePlaya — offline music player
+> **Package:** `com.offlineplaya.android`
+> **Source:** https://github.com/rsavutiu/OfflinePlaya
+> **Licence:** GPL-3.0-or-later
+> **APK:** attached to GitHub releases, e.g.
+> https://github.com/rsavutiu/OfflinePlaya/releases/tag/foss-v1.1.0
+> (`OfflinePlaya-1.1.0-foss.apk`, 5.9 MB, release-signed)
+>
+> OfflinePlaya plays the audio files you already own — no accounts, no
+> streaming, no ads, no analytics, no tracking. Library scanning, equalizer,
+> USB-DAC output, tag editing, Android Auto, 41 languages.
+>
+> The build attached to GitHub releases is a dedicated `foss` product flavour
+> that links against **no Google Play libraries** — verifiable with
+> `./gradlew :androidApp:dependencies --configuration fossReleaseRuntimeClasspath`.
+> The Play Store build is a separate flavour and is not what I'm submitting.
+>
+> **Anti-feature declaration — NonFreeNet.** The app is offline by default. Two
+> optional, user-triggered album-art fallbacks query proprietary services when
+> the free sources (MusicBrainz, Cover Art Archive, LRCLIB, OpenLibrary,
+> Wikipedia) miss: `api.deezer.com` and `www.googleapis.com/books/v1`. Only an
+> album/artist name is sent; no library data leaves the device. The optional
+> "Play to PC" feature is off by default and LAN-only.
+>
+> **Disclosure:** this project has been developed with substantial assistance
+> from an AI coding assistant, recorded honestly in the commit history as
+> `Co-Authored-By:` trailers. I am flagging this up front against your policy on
+> generative-AI-authored code rather than letting you discover it.
+
+## Where to go instead
+
+If IzzyOnDroid declines (or you'd rather not spend the attempt):
+
+1. **Obtainium** — needs no permission from anyone. Users point it at
+   `github.com/rsavutiu/OfflinePlaya` and get tracked updates straight from the
+   releases you already publish. Worth a line in the README today.
+2. **Accrescent** — curated, growing, and has its own criteria; check theirs
+   before assuming.
+3. **F-Droid proper** — builds from source, slower queue, and **check whether
+   their current policy carries an equivalent AI clause before investing the
+   effort**; do not assume it matches IzzyOnDroid's.
+4. **The community posts still work, but carry the same disclosure duty.**
+   r/fossdroid and r/degoogle are substantially the *same* audience as
+   IzzyOnDroid and hold similar views on AI-written code — and anyone can read
+   the `Co-Authored-By: Claude` trailers in the public history. Check each
+   community's rules on AI content and self-promotion first, and disclose AI
+   assistance in the post itself. Being caught not disclosing there does more
+   damage than a lukewarm reception. r/headphones and Head-Fi care mainly about
+   the USB-DAC story and are a softer audience for this.
