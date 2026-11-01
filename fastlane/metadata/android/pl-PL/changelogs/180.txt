@@ -1,0 +1,2 @@
+• „Odtwarzaj na komputerze" sam się teraz tłumaczy: krótki przewodnik bezpośrednio na ekranie oraz link do bezpłatnej aplikacji na Windows, Mac i Linux. Skopiuj lub wyślij link na komputer — to tam instaluje się aplikacja.
+• Poprawki: pozostawione „/no_think" w kilku przetłumaczonych etykietach, zbędne ukośniki wsteczne w niektórych tekstach i dopracowanie tłumaczeń.

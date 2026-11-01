@@ -1,0 +1,2 @@
+• « Écouter sur votre PC » s'explique désormais : un guide de configuration court directement à l'écran, avec le lien vers l'application gratuite pour Windows, Mac et Linux. Copiez ou partagez le lien vers votre ordinateur — c'est là que l'application s'installe.
+• Corrections : un « /no_think » resté dans quelques libellés traduits, des antislashs parasites dans certains textes, et des retouches de traduction.
