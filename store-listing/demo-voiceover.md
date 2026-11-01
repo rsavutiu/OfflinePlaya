@@ -21,12 +21,12 @@ way.
 
 ## Script
 
-### 0:00 – 0:12 · Hook
+### 0:00 – 0:14 · Hook
 > If you still keep your own music — ripped CDs, Bandcamp downloads, DJ sets,
 > bootlegs — streaming apps are the wrong tool for it. This one is built for
 > files.
 
-### 0:12 – 0:30 · Permission and setup
+### 0:14 – 0:30 · Permission and setup
 > OfflinePlaya asks for access to the audio already on your phone. That's the
 > only thing it ever asks for. No account, no sign-up, no email.
 
