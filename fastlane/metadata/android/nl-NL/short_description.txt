@@ -1,0 +1,1 @@
+Offline muziekspeler met equalizer voor je eigen MP3- en FLAC-bestanden.

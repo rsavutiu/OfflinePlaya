@@ -1,0 +1,27 @@
+OfflinePlaya é um player de música offline para a música que você já tem. Ele toca os arquivos de áudio do seu telefone — MP3, FLAC, M4A, OGG, WAV, Opus — sem streaming, sem contas, sem anúncios e sem nuvem.
+
+Aponte para a sua pasta de música e ele monta uma biblioteca organizada, que você navega por artista, álbum, pasta ou faixa e organiza em playlists. Tudo funciona no modo avião.
+
+POR QUE UM PLAYER LOCAL
+Se você tem uma coleção — CDs copiados, compras no Bandcamp, gravações ao vivo, sets de DJ, audiolivros, gravações de campo — um aplicativo de streaming é a ferramenta errada. OfflinePlaya foi feito para arquivos: leitura rápida da biblioteca, navegação real por pastas e tags que você mesmo corrige.
+
+TOQUE NO SEU PC
+Envia o áudio do telefone ao vivo, pelo seu próprio Wi-Fi, para um aplicativo complementar para Windows, Mac ou Linux — e toca nas suas caixas de som ou no seu aparelho de som. O telefone continua no controle, nada é salvo no PC e a transmissão não sai da sua rede doméstica. Seu som vira uma jukebox, sem cabos e sem Bluetooth.
+
+RECURSOS
+• Totalmente offline — toca os arquivos que já estão no telefone, incluindo MP3, FLAC, M4A, OGG, WAV e Opus
+• Equalizador de 10 bandas — ajustes feitos à mão (Rock, Pop, Jazz, Clássica, EDM, Hip-Hop, Bass Boost, Vocal Boost e mais), curva manual ou modo Automático que escolhe o ajuste pelo gênero de cada faixa, além de um pré-amplificador
+• Suporte a DAC USB — saída bit-perfect no Android 14+ para um sinal intacto até o seu DAC, e reprodução limpa em qualquer outro USB DAC
+• Reprodução sem intervalos, crossfade opcional e controle pelas teclas de volume
+• Letras sincronizadas — lê letras embutidas e arquivos .lrc, ou busca quando faltam
+• Capas que simplesmente aparecem — imagens embutidas, imagens da pasta ou uma busca online quando necessário
+• Playlists inteligentes e histórico de audição — Tocadas recentemente, Mais tocadas, Favoritas esquecidas, Nunca tocadas, feitas a partir de como você ouve de verdade
+• Navegação por pastas e um editor de tags que grava de volta nos seus arquivos, para que outros aplicativos vejam suas correções
+• Android Auto — navegue e toque sua biblioteca no carro
+• Design Material 3 com tema escuro, cores Material You opcionais e tons tirados das suas capas
+• Disponível em mais de 40 idiomas
+
+PRIVACIDADE
+OfflinePlaya não tem contas, anúncios nem rastreamento. Ele só acessa a internet para buscar as capas e letras que você pede — sua biblioteca não sai do aparelho, e tocar no PC fica na sua rede local.
+
+OfflinePlaya é para quem mantém a própria coleção de música e quer um player offline rápido, reservado e bem acabado, não mais uma assinatura.

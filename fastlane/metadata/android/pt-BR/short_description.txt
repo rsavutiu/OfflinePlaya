@@ -1,0 +1,1 @@
+Player de música offline com equalizador para seus MP3 e FLAC.

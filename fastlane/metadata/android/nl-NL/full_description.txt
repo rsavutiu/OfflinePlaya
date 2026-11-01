@@ -1,0 +1,27 @@
+OfflinePlaya is een offline muziekspeler voor de muziek die je al hebt. Hij speelt de audiobestanden op je telefoon — MP3, FLAC, M4A, OGG, WAV, Opus — zonder streaming, zonder account, zonder advertenties en zonder cloud.
+
+Wijs hem je muziekmap aan en hij bouwt een overzichtelijke bibliotheek die je doorzoekt op artiest, album, map of nummer en indeelt in afspeellijsten. Alles werkt in vliegtuigmodus.
+
+WAAROM EEN LOKALE MUZIEKSPELER
+Heb je een collectie — geripte cd's, Bandcamp-downloads, liveopnames, dj-sets, audioboeken, veldopnames — dan is een streaming-app het verkeerde gereedschap. OfflinePlaya is voor bestanden gemaakt: snel inlezen van je bibliotheek, echt door mappen bladeren, en tags die je zelf kunt verbeteren.
+
+SPELEN OP JE PC
+Stuurt het geluid van je telefoon live over je eigen wifi naar een bijbehorende app voor Windows, Mac of Linux — en speelt het via je echte speakers of je hifi-set. De telefoon houdt de regie, op de pc wordt niets opgeslagen en de stream verlaat je thuisnetwerk niet. Je stereo wordt een jukebox, zonder kabels en zonder Bluetooth.
+
+FUNCTIES
+• Volledig offline — speelt de bestanden die al op je telefoon staan, waaronder MP3, FLAC, M4A, OGG, WAV en Opus
+• 10-bands equalizer — met de hand afgestemde presets (Rock, Pop, Jazz, Klassiek, EDM, Hiphop, Bass Boost, Vocal Boost en meer), een handmatige curve, of een Auto-stand die de preset kiest op het genre van elk nummer, plus een voorversterker
+• Ondersteuning voor USB DAC — bit-perfect uitvoer op Android 14+ voor een onaangeroerd signaal naar je DAC, en schone weergave via elke andere USB DAC
+• Naadloos afspelen, optionele crossfade en bediening met de volumetoetsen
+• Gesynchroniseerde songteksten — leest ingebedde teksten en .lrc-bestanden, of haalt ze op als ze ontbreken
+• Albumhoezen die er gewoon zijn — ingebedde afbeeldingen, mapafbeeldingen of een zoekopdracht online als het nodig is
+• Slimme afspeellijsten en luistergeschiedenis — Recent gespeeld, Vaakst gespeeld, Vergeten favorieten, Nooit gespeeld, opgebouwd uit hoe je echt luistert
+• Door mappen bladeren en een tag-editor die terugschrijft in je bestanden, zodat andere apps je correcties ook zien
+• Android Auto — blader door je bibliotheek en speel hem in de auto
+• Material 3-ontwerp met donker thema, optionele Material You-kleuren en tinten uit je albumhoes
+• Beschikbaar in meer dan 40 talen
+
+PRIVACY
+OfflinePlaya heeft geen accounts, geen advertenties en geen tracking. Het gaat alleen online om de albumhoezen en songteksten op te halen waar je om vraagt — je bibliotheek verlaat je apparaat niet, en spelen op de pc blijft op je eigen netwerk.
+
+OfflinePlaya is voor mensen met een eigen muziekcollectie die een snelle, private en mooi gemaakte offline speler willen, en niet nog een streaming-abonnement.

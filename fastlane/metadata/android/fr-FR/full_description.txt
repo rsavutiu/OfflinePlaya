@@ -1,0 +1,27 @@
+OfflinePlaya est un lecteur de musique hors ligne pour la musique que vous possédez déjà. Il lit les fichiers audio de votre téléphone — MP3, FLAC, M4A, OGG, WAV, Opus — sans streaming, sans compte, sans publicité et sans cloud.
+
+Indiquez-lui votre dossier de musique et il construit une bibliothèque claire, que vous parcourez par artiste, album, dossier ou titre, et organisez en playlists. Tout fonctionne en mode avion.
+
+POURQUOI UN LECTEUR LOCAL
+Si vous avez une collection — CD rippés, achats Bandcamp, enregistrements live, sets DJ, livres audio, prises de son — une application de streaming n'est pas le bon outil. OfflinePlaya est fait pour les fichiers : analyse rapide de la bibliothèque, vraie navigation par dossiers, et des tags que vous corrigez vous-même.
+
+ÉCOUTER SUR VOTRE PC
+Diffusez le son de votre téléphone en direct, sur votre propre Wi-Fi, vers une application compagnon pour Windows, Mac ou Linux — et écoutez-le sur vos vraies enceintes ou votre chaîne hi-fi. Le téléphone garde la main, rien n'est enregistré sur le PC, et le flux ne quitte jamais votre réseau domestique. Votre chaîne devient un juke-box, sans câble et sans Bluetooth.
+
+FONCTIONNALITÉS
+• Totalement hors ligne — lit les fichiers déjà sur votre téléphone, dont MP3, FLAC, M4A, OGG, WAV et Opus
+• Égaliseur 10 bandes — préréglages réglés à la main (Rock, Pop, Jazz, Classique, EDM, Hip-Hop, Bass Boost, Vocal Boost et plus), courbe manuelle, ou mode Auto qui choisit le préréglage selon le genre du morceau, avec un préamplificateur
+• Prise en charge des DAC USB — sortie bit-perfect sur Android 14+ pour un signal intact vers votre DAC, et lecture propre sur tout autre USB DAC
+• Lecture sans blanc, fondu enchaîné en option et contrôle par les touches de volume
+• Paroles synchronisées — lit les paroles intégrées et les fichiers .lrc, ou les récupère quand elles manquent
+• Des pochettes qui s'affichent — images intégrées, images du dossier, ou recherche en ligne si besoin
+• Playlists intelligentes et historique d'écoute — Écoutés récemment, Les plus écoutés, Favoris oubliés, Jamais écoutés, construits sur votre écoute réelle
+• Navigation par dossiers et éditeur de tags qui réécrit dans vos fichiers, pour que les autres applications voient vos corrections
+• Android Auto — parcourez et écoutez votre bibliothèque en voiture
+• Design Material 3 avec thème sombre, couleurs Material You en option et teintes tirées de vos pochettes
+• Disponible en plus de 40 langues
+
+CONFIDENTIALITÉ
+OfflinePlaya n'a ni compte, ni publicité, ni suivi. Il ne va sur Internet que pour chercher les pochettes et les paroles que vous demandez — votre bibliothèque ne quitte pas votre appareil, et l'écoute sur PC reste sur votre réseau local.
+
+OfflinePlaya est pour celles et ceux qui gardent leur propre collection et veulent un lecteur hors ligne rapide, privé et soigné — pas un abonnement de plus.

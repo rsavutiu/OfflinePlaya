@@ -1,0 +1,1 @@
+Reproductor de música offline con ecualizador para tus MP3 y FLAC.

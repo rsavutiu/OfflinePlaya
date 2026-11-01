@@ -1,0 +1,27 @@
+OfflinePlaya es un reproductor de música offline para la música que ya tienes. Reproduce los archivos de audio de tu teléfono — MP3, FLAC, M4A, OGG, WAV, Opus — sin streaming, sin cuentas, sin anuncios y sin nube.
+
+Indícale tu carpeta de música y creará una biblioteca ordenada que puedes explorar por artista, álbum, carpeta o pista, y organizar en listas de reproducción. Todo funciona en modo avión.
+
+POR QUÉ UN REPRODUCTOR LOCAL
+Si tienes una colección — CD copiados, descargas de Bandcamp, grabaciones en directo, sesiones de DJ, audiolibros, grabaciones de campo — una aplicación de streaming no es la herramienta adecuada. OfflinePlaya está hecho para archivos: análisis rápido de la biblioteca, navegación real por carpetas y etiquetas que puedes corregir tú.
+
+REPRODUCIR EN TU PC
+Envía el audio de tu teléfono en directo, por tu propia red Wi-Fi, a una aplicación complementaria para Windows, Mac o Linux, y escúchalo por tus altavoces o tu equipo de música. El teléfono mantiene el control, nada se guarda en el PC y la transmisión no sale de tu red doméstica. Tu equipo se convierte en una gramola, sin cables y sin Bluetooth.
+
+CARACTERÍSTICAS
+• Totalmente offline — reproduce los archivos que ya tienes en el teléfono, incluidos MP3, FLAC, M4A, OGG, WAV y Opus
+• Ecualizador de 10 bandas — ajustes preparados a mano (Rock, Pop, Jazz, Clásica, EDM, Hip-Hop, Bass Boost, Vocal Boost y más), curva manual o modo Automático que elige el ajuste según el género de cada pista, además de un preamplificador
+• Compatible con DAC USB — salida bit-perfect en Android 14+ para una señal intacta hacia tu DAC, y reproducción limpia con cualquier otro USB DAC
+• Reproducción sin silencios, fundido opcional entre pistas y control con las teclas de volumen
+• Letras sincronizadas — lee letras incrustadas y archivos .lrc, o las busca cuando faltan
+• Carátulas que simplemente aparecen — imágenes incrustadas, imágenes de la carpeta o una búsqueda en línea si hace falta
+• Listas inteligentes e historial de escucha — Escuchadas hace poco, Más escuchadas, Favoritas olvidadas, Nunca escuchadas, creadas a partir de cómo escuchas de verdad
+• Navegación por carpetas y un editor de etiquetas que escribe en tus archivos, para que otras aplicaciones vean tus correcciones
+• Android Auto — explora y reproduce tu biblioteca en el coche
+• Diseño Material 3 con tema oscuro, colores Material You opcionales y tonos tomados de tus carátulas
+• Disponible en más de 40 idiomas
+
+PRIVACIDAD
+OfflinePlaya no tiene cuentas, ni anuncios, ni seguimiento. Solo se conecta a Internet para buscar las carátulas y letras que le pides — tu biblioteca no sale de tu dispositivo, y la reproducción en el PC se queda en tu red local.
+
+OfflinePlaya es para quienes conservan su propia colección de música y quieren un reproductor offline rápido, privado y bien hecho, no otra suscripción.

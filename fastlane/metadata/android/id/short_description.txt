@@ -1,0 +1,1 @@
+Pemutar musik offline dengan equalizer untuk berkas MP3 dan FLAC Anda.

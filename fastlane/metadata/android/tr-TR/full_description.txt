@@ -1,0 +1,27 @@
+OfflinePlaya, zaten sizde olan müzik için bir çevrimdışı müzik çalardır. Telefonunuzdaki ses dosyalarını — MP3, FLAC, M4A, OGG, WAV, Opus — yayın yapmadan, hesap açmadan, reklamsız ve bulut olmadan çalar.
+
+Müzik klasörünüzü gösterin; sanatçıya, albüme, klasöre ya da parçaya göre gezebileceğiniz ve çalma listelerine ayırabileceğiniz düzenli bir kitaplık kurar. Her şey uçak modunda çalışır.
+
+NEDEN YEREL BİR MÜZİK ÇALAR
+Bir arşiviniz varsa — kopyalanmış CD'ler, Bandcamp'ten indirdikleriniz, konser kayıtları, DJ setleri, sesli kitaplar, saha kayıtları — yayın uygulaması doğru araç değildir. OfflinePlaya dosyalar için yapıldı: hızlı kitaplık taraması, gerçek klasör gezintisi ve kendiniz düzeltebileceğiniz etiketler.
+
+BİLGİSAYARINIZDA ÇALIN
+Telefonunuzun sesini kendi Wi-Fi ağınız üzerinden canlı olarak Windows, Mac veya Linux için bir yardımcı uygulamaya gönderir ve gerçek hoparlörlerinizden ya da müzik setinizden çalar. Denetim telefonda kalır, bilgisayarda hiçbir şey saklanmaz ve yayın ev ağınızın dışına çıkmaz. Müzik setiniz kablosuz ve Bluetooth'suz bir müzik kutusuna dönüşür.
+
+ÖZELLİKLER
+• Tamamen çevrimdışı — telefonunuzdaki dosyaları çalar; MP3, FLAC, M4A, OGG, WAV ve Opus dahil
+• 10 bantlı ekolayzır — elle hazırlanmış ayarlar (Rock, Pop, Jazz, Klasik, EDM, Hip-Hop, Bass Boost, Vocal Boost ve daha fazlası), elle çizilen eğri ya da her parçanın türüne göre ayar seçen Otomatik kip, ayrıca ön yükselteç
+• USB DAC desteği — Android 14+ üzerinde bit düzeyinde birebir çıkış, DAC'ınıza dokunulmamış bir sinyal; diğer tüm USB DAC'larda temiz çalma
+• Boşluksuz çalma, isteğe bağlı çapraz geçiş ve ses tuşlarıyla denetim
+• Eşzamanlı şarkı sözleri — dosyaya gömülü sözleri ve .lrc dosyalarını okur, eksikse indirir
+• Her zaman görünen albüm kapakları — gömülü görseller, klasördeki görseller ya da gerektiğinde çevrimiçi arama
+• Akıllı çalma listeleri ve dinleme geçmişi — Son dinlenenler, En çok dinlenenler, Unutulan favoriler, Hiç dinlenmeyenler; gerçek dinleme alışkanlığınızdan üretilir
+• Klasör gezintisi ve değişiklikleri dosyalarınıza geri yazan etiket düzenleyici, böylece diğer uygulamalar da düzeltmelerinizi görür
+• Android Auto — kitaplığınızı arabada gezin ve çalın
+• Koyu temalı Material 3 tasarımı, isteğe bağlı Material You renkleri ve albüm kapağınızdan alınan tonlar
+• 40'tan fazla dilde kullanılabilir
+
+GİZLİLİK
+OfflinePlaya'da hesap, reklam ve izleme yok. İnternete yalnızca istediğiniz albüm kapakları ve şarkı sözleri için çıkar — kitaplığınız cihazınızdan ayrılmaz, bilgisayarda çalma ise yerel ağınızda kalır.
+
+OfflinePlaya, kendi müzik arşivini tutan ve hızlı, kendine saklı, güzel görünen bir çevrimdışı çalar isteyenler için; bir abonelik daha değil.

@@ -1,0 +1,1 @@
+Odtwarzacz muzyki offline z korektorem do plików MP3 i FLAC.

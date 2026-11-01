@@ -1,0 +1,27 @@
+OfflinePlaya ist ein Offline-Musikplayer für die Musik, die du schon besitzt. Er spielt die Audiodateien auf deinem Telefon — MP3, FLAC, M4A, OGG, WAV, Opus — ohne Streaming, ohne Konto, ohne Werbung und ohne Cloud.
+
+Zeig ihm deinen Musikordner, und er baut eine übersichtliche Bibliothek, die du nach Interpret, Album, Ordner oder Titel durchsuchen und in Playlists sortieren kannst. Alles funktioniert im Flugmodus.
+
+WARUM EIN LOKALER MUSIKPLAYER
+Wenn du eine Sammlung hast — gerippte CDs, Bandcamp-Downloads, Bootlegs, DJ-Sets, Hörbücher, Field Recordings — ist eine Streaming-App das falsche Werkzeug. OfflinePlaya ist für Dateien gemacht: schnelles Einlesen der Bibliothek, echtes Ordner-Browsing und Tags, die du selbst korrigieren kannst.
+
+AUF DEINEM PC ABSPIELEN
+Überträgt den Ton deines Telefons live über dein eigenes WLAN an eine Begleit-App für Windows, Mac oder Linux — und spielt ihn über deine echten Lautsprecher oder deine HiFi-Anlage. Das Telefon behält die Kontrolle, auf dem PC wird nichts gespeichert, und der Stream verlässt dein Heimnetz nicht. Deine Stereoanlage wird zur Jukebox, ohne Kabel und ohne Bluetooth.
+
+FUNKTIONEN
+• Vollständig offline — spielt MP3, FLAC, M4A, OGG, WAV und Opus direkt von deinem Telefon
+• 10-Band-Equalizer — handgemachte Presets (Rock, Pop, Jazz, Klassik, EDM, Hip-Hop, Bass Boost, Vocal Boost und mehr), ein manueller Graph oder ein Auto-Modus, der das Preset aus dem Genre jedes Titels wählt, plus Vorverstärkung
+• USB-DAC-Unterstützung — bitgenaue Ausgabe auf Android 14+ für ein unverändertes Signal an deinen DAC, und saubere Wiedergabe über jeden anderen USB DAC
+• Lückenlose Wiedergabe, optionale Überblendung und Steuerung per Lautstärketasten
+• Synchronisierte Songtexte — liest eingebettete Texte und .lrc-Dateien oder lädt sie nach, wenn sie fehlen
+• Cover, die einfach da sind — eingebettete Bilder, Ordnerbilder oder eine Online-Suche, wenn nötig
+• Intelligente Playlists und Hörverlauf — Kürzlich gespielt, Oft gespielt, Vergessene Favoriten, Nie gespielt, aus deinem tatsächlichen Hörverhalten
+• Ordneransicht und ein Tag-Editor, der in deine Dateien zurückschreibt, damit andere Apps deine Korrekturen auch sehen
+• Android Auto — Bibliothek im Auto durchsuchen und abspielen
+• Material 3 Design mit dunklem Theme, optionalen Material You Wallpaper-Farben und Farben aus deinem Cover
+• In über 40 Sprachen verfügbar
+
+DATENSCHUTZ
+OfflinePlaya hat keine Konten, keine Werbung und kein Tracking. Es geht nur ins Internet, um Cover und Songtexte zu holen, die du anfragst — deine Bibliothek verlässt dein Gerät nicht, und das Abspielen auf dem PC bleibt in deinem lokalen Netz.
+
+OfflinePlaya ist für Menschen mit einer eigenen Musiksammlung, die einen schnellen, privaten und schön gestalteten Offline-Player wollen — kein weiteres Streaming-Abo.

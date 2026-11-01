@@ -1,0 +1,27 @@
+OfflinePlaya adalah pemutar musik offline untuk musik yang sudah Anda miliki. Ia memutar berkas audio di ponsel Anda — MP3, FLAC, M4A, OGG, WAV, Opus — tanpa streaming, tanpa akun, tanpa iklan, dan tanpa awan.
+
+Tunjukkan folder musik Anda, dan ia akan menyusun pustaka yang rapi: telusuri menurut artis, album, folder, atau lagu, lalu atur menjadi daftar putar. Semuanya bekerja dalam mode pesawat.
+
+MENGAPA PEMUTAR LOKAL
+Kalau Anda punya koleksi — CD yang disalin, unduhan Bandcamp, rekaman panggung, set DJ, buku audio, rekaman lapangan — aplikasi streaming bukan alat yang tepat. OfflinePlaya dibuat untuk berkas: pemindaian pustaka yang cepat, penelusuran folder yang sebenarnya, dan tag yang bisa Anda perbaiki sendiri.
+
+PUTAR DI PC ANDA
+Mengirim suara ponsel secara langsung, lewat Wi-Fi Anda sendiri, ke aplikasi pendamping untuk Windows, Mac, atau Linux — lalu memutarnya melalui pengeras suara atau perangkat hi-fi Anda. Kendali tetap di ponsel, tidak ada yang disimpan di PC, dan aliran suara tidak pernah keluar dari jaringan rumah Anda. Perangkat audio Anda menjadi jukebox, tanpa kabel dan tanpa Bluetooth.
+
+FITUR
+• Sepenuhnya offline — memutar berkas yang sudah ada di ponsel, termasuk MP3, FLAC, M4A, OGG, WAV, dan Opus
+• Equalizer 10 pita — prasetel yang disetel manual (Rock, Pop, Jazz, Klasik, EDM, Hip-Hop, Bass Boost, Vocal Boost, dan lainnya), kurva manual, atau mode Otomatis yang memilih prasetel dari genre setiap lagu, ditambah penguat awal
+• Dukungan USB DAC — keluaran bit-perfect di Android 14+ untuk sinyal utuh ke DAC Anda, dan pemutaran bersih lewat USB DAC lainnya
+• Pemutaran tanpa jeda, crossfade opsional, dan kendali lewat tombol volume
+• Lirik tersinkron — membaca lirik yang tertanam dan berkas .lrc, atau mengambilnya bila tidak ada
+• Sampul album yang selalu muncul — gambar tertanam, gambar dari folder, atau pencarian daring bila perlu
+• Daftar putar cerdas dan riwayat dengar — Baru diputar, Paling sering diputar, Favorit yang terlupakan, Belum pernah diputar, dibentuk dari cara Anda mendengarkan
+• Penelusuran folder dan penyunting tag yang menulis kembali ke berkas Anda, sehingga aplikasi lain ikut melihat perbaikan Anda
+• Android Auto — telusuri dan putar pustaka Anda di mobil
+• Desain Material 3 dengan tema gelap, warna Material You opsional, dan warna yang diambil dari sampul album
+• Tersedia dalam lebih dari 40 bahasa
+
+PRIVASI
+OfflinePlaya tidak punya akun, iklan, atau pelacakan. Ia hanya menjangkau internet untuk mencari sampul album dan lirik yang Anda minta — pustaka Anda tidak meninggalkan perangkat, dan memutar di PC tetap di jaringan lokal Anda.
+
+OfflinePlaya untuk orang yang menyimpan koleksi musiknya sendiri dan ingin pemutar offline yang cepat, tertutup, dan rapi — bukan langganan baru.

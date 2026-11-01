@@ -1,0 +1,27 @@
+OfflinePlaya to odtwarzacz muzyki offline do muzyki, którą już masz. Odtwarza pliki audio z twojego telefonu — MP3, FLAC, M4A, OGG, WAV, Opus — bez streamingu, bez konta, bez reklam i bez chmury.
+
+Wskaż mu folder z muzyką, a zbuduje przejrzystą bibliotekę, którą przeglądasz według wykonawcy, albumu, folderu lub utworu i porządkujesz w playlisty. Wszystko działa w trybie samolotowym.
+
+DLACZEGO LOKALNY ODTWARZACZ
+Jeśli masz kolekcję — zgrane płyty CD, zakupy z Bandcampa, nagrania koncertowe, sety DJ-skie, audiobooki, nagrania terenowe — aplikacja streamingowa to złe narzędzie. OfflinePlaya jest zrobiony do plików: szybkie skanowanie biblioteki, prawdziwe przeglądanie folderów i tagi, które poprawiasz sam.
+
+ODTWARZAJ NA KOMPUTERZE
+Przesyła dźwięk z telefonu na żywo, przez twoje własne Wi-Fi, do aplikacji towarzyszącej na Windows, Mac lub Linux — i odtwarza go na prawdziwych głośnikach albo na wieży. Telefon zachowuje kontrolę, na komputerze nic nie jest zapisywane, a strumień nie opuszcza twojej sieci domowej. Twój sprzęt staje się szafą grającą, bez kabli i bez Bluetootha.
+
+FUNKCJE
+• Całkowicie offline — odtwarza pliki, które już masz w telefonie, w tym MP3, FLAC, M4A, OGG, WAV i Opus
+• 10-pasmowy korektor — ustawienia dobrane ręcznie (Rock, Pop, Jazz, Klasyka, EDM, Hip-Hop, Bass Boost, Vocal Boost i więcej), ręczna krzywa albo tryb Auto, który wybiera ustawienie na podstawie gatunku utworu, plus przedwzmacniacz
+• Obsługa USB DAC — wyjście bit-perfect na Androidzie 14+ dla nietkniętego sygnału do twojego DAC-a i czyste odtwarzanie przez każdy inny USB DAC
+• Odtwarzanie bez przerw, opcjonalne przejścia między utworami i sterowanie klawiszami głośności
+• Zsynchronizowane teksty — czyta teksty zapisane w plikach i pliki .lrc albo pobiera je, gdy ich brakuje
+• Okładki, które po prostu są — obrazy w plikach, obrazy z folderu albo wyszukiwanie online, gdy trzeba
+• Inteligentne playlisty i historia słuchania — Ostatnio słuchane, Najczęściej słuchane, Zapomniane ulubione, Nigdy nie słuchane, zbudowane z tego, jak naprawdę słuchasz
+• Przeglądanie folderów i edytor tagów, który zapisuje zmiany w twoich plikach, więc inne aplikacje też widzą poprawki
+• Android Auto — przeglądaj i odtwarzaj bibliotekę w samochodzie
+• Wygląd Material 3 z ciemnym motywem, opcjonalnymi kolorami Material You i barwami pobranymi z okładki
+• Dostępne w ponad 40 językach
+
+PRYWATNOŚĆ
+OfflinePlaya nie ma kont, reklam ani śledzenia. Łączy się z internetem tylko po okładki i teksty, o które poprosisz — twoja biblioteka nie opuszcza urządzenia, a odtwarzanie na komputerze zostaje w twojej sieci lokalnej.
+
+OfflinePlaya jest dla ludzi, którzy mają własną kolekcję muzyki i chcą szybkiego, prywatnego i dobrze wyglądającego odtwarzacza offline, a nie kolejnej subskrypcji.

@@ -1,0 +1,27 @@
+OfflinePlaya è un lettore musicale offline per la musica che possiedi già. Riproduce i file audio sul tuo telefono — MP3, FLAC, M4A, OGG, WAV, Opus — senza streaming, senza account, senza pubblicità e senza cloud.
+
+Indicagli la tua cartella di musica e costruirà una libreria ordinata, da sfogliare per artista, album, cartella o brano e da organizzare in playlist. Tutto funziona in modalità aereo.
+
+PERCHÉ UN LETTORE LOCALE
+Se hai una collezione — CD copiati, acquisti su Bandcamp, registrazioni dal vivo, set da DJ, audiolibri, registrazioni ambientali — un'app di streaming è lo strumento sbagliato. OfflinePlaya è pensato per i file: scansione rapida della libreria, vera navigazione per cartelle e tag che puoi correggere tu.
+
+RIPRODUCI SUL TUO PC
+Invia l'audio del telefono in diretta, sul tuo Wi-Fi, a un'app compagna per Windows, Mac o Linux — e ascoltalo dai tuoi veri altoparlanti o dal tuo impianto hi-fi. Il telefono resta al comando, sul PC non viene salvato nulla e il flusso non lascia la tua rete domestica. Il tuo stereo diventa un jukebox, senza cavi e senza Bluetooth.
+
+CARATTERISTICHE
+• Completamente offline — riproduce i file già sul telefono, tra cui MP3, FLAC, M4A, OGG, WAV e Opus
+• Equalizzatore a 10 bande — preset curati a mano (Rock, Pop, Jazz, Classica, EDM, Hip-Hop, Bass Boost, Vocal Boost e altri), curva manuale o modalità Auto che scegli il preset dal genere del brano, più un preamplificatore
+• Supporto DAC USB — uscita bit-perfect su Android 14+ per un segnale intatto verso il tuo DAC, e riproduzione pulita con qualunque altro USB DAC
+• Riproduzione senza pause, dissolvenza incrociata opzionale e controllo con i tasti del volume
+• Testi sincronizzati — legge i testi incorporati e i file .lrc, o li recupera quando mancano
+• Copertine che si vedono sempre — immagini incorporate, immagini della cartella o una ricerca online se serve
+• Playlist intelligenti e cronologia di ascolto — Ascoltati di recente, I più ascoltati, Preferiti dimenticati, Mai ascoltati, costruite su come ascolti davvero
+• Navigazione per cartelle e un editor di tag che riscrive nei tuoi file, così anche le altre app vedono le tue correzioni
+• Android Auto — sfoglia e ascolta la tua libreria in auto
+• Design Material 3 con tema scuro, colori Material You opzionali e tinte prese dalle tue copertine
+• Disponibile in oltre 40 lingue
+
+PRIVACY
+OfflinePlaya non ha account, pubblicità né tracciamento. Si collega a Internet solo per cercare le copertine e i testi che chiedi — la tua libreria non lascia il dispositivo, e la riproduzione sul PC resta sulla tua rete locale.
+
+OfflinePlaya è per chi conserva la propria collezione e vuole un lettore offline veloce, riservato e ben fatto, non un altro abbonamento.
