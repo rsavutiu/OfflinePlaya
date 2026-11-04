@@ -180,73 +180,51 @@ These are forms rather than social posts, so no community rules to trip over:
 
 ## 5. The video you already have
 
-The demo is the strongest asset in the repo and it's currently doing almost
-nothing. Three places it should be and (as far as this repo can tell) isn't:
+The demo is the strongest asset in the repo, and on the Play side it is already
+wired in: `bf6c0b1` records that both the main Video field and the XR slot point
+at it, saved and submitted alongside 1.1.0 on 2026-11-01 (the video fields are
+shared across all 13 locales, not per-locale). The per-form-factor phone slot is
+deliberately empty so it inherits the main field.
 
-1. **The Play listing's promo video slot.** `fastlane/metadata/android/*/video.txt`
-   now carries the URL, but the release workflow uses
-   `r0adkll/upload-google-play`, which ships the AAB and changelog only — it
-   does not upload listing metadata. The video has to be pasted into Play
-   Console's Main store listing by hand.
-2. **The top of the README**, as a clickable thumbnail rather than a text link.
-3. **Every post above** — the 2-minute demo answers "what does it look like"
-   faster than any screenshot set.
+`fastlane/metadata/android/*/video.txt` now carries the URL too, so a future
+`fastlane supply` run picks it up instead of depending on a Console visit.
+
+Where it is still underused is off-Play:
+
+1. **The README** links it as plain text — a clickable thumbnail at the top
+   would do more.
+2. **Every post above** — two minutes of footage answers "what does this look
+   like" faster than any screenshot set.
 
 ---
 
-## 6. The real headline: 12 translated Play listings have never been uploaded
+## 6. The Play listing is done — don't re-do it
 
-`fastlane/metadata/android/` holds title, short and full descriptions in 13
-locales. The release workflow (`.github/workflows/release.yml`) uses
-`r0adkll/upload-google-play`, which ships **the AAB and the English changelog
-only** — the comment in the workflow even says to add localized listings in
-Play Console by hand, and that was never done.
+An earlier draft of this file claimed the 13 localized listings had never been
+uploaded. That was wrong, and it is worth recording why, because the repo
+invites the mistake:
 
-Play search is per-language. An English-only listing in 178 countries is close
-to invisible, which matches the install count better than any other
-explanation. This is the cheapest lever available and it needs no code.
+- `release.yml` really does ship only the AAB and the English changelog, and its
+  comment really does say to add localized listings in Console. But Console
+  entry is a **manual step that was already taken** — all 13 were added under
+  Manage languages and submitted for review on 2026-11-01, together with the
+  video and the 1.1.0 release.
+- **Console state is not visible from the repo.** The absence of automation is
+  not evidence that the manual step was skipped. Check the commit history
+  (`git log -- store-listing fastlane`) and the project notes before concluding
+  anything about what is live.
+- The limits are already enforced by **`python scripts/check_listing.py`**,
+  which checks title ≤30, short ≤80, full ≤4000, glossary-term survival,
+  promo-keyword bans and script mismatches. All 13 locales pass.
+- **Do not hand-roll the character counts.** `wc -m` in Git Bash counts *bytes*
+  for non-Latin text, which reported ja-JP's title as 36 characters when it is
+  21, and ru-RU's as 40 when it is 27 — and produced a table of limit breaches
+  that did not exist.
+- Likewise, do not test for the Play-to-PC section by grepping for `PC`: it
+  won't appear in Japanese, Russian or Turkish copy. `check_listing.py` already
+  covers this, because its glossary includes Windows / Mac / Linux and those
+  terms appear only in that paragraph.
 
-### Which locales are upload-ready
-
-Checked against Play's limits (title ≤30 chars, short description ≤80, full
-description ≤4000), and against whether the copy includes the Play-to-PC
-section added later:
-
-| Locale | Title | Short | Full | Play-to-PC |
-|---|---|---|---|---|
-| de-DE | 26 ✅ | 72 ✅ | 2922 ✅ | yes |
-| en-US | 26 ✅ | 77 ✅ | 2615 ✅ | yes |
-| es-419 | 26 ✅ | 68 ✅ | 2987 ✅ | yes |
-| es-ES | 26 ✅ | 68 ✅ | 2987 ✅ | yes |
-| fr-FR | 27 ✅ | 68 ✅ | 3029 ✅ | yes |
-| id | 28 ✅ | 71 ✅ | 2836 ✅ | yes |
-| it-IT | 26 ✅ | 66 ✅ | 2820 ✅ | yes |
-| nl-NL | 27 ✅ | 73 ✅ | 2863 ✅ | yes |
-| pl-PL | 25 ✅ | 62 ✅ | 2946 ✅ | yes |
-| pt-BR | **32 ✗** | 64 ✅ | 2810 ✅ | yes |
-| ja-JP | **36 ✗** | **104 ✗** | 3631 ✅ | **missing** |
-| ru-RU | **40 ✗** | **109 ✗** | **4839 ✗** | **missing** |
-| tr-TR | 28 ✅ | **83 ✗** | 3026 ✅ | **missing** |
-
-So **9 locales can go up as they are.** pt-BR needs its title trimmed by two
-characters. ja-JP, ru-RU and tr-TR are both over-limit *and* predate the
-Play-to-PC section — they want regenerating through `scripts/translate_strings.py`
-with length caps, not hand-trimming.
-
-### Getting them up there
-
-Pasting 9 listings into Play Console by hand is the no-setup path. The one-shot
-alternative is `fastlane supply` in metadata-only mode against the same
-`PLAY_SERVICE_ACCOUNT_JSON` the release workflow already uses — it reads this
-exact directory layout. Confirm the current flag names with
-`fastlane supply --help` before running it; the metadata-only invocation has
-changed between fastlane versions.
-
-Either way it's a Play Console account change, so it's yours to run.
-
-### Also by hand in Console
-
-The promo video. `fastlane/metadata/android/*/video.txt` now carries
-`https://www.youtube.com/watch?v=iyMItL6WTzU`, which `supply` would pick up, but
-`r0adkll` will not — the Main store listing's video field has to be filled in
-Console.
+**So the Play surface is not the open work.** It changed on 2026-11-01 — too
+recently to read an install effect. The genuinely untouched channels are the
+off-Play ones in sections 1-4.
