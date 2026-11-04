@@ -5,11 +5,41 @@ so sending it is yours to do. Check each community's self-promotion rules
 before posting — several subreddits require flair, an account-age/karma
 minimum, or ban app posts outside a weekly thread.
 
+### What is actually live on Play, read 2026-11-04
+
+Read off the public Play page in the browser pane, not inferred from the repo
+(WebFetch can't read Play — the page is JS-rendered and comes back truncated):
+
+| | Live on the store page | In the repo |
+|---|---|---|
+| Last updated | **Oct 17, 2026** | 1.1.0 submitted Nov 1 |
+| en-US short description | "Offline player for your own music. Stream to your PC, EQ, no ads, no cloud." | "Offline MP3 & FLAC music player with equalizer for the music you already own." |
+| de-DE short description | "Offline-Player für deine eigene Musik. Streame auf deinen PC, Equalizer, keine Werbung, keine Cloud." (~105 chars, over Play's 80) | "Offline-Musikplayer mit Equalizer für MP3 und FLAC auf deinem Telefon." |
+| de-DE full description | formal *Sie*, "(NEU)", "41 Sprachen" | informal *du*, no "NEU" |
+| Trailer video ID | `TZEk8RL2cIc` | `iyMItL6WTzU` (the demo) |
+| Downloads | **50+** | — |
+
+**None of the 2026-11-01 work is live.** Not the 13 hand-written localized
+listings, not the rewritten short description, not the new demo video. The store
+page still serves the pre-11-01 listing — the German text is a machine
+translation of the old English copy, which is why it breaks the 80-character
+limit and still carries the "keine Werbung, keine Cloud" phrasing that
+`check_listing.py` bans and that got the app promo-flagged in the first place.
+
+So either the 11-01 change set is still in review after three days, or it did
+not apply. **Checking that in Console is the first thing to do** — every post
+below points people at a listing that is three weeks stale, and the demo they
+were drafted around is not the video the store shows.
+
+The one piece of good news is unambiguous: **50+ downloads**, against the ~5
+that framed this as a failure. That is the baseline to measure the posts
+against.
+
 Shared links:
 
 - Play: <https://play.google.com/store/apps/details?id=com.offlineplaya.android>
 - GitHub: <https://github.com/rsavutiu/OfflinePlaya>
-- Demo video: <https://youtu.be/iyMItL6WTzU>
+- Demo video (3:09): <https://youtu.be/iyMItL6WTzU>
 - FOSS APK (no Play libraries): GitHub Releases
 
 ### Claim discipline
@@ -22,8 +52,9 @@ most likely to care are the ones who will test them:
   **16-bit or less** are bit-perfect. 24-bit files fall back to the system
   mixer. Say so in the post — an audiophile audience will find it in an hour
   and the correction costs more than the caveat.
-- **No install counts, no testimonials, no "hundreds of users."** There are
-  roughly five installs. Lead with what the app does instead.
+- **No testimonials, no "hundreds of users."** The live figure is 50+ downloads
+  and no rating yet. There's no need to mention numbers at all — lead with what
+  the app does.
 
 ---
 
@@ -61,7 +92,9 @@ most likely to care are the ones who will test them:
 > Free, no ads, no IAP. There's also a FOSS build on GitHub with no Play
 > libraries at all if you'd rather sideload.
 >
-> Play: <link> · Source: <link> · 2-minute demo: <link>
+> Play: https://play.google.com/store/apps/details?id=com.offlineplaya.android
+> Source: https://github.com/rsavutiu/OfflinePlaya
+> Demo (3 min): https://youtu.be/iyMItL6WTzU
 >
 > Happy to hear what's missing — especially from anyone with a big local
 > library, because that's where the scanner gets interesting.
@@ -104,7 +137,9 @@ forum.
 > hardware — chip, Android version, and whether the DAC badge reads
 > "Bit-perfect" or "System mixer".
 >
-> <links>
+> Play: https://play.google.com/store/apps/details?id=com.offlineplaya.android
+> Source: https://github.com/rsavutiu/OfflinePlaya
+> Demo (3 min): https://youtu.be/iyMItL6WTzU
 
 That ask — "tell me what your DAC reports" — is the part that makes this a
 discussion rather than an ad. Keep it.
@@ -148,7 +183,9 @@ Body:
 > Source is GPL-3.0-or-later, there's a FOSS build with no Play libraries, and the
 > commit history is honest about being heavily AI-assisted.
 >
-> <links>
+> Play: https://play.google.com/store/apps/details?id=com.offlineplaya.android
+> Source: https://github.com/rsavutiu/OfflinePlaya
+> Demo (3 min): https://youtu.be/iyMItL6WTzU
 
 HN responds to the engineering specifics, not the feature list — the
 `DocumentFile.listFiles` and `PLAYBACK_TYPE_REMOTE` bits are the hook. Post on
@@ -191,9 +228,9 @@ deliberately empty so it inherits the main field.
 
 Where it is still underused is off-Play:
 
-1. **The README** links it as plain text — a clickable thumbnail at the top
-   would do more.
-2. **Every post above** — two minutes of footage answers "what does this look
+1. ~~The README links it as plain text~~ — now a clickable thumbnail at the top
+   of the README.
+2. **Every post above** — three minutes of footage answers "what does this look
    like" faster than any screenshot set.
 
 ---

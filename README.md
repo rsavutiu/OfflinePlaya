@@ -15,6 +15,15 @@
   <a href="https://youtu.be/iyMItL6WTzU">Demo video</a>
 </p>
 
+<p align="center">
+  <a href="https://youtu.be/iyMItL6WTzU">
+    <img src="https://img.youtube.com/vi/iyMItL6WTzU/maxresdefault.jpg" width="520"
+         alt="Watch the 3-minute OfflinePlaya demo">
+  </a>
+  <br>
+  <sub><b>Watch the demo</b> — library scan, equalizer, USB DAC output, Play to PC</sub>
+</p>
+
 ## Features
 
 - **Strictly offline** — plays local files (FLAC, MP3, M4A, OGG, WAV…); nothing
