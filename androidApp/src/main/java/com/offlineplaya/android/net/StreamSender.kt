@@ -53,6 +53,11 @@ class StreamSender(private val logger: AppLogger) {
     @Volatile
     private var lastFormat: StreamFormat? = null
 
+    // DIAGNOSTIC drop counters — touched only on the playback thread (enqueuePcm).
+    private var framesSent = 0
+    private var framesDropped = 0
+    private var lastDropLog = 0L
+
     val isConnected: Boolean get() = connected.get()
 
     /**
@@ -134,7 +139,20 @@ class StreamSender(private val logger: AppLogger) {
 
     /** Non-blocking: queue PCM, dropping it if the network is behind. */
     fun enqueuePcm(pcm: ByteArray) {
-        channel?.trySend(OutFrame.Audio(pcm))
+        val sent = channel?.trySend(OutFrame.Audio(pcm))?.isSuccess ?: return
+        // DIAGNOSTIC: a dropped audio frame is an audible stutter. Count drops vs
+        // sends per second. Interpret ALONGSIDE the receiver's ring level: drops
+        // with the receiver ring near full = the receiver can't consume fast
+        // enough (back-pressure stalls our socket); drops with the ring near
+        // empty = the network itself is behind.
+        if (sent) framesSent++ else framesDropped++
+        val now = System.currentTimeMillis()
+        if (now - lastDropLog >= 1000L) {
+            logger.i(TAG, "wire: sent=$framesSent dropped=$framesDropped (last 1s)")
+            framesSent = 0
+            framesDropped = 0
+            lastDropLog = now
+        }
     }
 
     private fun enqueueControlBlocking(control: StreamControl) {

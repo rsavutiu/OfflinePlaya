@@ -73,6 +73,14 @@ class PcmPlayer {
             open(af, lineBuffer)
             start()
         }
+        // DIAGNOSTIC: what the OS actually gave us for this wire format. If the
+        // requested rate/bits differ from `newLine.format`, or the mixer is an
+        // unexpected one, that points at a Java-Sound resampling/format problem
+        // rather than the network.
+        System.out.println(
+            "[PcmPlayer] open requested=${newFormat.sampleRate}Hz/${newFormat.bitsPerSample}bit/${newFormat.channels}ch " +
+                "-> line.format=${newLine.format} lineBuffer=${newLine.bufferSize}",
+        )
         // ~1 s of slack, rounded up to a whole sample frame.
         val capacity = newFormat.bytesPerSecond + newFormat.frameBytes
         val newRing = PcmRingBuffer(capacity)
@@ -149,11 +157,39 @@ class PcmPlayer {
         val silence = ByteArray(chunkBytes)
         var leftover = 0 // bytes carried over that didn't complete a frame
 
+        // DIAGNOSTIC: one unconditional tick per second from the writer thread
+        // (the only owner of the line, so reading its position here is safe).
+        // Read it alongside the phone's drop log:
+        //  - frame delta ≈ sampleRate, ring high, no underruns, yet stutter  -> OS
+        //    (Windows) resampling the format badly.
+        //  - frame delta well under sampleRate with a full ring               -> the
+        //    line can't consume this format at real time (format/line problem).
+        //  - underruns high and ring near empty                              -> audio
+        //    isn't arriving fast enough (network / pacing); correlate w/ phone drops.
+        var underruns = 0
+        var bytesToLine = 0L
+        var lastFramePos = l.longFramePosition
+        var lastTick = System.currentTimeMillis()
+
         prebuffer(l, r, prebufferBytes, silence, chunkBytes)
         while (running.get() && !r.isClosed) {
+            val now = System.currentTimeMillis()
+            if (now - lastTick >= 1000L) {
+                val framePos = l.longFramePosition
+                val ringPct = r.available * 100 / r.capacity
+                System.out.println(
+                    "[PcmPlayer] frames/s=${framePos - lastFramePos} (rate=${fmt.sampleRate}) " +
+                        "underruns=$underruns ring=$ringPct% bytesToLine=$bytesToLine",
+                )
+                underruns = 0
+                bytesToLine = 0L
+                lastFramePos = framePos
+                lastTick = now
+            }
             if (flushRequested.getAndSet(false)) {
                 runCatching { l.flush() }
                 leftover = 0
+                lastFramePos = l.longFramePosition
                 // Refill before resuming (seek), feeding silence meanwhile; on a
                 // pause this just keeps clean silence flowing until audio returns.
                 prebuffer(l, r, prebufferBytes, silence, chunkBytes)
@@ -163,11 +199,14 @@ class PcmPlayer {
                 // Underrun: feed a full real-time chunk of silence so the line
                 // stays cleanly fed. Keep any sub-frame bytes for next time.
                 runCatching { l.write(silence, 0, chunkBytes) }
+                bytesToLine += chunkBytes
                 leftover = n
+                underruns++
                 continue
             }
             val writable = n - (n % frame)
             runCatching { l.write(buf, 0, writable) }
+            bytesToLine += writable
             leftover = n - writable
             if (leftover > 0) System.arraycopy(buf, writable, buf, 0, leftover)
         }
