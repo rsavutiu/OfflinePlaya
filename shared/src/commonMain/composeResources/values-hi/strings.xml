@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">मिलान खोजे जा रहे हैं…</string>
     <string name="lyrics_pick_empty">कोई मिलान वाले बोल नहीं मिले</string>
     <string name="lyrics_pick_synced">सिंक किया गया</string>
-
-    <!-- Auto-translated to Hindi via local LLM; review and refine. -->
     <string name="share_nudge_title">म्यूजिक का आनंद ले रहें हो?</string>
     <string name="share_nudge_body">इस प्लाईर सम्पुर्णतः मुफ्त है, कोई विज्ञापन नहीं और कोई ट्रैकिंग भी नहीं — बल्कि पब्लिसिटी से अपवाद हमेशा मुफ़्त हो। इसे जनरल कई व्यक्तियों तक पहुचाने का एकमात्र रूप सभी लोगों में आप ऐसा ही करते है। अगर इसने आपके फ़ोन पर जगह बुलाया, तो सभी लोगों में उचित रूप से हम करते है।</string>
     <string name="share_nudge_share">ऐप शेअर करें</string>
     <string name="share_nudge_dismiss">पहले बाद में</string>
     <string name="share_nudge_message">मुझे OfflinePlaya — एक मुफ्त,ऑनलाइन संगीत प्लॉयर हो। आज़ाद करें: %1$s</string>
+    <string name="dac_bit_perfect">बिट-परफ़ेक्ट USB आउटपुट</string>
+    <string name="dac_bit_perfect_subtitle">ऑडियो को बिना किसी बदलाव के आपके USB DAC पर भेजता है। चालू रहने तक EQ, प्रीएम्प और क्रॉसफ़ेड बायपास रहते हैं।</string>
+    <string name="dac_no_device">इसका उपयोग करने के लिए USB DAC कनेक्ट करें</string>
+    <string name="dac_reason_os">Android 14 या उसके बाद का वर्शन ज़रूरी है</string>
+    <string name="dac_reason_unsupported">यह फ़ोन या DAC इसे सपोर्ट नहीं करता</string>
+    <string name="dac_reason_format">मौजूदा ट्रैक का फ़ॉर्मैट सपोर्ट नहीं है, इसलिए यह सिस्टम मिक्सर से चलता है</string>
+    <string name="dac_reason_hires">16-बिट से ऊपर के ट्रैक सिस्टम मिक्सर से चलते हैं</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-बिट · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · सिस्टम मिक्सर</string>
+    <string name="dac_dsp_no_effect_note">कुछ USB DAC पर इक्वलाइज़र और प्रीऐम्प का कोई प्रभाव नहीं होता।</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">%1$d सेकंड में चल रहा है...</item>
         <item quantity="other">%1$d सेकंड में चल रहा है...</item>
@@ -298,15 +306,10 @@
         <item quantity="other">%1$d प्ले</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">बिट-परफ़ेक्ट USB आउटपुट</string>
-    <string name="dac_bit_perfect_subtitle">ऑडियो को बिना किसी बदलाव के आपके USB DAC पर भेजता है। चालू रहने तक EQ, प्रीएम्प और क्रॉसफ़ेड बायपास रहते हैं।</string>
-    <string name="dac_no_device">इसका उपयोग करने के लिए USB DAC कनेक्ट करें</string>
-    <string name="dac_reason_os">Android 14 या उसके बाद का वर्शन ज़रूरी है</string>
-    <string name="dac_reason_unsupported">यह फ़ोन या DAC इसे सपोर्ट नहीं करता</string>
-    <string name="dac_reason_format">मौजूदा ट्रैक का फ़ॉर्मैट सपोर्ट नहीं है, इसलिए यह सिस्टम मिक्सर से चलता है</string>
-    <string name="dac_reason_hires">16-बिट से ऊपर के ट्रैक सिस्टम मिक्सर से चलते हैं</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-बिट · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · सिस्टम मिक्सर</string>
-    <string name="dac_dsp_no_effect_note">कुछ USB DAC पर इक्वलाइज़र और प्रीऐम्प का कोई प्रभाव नहीं होता।</string>
+    <!-- Auto-translated to Hindi via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">वॉल्यूम सामानयन</string>
+    <string name="replay_gain_off">बंद</string>
+    <string name="replay_gain_track">पटरी</string>
+    <string name="replay_gain_album">कोषिणी</string>
+    <string name="replay_gain_hint">मेलबे गाइन टैग का उपयोग करके गानों के समान ध्वनि स्तर प्रदान करता है। पटरी में प्रतियह गाना; कोषिणी प्रत्येक कोषिणी के अपने डाइनमिक संचय को बरक़रार रखता है। टैग नहीं वाले फ़айलें प्रभावित बिना खुद में स्थिर रहते हैं。</string>
 </resources>

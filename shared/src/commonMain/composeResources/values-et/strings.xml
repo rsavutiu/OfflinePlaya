@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Vastete otsimine…</string>
     <string name="lyrics_pick_empty">Sobivaid sõnu ei leitud</string>
     <string name="lyrics_pick_synced">Sünkroonitud</string>
-
-    <!-- Auto-translated to Estonian via local LLM; review and refine. -->
     <string name="share_nudge_title">Muusikat nautimine?</string>
     <string name="share_nudge_body">See tootlus on täielikult tasuta, ilma reklaamita ja jälgimiseta – ja ka ilma turundusseadmeteta. Üheks viisiks, kuidas see jõuab teistele, on kui keegi nagu sina jagab seda. Kui see on juba sinu telefoni kohal, siis jagage seda edasi.</string>
     <string name="share_nudge_share">Jagage rakendust</string>
     <string name="share_nudge_dismiss">Võib olla hiljem</string>
     <string name="share_nudge_message">Olen kasutanud OfflinePlaya – tasuta, ühendatud muusikatootlust, ilma reklaamita ja jälgimiseta. Proovige seda: %1$s</string>
+    <string name="dac_bit_perfect">Bititäpne USB-väljund</string>
+    <string name="dac_bit_perfect_subtitle">Saadab heli USB DAC-ile muutmata kujul. Ekvalaiser, eelvõimendus ja ristsumbumine on aktiivsena välja lülitatud.</string>
+    <string name="dac_no_device">Selle kasutamiseks ühenda USB DAC</string>
+    <string name="dac_reason_os">Vajab Android 14 või uuemat</string>
+    <string name="dac_reason_unsupported">See telefon või DAC ei toeta seda</string>
+    <string name="dac_reason_format">Praeguse loo vormingut ei toetata, seega mängib see süsteemi mikseri kaudu</string>
+    <string name="dac_reason_hires">Üle 16-bitised lood mängivad süsteemi mikseri kaudu</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bitine · Bititäpne</string>
+    <string name="dac_badge_system_mixer">%1$s · Süsteemi mikser</string>
+    <string name="dac_dsp_no_effect_note">Mõne USB DAC-i puhul ei mõju ekvalaiser ega eelvõimendi.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Esitatakse %1$d sekundi pärast…</item>
         <item quantity="other">Esitatakse %1$d sekundi pärast…</item>
@@ -298,15 +306,10 @@
         <item quantity="other">%1$d esitust</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Bititäpne USB-väljund</string>
-    <string name="dac_bit_perfect_subtitle">Saadab heli USB DAC-ile muutmata kujul. Ekvalaiser, eelvõimendus ja ristsumbumine on aktiivsena välja lülitatud.</string>
-    <string name="dac_no_device">Selle kasutamiseks ühenda USB DAC</string>
-    <string name="dac_reason_os">Vajab Android 14 või uuemat</string>
-    <string name="dac_reason_unsupported">See telefon või DAC ei toeta seda</string>
-    <string name="dac_reason_format">Praeguse loo vormingut ei toetata, seega mängib see süsteemi mikseri kaudu</string>
-    <string name="dac_reason_hires">Üle 16-bitised lood mängivad süsteemi mikseri kaudu</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bitine · Bititäpne</string>
-    <string name="dac_badge_system_mixer">%1$s · Süsteemi mikser</string>
-    <string name="dac_dsp_no_effect_note">Mõne USB DAC-i puhul ei mõju ekvalaiser ega eelvõimendi.</string>
+    <!-- Auto-translated to Estonian via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Häälimõju normaliseerimine</string>
+    <string name="replay_gain_off">Välja</string>
+    <string name="replay_gain_track">Kordus</string>
+    <string name="replay_gain_album">Albumi</string>
+    <string name="replay_gain_hint">Kasutab ReplayGain märkide, et tasakaalustada helitugevuse kahesongidesse failis salvestatud andmete põhjal. Kordus hoiab iga laulu eraldi; Albumi säilitab igale albumile iseseisevalt dynamics. Failid ilma märkita soovitatavalt helilähtest kinni.</string>
 </resources>

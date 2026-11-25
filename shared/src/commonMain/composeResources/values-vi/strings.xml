@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Đang tìm kết quả khớp…</string>
     <string name="lyrics_pick_empty">Không tìm thấy lời bài hát khớp</string>
     <string name="lyrics_pick_synced">Đã đồng bộ</string>
-
-    <!-- Auto-translated to Vietnamese via local LLM; review and refine. -->
     <string name="share_nudge_title">Bạn đang tận hưởng âm nhạc?</string>
     <string name="share_nudge_body">Người chơi này hoàn toàn miễn phí, không có quảng cáo và không theo dõi — cũng không có ngân sách marketing nào cả. Cách duy nhất để nó đến được với người khác là khi có ai đó như bạn chia sẻ nó. Nếu nó đã có một vị trí trên điện thoại của bạn, vui lòng chia sẻ nó lại.</string>
     <string name="share_nudge_share">Chia sẻ ứng dụng</string>
     <string name="share_nudge_dismiss">Có lẽ sau</string>
     <string name="share_nudge_message">Tôi đã sử dụng OfflinePlaya — một trình phát nhạc miễn phí, có thể sử dụng ngoại tuyến mà không có quảng cáo hay theo dõi. Hãy thử nghiệm: %1$s</string>
+    <string name="dac_bit_perfect">Đầu ra USB bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">Gửi âm thanh đến DAC USB mà không thay đổi. EQ, tiền khuếch đại và chuyển tiếp mờ dần được bỏ qua khi đang bật.</string>
+    <string name="dac_no_device">Kết nối DAC USB để sử dụng tính năng này</string>
+    <string name="dac_reason_os">Cần Android 14 trở lên</string>
+    <string name="dac_reason_unsupported">Điện thoại hoặc DAC này không hỗ trợ</string>
+    <string name="dac_reason_format">Định dạng của bản nhạc hiện tại không được hỗ trợ, nên phát qua bộ trộn hệ thống</string>
+    <string name="dac_reason_hires">Bản nhạc trên 16-bit phát qua bộ trộn hệ thống</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Bộ trộn hệ thống</string>
+    <string name="dac_dsp_no_effect_note">Trên một số DAC USB, bộ chỉnh âm và tiền khuếch đại không có tác dụng.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Phát sau %1$d giây…</item>
         <item quantity="other">Phát sau %1$d giây…</item>
@@ -297,15 +305,10 @@
         <item quantity="other">%1$d lượt phát</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Đầu ra USB bit-perfect</string>
-    <string name="dac_bit_perfect_subtitle">Gửi âm thanh đến DAC USB mà không thay đổi. EQ, tiền khuếch đại và chuyển tiếp mờ dần được bỏ qua khi đang bật.</string>
-    <string name="dac_no_device">Kết nối DAC USB để sử dụng tính năng này</string>
-    <string name="dac_reason_os">Cần Android 14 trở lên</string>
-    <string name="dac_reason_unsupported">Điện thoại hoặc DAC này không hỗ trợ</string>
-    <string name="dac_reason_format">Định dạng của bản nhạc hiện tại không được hỗ trợ, nên phát qua bộ trộn hệ thống</string>
-    <string name="dac_reason_hires">Bản nhạc trên 16-bit phát qua bộ trộn hệ thống</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Bộ trộn hệ thống</string>
-    <string name="dac_dsp_no_effect_note">Trên một số DAC USB, bộ chỉnh âm và tiền khuếch đại không có tác dụng.</string>
+    <!-- Auto-translated to Vietnamese via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Chuẩn hóa âm lượng</string>
+    <string name="replay_gain_off">Tắt</string>
+    <string name="replay_gain_track">Bài hát</string>
+    <string name="replay_gain_album">Tập hợp</string>
+    <string name="replay_gain_hint">Cân bằng độ lớn giữa các bài nhạc sử dụng nhãn ReplayGain được lưu trữ trong tệp của bạn. Mức Track điều chỉnh cho từng bài; Album giữ nguyên động lực riêng của mỗi album. Các tập tin không có nhãn sẽ phát như bình thường.</string>
 </resources>

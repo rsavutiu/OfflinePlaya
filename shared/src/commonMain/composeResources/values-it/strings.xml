@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Ricerca di corrispondenze…</string>
     <string name="lyrics_pick_empty">Nessun testo corrispondente trovato</string>
     <string name="lyrics_pick_synced">Sincronizzato</string>
-
-    <!-- Auto-translated to Italian via local LLM; review and refine. -->
     <string name="share_nudge_title">Stai godendo la musica?</string>
     <string name="share_nudge_body">Questo player è completamente gratuito, senza pubblicità e senza tracciamento — e nemmeno un budget per il marketing. L'unico modo in cui raggiunge altre persone è quando qualcuno come te lo condivide. Se ha trovato posto sul tuo telefono, per favore condividi il player.</string>
     <string name="share_nudge_share">Condividi l'app</string>
     <string name="share_nudge_dismiss">Forse più tardi</string>
     <string name="share_nudge_message">Sto usando OfflinePlaya — un player musicale gratuito offline senza pubblicità o tracciamento. Provalo: %1$s</string>
+    <string name="dac_bit_perfect">Uscita USB bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">Invia l\'audio al DAC USB senza alterarlo. Equalizzatore, preamplificatore e dissolvenza incrociata vengono esclusi mentre è attiva.</string>
+    <string name="dac_no_device">Collega un DAC USB per usare questa opzione</string>
+    <string name="dac_reason_os">Richiede Android 14 o versioni successive</string>
+    <string name="dac_reason_unsupported">Questo telefono o DAC non lo supporta</string>
+    <string name="dac_reason_format">Il formato del brano attuale non è supportato, quindi viene riprodotto tramite il mixer di sistema</string>
+    <string name="dac_reason_hires">I brani oltre i 16 bit vengono riprodotti tramite il mixer di sistema</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bit · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Mixer di sistema</string>
+    <string name="dac_dsp_no_effect_note">Su alcuni DAC USB, l'equalizzatore e il preamplificatore non hanno effetto.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Riproduzione tra %1$d secondo…</item>
         <item quantity="other">Riproduzione tra %1$d secondi...</item>
@@ -298,15 +306,10 @@
         <item quantity="other">%1$d riproduzioni</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Uscita USB bit-perfect</string>
-    <string name="dac_bit_perfect_subtitle">Invia l\'audio al DAC USB senza alterarlo. Equalizzatore, preamplificatore e dissolvenza incrociata vengono esclusi mentre è attiva.</string>
-    <string name="dac_no_device">Collega un DAC USB per usare questa opzione</string>
-    <string name="dac_reason_os">Richiede Android 14 o versioni successive</string>
-    <string name="dac_reason_unsupported">Questo telefono o DAC non lo supporta</string>
-    <string name="dac_reason_format">Il formato del brano attuale non è supportato, quindi viene riprodotto tramite il mixer di sistema</string>
-    <string name="dac_reason_hires">I brani oltre i 16 bit vengono riprodotti tramite il mixer di sistema</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bit · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Mixer di sistema</string>
-    <string name="dac_dsp_no_effect_note">Su alcuni DAC USB, l'equalizzatore e il preamplificatore non hanno effetto.</string>
+    <!-- Auto-translated to Italian via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Normalizzazione del volume</string>
+    <string name="replay_gain_off">Spento</string>
+    <string name="replay_gain_track">Traccia</string>
+    <string name="replay_gain_album">Album</string>
+    <string name="replay_gain_hint">Equalizza il livello di volume tra le canzoni utilizzando gli tag ReplayGain memorizzati nei file. Le tracce regolano ogni singola canzone; l'album mantiene la propria dinamica originale. I files senza etichette vengono riprodotti inalterati.</string>
 </resources>

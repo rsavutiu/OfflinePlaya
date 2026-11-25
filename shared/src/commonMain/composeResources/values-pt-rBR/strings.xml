@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Procurando correspondências…</string>
     <string name="lyrics_pick_empty">Nenhuma letra correspondente encontrada</string>
     <string name="lyrics_pick_synced">Sincronizada</string>
-
-    <!-- Auto-translated to Brazilian Portuguese via local LLM; review and refine. -->
     <string name="share_nudge_title">Aproveitando a música?</string>
     <string name="share_nudge_body">Esse player é completamente gratuito, sem anúncios e sem rastreamento — e nem tem orçamento para marketing. A única forma dele chegar a outras pessoas é quando alguém como você o compartilha. Se conseguiu ganhar um espaço no seu celular, por favor, compartilhe.</string>
     <string name="share_nudge_share">Compartilhar o app</string>
     <string name="share_nudge_dismiss">Talvez depois</string>
     <string name="share_nudge_message">Tenho usado o OfflinePlaya — um player de música offline gratuito, sem anúncios ou rastreamento. Experimente: %1$s</string>
+    <string name="dac_bit_perfect">Saída USB bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">Envia o áudio ao seu DAC USB sem alterações. Equalizador, pré-amplificador e crossfade são ignorados enquanto estiver ativo.</string>
+    <string name="dac_no_device">Conecte um DAC USB para usar isto</string>
+    <string name="dac_reason_os">Requer Android 14 ou mais recente</string>
+    <string name="dac_reason_unsupported">Este celular ou DAC não oferece suporte</string>
+    <string name="dac_reason_format">O formato da faixa atual não é compatível, então ela toca pelo mixer do sistema</string>
+    <string name="dac_reason_hires">Faixas acima de 16 bits tocam pelo mixer do sistema</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bits · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Mixer do sistema</string>
+    <string name="dac_dsp_no_effect_note">Em alguns DACs USB, o equalizador e o pré-amplificador não têm efeito.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Jogando em %1$d segundo…</item>
         <item quantity="other">Jogando em %1$d segundos…</item>
@@ -298,15 +306,10 @@
         <item quantity="other">%1$d reproduções</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Saída USB bit-perfect</string>
-    <string name="dac_bit_perfect_subtitle">Envia o áudio ao seu DAC USB sem alterações. Equalizador, pré-amplificador e crossfade são ignorados enquanto estiver ativo.</string>
-    <string name="dac_no_device">Conecte um DAC USB para usar isto</string>
-    <string name="dac_reason_os">Requer Android 14 ou mais recente</string>
-    <string name="dac_reason_unsupported">Este celular ou DAC não oferece suporte</string>
-    <string name="dac_reason_format">O formato da faixa atual não é compatível, então ela toca pelo mixer do sistema</string>
-    <string name="dac_reason_hires">Faixas acima de 16 bits tocam pelo mixer do sistema</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bits · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Mixer do sistema</string>
-    <string name="dac_dsp_no_effect_note">Em alguns DACs USB, o equalizador e o pré-amplificador não têm efeito.</string>
+    <!-- Auto-translated to Brazilian Portuguese via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Normalização de volume</string>
+    <string name="replay_gain_off">Desligado</string>
+    <string name="replay_gain_track">Faixa</string>
+    <string name="replay_gain_album">Álbum</string>
+    <string name="replay_gain_hint">Equilibra a intensidade sonora entre as músicas usando os metadados ReplayGain armazenados nos seus arquivos. Faixa ajusta o nível de cada música; Álbum mantém dinâmica própria de cada álbum. Arquivos sem tags são reproduzidos como estão.</string>
 </resources>

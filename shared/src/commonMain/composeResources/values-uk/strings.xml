@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Пошук збігів…</string>
     <string name="lyrics_pick_empty">Відповідного тексту не знайдено</string>
     <string name="lyrics_pick_synced">Синхронізовано</string>
-
-    <!-- Auto-translated to Ukrainian via local LLM; review and refine. -->
     <string name="share_nudge_title">Насолоджуйтесь музикою?</string>
     <string name="share_nudge_body">Цей плеєр повністю безкоштовний, без реклами та без слідкінгу — і навіть без бюджету на маркетинг. Унікальний спосіб, як він досягає інших людей, — це коли хтось, як ви, поділиться ним. Якщо він вже з’явився на вашому телефоні, будь ласка, поділіться ним.</string>
     <string name="share_nudge_share">Поділитися додатком</string>
     <string name="share_nudge_dismiss">Можливо, пізніше</string>
     <string name="share_nudge_message">Я використовую OfflinePlaya — безкоштовний офлайн-плеєр музики без реклами та слідкінгу. Спробуйте його: %1$s</string>
+    <string name="dac_bit_perfect">Bit-perfect вивід через USB</string>
+    <string name="dac_bit_perfect_subtitle">Передає звук на USB-ЦАП без змін. Поки режим активний, еквалайзер, попереднє підсилення та кросфейд вимикаються.</string>
+    <string name="dac_no_device">Під\'єднайте USB-ЦАП, щоб скористатися цим</string>
+    <string name="dac_reason_os">Потрібен Android 14 або новіший</string>
+    <string name="dac_reason_unsupported">Цей телефон або ЦАП не підтримує цю функцію</string>
+    <string name="dac_reason_format">Формат поточного треку не підтримується, тому він відтворюється через системний мікшер</string>
+    <string name="dac_reason_hires">Треки понад 16 біт відтворюються через системний мікшер</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d біт · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Системний мікшер</string>
+    <string name="dac_dsp_no_effect_note">На деяких USB-ЦАП еквалайзер і попередній підсилювач не діють.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Відтворення через %1$d секунду…</item>
         <item quantity="other">Відтворення через %1$d секунд…</item>
@@ -300,15 +308,10 @@
         <item quantity="other">%1$d прослуховування</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Bit-perfect вивід через USB</string>
-    <string name="dac_bit_perfect_subtitle">Передає звук на USB-ЦАП без змін. Поки режим активний, еквалайзер, попереднє підсилення та кросфейд вимикаються.</string>
-    <string name="dac_no_device">Під\'єднайте USB-ЦАП, щоб скористатися цим</string>
-    <string name="dac_reason_os">Потрібен Android 14 або новіший</string>
-    <string name="dac_reason_unsupported">Цей телефон або ЦАП не підтримує цю функцію</string>
-    <string name="dac_reason_format">Формат поточного треку не підтримується, тому він відтворюється через системний мікшер</string>
-    <string name="dac_reason_hires">Треки понад 16 біт відтворюються через системний мікшер</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d біт · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Системний мікшер</string>
-    <string name="dac_dsp_no_effect_note">На деяких USB-ЦАП еквалайзер і попередній підсилювач не діють.</string>
+    <!-- Auto-translated to Ukrainian via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Нормалізація гучності</string>
+    <string name="replay_gain_off">Вимкнено</string>
+    <string name="replay_gain_track">Трек</string>
+    <string name="replay_gain_album">Альбом</string>
+    <string name="replay_gain_hint">Розподіляє рівень гучності між піснями за допомогою етикеток ReplayGain, зберіганих у ваших файлах. Для треку регулюється рівень кожної окремої пісні; для альбому збережено власну динаміку кожного альбома. Файли без етикеток проиграють у незмінному вигляді.</string>
 </resources>

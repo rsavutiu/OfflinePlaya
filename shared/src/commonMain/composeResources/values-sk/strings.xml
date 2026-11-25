@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Hľadanie zhôd…</string>
     <string name="lyrics_pick_empty">Nenašiel sa žiadny zodpovedajúci text</string>
     <string name="lyrics_pick_synced">Synchronizované</string>
-
-    <!-- Auto-translated to Slovak via local LLM; review and refine. -->
     <string name="share_nudge_title">Užívate hudbu?</string>
     <string name="share_nudge_body">Tento prehrávač je úplne zadarmo, bez reklám a bez sledovania — a ani bez rozpočtu na marketing. Jediný spôsob, ako sa dostane k ďalším ľudom, je, keď niekto ako vy ho zdieľa. Ak sa mu podarilo získať miesto na vašom telefóne, prosím, ho zdieľajte.</string>
     <string name="share_nudge_share">Zdieľajte aplikáciu</string>
     <string name="share_nudge_dismiss">Možno neskôr</string>
     <string name="share_nudge_message">Užívam OfflinePlaya — zadarmo, offline hudobný prehrávač bez reklám a sledovania. Skúste ho: %1$s</string>
+    <string name="dac_bit_perfect">Bit-perfect výstup USB</string>
+    <string name="dac_bit_perfect_subtitle">Posiela zvuk do USB DAC bez zmien. Ekvalizér, predzosilnenie a prelínanie sú počas aktivácie vynechané.</string>
+    <string name="dac_no_device">Na použitie pripojte USB DAC</string>
+    <string name="dac_reason_os">Vyžaduje Android 14 alebo novší</string>
+    <string name="dac_reason_unsupported">Tento telefón alebo DAC to nepodporuje</string>
+    <string name="dac_reason_format">Formát aktuálnej skladby nie je podporovaný, preto hrá cez systémový mixér</string>
+    <string name="dac_reason_hires">Skladby nad 16 bitov hrajú cez systémový mixér</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bitov · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Systémový mixér</string>
+    <string name="dac_dsp_no_effect_note">Pri niektorých USB DAC nemá ekvalizér a predzosilňovač žiadny účinok.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Prehráva sa o %1$d sekundu…</item>
         <item quantity="other">Prehráva sa o %1$d sekúnd…</item>
@@ -300,15 +308,10 @@
         <item quantity="other">%1$d prehraní</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Bit-perfect výstup USB</string>
-    <string name="dac_bit_perfect_subtitle">Posiela zvuk do USB DAC bez zmien. Ekvalizér, predzosilnenie a prelínanie sú počas aktivácie vynechané.</string>
-    <string name="dac_no_device">Na použitie pripojte USB DAC</string>
-    <string name="dac_reason_os">Vyžaduje Android 14 alebo novší</string>
-    <string name="dac_reason_unsupported">Tento telefón alebo DAC to nepodporuje</string>
-    <string name="dac_reason_format">Formát aktuálnej skladby nie je podporovaný, preto hrá cez systémový mixér</string>
-    <string name="dac_reason_hires">Skladby nad 16 bitov hrajú cez systémový mixér</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bitov · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Systémový mixér</string>
-    <string name="dac_dsp_no_effect_note">Pri niektorých USB DAC nemá ekvalizér a predzosilňovač žiadny účinok.</string>
+    <!-- Auto-translated to Slovak via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Normalizácia hlasitosti</string>
+    <string name="replay_gain_off">Vypnuté</string>
+    <string name="replay_gain_track">Skladba</string>
+    <string name="replay_gain_album">Album</string>
+    <string name="replay_gain_hint">Rozdialuje zvukovú úroveň medzi skladbami pomocou tagov ReplayGain uložených v súbore. Na sklade sa nastaví hlasitosť každej individuálnej skladby; na albume sa zachytáva dynamika jednotlivého albumu. Súbor bez tagov prehrávajú nezmenene.</string>
 </resources>

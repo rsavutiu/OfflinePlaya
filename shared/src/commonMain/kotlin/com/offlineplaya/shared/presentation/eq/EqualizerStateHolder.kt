@@ -5,6 +5,7 @@ import com.offlineplaya.shared.domain.model.CanonicalGenre
 import com.offlineplaya.shared.domain.model.EqMode
 import com.offlineplaya.shared.domain.model.EqPreferences
 import com.offlineplaya.shared.domain.model.EqPreset
+import com.offlineplaya.shared.domain.model.ReplayGainMode
 import com.offlineplaya.shared.domain.model.Track
 import com.offlineplaya.shared.domain.player.MusicPlayer
 import com.offlineplaya.shared.domain.repository.SettingsRepository
@@ -216,6 +217,18 @@ class EqualizerStateHolder(
                     .coerceIn(0, EqPreferences.MAX_PREAMP_PERCENT)
                 if (target != current.preampPercent) {
                     settings.setEqPreferences(current.copy(preampPercent = target))
+                }
+            }
+        }
+    }
+
+    /** Choose volume normalisation: off, per-track or per-album ReplayGain. */
+    fun setReplayGainMode(mode: ReplayGainMode) {
+        scope.launch {
+            preampLock.withLock {
+                val current = settings.getEqPreferences()
+                if (mode != current.replayGainMode) {
+                    settings.setEqPreferences(current.copy(replayGainMode = mode))
                 }
             }
         }

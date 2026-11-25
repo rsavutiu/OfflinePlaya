@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Søker etter treff…</string>
     <string name="lyrics_pick_empty">Fant ingen samsvarende sangtekst</string>
     <string name="lyrics_pick_synced">Synkronisert</string>
-
-    <!-- Auto-translated to Norwegian Bokmål via local LLM; review and refine. -->
     <string name="share_nudge_title">Nøkkel til musikken?</string>
     <string name="share_nudge_body">Denne spilleren er helt gratis, med ingen annonser og ingen sporing — og heller ingen markedsføringsbudsjett. Den eneste måten den når andre mennesker på, er når noen som deg deler den. Hvis den har fått plass på telefonen din, vennligst del den videre.</string>
     <string name="share_nudge_share">Del appen</string>
     <string name="share_nudge_dismiss">Kanskje seinere</string>
     <string name="share_nudge_message">Jeg har brukt OfflinePlaya — en gratis, offline musikkspiller med ingen annonser eller sporing. Prøv den: %1$s</string>
+    <string name="dac_bit_perfect">Bit-perfekt USB-utgang</string>
+    <string name="dac_bit_perfect_subtitle">Sender lyden uendret til USB-DAC-en din. Equalizer, forforsterkning og krysstoning hoppes over mens den er aktiv.</string>
+    <string name="dac_no_device">Koble til en USB-DAC for å bruke dette</string>
+    <string name="dac_reason_os">Krever Android 14 eller nyere</string>
+    <string name="dac_reason_unsupported">Denne telefonen eller DAC-en støtter det ikke</string>
+    <string name="dac_reason_format">Formatet på gjeldende spor støttes ikke, så det spilles gjennom systemmikseren</string>
+    <string name="dac_reason_hires">Spor over 16 bit spilles gjennom systemmikseren</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfekt</string>
+    <string name="dac_badge_system_mixer">%1$s · Systemmikser</string>
+    <string name="dac_dsp_no_effect_note">På enkelte USB-DAC-er har equalizeren og forforsterkeren ingen effekt.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Spiller om %1$d sekund …</item>
         <item quantity="other">Playing in %1$d seconds…</item>
@@ -298,15 +306,10 @@
         <item quantity="other">%1$d avspillinger</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Bit-perfekt USB-utgang</string>
-    <string name="dac_bit_perfect_subtitle">Sender lyden uendret til USB-DAC-en din. Equalizer, forforsterkning og krysstoning hoppes over mens den er aktiv.</string>
-    <string name="dac_no_device">Koble til en USB-DAC for å bruke dette</string>
-    <string name="dac_reason_os">Krever Android 14 eller nyere</string>
-    <string name="dac_reason_unsupported">Denne telefonen eller DAC-en støtter det ikke</string>
-    <string name="dac_reason_format">Formatet på gjeldende spor støttes ikke, så det spilles gjennom systemmikseren</string>
-    <string name="dac_reason_hires">Spor over 16 bit spilles gjennom systemmikseren</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfekt</string>
-    <string name="dac_badge_system_mixer">%1$s · Systemmikser</string>
-    <string name="dac_dsp_no_effect_note">På enkelte USB-DAC-er har equalizeren og forforsterkeren ingen effekt.</string>
+    <!-- Auto-translated to Norwegian Bokmål via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Volumnormalisering</string>
+    <string name="replay_gain_off">Av</string>
+    <string name="replay_gain_track">Spor</string>
+    <string name="replay_gain_album">Albume</string>
+    <string name="replay_gain_hint">Balanserer lydtrykk mellom sporer ved bruk av ReplayGain-merker lagret i dine filer. Spor niveller hver sang; Album beholder hvert album sin egen dynamikk. Filene uten merkere blir plyttet som de er.</string>
 </resources>

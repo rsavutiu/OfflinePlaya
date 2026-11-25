@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Etsitään osumia…</string>
     <string name="lyrics_pick_empty">Vastaavaa sanoitusta ei löytynyt</string>
     <string name="lyrics_pick_synced">Synkronoitu</string>
-
-    <!-- Auto-translated to Finnish via local LLM; review and refine. -->
     <string name="share_nudge_title">Käytätkö musiikkia?</string>
     <string name="share_nudge_body">Tämä soittimella on täysin ilmaista, ilman mainoksia ja seuranta-aikakirjaa – ja ilman myyntibudjetinkaan. Se saavuttaa muut ihmiset vain kun joku kuten sinä jakaa sitä. Jos se on saanut tilan puhelimellesi, ole hyvä ja jakaisi se.</string>
     <string name="share_nudge_share">Jaa sovellusta</string>
     <string name="share_nudge_dismiss">Ehkä myöhemmin</string>
     <string name="share_nudge_message">Olen käyttänyt OfflinePlayaa – ilmaista, offline-musiikkisovellusta ilman mainoksia tai seuranta-aikakirjaa. Kokeile se: %1$s</string>
+    <string name="dac_bit_perfect">Bittitarkka USB-lähtö</string>
+    <string name="dac_bit_perfect_subtitle">Lähettää äänen USB-DAC:lle muuttamattomana. Taajuuskorjain, esivahvistus ja ristihäivytys ohitetaan, kun se on käytössä.</string>
+    <string name="dac_no_device">Liitä USB-DAC käyttääksesi tätä</string>
+    <string name="dac_reason_os">Vaatii Android 14:n tai uudemman</string>
+    <string name="dac_reason_unsupported">Tämä puhelin tai DAC ei tue sitä</string>
+    <string name="dac_reason_format">Nykyisen kappaleen muotoa ei tueta, joten se soi järjestelmän mikserin kautta</string>
+    <string name="dac_reason_hires">Yli 16-bittiset kappaleet soivat järjestelmän mikserin kautta</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bittinen · Bittitarkka</string>
+    <string name="dac_badge_system_mixer">%1$s · Järjestelmän mikseri</string>
+    <string name="dac_dsp_no_effect_note">Joissakin USB-DAC-laitteissa taajuuskorjaimella ja esivahvistimella ei ole vaikutusta.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Toistetaan %1$d sekunnin kuluttua…</item>
         <item quantity="other">Toistetaan %1$d sekunnin kuluttua…</item>
@@ -298,15 +306,10 @@
         <item quantity="other">%1$d soittokertaa</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Bittitarkka USB-lähtö</string>
-    <string name="dac_bit_perfect_subtitle">Lähettää äänen USB-DAC:lle muuttamattomana. Taajuuskorjain, esivahvistus ja ristihäivytys ohitetaan, kun se on käytössä.</string>
-    <string name="dac_no_device">Liitä USB-DAC käyttääksesi tätä</string>
-    <string name="dac_reason_os">Vaatii Android 14:n tai uudemman</string>
-    <string name="dac_reason_unsupported">Tämä puhelin tai DAC ei tue sitä</string>
-    <string name="dac_reason_format">Nykyisen kappaleen muotoa ei tueta, joten se soi järjestelmän mikserin kautta</string>
-    <string name="dac_reason_hires">Yli 16-bittiset kappaleet soivat järjestelmän mikserin kautta</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bittinen · Bittitarkka</string>
-    <string name="dac_badge_system_mixer">%1$s · Järjestelmän mikseri</string>
-    <string name="dac_dsp_no_effect_note">Joissakin USB-DAC-laitteissa taajuuskorjaimella ja esivahvistimella ei ole vaikutusta.</string>
+    <!-- Auto-translated to Finnish via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Volume normalisointi</string>
+    <string name="replay_gain_off">Välitön</string>
+    <string name="replay_gain_track">Kappale</string>
+    <string name="replay_gain_album">Albumi</string>
+    <string name="replay_gain_hint">Evens out loudness between songs using the ReplayGain tags stored in your files. Track levels every song; Album keeps each album's own dynamics. Files without tags play unchanged.</string>
 </resources>

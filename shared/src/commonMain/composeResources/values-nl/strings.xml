@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Zoeken naar overeenkomsten…</string>
     <string name="lyrics_pick_empty">Geen overeenkomende songtekst gevonden</string>
     <string name="lyrics_pick_synced">Gesynchroniseerd</string>
-
-    <!-- Auto-translated to Dutch via local LLM; review and refine. -->
     <string name="share_nudge_title">Geniet van de muziek?</string>
     <string name="share_nudge_body">Deze speler is volledig gratis, zonder reclame en zonder tracking — en ook zonder marketingbudget. De enige manier waarop hij bij anderen kan komen, is wanneer iemand zoals jij het deelt. Als hij een plek op je telefoon heeft verdiend, geef het dan door.</string>
     <string name="share_nudge_share">Deel de app</string>
     <string name="share_nudge_dismiss">Misschien later</string>
     <string name="share_nudge_message">Ik gebruik OfflinePlaya — een gratis, offline muziekspeler zonder reclame of tracking. Probeer het eens: %1$s</string>
+    <string name="dac_bit_perfect">Bit-perfecte USB-uitvoer</string>
+    <string name="dac_bit_perfect_subtitle">Stuurt het geluid ongewijzigd naar je USB-DAC. Equalizer, voorversterking en crossfade worden overgeslagen zolang dit actief is.</string>
+    <string name="dac_no_device">Sluit een USB-DAC aan om dit te gebruiken</string>
+    <string name="dac_reason_os">Vereist Android 14 of nieuwer</string>
+    <string name="dac_reason_unsupported">Deze telefoon of DAC ondersteunt dit niet</string>
+    <string name="dac_reason_format">Het formaat van het huidige nummer wordt niet ondersteund, dus het speelt via de systeemmixer</string>
+    <string name="dac_reason_hires">Nummers boven 16 bit spelen via de systeemmixer</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Systeemmixer</string>
+    <string name="dac_dsp_no_effect_note">Bij sommige USB-DAC's hebben de equalizer en voorversterker geen effect.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Afspelen over %1$d seconde…</item>
         <item quantity="other">Afspelen over %1$d seconden…</item>
@@ -298,15 +306,10 @@
         <item quantity="other">%1$d keer afgespeeld</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Bit-perfecte USB-uitvoer</string>
-    <string name="dac_bit_perfect_subtitle">Stuurt het geluid ongewijzigd naar je USB-DAC. Equalizer, voorversterking en crossfade worden overgeslagen zolang dit actief is.</string>
-    <string name="dac_no_device">Sluit een USB-DAC aan om dit te gebruiken</string>
-    <string name="dac_reason_os">Vereist Android 14 of nieuwer</string>
-    <string name="dac_reason_unsupported">Deze telefoon of DAC ondersteunt dit niet</string>
-    <string name="dac_reason_format">Het formaat van het huidige nummer wordt niet ondersteund, dus het speelt via de systeemmixer</string>
-    <string name="dac_reason_hires">Nummers boven 16 bit spelen via de systeemmixer</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Systeemmixer</string>
-    <string name="dac_dsp_no_effect_note">Bij sommige USB-DAC's hebben de equalizer en voorversterker geen effect.</string>
+    <!-- Auto-translated to Dutch via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Volume normalisatie</string>
+    <string name="replay_gain_off">Uit</string>
+    <string name="replay_gain_track">Spoor</string>
+    <string name="replay_gain_album">Album</string>
+    <string name="replay_gain_hint">Verlaagt het volume van zachte stukken en verhoogt dat van luide, op basis van de ReplayGain tags in je bestanden. Track equaliseert elk nummer afzonderlijk; Album behoudt de eigen dynamiek per album. Bestanden zonder tag worden onveranderd gespeeld.</string>
 </resources>

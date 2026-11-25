@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">מחפש התאמות…</string>
     <string name="lyrics_pick_empty">לא נמצאו מילים תואמות</string>
     <string name="lyrics_pick_synced">מסונכרן</string>
-
-    <!-- Auto-translated to Hebrew via local LLM; review and refine. -->
     <string name="share_nudge_title">מتعנים במוזיקה?</string>
     <string name="share_nudge_body">השחקן הזה הוא לגמרי חופשי, ללא פרסומות, ללא מעקב — וגם ללא התקציב לפרסום. הדרך היחידה שבה הוא מגיע לאחרים היא כשאיש כמו await делится בו. אם הוא זכה的地位 בטלפון שלך, אנא ת делитесь בו.</string>
     <string name="share_nudge_share">שיתוף האפליקציה</string>
     <string name="share_nudge_dismiss">אולי מאוחר יותר</string>
     <string name="share_nudge_message">אני משתמש בOfflinePlaya — שחקן מוזיקה ללא אינטרנט, ללא פרסומות, ללא מעקב. נסה אותו: %1$s</string>
+    <string name="dac_bit_perfect">פלט USB מדויק לביט (Bit-perfect)</string>
+    <string name="dac_bit_perfect_subtitle">שולח את השמע ל-DAC ב-USB ללא שינוי. האקולייזר, ההגברה המקדימה והמעבר ההדרגתי מושבתים כל עוד הוא פעיל.</string>
+    <string name="dac_no_device">חבר DAC ב-USB כדי להשתמש בזה</string>
+    <string name="dac_reason_os">נדרש Android 14 ומעלה</string>
+    <string name="dac_reason_unsupported">הטלפון או ה-DAC הזה אינו תומך בכך</string>
+    <string name="dac_reason_format">הפורמט של הרצועה הנוכחית אינו נתמך, ולכן היא מתנגנת דרך מערבל המערכת</string>
+    <string name="dac_reason_hires">רצועות מעל 16 ביט מתנגנות דרך מערבל המערכת</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d ביט · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · מערבל המערכת</string>
+    <string name="dac_dsp_no_effect_note">בחלק מממירי USB, לאקולייזר ולמגבר המקדים אין כל השפעה.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">משחק בעוד %1$d שניות...</item>
         <item quantity="other">פועל בעוד %1$d שניות...</item>
@@ -300,15 +308,10 @@
         <item quantity="other">%1$d השמעות</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">פלט USB מדויק לביט (Bit-perfect)</string>
-    <string name="dac_bit_perfect_subtitle">שולח את השמע ל-DAC ב-USB ללא שינוי. האקולייזר, ההגברה המקדימה והמעבר ההדרגתי מושבתים כל עוד הוא פעיל.</string>
-    <string name="dac_no_device">חבר DAC ב-USB כדי להשתמש בזה</string>
-    <string name="dac_reason_os">נדרש Android 14 ומעלה</string>
-    <string name="dac_reason_unsupported">הטלפון או ה-DAC הזה אינו תומך בכך</string>
-    <string name="dac_reason_format">הפורמט של הרצועה הנוכחית אינו נתמך, ולכן היא מתנגנת דרך מערבל המערכת</string>
-    <string name="dac_reason_hires">רצועות מעל 16 ביט מתנגנות דרך מערבל המערכת</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d ביט · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · מערבל המערכת</string>
-    <string name="dac_dsp_no_effect_note">בחלק מממירי USB, לאקולייזר ולמגבר המקדים אין כל השפעה.</string>
+    <!-- Auto-translated to Hebrew via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">תצורת נפח</string>
+    <string name="replay_gain_off">כבוי</string>
+    <string name="replay_gain_track">שיר</string>
+    <string name="replay_gain_album">אלבום</string>
+    <string name="replay_gain_hint">מאוזן את רמת הקול בין השירים באמצעות סימני ReplayGain שמורים בקבצים שלך. "שיר" מתקנה את הרמות בכל שיר; "אלבום" משמרת את הדינאמיקה של כל אלבوم בנפרד. קובצי תצוגה ללא סימנים ניגונים כפי שהם</string>
 </resources>

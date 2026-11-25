@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Eşleşmeler aranıyor…</string>
     <string name="lyrics_pick_empty">Eşleşen şarkı sözü bulunamadı</string>
     <string name="lyrics_pick_synced">Eşitlendi</string>
-
-    <!-- Auto-translated to Turkish via local LLM; review and refine. -->
     <string name="share_nudge_title">Müziği seviyor musunuz?</string>
     <string name="share_nudge_body">Bu oynatıcı tamamen ücretsizdir, reklamsız, izleme izi bırakmaz ve ayrıca pazarlama bütçesi de yoktur. Başka insanlara ulaşabilmesi için sadece birisi gibi sizin gibi birisi onu paylaşması gerekir. Telefonunuza yer edinmişse lütfen paylaşın.</string>
     <string name="share_nudge_share">Uygulamayı paylaş</string>
     <string name="share_nudge_dismiss">Belki daha sonra</string>
     <string name="share_nudge_message">OfflinePlaya kullanmaya devam ediyorum — reklamsız, çevrimdışı bir müzik oynatıcısı. Deneyin: %1$s</string>
+    <string name="dac_bit_perfect">Bit-perfect USB çıkışı</string>
+    <string name="dac_bit_perfect_subtitle">Sesi USB DAC\'nize hiç değiştirmeden gönderir. Etkinken ekolayzer, ön yükseltme ve geçiş efekti devre dışı kalır.</string>
+    <string name="dac_no_device">Kullanmak için bir USB DAC bağlayın</string>
+    <string name="dac_reason_os">Android 14 veya üzeri gerekir</string>
+    <string name="dac_reason_unsupported">Bu telefon veya DAC bunu desteklemiyor</string>
+    <string name="dac_reason_format">Geçerli parçanın biçimi desteklenmiyor, bu yüzden sistem mikseri üzerinden çalınıyor</string>
+    <string name="dac_reason_hires">16 bitin üzerindeki parçalar sistem mikseri üzerinden çalınır</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bit · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Sistem mikseri</string>
+    <string name="dac_dsp_no_effect_note">Bazı USB DAC'lerde ekolayzer ve ön yükselteç etkili olmaz.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">%1$d saniye içinde oynatılıyor…</item>
         <item quantity="other">%1$d saniye içinde oynatılıyor…</item>
@@ -298,15 +306,10 @@
         <item quantity="other">%1$d çalınma</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Bit-perfect USB çıkışı</string>
-    <string name="dac_bit_perfect_subtitle">Sesi USB DAC\'nize hiç değiştirmeden gönderir. Etkinken ekolayzer, ön yükseltme ve geçiş efekti devre dışı kalır.</string>
-    <string name="dac_no_device">Kullanmak için bir USB DAC bağlayın</string>
-    <string name="dac_reason_os">Android 14 veya üzeri gerekir</string>
-    <string name="dac_reason_unsupported">Bu telefon veya DAC bunu desteklemiyor</string>
-    <string name="dac_reason_format">Geçerli parçanın biçimi desteklenmiyor, bu yüzden sistem mikseri üzerinden çalınıyor</string>
-    <string name="dac_reason_hires">16 bitin üzerindeki parçalar sistem mikseri üzerinden çalınır</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bit · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Sistem mikseri</string>
-    <string name="dac_dsp_no_effect_note">Bazı USB DAC'lerde ekolayzer ve ön yükselteç etkili olmaz.</string>
+    <!-- Auto-translated to Turkish via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Sessizlik normalizasyonu</string>
+    <string name="replay_gain_off">Kapat</string>
+    <string name="replay_gain_track">Parça</string>
+    <string name="replay_gain_album">Albüm</string>
+    <string name="replay_gain_hint">ReplayGain etiketlerini kullanarak şarkılar arasında ses seviyesini eşitler. Parça, her şarkının düzeyini; Albüm, her albümin kendi dinamğini korur. Etiketsiz dosyalar değişmeden çalınır.</string>
 </resources>

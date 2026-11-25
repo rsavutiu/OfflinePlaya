@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Iskanje ujemanj…</string>
     <string name="lyrics_pick_empty">Ni najdenega ujemajočega besedila</string>
     <string name="lyrics_pick_synced">Sinhronizirano</string>
-
-    <!-- Auto-translated to Slovenian via local LLM; review and refine. -->
     <string name="share_nudge_title">Uživajte v glasbi?</string>
     <string name="share_nudge_body">Ta predvajalnik je popolnoma brezplačen, brez oglaševanj in sledenja — ter tudi brez marketinga. Edina način, kako se dostavi drugim ljudem, je, ko ga nekdo kot vi deli. Če je zasedel mesto na vašem telefonu, prosim, ga preporočite.</string>
     <string name="share_nudge_share">Deli aplikacijo</string>
     <string name="share_nudge_dismiss">Možno kasneje</string>
     <string name="share_nudge_message">Uporabljam OfflinePlaya — brezplačni predvajalnik glasbe brez oglaševanj in sledenja. Poskusite ga: %1$s</string>
+    <string name="dac_bit_perfect">Bitno natančen izhod USB</string>
+    <string name="dac_bit_perfect_subtitle">Pošilja zvok v USB DAC brez sprememb. Izenačevalnik, predojačitev in navzkrižno pojemanje so med delovanjem izklopljeni.</string>
+    <string name="dac_no_device">Za uporabo priključite USB DAC</string>
+    <string name="dac_reason_os">Zahteva Android 14 ali novejši</string>
+    <string name="dac_reason_unsupported">Ta telefon ali DAC tega ne podpira</string>
+    <string name="dac_reason_format">Oblika trenutne skladbe ni podprta, zato se predvaja prek sistemskega mešalnika</string>
+    <string name="dac_reason_hires">Skladbe nad 16 biti se predvajajo prek sistemskega mešalnika</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bitno · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Sistemski mešalnik</string>
+    <string name="dac_dsp_no_effect_note">Pri nekaterih USB DAC izenačevalnik in predojačevalnik nimata učinka.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Predvajanje čez %1$d sekundo …</item>
         <item quantity="other">Predvajanje čez %1$d sekund …</item>
@@ -300,15 +308,10 @@
         <item quantity="other">%1$d predvajanj</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Bitno natančen izhod USB</string>
-    <string name="dac_bit_perfect_subtitle">Pošilja zvok v USB DAC brez sprememb. Izenačevalnik, predojačitev in navzkrižno pojemanje so med delovanjem izklopljeni.</string>
-    <string name="dac_no_device">Za uporabo priključite USB DAC</string>
-    <string name="dac_reason_os">Zahteva Android 14 ali novejši</string>
-    <string name="dac_reason_unsupported">Ta telefon ali DAC tega ne podpira</string>
-    <string name="dac_reason_format">Oblika trenutne skladbe ni podprta, zato se predvaja prek sistemskega mešalnika</string>
-    <string name="dac_reason_hires">Skladbe nad 16 biti se predvajajo prek sistemskega mešalnika</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bitno · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Sistemski mešalnik</string>
-    <string name="dac_dsp_no_effect_note">Pri nekaterih USB DAC izenačevalnik in predojačevalnik nimata učinka.</string>
+    <!-- Auto-translated to Slovenian via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Normalizacija glasu</string>
+    <string name="replay_gain_off">Vypokločeno</string>
+    <string name="replay_gain_track">Pesem</string>
+    <string name="replay_gain_album">Albom</string>
+    <string name="replay_gain_hint">Ravnoteži glosnost med pesmimi s tagovi ReplayGain shranjenimi v vaših datotekah. Povratna zvočnica za vsako pesem; Album ohranja svoje dinamike posameznega alboma. Datoteke brez tagov se predvajajo neurejene.</string>
 </resources>

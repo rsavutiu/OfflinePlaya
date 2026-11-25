@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">正在搜尋相符項目…</string>
     <string name="lyrics_pick_empty">找不到相符的歌詞</string>
     <string name="lyrics_pick_synced">已同步</string>
-
-    <!-- Auto-translated to Traditional Chinese via local LLM; review and refine. -->
     <string name="share_nudge_title">正在享受音樂嗎？</string>
     <string name="share_nudge_body">這個播放器完全免費，沒有廣告，沒有追蹤 —— 連行銷預算也沒有。它能傳達到其他人手中，只靠像你這樣的人分享。如果它已經成為你手機的一部分，請把它傳給別人。</string>
     <string name="share_nudge_share">分享這個應用</string>
     <string name="share_nudge_dismiss">或許以後</string>
     <string name="share_nudge_message">我一直在使用OfflinePlaya — 一個免費的離線音樂播放器，沒有廣告也沒有追蹤。試試看：%1$s</string>
+    <string name="dac_bit_perfect">位元完美 USB 輸出</string>
+    <string name="dac_bit_perfect_subtitle">將音訊原封不動傳送到 USB DAC。啟用期間會略過等化器、前級增益和交叉淡化。</string>
+    <string name="dac_no_device">連接 USB DAC 後即可使用</string>
+    <string name="dac_reason_os">需要 Android 14 以上版本</string>
+    <string name="dac_reason_unsupported">這支手機或 DAC 不支援此功能</string>
+    <string name="dac_reason_format">不支援目前曲目的格式，因此透過系統混音器播放</string>
+    <string name="dac_reason_hires">高於 16 位元的曲目會透過系統混音器播放</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d 位元 · 位元完美</string>
+    <string name="dac_badge_system_mixer">%1$s · 系統混音器</string>
+    <string name="dac_dsp_no_effect_note">在某些 USB DAC 上，等化器與前級擴大機不會有作用。</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">%1$d 秒後播放...</item>
         <item quantity="other">%1$d 秒後播放...</item>
@@ -297,15 +305,10 @@
         <item quantity="other">%1$d 次播放</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">位元完美 USB 輸出</string>
-    <string name="dac_bit_perfect_subtitle">將音訊原封不動傳送到 USB DAC。啟用期間會略過等化器、前級增益和交叉淡化。</string>
-    <string name="dac_no_device">連接 USB DAC 後即可使用</string>
-    <string name="dac_reason_os">需要 Android 14 以上版本</string>
-    <string name="dac_reason_unsupported">這支手機或 DAC 不支援此功能</string>
-    <string name="dac_reason_format">不支援目前曲目的格式，因此透過系統混音器播放</string>
-    <string name="dac_reason_hires">高於 16 位元的曲目會透過系統混音器播放</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d 位元 · 位元完美</string>
-    <string name="dac_badge_system_mixer">%1$s · 系統混音器</string>
-    <string name="dac_dsp_no_effect_note">在某些 USB DAC 上，等化器與前級擴大機不會有作用。</string>
+    <!-- Auto-translated to Traditional Chinese via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">音量歸一化</string>
+    <string name="replay_gain_off">关闭</string>
+    <string name="replay_gain_track">軌道</string>
+    <string name="replay_gain_album">專輯</string>
+    <string name="replay_gain_hint">使用 ReplayGain 標籤來平衡歌曲之間的音量。軌道會調整每首歌的音量；專輯則保留每個專輯本身的動態範圍。沒有標籤的文件將保持原樣播放。</string>
 </resources>

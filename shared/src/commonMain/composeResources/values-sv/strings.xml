@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Söker efter träffar…</string>
     <string name="lyrics_pick_empty">Ingen matchande låttext hittades</string>
     <string name="lyrics_pick_synced">Synkroniserad</string>
-
-    <!-- Auto-translated to Swedish via local LLM; review and refine. -->
     <string name="share_nudge_title">Nöjer du dig med musiken?</string>
     <string name="share_nudge_body">Den här spelaren är helt kostnadsfri, utan annonser och utan spårning — och utan marknadsföringsbudget heller. Den enda sättet den når andra människor är när någon som du delar den. Om den har fått ett utrymme på din telefon, vänligen dela den.</string>
     <string name="share_nudge_share">Dela appen</string>
     <string name="share_nudge_dismiss">Kanske senare</string>
     <string name="share_nudge_message">Jag har använt OfflinePlaya — en kostnadsfri, offline musikspelare utan annonser eller spårning. Prova den: %1$s</string>
+    <string name="dac_bit_perfect">Bitperfekt USB-utgång</string>
+    <string name="dac_bit_perfect_subtitle">Skickar ljudet oförändrat till din USB-DAC. Equalizer, förförstärkning och övertoning kringgås medan den är aktiv.</string>
+    <string name="dac_no_device">Anslut en USB-DAC för att använda detta</string>
+    <string name="dac_reason_os">Kräver Android 14 eller senare</string>
+    <string name="dac_reason_unsupported">Den här telefonen eller DAC:n stöder inte det</string>
+    <string name="dac_reason_format">Formatet på det aktuella spåret stöds inte, så det spelas via systemmixern</string>
+    <string name="dac_reason_hires">Spår över 16 bitar spelas via systemmixern</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bitars · Bitperfekt</string>
+    <string name="dac_badge_system_mixer">%1$s · Systemmixer</string>
+    <string name="dac_dsp_no_effect_note">På vissa USB-DAC:ar har equalizern och förförstärkaren ingen effekt.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Spelar om %1$d sekund...</item>
         <item quantity="other">Spelas om %1$d sekunder...</item>
@@ -298,15 +306,10 @@
         <item quantity="other">%1$d uppspelningar</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Bitperfekt USB-utgång</string>
-    <string name="dac_bit_perfect_subtitle">Skickar ljudet oförändrat till din USB-DAC. Equalizer, förförstärkning och övertoning kringgås medan den är aktiv.</string>
-    <string name="dac_no_device">Anslut en USB-DAC för att använda detta</string>
-    <string name="dac_reason_os">Kräver Android 14 eller senare</string>
-    <string name="dac_reason_unsupported">Den här telefonen eller DAC:n stöder inte det</string>
-    <string name="dac_reason_format">Formatet på det aktuella spåret stöds inte, så det spelas via systemmixern</string>
-    <string name="dac_reason_hires">Spår över 16 bitar spelas via systemmixern</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bitars · Bitperfekt</string>
-    <string name="dac_badge_system_mixer">%1$s · Systemmixer</string>
-    <string name="dac_dsp_no_effect_note">På vissa USB-DAC:ar har equalizern och förförstärkaren ingen effekt.</string>
+    <!-- Auto-translated to Swedish via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Volymnormalisering</string>
+    <string name="replay_gain_off">Av</string>
+    <string name="replay_gain_track">Spår</string>
+    <string name="replay_gain_album">Album</string>
+    <string name="replay_gain_hint">Evens out loudness between songs using the ReplayGain tags stored in your files. Track levels every song; Album keeps each album's own dynamics. Files without tags play unchanged.</string>
 </resources>

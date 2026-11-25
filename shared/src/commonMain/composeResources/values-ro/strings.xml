@@ -278,13 +278,21 @@
     <string name="onboarding_done_body">Biblioteca ta este pregătită. Poți adăuga mai multe foldere sau modifica orice mai târziu în Setări.</string>
     <string name="onboarding_done_summary">%1$d piese · %2$d foldere</string>
     <string name="onboarding_done_cta">Începe să asculți</string>
-
-    <!-- Auto-translated to Romanian via local LLM; review and refine. -->
     <string name="share_nudge_title">Plăceați muzica?</string>
     <string name="share_nudge_body">Acest player este complet gratuit, fără reclame și fără urmărire — și fără buget de marketing nici. Singura modalitate în care ajunge la alții este când cineva ca tu îl împarte. Dacă a reușit să se afle pe telefonul tău, te rugăm să îl împărtășești.</string>
     <string name="share_nudge_share">Împărtășește aplicația</string>
     <string name="share_nudge_dismiss">Poate mai târziu</string>
     <string name="share_nudge_message">Am folosit OfflinePlaya — un player de muzică gratuit, offline, fără reclame sau urmărire. Încearcă-l: %1$s</string>
+    <string name="dac_bit_perfect">Ieșire USB bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">Trimite sunetul către DAC-ul USB fără nicio modificare. Egalizatorul, preamplificarea și crossfade-ul sunt ocolite cât timp este activă.</string>
+    <string name="dac_no_device">Conectează un DAC USB pentru a folosi această opțiune</string>
+    <string name="dac_reason_os">Necesită Android 14 sau o versiune mai nouă</string>
+    <string name="dac_reason_unsupported">Acest telefon sau DAC nu acceptă această funcție</string>
+    <string name="dac_reason_format">Formatul piesei curente nu este acceptat, așa că este redată prin mixerul sistemului</string>
+    <string name="dac_reason_hires">Piesele de peste 16 biți sunt redate prin mixerul sistemului</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d biți · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Mixerul sistemului</string>
+    <string name="dac_dsp_no_effect_note">La unele DAC-uri USB, egalizatorul și preamplificatorul nu au efect.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Se joacă în %1$d secundă...</item>
         <item quantity="other">Se joacă în %1$d secunde...</item>
@@ -299,15 +307,10 @@
         <item quantity="other">%1$d de redări</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Ieșire USB bit-perfect</string>
-    <string name="dac_bit_perfect_subtitle">Trimite sunetul către DAC-ul USB fără nicio modificare. Egalizatorul, preamplificarea și crossfade-ul sunt ocolite cât timp este activă.</string>
-    <string name="dac_no_device">Conectează un DAC USB pentru a folosi această opțiune</string>
-    <string name="dac_reason_os">Necesită Android 14 sau o versiune mai nouă</string>
-    <string name="dac_reason_unsupported">Acest telefon sau DAC nu acceptă această funcție</string>
-    <string name="dac_reason_format">Formatul piesei curente nu este acceptat, așa că este redată prin mixerul sistemului</string>
-    <string name="dac_reason_hires">Piesele de peste 16 biți sunt redate prin mixerul sistemului</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d biți · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Mixerul sistemului</string>
-    <string name="dac_dsp_no_effect_note">La unele DAC-uri USB, egalizatorul și preamplificatorul nu au efect.</string>
+    <!-- Auto-translated to Romanian via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Normalizare volum</string>
+    <string name="replay_gain_off">Dezactivat</string>
+    <string name="replay_gain_track">Cântec</string>
+    <string name="replay_gain_album">Albume</string>
+    <string name="replay_gain_hint">Echilibrează nivelul de zgomot între melodii folosind etichetele ReplayGain stocate în fișiere. Nivelul fiecărui cântec este luat separat; Album păstrează dinamica proprie a fiecaruia albume. Fișierelor fără taguri li se aplică modificarea normalizată.</string>
 </resources>

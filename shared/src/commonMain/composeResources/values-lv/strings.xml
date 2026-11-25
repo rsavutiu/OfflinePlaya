@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Meklē atbilstības…</string>
     <string name="lyrics_pick_empty">Nav atrasti atbilstoši vārdi</string>
     <string name="lyrics_pick_synced">Sinhronizēts</string>
-
-    <!-- Auto-translated to Latvian via local LLM; review and refine. -->
     <string name="share_nudge_title">Vai patīk mūzika?</string>
     <string name="share_nudge_body">Šis spēlētājs ir pilnībā bezmaksas, bez reklāmas un bez uzraudzības — un pat bez reklāmas budžeta. Vienu vienīgu veidu, kā to var sasniegt citiem, ir, ja kāds kā jūs to izdala. Ja tas ir ieguvis vietu jūsu tālruņa, lūdzu, izdala to citiem.</string>
     <string name="share_nudge_share">Izkāpt aplikāciju</string>
     <string name="share_nudge_dismiss">Varbūt vēlāk</string>
     <string name="share_nudge_message">Es esmu izmantojis OfflinePlaya — bezmaksas, offline mūzikas spēlētāju bez reklāmas vai uzraudzības. Iepazīstieties ar to: %1$s</string>
+    <string name="dac_bit_perfect">Bitu precīza USB izvade</string>
+    <string name="dac_bit_perfect_subtitle">Sūta audio uz USB DAC bez izmaiņām. Kamēr tā ir aktīva, ekvalaizers, priekšpastiprinājums un pārejas efekts tiek apieti.</string>
+    <string name="dac_no_device">Lai to izmantotu, pievienojiet USB DAC</string>
+    <string name="dac_reason_os">Nepieciešama Android 14 vai jaunāka versija</string>
+    <string name="dac_reason_unsupported">Šis tālrunis vai DAC to neatbalsta</string>
+    <string name="dac_reason_format">Pašreizējā ieraksta formāts netiek atbalstīts, tāpēc tas tiek atskaņots caur sistēmas mikseri</string>
+    <string name="dac_reason_hires">Ieraksti virs 16 bitiem tiek atskaņoti caur sistēmas mikseri</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bitu · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Sistēmas mikseris</string>
+    <string name="dac_dsp_no_effect_note">Dažiem USB DAC ekvalaizeram un priekšpastiprinātājam nav nekādas ietekmes.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Tiek atskaņots pēc %1$d sekundes…</item>
         <item quantity="other">Tiek atskaņots pēc %1$d sekundēm…</item>
@@ -299,15 +307,10 @@
         <item quantity="other">%1$d atskaņojumi</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Bitu precīza USB izvade</string>
-    <string name="dac_bit_perfect_subtitle">Sūta audio uz USB DAC bez izmaiņām. Kamēr tā ir aktīva, ekvalaizers, priekšpastiprinājums un pārejas efekts tiek apieti.</string>
-    <string name="dac_no_device">Lai to izmantotu, pievienojiet USB DAC</string>
-    <string name="dac_reason_os">Nepieciešama Android 14 vai jaunāka versija</string>
-    <string name="dac_reason_unsupported">Šis tālrunis vai DAC to neatbalsta</string>
-    <string name="dac_reason_format">Pašreizējā ieraksta formāts netiek atbalstīts, tāpēc tas tiek atskaņots caur sistēmas mikseri</string>
-    <string name="dac_reason_hires">Ieraksti virs 16 bitiem tiek atskaņoti caur sistēmas mikseri</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bitu · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Sistēmas mikseris</string>
-    <string name="dac_dsp_no_effect_note">Dažiem USB DAC ekvalaizeram un priekšpastiprinātājam nav nekādas ietekmes.</string>
+    <!-- Auto-translated to Latvian via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Volume normalizācija</string>
+    <string name="replay_gain_off">Izslēgts</string>
+    <string name="replay_gain_track">Sings</string>
+    <string name="replay_gain_album">Albūms</string>
+    <string name="replay_gain_hint">Ievieno līdzvērtīgu skaļumu starp dziesmām, izmantotu atkārtojuma ReplayGain uzņemšanas zīmes saglabātos jūsu failos. Sings ritez katru dziesmu; Albūms uztur katra albūma savas dinamikas. Faili bez zīmēm spiež neizmainot.</string>
 </resources>

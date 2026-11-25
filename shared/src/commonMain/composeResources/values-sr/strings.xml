@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Тражење подударања…</string>
     <string name="lyrics_pick_empty">Није пронађен одговарајући текст</string>
     <string name="lyrics_pick_synced">Синхронизовано</string>
-
-    <!-- Auto-translated to Serbian via local LLM; review and refine. -->
     <string name="share_nudge_title">Уживај у музике?</string>
     <string name="share_nudge_body">Овај плејер је потпуно бесплатно, без реклама и без пратења — и без буџета за маркетинг. Једина начин да стигне до других је када неко као што сте делите јега. Ако је освојио место на вашем мобилном телефону, молим вас да га поделите.</string>
     <string name="share_nudge_share">Делите апликацију</string>
     <string name="share_nudge_dismiss">Можда касније</string>
     <string name="share_nudge_message">Имам коришћен OfflinePlaya — бесплатно, офлайн музички плејер без реклама или пратења. Пробајте га: %1$s</string>
+    <string name="dac_bit_perfect">Bit-perfect USB излаз</string>
+    <string name="dac_bit_perfect_subtitle">Шаље звук на USB DAC без измена. Еквилајзер, претпојачање и претапање се заобилазе док је укључено.</string>
+    <string name="dac_no_device">Повежите USB DAC да бисте ово користили</string>
+    <string name="dac_reason_os">Захтева Android 14 или новији</string>
+    <string name="dac_reason_unsupported">Овај телефон или DAC то не подржава</string>
+    <string name="dac_reason_format">Формат тренутне песме није подржан, па се пушта преко системског миксера</string>
+    <string name="dac_reason_hires">Песме изнад 16 бита се пуштају преко системског миксера</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-битни · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Системски миксер</string>
+    <string name="dac_dsp_no_effect_note">На неким USB DAC уређајима еквилајзер и претпојачало немају ефекта.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Репродукује се за %1$d секунду…</item>
         <item quantity="other">Репродукује се за %1$d секунди…</item>
@@ -299,15 +307,10 @@
         <item quantity="other">%1$d репродукција</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Bit-perfect USB излаз</string>
-    <string name="dac_bit_perfect_subtitle">Шаље звук на USB DAC без измена. Еквилајзер, претпојачање и претапање се заобилазе док је укључено.</string>
-    <string name="dac_no_device">Повежите USB DAC да бисте ово користили</string>
-    <string name="dac_reason_os">Захтева Android 14 или новији</string>
-    <string name="dac_reason_unsupported">Овај телефон или DAC то не подржава</string>
-    <string name="dac_reason_format">Формат тренутне песме није подржан, па се пушта преко системског миксера</string>
-    <string name="dac_reason_hires">Песме изнад 16 бита се пуштају преко системског миксера</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-битни · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Системски миксер</string>
-    <string name="dac_dsp_no_effect_note">На неким USB DAC уређајима еквилајзер и претпојачало немају ефекта.</string>
+    <!-- Auto-translated to Serbian via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Normalizacija volumena</string>
+    <string name="replay_gain_off">Izađi</string>
+    <string name="replay_gain_track">Tračak</string>
+    <string name="replay_gain_album">Album</string>
+    <string name="replay_gain_hint">Ravnomerno rasporeduje glasnost izmeђu pesama koristeći etikete ReplayGain skladištena u vašim datotekama. Tračak nivo svake pese; Album održava sopstvene dinamike svakoalbuma. Datoteke bez etiketa se igraju neizmenjene.</string>
 </resources>

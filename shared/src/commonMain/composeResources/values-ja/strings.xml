@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">一致を検索中…</string>
     <string name="lyrics_pick_empty">一致する歌詞が見つかりません</string>
     <string name="lyrics_pick_synced">同期済み</string>
-
-    <!-- Auto-translated to Japanese via local LLM; review and refine. -->
     <string name="share_nudge_title">音楽を楽しんでいますか？</string>
     <string name="share_nudge_body">このプレイヤーは完全に無料で、広告もトラッキングもありません。またマーケティング予算もありません。他の人に届く唯一の方法は、あなたのような人が共有することです。もし電話にこのアプリがインストールされているなら、ぜひ共有してください。</string>
     <string name="share_nudge_share">アプリを共有</string>
     <string name="share_nudge_dismiss">またの機会に</string>
     <string name="share_nudge_message">私はOfflinePlayaを使用しています — 広告やトラッキングなしの無料オフライン音楽プレイヤーです。試してみてください: %1$s</string>
+    <string name="dac_bit_perfect">ビットパーフェクト USB 出力</string>
+    <string name="dac_bit_perfect_subtitle">オーディオを加工せずに USB DAC へ送ります。有効な間はイコライザー、プリアンプ、クロスフェードがバイパスされます。</string>
+    <string name="dac_no_device">使用するには USB DAC を接続してください</string>
+    <string name="dac_reason_os">Android 14 以降が必要です</string>
+    <string name="dac_reason_unsupported">このスマートフォンまたは DAC は対応していません</string>
+    <string name="dac_reason_format">現在の曲の形式は非対応のため、システムミキサー経由で再生されます</string>
+    <string name="dac_reason_hires">16 ビットを超える曲はシステムミキサー経由で再生されます</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d ビット · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · システムミキサー</string>
+    <string name="dac_dsp_no_effect_note">一部の USB DAC では、イコライザーとプリアンプは効果がありません。</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">%1$d 秒後に再生します…</item>
         <item quantity="other">%1$d 秒後に再生します…</item>
@@ -297,15 +305,10 @@
         <item quantity="other">%1$d 回再生</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">ビットパーフェクト USB 出力</string>
-    <string name="dac_bit_perfect_subtitle">オーディオを加工せずに USB DAC へ送ります。有効な間はイコライザー、プリアンプ、クロスフェードがバイパスされます。</string>
-    <string name="dac_no_device">使用するには USB DAC を接続してください</string>
-    <string name="dac_reason_os">Android 14 以降が必要です</string>
-    <string name="dac_reason_unsupported">このスマートフォンまたは DAC は対応していません</string>
-    <string name="dac_reason_format">現在の曲の形式は非対応のため、システムミキサー経由で再生されます</string>
-    <string name="dac_reason_hires">16 ビットを超える曲はシステムミキサー経由で再生されます</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d ビット · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · システムミキサー</string>
-    <string name="dac_dsp_no_effect_note">一部の USB DAC では、イコライザーとプリアンプは効果がありません。</string>
+    <!-- Auto-translated to Japanese via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">ボリューム正規化</string>
+    <string name="replay_gain_off">オフ</string>
+    <string name="replay_gain_track">トラック</string>
+    <string name="replay_gain_album">アルバム</string>
+    <string name="replay_gain_hint">再生ゲインのタグを使用して、曲間で音量を均一にします。トラックは各楽曲のレベルを調整し、アルバムはそれぞれのアルバム独自のダイナミクスを保持します。タグが無いファイルは変更なしで再生されます。</string>
 </resources>

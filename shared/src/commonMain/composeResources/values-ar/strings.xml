@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">جارٍ البحث عن تطابقات…</string>
     <string name="lyrics_pick_empty">لم يتم العثور على كلمات مطابقة</string>
     <string name="lyrics_pick_synced">متزامنة</string>
-
-    <!-- Auto-translated to Arabic via local LLM; review and refine. -->
     <string name="share_nudge_title">هل تستمتع بالموسيقى؟</string>
     <string name="share_nudge_body">هذا اللاعب مجاني تمامًا، ولا يحتوي على إعلانات ولا تتبع ولا ميزانية تسويقية أيضًا. الطريقة الوحيدة التي تصل بها إلى الآخرين هي عندما يشارك بها شخص مثلك. إذا وجدت مكانه على هاتفك، من فضلك اشاركه.</string>
     <string name="share_nudge_share">مشاركة التطبيق</string>
     <string name="share_nudge_dismiss">ربما لاحقًا</string>
     <string name="share_nudge_message">لقد كنت أستخدم OfflinePlaya — لاعب موسيقى مجاني بدون إعلانات أو تتبع. جرّبها: %1$s</string>
+    <string name="dac_bit_perfect">إخراج USB مطابق تمامًا (Bit-perfect)</string>
+    <string name="dac_bit_perfect_subtitle">يرسل الصوت إلى محوّل DAC عبر USB دون أي تعديل. يتم تجاوز المعادل والتضخيم المسبق والتلاشي المتقاطع أثناء التفعيل.</string>
+    <string name="dac_no_device">وصّل محوّل DAC عبر USB لاستخدام هذه الميزة</string>
+    <string name="dac_reason_os">يتطلب Android 14 أو أحدث</string>
+    <string name="dac_reason_unsupported">هذا الهاتف أو محوّل DAC لا يدعم ذلك</string>
+    <string name="dac_reason_format">تنسيق المقطع الحالي غير مدعوم، لذا يُشغَّل عبر خلاط النظام</string>
+    <string name="dac_reason_hires">المقاطع الأعلى من 16 بت تُشغَّل عبر خلاط النظام</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d بت · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · خلاط النظام</string>
+    <string name="dac_dsp_no_effect_note">مع بعض محولات USB الرقمية، لا يكون للمعادل ومضخم الصوت أي تأثير.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">جارٍ التشغيل خلال %1$d ثانية...</item>
         <item quantity="other">يتم التشغيل خلال %1$d ثانية...</item>
@@ -302,15 +310,10 @@
         <item quantity="other">%1$d تشغيل</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">إخراج USB مطابق تمامًا (Bit-perfect)</string>
-    <string name="dac_bit_perfect_subtitle">يرسل الصوت إلى محوّل DAC عبر USB دون أي تعديل. يتم تجاوز المعادل والتضخيم المسبق والتلاشي المتقاطع أثناء التفعيل.</string>
-    <string name="dac_no_device">وصّل محوّل DAC عبر USB لاستخدام هذه الميزة</string>
-    <string name="dac_reason_os">يتطلب Android 14 أو أحدث</string>
-    <string name="dac_reason_unsupported">هذا الهاتف أو محوّل DAC لا يدعم ذلك</string>
-    <string name="dac_reason_format">تنسيق المقطع الحالي غير مدعوم، لذا يُشغَّل عبر خلاط النظام</string>
-    <string name="dac_reason_hires">المقاطع الأعلى من 16 بت تُشغَّل عبر خلاط النظام</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d بت · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · خلاط النظام</string>
-    <string name="dac_dsp_no_effect_note">مع بعض محولات USB الرقمية، لا يكون للمعادل ومضخم الصوت أي تأثير.</string>
+    <!-- Auto-translated to Arabic via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">توحيد الصوت</string>
+    <string name="replay_gain_off">إيقاف</string>
+    <string name="replay_gain_track">مقطع</string>
+    <string name="replay_gain_album">ألبوم</string>
+    <string name="replay_gain_hint">يوازن بين حدة صوتيات الأغاني باستخدام علامات ReplayGain المخزنة في ملفك. مستوى كل أغنية بمفردها؛ وألبوم الحفاظ على الديناميكيات الخاصة بكل ألبوم. يتم تشغيل الملفات التي لا تحتوي على العلامات كما هي.</string>
 </resources>

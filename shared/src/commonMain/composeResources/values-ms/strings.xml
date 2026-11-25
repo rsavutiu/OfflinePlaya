@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Mencari padanan…</string>
     <string name="lyrics_pick_empty">Tiada lirik sepadan dijumpai</string>
     <string name="lyrics_pick_synced">Disegerakkan</string>
-
-    <!-- Auto-translated to Malay via local LLM; review and refine. -->
     <string name="share_nudge_title">Menikmati muzik?</string>
     <string name="share_nudge_body">Pemain ini sepenuhnya percuma, tanpa iklan dan tanpa pemantauan — dan juga tanpa belanja pemasaran. Satu-satunya cara ia sampai kepada orang lain ialah apabila seseorang seperti anda berkongsi ia. Jika ia telah mendapat tempat di telefon anda, sila kongsikan ia.</string>
     <string name="share_nudge_share">Kongsi aplikasi</string>
     <string name="share_nudge_dismiss">Mungkin nanti</string>
     <string name="share_nudge_message">Saya menggunakan OfflinePlaya — pemain muzik percuma tanpa iklan atau pemantauan. Cuba ia: %1$s</string>
+    <string name="dac_bit_perfect">Output USB bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">Menghantar audio ke DAC USB anda tanpa diubah. EQ, prapenguat dan crossfade dipintas semasa ia aktif.</string>
+    <string name="dac_no_device">Sambungkan DAC USB untuk menggunakan ini</string>
+    <string name="dac_reason_os">Memerlukan Android 14 atau lebih baharu</string>
+    <string name="dac_reason_unsupported">Telefon atau DAC ini tidak menyokongnya</string>
+    <string name="dac_reason_format">Format lagu semasa tidak disokong, jadi ia dimainkan melalui pengadun sistem</string>
+    <string name="dac_reason_hires">Lagu melebihi 16-bit dimainkan melalui pengadun sistem</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Pengadun sistem</string>
+    <string name="dac_dsp_no_effect_note">Pada sesetengah DAC USB, penyama dan praamp tidak memberi kesan.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Memainkan dalam %1$d saat…</item>
         <item quantity="other">Dimainkan dalam %1$d saat…</item>
@@ -297,15 +305,10 @@
         <item quantity="other">%1$d mainan</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Output USB bit-perfect</string>
-    <string name="dac_bit_perfect_subtitle">Menghantar audio ke DAC USB anda tanpa diubah. EQ, prapenguat dan crossfade dipintas semasa ia aktif.</string>
-    <string name="dac_no_device">Sambungkan DAC USB untuk menggunakan ini</string>
-    <string name="dac_reason_os">Memerlukan Android 14 atau lebih baharu</string>
-    <string name="dac_reason_unsupported">Telefon atau DAC ini tidak menyokongnya</string>
-    <string name="dac_reason_format">Format lagu semasa tidak disokong, jadi ia dimainkan melalui pengadun sistem</string>
-    <string name="dac_reason_hires">Lagu melebihi 16-bit dimainkan melalui pengadun sistem</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Pengadun sistem</string>
-    <string name="dac_dsp_no_effect_note">Pada sesetengah DAC USB, penyama dan praamp tidak memberi kesan.</string>
+    <!-- Auto-translated to Malay via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Pemormalan suara</string>
+    <string name="replay_gain_off">Mati</string>
+    <string name="replay_gain_track">Lagu</string>
+    <string name="replay_gain_album">Album</string>
+    <string name="replay_gain_hint">Menyesuaikan kebisingan antara lagu menggunakan tag ReplayGain yang disimpan dalam fail anda. Tahap setiap lagu untuk Track; Album mengekalkan dinamik masing-masing album. Fail tanpa tag akan dimainkan seperti asalnya.</string>
 </resources>

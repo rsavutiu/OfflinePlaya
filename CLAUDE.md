@@ -256,8 +256,10 @@ Android impl using `java.time.LocalTime`. If you need more datetime APIs, decide
   multiple columns in landscape — see the Navigation section).
 - No remote streaming — strictly offline, files the user already has.
 - No accounts, no cloud sync.
-- No ReplayGain / LUFS normalization (the preamp is a manual loudness boost, not per-track
-  normalization).
+- No LUFS analysis. ReplayGain is **tag-based only** (`ReplayGainMode` Off/Track/Album on the EQ
+  page): `ReplayGainTracker` reads the tags ExoPlayer already parsed, and `AppEqualizerController`
+  sums the gain with the preamp on one `LoudnessEnhancer`. Untagged files play unchanged; bypassed
+  in bit-perfect/Play-to-PC like the rest of the DSP. Not applied to the crossfade secondary engine.
 - No iOS / desktop targets implemented even though the structure supports them.
 
 ## When the user asks for "design feedback"

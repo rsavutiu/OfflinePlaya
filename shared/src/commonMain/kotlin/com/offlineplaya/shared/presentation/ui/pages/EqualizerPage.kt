@@ -26,6 +26,8 @@ import com.offlineplaya.shared.domain.model.BuiltInPresets
 import com.offlineplaya.shared.domain.model.EqMode
 import com.offlineplaya.shared.domain.model.EqPreferences
 import com.offlineplaya.shared.domain.model.EqPreset
+import com.offlineplaya.shared.domain.model.ReplayGainMode
+import com.offlineplaya.shared.presentation.ui.molecules.ReplayGainChooser
 import com.offlineplaya.shared.presentation.ui.LocalOrientation
 import com.offlineplaya.shared.presentation.ui.Orientation
 import com.offlineplaya.shared.presentation.ui.atoms.AppTopBar
@@ -48,6 +50,7 @@ import offlineplaya.shared.generated.resources.settings_section_bands
 import offlineplaya.shared.generated.resources.settings_section_mode
 import offlineplaya.shared.generated.resources.settings_section_preamp
 import offlineplaya.shared.generated.resources.settings_section_preset
+import offlineplaya.shared.generated.resources.settings_section_replay_gain
 import offlineplaya.shared.generated.resources.top_bar_equalizer
 import org.jetbrains.compose.resources.stringResource
 
@@ -72,6 +75,7 @@ fun EqualizerPage(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     dacActive: Boolean = false,
+    onReplayGainChange: (ReplayGainMode) -> Unit = {},
 ) {
     Scaffold(
         modifier = modifier,
@@ -160,6 +164,17 @@ fun EqualizerPage(
         }
 
         @Composable
+        fun replayGainSection() {
+            SettingsSection(title = stringResource(Res.string.settings_section_replay_gain)) {
+                ReplayGainChooser(
+                    selected = preferences.replayGainMode,
+                    onModeChange = onReplayGainChange,
+                    modifier = Modifier.padding(horizontal = AppSpacing.lg, vertical = AppSpacing.sm),
+                )
+            }
+        }
+
+        @Composable
         fun bandsSection(graphHeight: Dp = 300.dp) {
             SettingsSection(title = stringResource(Res.string.settings_section_bands)) {
                 EqualizerGraph(
@@ -203,6 +218,7 @@ fun EqualizerPage(
                             modeSection()
                             presetSection()
                             preampSection()
+                            replayGainSection()
                         }
                         Column(
                             modifier = Modifier
@@ -223,6 +239,7 @@ fun EqualizerPage(
                         modeSection()
                         presetSection()
                         preampSection()
+                        replayGainSection()
                         bandsSection(graphHeight = tallHeight)
                     }
                 }

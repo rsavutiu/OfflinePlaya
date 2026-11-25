@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">กำลังค้นหารายการที่ตรงกัน…</string>
     <string name="lyrics_pick_empty">ไม่พบเนื้อเพลงที่ตรงกัน</string>
     <string name="lyrics_pick_synced">ซิงค์แล้ว</string>
-
-    <!-- Auto-translated to Thai via local LLM; review and refine. -->
     <string name="share_nudge_title">สนุกกับเสียงเพลงไหม?</string>
     <string name="share_nudge_body">แอปนี้เป็นผู้เล่นเพลงแบบฟรีเต็มตัว ไม่มีโฆษณา ไม่มีการติดตาม และไม่มีงบประมาณการตลาดด้วย วิธีเดียวที่มันจะไปถึงคนอื่นคือเมื่อมีคนอย่างคุณแชร์มัน ถ้ามันได้รับการติดตั้งบนโทรศัพท์ของคุณแล้ว โปรดแชร์มันต่อ</string>
     <string name="share_nudge_share">แชร์แอป</string>
     <string name="share_nudge_dismiss">อาจเป็นอีกที</string>
     <string name="share_nudge_message">ฉันใช้ OfflinePlaya แอปผู้เล่นเพลงแบบออฟไลน์ที่ฟรี ไม่มีโฆษณา ไม่มีการติดตาม ลองใช้ดู: %1$s</string>
+    <string name="dac_bit_perfect">เอาต์พุต USB แบบ Bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">ส่งเสียงไปยัง USB DAC โดยไม่ดัดแปลง อีควอไลเซอร์ ปรีแอมป์ และครอสเฟดจะถูกข้ามขณะเปิดใช้งาน</string>
+    <string name="dac_no_device">เชื่อมต่อ USB DAC เพื่อใช้งานฟีเจอร์นี้</string>
+    <string name="dac_reason_os">ต้องใช้ Android 14 ขึ้นไป</string>
+    <string name="dac_reason_unsupported">โทรศัพท์หรือ DAC นี้ไม่รองรับ</string>
+    <string name="dac_reason_format">ไม่รองรับรูปแบบของเพลงปัจจุบัน จึงเล่นผ่านมิกเซอร์ของระบบ</string>
+    <string name="dac_reason_hires">เพลงที่สูงกว่า 16 บิตจะเล่นผ่านมิกเซอร์ของระบบ</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d บิต · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · มิกเซอร์ของระบบ</string>
+    <string name="dac_dsp_no_effect_note">บน USB DAC บางรุ่น อีควอไลเซอร์และปรีแอมป์จะไม่มีผล</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">กำลังเล่นใน %1$d วินาที...</item>
         <item quantity="other">กำลังเล่นใน %1$d วินาที...</item>
@@ -297,15 +305,10 @@
         <item quantity="other">%1$d ครั้ง</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">เอาต์พุต USB แบบ Bit-perfect</string>
-    <string name="dac_bit_perfect_subtitle">ส่งเสียงไปยัง USB DAC โดยไม่ดัดแปลง อีควอไลเซอร์ ปรีแอมป์ และครอสเฟดจะถูกข้ามขณะเปิดใช้งาน</string>
-    <string name="dac_no_device">เชื่อมต่อ USB DAC เพื่อใช้งานฟีเจอร์นี้</string>
-    <string name="dac_reason_os">ต้องใช้ Android 14 ขึ้นไป</string>
-    <string name="dac_reason_unsupported">โทรศัพท์หรือ DAC นี้ไม่รองรับ</string>
-    <string name="dac_reason_format">ไม่รองรับรูปแบบของเพลงปัจจุบัน จึงเล่นผ่านมิกเซอร์ของระบบ</string>
-    <string name="dac_reason_hires">เพลงที่สูงกว่า 16 บิตจะเล่นผ่านมิกเซอร์ของระบบ</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d บิต · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · มิกเซอร์ของระบบ</string>
-    <string name="dac_dsp_no_effect_note">บน USB DAC บางรุ่น อีควอไลเซอร์และปรีแอมป์จะไม่มีผล</string>
+    <!-- Auto-translated to Thai via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">การปรับระดับเสียงให้เท่ากัน</string>
+    <string name="replay_gain_off">ปิด</string>
+    <string name="replay_gain_track">เพลง</string>
+    <string name="replay_gain_album">อัลบัม</string>
+    <string name="replay_gain_hint">เทียบความเข้มข้นของเพลงระหว่างบทเพลงโดยใช้แท็ก ReplayGain ในไฟล์ของคุณ โดยการปรับระดับแต่ละเพลง (Track) และรักษาพลังเสียงเฉพาะอัลบัม (Album) สำหรับไฟล์ที่ไม่มีแท็ก จะเล่นตามปกติโดยไม่มีการเปลี่ยนแปลง</string>
 </resources>

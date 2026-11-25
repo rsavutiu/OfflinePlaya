@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Αναζήτηση αντιστοιχιών…</string>
     <string name="lyrics_pick_empty">Δεν βρέθηκαν αντίστοιχοι στίχοι</string>
     <string name="lyrics_pick_synced">Συγχρονισμένοι</string>
-
-    <!-- Auto-translated to Greek via local LLM; review and refine. -->
     <string name="share_nudge_title">Απολαμβάνετε τη μουσική;</string>
     <string name="share_nudge_body">Αυτός ο παραγωγός είναι πλήρως δωρεάν, χωρίς διαφημιστικά και χωρίς παρακολούθηση — και χωρίς και προσωρινό προϋπολογισμό διαφημίσεων. Το μόνο τρόπο που φτάνει σε άλλους άνθρωπους είναι όταν κάποιος όπως εσύ το κοινοποιεί. Αν έχει καταλάβει ένα σημείο στο κινητό σας, παρακαλώ το κοινοποιήστε.</string>
     <string name="share_nudge_share">Κοινοποίηση της εφαρμογής</string>
     <string name="share_nudge_dismiss">Πιθανότατα αργότερα</string>
     <string name="share_nudge_message">Έχω χρησιμοποιήσει την OfflinePlaya — μια δωρεάν, αφόρτιστη μουσική παραγωγό με καμία διαφήμιση ή παρακολούθηση. Δοκιμάστε την: %1$s</string>
+    <string name="dac_bit_perfect">Έξοδος USB bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">Στέλνει τον ήχο στο USB DAC χωρίς αλλοιώσεις. Ο ισοσταθμιστής, η προενίσχυση και η διασταυρούμενη μετάβαση παρακάμπτονται όσο είναι ενεργό.</string>
+    <string name="dac_no_device">Συνδέστε ένα USB DAC για να το χρησιμοποιήσετε</string>
+    <string name="dac_reason_os">Απαιτεί Android 14 ή νεότερο</string>
+    <string name="dac_reason_unsupported">Αυτό το τηλέφωνο ή το DAC δεν το υποστηρίζει</string>
+    <string name="dac_reason_format">Η μορφή του τρέχοντος κομματιού δεν υποστηρίζεται, οπότε παίζει μέσω του μίκτη συστήματος</string>
+    <string name="dac_reason_hires">Τα κομμάτια άνω των 16 bit παίζουν μέσω του μίκτη συστήματος</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bit · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Μίκτης συστήματος</string>
+    <string name="dac_dsp_no_effect_note">Σε ορισμένα USB DAC, ο ισοσταθμιστής και ο προενισχυτής δεν έχουν καμία επίδραση.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Αναπαραγωγή σε %1$d δευτερόλεπτο…</item>
         <item quantity="other">Αναπαραγωγή σε %1$d δευτερόλεπτα…</item>
@@ -298,15 +306,10 @@
         <item quantity="other">%1$d αναπαραγωγές</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Έξοδος USB bit-perfect</string>
-    <string name="dac_bit_perfect_subtitle">Στέλνει τον ήχο στο USB DAC χωρίς αλλοιώσεις. Ο ισοσταθμιστής, η προενίσχυση και η διασταυρούμενη μετάβαση παρακάμπτονται όσο είναι ενεργό.</string>
-    <string name="dac_no_device">Συνδέστε ένα USB DAC για να το χρησιμοποιήσετε</string>
-    <string name="dac_reason_os">Απαιτεί Android 14 ή νεότερο</string>
-    <string name="dac_reason_unsupported">Αυτό το τηλέφωνο ή το DAC δεν το υποστηρίζει</string>
-    <string name="dac_reason_format">Η μορφή του τρέχοντος κομματιού δεν υποστηρίζεται, οπότε παίζει μέσω του μίκτη συστήματος</string>
-    <string name="dac_reason_hires">Τα κομμάτια άνω των 16 bit παίζουν μέσω του μίκτη συστήματος</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bit · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Μίκτης συστήματος</string>
-    <string name="dac_dsp_no_effect_note">Σε ορισμένα USB DAC, ο ισοσταθμιστής και ο προενισχυτής δεν έχουν καμία επίδραση.</string>
+    <!-- Auto-translated to Greek via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Ανομαλίστεις τόνου από κύκλωµα</string>
+    <string name="replay_gain_off">Εξωφράγµατο</string>
+    <string name="replay_gain_track">Τραχών</string>
+    <string name="replay_gain_album">Άλβυµα</string>
+    <string name="replay_gain_hint">Συγκρατεί όση φθορά του από κύκλωµα µεταξύ ειδής παιζόντων, σχέδιο ReplayGain γραφών έχει διατυπωθεί στη χάρτιν. Γραµματεί κλίµακα ειδής παιζόντων; Άλβυµα φυλάσσει το δικό του από κύκλωµα για κάθε χάρτιν. Γραφές µη είχαν σήµα παιζόντων φυλάσσονται ίδιου από κύκλωµα.</string>
 </resources>

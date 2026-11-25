@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Търсене на съвпадения…</string>
     <string name="lyrics_pick_empty">Няма намерен съвпадащ текст</string>
     <string name="lyrics_pick_synced">Синхронизиран</string>
-
-    <!-- Auto-translated to Bulgarian via local LLM; review and refine. -->
     <string name="share_nudge_title">Услаждавате се с музиката?</string>
     <string name="share_nudge_body">Този плеер е напълно свободен, без реклами и без отслежване — и без бюджет за маркетинг. Единственият начин той да достигне до други хора е когато някой като вас го сподели. Ако е зает място на вашия телефон, моля, го споделете.</string>
     <string name="share_nudge_share">Споделете приложението</string>
     <string name="share_nudge_dismiss">Може би по-късно</string>
     <string name="share_nudge_message">Използвам OfflinePlaya — свободен, офлайн музикален плеер без реклами или отслежване. Опитайте го: %1$s</string>
+    <string name="dac_bit_perfect">Bit-perfect USB изход</string>
+    <string name="dac_bit_perfect_subtitle">Изпраща звука към USB DAC без промени. Еквалайзерът, предусилването и кросфейдът се изключват, докато е активен.</string>
+    <string name="dac_no_device">Свържете USB DAC, за да използвате това</string>
+    <string name="dac_reason_os">Изисква Android 14 или по-нова версия</string>
+    <string name="dac_reason_unsupported">Този телефон или DAC не го поддържа</string>
+    <string name="dac_reason_format">Форматът на текущата песен не се поддържа, затова тя се възпроизвежда през системния миксер</string>
+    <string name="dac_reason_hires">Песните над 16 бита се възпроизвеждат през системния миксер</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d бита · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Системен миксер</string>
+    <string name="dac_dsp_no_effect_note">При някои USB ЦАП устройства еквалайзерът и предусилвателят нямат ефект.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Пуска се след %1$d секунда...</item>
         <item quantity="other">Възпроизвежда се след %1$d секунди...</item>
@@ -298,15 +306,10 @@
         <item quantity="other">%1$d изпълнения</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Bit-perfect USB изход</string>
-    <string name="dac_bit_perfect_subtitle">Изпраща звука към USB DAC без промени. Еквалайзерът, предусилването и кросфейдът се изключват, докато е активен.</string>
-    <string name="dac_no_device">Свържете USB DAC, за да използвате това</string>
-    <string name="dac_reason_os">Изисква Android 14 или по-нова версия</string>
-    <string name="dac_reason_unsupported">Този телефон или DAC не го поддържа</string>
-    <string name="dac_reason_format">Форматът на текущата песен не се поддържа, затова тя се възпроизвежда през системния миксер</string>
-    <string name="dac_reason_hires">Песните над 16 бита се възпроизвеждат през системния миксер</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d бита · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Системен миксер</string>
-    <string name="dac_dsp_no_effect_note">При някои USB ЦАП устройства еквалайзерът и предусилвателят нямат ефект.</string>
+    <!-- Auto-translated to Bulgarian via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Нормализация на гласността</string>
+    <string name="replay_gain_off">Изключено</string>
+    <string name="replay_gain_track">Трек</string>
+    <string name="replay_gain_album">Албум</string>
+    <string name="replay_gain_hint">Равнява звуковата интензивност между песни, използвайки етикетите ReplayGain вътре в файловете Ви. „Трек“ регулира н cascade на всяка песен; „Албум“ запазва динамиката на всички албуми отдельно. Файл без тагове се изпълняват такива, както са.</string>
 </resources>

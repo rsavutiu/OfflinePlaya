@@ -13,6 +13,7 @@ import com.offlineplaya.android.MainActivity
 import com.offlineplaya.android.audio.AndroidPlayToPcController
 import com.offlineplaya.android.audio.AppEqualizerController
 import com.offlineplaya.android.audio.CrossfadeController
+import com.offlineplaya.android.audio.ReplayGainTracker
 import com.offlineplaya.android.audio.DacPlaybackController
 import com.offlineplaya.android.audio.PcmTap
 import com.offlineplaya.android.audio.PreampVolumePlayer
@@ -50,6 +51,7 @@ class PlaybackService : MediaLibraryService() {
     private var audioSessionId: Int = AudioEffect.ERROR_BAD_VALUE
     private var equalizerController: AppEqualizerController? = null
     private var crossfadeController: CrossfadeController? = null
+    private var replayGainTracker: ReplayGainTracker? = null
     private var dacController: DacPlaybackController? = null
     private var playToPcController: AndroidPlayToPcController? = null
     private var logger: AppLogger? = null
@@ -118,11 +120,14 @@ class PlaybackService : MediaLibraryService() {
         ) { bitPerfect, pc -> bitPerfect || pc }
             .stateIn(serviceScope, SharingStarted.Eagerly, false)
 
+        val replayGain = ReplayGainTracker(player).also { replayGainTracker = it }
+
         equalizerController = AppEqualizerController(
             context = this,
             audioSessionId = audioSessionId,
             stateHolder = stateHolder,
             bypass = dspBypass,
+            replayGainTags = replayGain.tags,
             scope = serviceScope,
             logger = logger,
         ).also { it.start() }
@@ -211,6 +216,8 @@ class PlaybackService : MediaLibraryService() {
         crossfadeController = null
         safeRelease("equalizer") { equalizerController?.release() }
         equalizerController = null
+        safeRelease("replayGain") { replayGainTracker?.release() }
+        replayGainTracker = null
         safeRelease("dac") { dacController?.release() }
         dacController = null
         safeRelease("serviceScope") { serviceScope.cancel() }

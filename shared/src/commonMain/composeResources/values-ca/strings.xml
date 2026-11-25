@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">S\'estan cercant coincidències…</string>
     <string name="lyrics_pick_empty">No s\'ha trobat cap lletra coincident</string>
     <string name="lyrics_pick_synced">Sincronitzada</string>
-
-    <!-- Auto-translated to Catalan via local LLM; review and refine. -->
     <string name="share_nudge_title">Disfrutant la música?</string>
     <string name="share_nudge_body">Aquest reproductor és completament gratuït, sense publicitat i sense rastrejament — i sense pressupost de marketing tampoc. L'única manera que arriba a altres persones és quan algú com tu el comparteix. Si ha aconseguit un lloc al teu telèfon, passa'l a algú.</string>
     <string name="share_nudge_share">Comparteix l'aplicació</string>
     <string name="share_nudge_dismiss">Potser més endavant</string>
     <string name="share_nudge_message">He estat utilitzant OfflinePlaya — un reproductor de música offline gratuït sense publicitat ni rastrejament. Prova'l: %1$s</string>
+    <string name="dac_bit_perfect">Sortida USB bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">Envia l\'àudio al DAC USB sense cap canvi. L\'equalitzador, el preamplificador i la transició s\'ometen mentre està actiu.</string>
+    <string name="dac_no_device">Connecta un DAC USB per fer-ho servir</string>
+    <string name="dac_reason_os">Cal Android 14 o posterior</string>
+    <string name="dac_reason_unsupported">Aquest telèfon o DAC no ho admet</string>
+    <string name="dac_reason_format">El format de la pista actual no és compatible, així que es reprodueix pel mesclador del sistema</string>
+    <string name="dac_reason_hires">Les pistes de més de 16 bits es reprodueixen pel mesclador del sistema</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bits · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Mesclador del sistema</string>
+    <string name="dac_dsp_no_effect_note">En alguns DAC USB, l'equalitzador i el preamplificador no tenen cap efecte.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">S'està jugant en %1$d segons...</item>
         <item quantity="other">S'està jugant en %1$d segons...</item>
@@ -298,15 +306,10 @@
         <item quantity="other">%1$d reproduccions</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Sortida USB bit-perfect</string>
-    <string name="dac_bit_perfect_subtitle">Envia l\'àudio al DAC USB sense cap canvi. L\'equalitzador, el preamplificador i la transició s\'ometen mentre està actiu.</string>
-    <string name="dac_no_device">Connecta un DAC USB per fer-ho servir</string>
-    <string name="dac_reason_os">Cal Android 14 o posterior</string>
-    <string name="dac_reason_unsupported">Aquest telèfon o DAC no ho admet</string>
-    <string name="dac_reason_format">El format de la pista actual no és compatible, així que es reprodueix pel mesclador del sistema</string>
-    <string name="dac_reason_hires">Les pistes de més de 16 bits es reprodueixen pel mesclador del sistema</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bits · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Mesclador del sistema</string>
-    <string name="dac_dsp_no_effect_note">En alguns DAC USB, l'equalitzador i el preamplificador no tenen cap efecte.</string>
+    <!-- Auto-translated to Catalan via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Normalització de volum</string>
+    <string name="replay_gain_off">Desactivat</string>
+    <string name="replay_gain_track">Pista</string>
+    <string name="replay_gain_album">Àlbum</string>
+    <string name="replay_gain_hint">Aplanar el nivell del so entre cançons utilitza les etiquetes ReplayGain emmagatzemades als fitxers. Nivells individualment cada canció; àlbum manté els propis dinàmics de cadascun d'ells. Fitxers sense etiquetes es reproduïen com són.</string>
 </resources>

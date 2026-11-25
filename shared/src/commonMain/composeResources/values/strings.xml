@@ -149,6 +149,11 @@
     <string name="settings_section_preset">Preset</string>
     <string name="settings_section_bands">Bands</string>
     <string name="settings_section_preamp">Preamp</string>
+    <string name="settings_section_replay_gain">Volume normalisation</string>
+    <string name="replay_gain_off">Off</string>
+    <string name="replay_gain_track">Track</string>
+    <string name="replay_gain_album">Album</string>
+    <string name="replay_gain_hint">Evens out loudness between songs using the ReplayGain tags stored in your files. Track levels every song; Album keeps each album\'s own dynamics. Files without tags play unchanged.</string>
     <string name="eq_preamp_hint">Boost beyond max volume. Vol+ at full volume raises it; Vol− lowers it before reducing volume. High boost can clip.</string>
 
     <!-- Appearance -->

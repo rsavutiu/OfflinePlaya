@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Wyszukiwanie dopasowań…</string>
     <string name="lyrics_pick_empty">Nie znaleziono pasującego tekstu</string>
     <string name="lyrics_pick_synced">Zsynchronizowany</string>
-
-    <!-- Auto-translated to Polish via local LLM; review and refine. -->
     <string name="share_nudge_title">Czy cieszysz się muzyką?</string>
     <string name="share_nudge_body">Ten odtwarzacz jest całkowicie darmowy, bez reklam i śledzenia — oraz bez budżetu marketingowego. Jedyne sposoby, w jaki osiąga innych ludzi, to kiedy ktoś jak Ty go udostępnia. Jeśli zdobył miejsce na Twoim telefonie, proszę go przekazać.</string>
     <string name="share_nudge_share">Udostępnij aplikację</string>
     <string name="share_nudge_dismiss">Może później</string>
     <string name="share_nudge_message">Używam OfflinePlaya — darmowego odtwarzacza muzyki offline bez reklam i śledzenia. Spróbuj: %1$s</string>
+    <string name="dac_bit_perfect">Wyjście USB bit-perfect</string>
+    <string name="dac_bit_perfect_subtitle">Wysyła dźwięk do przetwornika USB DAC bez zmian. Korektor, przedwzmacniacz i przenikanie są pomijane, gdy jest aktywne.</string>
+    <string name="dac_no_device">Podłącz przetwornik USB DAC, aby tego użyć</string>
+    <string name="dac_reason_os">Wymaga Androida 14 lub nowszego</string>
+    <string name="dac_reason_unsupported">Ten telefon lub przetwornik DAC tego nie obsługuje</string>
+    <string name="dac_reason_format">Format bieżącego utworu nie jest obsługiwany, więc gra przez mikser systemowy</string>
+    <string name="dac_reason_hires">Utwory powyżej 16 bitów grają przez mikser systemowy</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bitów · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Mikser systemowy</string>
+    <string name="dac_dsp_no_effect_note">W niektórych przetwornikach USB DAC korektor i przedwzmacniacz nie działają.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Odtwarzam za %1$d sekundę…</item>
         <item quantity="other">Odtwarzam za %1$d sekund…</item>
@@ -300,15 +308,10 @@
         <item quantity="other">%1$d odtworzenia</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Wyjście USB bit-perfect</string>
-    <string name="dac_bit_perfect_subtitle">Wysyła dźwięk do przetwornika USB DAC bez zmian. Korektor, przedwzmacniacz i przenikanie są pomijane, gdy jest aktywne.</string>
-    <string name="dac_no_device">Podłącz przetwornik USB DAC, aby tego użyć</string>
-    <string name="dac_reason_os">Wymaga Androida 14 lub nowszego</string>
-    <string name="dac_reason_unsupported">Ten telefon lub przetwornik DAC tego nie obsługuje</string>
-    <string name="dac_reason_format">Format bieżącego utworu nie jest obsługiwany, więc gra przez mikser systemowy</string>
-    <string name="dac_reason_hires">Utwory powyżej 16 bitów grają przez mikser systemowy</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bitów · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Mikser systemowy</string>
-    <string name="dac_dsp_no_effect_note">W niektórych przetwornikach USB DAC korektor i przedwzmacniacz nie działają.</string>
+    <!-- Auto-translated to Polish via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Normalizacja głośności</string>
+    <string name="replay_gain_off">Wyłączony</string>
+    <string name="replay_gain_track">Plik dźwiękowy</string>
+    <string name="replay_gain_album">Album</string>
+    <string name="replay_gain_hint">Evens out loudness between songs using the ReplayGain tags stored in your files. Track levels every song; Album keeps each album's own dynamics. Files without tags play unchanged.</string>
 </resources>

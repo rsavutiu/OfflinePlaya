@@ -20,6 +20,7 @@ data class EqPreferences(
     val manualPresetName: String,
     val manualGains: List<Int>,
     val preampPercent: Int = 0,
+    val replayGainMode: ReplayGainMode = ReplayGainMode.OFF,
 ) {
     companion object {
         val Default = EqPreferences(
@@ -27,6 +28,7 @@ data class EqPreferences(
             manualPresetName = BuiltInPresets.FLAT.name,
             manualGains = emptyList(),
             preampPercent = 0,
+            replayGainMode = ReplayGainMode.OFF,
         )
 
         /** Hard cap: +100% ≈ +6 dB. More than this clips audibly. */

@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Naghahanap ng mga tugma…</string>
     <string name="lyrics_pick_empty">Walang nahanap na tugmang lyrics</string>
     <string name="lyrics_pick_synced">Naka-sync</string>
-
-    <!-- Auto-translated to Filipino via local LLM; review and refine. -->
     <string name="share_nudge_title">Nangangasiwa ka ba sa musika?</string>
     <string name="share_nudge_body">Ang player na ito ay kompletong libre, walang mga ad, walang pagtakda, at walang budget para sa marketing. Ang angkop na paraan para makarating ito sa iba ay kapag may taong tulad mo na nagbabahagi nito. Kung ito ay naging bahagi ng iyong telepono, mangyaring ihatid ito.</string>
     <string name="share_nudge_share">I-share ang app</string>
     <string name="share_nudge_dismiss">Sige mamaya</string>
     <string name="share_nudge_message">Nagsusulat ako ng OfflinePlaya — isang libre, offline music player na walang mga ad o pagtakda. Subukan ito: %1$s</string>
+    <string name="dac_bit_perfect">Bit-perfect na USB output</string>
+    <string name="dac_bit_perfect_subtitle">Ipinapadala ang audio sa iyong USB DAC nang walang binabago. Nilalaktawan ang EQ, preamp at crossfade habang aktibo ito.</string>
+    <string name="dac_no_device">Magkonekta ng USB DAC para magamit ito</string>
+    <string name="dac_reason_os">Kailangan ng Android 14 o mas bago</string>
+    <string name="dac_reason_unsupported">Hindi ito sinusuportahan ng phone o DAC na ito</string>
+    <string name="dac_reason_format">Hindi suportado ang format ng kasalukuyang track, kaya tumutugtog ito sa system mixer</string>
+    <string name="dac_reason_hires">Ang mga track na higit sa 16-bit ay tumutugtog sa system mixer</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · System mixer</string>
+    <string name="dac_dsp_no_effect_note">Sa ilang USB DAC, walang epekto ang equalizer at preamp.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Nagpe-play sa loob ng %1$d segundo…</item>
         <item quantity="other">Nagpe-play sa loob ng %1$d segundo…</item>
@@ -298,15 +306,10 @@
         <item quantity="other">%1$d (na) play</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Bit-perfect na USB output</string>
-    <string name="dac_bit_perfect_subtitle">Ipinapadala ang audio sa iyong USB DAC nang walang binabago. Nilalaktawan ang EQ, preamp at crossfade habang aktibo ito.</string>
-    <string name="dac_no_device">Magkonekta ng USB DAC para magamit ito</string>
-    <string name="dac_reason_os">Kailangan ng Android 14 o mas bago</string>
-    <string name="dac_reason_unsupported">Hindi ito sinusuportahan ng phone o DAC na ito</string>
-    <string name="dac_reason_format">Hindi suportado ang format ng kasalukuyang track, kaya tumutugtog ito sa system mixer</string>
-    <string name="dac_reason_hires">Ang mga track na higit sa 16-bit ay tumutugtog sa system mixer</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d-bit · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · System mixer</string>
-    <string name="dac_dsp_no_effect_note">Sa ilang USB DAC, walang epekto ang equalizer at preamp.</string>
+    <!-- Auto-translated to Filipino via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Normalisasyon ng antas ng volume</string>
+    <string name="replay_gain_off">Off</string>
+    <string name="replay_gain_track">Tracks</string>
+    <string name="replay_gain_album">Album</string>
+    <string name="replay_gain_hint">Ilevel ang kahusayan sa pagkakaloud ng mga awit gamit ang ReplayGain tags na nakaimbak sa iyong file. Track ay nag-level para sa bawat song; Album naman pananatilihin ang sariling dynamics ng bawa't album. Ang files walang tag ay i-play tulad nga lang.</string>
 </resources>

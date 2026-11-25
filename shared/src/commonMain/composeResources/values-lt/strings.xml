@@ -278,13 +278,21 @@
     <string name="lyrics_pick_loading">Ieškoma atitikmenų…</string>
     <string name="lyrics_pick_empty">Atitinkančių žodžių nerasta</string>
     <string name="lyrics_pick_synced">Sinchronizuota</string>
-
-    <!-- Auto-translated to Lithuanian via local LLM; review and refine. -->
     <string name="share_nudge_title">Mėgaujasi muzika?</string>
     <string name="share_nudge_body">Šis plaikstytuvas visiškai nemoka, be skelbimų ir stebėjimo — ir net nemoka reklamos. Šis plaikstytuvas pasiekia kitus žmones tik tada, kai kažkas kaip jūs dalijasi juo. Jei jis užėmė vietą jūsų telefone, prašykite pasidalinti.</string>
     <string name="share_nudge_share">Dalinkitės programine</string>
     <string name="share_nudge_dismiss">Galiausiai</string>
     <string name="share_nudge_message">Aš naudoju OfflinePlaya — nemokamą, offline muzikos plaikstytuvą be skelbimų ir stebėjimo. Pabandykite: %1$s</string>
+    <string name="dac_bit_perfect">Bitų tikslumo USB išvestis</string>
+    <string name="dac_bit_perfect_subtitle">Siunčia garsą į USB DAC be pakeitimų. Kol įjungta, ekvalaizeris, išankstinis stiprinimas ir perėjimas apeinami.</string>
+    <string name="dac_no_device">Prijunkite USB DAC, kad galėtumėte tai naudoti</string>
+    <string name="dac_reason_os">Reikia Android 14 ar naujesnės versijos</string>
+    <string name="dac_reason_unsupported">Šis telefonas ar DAC to nepalaiko</string>
+    <string name="dac_reason_format">Dabartinio takelio formatas nepalaikomas, todėl jis grojamas per sistemos maišiklį</string>
+    <string name="dac_reason_hires">Didesni nei 16 bitų takeliai grojami per sistemos maišiklį</string>
+    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bitų · Bit-perfect</string>
+    <string name="dac_badge_system_mixer">%1$s · Sistemos maišiklis</string>
+    <string name="dac_dsp_no_effect_note">Su kai kuriais USB DAC ekvalaizeris ir pirminis stiprintuvas neveikia.</string>
     <plurals name="track_details_playing_in_plurals">
         <item quantity="one">Leidžiama po %1$d sekundės…</item>
         <item quantity="other">Playing in %1$d seconds…</item>
@@ -300,15 +308,10 @@
         <item quantity="other">%1$d grojimų</item>
     </plurals>
 
-    <!-- USB DAC / bit-perfect output -->
-    <string name="dac_bit_perfect">Bitų tikslumo USB išvestis</string>
-    <string name="dac_bit_perfect_subtitle">Siunčia garsą į USB DAC be pakeitimų. Kol įjungta, ekvalaizeris, išankstinis stiprinimas ir perėjimas apeinami.</string>
-    <string name="dac_no_device">Prijunkite USB DAC, kad galėtumėte tai naudoti</string>
-    <string name="dac_reason_os">Reikia Android 14 ar naujesnės versijos</string>
-    <string name="dac_reason_unsupported">Šis telefonas ar DAC to nepalaiko</string>
-    <string name="dac_reason_format">Dabartinio takelio formatas nepalaikomas, todėl jis grojamas per sistemos maišiklį</string>
-    <string name="dac_reason_hires">Didesni nei 16 bitų takeliai grojami per sistemos maišiklį</string>
-    <string name="dac_badge_bit_perfect">%1$s · %2$s kHz · %3$d bitų · Bit-perfect</string>
-    <string name="dac_badge_system_mixer">%1$s · Sistemos maišiklis</string>
-    <string name="dac_dsp_no_effect_note">Su kai kuriais USB DAC ekvalaizeris ir pirminis stiprintuvas neveikia.</string>
+    <!-- Auto-translated to Lithuanian via local LLM; review and refine. -->
+    <string name="settings_section_replay_gain">Volume normalizavimas</string>
+    <string name="replay_gain_off">Išjungta</string>
+    <string name="replay_gain_track">Stotis</string>
+    <string name="replay_gain_album">Albumas</string>
+    <string name="replay_gain_hint">Lygina garsą tarp dainų naudodamas ReplayGain žymes, saugomas jūsų failuose. Stoties lyginama kiekviena daina; Albumas išlaiko kiekvieno albumo savo dinamiką. Failai be žymės sklanda nesikeičiantys.</string>
 </resources>

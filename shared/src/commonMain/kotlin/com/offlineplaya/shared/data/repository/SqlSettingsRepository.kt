@@ -11,6 +11,7 @@ import com.offlineplaya.shared.domain.model.EqMode
 import com.offlineplaya.shared.domain.model.EqPreferences
 import com.offlineplaya.shared.domain.model.LyricsPreferences
 import com.offlineplaya.shared.domain.model.PlaybackPreferences
+import com.offlineplaya.shared.domain.model.ReplayGainMode
 import com.offlineplaya.shared.domain.model.ReviewPromptState
 import com.offlineplaya.shared.domain.model.ThemePreferences
 import com.offlineplaya.shared.domain.repository.SettingsRepository
@@ -163,6 +164,7 @@ internal class SqlSettingsRepository(
                     preferences.manualGains.joinToString(separator = ","),
                 )
                 queries.insertOrReplace(KEY_EQ_PREAMP, preferences.preampPercent.toString())
+                queries.insertOrReplace(KEY_REPLAY_GAIN, preferences.replayGainMode.dbValue)
             }
         }
 
@@ -243,6 +245,7 @@ internal class SqlSettingsRepository(
             manualGains = gains,
             preampPercent = (map[KEY_EQ_PREAMP]?.toIntOrNull() ?: defaults.preampPercent)
                 .coerceIn(0, EqPreferences.MAX_PREAMP_PERCENT),
+            replayGainMode = ReplayGainMode.fromDbValue(map[KEY_REPLAY_GAIN]),
         )
     }
 
@@ -275,6 +278,7 @@ internal class SqlSettingsRepository(
         const val KEY_EQ_MANUAL_PRESET = "eq.manual_preset"
         const val KEY_EQ_MANUAL_GAINS = "eq.manual_gains"
         const val KEY_EQ_PREAMP = "eq.preamp_percent"
+        const val KEY_REPLAY_GAIN = "eq.replay_gain_mode"
         const val KEY_CROSSFADE_ENABLED = "playback.crossfade_enabled"
         const val KEY_CROSSFADE_DURATION = "playback.crossfade_duration_s"
         const val KEY_BT_AUTOPLAY = "playback.bluetooth_autoplay"
